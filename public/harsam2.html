@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" ng-app="HarsamApp">
+    <head>
+      <meta charset="utf-8">
+      <title>Harsam 2</title>
+      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+      <link rel="stylesheet" href="css/tuna.css">
+      <script src="bower_components/angular/angular.js"></script>
+      <script src="js/harsam.js"></script>
+    </head>
+    <body ng-controller="SelectLotCtrl">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="harsam.html">HarSam</a>
+                    <ul>
+                        <li><a href="harsam1.html">Station 1</a></li>
+                        <li><a href="harsam2.html">Station 2</a></li>
+                        <li><a href="harsam_admin.html">Admin</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">AMANDA</a>
+                    <ul>
+                        <li><a href="amanda1.html">Station 1</a></li>
+                        <li><a href="amanda2.html">Station 2</a></li>
+                        <li><a href="amanda_admin.html">Admin</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="sidebar">
+            HarSam
+            <div class="button" ng-click="PlaceOnScale($event)"><p>Place On Scale</p></div>
+            <div id="scale">{{scale}}</div>
+        </div>
+        <div class="selectlot">
+        <h1>Select Lot:</h1><br>
+            <table>
+              <tr>
+                <th>Supplier</th>
+                <th>Fleet</th>
+                <th>Fair Trade</th>
+                <th>Received Date</th>
+                <th>Lot #</th>
+              </tr>
+              <tr ng-repeat="lot in lots">
+                <td>{{lot.supplier}}</td>
+                <td>{{lot.fleet}}</td>
+                <td>{{lot.fairtrade}}</td>
+                <td>{{lot.received_date}}</td>
+                <td>{{lot.lot_number}}</td>
+              </tr>
+            </table>
+            <div class="button"><p>Weigh</p></div>
+            <div class="button"><p>Select Grade</p></div>
+            <div id="create_label" class="button"><p>Create Label</p></div>
+            <div class="button"><p>Print</p></div>
+            <img class="label hidden" src="label1.png">
+        </div>
+    </body>
+</html>

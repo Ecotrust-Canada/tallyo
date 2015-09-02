@@ -1,0 +1,12 @@
+[
+    {"fleet": "FT Assilulu",
+     "fairtrade": "Yes",
+      "supplier": "H. Sinar - 01",
+      "received_date": "8/18/2015",
+      "lot_number": "10000123015"},
+    {"fleet": "FT Buru",
+     "fairtrade": "Yes",
+      "supplier": "Salwa - 02",
+      "received_date": "8/18/2015",
+      "lot_number": "10000223015"}
+  ]

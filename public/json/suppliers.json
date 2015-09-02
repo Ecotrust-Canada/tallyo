@@ -1,0 +1,16 @@
+[
+    {"fleet": "FT Assilulu",
+     "fairtrade": "Yes",
+      "supplier": "H. Sinar - 01",
+      "species": "Yellowfin Tuna",
+      "state": "Fresh",
+      "handling": "Loin",
+      "area": "WPP 714"},
+    {"fleet": "FT Buru",
+     "fairtrade": "Yes",
+      "supplier": "Salwa - 02",
+      "species": "Yellowfin Tuna",
+      "state": "Fresh",
+      "handling": "Loin",
+      "area": "WPP 715"}
+  ]
