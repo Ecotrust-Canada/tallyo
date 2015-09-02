@@ -2,9 +2,9 @@
 
 /* Controllers */
 
-var HarsamApp = angular.module('HarsamApp', []);
+var scanthisControllers = angular.module('scanthisControllers', []);
 
-HarsamApp.controller('ReceivingCtrl', function($scope, $http) {
+scanthisControllers.controller('ReceivingCtrl', function($scope, $http) {
   
   /*initialize some values */
   $scope.scale="00.00kg"
@@ -67,7 +67,7 @@ HarsamApp.controller('ReceivingCtrl', function($scope, $http) {
   $scope.testing = "It works!"
 });
 
-HarsamApp.controller('SelectLotCtrl', function($scope, $http) {
+scanthisControllers.controller('SelectLotCtrl', function($scope, $http) {
   $scope.scale="00.00kg"
   $scope.PlaceOnScale = function(clickEvent) {
     $scope.scale="14.85kg"
