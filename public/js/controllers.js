@@ -68,24 +68,35 @@ scanthisControllers.controller('ReceivingCtrl', function($scope, $http) {
 
   $scope.Confirm = function(clickEvent) {
 
-    /* if there is not yet a receiving lot matching date and supplier, create one */
+    /*get local variables from $scope*/
+    var weight = $scope.weight;
+    var grade = $scope.grade;
     var date = $scope.datereceived;
-    var date_p = moment(date.valueOf()).format();
-    var start_date = moment(date.valueOf()).startOf('isoWeek');
-    var end_date = moment(date.valueOf()).endOf('isoWeek');
-    var datestring = moment(date.valueOf()).format('DDMMYYYY');
     var sup_id = $scope.sup.id;
-    var lot_num = (String(sup_id)).concat(datestring);
-    $http.get('http://10.10.50.30:3000/receiving_lots?id_supplier=eq.' + sup_id + '&start_date=lt.' + date_p + '&end_date=gt.' + date_p).success(function(data) {
-      if (data.length < 1){
-        var toSubmit = {'lot_number': lot_num, 'id_supplier': sup_id, 'in_prod': 'false', 'start_date': start_date, 'end_date': end_date}
+    
+    /*initialize lot_num*/
+    var lot_num;
+    
+    /*get week from current timestamp*/
+    var dates = dateManipulation(date);
+    
+    /*see if there is an existing receiving_lot matching date and supplier id*/
+    $http.get('http://10.10.50.30:3000/receiving_lots?id_supplier=eq.' + sup_id + '&start_date=lt.' + dates.postgres_date + '&end_date=gt.' + dates.postgres_date).success(function(data) {
+      
+      if (data.length < 1){/*if no, create a new lot_number and receiving_lot entry*/
+        lot_num = createLotNum(date, sup_id);
+        var toSubmit = {'lot_number': lot_num, 'id_supplier': sup_id, 'in_prod': 'false', 'start_date': dates.start_date, 'end_date': dates.end_date}
         $http.post('http://10.10.50.30:3000/receiving_lots', toSubmit);
+      }      
+      else{/*if yes, get the lot_number*/
+        lot_num = data[0].lot_number
       }
-    });
+      
+      /*create a receiving entry*/
+      var receiving_submit = {'weight': weight,'timestamp': dates.postgres_date,'grade': grade, 'lot_number_receiving_lots': lot_num};
+      $http.post('http://10.10.50.30:3000/receiving', receiving_submit);
 
-    /* create receiving entry */
-    var receiving_submit = {'weight': $scope.weight,'timestamp': date_p,'grade': $scope.grade, 'lot_number_receiving_lots': lot_num};
-    $http.post('http://10.10.50.30:3000/receiving', receiving_submit);
+    });
 
     /*clear data for completed entry */
     clear();
