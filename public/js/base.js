@@ -8,6 +8,10 @@ HarsamApp.config(['$routeProvider',
       when('/home', {
         templateUrl: 'home.html'
       }).
+      when('/harsam_admin', {
+        templateUrl: 'harsam_admin.html',
+        controller: 'InProductionCtrl'
+      }).
       when('/harsam2', {
         templateUrl: 'harsam2.html',
         controller: 'SelectLotCtrl'
@@ -15,7 +19,7 @@ HarsamApp.config(['$routeProvider',
       when('/harsam1', {
         templateUrl: 'harsam1.html',
         controller: 'ReceivingCtrl'
-      }).      
+      }).
       otherwise({
         redirectTo: '/home'
       });

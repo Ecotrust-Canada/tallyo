@@ -1,31 +1,11 @@
 
-
-  <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="harsam.html">HarSam</a>
-                    <ul>
-                        <li><a href="harsam1.html">Station 1</a></li>
-                        <li><a href="harsam2.html">Station 2</a></li>
-                        <li><a href="harsam_admin.html">Admin</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">AMANDA</a>
-                    <ul>
-                        <li><a href="amanda1.html">Station 1</a></li>
-                        <li><a href="amanda2.html">Station 2</a></li>
-                        <li><a href="amanda_admin.html">Admin</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
         <div id="sidebar">
             HarSam
             <div class="button" ng-click="ScanIncoming($event)"><p>Scan Supplier Code</p></div>
             <div class="button" ng-click="PlaceOnScale($event)"><p>Place On Scale</p></div>
             <div class="button" ng-click="ScanGrade($event)"><p>Scan Grade</p></div>
             <div class="button" ng-click="ScanDirtyClean($event)"><p>Scan Dirty/Clean</p></div>
-            <div id="scale">{{scale}}</div>
+            <div id="scale">{{scale}}kg</div>
         </div>
         <div id="currentscan">
         <h1>Current Scan:</h1>
@@ -56,7 +36,7 @@
                 <td class="left">Weight:</td>
                 <td class="right">{{weight}}</td>
                 <td class="left">Date Received:</td>
-                <td class="right">{{datereceived}}</td>
+                <td class="right">{{datereceived | date:'medium'}}</td>
               </tr>
               <tr>
                 <td class="left">Grade:</td>

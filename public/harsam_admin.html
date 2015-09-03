@@ -1,0 +1,91 @@
+
+        <div id="admin">
+        <div><h1>Supplier Info:</h1><hr>
+            <div id="edittable" class="block">
+              <table>
+                <tr>
+                  <th>Supplier</th>
+                  <th>Fleet</th>
+                  <th>Area</th>
+                  <th>Species</th>
+                  <th>Handling</th>
+                  <th>State</th>
+                  <th>Fair Trade</th>
+                  <th>Traceable</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td>H. Sinar-01</td>
+                  <td>FT Assilulu</td>
+                  <td>WPP 714</td>
+                  <td>Yellowfish Tuna</td>
+                  <td>Loin</td>
+                  <td>Fresh</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td class="edit">Edit</td>
+                </tr>
+                <tr>
+                  <td>Salwa-01</td>
+                  <td>FT Assilulu</td>
+                  <td>WPP 714</td>
+                  <td>Yellowfish Tuna</td>
+                  <td>Loin</td>
+                  <td>Fresh</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td class="edit">Edit</td>
+                </tr>
+              </table>
+            </div>
+            <hr>
+        </div>
+        <div><h1>Processing:</h1><hr>            
+            <div id="edittable" class="block">
+            <table>
+                <tr>
+                  <th>Supplier</th>
+                  <th>Fleet</th>
+                  <th>Week Received</th>
+                  <th></th>
+                </tr>
+                <tr ng-repeat="re in receiving">
+                  <td>{{re.name}}</td>
+                  <td>{{re.fleet}}</td>
+                  <td>{{re.start_date | date: 'dd MMM'}} - {{re.end_date | date: 'dd MMM'}}</td>
+                  <td ng-if="re.lot_num=true"> <p>{{re.in_prod | processToString}}</p></td>
+                  <td ng-if="re.lot_num=false"> <p ng-click="processToday(re.lot_num)">{{re.in_prod | processToString}}</p></td>
+                </tr>
+              </table>
+            </div>
+            <hr>
+        </div>
+        <div><h1>Summary:</h1><hr>
+          <div class='summary'>
+            <table>
+              <tr>
+                <th></th>
+                <th colspan='5'>Production Lot volume</th> 
+              </tr>
+              <tr>
+                <th>Code</th>
+                <th>A</th>
+                <th>AB</th>
+                <th>B</th>
+                <th>C</th>
+                <th>Total</th>
+              </tr>
+              <tr>
+                <td>A000009</td>
+                <td>150kg</td>
+                <td>30kg</td>
+                <td>180kg</td>
+                <td>210kg</td>
+                <td>540kg</td>
+              </tr>
+            </table>
+          </div>
+            <div class="button">Export to CSV</div>
+        </div>
+        </div>
+

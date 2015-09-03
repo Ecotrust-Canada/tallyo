@@ -7,11 +7,31 @@
       <link rel="stylesheet" href="css/tuna.css">
       <script src="bower_components/angular/angular.js"></script>
       <script src="bower_components/angular-route/angular-route.js"></script>
+      <script src="bower_components/moment/moment.js"></script>
       <script src="js/common.js"></script>
       <script src="js/base.js"></script>
       <script src="js/controllers.js"></script>
     </head>
     <body>
+         <nav>
+            <ul>
+                <li><a href="#/home">Home</a></li>
+                <li><a href="harsam.html">HarSam</a>
+                    <ul>
+                        <li><a href="#/harsam1">Station 1</a></li>
+                        <li><a href="#/harsam2">Station 2</a></li>
+                        <li><a href="#/harsam_admin">Admin</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">AMANDA</a>
+                    <ul>
+                        <li><a href="amanda1.html">Station 1</a></li>
+                        <li><a href="amanda2.html">Station 2</a></li>
+                        <li><a href="amanda_admin.html">Admin</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
         <div ng-view></div>
     </body>
 </html>
