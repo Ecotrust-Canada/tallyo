@@ -129,8 +129,9 @@ tr{
 .selectlot tr{
     outline: solid 1px;
 }
-.highlight{
-    outline: solid 4px #9E6C42 !important;
+.selected{
+    outline: solid 7px #9E6C42 !important;
+    background-color: #B2CCA9;
 }
 .block{
     display: inline-block;

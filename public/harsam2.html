@@ -2,29 +2,30 @@
         <div id="sidebar">
             HarSam
             <div class="button" ng-click="PlaceOnScale($event)"><p>Place On Scale</p></div>
-            <div id="scale">{{scale}}</div>
+            <div id="scale">{{scale}}kg</div>
         </div>
         <div class="selectlot">
         <h1>Select Lot:</h1><br>
             <table>
-              <tr>
-                <th>Supplier</th>
-                <th>Fleet</th>
-                <th>Fair Trade</th>
-                <th>Received Date</th>
-                <th>Lot #</th>
-              </tr>
-              <tr ng-repeat="lot in lots">
-                <td>{{lot.supplier}}</td>
-                <td>{{lot.fleet}}</td>
-                <td>{{lot.fairtrade}}</td>
-                <td>{{lot.received_date}}</td>
-                <td>{{lot.lot_number}}</td>
-              </tr>
-            </table>
-            <div class="button"><p>Weigh</p></div>
-            <div class="button"><p>Select Grade</p></div>
-            <div id="create_label" class="button"><p>Create Label</p></div>
+                <tr>
+                  <th>Supplier</th>
+                  <th>Fleet</th>
+                  <th>Week Received</th>
+                </tr>
+                <tr ng-repeat="re in lots" ng-click="setSelected(re.lot_num)" ng-class="{selected: re.lot_num === selected_lot}">
+                  <td><p >{{re.name}}<p></td>
+                  <td>{{re.fleet}}</td>
+                  <td>{{re.start_date | date: 'dd MMM'}} - {{re.end_date | date: 'dd MMM'}}</td>
+                </tr>
+              </table>
+              current lot_number is: {{selected_lot}} <br>
+
+
+
+
+            <div class="button" ng-click="Weigh($event)"><p>Weigh</p></div>
+            <div class="button" ng-click="SelectGrade($event)"><p>Select Grade</p></div>
+            <div id="create_label" class="button" ng-click="CreateLabel($event)"><p>Create Label</p></div>
             <div class="button"><p>Print</p></div>
             <img class="label hidden" src="label1.png">
         </div>

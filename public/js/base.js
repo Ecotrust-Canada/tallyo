@@ -10,7 +10,7 @@ HarsamApp.config(['$routeProvider',
       }).
       when('/harsam_admin', {
         templateUrl: 'harsam_admin.html',
-        controller: 'InProductionCtrl'
+        //controller: 'InProductionCtrl'
       }).
       when('/harsam2', {
         templateUrl: 'harsam2.html',
