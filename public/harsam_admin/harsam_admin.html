@@ -33,13 +33,14 @@
                   <th>Fleet</th>
                   <th>Week Received</th>
                   <th></th>
+                  <th></th>
                 </tr>
                 <tr ng-repeat="re in receiving">
                   <td>{{re.name}}</td>
                   <td>{{re.fleet}}</td>
                   <td>{{re.start_date | date: 'dd MMM'}} - {{re.end_date | date: 'dd MMM'}}</td>
-                  <td ng-if="re.lot_num=true"> <p>{{re.in_prod | processToString}}</p></td>
-                  <td ng-if="re.lot_num=false"> <p ng-click="processToday(re.lot_num)">{{re.in_prod | processToString}}</p></td>
+                  <td> <p>{{re.in_prod | processToString}}</p></td>
+                  <td><p ng-click="processToday(re.lot_num)">click me!</p></td>
                 </tr>
               </table>
             </div>
