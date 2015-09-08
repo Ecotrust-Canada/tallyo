@@ -11,12 +11,15 @@ var InProductionCtrl = function($scope, $http) {
   });
 
   $scope.processToday = function(lot_num) {
+    console.log("has been clicked");
     var change = {'in_prod': 'true'};
     $http.patch('http://10.10.50.30:3000/receiving_lots?lot_number=eq.' + lot_num, change).then(function(response){}, 
         function(response){
           alert(response.status);
         });
   };
+
+
   /*TODO: add code so can not keep clicking same in one day, visually show if in production*/
   /*if true - 'in processing' if false - 'process today'*/
   /*TODO: add code so can not keep clicking same in one day*/
