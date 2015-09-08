@@ -1,0 +1,9 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+*         text=auto whitespace=trailing-space,space-before-tab,-indent-with-non-tab,tab-in-indent,tabwidth=2
+
+*.py      text
+*.html    text
+*.css     text
+*.js      text
+
+*.sh      text eol=lf
