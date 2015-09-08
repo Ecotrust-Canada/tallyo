@@ -1,8 +1,29 @@
 'use strict';
 
-var HarsamApp = angular.module('HarsamApp', ['ngRoute', 'scanthisControllers']);
+// Declare app level module which depends on views, and components
+angular.module('scanthisApp', [
+  'ngRoute',
+  'scanthisApp.harsam1',
+  'scanthisApp.harsam2',
+  'scanthisApp.harsam_admin'
+]).
+config(['$routeProvider', function($routeProvider) {
+  $routeProvider.otherwise({redirectTo: '/harsam1'});
+}]);
 
-HarsamApp.config(['$routeProvider',
+
+
+
+
+
+
+
+
+/*'use strict';
+
+var HarsamApp = angular.module('HarsamApp', ['ngRoute', 'scanthisControllers']);*/
+
+/*HarsamApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
@@ -22,25 +43,11 @@ HarsamApp.config(['$routeProvider',
         templateUrl: 'harsam1.html',
         controller: 'ReceivingCtrl'
       }).
-      when('/amanda',{
-        templateUrl: 'amanda.html'
-      }).
-      when('/amanda_admin', {
-        templateUrl: 'amanda_admin.html'
-      }).
-      when('/amanda2', {
-        templateUrl: 'amanda2.html',
-        controller: 'SelectLotCtrl'
-      }).
-      when('/amanda1', {
-        templateUrl: 'amanda1.html',
-        controller: 'ReceivingCtrl'
-      }).
       otherwise({
         redirectTo: '/home'
       });
 
-  }]);
+  }]);*/
 
 
 

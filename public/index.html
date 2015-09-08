@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="HarsamApp">
+<html lang="en" ng-app="scanthisApp">
     <head>
       <meta charset="utf-8">
       <title>Scanthis</title>
@@ -10,12 +10,17 @@
       <script src="bower_components/moment/moment.js"></script>
       <script src="js/common.js"></script>
       <script src="js/base.js"></script>
-      <script src="js/controllers.js"></script>
+      <script src="js/receiving_controller.js"></script>
+      <script src="js/processing_controller.js"></script>
+      <script src="js/admin_controllers.js"></script>
+      <script src="harsam1/harsam1.js"></script>
+      <script src="harsam2/harsam2.js"></script>
+      <script src="harsam_admin/harsam_admin.js"></script>
     </head>
     <body>
          <nav>
             <ul>
-                <li><a href="#/home">Home</a></li>
+                <!--<li><a href="#/home">Home</a></li>-->
                 <li><a href="#/harsam">HarSam</a>
                     <ul>
                         <li><a href="#/harsam1">Station 1</a></li>
@@ -23,13 +28,13 @@
                         <li><a href="#/harsam_admin">Admin</a></li>
                     </ul>
                 </li>
-                <li><a href="#/amanda">AMANDA</a>
+                <!--<li><a href="#/amanda">AMANDA</a>
                     <ul>
                         <li><a href="#/amanda1">Station 1</a></li>
                         <li><a href="#/amanda2">Station 2</a></li>
                         <li><a href="#/amanda_admin">Admin</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
         </nav>
         <div ng-view></div>
