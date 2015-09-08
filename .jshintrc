@@ -9,5 +9,7 @@
     "afterEach": false,
     "module": false,
     "inject": false
-  }
+  },
+
+  "node": true
 }
