@@ -2,6 +2,18 @@
 
 Open source Fish Plant data collection software, geared towards generating traceable data.
 
+### Installation
+
+```
+npm install -g nodemon
+```
+
+### Starting the Node Server
+```
+npm start
+```
+
+
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
