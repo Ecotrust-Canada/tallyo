@@ -1,12 +1,10 @@
+"use strict";
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
-
-
 var app = express();
-
-
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -15,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
@@ -48,4 +46,4 @@ module.exports = app;
 require('./config')(app);
 
 app.listen(app.get('port'));
-console.log('running on', app.get('port'))
+console.log('Server running on port', app.get('port'));
