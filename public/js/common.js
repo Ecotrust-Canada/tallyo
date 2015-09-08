@@ -21,3 +21,43 @@ var CreateProductionLotNumber = function(prod_id, receive_lot, date){
 
 
 
+
+
+
+
+var InitReceivingLotEntry = function(plant_settings){
+    var jsonobj = {
+        'lot_number': '',
+        'id_supplier': '',
+        'in_prod': 'false',
+        'start_date': '',
+        'end_date': ''
+    };
+    return jsonobj;
+}
+
+
+var InitReceivingEntry = function(plant_settings){
+    var jsonobj = {
+        'weight': '',
+        'timestamp': '',
+        'lot_number_receiving_lots': '',
+        'end_date': ''
+    };
+    if (plant_settings.grade === 'true'){
+        jsonobj.grade = '';
+    }
+    return jsonobj;
+}
+
+
+var CreateReceivingLotQuery = function(plant_settings, re_lot_entry, date){
+    var url = plant_settings.database_url;
+    url = url.concat('/receiving_lots?');
+    if (plant_settings.re_query_date_in_range === 'true'){
+        url.concat('&start_date=lt.' + date + '&end_date=gt.' + date)
+    }
+}
+
+
+
