@@ -8,7 +8,9 @@
     "beforeEach": false,
     "afterEach": false,
     "module": false,
-    "inject": false
+    "inject": false,
+    "moment": false,
+    "alert": false
   },
 
   "node": true
