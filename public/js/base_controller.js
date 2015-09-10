@@ -34,8 +34,14 @@ var BaseCtrl = function($scope, $http, $location) {
 
   /*set is_current to true for lot number*/
   $scope.SetLotAsCurrent = function(lot_number){
-    $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id, {'is_current': false});
-    $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true});
+    $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id, {'is_current': false}).then(function(response){
+    }, function(response){
+      alert(response.status);
+    });
+    $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
+    }, function(response){
+      alert(response.status);
+    });
   };
 
   /*gets all suppliers in table*/
@@ -54,6 +60,32 @@ var BaseCtrl = function($scope, $http, $location) {
 
 
 
+  $scope.ReadInScale = function(weight, column){
+    //weight would be read from scale
+    $scope.entry[column] = weight;
+  };
+
+
+  $scope.GetCurrentLotNumber = function(callBack){
+    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
+      $scope.current_lot_number = response.data[0].lot_number;
+      callBack(response.data[0].lot_number);
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+  $scope.CreateEntry = function(lot_number){
+    var date = moment(new Date()).format();
+    $scope.entry.timestamp = date;
+    $scope.entry.lot_number = lot_number;
+    console.log($scope.entry);
+    $http.post('http://10.10.50.30:3000/entry', $scope.entry).then(function(response){
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
 
 
 
@@ -69,14 +101,6 @@ var BaseCtrl = function($scope, $http, $location) {
 //display lots with boolean equal to true
   };
 
-
-  $scope.ReadInScale = function(){
-//get the information from the scale
-  };
-
-  $scope.CreateEntry = function(){
-//create an entry based on lot number, data to input, stage_id
-  };
 
 
 

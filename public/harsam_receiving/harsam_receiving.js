@@ -12,6 +12,32 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
 .controller('harsamReceivingCtrl', function($scope, $http, $injector) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
+  $scope.stage_id = 4;
+  $scope.station_id = 4;
+  $scope.entry = {'weight_1': '', 'weight_2': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+  
+  $scope.WeighP = function(clickEvent){
+    $scope.ReadInScale(12.02, 'weight_1');
+  };
 
+  $scope.WeighNP = function(clickEvent){
+    $scope.ReadInScale(11.09, 'weight_2');
+  };
+
+  $scope.redoP = function(clickEvent){
+     $scope.entry.weight_1 = '';
+  };
+
+  $scope.redoNP = function(clickEvent){
+     $scope.entry.weight_2 = '';
+  };
+
+  
+  $scope.Confirm = function(clickEvent){
+    $scope.GetCurrentLotNumber($scope.CreateEntry);
+  };
+  
+
+  
  
 });
