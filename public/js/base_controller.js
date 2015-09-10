@@ -12,18 +12,27 @@ var BaseCtrl = function($scope, $http, $location) {
 
 
   $scope.CreateLot = function(queryString){
-
+    var lot_num;
     $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
       if (response.data.length < 1){
-        var lot_num = createLotNum($scope.queryparams.stage_id, $scope.queryparams.date);
+        lot_num = createLotNum($scope.queryparams.stage_id, $scope.queryparams.date);
         $scope.lot_entry.lot_number = lot_num;
-        $scope.CreateEntryPeriod($scope.queryparams.date, 'week');
+        //$scope.CreateEntryPeriod($scope.queryparams.date, 'week');
         console.log($scope.lot_entry);
+        $http.post('http://10.10.50.30:3000/lot', $scope.lot_entry).then(function(response){
+
+        }, function(response){
+            alert(response.statusText);
+          });//end post lot
+      }//end if
+      else{
+        lot_num = response.data.lot_number;
       }
 
     }, function(response){
       alert(response.status);
-    });
+    });//end get lot
+    return lot_num;
   };
 
 

@@ -1,10 +1,44 @@
-<div class="button" ng-click="SelectSupplier($event)"><p>testtest</p></div>
-  <br>
-
-
+<div class="selectlot">
 <table>
-  <tr ng-repeat="sup in suppliers">
+  <tr>
+    <th>Supplier ID</th>
+    <th>Supplier Name</th>
+  </tr>
+  <tr ng-repeat="sup in suppliers" ng-click="setSelected(sup)" ng-class="{selected: sup === selected_id}">
     <td>{{sup.id}}</td>
     <td>{{sup.name}}</td>
   </tr>
 </table>
+</div>
+
+
+<div class="selectlot">
+<table>
+  <tr>
+    <th colspan="2">Supplier Details</th>
+  </tr>
+  <tr>
+    <td>ID</td>
+    <td>{{selected_id.id}}
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>{{selected_id.name}}
+  </tr>
+  <tr>
+    <td>Supplier Group</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Fishing area</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Etc</td>
+    <td></td>
+  </tr>
+
+</table>
+</div>
+<div class="button" ng-click="SelectSupplier(selected_id.id)"><p>Set Current</p></div>
+
