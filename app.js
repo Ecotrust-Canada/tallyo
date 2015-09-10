@@ -5,6 +5,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var app = express();
+var TraceabilityProvider = require('./lib/traceability_provider');
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -47,3 +48,4 @@ require('./config')(app);
 
 app.listen(app.get('port'));
 console.log('Server running on port', app.get('port'));
+TraceabilityProvider.start(); // WIP
