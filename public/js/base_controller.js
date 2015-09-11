@@ -102,18 +102,6 @@ var BaseCtrl = function($scope, $http, $location) {
 
 
 
-  $scope.SetLotInProd = function(){
-//set boolean to true
-  };
-
-  $scope.DisplayLotsInProd = function(){
-//display lots with boolean equal to true
-  };
-
-
-
-
-
 
 
 

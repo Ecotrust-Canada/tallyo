@@ -5,21 +5,17 @@
   <br>
   <div class="block">
     <p>{{entry.weight_1}}Kg</p>
-    <div class="button" ng-click="WeighP($event)"><p>Weigh with Plastic</p></div> 
+    <div class="button" ng-click="ReadInScale(12.02, 'weight_1')"><p>Weigh with Plastic</p></div> 
     <br>   
-    <div id="redo" class="button" ng-click="redoP($event)"><p>Redo</p></div>
+    <div id="redo" class="button" ng-click="redo('weight_1')"><p>Redo</p></div>
   </div>
   <div class="block">
     <p>{{entry.weight_2}}Kg</p>
-    <div class="button" ng-click="WeighNP($event)"><p>Weigh No Plastic</p></div>
+    <div class="button" ng-click="ReadInScale(11.09, 'weight_2')"><p>Weigh No Plastic</p></div>
     <br>
-    <div id="redo" class="button" ng-click="redoNP($event)"><p>Redo</p></div> 
+    <div id="redo" class="button" ng-click="redo('weight_2')"><p>Redo</p></div> 
   </div>
-
-  
   <br>
-
-
   <div id="confirm" class="button" ng-click="Confirm($event)"><p>Confirm</p></div>
 </div>
 
