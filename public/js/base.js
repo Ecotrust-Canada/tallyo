@@ -5,6 +5,7 @@ angular.module('scanthisApp', [
   'ngRoute',
   'scanthisApp.harsam_receiving',
   'scanthisApp.harsam_trimming',
+  'scanthisApp.harsam_retouching',
   'scanthisApp.harsam_admin'
 ]).
 config(['$routeProvider', function($routeProvider) {

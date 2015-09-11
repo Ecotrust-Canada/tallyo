@@ -1,0 +1,24 @@
+
+
+<div id="currentscan">
+  {{current_lot_number}}
+  <br>
+  <div class="block">
+    <p>{{entry.weight_1}}Kg</p>
+    <p>grade:{{entry.grade}}</p>
+    <div class="button" ng-click="Weigh('A')"><p>A</p></div>
+    <div class="button" ng-click="Weigh('B')"><p>B</p></div>
+    <div class="button" ng-click="Weigh('C')"><p>C</p></div>
+    <div class="button" ng-click="Weigh('D')"><p>D</p></div>
+  </div>
+
+  
+  <br>
+
+
+  <div id="confirm" class="button" ng-click="Confirm($event)"><p>Confirm and print</p></div>
+  <div id="redo" class="button" ng-click="redo($event)"><p>Redo</p></div>
+</div>
+
+
+

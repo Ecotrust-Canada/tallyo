@@ -53,6 +53,15 @@ var BaseCtrl = function($scope, $http, $location) {
     });
   };
 
+  /*gets lots from given stage*/
+  $scope.ListLots = function(stage_id){
+    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + stage_id).then(function(response){
+      $scope.lots = response.data;
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
   /*for selecting on a table*/
   $scope.setSelected = function(id) {
     $scope.selected_id = id;
