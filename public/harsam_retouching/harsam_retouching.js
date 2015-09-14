@@ -21,13 +21,6 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
     $scope.entry.grade = grade;
   };
 
-  $scope.redo = function(clickEvent){
-     $scope.entry.weight_1 = '';
-     $scope.entry.grade = '';
-  };
-
-
-  
   $scope.Confirm = function(clickEvent){
     $scope.GetCurrentLotNumber($scope.CreateEntry);
   };

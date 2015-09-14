@@ -20,13 +20,6 @@ angular.module('scanthisApp.harsam_trimming', ['ngRoute'])
     $scope.ReadInScale(9.02, 'weight_1');
     $scope.entry.grade = grade;
   };
-
-  $scope.redo = function(clickEvent){
-     $scope.entry.weight_1 = '';
-     $scope.entry.grade = '';
-  };
-
-
   
   $scope.Confirm = function(clickEvent){
     $scope.GetCurrentLotNumber($scope.CreateEntry);

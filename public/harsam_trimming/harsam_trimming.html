@@ -2,6 +2,7 @@
 
 <div id="currentscan">
   {{current_lot_number}}
+  {{original_lot_number}}
   <br>
   <div class="block">
     <p>{{entry.weight_1}}Kg</p>
@@ -17,7 +18,7 @@
 
 
   <div id="confirm" class="button" ng-click="Confirm($event)"><p>Confirm</p></div>
-  <div id="redo" class="button" ng-click="redo($event)"><p>Redo</p></div>
+  <div id="redo" class="button" ng-click="redo(['weight_1', 'grade'])"><p>Redo</p></div>
 </div>
 
 

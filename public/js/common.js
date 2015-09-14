@@ -50,4 +50,24 @@ var LotQuery = function(params){
   };
 
 
+var DateRangeCurrent = function(date, start_date, end_date){
+    if (date > start_date && date < end_date){
+        return true;
+    }
+    return false;
+};
+
+
+var NoMissingValues = function(jsonobj){
+    for (var key in jsonobj) {
+      if (jsonobj.hasOwnProperty(key)) {
+        if (jsonobj[key] === ''){
+            return false;
+        }
+      }
+    }
+    return true;
+};
+
+
 
