@@ -16,16 +16,15 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
   $scope.station_id = 6;
   $scope.entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
   
-  $scope.Weigh = function(grade){
-    $scope.ReadInScale(9.02, 'weight_1');
-    $scope.entry.grade = grade;
+ 
+  $scope.updateFunction = function(fish) {
+    $scope.entry.timestamp = moment(new Date()).format();
+    $scope.entry.weight_1 = angular.copy(fish.w1);
+    $scope.entry.grade = angular.copy(fish.grade);
+    $scope.entry.lot_number = $scope.current_lot_number;
   };
 
-  $scope.Confirm = function(clickEvent){
-    $scope.GetCurrentLotNumber($scope.CreateEntry);
-  };
-  
-
+  $scope.GetCurrentLotNumber($scope.updateFunction);
   
  
 });

@@ -1,25 +1,25 @@
+<div class = "wrapper">
+  
 
-
-<div id="currentscan">
-  {{current_lot_number}}
-  {{original_lot_number}}
-  <br>
-  <div class="block">
-    <p>{{entry.weight_1}}Kg</p>
-    <p>grade:{{entry.grade}}</p>
-    <div class="button" ng-click="Weigh('A')"><p>A</p></div>
-    <div class="button" ng-click="Weigh('B')"><p>B</p></div>
-    <div class="button" ng-click="Weigh('C')"><p>C</p></div>
-    <div class="button" ng-click="Weigh('D')"><p>D</p></div>
+  <div class = "outline">
+    <div class = "admin">
+      {{current_lot_number}}
+    </div>
+    <form class = "form">
+      Weight: <input type="number" ng-model="fish.w1" />kg<br />
+      Grade: <input type="radio" ng-model="fish.grade" value="A" />A
+      <input type="radio" ng-model="fish.grade" value="B" />B
+      <input type="radio" ng-model="fish.grade" value="C" />C
+      <input type="radio" ng-model="fish.grade" value="D" />D<br />
+      <input type="button" ng-click="ClearEntry()" value="Clear" />
+      <input type="button" ng-click="update(fish)" value="Create" />
+      <input type="button" ng-click="submit($event)" value="Submit" />
+    </form>
+    <pre>entry = {{entry | json}}</pre>
   </div>
 
-  
-  <br>
+  <div class = "outline">
+  </div>
 
 
-  <div id="confirm" class="button" ng-click="Confirm($event)"><p>Confirm and print</p></div>
-  <div id="redo" class="button" ng-click="redo(['weight_1', 'grade'])"><p>Redo</p></div>
 </div>
-
-
-

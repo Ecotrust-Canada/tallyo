@@ -73,14 +73,21 @@ var BaseCtrl = function($scope, $http, $location) {
    *
    */
 
-  $scope.GetCurrentLotNumber = function(callBack){
+  $scope.GetCurrentLotNumber = function(callback){
     $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
       var date  = moment(new Date()).format();
       //check that there is a lot selected for the current date
       if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){
         $scope.current_lot_number = response.data[0].lot_number;
+        $scope.entry.lot_number = $scope.current_lot_number;
         $scope.GetOriginalLotNumber($scope.current_lot_number);
-        callBack(response.data[0].lot_number);
+        $scope.update = function(fish){
+          $scope.entry.timestamp = moment(new Date()).format();
+          callback(fish);
+        };
+        $scope.submit = function(clickEvent){
+          $scope.CreateEntry($scope.current_lot_number);
+        };
       }
       else{
         alert("no lot selected");
@@ -110,6 +117,7 @@ var BaseCtrl = function($scope, $http, $location) {
   /*helpers*/
 
   $scope.ClearEntry = function(){
+    $scope.fish = null;
     var columns = ['weight_1', 'weight_2', 'timestamp', 'grade'];
     for (var i = 0;i<columns.length;i++){
       if ($scope.entry[columns[i]]){
@@ -117,6 +125,7 @@ var BaseCtrl = function($scope, $http, $location) {
       }
     }
   };
+
 
   $scope.GetOriginalLotNumber = function(lot_number){
     $http.get('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number).then(function(response){
@@ -131,20 +140,6 @@ var BaseCtrl = function($scope, $http, $location) {
 
     });
   };
-
-  /*clicking and selecting*/
-
-  $scope.ReadInScale = function(weight, column){
-    //weight would be read from scale
-    $scope.entry[column] = weight;
-  };
-
-  $scope.redo = function(columns){
-    for (var i = 0;i<columns.length;i++){
-     $scope.entry[columns[i]] = '';
-    }
-  };
-
 
 
   /*

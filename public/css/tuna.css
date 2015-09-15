@@ -1,3 +1,29 @@
+.wrapper{
+  width: 1400px;
+  height: 800px;
+  margin: 0 auto;
+}
+.admin{
+  height: 80px;
+  width: 100%;
+  outline: solid 7px;
+}
+.outline{
+  outline: solid 7px;
+  width: 49.6%;
+  height: 720px;
+  margin-bottom: 7px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+
+
+
+
+
+
 .button{
     background-color: #8DA6F2;
     color: #454746;
@@ -5,7 +31,6 @@
     text-align: center;
     vertical-align: center;
     box-shadow: 2px 2px 1px #737373;
-    font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
     border-radius: 5px;
     padding: 15px;
     font-size: 30px;
@@ -13,16 +38,7 @@
     width: 200px;
     margin-bottom: 3px;
 }
-.plant{
-    width: 150px;
-    margin-top: 100px;
-    margin-left: 100px;
-}
-.station{
-    width: 180px;
-    margin-top: 100px;
-    margin-left: 70px;
-}
+
 .button a{
     color:#454746;
     text-decoration: none;
@@ -38,30 +54,7 @@
 .button p:hover{
     color: white;
 }
-#sidebar{
-    width: 250px;
-    box-shadow: 2px 2px 1px #737373;
-    position:absolute;
-    top:0; bottom:0; left:0;
-    padding-top:100px;
-    padding-left: 5px;
-}
-#scale{
-    height: 80px;
-    width: 230px;
-    outline: 3px solid;
-    margin-top: 50px;
-    font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
-    font-size: 50px;
-    display: inline-block;
-}
-#currentscan{
-    outline: 2px solid;
-    margin-top: 50px;
-    margin-left: 300px;
-    color:#454746;
-    display: inline-block;
-}
+
 .selectlot{
     margin-top: 50px;
     margin-left: 300px;
@@ -73,49 +66,16 @@ body{
     font-size: 30px;
     margin: 0 0 0 0;
 }
-body h1{
+h1{
     margin: 0 0 0 0;
     font-size: 40px;
     font-style: italic;
 }
-.left{
-    text-align: right;
-}
-.blank {
-    background-color: #D1775E;
-}
-#scantable .right{
-    color: #063291;
-}
-#scantable2 .right{
-    color: #063291;
-}
-#admin .right{
-    background-color: #DBDBDB;
-}
-#admin{
-    margin-left:20px;
-}
 tr{
     height: 60px;
 }
-#scantable td{
-    min-width:200px;
-    height: 80px;
-}
-#confirm{
-    margin-left:5px;
-    width: 150px;
-    background-color: #83B349;
-}
-#redo{
-    margin-left:5px;
-    width: 150px;
-    background-color: #E05E43;
-}
-#tfcode{
-    font-weight: bold;
-}
+
+
 .selectlot th{
     font-size: 25px;
     font-style: normal;
@@ -138,44 +98,16 @@ tr{
     vertical-align: top;
     margin-right: 40px;
 }
-#admin table{
-    outline: solid 1px;
-}
-.static {
-    color: #A3A6A2 !important;
-}
+
+
 .hidden{
     display:none;
 }
-.done p{
-    color:#DB7756;
-    font-size:15px;
-}
-.done p:hover{
-    color:#DBDBDB;
-}
-.label{
-    margin-left:20px;
-    margin-top: 5px;
-}
-.summary td{
-    width:150px;
-    outline: 1px solid;
-}
-.summary th{
-    width:150px;
-    outline: 1px solid;
-}
-#edittable{
-    font-size: 18px;
-}
-#edittable td{
-    padding-right:20px;
-}
-.edit{
-    color: #ED710C;
-    font-style: bold;
-}
+
+
+
+/*nav bar */
+
 nav ul ul {
     display: none;
 }

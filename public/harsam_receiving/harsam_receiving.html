@@ -1,23 +1,43 @@
+<div class = "wrapper">
+  
+
+  <div class = "outline" ng-controller="harsamReceivingCtrl">
+    <div class = "admin">
+      {{current_lot_number}}
+    </div>
+    <form class = "form">
+      Weight Plastic: <input type="number" ng-model="fish.w1" />kg<br />
+      Weight No Plastic: <input type="number" ng-model="fish.w2" />kg<br />
+      <input type="button" ng-click="ClearEntry()" value="Clear" />
+      <input type="button" ng-click="update(fish)" value="Create" />
+      <input type="button" ng-click="submit($event)" value="Submit" />
+    </form>
+    <pre>entry = {{entry | json}}</pre>
+  </div>
 
 
-<div id="currentscan">
-  {{current_lot_number}}
-  <br>
-  <div class="block">
-    <p>{{entry.weight_1}}Kg</p>
-    <div class="button" ng-click="ReadInScale(12.02, 'weight_1')"><p>Weigh with Plastic</p></div> 
-    <br>   
-    <div id="redo" class="button" ng-click="redo(['weight_1'])"><p>Redo</p></div>
+  <div class = "outline" ng-controller="harsamTrimmingCtrl">
+    <div class = "admin">
+      {{current_lot_number}}
+    </div>
+    <form class = "form">
+      Weight: <input type="number" ng-model="fish.w1" />kg<br />
+      Grade: <input type="radio" ng-model="fish.grade" value="A" />A
+      <input type="radio" ng-model="fish.grade" value="B" />B
+      <input type="radio" ng-model="fish.grade" value="C" />C
+      <input type="radio" ng-model="fish.grade" value="D" />D<br />
+      <input type="button" ng-click="ClearEntry()" value="Clear" />
+      <input type="button" ng-click="update(fish)" value="Create" />
+      <input type="button" ng-click="submit($event)" value="Submit" />
+    </form>
+    <pre>entry = {{entry | json}}</pre>
   </div>
-  <div class="block">
-    <p>{{entry.weight_2}}Kg</p>
-    <div class="button" ng-click="ReadInScale(11.09, 'weight_2')"><p>Weigh No Plastic</p></div>
-    <br>
-    <div id="redo" class="button" ng-click="redo(['weight_2'])"><p>Redo</p></div> 
-  </div>
-  <br>
-  <div id="confirm" class="button" ng-click="Confirm($event)"><p>Confirm</p></div>
+
+
 </div>
+
+
+
 
 
 
