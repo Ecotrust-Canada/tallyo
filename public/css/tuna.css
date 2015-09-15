@@ -1,6 +1,5 @@
 .wrapper{
   width: 1400px;
-  height: 800px;
   margin: 0 auto;
 }
 .admin{
@@ -8,13 +7,30 @@
   width: 100%;
   outline: solid 7px;
 }
-.outline{
-  outline: solid 7px;
+.outline{ 
   width: 49.6%;
-  height: 720px;
-  margin-bottom: 7px;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: top;  
+}
+.summary{
+  height:720px;
+  overflow: scroll;
+  outline: solid 7px;
+}
+.input{
+  height:720px;
+  outline: solid 7px;
+}
+.view{
+  background-color: #454A4A;
+  color: #737373;;
+  width: 160px;
+  height: 80px;
+  padding-left: 5px;
+  box-shadow: 3px 3px 2px #737373;
+}
+.view:hover{
+  color:white;
 }
 
 
@@ -75,6 +91,16 @@ tr{
     height: 60px;
 }
 
+.fill{
+  width: 100%;
+
+}
+tr:nth-child(even) {
+  background-color: #EBEDED;
+}
+tr:nth-child(odd) {
+  background-color: #C2C4C4;
+}
 
 .selectlot th{
     font-size: 25px;
@@ -97,11 +123,6 @@ tr{
     display: inline-block;
     vertical-align: top;
     margin-right: 40px;
-}
-
-
-.hidden{
-    display:none;
 }
 
 

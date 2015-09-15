@@ -9,7 +9,12 @@ angular.module('scanthisApp', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/harsam_receiving'});
-}]);
+}])
+.filter('stringtodate', function() {
+  return function(input) {
+    return new Date(input);
+  };
+});
 
 
 

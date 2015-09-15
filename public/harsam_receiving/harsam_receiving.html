@@ -5,14 +5,31 @@
     <div class = "admin">
       {{current_lot_number}}
     </div>
-    <form class = "form">
-      Weight Plastic: <input type="number" ng-model="fish.w1" />kg<br />
-      Weight No Plastic: <input type="number" ng-model="fish.w2" />kg<br />
-      <input type="button" ng-click="ClearEntry()" value="Clear" />
-      <input type="button" ng-click="update(fish)" value="Create" />
-      <input type="button" ng-click="submit($event)" value="Submit" />
-    </form>
-    <pre>entry = {{entry | json}}</pre>
+    <div class = "input" ng-show="showScan">
+      <form class = "form">
+        Weight Plastic: <input type="number" ng-model="fish.w1" />kg<br />
+        Weight No Plastic: <input type="number" ng-model="fish.w2" />kg<br />
+        <input type="button" ng-click="ClearEntry()" value="Clear" />
+        <input type="button" ng-click="update(fish)" value="Create" />
+        <input type="button" ng-click="submit($event)" value="Submit" />
+      </form>
+      <pre>entry = {{entry | json}}</pre>
+    </div>
+
+    <div class = "summary" ng-show="showSummary">
+      <table class = "fill">
+        <tr ng-repeat = "lot in lots">
+          <td>{{(lot.weight_1).toFixed(2)}}kg</td>
+          <td>{{(lot.weight_2).toFixed(2)}}kg</td>
+          <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class = "view">
+      <span ng-click="show()">{{view_summary}}</span>
+    </div>
+
   </div>
 
 
@@ -20,17 +37,34 @@
     <div class = "admin">
       {{current_lot_number}}
     </div>
-    <form class = "form">
-      Weight: <input type="number" ng-model="fish.w1" />kg<br />
-      Grade: <input type="radio" ng-model="fish.grade" value="A" />A
-      <input type="radio" ng-model="fish.grade" value="B" />B
-      <input type="radio" ng-model="fish.grade" value="C" />C
-      <input type="radio" ng-model="fish.grade" value="D" />D<br />
-      <input type="button" ng-click="ClearEntry()" value="Clear" />
-      <input type="button" ng-click="update(fish)" value="Create" />
-      <input type="button" ng-click="submit($event)" value="Submit" />
-    </form>
-    <pre>entry = {{entry | json}}</pre>
+    <div class = "input" ng-show="showScan">
+      <form class = "form">
+        Weight: <input type="number" ng-model="fish.w1" />kg<br />
+        Grade: <input type="radio" ng-model="fish.grade" value="A" />A
+        <input type="radio" ng-model="fish.grade" value="B" />B
+        <input type="radio" ng-model="fish.grade" value="C" />C
+        <input type="radio" ng-model="fish.grade" value="D" />D<br />
+        <input type="button" ng-click="ClearEntry()" value="Clear" />
+        <input type="button" ng-click="update(fish)" value="Create" />
+        <input type="button" ng-click="submit($event)" value="Submit" />
+      </form>
+      <pre>entry = {{entry | json}}</pre>
+    </div>
+
+    <div class = "summary" ng-show="showSummary">
+      <table class = "fill">
+        <tr ng-repeat = "lot in lots">
+          <td>{{lot.grade}}</td>
+          <td>{{(lot.weight_1).toFixed(2)}}kg</td>
+          <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class = "view">
+      <span ng-click="show()">{{view_summary}}</span>
+    </div>
+
   </div>
 
 

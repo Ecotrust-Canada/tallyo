@@ -66,6 +66,19 @@ var BaseCtrl = function($scope, $http, $location) {
     });
   };
 
+  $scope.show = function(){
+    if ($scope.showSummary === false){
+      $scope.showSummary = true;
+      $scope.showScan = false;
+      $scope.view_summary = "Back to scan";
+    }
+    else {
+      $scope.showSummary = false;
+      $scope.showScan = true;
+      $scope.view_summary = "view summary";
+    }
+  };
+
 
   /*
    *
@@ -81,6 +94,7 @@ var BaseCtrl = function($scope, $http, $location) {
         $scope.current_lot_number = response.data[0].lot_number;
         $scope.entry.lot_number = $scope.current_lot_number;
         $scope.GetOriginalLotNumber($scope.current_lot_number);
+        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
         $scope.update = function(fish){
           $scope.entry.timestamp = moment(new Date()).format();
           callback(fish);
@@ -105,6 +119,7 @@ var BaseCtrl = function($scope, $http, $location) {
     if (NoMissingValues($scope.entry)){
       $http.post('http://10.10.50.30:3000/entry', $scope.entry).then(function(response){
         $scope.ClearEntry();
+        $scope.GetAllbyLotNumber(lot_number, $scope.station_id);
       }, function(response){
         alert(response.status);
       });
@@ -160,6 +175,14 @@ var BaseCtrl = function($scope, $http, $location) {
   /*gets lots from given stage*/
   $scope.ListLots = function(stage_id){
     $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + stage_id + '&in_production=eq.true').then(function(response){
+      $scope.lots = response.data;
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+  $scope.GetAllbyLotNumber = function(lot_number, station_id){
+    $http.get('http://10.10.50.30:3000/entry?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id).then(function(response){
       $scope.lots = response.data;
     }, function(response){
       alert(response.status);
