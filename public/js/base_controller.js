@@ -1,6 +1,6 @@
 'use strict';
 
-var BaseCtrl = function($scope, $http, $location) {
+var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   
   
   /*
@@ -199,7 +199,7 @@ var BaseCtrl = function($scope, $http, $location) {
 
    //todo: this should be a view to get name rather than supplier id
    $scope.AdminGetCurrentLotNumber = function(){
-    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
+    $http.get('http://10.10.50.30:3000/lot_supplier').then(function(response){
       var date  = moment(new Date()).format();
       //check that there is a lot selected for the current date
       if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){

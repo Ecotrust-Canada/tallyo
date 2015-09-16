@@ -1,35 +1,68 @@
-<div class="sidebar">
+
+<div class="sidebar" >
+
 </div>
 
 <div class="main">
 
-  <div class="step" ng-controller="harsamAdminCtrl1">
+  <div id="receiving" class="step" ng-controller="harsamAdminCtrl1">
     <div class="block">
       <img src="../../images/fishing-boat-clip-art-160929.jpg" height="200" width="200">
     </div>
     <div class="block">
       <h1>............Receiving......</h1>
-      <p>Supplier: {{selected.supplier_id}}</p>
-      <p>New Lot number: {{selected.lot_number}}</p>
+      <p>Supplier: {{selected.supplier}}</p>
+      <p>Fleet: {{selected.fleet_vessel}}</p>
+      <p>Lot number: {{selected.lot_number}}</p>
     </div>
+
     <div class="table">
+    <hr>
       <table>
         <tr>
           <th></th>
           <th colspan="2">Choose Supplier:</th>
           <th></th>
         </tr>
-        <tr ng-repeat="sup in suppliers">
-          <td>+</td>
+        <tr ng-repeat-start="sup in suppliers">
+          <td>
+            <button ng-if="sup.expanded" ng-click="sup.expanded = false">-</button>
+            <button ng-if="!sup.expanded" ng-click="sup.expanded = true">+</button>
+          </td>
           <td>{{sup.id}}</td>
-          <td>{{sup.name}}</td>
+          <td>{{sup.supplier}}</td>
+          <td>{{sup.fleet_vessel}}</td>
+          <td>{{sup.fair_trade|isfairtrade}}</td>
           <td><div class="button" ng-click="SelectSupplier(sup.id)"><p>Set Current</p></div></td>
         </tr>
+        <tr ng-if="sup.expanded">
+          <td colspan="3">{{sup.species_common}}</td>
+        </tr>
+        <tr ng-if="sup.expanded" ng-repeat-end="">
+          <td colspan="3">{{sup.species_latin}}</td>
+        </tr>
       </table>
+      <hr>
     </div>
+
+
+    <form>
+      <hr>
+      <span ng-repeat="row in formarray.fields">
+        <span ng-if="row.fieldname !== 'fair_trade'">{{row.title}}: <input  type="text" ng-model="row.value"><br></span>
+        <span ng-if="row.fieldname === 'fair_trade'">{{row.title}}: 
+          <input type="radio" ng-model="row.value" value="true" />Yes
+          <input type="radio" ng-model="row.value" value="false" />No
+          <br>
+          </span>
+      </span>
+      <input type="submit" ng-click="update()" value="Save" />
+      <hr>
+    </form>
+
   </div>
 
-  <div class="step" ng-controller="harsamAdminCtrl2">
+  <div id="processing" class="step" ng-controller="harsamAdminCtrl2">
     <div class="block">
       <br>
       <br>
@@ -47,8 +80,11 @@
           <th colspan="2">Choose Lot:</th>
           <th></th>
         </tr>
-        <tr ng-repeat="lot in lots">
-          <td>+</td>
+        <tr ng-repeat-start="lot in lots">
+          <td>
+            <button ng-if="lot.expanded" ng-click="lot.expanded = false">-</button>
+            <button ng-if="!lot.expanded" ng-click="lot.expanded = true">+</button>
+          </td>
           <br>
           <td>{{lot.lot_number}}</td>
           <td>{{lot.supplier_id}}</td>
@@ -56,11 +92,34 @@
           <!--todo: update immediately on mark complete-->
           <td><div class="button" ng-click="MarkComplete(lot.lot_number)"><p>Mark Complete</p></div></td>
         </tr>
+        <tr ng-if="lot.expanded" ng-repeat-end="">
+          <td colspan="3">something here!</td>
+        </tr>
       </table>
     </div>
   </div>
 
-  <div class="step">
+  <div id="packing" class="step">
+    <div class="block">
+      <br>
+      <br>
+      <img src="../../images/fish_outline_clip_art_6845.jpg" height="100" width="200">
+    </div>
+    <div class="block">
+      <h1>............Packing......</h1>
+    </div>
+    </div>
+
+  <div class="step" id="shipping">
+    <div class="block">
+      <br>
+      <br>
+      <img src="../../images/fish_outline_clip_art_6845.jpg" height="100" width="200">
+    </div>
+    <div class="block">
+      <h1>............Shipping......</h1>
+    </div>
+    </div>
   </div>
   
 
@@ -69,6 +128,7 @@
 
 
 </div>
+
 
 
 

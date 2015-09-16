@@ -12,10 +12,44 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
 .controller('harsamAdminCtrl1', function($scope, $http, $injector) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
-  $scope.stage_id = 4;
+  $scope.stage_id = 2;
   $scope.ListSuppliers();
 
   $scope.AdminGetCurrentLotNumber();
+
+  $http.get('../json/supplierform.json').success(function(data) {
+    $scope.formarray = data;
+  });
+
+  $http.get('../json/supplierentry.json').success(function(data) {
+    $scope.entryform = data;
+  });
+
+
+  $scope.ClearForm = function(){
+    $scope.formarray.fields[4].value = '';
+    $scope.formarray.fields[5].value = '';
+    $scope.formarray.fields[6].value = '';
+    $scope.formarray.fields[8].value = '';
+
+    for (var key in $scope.entryform){
+        $scope.entryform[key] = '';
+      }
+  };
+
+  $scope.update = function(){
+    var array = $scope.formarray.fields;
+    for (var i=0;i<array.length;i++){
+      var current = array[i];
+      $scope.entryform[current.fieldname] = current.value;
+    }
+    $http.post('http://10.10.50.30:3000/supplier', $scope.entryform).then(function(response){
+      $scope.ListSuppliers();
+      $scope.ClearForm();
+    }, function(response){
+      alert(response.status);
+    });
+  };
 
   $scope.SelectSupplier = function(supplier_id){
     var date = new Date();
@@ -48,8 +82,7 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     $scope.AdminGetCurrentLotNumber();
   };//End of SelectLot
 
+
 });
-
-
 
 
