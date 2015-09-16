@@ -33,8 +33,47 @@
   color:white;
 }
 
+.fill{
+  width: 100%;
+
+}
+.fill tr:nth-child(even) {
+  background-color: #EBEDED;
+}
+.fill tr:nth-child(odd) {
+  background-color: #C2C4C4;
+}
 
 
+.sidebar{
+  background-color: #08736C;
+  float: left;
+  margin-top: -40px;
+  height: 100vh;
+  width: 250px;
+}
+
+.main {
+  background-color: #B9C4C4;
+  width: 100%;
+  margin-left:315px;
+  border-radius: 20px;
+  padding-top: 50px;
+}
+.step{
+  width: 900px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 5px 5px 3px #616363;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.table{
+  padding-left: 40px;
+}
 
 
 
@@ -43,29 +82,19 @@
 .button{
     background-color: #8DA6F2;
     color: #454746;
-    display: inline-block;
     text-align: center;
     vertical-align: center;
     box-shadow: 2px 2px 1px #737373;
     border-radius: 5px;
-    padding: 15px;
-    font-size: 30px;
-    margin-top: 30px;
+    padding: 5px;
     width: 200px;
     margin-bottom: 3px;
 }
 
-.button a{
-    color:#454746;
-    text-decoration: none;
-}
 .button p{
     color:#454746;
     text-decoration: none;
     margin: 0 0 0 0;
-}
-.button a:hover{
-    color: white;
 }
 .button p:hover{
     color: white;
@@ -81,6 +110,7 @@ body{
     font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
     font-size: 30px;
     margin: 0 0 0 0;
+    height: 100%;
 }
 h1{
     margin: 0 0 0 0;
@@ -91,26 +121,20 @@ tr{
     height: 60px;
 }
 
-.fill{
-  width: 100%;
 
-}
-tr:nth-child(even) {
-  background-color: #EBEDED;
-}
-tr:nth-child(odd) {
-  background-color: #C2C4C4;
-}
 
-.selectlot th{
+th{
     font-size: 25px;
     font-style: normal;
-    width: 170px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
-.selectlot td{
+td{
     font-size: 22px;
     font-style: normal;
     text-align:center;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 .selectlot tr{
     outline: solid 1px;
@@ -148,7 +172,7 @@ nav ul {
     position: relative;
     display: inline-table;
     margin-top:0px;
-    padding-left:250px;
+    padding-left:100px;
 }
     nav ul:after {
         content: ""; clear: both; display: block;

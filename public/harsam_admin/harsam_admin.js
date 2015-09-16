@@ -15,12 +15,15 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   $scope.stage_id = 4;
   $scope.ListSuppliers();
 
+  $scope.AdminGetCurrentLotNumber();
+
   $scope.SelectSupplier = function(supplier_id){
     var date = new Date();
     $scope.queryparams = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'date': date};
     var queryString = LotQuery($scope.queryparams);
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': true};
     $scope.CreateLot(queryString, $scope.SetLotAsCurrent);
+    $scope.AdminGetCurrentLotNumber();
   };//End of SelectSupplier
 
 })
@@ -34,12 +37,15 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   $scope.ListLots($scope.previous_stage_id);
   $scope.product_id = 1;
 
+  $scope.AdminGetCurrentLotNumber();
+
   $scope.SelectLot = function(lot_number){
     var date = new Date();
     $scope.queryparams = {'stage_id': $scope.stage_id, 'date': date, 'previous_lot_number': lot_number, 'product_id': $scope.product_id};
     var queryString = LotQuery($scope.queryparams);
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'previous_lot_number': lot_number, 'product_id': $scope.product_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': false};
     $scope.CreateLot(queryString, $scope.SetLotAsCurrent);
+    $scope.AdminGetCurrentLotNumber();
   };//End of SelectLot
 
 });

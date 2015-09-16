@@ -17,6 +17,7 @@ var BaseCtrl = function($scope, $http, $location) {
         $scope.CreateEntryPeriod($scope.queryparams.date, 'week');
         $http.post('http://10.10.50.30:3000/lot', $scope.lot_entry).then(function(response){
           callBack($scope.lot_entry.lot_number);
+
         }, function(response){
             alert(response.statusText);
           }); //end post lot
@@ -37,6 +38,7 @@ var BaseCtrl = function($scope, $http, $location) {
       alert(response.status);
     });
     $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
+        $scope.AdminGetCurrentLotNumber();
     }, function(response){
       alert(response.status);
     });
@@ -184,6 +186,27 @@ var BaseCtrl = function($scope, $http, $location) {
   $scope.GetAllbyLotNumber = function(lot_number, station_id){
     $http.get('http://10.10.50.30:3000/entry?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id).then(function(response){
       $scope.lots = response.data;
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+  /*
+   *
+   * Admin
+   *
+   */
+
+   //todo: this should be a view to get name rather than supplier id
+   $scope.AdminGetCurrentLotNumber = function(){
+    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
+      var date  = moment(new Date()).format();
+      //check that there is a lot selected for the current date
+      if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){
+        $scope.selected = response.data[0];
+      }
+      else{
+      }
     }, function(response){
       alert(response.status);
     });
