@@ -39,9 +39,6 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     });
     $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
       $scope.AdminGetCurrentLotNumber();
-      if ($scope.stage_id == 3){
-        $scope.GetCurrentLotNumber($scope.updateFunction);
-      }
     }, function(response){
       alert(response.status);
     });

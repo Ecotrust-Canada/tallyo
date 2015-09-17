@@ -19,7 +19,19 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
   $scope.ListLots($scope.stage_id);
 
   $scope.SetLot = function(){
-    $scope.SetLotAsCurrent($scope.SelectedLot);
+    async.series([
+        function(callback){
+            $scope.SetLotAsCurrent($scope.SelectedLot);
+            callback(null, null);
+        },
+        function(callback){
+            $scope.GetCurrentLotNumber($scope.updateFunction);
+            callback(null, null);
+        }
+    ],
+    function(err, results){
+    });
+    
   };
 
 
@@ -31,6 +43,25 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
   };
 
   $scope.GetCurrentLotNumber($scope.updateFunction);
+
+  $scope.test = function(a, b){
+    async.series([
+        function(callback){
+            console.log("a");
+            callback(null, null);
+        },
+        function(callback){
+          console.log("b");
+            // do some more stuff ...
+            callback(null, null);
+        }
+    ],
+    // optional callback
+    function(err, results){
+        // results is now equal to ['one', 'two']
+    });
+
+  };
 
   
   
