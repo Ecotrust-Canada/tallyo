@@ -12,7 +12,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 2;
-  $scope.station_id = 4;
+  $scope.station_id = 1;
   $scope.entry = {'weight_1': '', 'weight_2': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
   $scope.showScan = true;
@@ -32,7 +32,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 2;
-  $scope.station_id = 5;
+  $scope.station_id = 2;
   $scope.entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
 

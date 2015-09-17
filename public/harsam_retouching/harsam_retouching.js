@@ -4,19 +4,25 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/harsam_retouching', {
-    templateUrl: 'harsam_retouching/harsam_retouching.html',
-    controller: 'harsamRetouchingCtrl'
+    templateUrl: 'harsam_retouching/harsam_retouching.html'
   });
 }])
 
 .controller('harsamRetouchingCtrl', function($scope, $http, $injector) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
-  $scope.stage_id = 1;
-  $scope.station_id = 6;
+  $scope.stage_id = 3;
+  $scope.station_id = 3;
   $scope.entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
- 
+  //$scope.ListLots($scope.stage_id);
+  $scope.ListLots($scope.stage_id);
+
+  $scope.SetLot = function(){
+    $scope.SetLotAsCurrent($scope.SelectedLot);
+  };
+
+
   $scope.updateFunction = function(fish) {
     $scope.entry.timestamp = moment(new Date()).format();
     $scope.entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);

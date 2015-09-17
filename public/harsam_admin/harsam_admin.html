@@ -70,8 +70,6 @@
     </div>
     <div class="block">
       <h1>............Processing......</h1>
-      <p>Selected Lot #: {{selected.previous_lot_number}}</p>
-      <p>New Lot number: {{selected.lot_number}}</p>
     </div>
     <div class="table">
       <table>
@@ -80,7 +78,7 @@
           <th colspan="2">Choose Lot:</th>
           <th></th>
         </tr>
-        <tr ng-repeat-start="lot in lots">
+        <tr ng-repeat-start="lot in listlots">
           <td>
             <button ng-if="lot.expanded" ng-click="lot.expanded = false">-</button>
             <button ng-if="!lot.expanded" ng-click="lot.expanded = true">+</button>
@@ -88,9 +86,7 @@
           <br>
           <td>{{lot.lot_number}}</td>
           <td>{{lot.supplier_id}}</td>
-          <td><div class="button" ng-click="SelectLot(lot.lot_number)"><p>Set Current</p></div></td>
-          <!--todo: update immediately on mark complete-->
-          <td><div class="button" ng-click="MarkComplete(lot.lot_number)"><p>Mark Complete</p></div></td>
+          <td><div class="button" ng-click="SwitchStage(lot.lot_number)"><p>Move to processing</p></div></td>
         </tr>
         <tr ng-if="lot.expanded" ng-repeat-end="">
           <td colspan="3">something here!</td>
@@ -99,16 +95,25 @@
     </div>
   </div>
 
-  <div id="packing" class="step">
+  <div id="packing" class="step" ng-controller="harsamAdminCtrl3">
     <div class="block">
-      <br>
-      <br>
-      <img src="../../images/fish_outline_clip_art_6845.jpg" height="100" width="200">
+      <img src="../../images/box-clipart-MiLLLR9oT.png" height="200" width="200">
     </div>
     <div class="block">
       <h1>............Packing......</h1>
     </div>
-    </div>
+    <hr>
+    <form>
+      Lot Number: <input type="text" ng-model="form.lot_number" ><br>
+      FT Box Number: <input type="text" ng-model="form.ft_box_num" ><br>
+      Weight: <input type="number" ng-model="form.weight" ><br>
+      Size: <input type="text" ng-model="form.size" ><br>
+      Grade: <input type="text" ng-model="form.grade" ><br>
+      Number of Labels: <input type="number" ng-model="labels" ><br>
+      <input type="button" ng-click="makebox(form, labels)" value="Create" />
+    </form>
+    <hr>
+  </div>
 
   <div class="step" id="shipping">
     <div class="block">
@@ -119,8 +124,9 @@
     <div class="block">
       <h1>............Shipping......</h1>
     </div>
-    </div>
+
   </div>
+
   
 
 

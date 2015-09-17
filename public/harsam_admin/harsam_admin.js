@@ -62,25 +62,45 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
 
 })
 
-
 .controller('harsamAdminCtrl2', function($scope, $http, $injector) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
-  $scope.stage_id = 1;
-  $scope.previous_stage_id = 4;
+  $scope.stage_id = 3;
+  $scope.previous_stage_id = 2;
+
+
   $scope.ListLots($scope.previous_stage_id);
-  $scope.product_id = 1;
+ 
 
-  $scope.AdminGetCurrentLotNumber();
+  $scope.SwitchStage = function(lot_number){
+    var patch = {'stage_id': $scope.stage_id };
+    $http.patch('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number, patch).then(function(response){
+      $scope.ListLots($scope.previous_stage_id);
+    }, function(response){
+      alert(response.status);
+    });
+  };
 
-  $scope.SelectLot = function(lot_number){
-    var date = new Date();
-    $scope.queryparams = {'stage_id': $scope.stage_id, 'date': date, 'previous_lot_number': lot_number, 'product_id': $scope.product_id};
-    var queryString = LotQuery($scope.queryparams);
-    $scope.lot_entry = {'stage_id': $scope.stage_id, 'previous_lot_number': lot_number, 'product_id': $scope.product_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': false};
-    $scope.CreateLot(queryString, $scope.SetLotAsCurrent);
-    $scope.AdminGetCurrentLotNumber();
-  };//End of SelectLot
+
+})
+
+
+.controller('harsamAdminCtrl3', function($scope, $http, $injector) {
+  $injector.invoke(BaseCtrl, this, {$scope: $scope});
+
+  $scope.boxentry = {'ft_box_num':'', 'weight':'', 'size':'', 'grade':'', 'lot_number':''};
+
+  $scope.makebox = function(form, labels){
+    console.log("function called");
+    for (var key in form){
+      $scope.boxentry[key] = form[key]; 
+    }
+
+    for (var i=1;i<=labels;i++){
+      $http.post('http://10.10.50.30:3000/box', $scope.boxentry);
+    }
+
+  };
 
 
 });

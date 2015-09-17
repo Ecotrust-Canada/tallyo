@@ -38,7 +38,10 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
       alert(response.status);
     });
     $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
-        $scope.AdminGetCurrentLotNumber();
+      $scope.AdminGetCurrentLotNumber();
+      if ($scope.stage_id == 3){
+        $scope.GetCurrentLotNumber($scope.updateFunction);
+      }
     }, function(response){
       alert(response.status);
     });
@@ -106,7 +109,6 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
         };
       }
       else{
-        alert("no lot selected");
       }
     }, function(response){
       alert(response.status);
@@ -176,8 +178,9 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
 
   /*gets lots from given stage*/
   $scope.ListLots = function(stage_id){
-    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + stage_id + '&in_production=eq.true').then(function(response){
-      $scope.lots = response.data;
+    $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + stage_id).then(function(response){
+      $scope.listlots = response.data;
+      console.log($scope.listlots);
     }, function(response){
       alert(response.status);
     });
@@ -199,7 +202,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
 
    //todo: this should be a view to get name rather than supplier id
    $scope.AdminGetCurrentLotNumber = function(){
-    $http.get('http://10.10.50.30:3000/lot_supplier').then(function(response){
+    $http.get('http://10.10.50.30:3000/lot_supplier?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
       var date  = moment(new Date()).format();
       //check that there is a lot selected for the current date
       if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){

@@ -1,39 +1,52 @@
-<div class = "wrapper">
-  
-
-  <div class = "outline">
-    <div class = "admin">
-      {{current_lot_number}}
-    </div>
-    <div class = "input">
-      <form class = "form">
-        Weight: <input type="number" ng-model="fish.w1" />kg<br />
-        Grade: <input type="radio" ng-model="fish.grade" value="A" />A
-        <input type="radio" ng-model="fish.grade" value="B" />B
-        <input type="radio" ng-model="fish.grade" value="C" />C
-        <input type="radio" ng-model="fish.grade" value="D" />D<br />
-        <input type="button" ng-click="ClearEntry()" value="Clear" />
-        <input type="button" ng-click="update(fish)" value="Create" />
-        <input type="button" ng-click="submit($event)" value="Submit" />
-      </form>
-      <pre>entry = {{entry | json}}</pre>
-    </div>
+<div class = "wrapper" ng-controller="harsamRetouchingCtrl">
+  <div>
+    <form name="myForm">
+      <label for="singleSelect"> Choose Lot: </label><br>
+      <select name="singleSelect" ng-model="SelectedLot" ng-change="SetLot()">
+        <option ng-repeat = "lot in listlots">{{lot.lot_number}}</option>
+      </select><br>
+    </form>
   </div>
 
-  <div class = "outline">
-    <div class = "admin">
-      {{current_lot_number}}
+
+  <br>
+  <br>
+  <br>
+  <div >
+    <div class = "outline">
+      <div class = "admin">
+        {{current_lot_number}}
+      </div>
+      <div class = "input">
+        <form class = "form">
+          Weight: <input type="number" ng-model="fish.w1" />kg<br />
+          Grade: <input type="radio" ng-model="fish.grade" value="A" />A
+          <input type="radio" ng-model="fish.grade" value="B" />B
+          <input type="radio" ng-model="fish.grade" value="C" />C
+          <input type="radio" ng-model="fish.grade" value="D" />D<br />
+          <input type="button" ng-click="ClearEntry()" value="Clear" />
+          <input type="button" ng-click="update(fish)" value="Create" />
+          <input type="button" ng-click="submit($event)" value="Submit" />
+        </form>
+        <pre>entry = {{entry | json}}</pre>
+      </div>
     </div>
-    <div class = "summary">
-      <table class = "fill">
-        <tr ng-repeat = "lot in lots">
-          <td>{{lot.grade}}</td>
-          <td>{{(lot.weight_1).toFixed(2)}}kg</td>
-          <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
-        </tr>
-      </table>
+
+    <div class = "outline">
+      <div class = "admin">
+        {{current_lot_number}}
+      </div>
+      <div class = "summary">
+        <table class = "fill">
+          <tr ng-repeat = "lot in lots">
+            <td>{{lot.grade}}</td>
+            <td>{{(lot.weight_1).toFixed(2)}}kg</td>
+            <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
+          </tr>
+        </table>
+      </div>
+      
     </div>
-    
   </div>
 
 
