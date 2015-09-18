@@ -93,17 +93,8 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
       var date  = moment(new Date()).format();
       //check that there is a lot selected for the current date
       if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){
-        $scope.current_lot_number = response.data[0].lot_number;
-        $scope.entry.lot_number = $scope.current_lot_number;
-        $scope.GetOriginalLotNumber($scope.current_lot_number);
-        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
-        $scope.update = function(fish){
-          $scope.entry.timestamp = moment(new Date()).format();
-          callback(fish);
-        };
-        $scope.submit = function(clickEvent){
-          $scope.CreateEntry($scope.current_lot_number);
-        };
+        $scope.current_lot_number = response.data[0].lot_number;        
+        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);        
       }
       else{
       }
@@ -112,15 +103,21 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     });
   };
 
-  $scope.CreateEntry = function(lot_number){
-    var date = moment(new Date()).format();
-    $scope.entry.timestamp = date;
-    $scope.entry.lot_number = lot_number;
-    console.log($scope.entry);
+  $scope.submit = function(clickEvent){
+    $scope.CreateEntry();
+  };
+
+  $scope.update = function(fish){
+    $scope.entry.lot_number = $scope.current_lot_number;
+    $scope.entry.timestamp = moment(new Date()).format();
+    $scope.updateFunction(fish);
+  };
+
+  $scope.CreateEntry = function(){
     if (NoMissingValues($scope.entry)){
       $http.post('http://10.10.50.30:3000/entry', $scope.entry).then(function(response){
         $scope.ClearEntry();
-        $scope.GetAllbyLotNumber(lot_number, $scope.station_id);
+        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
       }, function(response){
         alert(response.status);
       });
@@ -134,7 +131,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
 
   $scope.ClearEntry = function(){
     $scope.fish = null;
-    var columns = ['weight_1', 'weight_2', 'timestamp', 'grade'];
+    var columns = ['weight_1', 'weight_2', 'timestamp', 'grade', 'lot_number'];
     for (var i = 0;i<columns.length;i++){
       if ($scope.entry[columns[i]]){
         $scope.entry[columns[i]] = '';
