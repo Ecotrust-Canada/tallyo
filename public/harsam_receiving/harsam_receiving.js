@@ -24,7 +24,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
     $scope.entry.weight_2 = (angular.copy(fish.w2)).toFixed(2);
   };
 
-  $scope.GetCurrentLotNumber($scope.updateFunction);
+  $scope.GetCurrentLotNumber();
  
 })
 
@@ -45,8 +45,6 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
     $scope.entry.grade = angular.copy(fish.grade);
   };
 
-
-
-  $scope.GetCurrentLotNumber($scope.updateFunction);
+  $scope.GetCurrentLotNumber();
  
 });

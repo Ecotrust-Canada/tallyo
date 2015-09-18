@@ -88,7 +88,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
    *
    */
 
-  $scope.GetCurrentLotNumber = function(callback){
+  $scope.GetCurrentLotNumber = function(){
     $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
       var date  = moment(new Date()).format();
       //check that there is a lot selected for the current date
@@ -152,6 +152,22 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     },function(response){
 
     });
+  };
+
+  $scope.SetLot = function(){
+    async.series([
+        function(callback){
+            $scope.SetLotAsCurrent($scope.SelectedLot);
+            callback(null, null);
+        },
+        function(callback){
+            $scope.GetCurrentLotNumber($scope.updateFunction);
+            callback(null, null);
+        }
+    ],
+    function(err, results){
+    });
+    
   };
 
 
