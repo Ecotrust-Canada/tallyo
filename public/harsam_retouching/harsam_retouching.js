@@ -17,10 +17,16 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
 
   $scope.ListLots($scope.stage_id);
 
+  /*$scope.$watch($scope.current_lot_number, function(newValue, oldValue) {
+    $scope.GetAllbyLotNumber(newValue, $scope.station_id);
+  });*/
+
   $scope.updateFunction = function(fish) {
     $scope.entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);
     $scope.entry.grade = angular.copy(fish.grade);
   };
+
+ 
 
   $scope.GetCurrentLotNumber();
 

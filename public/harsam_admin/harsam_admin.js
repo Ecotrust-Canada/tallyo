@@ -56,7 +56,18 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     $scope.queryparams = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'date': date};
     var queryString = LotQuery($scope.queryparams);
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': true};
-    $scope.CreateLot(queryString, $scope.SetLotAsCurrent);
+    //$scope.CreateLot(queryString, $scope.SetLotAsCurrent);
+    async.series([
+        function(callback){
+            $scope.CreateLot(queryString, callback);
+        },
+        function(callback){
+            $scope.SetLotAsCurrent($scope.currentlot);
+            callback(null, null);
+        }
+    ],
+    function(err, results){
+    });
   };
 
 })
@@ -78,27 +89,6 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     }, function(response){
       alert(response.status);
     });
-  };
-
-
-})
-
-
-.controller('harsamAdminCtrl3', function($scope, $http, $injector) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
-
-  $scope.boxentry = {'ft_box_num':'', 'weight':'', 'size':'', 'grade':'', 'lot_number':''};
-
-  $scope.makebox = function(form, labels){
-    console.log("function called");
-    for (var key in form){
-      $scope.boxentry[key] = form[key]; 
-    }
-
-    for (var i=1;i<=labels;i++){
-      $http.post('http://10.10.50.30:3000/box', $scope.boxentry);
-    }
-
   };
 
 
