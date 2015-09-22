@@ -61,6 +61,7 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
   };
 
   $scope.done = function(){
+    //todo: add packing date and best before date
     $http.patch('http://10.10.50.30:3000/box?id=eq.' + $scope.box.id, {'weight': $scope.box_weight, 'lot_number': $scope.latest_lot_number}, {headers: {
        'Prefer': 'return=representation'}
     }).then(function(response){

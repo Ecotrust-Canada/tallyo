@@ -1,0 +1,30 @@
+<div ng-controller="harsamShippingCtrl">
+  <form>
+    P.O Number: <input type="text" ng-model="form.po_number" ><br>
+    Customer: <input type="text" ng-model="form.customer" ><br>
+    Bill of Lading: <input type="text" ng-model="form.bill_of_lading" ><br>
+    Vessel Name: <input type="text" ng-model="form.vessel_name" ><br>
+    Container Number: <input type="text" ng-model="form.container_number" ><br>
+    <input type="button" ng-click="createShippingEntry(form)" value="Create Shipping Entry" />
+  </form>
+  <hr>
+  <form>
+    Box ID: <input type="text" ng-model="box_id">
+    <input type="button" ng-click="addBox(box_id)" value="Add"><br>
+  </form>
+
+  <table>
+    <tr>
+      <td>P.O. Number: {{shipping.po_number}}</td>
+      <td>Customer: {{shipping.customer}}</td>
+      <td>Bill of Lading: {{shipping.bill_of_lading}}</td>
+      <td>Vessel Name: {{shipping.vessel_name}}</td>
+      <td>Container Number: {{shipping.container_number}}</td>
+    </tr>
+    <tr ng-repeat="box in boxes">
+      <td>{{box}}</td>
+    </tr>
+
+  </table>
+
+</div>

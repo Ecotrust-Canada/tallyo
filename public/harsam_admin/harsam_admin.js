@@ -92,6 +92,8 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   };
 
 
-});
+})
+
+
 
 
