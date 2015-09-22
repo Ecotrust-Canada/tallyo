@@ -18,8 +18,12 @@
         <td>FT Box #: {{box.ft_box_num}}</td>
         <td>Weight: {{box.weight}}kg</td>
         <td>Size: {{box.size}}</td>
+      </tr>
+      <tr>
         <td>Grade: {{box.grade}}</td>
-        <td>Lot_number: {{box.lot_number}}</td>
+        <td>Lot Number: {{box.lot_number}}</td>
+        <td>Packing Date: {{box.packing_date}}</td>
+        <td>Best Before Date: {{box.best_before_date}}</td>
       </tr>
       <tr ng-repeat="entry in includedentries">
         <td>{{entry.weight_1}}kg</td>

@@ -56,14 +56,17 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     $scope.queryparams = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'date': date};
     var queryString = LotQuery($scope.queryparams);
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': true};
-    //$scope.CreateLot(queryString, $scope.SetLotAsCurrent);
+
     async.series([
         function(callback){
             $scope.CreateLot(queryString, callback);
         },
         function(callback){
-            $scope.SetLotAsCurrent($scope.currentlot);
-            callback(null, null);
+            $scope.SetLotAsCurrent($scope.currentlot, callback);
+        },
+        function(callback){
+            $scope.AdminGetCurrentLotNumber();
+            callback(null,null);
         }
     ],
     function(err, results){

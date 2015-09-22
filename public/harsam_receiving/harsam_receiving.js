@@ -19,12 +19,12 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
   $scope.showSummary = false;
   $scope.view_summary = "view summary";
 
-  $scope.updateFunction = function(fish) {
-    $scope.entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);
-    $scope.entry.weight_2 = (angular.copy(fish.w2)).toFixed(2);
-  };
-
-  $scope.GetCurrentLotNumber();
+  async.series([
+        function(callback){ $scope.GetCurrentLotNumber(callback); }
+    ],
+    function(err, results){
+      $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
+    });
  
 })
 
@@ -39,12 +39,13 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
   $scope.showScan = true;
   $scope.showSummary = false;
   $scope.view_summary = "view summary";
-  
-  $scope.updateFunction = function(fish) {
-    $scope.entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);
-    $scope.entry.grade = angular.copy(fish.grade);
-  };
 
-  $scope.GetCurrentLotNumber();
+  async.series([
+      function(callback){ $scope.GetCurrentLotNumber(callback); }
+    ],
+    function(err, results){
+      $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
+  });
+
  
 });
