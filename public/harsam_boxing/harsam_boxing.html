@@ -1,0 +1,37 @@
+<div id="packing" ng-controller="harsamBoxingCtrl">
+    <form>
+      FT Box Number: <input type="text" ng-model="form.ft_box_num" ><br>
+      Size: <input type="text" ng-model="form.size" ><br>
+      Grade: <input type="text" ng-model="form.grade" ><br>
+      <input type="button" ng-click="makebox(form)" value="Create" />
+    </form>
+    <hr>
+    <form>
+      Entry Id: <input type="text" ng-model="entry_id">
+      <input type="button" ng-click="addLoin(entry_id)" value="Add"><br>
+      <input type="button" ng-click="done()" value="Done"><br>
+      <input type="button" ng-click="seeData()" value="View Box Contents">
+    </form>
+    <table>
+      <tr>
+        <td>Box id: {{box.id}}</td>
+        <td>FT Box #: {{box.ft_box_num}}</td>
+        <td>Weight: {{box.weight}}kg</td>
+        <td>Size: {{box.size}}</td>
+      </tr>
+      <tr>
+        <td>Grade: {{box.grade}}</td>
+        <td>Lot Number: {{box.lot_number}}</td>
+        <td>Packing Date: {{box.packing_date}}</td>
+        <td>Best Before Date: {{box.best_before_date}}</td>
+      </tr>
+      <tr ng-repeat="entry in includedentries">
+        <td>{{entry.weight_1}}kg</td>
+        <td>{{entry.lot_number}}</td>
+        <td>{{entry.grade}}</td>
+      </tr>
+    </table>
+    <form>
+      <input type="button" value="print">
+    </form>
+  </div>

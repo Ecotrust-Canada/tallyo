@@ -5,43 +5,45 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   
   /*
    *
-   * Create a lot if does not exist, set as current
+   * Create a lot if does not exist, set as current, display
    *
    */
 
-   /*checks if there is an existing lot matching query, if not creates new one, callback function on lot number*/
-  $scope.CreateLot = function(queryString, callBack){
-    $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
-      if (response.data.length < 1){
-        $scope.lot_entry.lot_number = createLotNum($scope.queryparams.stage_id, $scope.queryparams.date);
-        $scope.CreateEntryPeriod($scope.queryparams.date, 'week');
-        $http.post('http://10.10.50.30:3000/lot', $scope.lot_entry).then(function(response){
-          callBack($scope.lot_entry.lot_number);
+  /*function to create a new lot*/
+  $scope.NewLot = function(callback){
+    $scope.lot_entry.lot_number = $scope.currentlot;        
+    $scope.CreateEntryPeriod($scope.queryparams.date, 'week');
+    $http.post('http://10.10.50.30:3000/lot', $scope.lot_entry).then(function(response){
+    }, function(response){
+        alert(response.statusText);
+      }); //end post lot
+    callback(null, null);
+  };
 
-        }, function(response){
-            alert(response.statusText);
-          }); //end post lot
+   /*checks if there is an existing lot matching query, if not creates new one (calls newlot)*/
+  $scope.CreateLot = function(queryString, callback){
+    $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
+      if (response.data.length > 0){
+        $scope.currentlot = response.data[0].lot_number;
+        callback(null, null);
       }//end if
       else{
-        callBack(response.data[0].lot_number);
+        $scope.currentlot = createLotNum($scope.queryparams.stage_id, $scope.queryparams.date);
+        $scope.NewLot(callback);        
       }
-
     }, function(response){
       alert(response.status);
     });//end get lot
   };
 
   /*set is_current to true for lot number*/
-  $scope.SetLotAsCurrent = function(lot_number){
+  $scope.SetLotAsCurrent = function(lot_number, callback){
     $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id, {'is_current': false}).then(function(response){
-    }, function(response){
-      alert(response.status);
-    });
-    $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
-      $scope.AdminGetCurrentLotNumber();
-      if ($scope.stage_id == 3){
-        $scope.GetCurrentLotNumber($scope.updateFunction);
-      }
+      $http.patch('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&lot_number=eq.' + lot_number, {'is_current': true}).then(function(response){
+        callback(null, null);
+      }, function(response){
+        alert(response.status);
+      });      
     }, function(response){
       alert(response.status);
     });
@@ -56,21 +58,13 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     $scope.lot_entry.end_date = dates.end_date;
   };
 
+  /*
+   *
+   *HTML manipulation
+   *
+   */
 
-  /*clicking and selecting*/
-
-  /*for selecting on a table*/
-  $scope.setSelected = function(id) {
-    $scope.selected_id = id;
-  };
-
-  $scope.MarkComplete = function(lot_number){
-    var patch = {'in_production': false};
-    $http.patch('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number, patch).then(function(response){
-    }, function(response){
-    });
-  };
-
+  /*switch between scanning and view summary*/
   $scope.show = function(){
     if ($scope.showSummary === false){
       $scope.showSummary = true;
@@ -90,40 +84,44 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
    * Create an entry
    *
    */
+  /*this is the 'callback function'*/
+  $scope.updateFunction = function(arg){
+  };
 
+  /*finds lot with is_current set to true*/
   $scope.GetCurrentLotNumber = function(callback){
     $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
-      var date  = moment(new Date()).format();
-      //check that there is a lot selected for the current date
-      if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){
+      if (response.data.length > 0){
         $scope.current_lot_number = response.data[0].lot_number;
-        $scope.entry.lot_number = $scope.current_lot_number;
-        $scope.GetOriginalLotNumber($scope.current_lot_number);
-        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
-        $scope.update = function(fish){
-          $scope.entry.timestamp = moment(new Date()).format();
-          callback(fish);
-        };
-        $scope.submit = function(clickEvent){
-          $scope.CreateEntry($scope.current_lot_number);
-        };
       }
       else{
       }
+      callback(null,null);
     }, function(response){
       alert(response.status);
     });
   };
 
-  $scope.CreateEntry = function(lot_number){
-    var date = moment(new Date()).format();
-    $scope.entry.timestamp = date;
-    $scope.entry.lot_number = lot_number;
-    console.log($scope.entry);
+  /*function for submit button*/
+  $scope.submit = function(clickEvent){
+    $scope.CreateEntry();
+  };
+
+  /*fill in entry fields*/
+  $scope.update = function(form){
+    $scope.entry.lot_number = $scope.current_lot_number;
+    $scope.entry.timestamp = moment(new Date()).format();
+    for (var key in form){
+        $scope.entry[key] = form[key];
+    }
+  };
+
+  /*make an entry*/
+  $scope.CreateEntry = function(){
     if (NoMissingValues($scope.entry)){
       $http.post('http://10.10.50.30:3000/entry', $scope.entry).then(function(response){
         $scope.ClearEntry();
-        $scope.GetAllbyLotNumber(lot_number, $scope.station_id);
+        $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
       }, function(response){
         alert(response.status);
       });
@@ -136,31 +134,14 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   /*helpers*/
 
   $scope.ClearEntry = function(){
-    $scope.fish = null;
-    var columns = ['weight_1', 'weight_2', 'timestamp', 'grade'];
-    for (var i = 0;i<columns.length;i++){
-      if ($scope.entry[columns[i]]){
-        $scope.entry[columns[i]] = '';
+    $scope.form = null;
+    for (var key in $scope.entry){
+      if (key !== 'station_id' && key !== 'stage_id'){
+        $scope.entry[key] = "";
       }
     }
   };
-
-
-  $scope.GetOriginalLotNumber = function(lot_number){
-    $http.get('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number).then(function(response){
-      if (response.data[0].previous_lot_number){
-        $scope.GetOriginalLotNumber(response.data[0].previous_lot_number);
-      }
-      else{
-        $scope.original_lot_number = response.data[0].lot_number;
-        //TODO: add callback here
-      }
-    },function(response){
-
-    });
-  };
-
-
+  
   /*
    *
    * Displaying tables
@@ -180,12 +161,12 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   $scope.ListLots = function(stage_id){
     $http.get('http://10.10.50.30:3000/lot?stage_id=eq.' + stage_id).then(function(response){
       $scope.listlots = response.data;
-      console.log($scope.listlots);
     }, function(response){
       alert(response.status);
     });
   };
 
+  /*get the entries for a given lot number and station_id*/
   $scope.GetAllbyLotNumber = function(lot_number, station_id){
     $http.get('http://10.10.50.30:3000/entry?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id).then(function(response){
       $scope.lots = response.data;
@@ -199,22 +180,16 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
    * Admin
    *
    */
-
-   //todo: this should be a view to get name rather than supplier id
+   /*gets lot_number and supplier info which is_current*/
    $scope.AdminGetCurrentLotNumber = function(){
     $http.get('http://10.10.50.30:3000/lot_supplier?stage_id=eq.' + $scope.stage_id + '&is_current=eq.true').then(function(response){
-      var date  = moment(new Date()).format();
-      //check that there is a lot selected for the current date
-      if (response.data.length > 0 && DateRangeCurrent(date, response.data[0].start_date, response.data[0].end_date)){
+      if (response.data.length > 0 ){
         $scope.selected = response.data[0];
-      }
-      else{
       }
     }, function(response){
       alert(response.status);
     });
   };
 
-  
 
 };//end of controller

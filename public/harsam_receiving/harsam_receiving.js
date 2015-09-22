@@ -21,13 +21,12 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute', 'scanthisApp.shared']
   $scope.showSummary = false;
   $scope.view_summary = "view summary";
 
-  $scope.updateFunction = function(fish) {
-    entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);
-    entry.weight_2 = (angular.copy(fish.w2)).toFixed(2);
-  };
-
-  $scope.GetCurrentLotNumber($scope.updateFunction);
- 
+  async.series([
+        function(callback){ $scope.GetCurrentLotNumber(callback); }
+    ],
+    function(err, results){
+      $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
+    });
 })
 
 .controller('harsamTrimmingCtrl', function($scope, $http, $injector) {
@@ -41,14 +40,13 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute', 'scanthisApp.shared']
   $scope.showScan = true;
   $scope.showSummary = false;
   $scope.view_summary = "view summary";
-  
-  $scope.updateFunction = function(fish) {
-    $scope.entry.weight_1 = (angular.copy(fish.w1)).toFixed(2);
-    $scope.entry.grade = angular.copy(fish.grade);
-  };
 
+  async.series([
+      function(callback){ $scope.GetCurrentLotNumber(callback); }
+    ],
+    function(err, results){
+      $scope.GetAllbyLotNumber($scope.current_lot_number, $scope.station_id);
+  });
 
-
-  $scope.GetCurrentLotNumber($scope.updateFunction);
  
 });

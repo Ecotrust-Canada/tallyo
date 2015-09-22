@@ -19,13 +19,13 @@
       </div>
       <div class = "input">
         <form class = "form">
-          Weight: <input type="number" ng-model="fish.w1" />kg<br />
-          Grade: <input type="radio" ng-model="fish.grade" value="A" />A
-          <input type="radio" ng-model="fish.grade" value="B" />B
-          <input type="radio" ng-model="fish.grade" value="C" />C
-          <input type="radio" ng-model="fish.grade" value="D" />D<br />
+          Weight: <input type="number" ng-model="form.weight_1" />kg<br />
+          Grade: <input type="radio" ng-model="form.grade" value="A" />A
+          <input type="radio" ng-model="form.grade" value="B" />B
+          <input type="radio" ng-model="form.grade" value="C" />C
+          <input type="radio" ng-model="form.grade" value="D" />D<br />
           <input type="button" ng-click="ClearEntry()" value="Clear" />
-          <input type="button" ng-click="update(fish)" value="Create" />
+          <input type="button" ng-click="update(form)" value="Create" />
           <input type="button" ng-click="submit($event)" value="Submit" />
         </form>
         <pre>entry = {{entry | json}}</pre>
