@@ -37,13 +37,11 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
   };
 
   $scope.addLoin = function(entry_id){
-    console.log(entry_id);
     async.series([
       function(callback){
         $http.get('http://10.10.50.30:3000/entry?id=eq.' + entry_id).then(function(response){
           $scope.box_weight += response.data[0].weight_1;
-          console.log($scope.box_weight);
-          console.log(response.data);
+          $scope.latest_lot_number = response.data[0].lot_number;
           callback(null, null);
         }, function(response){
 
@@ -51,7 +49,7 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
       },
       function(callback){
         $http.patch('http://10.10.50.30:3000/entry?id=eq.' + entry_id, {'box_id': $scope.box.id}).then(function(response){
-
+          $scope.entry_id = null;
         }, function(response){
           
         });
@@ -63,7 +61,7 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
   };
 
   $scope.done = function(){
-    $http.patch('http://10.10.50.30:3000/box?id=eq.' + $scope.box.id, {'weight': $scope.box_weight}, {headers: {
+    $http.patch('http://10.10.50.30:3000/box?id=eq.' + $scope.box.id, {'weight': $scope.box_weight, 'lot_number': $scope.latest_lot_number}, {headers: {
        'Prefer': 'return=representation'}
     }).then(function(response){
       console.log(response);
