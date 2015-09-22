@@ -61,7 +61,7 @@ var DateRangeCurrent = function(date, start_date, end_date){
 var NoMissingValues = function(jsonobj){
     for (var key in jsonobj) {
       if (jsonobj.hasOwnProperty(key)) {
-        if (jsonobj[key] === ''){
+        if (jsonobj[key] === '' || jsonobj[key] === undefined){
             return false;
         }
       }
