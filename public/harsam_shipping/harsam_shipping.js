@@ -31,13 +31,13 @@ angular.module('scanthisApp.harsam_shipping', ['ngRoute'])
   };
 
   $scope.addBox = function(box_id){
-
-    $http.patch('http://10.10.50.30:3000/box?id=eq.' + box_id, {'shipping_container': $scope.shipping.id}).then(function(response){
-      $scope.box_id = null;
-      $scope.boxes.push(box_id);
-    }, function(response){
-      
-    });
+    if (box_id && valueNotInArray($scope.boxes, box_id)){
+      $http.patch('http://10.10.50.30:3000/box?id=eq.' + box_id, {'shipping_container': $scope.shipping.id}).then(function(response){
+        $scope.box_id = null;        
+        $scope.boxes.push(box_id);  
+      }, function(response){       
+      });
+    }
   };
 
 

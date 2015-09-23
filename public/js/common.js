@@ -80,11 +80,21 @@ var idNotInArray = function(array, id){
 
 var removeFromArray = function(array, id){
     for (var i=0;i<array.length;i++){
-        if (array[i].id == id){
+        if (String(array[i].id) === String(id)){
             array.splice(i,1);
         }
     }           
     return array;
+};
+
+
+var valueNotInArray = function(array, value){
+    for (var i=0;i<array.length;i++){
+        if (String(array[i]) === String(value)){
+            return false;
+        }
+    }
+    return true;
 };
 
 
