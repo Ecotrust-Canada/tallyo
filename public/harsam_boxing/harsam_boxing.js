@@ -12,6 +12,7 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.boxentry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
+  $scope.includedentries = [];
 
   $scope.makebox = function(form, labels){
     for (var key in form){
@@ -24,32 +25,34 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
        ).then(function(response){
       $scope.box = response.data;
       $scope.box_weight = 0;
-      $scope.includedentries = null;
+      $scope.includedentries = [];
       $scope.form = null;
     }, function(response){
     });
   };
 
   $scope.addLoin = function(entry_id){
-    async.series([
-      function(callback){
-        $http.get('http://10.10.50.30:3000/entry?id=eq.' + entry_id).then(function(response){
-          $scope.box_weight += response.data[0].weight_1;
-          $scope.latest_lot_number = response.data[0].lot_number;/*for now just set box lot_number to most recent loin*/
-          callback(null, null);
-        }, function(response){
-        });
-      },
-      function(callback){
-        $http.patch('http://10.10.50.30:3000/entry?id=eq.' + entry_id, {'box_id': $scope.box.id}).then(function(response){
-          $scope.entry_id = null;
-        }, function(response){          
-        });
-      }
-    ],
-    function(err, results){
-    });
-
+    if (idNotInArray($scope.includedentries, entry_id)){
+      async.series([
+        function(callback){
+          $http.get('http://10.10.50.30:3000/entry?id=eq.' + entry_id).then(function(response){
+            $scope.box_weight += response.data[0].weight_1;
+            $scope.latest_lot_number = response.data[0].lot_number;/*for now just set box lot_number to most recent loin*/
+            callback(null, null);
+          }, function(response){
+          });
+        },
+        function(callback){
+          $http.patch('http://10.10.50.30:3000/entry?id=eq.' + entry_id, {'box_id': $scope.box.id}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+            $scope.entry_id = null;
+            $scope.includedentries.push(response.data[0]);
+          }, function(response){          
+          });
+        }
+      ],
+      function(err, results){
+      });
+    }
   };
 
   $scope.done = function(){
@@ -63,14 +66,11 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
     });
   };
 
-  $scope.seeData = function(){
-    $http.get('http://10.10.50.30:3000/entry?box_id=eq.' + $scope.box.id).then(function(response){
-        $scope.includedentries = response.data;
-      }, function(response){
-        
-      });
-
+  $scope.remove = function(entry_id){
+    $http.patch('http://10.10.50.30:3000/entry?id=eq.' + entry_id, {'box_id': null}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+          $scope.includedentries = removeFromArray($scope.includedentries, entry_id);
+        }, function(response){          
+        });
   };
-
 
 });//end controller

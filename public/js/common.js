@@ -69,5 +69,24 @@ var NoMissingValues = function(jsonobj){
     return true;
 };
 
+var idNotInArray = function(array, id){
+    for (var i=0;i<array.length;i++){
+        if (array[i].id == id){
+            return false;
+        }
+    }
+    return true;
+};
+
+var removeFromArray = function(array, id){
+    for (var i=0;i<array.length;i++){
+        if (array[i].id == id){
+            array.splice(i,1);
+        }
+    }           
+    return array;
+};
+
+
 
 
