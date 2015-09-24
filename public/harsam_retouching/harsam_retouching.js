@@ -9,7 +9,7 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
 }])
 
 .controller('harsamRetouchingCtrl', function($scope, $http, $injector) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 3;
   $scope.station_id = 3;
@@ -17,21 +17,16 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
 
   $scope.ListLots($scope.stage_id);
 
-  $scope.$watch('current_lot_number', function(newValue, oldValue) {
-    $scope.GetAllbyLotNumber(newValue, $scope.station_id);
+  $scope.$watch('currentlot', function(newValue, oldValue) {
+    $scope.ListEntries(newValue, $scope.station_id);
   });
 
-  $scope.SetLot = function(){
-    async.series([
-        function(callback){
-            $scope.SetLotAsCurrent($scope.SelectedLot, callback);
-        },
-        function(callback){
-            $scope.GetCurrentLotNumber(callback);
-        }
-    ],
-    function(err, results){
-    });    
+  $scope.SetLot = function(lot_number){
+    $http.patch('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id, {'current_lot_number': lot_number}).then(function(response){
+      $scope.currentlot = lot_number;
+    }, function(response){
+      alert(response.status);
+    });
   };
 
 

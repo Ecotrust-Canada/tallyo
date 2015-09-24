@@ -10,38 +10,51 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
 }])
 
 .controller('harsamAdminCtrl1', function($scope, $http, $injector) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 2;
   $scope.ListSuppliers();
 
-  $scope.AdminGetCurrentLotNumber();
+  $scope.GetCurrentSupplier = function(){
+    $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
+      var supplier_id = response.data[0].current_supplier_id;
+      var query = '?id=eq.' + supplier_id;
+      $scope.GetEntries('supplier', 'current_supplier', query);
+    }, function(response){
+    });
+    
+  };
+
+  $scope.GetCurrentSupplier();
 
   $http.get('../json/supplierform.json').success(function(data) {
-    $scope.formarray = data;
+    $scope.formarray = data.fields;
+    $scope.form = {};
+    $scope.resetform();
   });
 
   $http.get('../json/supplierentry.json').success(function(data) {
-    $scope.entryform = data;
+    $scope.entry = data;
   });
+
+  $scope.resetform = function(){
+    for (var i=0;i<$scope.formarray.length;i++){
+      $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
+    }
+  };
+
 
 
   $scope.ClearForm = function(){
-    $scope.formarray.fields[4].value = '';
-    $scope.formarray.fields[5].value = '';
-    $scope.formarray.fields[6].value = '';
-    $scope.formarray.fields[8].value = '';
-
+    $scope.resetform();
     for (var key in $scope.entryform){
-        $scope.entryform[key] = '';
+        $scope.entry[key] = '';
       }
   };
 
-  $scope.update = function(){
-    var array = $scope.formarray.fields;
-    for (var i=0;i<array.length;i++){
-      var current = array[i];
-      $scope.entryform[current.fieldname] = current.value;
+  $scope.update = function(form){
+    for (var key in form){
+        $scope.entry[key] = form[key];
     }
     $http.post('http://10.10.50.30:3000/supplier', $scope.entryform).then(function(response){
       $scope.ListSuppliers();
@@ -51,32 +64,19 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     });
   };
 
-  $scope.SelectSupplier = function(supplier_id){
-    var date = new Date();
-    $scope.queryparams = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'date': date};
-    var queryString = LotQuery($scope.queryparams);
-    $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': '', 'is_current': false, 'in_production': true};
+  
 
-    async.series([
-        function(callback){
-            $scope.CreateLot(queryString, callback);
-        },
-        function(callback){
-            $scope.SetLotAsCurrent($scope.currentlot, callback);
-        },
-        function(callback){
-            $scope.AdminGetCurrentLotNumber();
-            callback(null,null);
-        }
-    ],
-    function(err, results){
+  $scope.SelectSupplier = function(supplier_id){
+    $http.patch('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id, {"current_supplier_id": supplier_id}).then(function(response){
+      $scope.GetCurrentSupplier();
+    }, function(response){
     });
   };
 
 })
 
 .controller('harsamAdminCtrl2', function($scope, $http, $injector) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 3;
   $scope.previous_stage_id = 2;
@@ -95,7 +95,10 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   };
 
 
-})
+});
+
+
+
 
 
 

@@ -1,72 +1,36 @@
-<div class = "wrapper">
+<div class = "wrapper" ng-controller="sharedCtrl">
   
-
   <div class = "outline" ng-controller="harsamReceivingCtrl">
-    <div class = "admin">
-      {{current_lot_number}}
-    </div>
+    <currentlot></currentlot>
     <div class = "input" ng-show="showScan">
       <form class = "form">
-        Weight Plastic: <input type="number" ng-model="form.weight_1" />kg<br />
-        Weight No Plastic: <input type="number" ng-model="form.weight_2" />kg<br />
-        <input type="button" ng-click="ClearEntry()" value="Clear" />
-        <input type="button" ng-click="update(form)" value="Create" />
-        <input type="button" ng-click="submit($event)" value="Submit" />
+        <plasticweight></plasticweight>
+        <submitbuttons></submitbuttons>
       </form>
-      <pre>entry = {{entry | json}}</pre>
+      <showentry></showentry>
     </div>
-
     <div class = "summary" ng-show="showSummary">
-      <table class = "fill">
-        <tr ng-repeat = "lot in lots">
-          <td>{{(lot.weight_1).toFixed(2)}}kg</td>
-          <td>{{(lot.weight_2).toFixed(2)}}kg</td>
-          <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
-        </tr>
-      </table>
+      <summarytable></summarytable>
     </div>
-
-    <div class = "view">
-      <span ng-click="show()">{{view_summary}}</span>
-    </div>
-
+    <viewsummarybutton></viewsummarybutton>
   </div>
 
 
   <div class = "outline" ng-controller="harsamTrimmingCtrl">
-    <div class = "admin">
-      {{current_lot_number}}
-    </div>
+    <currentlot></currentlot>
     <div class = "input" ng-show="showScan">
       <form class = "form">
-        Weight: <input type="number" ng-model="form.weight_1" />kg<br />
-        Grade: <input type="radio" ng-model="form.grade" value="A" />A
-        <input type="radio" ng-model="form.grade" value="B" />B
-        <input type="radio" ng-model="form.grade" value="C" />C
-        <input type="radio" ng-model="form.grade" value="D" />D<br />
-        <input type="button" ng-click="ClearEntry()" value="Clear" />
-        <input type="button" ng-click="update(form)" value="Create" />
-        <input type="button" ng-click="submit($event)" value="Submit" />
+        <inputweight></inputweight>
+        <gradebuttons></gradebuttons>
+        <submitbuttons></submitbuttons>
       </form>
-      <pre>entry = {{entry | json}}</pre>
+      <showentry></showentry>
     </div>
-
     <div class = "summary" ng-show="showSummary">
-      <table class = "fill">
-        <tr ng-repeat = "lot in lots">
-          <td>{{lot.grade}}</td>
-          <td>{{(lot.weight_1).toFixed(2)}}kg</td>
-          <td>{{lot.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
-        </tr>
-      </table>
+      <summarytable></summarytable>
     </div>
-
-    <div class = "view">
-      <span ng-click="show()">{{view_summary}}</span>
-    </div>
-
+    <viewsummarybutton></viewsummarybutton>
   </div>
-
 
 </div>
 

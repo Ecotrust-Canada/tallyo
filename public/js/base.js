@@ -13,6 +13,25 @@ angular.module('scanthisApp', [
   $routeProvider.otherwise({redirectTo: '/harsam_receiving'});
 }])
 
+.directive('submitbuttons', function() { return { templateUrl: 'htmlpartials/submitbuttons.html' }; })
+
+.directive('inputweight', function() { return { templateUrl: 'htmlpartials/inputweight.html' }; })
+
+.directive('plasticweight', function() { return { templateUrl: 'htmlpartials/plasticweight.html' }; })
+
+.directive('gradebuttons', function() { return { templateUrl: 'htmlpartials/gradebuttons.html' }; })
+
+.directive('showentry', function() { return { templateUrl: 'htmlpartials/showentry.html' }; })
+
+.directive('viewsummarybutton', function() { return { templateUrl: 'htmlpartials/viewsummarybutton.html' }; })
+
+.directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
+
+.directive('selectlot', function() { return { templateUrl: 'htmlpartials/selectlot.html' }; })
+
+.directive('summarytable', function() { return { templateUrl: 'htmlpartials/summarytable.html' }; })
+
+
 .filter('stringtodate', function() {
   return function(input) {
     return new Date(input);

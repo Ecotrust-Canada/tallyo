@@ -29,13 +29,13 @@ var createLotNum = function(stage_id, date){
     return String(stage_id) + datestring;
 };
 
-
+/*creates a querystring from a json object*/
 var LotQuery = function(params){
-    var queryString = '?stage_id=eq.' + params.stage_id;
-
+    var queryString = '?';
+    //todo: first without &, rest with
     queryString = queryString + ['supplier_id','previous_lot_number','product_id','lot_number'].map(function(param){
       if (typeof params[param] !== 'undefined'){
-        return '&' + param + '=eq.' + params[param];
+        return param + '=eq.' + params[param];
       }
       else{
         return '';
@@ -61,7 +61,7 @@ var DateRangeCurrent = function(date, start_date, end_date){
 var NoMissingValues = function(jsonobj){
     for (var key in jsonobj) {
       if (jsonobj.hasOwnProperty(key)) {
-        if (jsonobj[key] === ''){
+        if (jsonobj[key] === '' || jsonobj[key] === undefined){
             return false;
         }
       }
@@ -69,5 +69,39 @@ var NoMissingValues = function(jsonobj){
     return true;
 };
 
+var idNotInArray = function(array, id){
+    for (var i=0;i<array.length;i++){
+        if (String(array[i].id) === String(id)){
+            return false;
+        }
+    }
+    return true;
+};
+
+var removeFromArray = function(array, id){
+    for (var i=0;i<array.length;i++){
+        if (String(array[i].id) === String(id)){
+            array.splice(i,1);
+        }
+    }           
+    return array;
+};
+
+
+var valueNotInArray = function(array, value){
+    for (var i=0;i<array.length;i++){
+        if (String(array[i]) === String(value)){
+            return false;
+        }
+    }
+    return true;
+};
+
+
+var CreateEntryPeriod = function(today, period, $scope){
+    var dates = dateManipulation(today, period);
+    $scope.lot_entry.start_date = dates.start_date;
+    $scope.lot_entry.end_date = dates.end_date;
+  };
 
 
