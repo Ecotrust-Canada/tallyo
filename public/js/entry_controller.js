@@ -66,9 +66,8 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     };
     var patch = {"current_supplier_id": supplier_id};
     var query = '?id=eq.' + $scope.stage_id;
-    $scope.PatchEntry('stage', patch, func);
+    $scope.PatchEntry('stage', patch, query, func);
   };
-
 
   
   $scope.RemoveItem = function(item_id){
