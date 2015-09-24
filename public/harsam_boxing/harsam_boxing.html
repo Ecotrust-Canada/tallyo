@@ -15,8 +15,8 @@
   Add Loins:
   <div class="section">
     <form>
-      Entry Id: <input type="text" ng-model="entry_id">
-      <input type="button" ng-click="addLoin(entry_id)" value="Add"><br>
+      Item Id: <input type="text" ng-model="item_id">
+      <input type="button" ng-click="addLoin(item_id)" value="Add"><br>
       <input type="button" ng-click="done()" value="Calculate Total Weight"><br>
     </form>
     <form>
@@ -40,11 +40,11 @@
     </div>
     <div class="block verticalLine">
       <table>  
-        <tr ng-repeat="entry in includedentries">
-          <td>{{entry.weight_1}}kg</td>
-          <td>{{entry.lot_number}}</td>
-          <td>{{entry.grade}}</td>
-          <td ng-click="remove(entry.id)">Remove</td>
+        <tr ng-repeat="item in includeditems">
+          <td>{{item.weight_1}}kg</td>
+          <td>{{item.lot_number}}</td>
+          <td>{{item.grade}}</td>
+          <td ng-click="remove(item.id)">Remove</td>
         </tr>
       </table>
     </div>

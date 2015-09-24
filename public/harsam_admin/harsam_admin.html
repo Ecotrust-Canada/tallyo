@@ -23,22 +23,22 @@
           <th colspan="2">Choose Supplier:</th>
           <th></th>
         </tr>
-        <tr ng-repeat-start="sup in suppliers">
+        <tr ng-repeat-start="supplier in suppliers">
           <td>
-            <button ng-if="sup.expanded" ng-click="sup.expanded = false">-</button>
-            <button ng-if="!sup.expanded" ng-click="sup.expanded = true">+</button>
+            <button ng-if="supplier.expanded" ng-click="supplier.expanded = false">-</button>
+            <button ng-if="!supplier.expanded" ng-click="supplier.expanded = true">+</button>
           </td>
-          <td>{{sup.id}}</td>
-          <td>{{sup.supplier}}</td>
-          <td>{{sup.fleet_vessel}}</td>
-          <td>{{sup.fair_trade|isfairtrade}}</td>
-          <td><div class="button" ng-click="SelectSupplier(sup.id)"><p>Set Current</p></div></td>
+          <td>{{supplier.id}}</td>
+          <td>{{supplier.supplier}}</td>
+          <td>{{supplier.fleet_vessel}}</td>
+          <td>{{supplier.fair_trade|isfairtrade}}</td>
+          <td><div class="button" ng-click="SelectSupplier(supplier.id)"><p>Set Current</p></div></td>
         </tr>
-        <tr ng-if="sup.expanded">
-          <td colspan="3">{{sup.species_common}}</td>
+        <tr ng-if="supplier.expanded">
+          <td colspan="3">{{supplier.species_common}}</td>
         </tr>
-        <tr ng-if="sup.expanded" ng-repeat-end="">
-          <td colspan="3">{{sup.species_latin}}</td>
+        <tr ng-if="supplier.expanded" ng-repeat-end="">
+          <td colspan="3">{{supplier.species_latin}}</td>
         </tr>
       </table>
       <hr>
@@ -77,7 +77,7 @@
           <th colspan="2">Choose Lot:</th>
           <th></th>
         </tr>
-        <tr ng-repeat-start="lot in listlots">
+        <tr ng-repeat-start="lot in lots">
           <td>
             <button ng-if="lot.expanded" ng-click="lot.expanded = false">-</button>
             <button ng-if="!lot.expanded" ng-click="lot.expanded = true">+</button>

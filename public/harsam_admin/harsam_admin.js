@@ -34,7 +34,7 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   });
 
   $http.get('../json/supplierentry.json').success(function(data) {
-    $scope.entry = data;
+    $scope.supplier_entry = data;
   });
 
   $scope.resetform = function(){
@@ -48,13 +48,13 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   $scope.ClearForm = function(){
     $scope.resetform();
     for (var key in $scope.entryform){
-        $scope.entry[key] = '';
+        $scope.supplier_entry[key] = '';
       }
   };
 
   $scope.update = function(form){
     for (var key in form){
-        $scope.entry[key] = form[key];
+        $scope.supplier_entry[key] = form[key];
     }
     $http.post('http://10.10.50.30:3000/supplier', $scope.entryform).then(function(response){
       $scope.ListSuppliers();

@@ -11,22 +11,22 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
 .controller('harsamBoxingCtrl', function($scope, $http, $injector) {
   $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
-  $scope.boxentry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
-  $scope.includedentries = [];
+  $scope.box_entry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
+  $scope.includeditems = [];
 
   $scope.makebox = function(form){
     $scope.MakeBoxEntry(form);
     $scope.DatabaseBox();
   };
 
-  $scope.addLoin = function(entry_id){
-    if (idNotInArray($scope.includedentries, entry_id)){
+  $scope.addLoin = function(item_id){
+    if (idNotInArray($scope.includeditems, item_id)){
       async.series([
         function(callback){
-          $scope.GetItem(entry_id, callback);
+          $scope.GetItem(item_id, callback);
         },
         function(callback){
-          $scope.PatchItemWithBox(entry_id, callback);
+          $scope.PatchItemWithBox(item_id, callback);
         }
       ],
       function(err, results){
@@ -38,8 +38,8 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
     $scope.PatchBox();
   };
 
-  $scope.remove = function(entry_id){
-    $scope.PatchItemRemoveBox(entry_id);
+  $scope.remove = function(item_id){
+    $scope.PatchItemRemoveBox(item_id);
   };
 
 });//end controller

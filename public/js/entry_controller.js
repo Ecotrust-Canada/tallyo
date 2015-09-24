@@ -7,10 +7,10 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   /*gets a list from a table*/
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
-    $scope.GetEntries('lot','listlots', query);
+    $scope.GetEntries('lot','lots', query);
   };
 
-  $scope.ListEntries = function(lot_number, station_id){
+  $scope.ListItems = function(lot_number, station_id){
     var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
     $scope.GetEntries('item', 'items', query);
   };
@@ -21,8 +21,8 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
 
 
-  $scope.GetItem = function(entry_id, callback){
-    $http.get('http://10.10.50.30:3000/item?id=eq.' + entry_id).then(function(response){
+  $scope.GetItem = function(item_id, callback){
+    $http.get('http://10.10.50.30:3000/item?id=eq.' + item_id).then(function(response){
       $scope.box_weight += response.data[0].weight_1;
       $scope.latest_lot_number = response.data[0].lot_number;/*for now just set box lot_number to most recent loin*/
       callback(null, null);
@@ -32,17 +32,17 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
 
 
-  $scope.PatchItemWithBox = function(entry_id, callback){
-    $http.patch('http://10.10.50.30:3000/item?id=eq.' + entry_id, {'box_id': $scope.box.id}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
-      $scope.entry_id = null;
-      $scope.includedentries.push(response.data[0]);
+  $scope.PatchItemWithBox = function(item_id, callback){
+    $http.patch('http://10.10.50.30:3000/item?id=eq.' + item_id, {'box_id': $scope.box.id}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      $scope.item_id = null;
+      $scope.includeditems.push(response.data[0]);
     }, function(response){          
     });
   };
 
-  $scope.PatchItemRemoveBox = function(entry_id){
-    $http.patch('http://10.10.50.30:3000/entry?id=eq.' + entry_id, {'box_id': null}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
-      $scope.includedentries = removeFromArray($scope.includedentries, entry_id);
+  $scope.PatchItemRemoveBox = function(item_id){
+    $http.patch('http://10.10.50.30:3000/entry?id=eq.' + item_id, {'box_id': null}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      $scope.includeditems = removeFromArray($scope.includeditems, item_id);
     }, function(response){          
     });
   };
@@ -61,7 +61,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   $scope.RemoveItem = function(item_id){
     var query = '?id=eq.' + item_id;
     var func = function(){
-      $scope.ListEntries($scope.currentlot, $scope.station_id);
+      $scope.ListItems($scope.currentlot, $scope.station_id);
     };
     $scope.RemoveEntry('item', query, func);
   };
@@ -73,9 +73,9 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
   /*fill in entry fields*/
   $scope.MakeItemEntry = function(form){
-    $scope.entry.lot_number = $scope.currentlot;
-    $scope.entry.timestamp = moment(new Date()).format();
-    $scope.MakeEntry(form, 'entry');
+    $scope.item_entry.lot_number = $scope.currentlot;
+    $scope.item_entry.timestamp = moment(new Date()).format();
+    $scope.MakeEntry(form, 'item_entry');
   };
 
   $scope.MakeLotEntry = function(date, lot_number){
@@ -84,9 +84,9 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   };
 
   $scope.MakeBoxEntry = function(form){
-    $scope.boxentry.packing_date = moment(new Date()).format();
-    $scope.boxentry.best_before_date = moment(new Date()).add(2, 'years').format();
-    $scope.MakeEntry(form, 'boxentry');
+    $scope.box_entry.packing_date = moment(new Date()).format();
+    $scope.box_entry.best_before_date = moment(new Date()).add(2, 'years').format();
+    $scope.MakeEntry(form, 'box_entry');
   };
 
 
@@ -102,10 +102,10 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   };
 
   $scope.DatabaseItem = function(){
-    if (NoMissingValues($scope.entry)){
-      $http.post('http://10.10.50.30:3000/item', $scope.entry).then(function(response){
+    if (NoMissingValues($scope.item_entry)){
+      $http.post('http://10.10.50.30:3000/item', $scope.item_entry).then(function(response){
         $scope.Clear();
-        $scope.ListEntries($scope.currentlot, $scope.station_id);
+        $scope.ListItems($scope.currentlot, $scope.station_id);
       }, function(response){
         alert(response.status);
       });
@@ -116,11 +116,11 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   };
 
   $scope.DatabaseBox = function(){
-    $http.post('http://10.10.50.30:3000/box', $scope.boxentry, {headers: {'Prefer': 'return=representation'}}
+    $http.post('http://10.10.50.30:3000/box', $scope.box_entry, {headers: {'Prefer': 'return=representation'}}
        ).then(function(response){
       $scope.box = response.data;
       $scope.box_weight = 0;
-      $scope.includedentries = [];
+      $scope.includeditems = [];
       $scope.form = null;
     }, function(response){
     });
