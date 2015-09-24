@@ -1,33 +1,33 @@
 .wrapper{
-  width: 1400px;
+  width: 850px;
   margin: 0 auto;
 }
 .admin{
-  height: 80px;
+  height: 60px;
   width: 100%;
-  outline: solid 7px;
+  outline: solid 3px;
 }
 .outline{ 
-  width: 49.4%;
+  width: 49.3%;
   display: inline-block;
   vertical-align: top;  
 }
 .summary{
-  height:720px;
+  height:500px;
   overflow: scroll;
-  outline: solid 7px;
+  outline: solid 3px;
 }
 .input{
-  height:720px;
-  outline: solid 7px;
+  height:500px;
+  outline: solid 3px;
 }
 
 .section{
   outline:solid;
-  padding: 50px;
-  margin-left: 200px;
-  margin-top:50px;
-  width: 1000px;
+  padding: 30px;
+  margin-left: 170px;
+  margin-top:40px;
+  width: 600px;
 }
 
 .verticalLine {
@@ -63,9 +63,9 @@
 .sidebar{
   background-color: #08736C;
   position: absolute;
-  top:95px;
+  top:85px;
   bottom:0;
-  width: 250px;
+  width: 150px;
   z-index: -1;
 }
 .sidebar a{
@@ -75,25 +75,25 @@
 .main {
   background-color: #B9C4C4;
   width: 70%;
-  margin-left:315px;
+  margin-left:215px;
   border-radius: 20px;
   padding-top: 50px;
   overflow: scroll;
   height: 87vh;
 }
 .step{
-  width: 900px;
+  width: 600px;
   background-color: white;
   border-radius: 30px;
   box-shadow: 5px 5px 3px #616363;
   margin-left: 50px;
   margin-bottom: 450px;
   padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 15px;
   padding-bottom: 20px;
 }
 .table{
-  padding-left: 40px;
+  padding-left: 20px;
 }
 
 
@@ -108,7 +108,7 @@
     box-shadow: 2px 2px 1px #737373;
     border-radius: 5px;
     padding: 5px;
-    width: 200px;
+    width: 100px;
     margin-bottom: 3px;
 }
 
@@ -131,39 +131,38 @@
 
 body{
     font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0 0 0 0;
     height: 100%;
 }
 h1{
     margin: 0 0 0 0;
-    font-size: 40px;
+    font-size: 30px;
     font-style: italic;
 }
 tr{
-    height: 60px;
+    height: 30px;
 }
 
 
 
 th{
-    font-size: 25px;
+    font-size: 18px;
     font-style: normal;
     padding-right: 10px;
     padding-left: 10px;
 }
 td{
-    font-size: 22px;
+    font-size: 15px;
     font-style: normal;
     text-align:center;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .block{
     display: inline-block;
     vertical-align: top;
-    margin-right: 40px;
 }
 
 
@@ -232,21 +231,21 @@ nav ul li {
 
 
 .outline {
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .outline select {
-  font-size: 40px;
+  font-size: 30px;
 }
 .outline input {
-  font-size: 40px;
+  font-size: 30px;
 }
 .outline input[type=text] {
   max-width: 250px;
 }
 .outline input[type=number] {
   max-width: 150px;
-  font-size: 40px;
+  font-size: 35px;
 }
 .outline input[type=radio] {
   display:none;
@@ -290,8 +289,8 @@ nav ul li {
     background-color:#e0e0e0;
 }
 .outline form {
-  padding-top: 50px;
-  padding-left: 50px;
+  padding-top: 30px;
+  padding-left: 30px;
 }
 
 
@@ -300,7 +299,7 @@ nav ul li {
 
 ul{
   list-style-type: none;
-  font-size: 25px;
+  font-size: 18px;
 }
 
 
