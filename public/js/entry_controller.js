@@ -58,6 +58,15 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   };
 
 
+  $scope.RemoveItem = function(item_id){
+    var query = '?id=eq.' + item_id;
+    var func = function(){
+      $scope.ListEntries($scope.currentlot, $scope.station_id);
+    };
+    $scope.RemoveEntry('item', query, func);
+  };
+
+
 
 
 

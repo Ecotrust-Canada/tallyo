@@ -40,6 +40,14 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     });
   };
 
+  $scope.RemoveEntry = function(table, querystring, func){
+    $http.delete('http://10.10.50.30:3000/' + table + querystring).then(function(response){
+      func();
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
 
   $scope.GetEntries = function(table, scopevar, querystring){
     var url;
