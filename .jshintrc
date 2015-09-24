@@ -12,6 +12,8 @@
     "module":           false,
     "inject":           false,
     "moment":           false,
-    "alert":            false
+    "alert":            false,
+    "async":            false,
+    "fjs":              false
   }
 }

@@ -11,9 +11,8 @@
     </div>
     <div class="block">
       <h1>............Receiving......</h1>
-      <p>Supplier: {{selected.supplier}}</p>
-      <p>Fleet: {{selected.fleet_vessel}}</p>
-      <p>Lot number: {{selected.lot_number}}</p>
+      <p>Supplier: {{current_supplier[0].supplier}}</p>
+      <p>Fleet: {{current_supplier[0].fleet_vessel}}</p>
     </div>
 
     <div class="table">
@@ -48,15 +47,15 @@
 
     <form>
       <hr>
-      <span ng-repeat="row in formarray.fields">
-        <span ng-if="row.fieldname !== 'fair_trade'">{{row.title}}: <input  type="text" ng-model="row.value"><br></span>
+      <span ng-repeat="row in formarray">
+        <span ng-if="row.fieldname !== 'fair_trade'">{{row.title}}: <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ><br></span>
         <span ng-if="row.fieldname === 'fair_trade'">{{row.title}}: 
-          <input type="radio" ng-model="row.value" value="true" />Yes
-          <input type="radio" ng-model="row.value" value="false" />No
+          <input type="radio" ng-model="form.fair_trade" value="true" />Yes
+          <input type="radio" ng-model="form.fair_trade" value="false" />No
           <br>
           </span>
       </span>
-      <input type="submit" ng-click="update()" value="Save" />
+      <input type="submit" ng-click="update(form)" value="Save" />
       <hr>
     </form>
 
@@ -93,6 +92,9 @@
         </tr>
       </table>
     </div>
+  </div>
+
+  <div ng-controller="testtest">
   </div>
 
 
