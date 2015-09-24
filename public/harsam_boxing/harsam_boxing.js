@@ -14,32 +14,10 @@ angular.module('scanthisApp.harsam_boxing', ['ngRoute'])
   $scope.box_entry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
   $scope.includeditems = [];
 
-  $scope.makebox = function(form){
-    $scope.MakeBoxEntry(form);
-    $scope.DatabaseBox();
-  };
-
-  $scope.addLoin = function(item_id){
-    if (idNotInArray($scope.includeditems, item_id)){
-      async.series([
-        function(callback){
-          $scope.GetItem(item_id, callback);
-        },
-        function(callback){
-          $scope.PatchItemWithBox(item_id, callback);
-        }
-      ],
-      function(err, results){
-      });
-    }
-  };
-
-  $scope.done = function(){
-    $scope.PatchBox();
-  };
-
-  $scope.remove = function(item_id){
-    $scope.PatchItemRemoveBox(item_id);
+  $scope.CalcBox = function(){
+    var box_weight = CalculateBoxWeight($scope.includeditems);
+    var lot_num = GetBoxLotNumber($scope.includeditems);
+    $scope.PatchBoxWithWeightLot(box_weight, lot_num);
   };
 
 });//end controller

@@ -21,43 +21,56 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
 
 
-  $scope.GetItem = function(item_id, callback){
-    $http.get('http://10.10.50.30:3000/item?id=eq.' + item_id).then(function(response){
-      $scope.box_weight += response.data[0].weight_1;
+  $scope.PutItemInBox = function(item_id){
+    var func = function(response){
       $scope.latest_lot_number = response.data[0].lot_number;/*for now just set box lot_number to most recent loin*/
-      callback(null, null);
-    }, function(response){
-    });
+      $scope.PatchItemWithBox(item_id);
+    };
+    var query = '?id=eq.' + item_id;
+    $scope.GetEntry('item', func, query);
   };
 
 
 
-  $scope.PatchItemWithBox = function(item_id, callback){
-    $http.patch('http://10.10.50.30:3000/item?id=eq.' + item_id, {'box_id': $scope.box.id}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+  $scope.PatchItemWithBox = function(item_id){
+    var func = function(response){
       $scope.item_id = null;
       $scope.includeditems.push(response.data[0]);
-    }, function(response){          
-    });
+    };
+    var patch = {'box_id': $scope.box.id};
+    var query = '?id=eq.' + item_id;
+    $scope.PatchEntry('item', patch, query, func);
   };
 
   $scope.PatchItemRemoveBox = function(item_id){
-    $http.patch('http://10.10.50.30:3000/entry?id=eq.' + item_id, {'box_id': null}, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    var func = function(response){
       $scope.includeditems = removeFromArray($scope.includeditems, item_id);
-    }, function(response){          
-    });
+    };
+    var patch = {'box_id': null};
+    var query = '?id=eq.' + item_id;
+    $scope.PatchEntry('item', patch, query, func);
   };
 
-  $scope.PatchBox = function(){
-    $http.patch('http://10.10.50.30:3000/box?id=eq.' + $scope.box.id, {'weight': $scope.box_weight, 'lot_number': $scope.latest_lot_number}, {headers: {
-       'Prefer': 'return=representation'}
-    }).then(function(response){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num){
+    var func = function(response){
       $scope.box = response.data[0];
-    }, function(response){
-        
-    });
+    };
+    var patch = {'weight': box_weight, 'lot_number': lot_num};
+    var query = '?id=eq.' + $scope.box.id;
+    $scope.PatchEntry('box', patch, query, func);
+  };
+
+  $scope.PatchStageWithSupplier = function(supplier_id){
+    var func = function(response){
+      $scope.GetCurrentSupplier();
+    };
+    var patch = {"current_supplier_id": supplier_id};
+    var query = '?id=eq.' + $scope.stage_id;
+    $scope.PatchEntry('stage', patch, func);
   };
 
 
+  
   $scope.RemoveItem = function(item_id){
     var query = '?id=eq.' + item_id;
     var func = function(){
@@ -89,6 +102,10 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     $scope.MakeEntry(form, 'box_entry');
   };
 
+  $scope.MakeSupplierEntry = function(form){
+    $scope.MakeEntry(form, 'supplier_entry');
+  };
+
 
 
 
@@ -97,33 +114,52 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
 
   /*create entry in database*/
-  $scope.DatabaseLot = function(){
-    $scope.DatabaseEntry('lot', $scope.lot_entry);
+  $scope.DatabaseLot = function(lot_number){
+    var func = function(){
+      $scope.currentlot = lot_number;
+    };
+    $scope.DatabaseEntry('lot', $scope.lot_entry, func);
   };
 
   $scope.DatabaseItem = function(){
+    var func = function(){
+      $scope.Clear('item_entry');
+      $scope.ListItems($scope.currentlot, $scope.station_id);
+    };
     if (NoMissingValues($scope.item_entry)){
-      $http.post('http://10.10.50.30:3000/item', $scope.item_entry).then(function(response){
-        $scope.Clear();
-        $scope.ListItems($scope.currentlot, $scope.station_id);
-      }, function(response){
-        alert(response.status);
-      });
+      $scope.DatabaseEntry('item', $scope.item_entry, func);
     }
-    else{
-      alert("missing values");
-    }
+    else{ alert("missing values"); }
   };
+
+  $scope.DatabaseSupplier = function(){
+    var func = function(){
+      $scope.Clear('supplier_entry');
+      $scope.ListSuppliers();
+    };
+    $scope.DatabaseEntry('supplier', $scope.supplier_entry, func);
+  };
+
 
   $scope.DatabaseBox = function(){
     $http.post('http://10.10.50.30:3000/box', $scope.box_entry, {headers: {'Prefer': 'return=representation'}}
        ).then(function(response){
       $scope.box = response.data;
-      $scope.box_weight = 0;
       $scope.includeditems = [];
       $scope.form = null;
     }, function(response){
     });
+  };
+
+
+  $scope.BoxEntry = function(form){
+    $scope.MakeBoxEntry(form);
+    $scope.DatabaseBox();
+  };
+
+  $scope.SupplierEntry = function(form){
+    $scope.MakeSupplierEntry(form);
+    $scope.DatabaseSupplier();
   };
 
 

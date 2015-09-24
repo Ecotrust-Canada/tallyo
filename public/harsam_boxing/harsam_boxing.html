@@ -7,7 +7,7 @@
         FT Box #: <input type="text" ng-model="form.ft_box_num" ><br>
         Size: <input type="text" ng-model="form.size" ><br>
         Grade: <input type="text" ng-model="form.grade" ><br>
-        <input type="button" ng-click="makebox(form)" value="Create" />
+        <input type="button" ng-click="BoxEntry(form)" value="Create" />
       </form>
     </div>
     
@@ -16,8 +16,8 @@
   <div class="section">
     <form>
       Item Id: <input type="text" ng-model="item_id">
-      <input type="button" ng-click="addLoin(item_id)" value="Add"><br>
-      <input type="button" ng-click="done()" value="Calculate Total Weight"><br>
+      <input type="button" ng-click="PutItemInBox(item_id)" value="Add"><br>
+      <input type="button" ng-click="CalcBox()" value="Calculate Total Weight"><br>
     </form>
     <form>
       <input type="button" value="print">
@@ -44,7 +44,7 @@
           <td>{{item.weight_1}}kg</td>
           <td>{{item.lot_number}}</td>
           <td>{{item.grade}}</td>
-          <td ng-click="remove(item.id)">Remove</td>
+          <td ng-click="PatchItemRemoveBox(item.id)">Remove</td>
         </tr>
       </table>
     </div>

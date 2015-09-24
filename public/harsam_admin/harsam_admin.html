@@ -11,8 +11,8 @@
     </div>
     <div class="block">
       <h1>............Receiving......</h1>
-      <p>Supplier: {{current_supplier[0].supplier}}</p>
-      <p>Fleet: {{current_supplier[0].fleet_vessel}}</p>
+      <p>Supplier: {{currentsupplier[0].supplier}}</p>
+      <p>Fleet: {{currentsupplier[0].fleet_vessel}}</p>
     </div>
 
     <div class="table">
@@ -32,7 +32,7 @@
           <td>{{supplier.supplier}}</td>
           <td>{{supplier.fleet_vessel}}</td>
           <td>{{supplier.fair_trade|isfairtrade}}</td>
-          <td><div class="button" ng-click="SelectSupplier(supplier.id)"><p>Set Current</p></div></td>
+          <td><div class="button" ng-click="PatchStageWithSupplier(supplier.id)"><p>Set Current</p></div></td>
         </tr>
         <tr ng-if="supplier.expanded">
           <td colspan="3">{{supplier.species_common}}</td>
@@ -55,7 +55,7 @@
           <br>
           </span>
       </span>
-      <input type="submit" ng-click="update(form)" value="Save" />
+      <input type="submit" ng-click="SupplierEntry(form)" value="Save" />
       <hr>
     </form>
 

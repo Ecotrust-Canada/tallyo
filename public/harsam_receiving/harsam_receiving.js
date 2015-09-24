@@ -21,8 +21,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
       else{
         var lot_number = createLotNum($scope.stage_id, date);
         $scope.MakeLotEntry(date, lot_number);
-        $scope.DatabaseLot();
-        $scope.currentlot = lot_number;//todo: async or in http response       
+        $scope.DatabaseLot(lot_number);     
       }
     }, function(response){
       alert(response.status);

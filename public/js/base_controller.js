@@ -7,17 +7,21 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     $scope.form = null;
   };
 
-  $scope.ClearEntry = function(){
-    for (var key in $scope.entry){
+  $scope.ClearEntry = function(scopevar){
+    for (var key in $scope[scopevar]){
       if (key !== 'station_id' && key !== 'stage_id'){
-        $scope.entry[key] = "";
+        $scope[scopevar][key] = "";
       }
     }
   };
 
-  $scope.Clear = function(){
+  $scope.Test = function(str){
+    console.log(str);
+  };
+
+  $scope.Clear = function(scopevar){
     $scope.ClearForm();
-    $scope.ClearEntry();
+    $scope.ClearEntry(scopevar);
   };
 
   $scope.MakeEntry = function(form, scopevar){
@@ -26,15 +30,17 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     }
   };
 
-  $scope.DatabaseEntry = function(table, entry){
+  $scope.DatabaseEntry = function(table, entry, func){
     $http.post('http://10.10.50.30:3000/' + table, entry).then(function(response){
+      func();
     }, function(response){
       alert(response.statusText);
     });
   };
 
-  $scope.PatchEntry = function(table, patch){
-    $http.patch('http://10.10.50.30:3000/' + table, patch).then(function(response){
+  $scope.PatchEntry = function(table, patch, querystring, func){
+    $http.patch('http://10.10.50.30:3000/' + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      func(response);
     }, function(response){
       alert(response.statusText);
     });
@@ -59,6 +65,15 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     }
     $http.get(url).then(function(response){
       $scope[scopevar] = response.data;
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+  $scope.GetEntry = function(table, func, querystring){
+    var url = 'http://10.10.50.30:3000/' + table + querystring;
+    $http.get(url).then(function(response){
+      func(response);
     }, function(response){
       alert(response.status);
     });

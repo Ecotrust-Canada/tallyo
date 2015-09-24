@@ -105,3 +105,29 @@ var CreateEntryPeriod = function(today, period, $scope){
   };
 
 
+var CalculateBoxWeight = function(array){
+    var totalweight = 0;
+    for (var i=0;i<array.length;i++){
+        totalweight += array[i].weight_1;
+    }
+    return totalweight;
+};
+
+
+var GetBoxLotNumber = function(arr) {
+    var lotarray = fjs.pluck("lot_number", arr);
+    var numMapping = {};
+    var greatestFreq = 0;
+    var mode;
+    lotarray.forEach(function findMode(number) {
+        numMapping[number] = (numMapping[number] || 0) + 1;
+
+        if (greatestFreq < numMapping[number]) {
+            greatestFreq = numMapping[number];
+            mode = number;
+        }
+    });
+    return mode;
+};
+
+
