@@ -21,8 +21,6 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.MakeEntry = function(form, scopevar){
-    if ($scope[scopevar].lot_number === '') $scope.entry.lot_number = $scope.currentlot;
-    if ($scope[scopevar].timestamp === '') $scope.entry.timestamp = moment(new Date()).format();
     for (var key in form){
         $scope[scopevar][key] = form[key];
     }
@@ -34,6 +32,14 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
       alert(response.statusText);
     });
   };
+
+  $scope.PatchEntry = function(table, patch){
+    $http.patch('http://10.10.50.30:3000/' + table, patch).then(function(response){
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
 
   $scope.GetEntries = function(table, scopevar, querystring){
     var url;

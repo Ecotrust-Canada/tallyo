@@ -105,7 +105,3 @@ var CreateEntryPeriod = function(today, period, $scope){
   };
 
 
-
-
-
-

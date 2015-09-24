@@ -95,27 +95,6 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   };
 
 
-})
-
-.controller('testtest', function($scope, $http, $injector) {
-  
-
-  var a = {"a":"1"};
-  var b = {"b":"2"};
-
-  var c = [{"a":"1", "b":"abc"},{"a":"2", "b":"xyz"}, {"a":"3", "b":"jkl"}];
-
-  var join = function(obj1, obj2){
-    var result2 = {};
-    result2[obj2.a] = obj2.b;
-    return fjs.assign(obj1, result2);
-  };
-
-  var joinmap = fjs.fold(join, {});
-
-  console.log(joinmap(c));
-
-
 });
 
 
