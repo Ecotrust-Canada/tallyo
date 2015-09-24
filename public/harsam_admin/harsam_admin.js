@@ -19,7 +19,7 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
     $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
       var supplier_id = response.data[0].current_supplier_id;
       var query = '?id=eq.' + supplier_id;
-      $scope.GetEntries('supplier', 'current_supplier', query);
+      $scope.GetEntries('supplier', 'currentsupplier', query);
     }, function(response){
     });
     
@@ -30,49 +30,18 @@ angular.module('scanthisApp.harsam_admin', ['ngRoute'])
   $http.get('../json/supplierform.json').success(function(data) {
     $scope.formarray = data.fields;
     $scope.form = {};
-    $scope.resetform();
+    $scope.ClearForm();
   });
 
   $http.get('../json/supplierentry.json').success(function(data) {
-    $scope.entry = data;
+    $scope.supplier_entry = data;
   });
 
-  $scope.resetform = function(){
+  $scope.ClearForm = function(){
     for (var i=0;i<$scope.formarray.length;i++){
       $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
     }
   };
-
-
-
-  $scope.ClearForm = function(){
-    $scope.resetform();
-    for (var key in $scope.entryform){
-        $scope.entry[key] = '';
-      }
-  };
-
-  $scope.update = function(form){
-    for (var key in form){
-        $scope.entry[key] = form[key];
-    }
-    $http.post('http://10.10.50.30:3000/supplier', $scope.entryform).then(function(response){
-      $scope.ListSuppliers();
-      $scope.ClearForm();
-    }, function(response){
-      alert(response.status);
-    });
-  };
-
-  
-
-  $scope.SelectSupplier = function(supplier_id){
-    $http.patch('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id, {"current_supplier_id": supplier_id}).then(function(response){
-      $scope.GetCurrentSupplier();
-    }, function(response){
-    });
-  };
-
 })
 
 .controller('harsamAdminCtrl2', function($scope, $http, $injector) {

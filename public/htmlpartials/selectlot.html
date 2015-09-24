@@ -2,7 +2,7 @@
   <form name="myForm">
     <label for="singleSelect"> Choose Lot: </label><br>
     <select name="singleSelect" ng-model="SelectedLot" ng-change="SetLot(SelectedLot)">
-      <option ng-repeat = "lot in listlots">{{lot.lot_number}}</option>
+      <option ng-repeat = "lot in lots">{{lot.lot_number}}</option>
     </select>
   </form>
 </div>

@@ -21,8 +21,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
       else{
         var lot_number = createLotNum($scope.stage_id, date);
         $scope.MakeLotEntry(date, lot_number);
-        $scope.DatabaseLot();
-        $scope.currentlot = lot_number;//todo: async or in http response       
+        $scope.DatabaseLot(lot_number);     
       }
     }, function(response){
       alert(response.status);
@@ -50,23 +49,23 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
 
   
   $scope.station_id = 1;
-  $scope.entry = {'weight_1': '', 'weight_2': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+  $scope.item_entry = {'weight_1': '', 'weight_2': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
   $scope.showScan = true;
   $scope.showSummary = false;
   $scope.view_summary = "view summary";
 
   $scope.$watch('currentlot', function(newValue, oldValue) {
-    $scope.ListEntries(newValue, $scope.station_id);
+    $scope.ListItems(newValue, $scope.station_id);
   });
  
 })
 
 .controller('harsamTrimmingCtrl', function($scope, $http, $injector) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
   $scope.station_id = 2;
-  $scope.entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+  $scope.item_entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
 
   $scope.showScan = true;
@@ -74,7 +73,7 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
   $scope.view_summary = "view summary";
 
   $scope.$watch('currentlot', function(newValue, oldValue) {
-    $scope.ListEntries(newValue, $scope.station_id);
+    $scope.ListItems(newValue, $scope.station_id);
   });
 
  

@@ -13,12 +13,12 @@ angular.module('scanthisApp.harsam_retouching', ['ngRoute'])
 
   $scope.stage_id = 3;
   $scope.station_id = 3;
-  $scope.entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+  $scope.item_entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
 
   $scope.ListLots($scope.stage_id);
 
   $scope.$watch('currentlot', function(newValue, oldValue) {
-    $scope.ListEntries(newValue, $scope.station_id);
+    $scope.ListItems(newValue, $scope.station_id);
   });
 
   $scope.SetLot = function(lot_number){
