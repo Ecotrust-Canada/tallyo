@@ -85,7 +85,7 @@
           <br>
           <td>{{lot.lot_number}}</td>
           <td>{{lot.supplier_id}}</td>
-          <td><div class="button" ng-click="SwitchStage(lot.lot_number)"><p>Move to processing</p></div></td>
+          <td><div class="button" ng-click="PatchLotWithStage(lot.lot_number)"><p>Move to processing</p></div></td>
         </tr>
         <tr ng-if="lot.expanded" ng-repeat-end="">
           <td colspan="3">something here!</td>

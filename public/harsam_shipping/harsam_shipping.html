@@ -6,13 +6,13 @@
       Bill of Lading: <input type="text" ng-model="form.bill_of_lading" ><br>
       Vessel Name: <input type="text" ng-model="form.vessel_name" ><br>
       Container Number: <input type="text" ng-model="form.container_number" ><br>
-      <input type="button" ng-click="createShippingEntry(form)" value="Create Shipping Entry" />
+      <input type="button" ng-click="ShippingEntry(form)" value="Create Shipping Entry" />
     </form>
   </div>
   <div class="section">
     <form>
       Box ID: <input type="text" ng-model="box_id">
-      <input type="button" ng-click="addBox(box_id)" value="Add"><br>
+      <input type="button" ng-click="PatchBoxWithShipping(box_id)" value="Add"><br>
     </form>
   </div>
   <div class="section">

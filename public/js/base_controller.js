@@ -38,6 +38,14 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     });
   };
 
+  $scope.DatabaseEntryReturn = function(table, entry, func){
+    $http.post('http://10.10.50.30:3000/' + table, entry, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      func(response);
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
   $scope.PatchEntry = function(table, patch, querystring, func){
     $http.patch('http://10.10.50.30:3000/' + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       func(response);
@@ -98,6 +106,8 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   /*this is the 'callback function'*/
   $scope.updateFunction = function(arg){
   };
+
+
 
 
 };//end of controller

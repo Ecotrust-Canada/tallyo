@@ -47,34 +47,15 @@ angular.module('scanthisApp.harsam_receiving', ['ngRoute'])
 .controller('harsamReceivingCtrl', function($scope, $http, $injector) {
   $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
-  
-  $scope.station_id = 1;
-  $scope.item_entry = {'weight_1': '', 'weight_2': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
-
-  $scope.showScan = true;
-  $scope.showSummary = false;
-  $scope.view_summary = "view summary";
-
-  $scope.$watch('currentlot', function(newValue, oldValue) {
-    $scope.ListItems(newValue, $scope.station_id);
-  });
+  $scope.InitItemAdd(2, 1, ['weight_1','weight_2']);
+  InitShowSummary($scope);
  
 })
 
 .controller('harsamTrimmingCtrl', function($scope, $http, $injector) {
   $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
-  $scope.station_id = 2;
-  $scope.item_entry = {'weight_1': '', 'grade': '', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
-
-
-  $scope.showScan = true;
-  $scope.showSummary = false;
-  $scope.view_summary = "view summary";
-
-  $scope.$watch('currentlot', function(newValue, oldValue) {
-    $scope.ListItems(newValue, $scope.station_id);
-  });
-
+  $scope.InitItemAdd(2, 2, ['weight_1','grade']);
+  InitShowSummary($scope);
  
 });

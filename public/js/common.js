@@ -131,3 +131,10 @@ var GetBoxLotNumber = function(arr) {
 };
 
 
+
+var InitShowSummary = function($scope){
+    $scope.showScan = true;
+    $scope.showSummary = false;
+    $scope.view_summary = "view summary";
+};
+
