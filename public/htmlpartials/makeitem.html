@@ -1,0 +1,27 @@
+<div class = "outline" ng-show="showScan">
+  <div class = "admin" style="font-size:20px;">
+    {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
+    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}
+  </div>
+  <div class = "input">
+    <form class = "form">
+      <span ng-if="fields.weight_1">{{fields.weight_1}}: <input type="number" ng-model="$parent.form.weight_1">kg<br><br></span>
+
+      <span ng-if="fields.weight_2">{{fields.weight_2}}: <input type="number" ng-model="$parent.form.weight_2">kg<br><br></span>
+
+      <span ng-if="fields.grade">{{fields.grade}}:<input type="radio" id="radio1" name="radios" ng-model="$parent.form.grade" value="A"><label for="radio1">A</label>
+      <input type="radio" id="radio2" name="radios" ng-model="$parent.form.grade" value="B"><label for="radio2">B</label>
+      <input type="radio" id="radio3" name="radios" ng-model="$parent.form.grade" value="C"><label for="radio3">C</label>
+      <input type="radio" id="radio4" name="radios" ng-model="$parent.form.grade" value="D"><label for="radio4">D</label><br><br></span>
+
+      <input type="button" ng-click="Clear('item_entry')" value="Clear">
+      <input type="button" ng-click="MakeItemEntry(form)" value="Review">
+      <input ng-if="options.print==='true'" type="button" ng-click="DatabaseItem()" value="Submit/Print">
+      <input ng-if="options.print==='false'" type="button" ng-click="DatabaseItem()" value="Submit">
+    </form>
+    <ul>
+      <li ng-repeat="(key,val) in item_entry">{{key}}: {{val}}</li>
+    </ul>
+  </div>
+</div>
+

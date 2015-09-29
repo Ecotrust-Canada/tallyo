@@ -15,8 +15,22 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     $scope.GetEntries('item', 'items', query);
   };
 
+  $scope.ListAllItems = function(station_id){
+    var query = '?station_id=eq.' + station_id;
+    $scope.GetEntries('item', 'items', query);
+  };
+
   $scope.ListSuppliers = function(){
     $scope.GetEntries('supplier', 'suppliers');
+  };
+
+
+  $scope.SupplierFromLotNumber = function(lot_number){
+    var func = function(response){
+      $scope.supplier_lot = response.data[0];
+    };
+    var query = '?lot_number=eq.' + lot_number;
+    $scope.GetEntry('supplier_lot', func, query);
   };
 
 
@@ -38,8 +52,11 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
       $scope.includeditems.push(response.data[0]);
     };
     var patch = {'box_id': $scope.box.id};
-    var query = '?id=eq.' + item_id;
-    $scope.PatchEntry('item', patch, query, func);
+    var query = '?id=eq.' + item_id;    
+    if (item_id && idNotInArray($scope.includeditems, item_id)){
+      console.log($scope.includeditems);
+      $scope.PatchEntry('item', patch, query, func);
+    }
   };
 
   $scope.PatchItemRemoveBox = function(item_id){
@@ -81,6 +98,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   $scope.PatchStageWithLot = function(lot_number){
     var func = function(response){
       $scope.currentlot = lot_number;
+      $scope.SupplierFromLotNumber($scope.currentlot);
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
@@ -146,6 +164,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   $scope.DatabaseLot = function(lot_number){
     var func = function(){
       $scope.currentlot = lot_number;
+      $scope.SupplierFromLotNumber($scope.currentlot);
     };
     $scope.DatabaseEntry('lot', $scope.lot_entry, func);
   };
@@ -182,7 +201,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     var func = function(response){
       $scope.shipping = response.data;
     };
-    $scope.DatabaseEntryReturn('shipping', $scope.shipping_entry, func);
+    $scope.DatabaseEntryReturn('shipping_unit', $scope.shipping_entry, func);
   };
 
   $scope.BoxEntry = function(form){
@@ -198,22 +217,6 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   $scope.ShippingEntry = function(form){
     $scope.MakeShippingEntry(form);
     $scope.DatabaseShipping();
-  };
-
-
-
-  $scope.InitItemAdd = function(stage_id, station_id, fields){
-    $scope.stage_id = stage_id;
-    $scope.station_id = station_id;
-    $scope.item_entry = {'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
-
-    for (var i=0;i<fields.length;i++){
-      $scope.item_entry[fields[i]] = '';
-    }
-
-    $scope.$watch('currentlot', function(newValue, oldValue) {
-      $scope.ListItems(newValue, $scope.station_id);
-    });
   };
 
 

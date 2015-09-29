@@ -48,7 +48,10 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
 
   $scope.PatchEntry = function(table, patch, querystring, func){
     $http.patch('http://10.10.50.30:3000/' + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
-      func(response);
+      if (response.data.length >0){
+        func(response);
+      }
+      else alert("invalid object");
     }, function(response){
       alert(response.statusText);
     });
@@ -81,7 +84,10 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   $scope.GetEntry = function(table, func, querystring){
     var url = 'http://10.10.50.30:3000/' + table + querystring;
     $http.get(url).then(function(response){
-      func(response);
+      if (response.data.length >0){
+        func(response);
+      }
+      else alert("invalid object");
     }, function(response){
       alert(response.status);
     });

@@ -3,56 +3,93 @@
 // Declare app level module which depends on views, and components
 angular.module('scanthisApp', [
   'ngRoute',
-  'scanthisApp.harsam_receiving',
-  'scanthisApp.harsam_retouching',
   'scanthisApp.harsam_admin',
   'scanthisApp.harsam_boxing',
-  'scanthisApp.harsam_shipping'
+  'scanthisApp.harsam_shipping',
+  'scanthisApp.directives',
+  'scanthisApp.routing',
+  'scanthisApp.filters'
 ])
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/harsam_receiving'});
-}])
 
-.directive('submitbuttons', function() { return { templateUrl: 'htmlpartials/submitbuttons.html' }; })
-
-.directive('inputweight', function() { return { templateUrl: 'htmlpartials/inputweight.html' }; })
-
-.directive('plasticweight', function() { return { templateUrl: 'htmlpartials/plasticweight.html' }; })
-
-.directive('gradebuttons', function() { return { templateUrl: 'htmlpartials/gradebuttons.html' }; })
-
-.directive('showentry', function() { return { templateUrl: 'htmlpartials/showentry.html' }; })
-
-.directive('viewsummarybutton', function() { return { templateUrl: 'htmlpartials/viewsummarybutton.html' }; })
-
-.directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
-
-.directive('selectlot', function() { return { templateUrl: 'htmlpartials/selectlot.html' }; })
-
-.directive('summarytable', function() { return { templateUrl: 'htmlpartials/summarytable.html' }; })
-
-
-.filter('stringtodate', function() {
-  return function(input) {
-    return new Date(input);
+.controller('SetStation', function($scope, $http, $injector) {
+  //$injector.invoke(EntryCtrl, this, {$scope: $scope});
+  $scope.init = function(station_id){
+    $scope.station_id = station_id;
   };
 })
-.filter('isfairtrade', function() {
-  return function(input) {
-    if (String(input) === 'true'){
-        return 'FT';
-    }
-    else return '';
+
+.controller('SetStage', function($scope, $http, $injector) {
+  //$injector.invoke(EntryCtrl, this, {$scope: $scope});
+  $scope.init = function(stage_id){
+    $scope.stage_id = stage_id;
   };
 })
-.filter('removeslash', function() {
-  return function(str) {
-    if(str.substr(-1) === '/') {
-        return str.substr(0, str.length - 1);
+
+
+.controller('ItemCtrl', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+  $scope.init = function(fields, options){
+    $scope.item_entry = {'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+    $scope.fields = fields;
+    $scope.options = options;
+    for (var key in fields){
+      $scope.item_entry[key] = '';
     }
-    return str;
+    if (options.summaryhidden === 'true'){
+      InitShowSummary($scope);
+    }
+    else{
+      $scope.showScan = true;
+      $scope.showSummary = true;
+    }
+    $scope.ListLots($scope.stage_id);
+    $scope.$watch('currentlot', function(newValue, oldValue) {
+      $scope.ListItems(newValue, $scope.station_id);
+    });
   };
+})
+
+.controller('sharedCtrl', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+  $scope.stage_id = 2;
+
+  /*checks if there is an existing lot matching query, if not creates new one (calls newlot)*/
+  $scope.CreateLot = function(queryString, date){
+    $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
+      if (response.data.length > 0){
+        $scope.currentlot = response.data[0].lot_number;
+        $scope.SupplierFromLotNumber($scope.currentlot);
+      }//end if
+      else{
+        var lot_number = createLotNum($scope.stage_id, date);
+        $scope.MakeLotEntry(date, lot_number);
+        $scope.DatabaseLot(lot_number);     
+      }
+    }, function(response){
+      alert(response.status);
+    });//end get lot
+  };
+
+  $scope.LotFromSupplier = function(){
+    $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
+      var supplier_id = response.data[0].current_supplier_id;
+      var date = new Date();
+      var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
+      $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
+      $scope.CreateLot(queryString, date);
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
+  $scope.LotFromSupplier();
+
 });
+
+
+
+
+
 
 
 

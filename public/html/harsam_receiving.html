@@ -1,0 +1,27 @@
+<div class = "wrapper" ng-controller="sharedCtrl">
+
+  <div class="block" ng-controller="SetStation" ng-init="init(1)">  
+    <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight with Plastic', 'weight_2': 'Weight No Plastic'}, {'print':'false','summaryhidden':'true'})">
+      <makeitem></makeitem>
+      <summaryblock></summaryblock>
+      <viewsummarybutton></viewsummarybutton>
+    </div>
+  </div>
+  
+
+  <div class="block" ng-controller="SetStation" ng-init="init(2)">
+    <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
+      <makeitem></makeitem>
+      <summaryblock></summaryblock>
+      <viewsummarybutton></viewsummarybutton>
+    </div>
+  </div>
+    
+
+</div>
+
+
+
+
+
+
