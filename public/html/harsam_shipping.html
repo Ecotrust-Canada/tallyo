@@ -1,4 +1,4 @@
-<div ng-controller="harsamShippingCtrl">
+<div ng-controller="harsamPackingCtrl" ng-init = "init({'po_number':'', 'customer': '', 'bill_of_lading':'', 'vessel_name':'', 'container_number':''}, 'shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
   <div class="section">
     <form>
       P.O Number: <input type="text" ng-model="form.po_number" ><br>
@@ -6,32 +6,41 @@
       Bill of Lading: <input type="text" ng-model="form.bill_of_lading" ><br>
       Vessel Name: <input type="text" ng-model="form.vessel_name" ><br>
       Container Number: <input type="text" ng-model="form.container_number" ><br>
-      <input type="button" ng-click="ShippingEntry(form)" value="Create Shipping Entry" />
+      <input type="button" ng-click="ContainerEntry(form)" value="Create Shipping Entry" />
     </form>
   </div>
   <div class="section">
     <form>
-      Box ID: <input type="text" ng-model="box_id">
-      <input type="button" ng-click="PatchBoxWithShipping(box_id)" value="Add"><br>
+      Box ID: <input type="text" ng-model="obj_id">
+      <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
     </form>
   </div>
   <div class="section">
+    <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+      <option ng-repeat = "ship in ship_units">{{ship.id}}</option>
+    </select>
     <table>
       <tr>
-        <td>P.O. Number: {{shipping.po_number}}</td>
-        <td>Customer: {{shipping.customer}}</td>
-        <td>Bill of Lading: {{shipping.bill_of_lading}}</td>
+        <td>P.O. Number: {{container.po_number}}</td>
+        <td>Customer: {{container.customer}}</td>
+        <td>Bill of Lading: {{container.bill_of_lading}}</td>
       </tr>
       <tr>
-        <td>Vessel Name: {{shipping.vessel_name}}</td>
-        <td>Container Number: {{shipping.container_number}}</td>
+        <td>Vessel Name: {{container.vessel_name}}</td>
+        <td>Container Number: {{container.container_number}}</td>
       </tr>
     </table>
-      <div class="verticalLine">
-        <ul ng-repeat="box in boxes">
-          <li>{{box}}</li>
-        </ul>
-      </div>
+      <div class="block verticalLine">
+      <table>  
+        <tr ng-repeat="box in includeditems">
+          <td>{{box.id}}</td>
+          <td>{{box.weight}}kg</td>
+          <td>{{box.lot_number}}</td>
+          <td>{{box.ft_box_num}}</td>
+          <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+        </tr>
+      </table>
+    </div>
 
   </div>
 

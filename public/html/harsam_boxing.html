@@ -1,5 +1,5 @@
 
-<div id="packing" ng-controller="harsamBoxingCtrl">    
+<div id="packing" ng-controller="harsamPackingCtrl" ng-init = "init({'ft_box_num':'','size':'', 'grade':'', 'lot_number':'', 'packing_date': '', 'best_before_date':''}, 'box', 'box_id', 'recent_boxes', 'boxes', 'item')">    
   Create Box:
   <div class="section">
     <div class="block">
@@ -17,7 +17,7 @@
           <option value="AA">AA</option>
           <option value="AAA">AAA</option>
         </select><br>
-        <input type="button" ng-click="BoxEntry(form)" value="Create" />
+        <input type="button" ng-click="ContainerEntry(form)" value="Create" />
       </form>
     </div>
     
@@ -25,8 +25,8 @@
   Add Loins:
   <div class="section">
     <form>
-      Item Id: <input type="text" ng-model="item_id">
-      <input type="button" ng-click="PutItemInBox(item_id)" value="Add"><br>
+      Item Id: <input type="text" ng-model="obj_id">
+      <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
       <input type="button" ng-click="CalcBox()" value="Calculate Total Weight"><br>
     </form>
     <form>
@@ -35,20 +35,20 @@
   </div>
   Verify:
   <div class="section">
-    <select name="singleSelect" ng-model="SelectedBox" ng-change="CurrentBox(SelectedBox)">
+    <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
       <option ng-repeat = "box in boxes">{{box.id}}</option>
     </select>
     <div class="block">
       <ul>
-        <li>Box id: {{box.id}}</li>
-        <li>FT Box #: {{box.ft_box_num}}</li>      
-        <li>Size: {{box.size}}</li>
-        <li>Grade: {{box.grade}}</li>
-        <li>Packing Date: {{box.packing_date | stringtodate |date : format : shortDate}}</li>
-        <li>Best Before Date: {{box.best_before_date}}</li>
+        <li>Box id: {{container.id}}</li>
+        <li>FT Box #: {{container.ft_box_num}}</li>      
+        <li>Size: {{container.size}}</li>
+        <li>Grade: {{container.grade}}</li>
+        <li>Packing Date: {{container.packing_date | stringtodate |date : format : shortDate}}</li>
+        <li>Best Before Date: {{container.best_before_date}}</li>
         <hr>
-        <li>Weight: {{box.weight}}kg</li>
-        <li>Lot Number: {{box.lot_number}}</li>
+        <li>Weight: {{container.weight}}kg</li>
+        <li>Lot Number: {{container.lot_number}}</li>
       </ul>
     </div>
     <div class="block verticalLine">
@@ -58,7 +58,7 @@
           <td>{{item.weight_1}}kg</td>
           <td>{{item.lot_number}}</td>
           <td>{{item.grade}}</td>
-          <td ng-click="PatchItemRemoveBox(item.id)">Remove</td>
+          <td ng-click="PatchObjRemoveContainer(item.id)">Remove</td>
         </tr>
       </table>
     </div>

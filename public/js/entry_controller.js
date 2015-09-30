@@ -145,7 +145,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   $scope.PatchBoxWithShipping = function(box_id){
     var func = function(response){
       $scope.box_id = null;        
-      $scope.boxes.push(box_id);  
+      $scope.boxes.push(response.data[0]);  
     };
     var patch = {'shipping_container': $scope.shipping.id};
     var query = '?id=eq.' + box_id;
