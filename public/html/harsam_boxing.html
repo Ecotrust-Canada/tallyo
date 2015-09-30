@@ -5,8 +5,18 @@
     <div class="block">
       <form>
         FT Box #: <input type="text" ng-model="form.ft_box_num" ><br>
-        Size: <input type="text" ng-model="form.size" ><br>
-        Grade: <input type="text" ng-model="form.grade" ><br>
+        Size: 
+        <select ng-model="form.size">
+          <option value="3">3</option>
+          <option value="3-5">3-5</option>
+          <option value=">5">>5</option>
+        </select><br>
+        Grade: 
+        <select ng-model="form.grade">
+          <option value="A">A</option>
+          <option value="AA">AA</option>
+          <option value="AAA">AAA</option>
+        </select><br>
         <input type="button" ng-click="BoxEntry(form)" value="Create" />
       </form>
     </div>
@@ -25,6 +35,9 @@
   </div>
   Verify:
   <div class="section">
+    <select name="singleSelect" ng-model="SelectedBox" ng-change="CurrentBox(SelectedBox)">
+      <option ng-repeat = "box in boxes">{{box.id}}</option>
+    </select>
     <div class="block">
       <ul>
         <li>Box id: {{box.id}}</li>
@@ -41,6 +54,7 @@
     <div class="block verticalLine">
       <table>  
         <tr ng-repeat="item in includeditems">
+          <td>{{item.id}}</td>
           <td>{{item.weight_1}}kg</td>
           <td>{{item.lot_number}}</td>
           <td>{{item.grade}}</td>

@@ -69,6 +69,19 @@ var NoMissingValues = function(jsonobj){
     return true;
 };
 
+var NotEmpty = function(jsonobj){
+    for (var key in jsonobj) {
+      if (jsonobj.hasOwnProperty(key)) {
+        if (jsonobj[key] !== '' || jsonobj[key] === undefined){
+            return true;
+        }
+      }
+    }
+    return false;
+};
+
+
+
 var idNotInArray = function(array, id){
     for (var i=0;i<array.length;i++){
         if (String(array[i].id) === String(id)){

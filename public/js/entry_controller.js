@@ -15,6 +15,8 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     $scope.GetEntries('item', 'items', query);
   };
 
+  
+
   $scope.ListAllItems = function(station_id){
     var query = '?station_id=eq.' + station_id;
     $scope.GetEntries('item', 'items', query);
@@ -22,6 +24,10 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
   $scope.ListSuppliers = function(){
     $scope.GetEntries('supplier', 'suppliers');
+  };
+
+  $scope.ListBoxes = function(){
+    $scope.GetEntries('recent_boxes', 'boxes');
   };
 
 
@@ -33,12 +39,44 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     $scope.GetEntry('supplier_lot', func, query);
   };
 
+  $scope.BoxFromBoxId = function(box_id){
+    var func = function(response){
+      $scope.box = response.data[0];
+    };
+    var query = '?id=eq.' + box_id;
+    $scope.GetEntry('box', func, query);
+  };
+
+  $scope.ListBoxItems = function(box_id){
+    var func = function(response){
+      $scope.includeditems = [];
+      for (var i in response.data){
+        $scope.includeditems.push(response.data[i]);
+      }
+    };
+    var query = '?box_id=eq.' + box_id;
+    $scope.GetEntriesReturn('item', func, query);
+  };
+
 
 
   $scope.PutItemInBox = function(item_id){
     var func = function(response){
-      $scope.latest_lot_number = response.data[0].lot_number;/*for now just set box lot_number to most recent loin*/
-      $scope.PatchItemWithBox(item_id);
+      if (response.data[0].box_id && response.data[0].box_id != $scope.box.id){
+        var overwrite = confirm("overwrite from previous box?");
+        if (overwrite === true){
+          $scope.PatchItemWithBox(item_id);
+        }
+        else{
+          $scope.item_id = null;
+        }
+      }
+      else if (response.data[0].box_id == $scope.box.id){
+        alert("already in box");
+      }
+      else{
+        $scope.PatchItemWithBox(item_id);
+      }      
     };
     var query = '?id=eq.' + item_id;
     $scope.GetEntry('item', func, query);
@@ -54,7 +92,6 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     var patch = {'box_id': $scope.box.id};
     var query = '?id=eq.' + item_id;    
     if (item_id && idNotInArray($scope.includeditems, item_id)){
-      console.log($scope.includeditems);
       $scope.PatchEntry('item', patch, query, func);
     }
   };
@@ -192,9 +229,13 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
     var func = function(response){
       $scope.box = response.data;
       $scope.includeditems = [];
-      $scope.form = null;
+      $scope.Clear('box_entry');
+      $scope.ListBoxes();
     };
-    $scope.DatabaseEntryReturn('box', $scope.box_entry, func);
+    if (NotEmpty($scope.form)){
+      $scope.DatabaseEntryReturn('box', $scope.box_entry, func);
+    }
+    else{ alert("empty"); }    
   };
 
   $scope.DatabaseShipping = function(){

@@ -12,12 +12,12 @@
   vertical-align: top;  
 }
 .summary{
-  height:500px;
+  height:550px;
   overflow: scroll;
   outline: solid 3px;
 }
 .input{
-  height:500px;
+  height:550px;
   outline: solid 3px;
 }
 

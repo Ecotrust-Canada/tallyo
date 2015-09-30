@@ -96,6 +96,13 @@ angular.module('scanthisApp', [
   $scope.box_entry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
   $scope.includeditems = [];
 
+  $scope.ListBoxes();
+
+  $scope.CurrentBox = function(box_id){
+    $scope.BoxFromBoxId(box_id);
+    $scope.ListBoxItems(box_id);
+  };
+
   $scope.CalcBox = function(){
     var box_weight = CalculateBoxWeight($scope.includeditems);
     var lot_num = GetBoxLotNumber($scope.includeditems);

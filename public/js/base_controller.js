@@ -79,6 +79,15 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     });
   };
 
+  $scope.GetEntriesReturn = function(table, func, querystring){
+    var url = databaseurl + table + querystring;
+    $http.get(url).then(function(response){
+      func(response);
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
   $scope.GetEntry = function(table, func, querystring){
     var url = databaseurl + table + querystring;
     $http.get(url).then(function(response){
