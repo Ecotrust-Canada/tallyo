@@ -1,6 +1,9 @@
 'use strict';
 
 var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
+
+
+  var databaseurl = 'http://10.10.50.30:3000/';
   
   
   $scope.ClearForm = function(){
@@ -15,10 +18,6 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
     }
   };
 
-  $scope.Test = function(str){
-    console.log(str);
-  };
-
   $scope.Clear = function(scopevar){
     $scope.ClearForm();
     $scope.ClearEntry(scopevar);
@@ -31,7 +30,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.DatabaseEntry = function(table, entry, func){
-    $http.post('http://10.10.50.30:3000/' + table, entry).then(function(response){
+    $http.post(databaseurl + table, entry).then(function(response){
       func();
     }, function(response){
       alert(response.statusText);
@@ -39,7 +38,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.DatabaseEntryReturn = function(table, entry, func){
-    $http.post('http://10.10.50.30:3000/' + table, entry, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    $http.post(databaseurl + table, entry, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       func(response);
     }, function(response){
       alert(response.statusText);
@@ -47,7 +46,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.PatchEntry = function(table, patch, querystring, func){
-    $http.patch('http://10.10.50.30:3000/' + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
       }
@@ -58,7 +57,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.RemoveEntry = function(table, querystring, func){
-    $http.delete('http://10.10.50.30:3000/' + table + querystring).then(function(response){
+    $http.delete(databaseurl + table + querystring).then(function(response){
       func();
     }, function(response){
       alert(response.statusText);
@@ -66,13 +65,13 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
 
-  $scope.GetEntries = function(table, scopevar, querystring){
+  $scope.GetEntries = function(table, scopevar, querystring, apiPrefix){
     var url;
     if (querystring){
-      url = 'http://10.10.50.30:3000/' + table + querystring;
+      url = databaseurl + table + querystring;
     }
     else{
-      url = 'http://10.10.50.30:3000/' + table;
+      url = databaseurl + table;
     }
     $http.get(url).then(function(response){
       $scope[scopevar] = response.data;
@@ -82,7 +81,7 @@ var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
   };
 
   $scope.GetEntry = function(table, func, querystring){
-    var url = 'http://10.10.50.30:3000/' + table + querystring;
+    var url = databaseurl + table + querystring;
     $http.get(url).then(function(response){
       if (response.data.length >0){
         func(response);

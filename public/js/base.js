@@ -3,23 +3,18 @@
 // Declare app level module which depends on views, and components
 angular.module('scanthisApp', [
   'ngRoute',
-  'scanthisApp.harsam_admin',
-  'scanthisApp.harsam_boxing',
-  'scanthisApp.harsam_shipping',
   'scanthisApp.directives',
   'scanthisApp.routing',
-  'scanthisApp.filters'
+  'scanthisApp.filters',
 ])
 
 .controller('SetStation', function($scope, $http, $injector) {
-  //$injector.invoke(EntryCtrl, this, {$scope: $scope});
   $scope.init = function(station_id){
     $scope.station_id = station_id;
   };
 })
 
 .controller('SetStage', function($scope, $http, $injector) {
-  //$injector.invoke(EntryCtrl, this, {$scope: $scope});
   $scope.init = function(stage_id){
     $scope.stage_id = stage_id;
   };
@@ -53,7 +48,7 @@ angular.module('scanthisApp', [
   $injector.invoke(EntryCtrl, this, {$scope: $scope});
   $scope.stage_id = 2;
 
-  /*checks if there is an existing lot matching query, if not creates new one (calls newlot)*/
+  /*checks if there is an existing lot matching query, if not creates new one*/
   $scope.CreateLot = function(queryString, date){
     $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
       if (response.data.length > 0){
@@ -83,6 +78,89 @@ angular.module('scanthisApp', [
   };
 
   $scope.LotFromSupplier();
+
+})
+
+
+.controller('harsamShippingCtrl', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+
+  $scope.shipping_entry = {'po_number':'', 'customer': '', 'bill_of_lading':'', 'vessel_name':'', 'container_number':''};
+  $scope.boxes = [];
+  
+})
+
+.controller('harsamBoxingCtrl', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+
+  $scope.box_entry = {'ft_box_num':'','size':'', 'grade':'', 'lot_number':''};
+  $scope.includeditems = [];
+
+  $scope.CalcBox = function(){
+    var box_weight = CalculateBoxWeight($scope.includeditems);
+    var lot_num = GetBoxLotNumber($scope.includeditems);
+    $scope.PatchBoxWithWeightLot(box_weight, lot_num);
+  };
+
+})
+
+
+
+.controller('harsamAdminCtrl1', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+
+  $scope.stage_id = 2;
+  $scope.ListSuppliers();
+
+
+  $scope.GetCurrentSupplier = function(){
+    $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
+      var supplier_id = response.data[0].current_supplier_id;
+      var query = '?id=eq.' + supplier_id;
+      $scope.GetEntries('supplier', 'currentsupplier', query);
+    }, function(response){
+    });
+    
+  };
+
+  $scope.GetCurrentSupplier();
+
+  $http.get('../json/supplierform.json').success(function(data) {
+    $scope.formarray = data.fields;
+    $scope.form = {};
+    $scope.ClearForm();
+  });
+
+  $http.get('../json/supplierentry.json').success(function(data) {
+    $scope.supplier_entry = data;
+  });
+
+  $scope.ClearForm = function(){
+    for (var i=0;i<$scope.formarray.length;i++){
+      $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
+    }
+  };
+})
+
+.controller('harsamAdminCtrl2', function($scope, $http, $injector) {
+  $injector.invoke(EntryCtrl, this, {$scope: $scope});
+
+  $scope.stage_id = 3;
+  $scope.previous_stage_id = 2;
+
+
+  $scope.ListLots($scope.previous_stage_id);
+ 
+
+  $scope.SwitchStage = function(lot_number){
+    var patch = {'stage_id': $scope.stage_id };
+    $http.patch('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number, patch).then(function(response){
+      $scope.ListLots($scope.previous_stage_id);
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
 
 });
 
