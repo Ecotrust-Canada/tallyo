@@ -19,4 +19,10 @@ angular.module('scanthisApp.directives', [])
         $scope.ListAllItems($scope.station_id);        
     }
   };
+})
+
+.directive('movelot', function() {
+  return {
+    templateUrl: 'htmlpartials/movelot.html'
+  };
 });

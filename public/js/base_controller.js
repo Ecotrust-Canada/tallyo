@@ -2,7 +2,6 @@
 
 var BaseCtrl = function($scope, $http, $location, $anchorScroll) {
 
-
   var databaseurl = 'http://10.10.50.30:3000/';
   
   

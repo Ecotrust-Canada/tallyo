@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th colspan="2">{{title}}</th>
+    <th><button ng-click="ReList()">Refresh</button></th>
+  </tr>
+  <tr ng-repeat-start="lot in lots">
+    <td>
+      <button ng-if="lot.expanded" ng-click="lot.expanded = false">-</button>
+      <button ng-if="!lot.expanded" ng-click="lot.expanded = true">+</button>
+    </td>
+    <br>
+    <td>{{lot.supplier}} : {{lot.fleet_vessel}}</td>
+    <td>{{lot.start_date|stringtodate|date:format:"MMM dd"}} - {{lot.end_date|stringtodate|date:format:"MMM dd"}}</td>
+    <td><button ng-click="PatchLotWithStage(lot.lot_number)">{{ label }}</button></td>
+  </tr>
+  <tr ng-if="lot.expanded" ng-repeat-end="">
+    <td colspan="3">something here!</td>
+  </tr>
+</table>

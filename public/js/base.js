@@ -140,27 +140,25 @@ angular.module('scanthisApp', [
       $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
     }
   };
+
+
 })
 
 .controller('harsamAdminCtrl2', function($scope, $http, $injector) {
   $injector.invoke(EntryCtrl, this, {$scope: $scope});
 
-  $scope.stage_id = 3;
-  $scope.previous_stage_id = 2;
+  $scope.init = function(from_stage, to_stage, label, title){
+    $scope.from_stage = from_stage;
+    $scope.to_stage = to_stage;
+    $scope.label = label;
+    $scope.title = title;
 
-
-  $scope.ListLots($scope.previous_stage_id);
- 
-
-  $scope.SwitchStage = function(lot_number){
-    var patch = {'stage_id': $scope.stage_id };
-    $http.patch('http://10.10.50.30:3000/lot?lot_number=eq.' + lot_number, patch).then(function(response){
-      $scope.ListLots($scope.previous_stage_id);
-    }, function(response){
-      alert(response.status);
-    });
+    $scope.ListLots($scope.from_stage);
+    $scope.ReList = function(){
+      $scope.ListLots($scope.from_stage);
+    };
   };
-
+        
 
 });
 

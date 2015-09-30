@@ -62,36 +62,23 @@
 
   </div>
 
-  <div id="processing" class="step" ng-controller="harsamAdminCtrl2">
+  <div id="processing" class="step">
     <div class="block">
       <br>
       <br>
       <img src="../../images/fish_outline_clip_art_6845.jpg" height="100" width="200">
     </div>
     <div class="block">
-      <h1>............Processing......</h1>
+      <h1>..........Manage Lots......</h1>
     </div>
-    <div class="table">
-      <table>
-        <tr>
-          <th></th>
-          <th colspan="2">Choose Lot:</th>
-          <th></th>
-        </tr>
-        <tr ng-repeat-start="lot in lots">
-          <td>
-            <button ng-if="lot.expanded" ng-click="lot.expanded = false">-</button>
-            <button ng-if="!lot.expanded" ng-click="lot.expanded = true">+</button>
-          </td>
-          <br>
-          <td>{{lot.lot_number}}</td>
-          <td>{{lot.supplier_id}}</td>
-          <td><div class="button" ng-click="PatchLotWithStage(lot.lot_number)"><p>Move to processing</p></div></td>
-        </tr>
-        <tr ng-if="lot.expanded" ng-repeat-end="">
-          <td colspan="3">something here!</td>
-        </tr>
-      </table>
+    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(2, 3, 'Move to Retouching', 'Receiving')">
+      <movelot></movelot>
+    </div>
+    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(3, 4, 'Move to Packing', 'Retouching')">
+      <movelot></movelot>
+    </div>
+    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(4, 5, 'Mark Shipped', 'Packing')">
+      <movelot></movelot>
     </div>
   </div>
 

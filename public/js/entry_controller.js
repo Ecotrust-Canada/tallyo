@@ -7,7 +7,7 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
   /*gets a list from a table*/
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
-    $scope.GetEntries('lot','lots', query);
+    $scope.GetEntries('supplier_lot','lots', query);
   };
 
   $scope.ListItems = function(lot_number, station_id){
@@ -88,9 +88,9 @@ var EntryCtrl = function($scope, $http, $location, $anchorScroll, $injector) {
 
   $scope.PatchLotWithStage = function(lot_number){
     var func = function(response){
-      $scope.ListLots($scope.previous_stage_id);
+      $scope.ListLots($scope.from_stage);
     };
-    var patch = {'stage_id': $scope.stage_id };
+    var patch = {'stage_id': $scope.to_stage };
     var query = '?lot_number=eq.' + lot_number;
     $scope.PatchEntry('lot', patch, query, func);
   };
