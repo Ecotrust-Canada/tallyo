@@ -3,7 +3,7 @@
 
 angular.module('scanthisApp.movelotController', [])
 
-.controller('MoveLotCtrl', function($scope, $http, $injector) {
+.controller('MoveLotCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.ListLots = function(stage_id){
@@ -17,7 +17,7 @@ angular.module('scanthisApp.movelotController', [])
     };
     var patch = {'stage_id': $scope.to_stage };
     var query = '?lot_number=eq.' + lot_number;
-    $scope.PatchEntry('lot', patch, query, func);
+    DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
   $scope.init = function(from_stage, to_stage, label, title){

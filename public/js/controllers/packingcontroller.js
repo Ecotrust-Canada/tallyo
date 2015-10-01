@@ -4,7 +4,7 @@
 angular.module('scanthisApp.packingController', [])
 
 
-.controller('PackingCtrl', function($scope, $http, $injector) {
+.controller('PackingCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
 
@@ -26,7 +26,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.current[0] = response.data[0];
       };
       var query = '?id=eq.' + id;
-      $scope.GetEntry(table, func, query);
+      DatabaseServices.GetEntry(table, func, query);
     };
 
     $scope.ListContainerItems = function(id){
@@ -37,7 +37,7 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       var query = '?' + fk + '=eq.' + id;
-      $scope.GetEntriesReturn(obj, func, query);
+      DatabaseServices.GetEntriesReturn(obj, func, query);
     };
 
     $scope.CurrentContainer = function(id){
@@ -71,7 +71,7 @@ angular.module('scanthisApp.packingController', [])
         }      
       };
       var query = '?id=eq.' + id;
-      $scope.GetEntry(obj, func, query);
+      DatabaseServices.GetEntry(obj, func, query);
     };
 
     $scope.PatchObjWithContainer = function(id){
@@ -83,7 +83,7 @@ angular.module('scanthisApp.packingController', [])
       patch[fk] = $scope.current[0].id;
       var query = '?id=eq.' + id;    
       if (id && idNotInArray($scope.includeditems, id)){
-        $scope.PatchEntry(obj, patch, query, func);
+        DatabaseServices.PatchEntry(obj, patch, query, func);
       }
     };
 
@@ -94,7 +94,7 @@ angular.module('scanthisApp.packingController', [])
       var patch = {};
       patch[fk] = null;
       var query = '?id=eq.' + id;
-      $scope.PatchEntry(obj, patch, query, func);
+      DatabaseServices.PatchEntry(obj, patch, query, func);
     };
 
     $scope.PatchBoxWithWeightLot = function(box_weight, lot_num){
@@ -103,7 +103,7 @@ angular.module('scanthisApp.packingController', [])
       };
       var patch = {'weight': box_weight, 'lot_number': lot_num};
       var query = '?id=eq.' + $scope.current[0].id;
-      $scope.PatchEntry('box', patch, query, func);
+      DatabaseServices.PatchEntry('box', patch, query, func);
     };
 
     

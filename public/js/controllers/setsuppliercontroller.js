@@ -3,7 +3,7 @@
 
 angular.module('scanthisApp.setsupplierController', [])
 
-.controller('SetSupplierCtrl', function($scope, $http, $injector) {
+.controller('SetSupplierCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.stage_id = 2;
@@ -32,7 +32,7 @@ angular.module('scanthisApp.setsupplierController', [])
     };
     var patch = {"current_supplier_id": supplier_id};
     var query = '?id=eq.' + $scope.stage_id;
-    $scope.PatchEntry('stage', patch, query, func);
+    DatabaseServices.PatchEntry('stage', patch, query, func);
   };
 
   $scope.GetCurrentSupplier();

@@ -3,7 +3,7 @@
 
 angular.module('scanthisApp.createlotController', [])
 
-.controller('CreateLotCtrl', function($scope, $http, $injector) {
+.controller('CreateLotCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
   $scope.stage_id = 2;
 
@@ -12,7 +12,7 @@ angular.module('scanthisApp.createlotController', [])
       $scope.supplier_lot = response.data[0];
     };
     var query = '?lot_number=eq.' + lot_number;
-    $scope.GetEntry('supplier_lot', func, query);
+    DatabaseServices.GetEntry('supplier_lot', func, query);
   };
 
   $scope.MakeLotEntry = function(date, lot_number){
@@ -27,7 +27,7 @@ angular.module('scanthisApp.createlotController', [])
       $scope.currentlot = lot_number;
       $scope.SupplierFromLotNumber($scope.currentlot);
     };
-    $scope.DatabaseEntry('lot', $scope.lot_entry, func);
+    DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
   };
 
   /*checks if there is an existing lot matching query, if not creates new one*/

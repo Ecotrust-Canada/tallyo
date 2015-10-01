@@ -3,7 +3,7 @@
 
 angular.module('scanthisApp.formController', [])
 
-.controller('formCtrl', function($scope, $http, $injector) {
+.controller('formCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.init = function(jsonname, table, name){
@@ -43,7 +43,7 @@ angular.module('scanthisApp.formController', [])
         }
       };
       if (NotEmpty($scope.form)){
-        $scope.DatabaseEntryReturn(table, $scope[entry], func);
+        DatabaseServices.DatabaseEntryReturn(table, $scope[entry], func);
       }
       else{ alert("empty"); }  
     };

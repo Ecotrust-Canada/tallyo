@@ -4,7 +4,7 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ItemCtrl', function($scope, $http, $injector) {
+.controller('ItemCtrl', function($scope, $http, $injector, DatabaseServices) {
   $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
 
@@ -23,7 +23,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.supplier_lot = response.data[0];
     };
     var query = '?lot_number=eq.' + lot_number;
-    $scope.GetEntry('supplier_lot', func, query);
+    DatabaseServices.GetEntry('supplier_lot', func, query);
   };
 
   $scope.PatchStageWithLot = function(lot_number){
@@ -33,7 +33,7 @@ angular.module('scanthisApp.itemController', [])
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
-    $scope.PatchEntry('stage', patch, query, func);
+    DatabaseServices.PatchEntry('stage', patch, query, func);
   };
 
   $scope.RemoveItem = function(item_id){
@@ -41,7 +41,7 @@ angular.module('scanthisApp.itemController', [])
     var func = function(){
       $scope.ListItems($scope.currentlot, $scope.station_id);
     };
-    $scope.RemoveEntry('item', query, func);
+    DatabaseServices.RemoveEntry('item', query, func);
   };
 
   $scope.DatabaseItem = function(){
@@ -50,7 +50,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.ListItems($scope.currentlot, $scope.station_id);
     };
     if (NoMissingValues($scope.item_entry)){
-      $scope.DatabaseEntry('item', $scope.item_entry, func);
+      DatabaseServices.DatabaseEntry('item', $scope.item_entry, func);
     }
     else{ alert("missing values"); }
   };
@@ -61,6 +61,20 @@ angular.module('scanthisApp.itemController', [])
     $scope.item_entry.lot_number = $scope.currentlot;
     $scope.item_entry.timestamp = moment(new Date()).format();
     $scope.MakeEntry(form, 'item_entry');
+  };
+
+  /*switch between scanning and view summary*/
+  $scope.show = function(){
+    if ($scope.showSummary === false){
+      $scope.showSummary = true;
+      $scope.showScan = false;
+      $scope.view_summary = "Back to scan";
+    }
+    else {
+      $scope.showSummary = false;
+      $scope.showScan = true;
+      $scope.view_summary = "view summary";
+    }
   };
 
 
