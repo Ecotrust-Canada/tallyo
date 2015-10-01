@@ -5,7 +5,7 @@
 
 <div class="main">
 
-  <div id="receiving" class="step" ng-controller="harsamAdminCtrl1">
+  <div id="receiving" class="step" ng-controller="SetSupplierCtrl">
     <div class="block">
       <img src="../../images/fishing-boat-clip-art-160929.jpg" height="200" width="200">
     </div>
@@ -15,50 +15,12 @@
       <p>Fleet: {{currentsupplier[0].fleet_vessel}}</p>
     </div>
 
-    <div class="table">
-    <hr>
-      <table>
-        <tr>
-          <th></th>
-          <th colspan="2">Choose Supplier:</th>
-          <th></th>
-        </tr>
-        <tr ng-repeat-start="supplier in suppliers">
-          <td>
-            <button ng-if="supplier.expanded" ng-click="supplier.expanded = false">-</button>
-            <button ng-if="!supplier.expanded" ng-click="supplier.expanded = true">+</button>
-          </td>
-          <td>{{supplier.id}}</td>
-          <td>{{supplier.supplier}}</td>
-          <td>{{supplier.fleet_vessel}}</td>
-          <td>{{supplier.species_common}}</td>
-          <td>{{supplier.fair_trade|isfairtrade}}</td>
-          <td><div class="button" ng-click="PatchStageWithSupplier(supplier.id)"><p>Set Current</p></div></td>
-        </tr>
-        <tr ng-if="supplier.expanded">
-          <td colspan="3">{{supplier.species_common}}</td>
-        </tr>
-        <tr ng-if="supplier.expanded" ng-repeat-end="">
-          <td colspan="3">{{supplier.species_latin}}</td>
-        </tr>
-      </table>
-      <hr>
+    <supplierlist></supplierlist>
+
+    <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
+      <createform></createform>
     </div>
-
-
-    <form>
-      <hr>
-      <span ng-repeat="row in formarray">
-        <span ng-if="row.fieldname !== 'fair_trade'">{{row.title}}: <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ><br></span>
-        <span ng-if="row.fieldname === 'fair_trade'">{{row.title}}: 
-          <input type="radio" ng-model="form.fair_trade" value="true" />Yes
-          <input type="radio" ng-model="form.fair_trade" value="false" />No
-          <br>
-          </span>
-      </span>
-      <input type="submit" ng-click="SupplierEntry(form)" value="Save" />
-      <hr>
-    </form>
+    
 
   </div>
 
@@ -71,15 +33,20 @@
     <div class="block">
       <h1>..........Manage Lots......</h1>
     </div>
-    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(2, 3, 'Move to Retouching', 'Receiving')">
+
+    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(2, 3, 'Move to Retouching', 'Receiving')">
       <movelot></movelot>
     </div>
-    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(3, 4, 'Move to Packing', 'Retouching')">
+
+    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(3, 4, 'Move to Packing', 'Retouching')">
       <movelot></movelot>
     </div>
-    <div class="table" ng-controller="harsamAdminCtrl2" ng-init="init(4, 5, 'Mark Shipped', 'Packing')">
+
+    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(4, 5, 'Mark Shipped', 'Packing')">
       <movelot></movelot>
     </div>
+
+
   </div>
 
 

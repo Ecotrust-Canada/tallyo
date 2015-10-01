@@ -1,0 +1,7 @@
+{"fields":[
+    {"type":"text", "fieldname":"ft_box_num", "title":"FT Box #", "value":""}, 
+    {"type": "select", "fieldname":"size", "title":"Size", "value":["3", "3-5", ">5"]}, 
+    {"type": "select", "fieldname":"grade", "title":"Grade", "value":["A", "AA", "AAA"]}
+  ]}
+
+

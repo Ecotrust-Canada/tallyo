@@ -1,14 +1,14 @@
 {"fields":[
-    {"fieldname":"species_common", "title":"Species (Common)", "value":"Yellowfin Tuna"}, 
-    {"fieldname":"species_latin", "title":"Species (Latin)", "value":"Thunnus abacares"}, 
-    {"fieldname":"state", "title":"State", "value":"Fresh"},
-    {"fieldname":"handling", "title":"Handling", "value":"Loined"},
-    {"fieldname":"supplier", "title":"Supplier", "value":""},
-    {"fieldname":"fleet_vessel", "title":"Fleet/Vessel", "value":""},
-    {"fieldname":"fishing_area", "title":"Fishing Area", "value":""},
-    {"fieldname":"fishing_method", "title":"Fishing Method", "value":"Handline"},
-    {"fieldname":"landing_location", "title":"Landing Location", "value":""},
-    {"fieldname":"country_origin", "title":"Country of Origin", "value":"Indonesia"},
-    {"fieldname":"country_production", "title":"Country of Production", "value":"Indonesia"},
-    {"fieldname":"fair_trade", "title":"Fair Trade", "value":""}
+    {"type":"text", "fieldname":"species_common", "title":"Species (Common)", "value":"Yellowfin Tuna"}, 
+    {"type":"text", "fieldname":"species_latin", "title":"Species (Latin)", "value":"Thunnus abacares"}, 
+    {"type":"text", "fieldname":"state", "title":"State", "value":"Fresh"},
+    {"type":"text", "fieldname":"handling", "title":"Handling", "value":"Loined"},
+    {"type":"text", "fieldname":"supplier", "title":"Supplier", "value":""},
+    {"type":"text", "fieldname":"fleet_vessel", "title":"Fleet/Vessel", "value":""},
+    {"type":"text", "fieldname":"fishing_area", "title":"Fishing Area", "value":""},
+    {"type":"text", "fieldname":"fishing_method", "title":"Fishing Method", "value":"Handline"},
+    {"type":"text", "fieldname":"landing_location", "title":"Landing Location", "value":""},
+    {"type":"text", "fieldname":"country_origin", "title":"Country of Origin", "value":"Indonesia"},
+    {"type":"text", "fieldname":"country_production", "title":"Country of Production", "value":"Indonesia"},
+    {"type":"radio", "fieldname":"fair_trade", "title":"Fair Trade", "value":[{"val":"true", "label":"Yes"}, {"val":"false", "label":"No"}]}
   ]}

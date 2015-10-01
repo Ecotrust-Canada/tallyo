@@ -1,24 +1,12 @@
 
-<div id="packing" ng-controller="harsamPackingCtrl" ng-init = "init({'ft_box_num':'','size':'', 'grade':'', 'lot_number':'', 'packing_date': '', 'best_before_date':''}, 'box', 'box_id', 'recent_boxes', 'boxes', 'item')">    
+<div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'box_id', 'recent_boxes', 'boxes', 'item')">    
   Create Box:
   <div class="section">
     <div class="block">
-      <form>
-        FT Box #: <input type="text" ng-model="form.ft_box_num" ><br>
-        Size: 
-        <select ng-model="form.size">
-          <option value="3">3</option>
-          <option value="3-5">3-5</option>
-          <option value=">5">>5</option>
-        </select><br>
-        Grade: 
-        <select ng-model="form.grade">
-          <option value="A">A</option>
-          <option value="AA">AA</option>
-          <option value="AAA">AAA</option>
-        </select><br>
-        <input type="button" ng-click="ContainerEntry(form)" value="Create" />
-      </form>
+      <div ng-controller="formCtrl" ng-init="init('box', 'box', 'boxes')">
+      <createform></createform>
+    </div>
+    
     </div>
     
   </div>
@@ -40,15 +28,15 @@
     </select>
     <div class="block">
       <ul>
-        <li>Box id: {{container.id}}</li>
-        <li>FT Box #: {{container.ft_box_num}}</li>      
-        <li>Size: {{container.size}}</li>
-        <li>Grade: {{container.grade}}</li>
-        <li>Packing Date: {{container.packing_date | stringtodate |date : format : shortDate}}</li>
-        <li>Best Before Date: {{container.best_before_date}}</li>
+        <li>Box id: {{current[0].id}}</li>
+        <li>FT Box #: {{current[0].ft_box_num}}</li>      
+        <li>Size: {{current[0].size}}</li>
+        <li>Grade: {{current[0].grade}}</li>
+        <li>Packing Date: {{current[0].packing_date | stringtodate |date : format : shortDate}}</li>
+        <li>Best Before Date: {{current[0].best_before_date}}</li>
         <hr>
-        <li>Weight: {{container.weight}}kg</li>
-        <li>Lot Number: {{container.lot_number}}</li>
+        <li>Weight: {{current[0].weight}}kg</li>
+        <li>Lot Number: {{current[0].lot_number}}</li>
       </ul>
     </div>
     <div class="block verticalLine">

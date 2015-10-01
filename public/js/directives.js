@@ -11,18 +11,24 @@ angular.module('scanthisApp.directives', [])
 
 .directive('summaryblock', function() { return { templateUrl: 'htmlpartials/summaryblock.html' }; })
 
+.directive('createform', function() { return { templateUrl: 'htmlpartials/createform.html' }; })
+
+.directive('movelot', function() { return { templateUrl: 'htmlpartials/movelot.html' }; })
+
+.directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
+
 .directive('reprint', function() {
   return {
     templateUrl: 'htmlpartials/reprint.html',
     controller: function($scope, $injector) {
-        $injector.invoke(EntryCtrl, this, {$scope: $scope});
+        $injector.invoke(BaseCtrl, this, {$scope: $scope});
+
+        $scope.ListAllItems = function(station_id){
+            var query = '?station_id=eq.' + station_id;
+            $scope.GetEntries('item', 'items', query);
+          };
+
         $scope.ListAllItems($scope.station_id);        
     }
-  };
-})
-
-.directive('movelot', function() {
-  return {
-    templateUrl: 'htmlpartials/movelot.html'
   };
 });

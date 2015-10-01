@@ -1,0 +1,16 @@
+<form>
+  <span ng-repeat="row in formarray">
+    <span ng-if="row.type === 'text'">{{row.title}}: <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ><br></span>
+    <span ng-if="row.type === 'radio'">{{row.title}}: 
+      <span ng-repeat="option in row.value"><input  type="radio" ng-model="form[row.fieldname]" value={{option.val}} />{{option.label}}</span>
+      <br>
+    </span>
+    <span ng-if="row.type === 'select'">{{row.title}}:
+      <select ng-model="form[row.fieldname]">
+        <option ng-repeat="option in row.value" value={{option}}>{{option}}</option>
+      </select>
+      <br>
+    </span>
+  </span>
+  <input type="submit" ng-click="Submit(form)" value="Save" />
+</form>

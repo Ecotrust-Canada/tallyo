@@ -1,13 +1,8 @@
-<div ng-controller="harsamPackingCtrl" ng-init = "init({'po_number':'', 'customer': '', 'bill_of_lading':'', 'vessel_name':'', 'container_number':''}, 'shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
+<div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
   <div class="section">
-    <form>
-      P.O Number: <input type="text" ng-model="form.po_number" ><br>
-      Customer: <input type="text" ng-model="form.customer" ><br>
-      Bill of Lading: <input type="text" ng-model="form.bill_of_lading" ><br>
-      Vessel Name: <input type="text" ng-model="form.vessel_name" ><br>
-      Container Number: <input type="text" ng-model="form.container_number" ><br>
-      <input type="button" ng-click="ContainerEntry(form)" value="Create Shipping Entry" />
-    </form>
+    <div ng-controller="formCtrl" ng-init="init('shipping', 'shipping_unit', 'ship_units')">
+      <createform></createform>
+    </div>
   </div>
   <div class="section">
     <form>
@@ -21,13 +16,13 @@
     </select>
     <table>
       <tr>
-        <td>P.O. Number: {{container.po_number}}</td>
-        <td>Customer: {{container.customer}}</td>
-        <td>Bill of Lading: {{container.bill_of_lading}}</td>
+        <td>P.O. Number: {{current[0].po_number}}</td>
+        <td>Customer: {{current[0].customer}}</td>
+        <td>Bill of Lading: {{current[0].bill_of_lading}}</td>
       </tr>
       <tr>
-        <td>Vessel Name: {{container.vessel_name}}</td>
-        <td>Container Number: {{container.container_number}}</td>
+        <td>Vessel Name: {{current[0].vessel_name}}</td>
+        <td>Container Number: {{current[0].container_number}}</td>
       </tr>
     </table>
       <div class="block verticalLine">
