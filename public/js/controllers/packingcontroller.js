@@ -5,7 +5,6 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('PackingCtrl', function($scope, $http, $injector, DatabaseServices) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
 
   $scope.init = function(table, fk, view, name, obj){
@@ -18,7 +17,10 @@ angular.module('scanthisApp.packingController', [])
       }
     });
 
-    $scope.GetEntries(view, name);
+    var func = function(response){
+      $scope[name] = response.data;
+    };
+    DatabaseServices.GetEntries(view, func);
 
 
     $scope.ContainerFromId = function(id){

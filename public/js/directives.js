@@ -20,12 +20,14 @@ angular.module('scanthisApp.directives', [])
 .directive('reprint', function() {
   return {
     templateUrl: 'htmlpartials/reprint.html',
-    controller: function($scope, $injector) {
-        $injector.invoke(BaseCtrl, this, {$scope: $scope});
+    controller: function($scope, $injector, DatabaseServices) {
 
         $scope.ListAllItems = function(station_id){
             var query = '?station_id=eq.' + station_id;
-            $scope.GetEntries('item', 'items', query);
+            var func = function(response){
+              $scope.items = response.data;
+            };
+            DatabaseServices.GetEntries('item', func, query);
           };
 
         $scope.ListAllItems($scope.station_id);        

@@ -69,5 +69,21 @@ angular.module('scanthisApp.factories', [])
   };
 
 
+  factory.GetEntries = function(table, func, querystring){
+    var url;
+    if (querystring){
+      url = databaseurl + table + querystring;
+    }
+    else{
+      url = databaseurl + table;
+    }
+    $http.get(url).then(function(response){
+      func(response);
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+
   return factory;
 });

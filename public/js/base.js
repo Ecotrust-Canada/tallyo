@@ -7,6 +7,7 @@ angular.module('scanthisApp', [
   'scanthisApp.routing',
   'scanthisApp.filters',
   'scanthisApp.factories',
+  
   'scanthisApp.formController',
   'scanthisApp.itemController',
   'scanthisApp.packingController',

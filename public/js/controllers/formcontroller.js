@@ -4,7 +4,6 @@
 angular.module('scanthisApp.formController', [])
 
 .controller('formCtrl', function($scope, $http, $injector, DatabaseServices) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
   $scope.init = function(jsonname, table, name){
 
@@ -13,17 +12,7 @@ angular.module('scanthisApp.formController', [])
 
     var entry = table + '_entry';
 
-    $http.get(jsonform).success(function(data) {
-      $scope.formarray = data.fields;
-      $scope.form = {};
-      $scope.ClearForm();
-    });
-
-    $http.get(jsonentry).success(function(data) {
-      $scope[entry] = data;
-    });
-
-    $scope.ClearForm = function(){
+    var ClearForm = function($scope){
       for (var i=0;i<$scope.formarray.length;i++){
         if ($scope.formarray[i].type === 'text'){
           $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
@@ -34,9 +23,21 @@ angular.module('scanthisApp.formController', [])
       }
     };
 
+    $http.get(jsonform).success(function(data) {
+      $scope.formarray = data.fields;
+      $scope.form = {};
+      ClearForm($scope);
+    });
+
+    $http.get(jsonentry).success(function(data) {
+      $scope[entry] = data;
+    });
+
+    
+
     $scope.ToDatabase = function(){
       var func = function(response){
-        $scope.Clear(entry);
+        Clear(entry, $scope);
         $scope[name].push(response.data);
         if ($scope.current){
           $scope.current[0] = response.data;
@@ -52,7 +53,7 @@ angular.module('scanthisApp.formController', [])
     $scope.Submit = function(form){
       if ($scope[entry].packing_date === ''){$scope[entry].packing_date = moment(new Date()).format();}
       if ($scope[entry].best_before_date === '') {$scope[entry].best_before_date = moment(new Date()).add(2, 'years').format();}
-      $scope.MakeEntry(form, entry);
+      MakeEntry(form, entry, $scope);
       $scope.ToDatabase();
     };
 

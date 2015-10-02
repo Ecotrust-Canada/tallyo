@@ -4,7 +4,6 @@
 angular.module('scanthisApp.createlotController', [])
 
 .controller('CreateLotCtrl', function($scope, $http, $injector, DatabaseServices) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
   $scope.stage_id = 2;
 
   $scope.SupplierFromLotNumber = function(lot_number){

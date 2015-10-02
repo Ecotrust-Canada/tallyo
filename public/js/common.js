@@ -151,3 +151,27 @@ var InitShowSummary = function($scope){
     $scope.view_summary = "view summary";
 };
 
+
+var ClearForm = function($scope){
+    $scope.form = null;
+  };
+
+var ClearEntry = function(scopevar, $scope){
+    for (var key in $scope[scopevar]){
+      if (key !== 'station_id' && key !== 'stage_id'){
+        $scope[scopevar][key] = "";
+      }
+    }
+  };
+
+var Clear = function(scopevar, $scope){
+    ClearForm($scope);
+    ClearEntry(scopevar, $scope);
+  };
+
+var MakeEntry = function(form, scopevar, $scope){
+    for (var key in form){
+        $scope[scopevar][key] = form[key];
+    }
+  };
+

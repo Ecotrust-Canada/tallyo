@@ -5,17 +5,22 @@ angular.module('scanthisApp.itemController', [])
 
 
 .controller('ItemCtrl', function($scope, $http, $injector, DatabaseServices) {
-  $injector.invoke(BaseCtrl, this, {$scope: $scope});
 
 
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
-    $scope.GetEntries('supplier_lot','lots', query);
+    var func = function(response){
+      $scope.lots = response.data;
+    };
+    DatabaseServices.GetEntries('supplier_lot', func, query);
   };
 
   $scope.ListItems = function(lot_number, station_id){
     var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    $scope.GetEntries('item', 'items', query);
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('item', func, query);
   };
 
   $scope.SupplierFromLotNumber = function(lot_number){
@@ -46,7 +51,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseItem = function(){
     var func = function(){
-      $scope.Clear('item_entry');
+      Clear('item_entry', $scope);
       $scope.ListItems($scope.currentlot, $scope.station_id);
     };
     if (NoMissingValues($scope.item_entry)){
@@ -60,7 +65,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.MakeItemEntry = function(form){
     $scope.item_entry.lot_number = $scope.currentlot;
     $scope.item_entry.timestamp = moment(new Date()).format();
-    $scope.MakeEntry(form, 'item_entry');
+    MakeEntry(form, 'item_entry', $scope);
   };
 
   /*switch between scanning and view summary*/
