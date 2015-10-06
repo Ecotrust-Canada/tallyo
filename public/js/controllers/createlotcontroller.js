@@ -4,7 +4,7 @@
 angular.module('scanthisApp.createlotController', [])
 
 .controller('CreateLotCtrl', function($scope, $http, $injector, DatabaseServices) {
-  $scope.stage_id = 2;
+  //$scope.stage_id = 2;
 
   $scope.SupplierFromLotNumber = function(lot_number){
     var func = function(response){
@@ -21,7 +21,7 @@ angular.module('scanthisApp.createlotController', [])
 
   
   /*create entry in database*/
-  $scope.DatabaseLot = function(lot_number){
+  var DatabaseLot = function(lot_number){
     var func = function(){
       $scope.currentlot = lot_number;
       $scope.SupplierFromLotNumber($scope.currentlot);
@@ -29,9 +29,8 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
   };
 
-  /*checks if there is an existing lot matching query, if not creates new one*/
   $scope.CreateLot = function(queryString, date){
-    $http.get('http://10.10.50.30:3000/lot' + queryString).then(function(response) {
+    var func = function(response){
       if (response.data.length > 0){
         $scope.currentlot = response.data[0].lot_number;
         $scope.SupplierFromLotNumber($scope.currentlot);
@@ -39,23 +38,22 @@ angular.module('scanthisApp.createlotController', [])
       else{
         var lot_number = createLotNum($scope.stage_id, date);
         $scope.MakeLotEntry(date, lot_number);
-        $scope.DatabaseLot(lot_number);     
+        DatabaseLot(lot_number);  
       }
-    }, function(response){
-      alert(response.status);
-    });//end get lot
+    };
+    DatabaseServices.GetEntries('lot', func, queryString);
   };
 
   $scope.LotFromSupplier = function(){
-    $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
+    var func = function(response){
       var supplier_id = response.data[0].current_supplier_id;
       var date = new Date();
       var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
       $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
       $scope.CreateLot(queryString, date);
-    }, function(response){
-      alert(response.statusText);
-    });
+    };
+    var query = '?id=eq.' + $scope.stage_id;
+    DatabaseServices.GetEntries('stage', func, query);
   };
 
   $scope.LotFromSupplier();

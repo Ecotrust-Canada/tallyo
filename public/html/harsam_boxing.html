@@ -1,7 +1,8 @@
 
 <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'box_id', 'recent_boxes', 'boxes', 'item')">    
-  Create Box:
-  <div class="section">
+  
+  <div class="step">
+    Create Box:<br><br>
     <div class="block">
       <div ng-controller="formCtrl" ng-init="init('box', 'box', 'boxes')">
       <createform></createform>
@@ -10,8 +11,10 @@
     </div>
     
   </div>
-  Add Loins:
-  <div class="section">
+  <br>
+  
+  <div class="step">
+    Add Items:<br><br>
     <form>
       Item Id: <input type="text" ng-model="obj_id">
       <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
@@ -21,8 +24,10 @@
       <input type="button" value="print">
     </form>
   </div>
-  Verify:
-  <div class="section">
+  <br>
+  
+  <div class="step">
+    Verify:<br><br>
     <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
       <option ng-repeat = "box in boxes">{{box.id}}</option>
     </select>
@@ -39,8 +44,14 @@
         <li>Lot Number: {{current[0].lot_number}}</li>
       </ul>
     </div>
-    <div class="block verticalLine">
-      <table>  
+    <div class="verticalLine">
+      <table>
+        <tr>
+          <td>Item id</td>
+          <td>Weight</td>
+          <td>Lot Number</td>
+          <td>Grade</td>
+        </tr>
         <tr ng-repeat="item in includeditems">
           <td>{{item.id}}</td>
           <td>{{item.weight_1}}kg</td>

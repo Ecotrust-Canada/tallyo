@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on views, and components
 angular.module('scanthisApp', [
-  'ngRoute',
+
   'scanthisApp.directives',
   'scanthisApp.routing',
   'scanthisApp.filters',
@@ -15,6 +15,11 @@ angular.module('scanthisApp', [
   'scanthisApp.setsupplierController',
   'scanthisApp.movelotController'
 ])
+
+
+
+
+
 
 .controller('SetStation', function($scope, $http, $injector) {
   $scope.init = function(station_id){

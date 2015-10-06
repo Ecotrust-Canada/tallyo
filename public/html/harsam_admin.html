@@ -1,57 +1,20 @@
+<nav>
+  <ul>
+    <li><a ui-sref="harsam_admin.receiving">Manage Suppliers</a></li>
+    <li><a ui-sref="harsam_admin.manage_lots">Manage Lots</a></li>
+  </ul>
+</nav>
 
-<div class="sidebar" >
-
-</div>
-
-<div class="main">
-
-  <div id="receiving" class="step" ng-controller="SetSupplierCtrl">
-    <div class="block">
-      <img src="../../images/fishing-boat-clip-art-160929.jpg" height="200" width="200">
-    </div>
-    <div class="block">
-      <h1>............Receiving......</h1>
-      <p>Supplier: {{currentsupplier[0].supplier}}</p>
-      <p>Fleet: {{currentsupplier[0].fleet_vessel}}</p>
-    </div>
-
-    <supplierlist></supplierlist>
-
-    <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
-      <createform></createform>
-    </div>
-    
-
-  </div>
-
-  <div id="processing" class="step">
-    <div class="block">
-      <br>
-      <br>
-      <img src="../../images/fish_outline_clip_art_6845.jpg" height="100" width="200">
-    </div>
-    <div class="block">
-      <h1>..........Manage Lots......</h1>
-    </div>
-
-    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(2, 3, 'Move to Retouching', 'Receiving')">
-      <movelot></movelot>
-    </div>
-
-    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(3, 4, 'Move to Packing', 'Retouching')">
-      <movelot></movelot>
-    </div>
-
-    <div class="table" ng-controller="MoveLotCtrl" ng-init="init(4, 5, 'Mark Shipped', 'Packing')">
-      <movelot></movelot>
-    </div>
-
-
-  </div>
+<div ui-view></div>
 
 
 
-</div>
+  
+
+  
+
+
+
 
 
 

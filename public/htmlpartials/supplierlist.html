@@ -16,14 +16,29 @@
       <td>{{supplier.fleet_vessel}}</td>
       <td>{{supplier.species_common}}</td>
       <td>{{supplier.fair_trade|isfairtrade}}</td>
-      <td><div class="button" ng-click="PatchStageWithSupplier(supplier.id)"><p>Set Current</p></div></td>
+      <td><button ng-click="PatchStageWithSupplier(supplier.id)">Set Current</button></td>
     </tr>
-    <tr ng-if="supplier.expanded">
-      <td colspan="3">{{supplier.species_common}}</td>
+    <tr ng-if-start="supplier.expanded">
+      <td></td>
+      <td colspan="3">Latin name: {{supplier.species_latin}}</td>
+      <td colspan="3">Fishing Area: {{supplier.fishing_area}}</td>
     </tr>
-    <tr ng-if="supplier.expanded" ng-repeat-end="">
-      <td colspan="3">{{supplier.species_latin}}</td>
+    <tr>
+      <td></td>
+      <td colspan="3">State: {{supplier.state}}</td>
+      <td colspan="3">Landing Location: {{supplier.landing_location}}</td>
     </tr>
+    <tr>
+      <td></td>
+      <td colspan="3">Handling: {{supplier.handling}}</td>
+      <td colspan="3">Country of Origin: {{supplier.country_origin}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="3">Fishing Method: {{supplier.fishing_method}}</td>
+      <td colspan="3">Country of Production: {{supplier.country_production}}</td>
+    </tr>
+    <tr ng-if-end ng-repeat-end=""></tr>
   </table>
   <hr>
 </div>

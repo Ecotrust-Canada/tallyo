@@ -1,16 +1,21 @@
 <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
-  <div class="section">
+  <div class="step">
+    Create Shipping Entry:<br><br>
     <div ng-controller="formCtrl" ng-init="init('shipping', 'shipping_unit', 'ship_units')">
       <createform></createform>
     </div>
   </div>
-  <div class="section">
+  <br>
+  <div class="step">
+    Add Boxes: <br><br>
     <form>
       Box ID: <input type="text" ng-model="obj_id">
       <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
     </form>
   </div>
-  <div class="section">
+  <br>
+  <div class="step">
+    Review: <br><br>
     <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
       <option ng-repeat = "ship in ship_units">{{ship.id}}</option>
     </select>
@@ -26,7 +31,13 @@
       </tr>
     </table>
       <div class="block verticalLine">
-      <table>  
+      <table>
+        <tr>
+          <td>Box id</td>
+          <td>weight</td>
+          <td>lot number</td>
+          <td>FT box number</td>
+        </tr>  
         <tr ng-repeat="box in includeditems">
           <td>{{box.id}}</td>
           <td>{{box.weight}}kg</td>

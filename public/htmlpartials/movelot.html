@@ -13,7 +13,9 @@
     <td>{{lot.start_date|stringtodate|date:format:"MMM dd"}} - {{lot.end_date|stringtodate|date:format:"MMM dd"}}</td>
     <td><button ng-click="PatchLotWithStage(lot.lot_number)">{{ label }}</button></td>
   </tr>
-  <tr ng-if="lot.expanded" ng-repeat-end="">
-    <td colspan="3">something here!</td>
+  <tr ng-if-start="lot.expanded">
+    <td></td>
+    <td colspan = "2">Lot Number: {{lot.lot_number}}<td>
   </tr>
+  <tr ng-if-end ng-repeat-end=""></tr>
 </table>

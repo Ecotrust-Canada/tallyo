@@ -2,11 +2,15 @@
 
 <div ng-controller="SetStage" ng-init="init(3)">
   <div ng-controller="SetStation" ng-init="init(3)">
-    <div class = "wrapper" ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
-      <selectlot></selectlot><br>
-      <div><makeitem></makeitem><summaryblock></summaryblock></div>
-    </div>
-    <reprint></reprint>
+    <nav>
+      <ul>
+        <li><a ui-sref="harsam_retouching.main">Main</a></li>
+        <li><a ui-sref="harsam_retouching.reprint">Reprint Label</a></li>
+      </ul>
+    </nav>
+
+    
+    <div ui-view></div>
   </div>
 </div>
 

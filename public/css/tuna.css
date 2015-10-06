@@ -1,24 +1,18 @@
-.wrapper{
-  margin: 0 auto;
-}
-.admin{
-  height: 60px;
-  width: 100%;
-  outline: solid 3px;
-}
+
 .outline{ 
   width: 425px;
   display: inline-block;
-  vertical-align: top;  
+  vertical-align: top;
+  box-shadow: 0 0 0 2pt;
+  border-radius: 10px; 
 }
 .summary{
   height:550px;
   overflow: scroll;
-  outline: solid 3px;
+  
 }
 .input{
   height:550px;
-  outline: solid 3px;
 }
 
 .section{
@@ -37,10 +31,9 @@
 
 .view{
   background-color: #454A4A;
-  color: #737373;;
+  color: white;
   width: 190px;
-  height: 70px;
-  padding-left: 5px;
+  padding: 15px;
   box-shadow: 3px 3px 2px #737373;
 }
 .view:hover{
@@ -59,81 +52,23 @@
 }
 
 
-.sidebar{
-  background-color: #08736C;
-  position: absolute;
-  top:85px;
-  bottom:0;
-  width: 150px;
-  z-index: -1;
-}
-.sidebar a{
-  z-index: 100;
-}
-
-.main {
-  background-color: #B9C4C4;
-  width: 70%;
-  margin-left:215px;
-  border-radius: 20px;
-  padding-top: 50px;
-  overflow: scroll;
-  height: 87vh;
-}
 .step{
-  width: 600px;
+  display:inline-block;
   background-color: white;
   border-radius: 30px;
   box-shadow: 5px 5px 3px #616363;
   margin-left: 50px;
-  margin-bottom: 450px;
-  padding-top: 20px;
-  padding-left: 15px;
-  padding-bottom: 20px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  padding: 30px;
 }
-.table{
-  padding-left: 20px;
-}
-
-
-
-
-
-.button{
-    background-color: #8DA6F2;
-    color: #454746;
-    text-align: center;
-    vertical-align: center;
-    box-shadow: 2px 2px 1px #737373;
-    border-radius: 5px;
-    padding: 5px;
-    width: 100px;
-    margin-bottom: 3px;
-}
-
-.button p{
-    color:#454746;
-    text-decoration: none;
-    margin: 0 0 0 0;
-}
-.button p:hover{
-    color: white;
-}
-
-.selectlot{
-    margin-top: 50px;
-    margin-left: 300px;
-    color:#454746;
-    display: inline-block;
-}
-
 
 body{
-    font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
+    font-family: "proxima-nova-1", Verdana, sans-serif;
     font-size: 20px;
     margin: 0 0 0 0;
     height: 100%;
-    padding-left: 50px;
+    background-color: #707E8C;
 }
 h1{
     margin: 0 0 0 0;
@@ -143,8 +78,6 @@ h1{
 tr{
     height: 30px;
 }
-
-
 
 th{
     font-size: 18px;
@@ -174,6 +107,7 @@ nav ul ul {
 
     nav ul li:hover > ul {
         display: block;
+        z-index: 1000;
     }
 nav ul {
     background: #efefef; 
@@ -301,6 +235,9 @@ ul{
   list-style-type: none;
   font-size: 18px;
 }
+
+
+
 
 
 

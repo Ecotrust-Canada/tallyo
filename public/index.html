@@ -11,6 +11,7 @@
       <script type="text/javascript" src="bower_components/moment/moment.js"></script>
       <script type="text/javascript" src="bower_components/async/lib/async.js"></script>
       <script type="text/javascript" src="bower_components/functional.js/functional.js"></script>
+      <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 
       <script src="js/common.js"></script>      
@@ -34,19 +35,18 @@
     <body>
          <nav>
             <ul>
-                <!--<li><a href="#/home">Home</a></li>-->
-                <li><a href="#/harsam">HarSam</a>
+                <li><a>HarSam</a>
                     <ul>
-                        <li><a href="#/harsam_receiving">Station 1</a></li>
-                        <li><a href="#/harsam_retouching">Station 2</a></li>
-                        <li><a href="#/harsam_admin">Admin</a></li>
-                        <li><a href="#/harsam_boxing">Packing</a></li>
-                        <li><a href="#/harsam_shipping">Shipping</a></li>
+                        <li><a ui-sref="harsam_receiving">Station 1</a></li>
+                        <li><a ui-sref="harsam_retouching.main">Station 2</a></li>
+                        <li><a ui-sref="harsam_admin.receiving">Admin</a></li>
+                        <li><a ui-sref="harsam_boxing">Packing</a></li>
+                        <li><a ui-sref="harsam_shipping">Shipping</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
         
-        <div ng-view></div>
+        <div ui-view></div>
     </body>
 </html>

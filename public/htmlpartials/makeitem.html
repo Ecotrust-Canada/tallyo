@@ -3,6 +3,7 @@
     {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
     {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}
   </div>
+  <hr>
   <div class = "input">
     <form class = "form">
       <span ng-if="fields.weight_1">{{fields.weight_1}}: <input type="number" ng-model="$parent.form.weight_1">kg<br><br></span>
