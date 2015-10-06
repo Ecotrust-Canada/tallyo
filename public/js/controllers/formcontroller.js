@@ -3,15 +3,23 @@
 
 angular.module('scanthisApp.formController', [])
 
-.controller('formCtrl', function($scope, $http, $injector, DatabaseServices) {
+.controller('formCtrl', function($scope, $http, DatabaseServices) {
+  /*
+   *
+   *Creates and submits a form for a new database row using two json files
+   *
+   */
 
   $scope.init = function(jsonname, table, name){
 
+
+    /*define urls to get entry json and form info*/
     var jsonentry = '../json/' + jsonname + 'entry.json';
     var jsonform = '../json/' + jsonname + 'form.json';
 
     var entry = table + '_entry';
 
+    /*resets the form to default values*/
     var ClearForm = function($scope){
       for (var i=0;i<$scope.formarray.length;i++){
         if ($scope.formarray[i].type === 'text'){
@@ -22,6 +30,8 @@ angular.module('scanthisApp.formController', [])
         }
       }
     };
+
+    /*Get the entry and form info from json files*/
 
     $http.get(jsonform).success(function(data) {
       $scope.formarray = data.fields;
@@ -34,7 +44,7 @@ angular.module('scanthisApp.formController', [])
     });
 
     
-
+    /*submits the form to the database*/
     $scope.ToDatabase = function(){
       var func = function(response){
         Clear(entry, $scope);
@@ -49,7 +59,7 @@ angular.module('scanthisApp.formController', [])
       else{ alert("empty"); }  
     };
 
-
+    /*fills in entry json obj from form, sends to database*/
     $scope.Submit = function(form){
       if ($scope[entry].packing_date === ''){$scope[entry].packing_date = moment(new Date()).format();}
       if ($scope[entry].best_before_date === '') {$scope[entry].best_before_date = moment(new Date()).add(2, 'years').format();}

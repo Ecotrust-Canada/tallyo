@@ -4,9 +4,22 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ItemCtrl', function($scope, $http, $injector, DatabaseServices) {
+.controller('ItemCtrl', function($scope, $http, DatabaseServices) {
 
+  /*
+   *
+   *Creating new entries in item table by weighing, grading fish etc.
+   *Several parameters including whether to print label
+   *
+   *Includes functionality for selecting lot from dropdown
+   *
+   */
 
+  /*
+   *Selecting current lot from drop down
+   */
+
+  /*list the available lots for the current stage*/
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
     var func = function(response){
@@ -15,14 +28,7 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntries('supplier_lot', func, query);
   };
 
-  $scope.ListItems = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    var func = function(response){
-      $scope.items = response.data;
-    };
-    DatabaseServices.GetEntries('item', func, query);
-  };
-
+  /*Gets the supplier given the selected lot number*/
   $scope.SupplierFromLotNumber = function(lot_number){
     var func = function(response){
       $scope.supplier_lot = response.data[0];
@@ -31,6 +37,7 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntry('supplier_lot', func, query);
   };
 
+  /*Sets the current lot number for the stage*/
   $scope.PatchStageWithLot = function(lot_number){
     var func = function(response){
       $scope.currentlot = lot_number;
@@ -41,6 +48,23 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.PatchEntry('stage', patch, query, func);
   };
 
+  /*
+   *Creating items
+   */
+
+
+  /*displays items in the summary table*/
+  $scope.ListItems = function(lot_number, station_id){
+    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('item', func, query);
+  };
+
+  
+
+  /*removes an item from the database*/
   $scope.RemoveItem = function(item_id){
     var query = '?id=eq.' + item_id;
     var func = function(){
@@ -49,6 +73,7 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.RemoveEntry('item', query, func);
   };
 
+  /*creates a new row in the database, item table*/
   $scope.DatabaseItem = function(){
     var func = function(){
       Clear('item_entry', $scope);
@@ -61,7 +86,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
-  /*fill in entry fields*/
+  /*fills in fields in json to submit to database*/
   $scope.MakeItemEntry = function(form){
     $scope.item_entry.lot_number = $scope.currentlot;
     $scope.item_entry.timestamp = moment(new Date()).format();
@@ -82,11 +107,7 @@ angular.module('scanthisApp.itemController', [])
     }
   };
 
-
-
-
-
-
+  /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
     $scope.item_entry = {'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
     $scope.fields = fields;
@@ -106,14 +127,6 @@ angular.module('scanthisApp.itemController', [])
     $scope.$watch('currentlot', function(newValue, oldValue) {
       $scope.ListItems(newValue, $scope.station_id);
     });
-
-
-
-
-
-
-
-
 
 
   };

@@ -1,4 +1,5 @@
-<div id="receiving" class="step" ng-controller="SetSupplierCtrl">
+<div ng-controller="SetStage" class="step" ng-init="init(2)">
+  <div ng-controller="SetSupplierCtrl">  
     <div class="block">
       <img src="../../images/fishing-boat-clip-art-160929.jpg" height="200" width="200">
     </div>
@@ -9,8 +10,8 @@
     </div>
 
     <supplierlist></supplierlist>
-
-    <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
-      <createform></createform>
-    </div>
   </div>
+  <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
+    <createform></createform>
+  </div>
+</div>

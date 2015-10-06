@@ -13,21 +13,23 @@ angular.module('scanthisApp', [
   'scanthisApp.packingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
-  'scanthisApp.movelotController'
+  'scanthisApp.movelotController',
 ])
 
 
 
 
+/*
+ *Controllers used on most pages to set station and stage
+ */
 
-
-.controller('SetStation', function($scope, $http, $injector) {
+.controller('SetStation', function($scope, $http) {
   $scope.init = function(station_id){
     $scope.station_id = station_id;
   };
 })
 
-.controller('SetStage', function($scope, $http, $injector) {
+.controller('SetStage', function($scope, $http) {
   $scope.init = function(stage_id){
     $scope.stage_id = stage_id;
   };

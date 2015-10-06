@@ -3,8 +3,15 @@
 
 angular.module('scanthisApp.movelotController', [])
 
-.controller('MoveLotCtrl', function($scope, $http, $injector, DatabaseServices) {
+.controller('MoveLotCtrl', function($scope, $http, DatabaseServices) {
+  /*
+   *
+   *Plant manager records stage/location of each lot within plant
+   *
+   */
 
+
+  /*list lots for a stage*/
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
     var func = function(response){
@@ -13,6 +20,7 @@ angular.module('scanthisApp.movelotController', [])
     DatabaseServices.GetEntries('supplier_lot', func, query);
   };
 
+  /*change stage on lot*/
   $scope.PatchLotWithStage = function(lot_number){
     var func = function(response){
       $scope.ListLots($scope.from_stage);
@@ -22,6 +30,7 @@ angular.module('scanthisApp.movelotController', [])
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
+  /*initialize with stages and labels, refresh button*/
   $scope.init = function(from_stage, to_stage, label, title){
     $scope.from_stage = from_stage;
     $scope.to_stage = to_stage;

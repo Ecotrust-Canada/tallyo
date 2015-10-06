@@ -1,6 +1,7 @@
 'use strict';
 
 /*period defaults to day*/
+/*creates a start date and end date from input date and period*/
 var dateManipulation = function(date, period){
     if (period !== 'day' && period !== 'week'){
         period = 'day';
@@ -49,7 +50,7 @@ var LotQuery = function(params){
     return queryString;
   };
 
-
+/*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){
     if (date > start_date && date < end_date){
         return true;
@@ -57,7 +58,7 @@ var DateRangeCurrent = function(date, start_date, end_date){
     return false;
 };
 
-
+/*checks that a json object has no "" values*/
 var NoMissingValues = function(jsonobj){
     for (var key in jsonobj) {
       if (jsonobj.hasOwnProperty(key)) {
@@ -69,6 +70,7 @@ var NoMissingValues = function(jsonobj){
     return true;
 };
 
+/*checks that a json objects doesn't have all "" values*/
 var NotEmpty = function(jsonobj){
     for (var key in jsonobj) {
       if (jsonobj.hasOwnProperty(key)) {
@@ -81,7 +83,7 @@ var NotEmpty = function(jsonobj){
 };
 
 
-
+/*checks if a json object with id parameter is in an array*/
 var idNotInArray = function(array, id){
     for (var i=0;i<array.length;i++){
         if (String(array[i].id) === String(id)){
@@ -91,6 +93,7 @@ var idNotInArray = function(array, id){
     return true;
 };
 
+/*removes object with given id from array*/
 var removeFromArray = function(array, id){
     for (var i=0;i<array.length;i++){
         if (String(array[i].id) === String(id)){
@@ -100,7 +103,7 @@ var removeFromArray = function(array, id){
     return array;
 };
 
-
+/*checks if a value is in an array*/
 var valueNotInArray = function(array, value){
     for (var i=0;i<array.length;i++){
         if (String(array[i]) === String(value)){
@@ -110,14 +113,14 @@ var valueNotInArray = function(array, value){
     return true;
 };
 
-
+/*assigns results from date manipulation to scope*/
 var CreateEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
     $scope.lot_entry.start_date = dates.start_date;
     $scope.lot_entry.end_date = dates.end_date;
   };
 
-
+/*sums weights of all objects in array*/
 var CalculateBoxWeight = function(array){
     var totalweight = 0;
     for (var i=0;i<array.length;i++){
@@ -126,7 +129,7 @@ var CalculateBoxWeight = function(array){
     return totalweight;
 };
 
-
+/*box lot number is mode of all item lot numbers*/
 var GetBoxLotNumber = function(arr) {
     var lotarray = fjs.pluck("lot_number", arr);
     var numMapping = {};
@@ -144,18 +147,19 @@ var GetBoxLotNumber = function(arr) {
 };
 
 
-
+/*initialize display of scan/summary table*/
 var InitShowSummary = function($scope){
     $scope.showScan = true;
     $scope.showSummary = false;
     $scope.view_summary = "view summary";
 };
 
-
+/*clear a form*/
 var ClearForm = function($scope){
     $scope.form = null;
   };
 
+/*clear an entry*/
 var ClearEntry = function(scopevar, $scope){
     for (var key in $scope[scopevar]){
       if (key !== 'station_id' && key !== 'stage_id'){
@@ -164,11 +168,14 @@ var ClearEntry = function(scopevar, $scope){
     }
   };
 
+
+/*clear form and entry*/
 var Clear = function(scopevar, $scope){
     ClearForm($scope);
     ClearEntry(scopevar, $scope);
   };
 
+/*fill in fields in entry*/
 var MakeEntry = function(form, scopevar, $scope){
     for (var key in form){
         $scope[scopevar][key] = form[key];

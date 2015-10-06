@@ -4,7 +4,14 @@
 angular.module('scanthisApp.packingController', [])
 
 
-.controller('PackingCtrl', function($scope, $http, $injector, DatabaseServices) {
+.controller('PackingCtrl', function($scope, $http, DatabaseServices) {
+  /*
+   *
+   *creating a 'container' and assigning other objects as being in container
+   *
+   *Items in boxes and boxes in shipments
+   *
+   */
 
 
   $scope.init = function(table, fk, view, name, obj){
@@ -22,7 +29,7 @@ angular.module('scanthisApp.packingController', [])
     };
     DatabaseServices.GetEntries(view, func);
 
-
+    /*get container object from selected id*/
     $scope.ContainerFromId = function(id){
       var func = function(response){
         $scope.current[0] = response.data[0];
@@ -31,6 +38,7 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.GetEntry(table, func, query);
     };
 
+    /*list all the items in a given container*/
     $scope.ListContainerItems = function(id){
       var func = function(response){
         $scope.includeditems = [];
@@ -39,20 +47,23 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       var query = '?' + fk + '=eq.' + id;
-      DatabaseServices.GetEntriesReturn(obj, func, query);
+      DatabaseServices.GetEntries(obj, func, query);
     };
 
+    /*select a previous container form drop down*/
     $scope.CurrentContainer = function(id){
       $scope.ContainerFromId(id);
       $scope.ListContainerItems(id);
     };
 
+    /*calculate the weight and lot_number of a box*/
     $scope.CalcBox = function(){
       var box_weight = CalculateBoxWeight($scope.includeditems);
       var lot_num = GetBoxLotNumber($scope.includeditems);
       $scope.PatchBoxWithWeightLot(box_weight, lot_num);
     };
 
+    /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
     $scope.PutObjInContainer = function(id){
       var func = function(response){
         if (response.data[0][fk] && response.data[0][fk] != $scope.current[0].id){
@@ -76,6 +87,7 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.GetEntry(obj, func, query);
     };
 
+    /*writes the foreignkey of the object, adds object to list*/
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
         $scope.obj_id = null;
@@ -89,6 +101,7 @@ angular.module('scanthisApp.packingController', [])
       }
     };
 
+    /*remove an object from a acontainer*/
     $scope.PatchObjRemoveContainer = function(id){
       var func = function(response){
         $scope.includeditems = removeFromArray($scope.includeditems, id);
@@ -99,6 +112,7 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.PatchEntry(obj, patch, query, func);
     };
 
+    /*adds final info to box*/
     $scope.PatchBoxWithWeightLot = function(box_weight, lot_num){
       var func = function(response){
         $scope.current[0] = response.data[0];
