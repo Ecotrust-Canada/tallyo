@@ -21,6 +21,7 @@ angular.module('scanthisApp.itemController', [])
 
   /*list the available lots for the current stage*/
   $scope.ListLots = function(stage_id){
+    console.log("listlots");
     var query = '?stage_id=eq.' + stage_id;
     var func = function(response){
       $scope.lots = response.data;
@@ -30,6 +31,7 @@ angular.module('scanthisApp.itemController', [])
 
   /*Gets the supplier given the selected lot number*/
   $scope.SupplierFromLotNumber = function(lot_number){
+    console.log("supplierfromlotnumber");
     var func = function(response){
       $scope.supplier_lot = response.data[0];
     };
@@ -39,10 +41,9 @@ angular.module('scanthisApp.itemController', [])
 
   /*Sets the current lot number for the stage*/
   $scope.PatchStageWithLot = function(lot_number){
+    console.log("patchstagewithlot");
     var func = function(response){
       $scope.currentlot = lot_number;
-      //$scope.SupplierFromLotNumber($scope.currentlot);
-      //$scope.CurrentLot();
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
@@ -52,25 +53,29 @@ angular.module('scanthisApp.itemController', [])
 
 
 
-
+  /*supplier information from lot number*/
   $scope.SupplierFromLotNumber = function(lot_number){
+    console.log("supplierfromlotnumber");
     var func = function(response){
       $scope.supplier_lot = response.data[0];
-      $scope.PatchStageWithLot(lot_number);
+      $scope.ListItems($scope.supplier_lot.lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
     DatabaseServices.GetEntry('supplier_lot', func, query);
   };
 
+  /*gets lot number from stage*/
   $scope.CurrentLot = function(){
+    console.log("currentlot");
     var func = function(response){
       $scope.SupplierFromLotNumber(response.data[0].current_lot_number);
+      $scope.currentlot = response.data[0].current_lot_number;
     };
     var query = '?id=eq.' + $scope.stage_id;
     DatabaseServices.GetEntries('stage', func, query);
   };
 
-  $scope.CurrentLot();
+  //$scope.CurrentLot();
 
   /*
    *Creating items
@@ -149,7 +154,6 @@ angular.module('scanthisApp.itemController', [])
     $scope.ListLots($scope.stage_id);
 
     $scope.$watch('currentlot', function(newValue, oldValue) {
-      $scope.ListItems(newValue, $scope.station_id);
       $scope.CurrentLot();
     });
 
