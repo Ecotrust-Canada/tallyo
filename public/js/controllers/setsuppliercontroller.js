@@ -22,16 +22,11 @@ angular.module('scanthisApp.setsupplierController', [])
 
   /*show selected supplier*/
   $scope.GetCurrentSupplier = function(){
-    $http.get('http://10.10.50.30:3000/stage?id=eq.' + $scope.stage_id).then(function(response){
-      var supplier_id = response.data[0].current_supplier_id;
-      var query = '?id=eq.' + supplier_id;
-      var func = function(response){
-        $scope.currentsupplier = response.data;
-      };
-      DatabaseServices.GetEntries('supplier', func, query);
-    }, function(response){
-    });
-    
+    var func = function(response){
+      $scope.currentsupplier = response.data;
+    };
+    var query = '?stage_id=eq.' + $scope.stage_id;
+    DatabaseServices.GetEntries('supplier_stage', func, query);
   };
 
   /*assign one as current*/
@@ -45,6 +40,10 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.GetCurrentSupplier();
+
+  /*$scope.$watch('currentlot', function(newValue, oldValue) {
+      $scope.ListItems(newValue, $scope.station_id);
+    });*/
 
 
 });

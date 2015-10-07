@@ -60,7 +60,8 @@ angular.module('scanthisApp.packingController', [])
     $scope.CalcBox = function(){
       var box_weight = CalculateBoxWeight($scope.includeditems);
       var lot_num = GetBoxLotNumber($scope.includeditems);
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num);
+      var num = $scope.includeditems.length;
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
     };
 
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
@@ -113,11 +114,11 @@ angular.module('scanthisApp.packingController', [])
     };
 
     /*adds final info to box*/
-    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num){
+    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num){
       var func = function(response){
         $scope.current[0] = response.data[0];
       };
-      var patch = {'weight': box_weight, 'lot_number': lot_num};
+      var patch = {'weight': box_weight, 'lot_number': lot_num, 'num_loins': num};
       var query = '?id=eq.' + $scope.current[0].id;
       DatabaseServices.PatchEntry('box', patch, query, func);
     };

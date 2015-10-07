@@ -3,4 +3,8 @@
 "grade":"", 
 "lot_number":"", 
 "packing_date": "", 
-"best_before_date":""}
+"best_before_date":"",
+"prod_date_code":"",
+"process_location":""
+
+}

@@ -8,10 +8,9 @@
       <p>Supplier: {{currentsupplier[0].supplier}}</p>
       <p>Fleet: {{currentsupplier[0].fleet_vessel}}</p>
     </div>
-
-    <supplierlist></supplierlist>
-  </div>
-  <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
-    <createform></createform>
+    <supplierlist></supplierlist>  
+    <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
+      <createform></createform>
+    </div>
   </div>
 </div>

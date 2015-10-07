@@ -39,9 +39,12 @@
         <li>Grade: {{current[0].grade}}</li>
         <li>Packing Date: {{current[0].packing_date | stringtodate |date : format : shortDate}}</li>
         <li>Best Before Date: {{current[0].best_before_date}}</li>
+        <li>Production Date Code: {{current[0].prod_date_code}}</li>
+        <li>Processing Location: {{current[0].process_location}}</li>
         <hr>
         <li>Weight: {{current[0].weight}}kg</li>
         <li>Lot Number: {{current[0].lot_number}}</li>
+        <li>Number of Pieces: {{current[0].num_loins}}</li>
       </ul>
     </div>
     <div class="verticalLine">

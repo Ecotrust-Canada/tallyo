@@ -10,5 +10,6 @@
     {"type":"text", "fieldname":"landing_location", "title":"Landing Location", "value":""},
     {"type":"text", "fieldname":"country_origin", "title":"Country of Origin", "value":"Indonesia"},
     {"type":"text", "fieldname":"country_production", "title":"Country of Production", "value":"Indonesia"},
+    {"type":"text", "fieldname":"ft_fa_code", "title":"FT FA Code", "value":""},
     {"type":"radio", "fieldname":"fair_trade", "title":"Fair Trade", "value":[{"val":"true", "label":"Yes"}, {"val":"false", "label":"No"}]}
   ]}
