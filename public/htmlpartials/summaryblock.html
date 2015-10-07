@@ -1,7 +1,8 @@
 <div class = "outline" ng-show="showSummary">
   <div class = "admin" style="font-size:20px;">
     {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
-    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}
+    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    {{supplier_lot.internal_lot_code}}
   </div>
   <hr>
   <div class = "summary">

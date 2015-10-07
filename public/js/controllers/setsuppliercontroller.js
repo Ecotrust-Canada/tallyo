@@ -65,14 +65,14 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   /*gets selected supplier, creates querystring for lot*/
-  $scope.SupplierFromStage = function(supplier_id){    
+  $scope.SupplierFromStage = function(supplier_id){  
     var date = new Date();
     var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
     $scope.CreateLot(queryString, date);
   };
 
-  //$scope.SupplierFromStage();
+
 
   $scope.LotCode = function(lot_code){
     var func = function(response){
