@@ -1,7 +1,7 @@
 <form name="myForm">
   <label for="singleSelect"> Choose Lot: </label><br>
   <select name="singleSelect" ng-model="SelectedLot" ng-change="PatchStageWithLot(SelectedLot)">
-    <option ng-repeat = "lot in lots">{{lot.lot_number}}</option>
+    <option ng-repeat = "lot in lots" value={{lot.lot_number}}>{{lot.internal_lot_code}}</option>
   </select>
 </form>
 

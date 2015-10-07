@@ -1,7 +1,8 @@
 <div class = "outline" ng-show="showScan">
   <div class = "admin" style="font-size:20px;">
     {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
-    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}
+    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    {{supplier_lot.internal_lot_code}}
   </div>
   <hr>
   <div class = "input">
@@ -21,7 +22,7 @@
       <input ng-if="options.print==='false'" type="button" ng-click="DatabaseItem()" value="Submit">
     </form>
     <ul>
-      <li ng-repeat="(key,val) in item_entry">{{key}}: {{val}}</li>
+      <li ng-repeat="(key,val) in item_entry" ng-if="key !== 'lot_number' && key !== 'stage_id' && key !== 'station_id'">{{key}}: {{val}}</li>
     </ul>
   </div>
 </div>

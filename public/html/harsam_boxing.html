@@ -43,7 +43,6 @@
         <li>Processing Location: {{current[0].process_location}}</li>
         <hr>
         <li>Weight: {{current[0].weight}}kg</li>
-        <li>Lot Number: {{current[0].lot_number}}</li>
         <li>Number of Pieces: {{current[0].num_loins}}</li>
       </ul>
     </div>
@@ -52,13 +51,13 @@
         <tr>
           <td>Item id</td>
           <td>Weight</td>
-          <td>Lot Number</td>
+          <td>Internal Lot Code</td>
           <td>Grade</td>
         </tr>
         <tr ng-repeat="item in includeditems">
           <td>{{item.id}}</td>
           <td>{{item.weight_1}}kg</td>
-          <td>{{item.lot_number}}</td>
+          <td>{{item.internal_lot_code}}</td>
           <td>{{item.grade}}</td>
           <td ng-click="PatchObjRemoveContainer(item.id)">Remove</td>
         </tr>

@@ -34,19 +34,43 @@ angular.module('scanthisApp.itemController', [])
       $scope.supplier_lot = response.data[0];
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntry('supplier_lot', func, query);
+    DatabaseServices.GetEntries('supplier_lot', func, query);
   };
 
   /*Sets the current lot number for the stage*/
   $scope.PatchStageWithLot = function(lot_number){
     var func = function(response){
       $scope.currentlot = lot_number;
-      $scope.SupplierFromLotNumber($scope.currentlot);
+      //$scope.SupplierFromLotNumber($scope.currentlot);
+      //$scope.CurrentLot();
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
     DatabaseServices.PatchEntry('stage', patch, query, func);
   };
+
+
+
+
+
+  $scope.SupplierFromLotNumber = function(lot_number){
+    var func = function(response){
+      $scope.supplier_lot = response.data[0];
+      $scope.PatchStageWithLot(lot_number);
+    };
+    var query = '?lot_number=eq.' + lot_number;
+    DatabaseServices.GetEntry('supplier_lot', func, query);
+  };
+
+  $scope.CurrentLot = function(){
+    var func = function(response){
+      $scope.SupplierFromLotNumber(response.data[0].current_lot_number);
+    };
+    var query = '?id=eq.' + $scope.stage_id;
+    DatabaseServices.GetEntries('stage', func, query);
+  };
+
+  $scope.CurrentLot();
 
   /*
    *Creating items
@@ -126,6 +150,7 @@ angular.module('scanthisApp.itemController', [])
 
     $scope.$watch('currentlot', function(newValue, oldValue) {
       $scope.ListItems(newValue, $scope.station_id);
+      $scope.CurrentLot();
     });
 
 

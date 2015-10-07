@@ -16,7 +16,7 @@
       <td>{{supplier.fleet_vessel}}</td>
       <td>{{supplier.species_common}}</td>
       <td>{{supplier.fair_trade|isfairtrade}}</td>
-      <td><button ng-click="PatchStageWithSupplier(supplier.id)">Set Current</button></td>
+      <td><button ng-click="SupplierFromStage(supplier.id)">Set Current</button></td>
     </tr>
     <tr ng-if-start="supplier.expanded">
       <td></td>

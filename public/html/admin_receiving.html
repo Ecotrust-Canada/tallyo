@@ -5,8 +5,14 @@
     </div>
     <div class="block">
       <h1>...........Manage Suppliers......</h1>
-      <p>Supplier: {{currentsupplier[0].supplier}}</p>
-      <p>Fleet: {{currentsupplier[0].fleet_vessel}}</p>
+      {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
+    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot Code:
+    <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}</span>
+    <input ng-if-start="!supplier_lot.internal_lot_code" type="text" ng-model="$parent.lot_code">
+      <input ng-if-end type="button" ng-click="LotCode(lot_code)" value="submit"><br>
+    
+
     </div>
     <supplierlist></supplierlist>  
     <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
