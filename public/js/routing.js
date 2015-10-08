@@ -2,34 +2,12 @@
 
 angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
 
-/*.config(['$routeProvider', function($routeProvider) {
-  $routeProvider
-    .when('/harsam_receiving', {
-        templateUrl: 'html/harsam_receiving.html',
-    })
-    .when('/harsam_retouching', {
-        templateUrl: 'html/harsam_retouching.html',
-    })
-    .when('/harsam_boxing', {
-        templateUrl: 'html/harsam_boxing.html',
-    })
-    .when('/harsam_admin', {
-        templateUrl: 'html/harsam_admin.html',
-    })
-    .when('/harsam_shipping', {
-        templateUrl: 'html/harsam_shipping.html',
-    })
-    
-    .otherwise({redirectTo: '/harsam_receiving'})
 
-
-    ;
-}])*/
 
 .config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/harsam_receiving");
+  $urlRouterProvider.otherwise("/harsam_admin/suppliers");
   //
   // Now set up the states
   $stateProvider

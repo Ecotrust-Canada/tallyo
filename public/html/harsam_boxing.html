@@ -2,7 +2,7 @@
 <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'box_id', 'recent_boxes', 'boxes', 'item')">    
   
   <div class="step">
-    Create Box:<br><br>
+    Create Case:<br><br>
     <div class="block">
       <div ng-controller="formCtrl" ng-init="init('box', 'box', 'boxes')">
       <createform></createform>
@@ -16,18 +16,21 @@
   <div class="step">
     Add Items:<br><br>
     <form>
-      Item Id: <input type="text" ng-model="obj_id">
+      Loin Id: <input type="text" ng-model="obj_id">
       <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-      <input type="button" ng-click="CalcBox()" value="Calculate Total Weight"><br>
+      
     </form>
-    <form>
-      <input type="button" value="print">
-    </form>
+    
   </div>
   <br>
   
   <div class="step">
     Verify:<br><br>
+    <form>
+      <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
+      <input type="button" value="print">
+    </form>
+    <br>
     <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
       <option ng-repeat = "box in boxes">{{box.id}}</option>
     </select>

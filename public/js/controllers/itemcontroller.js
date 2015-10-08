@@ -65,7 +65,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   /*gets lot number from stage*/
-  $scope.CurrentLot = function(){
+  $scope.GetCurrentLot = function(){
     console.log("currentlot");
     var func = function(response){
       $scope.SupplierFromLotNumber(response.data[0].current_lot_number);
@@ -75,7 +75,7 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntries('stage', func, query);
   };
 
-  //$scope.CurrentLot();
+
 
   /*
    *Creating items
@@ -103,7 +103,8 @@ angular.module('scanthisApp.itemController', [])
   };
 
   /*creates a new row in the database, item table*/
-  $scope.DatabaseItem = function(){
+  $scope.DatabaseItem = function(form){
+    $scope.MakeItemEntry(form);
     var func = function(){
       Clear('item_entry', $scope);
       $scope.ListItems($scope.currentlot, $scope.station_id);
@@ -154,7 +155,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.ListLots($scope.stage_id);
 
     $scope.$watch('currentlot', function(newValue, oldValue) {
-      $scope.CurrentLot();
+      $scope.GetCurrentLot();
     });
 
 

@@ -35,7 +35,7 @@ angular.module('scanthisApp.directives', [])
             var func = function(response){
               $scope.items = response.data;
             };
-            DatabaseServices.GetEntries('item', func, query);
+            DatabaseServices.GetEntries('item_lot', func, query);
           };
 
         $scope.ListAllItems($scope.station_id);        

@@ -1,6 +1,6 @@
 <div class = "outline" ng-show="showScan">
   <div class = "admin" style="font-size:20px;">
-    {{supplier_lot.supplier}} : {{supplier_lot.fleet_vessel}}<br>
+    Supplier: {{supplier_lot.supplier}} Fleet:{{supplier_lot.fleet_vessel}}<br>
     {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
     {{supplier_lot.internal_lot_code}}
   </div>
@@ -17,13 +17,22 @@
       <input type="radio" id="radio4" name="radios" ng-model="$parent.form.grade" value="D"><label for="radio4">D</label><br><br></span>
 
       <input type="button" ng-click="Clear('item_entry')" value="Clear">
-      <input type="button" ng-click="MakeItemEntry(form)" value="Review">
-      <input ng-if="options.print==='true'" type="button" ng-click="DatabaseItem()" value="Submit/Print">
-      <input ng-if="options.print==='false'" type="button" ng-click="DatabaseItem()" value="Submit">
+      <input ng-if="options.print==='true'" type="button" ng-click="DatabaseItem(form)" value="Submit/Print">
+      <input ng-if="options.print==='false'" type="button" ng-click="DatabaseItem(form)" value="Submit">
     </form>
-    <ul>
-      <li ng-repeat="(key,val) in item_entry" ng-if="key !== 'lot_number' && key !== 'stage_id' && key !== 'station_id'">{{key}}: {{val}}</li>
-    </ul>
+    <br>
+    <br>
+
+    <table class = "fill">
+      <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: item.lot_number=currentlot | limitTo:5">
+        <td ng-if="item.grade">{{item.grade}}</td>
+        <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
+        <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>
+        <td>{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
+        <td ng-click="RemoveItem(item.id)">Remove</td>
+      </tr>
+    </table>
+
   </div>
 </div>
 

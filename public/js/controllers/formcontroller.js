@@ -20,7 +20,7 @@ angular.module('scanthisApp.formController', [])
     var entry = table + '_entry';
 
     /*resets the form to default values*/
-    var ClearForm = function($scope){
+    $scope.ClearForm = function(){
       for (var i=0;i<$scope.formarray.length;i++){
         if ($scope.formarray[i].type === 'text'){
           $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
@@ -36,7 +36,7 @@ angular.module('scanthisApp.formController', [])
     $http.get(jsonform).success(function(data) {
       $scope.formarray = data.fields;
       $scope.form = {};
-      ClearForm($scope);
+      $scope.ClearForm();
     });
 
     $http.get(jsonentry).success(function(data) {
@@ -47,10 +47,12 @@ angular.module('scanthisApp.formController', [])
     /*submits the form to the database*/
     $scope.ToDatabase = function(){
       var func = function(response){
-        Clear(entry, $scope);
-        $scope[name].push(response.data);
+        //Clear(entry, $scope);
+        $scope.ClearForm();
+        var thedata = response.data;
+        $scope[name].push(thedata);
         if ($scope.current){
-          $scope.current[0] = response.data;
+          $scope.current[0] = thedata;
         }
       };
       if (NotEmpty($scope.form)){

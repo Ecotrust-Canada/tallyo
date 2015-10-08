@@ -12,17 +12,31 @@ angular.module('scanthisApp.packingController', [])
    *Items in boxes and boxes in shipments
    *
    */
+   
 
 
   $scope.init = function(table, fk, view, name, obj){
-
     $scope.includeditems = [];
     $scope.current = [];
-    $scope.$watch('current', function(newValue, oldValue) {
-      if (newValue[0]){
+    $scope.$watch(name, function() {
+      console.log("seen");
+      /*if (newValue[0]){
+        
         $scope.ListContainerItems(newValue[0].id);
-      }
+      }*/
     });
+
+    $scope.ListContainerItems = function(id){
+      var func = function(response){
+        $scope.includeditems = [];
+        for (var i in response.data){
+          $scope.includeditems.push(response.data[i]);
+        }
+      };
+      var query = '?' + fk + '=eq.' + id;
+      DatabaseServices.GetEntries(obj, func, query);
+    };
+    
 
     var func = function(response){
       $scope[name] = response.data;
@@ -39,16 +53,7 @@ angular.module('scanthisApp.packingController', [])
     };
 
     /*list all the items in a given container*/
-    $scope.ListContainerItems = function(id){
-      var func = function(response){
-        $scope.includeditems = [];
-        for (var i in response.data){
-          $scope.includeditems.push(response.data[i]);
-        }
-      };
-      var query = '?' + fk + '=eq.' + id;
-      DatabaseServices.GetEntries(obj, func, query);
-    };
+    
 
     /*select a previous container form drop down*/
     $scope.CurrentContainer = function(id){

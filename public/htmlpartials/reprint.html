@@ -5,9 +5,11 @@
     <label>Id<input ng-model="search.id"></label><br>
     <label>Weight<input ng-model="search.weight_1"></label><br>
     <label>Grade<input ng-model="search.grade"></label><br>
+    <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
     <div style="width:500px;height:500px;overflow:scroll;">
         <table class = "fill">
           <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: search">
+            <td>{{item.internal_lot_code}}</td>
             <td>{{item.id}}</td>
             <td ng-if="item.grade">{{item.grade}}</td>
             <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
