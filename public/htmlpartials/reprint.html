@@ -8,9 +8,16 @@
     <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
     <div style="width:500px;height:500px;overflow:scroll;">
         <table class = "fill">
+          <tr>
+            <td>Internal Lot code:</td>
+            <td>Loin ID</td>
+            <td colspan="2">Scan Info</td>
+            <td>timestamp</td>
+            <td></td>
+          </tr>
           <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: search">
-            <td>{{item.internal_lot_code}}</td>
-            <td>{{item.id}}</td>
+            <td>{{item.internal_lot_code ? item.internal_lot_code : item.lot_number}}</td>
+            <td>{{item.loin_id}}</td>
             <td ng-if="item.grade">{{item.grade}}</td>
             <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
             <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>

@@ -38,9 +38,9 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
       url: "/harsam_admin",
       templateUrl: 'html/harsam_admin.html',
     })
-    .state('harsam_admin.receiving', {
+    .state('harsam_admin.manage_suppliers', {
       url: "/suppliers",
-      templateUrl: "html/admin_receiving.html"
+      templateUrl: "html/admin_manage_suppliers.html"
     })
     .state('harsam_admin.manage_lots', {
       url: "/lots",

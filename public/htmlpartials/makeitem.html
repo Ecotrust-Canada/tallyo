@@ -24,11 +24,16 @@
     <br>
 
     <table class = "fill">
+      <tr>
+        <td>Loin ID</td>
+        <td colspan="2">Scan Info</td>
+        <td></td>
+      </tr>
       <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: item.lot_number=currentlot | limitTo:5">
+        <td>{{item.loin_id}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
         <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
         <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>
-        <td>{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
         <td ng-click="RemoveItem(item.id)">Remove</td>
       </tr>
     </table>

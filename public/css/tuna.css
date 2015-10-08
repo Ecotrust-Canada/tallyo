@@ -97,6 +97,9 @@ td{
     display: inline-block;
     vertical-align: top;
 }
+.rmarg{
+  margin-right: 20px;
+}
 
 
 /*nav bar */

@@ -7,6 +7,12 @@
   <hr>
   <div class = "summary">
     <table class = "fill">
+      <tr>
+        <td>Loin ID</td>
+        <td colspan="2">Scan Info</td>
+        <td>timestamp</td>
+        <td></td>
+      </tr>
       <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: item.lot_number=currentlot">
         <td>{{item.loin_id}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
