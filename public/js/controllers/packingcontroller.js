@@ -14,23 +14,18 @@ angular.module('scanthisApp.packingController', [])
    */
    
 
-
   $scope.init = function(table, fk, view, name, obj){
-    $scope.includeditems = [];
+    $scope.included = {};
+    $scope.included.items = [];
     $scope.current = [];
-    $scope.$watch(name, function() {
-      console.log("seen");
-      /*if (newValue[0]){
-        
-        $scope.ListContainerItems(newValue[0].id);
-      }*/
-    });
+    
+    
 
     $scope.ListContainerItems = function(id){
       var func = function(response){
-        $scope.includeditems = [];
+        $scope.included.items = [];
         for (var i in response.data){
-          $scope.includeditems.push(response.data[i]);
+          $scope.included.items.push(response.data[i]);
         }
       };
       var query = '?' + fk + '=eq.' + id;
@@ -63,9 +58,9 @@ angular.module('scanthisApp.packingController', [])
 
     /*calculate the weight and lot_number of a box*/
     $scope.CalcBox = function(){
-      var box_weight = CalculateBoxWeight($scope.includeditems);
-      var lot_num = GetBoxLotNumber($scope.includeditems);
-      var num = $scope.includeditems.length;
+      var box_weight = CalculateBoxWeight($scope.included.items);
+      var lot_num = GetBoxLotNumber($scope.included.items);
+      var num = $scope.included.items.length;
       $scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
     };
 
@@ -97,12 +92,12 @@ angular.module('scanthisApp.packingController', [])
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
         $scope.obj_id = null;
-        $scope.includeditems.push(response.data[0]);
+        $scope.included.items.push(response.data[0]);
       };
       var patch = {};
       patch[fk] = $scope.current[0].id;
       var query = '?id=eq.' + id;    
-      if (id && idNotInArray($scope.includeditems, id)){
+      if (id && idNotInArray($scope.included.items, id)){
         DatabaseServices.PatchEntry(obj, patch, query, func);
       }
     };
@@ -110,7 +105,7 @@ angular.module('scanthisApp.packingController', [])
     /*remove an object from a acontainer*/
     $scope.PatchObjRemoveContainer = function(id){
       var func = function(response){
-        $scope.includeditems = removeFromArray($scope.includeditems, id);
+        $scope.included.items = removeFromArray($scope.included.items, id);
       };
       var patch = {};
       patch[fk] = null;

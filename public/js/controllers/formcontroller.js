@@ -54,6 +54,9 @@ angular.module('scanthisApp.formController', [])
         if ($scope.current){
           $scope.current[0] = thedata;
         }
+        if ($scope.included){
+          $scope.included.items = [];
+        }
       };
       if (NotEmpty($scope.form)){
         DatabaseServices.DatabaseEntryReturn(table, $scope[entry], func);
