@@ -8,6 +8,7 @@
   <div class = "summary">
     <table class = "fill">
       <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: item.lot_number=currentlot">
+        <td>{{item.loin_id}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
         <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
         <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>
