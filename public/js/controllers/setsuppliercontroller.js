@@ -10,6 +10,7 @@ angular.module('scanthisApp.setsupplierController', [])
    */
 
   
+
   /*display all suppliers*/
   $scope.ListSuppliers = function(){
     var func = function(response){

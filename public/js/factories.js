@@ -5,7 +5,7 @@ angular.module('scanthisApp.factories', [])
 
 .factory('DatabaseServices', function($http) {
 
-  var databaseurl = 'http://10.10.50.30:3000/';
+  var databaseurl = globalurl;
      
   var factory = {};
 
