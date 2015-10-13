@@ -58,7 +58,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.ListItems($scope.supplier_lot.lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntries('supplier_lot', func, query);
+    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
   };
 
   /*gets lot number from stage*/

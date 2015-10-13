@@ -71,6 +71,17 @@ angular.module('scanthisApp.factories', [])
     });
   };
 
+  factory.GetEntryNoAlert = function(table, func, querystring){
+    var url = databaseurl + table + querystring;
+    $http.get(url).then(function(response){
+      if (response.data.length >0){
+        func(response);
+      }
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
 /*sends a get request with or without a query*/
   factory.GetEntries = function(table, func, querystring){
     var url;
