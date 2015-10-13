@@ -34,6 +34,9 @@ angular.module('scanthisApp.directives', [])
             var query = '?station_id=eq.' + station_id;
             var func = function(response){
               $scope.items = response.data;
+              for (var i=0;i<$scope.items.length;i++){
+                $scope.items[i].internal_lot_code = $scope.items[i].internal_lot_code ? $scope.items[i].internal_lot_code : $scope.items[i].lot_number;
+              }
             };
             DatabaseServices.GetEntries('item_lot', func, query);
           };

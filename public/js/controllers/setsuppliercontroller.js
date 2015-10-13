@@ -27,6 +27,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.SupplierFromLotNumber = function(lot_number){
     var func = function(response){
       $scope.supplier_lot = response.data[0];
+      $scope.selectedsupplier = $scope.supplier_lot.id;
       $scope.PatchStageWithLot(lot_number);
     };
     var query = '?lot_number=eq.' + lot_number;
@@ -65,23 +66,27 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('lot', func, queryString);
   };
 
+  
+
   /*gets selected supplier, creates querystring for lot*/
   $scope.SupplierFromStage = function(supplier_id){  
     var date = new Date();
     var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
+    $scope.selectedsupplier = supplier_id;
     $scope.CreateLot(queryString, date);
   };
 
 
 
-  $scope.LotCode = function(lot_code){
+  $scope.LotCode = function(lot_code, form){
     var func = function(response){
       $scope.CurrentLot();
     };
     var patch = {'internal_lot_code': lot_code};
     var query = '?lot_number=eq.' + $scope.supplier_lot.lot_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
+    $scope.lot_code = form;
   };
 
 
@@ -113,6 +118,9 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?id=eq.' + $scope.stage_id;
     DatabaseServices.PatchEntry('stage', patch, query, func);
   };
+
+  
+
 
 
 });

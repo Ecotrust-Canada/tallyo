@@ -2,13 +2,13 @@
   <div class = "admin" style="font-size:20px;">
     Supplier: {{supplier_lot.supplier}} Fleet:{{supplier_lot.fleet_vessel}}<br>
     {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-    {{supplier_lot.internal_lot_code}}
+    Internal Lot Number: {{supplier_lot.internal_lot_code}}
   </div>
   <hr>
   <div class = "summary">
     <table class = "fill">
       <tr>
-        <td>Loin ID</td>
+        <td>Number</td>
         <td colspan="2">Scan Info</td>
         <td>timestamp</td>
         <td></td>
