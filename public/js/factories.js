@@ -39,6 +39,16 @@ angular.module('scanthisApp.factories', [])
     });
   };
 
+  factory.PatchEntryNoAlert = function(table, patch, querystring, func){
+    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      if (response.data.length >0){
+        func(response);
+      }
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
 /*deletes from the database*/
   factory.RemoveEntry = function(table, querystring, func){
     $http.delete(databaseurl + table + querystring).then(function(response){

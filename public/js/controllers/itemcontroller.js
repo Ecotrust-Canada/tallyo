@@ -45,7 +45,7 @@ angular.module('scanthisApp.itemController', [])
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.PatchEntry('stage', patch, query, func);
+    DatabaseServices.PatchEntryNoAlert('stage', patch, query, func);
   };
 
 
@@ -58,7 +58,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.ListItems($scope.supplier_lot.lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntry('supplier_lot', func, query);
+    DatabaseServices.GetEntries('supplier_lot', func, query);
   };
 
   /*gets lot number from stage*/
