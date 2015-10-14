@@ -27,12 +27,15 @@ angular.module('scanthisApp', [
 .controller('SetStation', function($scope, $http) {
   $scope.init = function(station_id){
     $scope.station_id = station_id;
+    $scope.entry = {};
+    $scope.list = {};
   };
 })
 
 .controller('SetStage', function($scope, $http) {
   $scope.init = function(stage_id){
     $scope.stage_id = stage_id;
+    $scope.current = {};
   };
 });
 

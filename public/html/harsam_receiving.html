@@ -1,20 +1,24 @@
 <div class="step" ng-controller="SetStage" ng-init="init(2)">
   <div class = "wrapper">
 
-    <div class="block" ng-controller="SetStation" ng-init="init(1)">  
-      <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight with Plastic', 'weight_2': 'Weight No Plastic'}, {'print':'false','summaryhidden':'true'})">
-        <makeitem></makeitem>
-        <summaryblock></summaryblock>
-        <viewsummarybutton></viewsummarybutton>
+    <div class="block" ng-controller="SetStation" ng-init="init(1)">
+      <div ng-controller="CurrentCtrl">  
+        <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight with Plastic', 'weight_2': 'Weight No Plastic'}, {'print':'false','summaryhidden':'true'})">
+          <makeitem></makeitem>
+          <summaryblock></summaryblock>
+          <viewsummarybutton></viewsummarybutton>
+        </div>
       </div>
     </div>
     
 
     <div class="block" ng-controller="SetStation" ng-init="init(2)">
-      <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
-        <makeitem></makeitem>
-        <summaryblock></summaryblock>
-        <viewsummarybutton></viewsummarybutton>
+      <div ng-controller="CurrentCtrl">
+        <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
+          <makeitem></makeitem>
+          <summaryblock></summaryblock>
+          <viewsummarybutton></viewsummarybutton>
+        </div>
       </div>
     </div>      
 

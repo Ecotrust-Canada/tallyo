@@ -1,8 +1,8 @@
 <div class = "outline" ng-show="showSummary">
   <div class = "admin" style="font-size:20px;">
-    Supplier: {{supplier_lot.supplier}} Fleet:{{supplier_lot.fleet_vessel}}<br>
-    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-    Internal Lot Number: {{supplier_lot.internal_lot_code}}
+    Supplier: {{current.supplier_lot.supplier}} Fleet:{{current.supplier_lot.fleet_vessel}}<br>
+    {{current.supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot number: {{current.supplier_lot.internal_lot_code}}
   </div>
   <hr>
   <div class = "summary">
@@ -13,9 +13,10 @@
         <td>timestamp</td>
         <td></td>
       </tr>
-      <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: item.lot_number=currentlot">
-        <td>{{item.loin_id}}</td>
+      <tr ng-repeat = "item in list.items | orderBy: '-timestamp' | filter: item.lot_number=currentlot">
+        <td>{{item.loin_number}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
+        <td ng-if="item.weight">{{(item.weight).toFixed(2)}}kg</td>
         <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
         <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>
         <td>{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>

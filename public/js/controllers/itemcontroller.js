@@ -4,48 +4,22 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ItemCtrl', function($scope, $http, DatabaseServices) {
 
-  /*
-   *
-   *Creating new entries in item table by weighing, grading fish etc.
-   *Several parameters including whether to print label
-   *
-   *Includes functionality for selecting lot from dropdown
-   *
-   */
-
-  /*
-   *Selecting current lot from drop down
-   */
-
-  /*list the available lots for the current stage*/
-  $scope.ListLots = function(stage_id){
-    var query = '?stage_id=eq.' + stage_id;
+.controller('CurrentCtrl', function($scope, $http, DatabaseServices) {
+  /*displays items in the summary table*/
+  $scope.ListItems = function(lot_number, station_id){
+    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
     var func = function(response){
-      $scope.lots = response.data;
+      $scope.list.items = response.data;
     };
-    DatabaseServices.GetEntries('supplier_lot', func, query);
+    DatabaseServices.GetEntries('scan', func, query);
   };
 
-  /*Sets the current lot number for the stage*/
-  $scope.PatchStageWithLot = function(lot_number){
-    var func = function(response){
-      $scope.current.lot = lot_number;
-    };
-    var patch = {'current_lot_number': lot_number};
-    var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.PatchEntryNoAlert('stage', patch, query, func);
-  };
-
-
-
-
-  /*supplier information from lot number*/
+   /*supplier information from lot number*/
   $scope.SupplierFromLotNumber = function(lot_number){
     var func = function(response){
-      $scope.supplier_lot = response.data[0];
-      $scope.ListItems($scope.supplier_lot.lot_number, $scope.station_id);
+      $scope.current.supplier_lot = response.data[0];
+      $scope.ListItems(lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
     DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
@@ -60,54 +34,71 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntries('stage', func, query);
   };
 
+  $scope.GetCurrentLot();
 
+  $scope.$watch('current.lot', function(newValue, oldValue) {
+    $scope.SupplierFromLotNumber($scope.current.lot);
+  });
 
-  /*
-   *Creating items
-   */
-
-
+})
+.controller('CurrentCtrlloin', function($scope, $http, DatabaseServices) {
   /*displays items in the summary table*/
-  $scope.ListItems = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
+  $scope.ListItems = function(lot_number){
+    var query = '?lot_number=eq.' + lot_number;
     var func = function(response){
-      $scope.items = response.data;
-      $scope.GetMaxLoin(lot_number, station_id);
-    };
-    DatabaseServices.GetEntries('item', func, query);
-  };
-
-  $scope.GetMaxLoin = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    var func = function(response){
-      if (response.data.length >0){
-        $scope.count.loin = response.data[0].max_loin + 1;
-      }
-      else {$scope.count.loin = 1;}
+      $scope.list.items = response.data;
     };
     DatabaseServices.GetEntries('loin', func, query);
   };
 
-  
+   /*supplier information from lot number*/
+  $scope.SupplierFromLotNumber = function(lot_number){
+    var func = function(response){
+      $scope.current.supplier_lot = response.data[0];
+      $scope.ListItems(lot_number);
+    };
+    var query = '?lot_number=eq.' + lot_number;
+    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
+  };
+
+  /*gets lot number from stage*/
+  $scope.GetCurrentLot = function(){
+    var func = function(response){
+      $scope.current.lot = response.data[0].current_lot_number;
+    };
+    var query = '?id=eq.' + $scope.stage_id;
+    DatabaseServices.GetEntries('stage', func, query);
+  };
+
+  $scope.GetCurrentLot();
+
+  $scope.$watch('current.lot', function(newValue, oldValue) {
+    $scope.SupplierFromLotNumber($scope.current.lot);
+  });
+
+})
+
+
+.controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices) {
 
   /*removes an item from the database*/
   $scope.RemoveItem = function(item_id){
     var query = '?id=eq.' + item_id;
     var func = function(){
-      $scope.ListItems($scope.current.lot, $scope.station_id);
+      removeFromArray($scope.list.items, item_id);
     };
-    DatabaseServices.RemoveEntry('item', query, func);
+    DatabaseServices.RemoveEntry('scan', query, func);
   };
 
   /*creates a new row in the database, item table*/
   $scope.DatabaseItem = function(form){
     $scope.MakeItemEntry(form);
-    var func = function(){
-      Clear('item_entry', $scope);
-      $scope.ListItems($scope.current.lot, $scope.station_id);
+    var func = function(response){
+      $scope.list.items.push(response.data);
+      Clear('item', $scope);    
     };
-    if (NoMissingValues($scope.item_entry)){
-      DatabaseServices.DatabaseEntry('item', $scope.item_entry, func);
+    if (NoMissingValues($scope.entry.item)){
+      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.item, func);
     }
     else{ alert("missing values"); }
   };
@@ -115,10 +106,13 @@ angular.module('scanthisApp.itemController', [])
 
   /*fills in fields in json to submit to database*/
   $scope.MakeItemEntry = function(form){
-    $scope.item_entry.lot_number = $scope.current.lot;
-    $scope.item_entry.timestamp = moment(new Date()).format();
-    $scope.item_entry.loin_id = $scope.count.loin;
-    MakeEntry(form, 'item_entry', $scope);
+    $scope.entry.item.lot_number = $scope.current.lot;
+    $scope.entry.item.timestamp = moment(new Date()).format();
+    MakeEntry(form, 'item', $scope);
+  };
+
+  $scope.Submit = function(form){
+    $scope.DatabaseItem(form);
   };
 
   /*switch between scanning and view summary*/
@@ -137,14 +131,12 @@ angular.module('scanthisApp.itemController', [])
 
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
-    $scope.item_entry = {'loin_id':'', 'timestamp': '', 'lot_number': '', 'stage_id': $scope.stage_id, 'station_id': $scope.station_id};
+    $scope.entry.item = {'timestamp': '', 'lot_number': '', 'station_id': $scope.station_id};
     $scope.fields = fields;
     $scope.options = options;
-    $scope.current = {};
-    $scope.count = {};
 
     for (var key in fields){
-      $scope.item_entry[key] = '';
+      $scope.entry.item[key] = '';
     }
     if (options.summaryhidden === 'true'){
       InitShowSummary($scope);
@@ -153,14 +145,103 @@ angular.module('scanthisApp.itemController', [])
       $scope.showScan = true;
       $scope.showSummary = true;
     }
-    $scope.ListLots($scope.stage_id);
-
-    $scope.GetCurrentLot();
-
-    $scope.$watch('current.lot', function(newValue, oldValue) {
-      $scope.SupplierFromLotNumber($scope.current.lot);
-    });
 
 
   };
+})
+
+.controller('LoinCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.GetMaxLoin = function(form){
+    var query = '?lot_number=eq.' + $scope.current.lot;
+    console.log(query);
+    var func = function(response){
+      var num = 1;
+      if (response.data.length >0){
+        num = response.data[0].max_loin + 1;
+      }
+      $scope.DatabaseItem(form, num);
+    };
+    DatabaseServices.GetEntries('loin_number', func, query);
+  };
+
+
+  /*removes an item from the database*/
+  $scope.RemoveItem = function(item_id){
+    var query = '?id=eq.' + item_id;
+    var func = function(){
+      removeFromArray($scope.list.items, item_id);
+    };
+    DatabaseServices.RemoveEntry('loin', query, func);
+  };
+
+  /*creates a new row in the database, item table*/
+  $scope.DatabaseItem = function(form, num){
+    $scope.MakeItemEntry(form, num);
+    var func = function(response){
+      $scope.list.items.push(response.data);
+      Clear('item', $scope);     
+    };
+    if (NoMissingValues($scope.entry.item)){
+      DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.item, func);
+    }
+    else{ alert("missing values"); }
+  };
+
+  $scope.Submit = function(form){
+    $scope.GetMaxLoin(form);
+  };
+
+  
+
+
+  /*fills in fields in json to submit to database*/
+  $scope.MakeItemEntry = function(form, num){
+    $scope.entry.item.loin_number = num;
+    $scope.entry.item.lot_number = $scope.current.lot;
+    $scope.entry.item.timestamp = moment(new Date()).format();
+    MakeEntry(form, 'item', $scope);
+  };
+
+  /*switch between scanning and view summary*/
+  $scope.show = function(){
+    if ($scope.showSummary === false){
+      $scope.showSummary = true;
+      $scope.showScan = false;
+      $scope.view_summary = "Back to scan";
+    }
+    else {
+      $scope.showSummary = false;
+      $scope.showScan = true;
+      $scope.view_summary = "view summary";
+    }
+  };
+
+  /*initialize with correct entry json object and display*/
+  $scope.init = function(fields, options){
+    $scope.entry.item = {'timestamp': '', 'lot_number': ''};
+    $scope.fields = fields;
+    $scope.options = options;
+
+    for (var key in fields){
+      $scope.entry.item[key] = '';
+    }
+    if (options.summaryhidden === 'true'){
+      InitShowSummary($scope);
+    }
+    else{
+      $scope.showScan = true;
+      $scope.showSummary = true;
+    }
+
+
+  };
+
+
+})
+
+
+.controller('ScanCtrl', function($scope, $http, DatabaseServices) {
+
+
 });

@@ -63,6 +63,11 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
     .state('amanda_external_receiving.print', {
       url: "/print",
       templateUrl: "html/receiving_print.html"
+    })
+
+    .state('amanda_internal_receiving', {
+      url: "/amanda_internal_receiving",
+      templateUrl: 'html/amanda_internal_receiving.html'
     });
 
 

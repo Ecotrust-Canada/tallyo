@@ -163,7 +163,7 @@ var ClearForm = function($scope){
 var ClearEntry = function(scopevar, $scope){
     for (var key in $scope[scopevar]){
       if (key !== 'station_id' && key !== 'stage_id'){
-        $scope[scopevar][key] = "";
+        $scope.entry[scopevar][key] = "";
       }
     }
   };
@@ -178,7 +178,8 @@ var Clear = function(scopevar, $scope){
 /*fill in fields in entry*/
 var MakeEntry = function(form, scopevar, $scope){
     for (var key in form){
-        $scope[scopevar][key] = form[key];
+        $scope.entry[scopevar][key] = form[key];
     }
   };
+
 

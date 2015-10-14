@@ -4,7 +4,7 @@
       <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
     </div>
     <div class="block">
-      <h1>...........Manage Sources......</h1>
+      <h1>...........Incoming.........</h1>
       Supplier: {{supplier_lot.supplier}}  Fleet: {{supplier_lot.fleet_vessel}}<br>
     {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
     Internal Lot Code:
@@ -25,7 +25,6 @@
       <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
         <makeitem></makeitem>
         <summaryblock></summaryblock>
-        <viewsummarybutton></viewsummarybutton>
       </div>
     </div>
 </div>

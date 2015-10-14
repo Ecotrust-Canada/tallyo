@@ -1,6 +1,12 @@
-<div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
-  <div class="step">
-    <selectlot></selectlot><br>
-
-  <div><makeitem></makeitem><summaryblock></summaryblock></div>
+<div class="step" ng-controller="LoinCtrl">
+  <div ng-controller="CreateLotCtrl">
+    <selectlot></selectlot>
+  </div>
+  <br>
+  <div ng-controller="CurrentCtrlloin">
+    <div ng-controller="LoinCtrl" ng-init="init({'weight': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
+      <makeitem></makeitem>
+      <summaryblock></summaryblock>
+    </div>
+  </div>
 </div>
