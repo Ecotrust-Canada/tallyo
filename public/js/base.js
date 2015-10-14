@@ -14,6 +14,7 @@ angular.module('scanthisApp', [
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.movelotController',
+  'scanthisApp.incomingController',
 ])
 
 

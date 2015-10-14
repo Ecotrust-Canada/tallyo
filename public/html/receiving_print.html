@@ -1,0 +1,31 @@
+<div ng-controller="SetStage" class="step" ng-init="init(6)">
+  <div ng-controller="SetSupplierCtrl">  
+    <div class="block rmarg">
+      <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
+    </div>
+    <div class="block">
+      <h1>...........Manage Sources......</h1>
+      Supplier: {{supplier_lot.supplier}}  Fleet: {{supplier_lot.fleet_vessel}}<br>
+    {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot Code:
+    <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}
+      <input type="button" ng-click="LotCode('', supplier_lot.internal_lot_code)" value="edit">
+    </span>
+    <input ng-if-start="!supplier_lot.internal_lot_code" type="text" ng-model="$parent.lot_code">
+      <input ng-if-end type="button" ng-click="LotCode(lot_code, null)" value="submit"><br>
+    
+
+    </div>
+    <supplierlist></supplierlist>  
+  </div>
+  <br>
+  <br>
+
+  <div class="block" ng-controller="SetStation" ng-init="init(4)">  
+      <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
+        <makeitem></makeitem>
+        <summaryblock></summaryblock>
+        <viewsummarybutton></viewsummarybutton>
+      </div>
+    </div>
+</div>

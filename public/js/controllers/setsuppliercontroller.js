@@ -31,7 +31,7 @@ angular.module('scanthisApp.setsupplierController', [])
       $scope.PatchStageWithLot(lot_number);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntries('supplier_lot', func, query);
+    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
   };
 
   /*fill in fields in json obj*/

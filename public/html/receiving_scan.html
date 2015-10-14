@@ -1,0 +1,14 @@
+<div class="step" ng-controller="SetStage" ng-init="init(6)">
+  <div class = "wrapper">
+
+    <div class="block" ng-controller="SetStation" ng-init="init(4)">  
+      <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'false'})">
+        <div ng-controller="IncomingCtrl">
+          String from scanner: <input  type="text" ng-model="inString" ng-change="ReadScan(inString)">
+          <summaryblock></summaryblock>
+        </div>
+      </div>
+    </div>      
+
+  </div>
+</div>
