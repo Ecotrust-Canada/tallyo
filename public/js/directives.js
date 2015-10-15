@@ -24,6 +24,18 @@ angular.module('scanthisApp.directives', [])
 /*table with suppliers with button to set as current*/
 .directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
+/**/
+.directive('loinlist', function() { return { templateUrl: 'htmlpartials/loinlist.html' }; })
+
+/**/
+.directive('boxinfo', function() { return { 
+  scope: { box: '=' },
+  templateUrl: 'htmlpartials/boxinfo.html' }; })
+
+.directive('shipinfo', function() { return { 
+  scope: { ship: '=' },
+  templateUrl: 'htmlpartials/shipinfo.html' }; })
+
 /*Creates a searchable table of items in order to reprint labels*/
 .directive('reprint', function() {
   return {

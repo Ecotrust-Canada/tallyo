@@ -13,19 +13,14 @@ angular.module('scanthisApp.packingController', [])
    *
    */
    
-
+   //"init('box', 'box_id', 'recent_boxes', 'boxes', 'item')"
   $scope.init = function(table, fk, view, name, obj){
-    $scope.included = {};
-    $scope.included.items = [];
-    $scope.current = [];
     
-    
-
     $scope.ListContainerItems = function(id){
       var func = function(response){
-        $scope.included.items = [];
+        $scope.list.included = [];
         for (var i in response.data){
-          $scope.included.items.push(response.data[i]);
+          $scope.list.included.push(response.data[i]);
         }
       };
       var query = '?' + fk + '=eq.' + id;
@@ -34,14 +29,14 @@ angular.module('scanthisApp.packingController', [])
     
 
     var func = function(response){
-      $scope[name] = response.data;
+      $scope.list[name] = response.data;
     };
     DatabaseServices.GetEntries(view, func);
 
     /*get container object from selected id*/
     $scope.ContainerFromId = function(id){
       var func = function(response){
-        $scope.current[0] = response.data[0];
+        $scope.current[table] = response.data[0];
       };
       var query = '?id=eq.' + id;
       DatabaseServices.GetEntry(table, func, query);
@@ -67,7 +62,7 @@ angular.module('scanthisApp.packingController', [])
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
     $scope.PutObjInContainer = function(id){
       var func = function(response){
-        if (response.data[0][fk] && response.data[0][fk] != $scope.current[0].id){
+        if (response.data[0][fk] && response.data[0][fk] != $scope.current[table].id){
           var overwrite = confirm("overwrite from previous?");
           if (overwrite === true){
             $scope.PatchObjWithContainer(id);
@@ -76,7 +71,7 @@ angular.module('scanthisApp.packingController', [])
             $scope.obj_id = null;
           }
         }
-        else if (response.data[0][fk] == $scope.current[0].id){
+        else if (response.data[0][fk] == $scope.current[table].id){
           alert("already added");
           $scope.obj_id = null;
         }
@@ -92,12 +87,12 @@ angular.module('scanthisApp.packingController', [])
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
         $scope.obj_id = null;
-        $scope.included.items.push(response.data[0]);
+        $scope.list.included.push(response.data[0]);
       };
       var patch = {};
-      patch[fk] = $scope.current[0].id;
+      patch[fk] = $scope.current[table].id;
       var query = '?id=eq.' + id;    
-      if (id && idNotInArray($scope.included.items, id)){
+      if (id && idNotInArray($scope.list.included, id)){
         DatabaseServices.PatchEntry(obj, patch, query, func);
       }
     };
@@ -116,10 +111,10 @@ angular.module('scanthisApp.packingController', [])
     /*adds final info to box*/
     $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num){
       var func = function(response){
-        $scope.current[0] = response.data[0];
+        $scope.current[table] = response.data[0];
       };
       var patch = {'weight': box_weight, 'lot_number': lot_num, 'num_loins': num};
-      var query = '?id=eq.' + $scope.current[0].id;
+      var query = '?id=eq.' + $scope.current[table].id;
       DatabaseServices.PatchEntry('box', patch, query, func);
     };
 

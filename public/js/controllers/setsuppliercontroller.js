@@ -14,7 +14,7 @@ angular.module('scanthisApp.setsupplierController', [])
   /*display all suppliers*/
   $scope.ListSuppliers = function(){
     var func = function(response){
-      $scope.suppliers = response.data;
+      $scope.list.suppliers = response.data;
     };
     DatabaseServices.GetEntries('supplier', func);
   };

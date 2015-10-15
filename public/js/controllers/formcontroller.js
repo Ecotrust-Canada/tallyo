@@ -17,7 +17,7 @@ angular.module('scanthisApp.formController', [])
     var jsonentry = '../json/' + jsonname + 'entry.json';
     var jsonform = '../json/' + jsonname + 'form.json';
 
-    var entry = table + '_entry';
+    //var entry = table + '_entry';
 
     /*resets the form to default values*/
     $scope.ClearForm = function(){
@@ -40,35 +40,30 @@ angular.module('scanthisApp.formController', [])
     });
 
     $http.get(jsonentry).success(function(data) {
-      $scope[entry] = data;
+      $scope.entry[table] = data;
     });
 
     
     /*submits the form to the database*/
     $scope.ToDatabase = function(){
       var func = function(response){
-        //Clear(entry, $scope);
         $scope.ClearForm();
         var thedata = response.data;
-        $scope[name].push(thedata);
-        if ($scope.current){
-          $scope.current[0] = thedata;
-        }
-        if ($scope.included){
-          $scope.included.items = [];
-        }
+        $scope.list[name].push(thedata);
+        $scope.current[table] = thedata;
+        $scope.list.included = [];
       };
       if (NotEmpty($scope.form)){
-        DatabaseServices.DatabaseEntryReturn(table, $scope[entry], func);
+        DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
       }
-      else{ alert("empty"); }  
+      else{ alert("empty form"); }  
     };
 
     /*fills in entry json obj from form, sends to database*/
     $scope.Submit = function(form){
-      if ($scope[entry].packing_date === ''){$scope[entry].packing_date = moment(new Date()).format();}
-      if ($scope[entry].best_before_date === '') {$scope[entry].best_before_date = moment(new Date()).add(2, 'years').format();}
-      MakeEntry(form, entry, $scope);
+      if ($scope.entry[table].timestamp === ''){$scope.entry[table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[table].best_before_date === '') {$scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();}
+      MakeEntry(form, table, $scope);
       $scope.ToDatabase();
     };
 

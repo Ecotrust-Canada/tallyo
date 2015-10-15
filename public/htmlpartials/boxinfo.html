@@ -1,0 +1,12 @@
+<table class="info">
+  <tr><td>Box id: </td><td>{{box.id}}</td></tr>
+  <tr><td>FT Box #: </td><td>{{box.ft_box_num}}</td></tr>      
+  <tr><td>Size: </td><td>{{box.size}}</td></tr>
+  <tr><td>Grade: </td><td>{{box.grade}}</td></tr>
+  <tr><td>Packing Date: </td><td>{{box.packing_date | stringtodate |date : format : shortDate}}</td></tr>
+  <tr><td>Best Before Date: </td><td>{{box.best_before_date}}</td></tr>
+  <tr><td>Production Date Code: </td><td>{{box.prod_date_code}}</td></tr>
+  <tr><td>Processing Location: </td><td>{{box.process_location}}</td></tr>
+  <tr><td>Weight: </td><td>{{box.weight}}kg</td></tr>
+  <tr><td>Number of Pieces: </td><td>{{box.num_loins}}</td></tr>
+</table>

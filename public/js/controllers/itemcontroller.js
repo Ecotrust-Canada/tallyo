@@ -154,7 +154,6 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.GetMaxLoin = function(form){
     var query = '?lot_number=eq.' + $scope.current.lot;
-    console.log(query);
     var func = function(response){
       var num = 1;
       if (response.data.length >0){

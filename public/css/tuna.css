@@ -97,6 +97,10 @@ td{
     padding-left: 10px;
 }
 
+.info td{
+  text-align:left;
+}
+
 .block{
     display: inline-block;
     vertical-align: top;
