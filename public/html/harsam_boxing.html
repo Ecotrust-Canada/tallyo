@@ -1,8 +1,8 @@
 <div ng-controller="SetStage" ng-init="init(8)">
   <div ng-controller="SetStation" ng-init="init(7)">
-    <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'box_id', 'recent_boxes', 'boxes', 'loin')">    
+    <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'loin')">    
       
-      <div class="step" ng-controller="formCtrl" ng-init="init('box', 'box', 'boxes')">
+      <div class="step" ng-controller="formCtrl" ng-init="init('box')">
         Create Case:<br><br>
         <createform></createform>               
       </div>
@@ -23,7 +23,7 @@
         </form>
         <br>
         <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-          <option ng-repeat = "box in list.boxes">{{box.id}}</option>
+          <option ng-repeat = "box in list.box">{{box.id}}</option>
         </select>
           <div boxinfo box="current.box"></div>
         <loinlist></loinlist>

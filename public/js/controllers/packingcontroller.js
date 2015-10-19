@@ -13,8 +13,10 @@ angular.module('scanthisApp.packingController', [])
    *
    */
    
-   //"init('box', 'box_id', 'recent_boxes', 'boxes', 'item')"
-  $scope.init = function(table, fk, view, name, obj){
+   //"init('box', 'item')"
+  $scope.init = function(table, obj){
+
+    var fk = table + '_id';
     
     $scope.ListContainerItems = function(id){
       var func = function(response){
@@ -29,9 +31,9 @@ angular.module('scanthisApp.packingController', [])
     
 
     var func = function(response){
-      $scope.list[name] = response.data;
+      $scope.list[table] = response.data;
     };
-    DatabaseServices.GetEntries(view, func);
+    DatabaseServices.GetEntries(table, func);
 
     /*get container object from selected id*/
     $scope.ContainerFromId = function(id){

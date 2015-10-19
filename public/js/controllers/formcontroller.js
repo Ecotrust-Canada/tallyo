@@ -10,14 +10,7 @@ angular.module('scanthisApp.formController', [])
    *
    */
 
-  $scope.init = function(jsonname, table, name){
-
-
-    /*define urls to get entry json and form info*/
-    /*var jsonentry = '../json/' + jsonname + 'entry.json';
-    var jsonform = '../json/' + jsonname + 'form.json';*/
-
-    //var entry = table + '_entry';
+  $scope.init = function(table){
 
     /*resets the form to default values*/
     $scope.ClearForm = function(){
@@ -30,18 +23,6 @@ angular.module('scanthisApp.formController', [])
         }
       }
     };
-
-    /*Get the entry and form info from json files*/
-
-    /*$http.get(jsonform).success(function(data) {
-      $scope.formarray = data.fields;
-      $scope.form = {};
-      $scope.ClearForm();
-    });
-
-    $http.get(jsonentry).success(function(data) {
-      $scope.entry[table] = data;
-    });*/
 
     $scope.FormData = function(table){
       var func = function(response){
@@ -61,7 +42,7 @@ angular.module('scanthisApp.formController', [])
       var func = function(response){
         $scope.ClearForm();
         var thedata = response.data;
-        $scope.list[name].push(thedata);
+        $scope.list[table].push(thedata);
         $scope.current[table] = thedata;
         $scope.list.included = [];
       };

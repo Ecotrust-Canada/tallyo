@@ -1,9 +1,9 @@
 <div ng-controller="SetStage" ng-init="init(9)">
 <div ng-controller="SetStation" ng-init="init(8)">
-  <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
+  <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box')">
     <div class="step">
       Create Shipping Entry:<br><br>
-      <div ng-controller="formCtrl" ng-init="init('shipping', 'shipping_unit', 'ship_units')">
+      <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
         <createform></createform>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="step">
       Review: <br><br>
       <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-        <option ng-repeat = "ship in list.ship_units">{{ship.id}}</option>
+        <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
       </select>
       <div shipinfo ship="current.shipping_unit"></div>
         <div class="block verticalLine">
