@@ -6,12 +6,20 @@
       <th colspan="2">Choose Supplier:</th>
       <th></th>
     </tr>
-    <tr ng-repeat-start="supplier in list.suppliers" ng-class="{selected: supplier.id === selectedsupplier}">
+    <tr>
+      <td colspan="3"><label>Supplier Group: <input ng-model="search.supplier_group"></label></td>
+      <td colspan="3"><label>Supplier: <input ng-model="search.supplier"></label></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan="2"><label>Fleet: <input ng-model="search.fleet_vessel"></label></td>
+    </tr>
+    <tr ng-repeat-start="supplier in list.suppliers | filter: search" ng-class="{selected: supplier.id === selectedsupplier}">
       <td>
         <button ng-if="supplier.expanded" ng-click="supplier.expanded = false">-</button>
         <button ng-if="!supplier.expanded" ng-click="supplier.expanded = true">+</button>
       </td>
-      <td>{{supplier.id}}</td>
+      <td>{{supplier.supplier_group}}</td>
       <td>{{supplier.supplier}}</td>
       <td>{{supplier.fleet_vessel}}</td>
       <td>{{supplier.species_common}}</td>

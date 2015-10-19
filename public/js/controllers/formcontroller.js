@@ -14,8 +14,8 @@ angular.module('scanthisApp.formController', [])
 
 
     /*define urls to get entry json and form info*/
-    var jsonentry = '../json/' + jsonname + 'entry.json';
-    var jsonform = '../json/' + jsonname + 'form.json';
+    /*var jsonentry = '../json/' + jsonname + 'entry.json';
+    var jsonform = '../json/' + jsonname + 'form.json';*/
 
     //var entry = table + '_entry';
 
@@ -33,7 +33,7 @@ angular.module('scanthisApp.formController', [])
 
     /*Get the entry and form info from json files*/
 
-    $http.get(jsonform).success(function(data) {
+    /*$http.get(jsonform).success(function(data) {
       $scope.formarray = data.fields;
       $scope.form = {};
       $scope.ClearForm();
@@ -41,7 +41,19 @@ angular.module('scanthisApp.formController', [])
 
     $http.get(jsonentry).success(function(data) {
       $scope.entry[table] = data;
-    });
+    });*/
+
+    $scope.FormData = function(table){
+      var func = function(response){
+        $scope.formarray = response.data[0].form.fields;
+        $scope.entry[table] = response.data[0].entry;
+        $scope.form = {};
+        $scope.ClearForm();        
+      };
+      var query = '?tablename=eq.' + table;
+      DatabaseServices.GetEntryNoAlert('form', func, query);
+    };
+    $scope.FormData(table);
 
     
     /*submits the form to the database*/

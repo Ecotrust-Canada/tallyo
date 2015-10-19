@@ -21,6 +21,27 @@
       <div ng-controller="formCtrl" ng-init="init('supplier', 'supplier', 'suppliers')">
         <createform></createform>
       </div>
+
+      <hr>
+      <div ng-controller="DropDownCtrl" ng-init="init('supplier')">
+        <div class="block">
+          <select ng-model="model.id">
+            <option value="">-- select --</option>
+            <option ng-repeat="option in formjson.fields | filter: search" value="{{option.id}}">{{option.title}}</option>
+          </select>
+        </div>
+        <div class="block">
+        <ul>
+          <li ng-repeat="selection in formjson.fields[model.id].value">{{selection.name}}</li>
+          <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new)" value="Add" /></li>
+        </ul>
+        </div>
+      </div>
+
+
+
+
+
     </div>
   </div>
 </div>

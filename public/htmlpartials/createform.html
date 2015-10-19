@@ -7,7 +7,8 @@
     </span>
     <span ng-if="row.type === 'select'">{{row.title}}:
       <select ng-model="form[row.fieldname]">
-        <option ng-repeat="option in row.value" value={{option}}>{{option}}</option>
+        <option value="">-- select --</option>
+        <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
       </select>
       <br>
     </span>
