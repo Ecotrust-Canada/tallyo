@@ -3,6 +3,44 @@
 
 angular.module('scanthisApp.movelotController', [])
 
+
+.controller('LotCtrl', function($scope, $http, DatabaseServices) {
+  
+  $scope.ListLots = function(stage_id){
+    var query = '?stage_id=eq.' + stage_id;
+    var func = function(response){
+      $scope.lot_stage[stage_id] = response.data;
+    };
+    DatabaseServices.GetEntries('supplier_lot', func, query);
+  };
+
+
+
+  $scope.init = function(array){
+    $scope.array = array;
+    $scope.lot_stage = {};
+
+
+    $scope.listAllLots = function(){
+      for (var i =0;i<$scope.array.length;i++){
+        $scope.ListLots($scope.array[i]);
+      }
+    };
+
+
+    $scope.listAllLots();
+
+  };
+
+
+
+
+
+
+})
+
+
+
 .controller('MoveLotCtrl', function($scope, $http, DatabaseServices) {
   /*
    *
@@ -11,36 +49,36 @@ angular.module('scanthisApp.movelotController', [])
    */
 
 
-  /*list lots for a stage*/
-  $scope.ListLots = function(stage_id){
-    var query = '?stage_id=eq.' + stage_id;
-    var func = function(response){
-      $scope.lots = response.data;
-    };
-    DatabaseServices.GetEntries('supplier_lot', func, query);
-  };
-
   /*change stage on lot*/
-  $scope.PatchLotWithStage = function(lot_number){
+  $scope.PatchLotWithNextStage = function(lot_number){
     var func = function(response){
-      $scope.ListLots($scope.from_stage);
+      $scope.listAllLots();
     };
     var patch = {'stage_id': $scope.to_stage };
     var query = '?lot_number=eq.' + lot_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
+  /*change stage on lot*/
+  $scope.PatchLotWithPrevStage = function(lot_number){
+    var func = function(response){
+      $scope.listAllLots();
+    };
+    var patch = {'stage_id': $scope.prev_stage };
+    var query = '?lot_number=eq.' + lot_number;
+    DatabaseServices.PatchEntry('lot', patch, query, func);
+  };
+
+
   /*initialize with stages and labels, refresh button*/
-  $scope.init = function(from_stage, to_stage, label, title){
+  $scope.init = function(prev_stage, from_stage, to_stage, label, title){
+    $scope.prev_stage = prev_stage;
     $scope.from_stage = from_stage;
     $scope.to_stage = to_stage;
     $scope.label = label;
     $scope.title = title;
 
-    $scope.ListLots($scope.from_stage);
-    $scope.ReList = function(){
-      $scope.ListLots($scope.from_stage);
-    };
+    
   };
         
 
