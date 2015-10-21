@@ -38,9 +38,22 @@ angular.module('scanthisApp.createlotController', [])
     var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
     var func = function(response){
       $scope.list.items = response.data;
+      //$scope.ItemTotals(lot_number, station_id);
     };
     DatabaseServices.GetEntries('scan', func, query);
   };
+
+  $scope.ItemTotals = function(lot_number, station_id){
+    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
+    var func = function(response){
+      $scope.list.totals = response.data;
+    };
+    DatabaseServices.GetEntries('scan_total', func, query);
+  };
+
+  $scope.$watch('list.items.length', function(newValue, oldValue) {
+    $scope.ItemTotals($scope.current.lot, $scope.station_id);
+  });
 
    /*supplier information from lot number*/
   $scope.SupplierFromLotNumber = function(lot_number){

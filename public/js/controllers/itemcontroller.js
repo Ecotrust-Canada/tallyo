@@ -6,6 +6,9 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices) {
 
+
+  
+
   /*removes an item from the database*/
   $scope.RemoveItem = function(item_id){
     var query = '?id=eq.' + item_id;
@@ -20,7 +23,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.MakeItemEntry(form);
     var func = function(response){
       $scope.list.items.push(response.data);
-      Clear('item', $scope);    
+      Clear('item', $scope);
     };
     if (NoMissingValues($scope.entry.item)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.item, func);
@@ -59,6 +62,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.entry.item = {'timestamp': '', 'lot_number': '', 'station_id': $scope.station_id};
     $scope.fields = fields;
     $scope.options = options;
+
 
     for (var key in fields){
       $scope.entry.item[key] = '';

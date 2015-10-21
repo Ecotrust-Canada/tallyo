@@ -6,6 +6,13 @@
   </div>
   <hr>
   <div class = "summary">
+    <table>
+      <tr ng-repeat = "total in list.totals">
+        <td>Total {{total.grade}}:</td>
+        <td>{{(total.weight1).toFixed(2)}}kg</td>
+        <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
+      </tr>
+    </table>
     <table class = "fill">
       <tr>
         <td>Number</td>
@@ -13,7 +20,7 @@
         <td>timestamp</td>
         <td></td>
       </tr>
-      <tr ng-repeat = "item in list.items | orderBy: '-timestamp' | filter: item.lot_number=currentlot">
+      <tr ng-repeat = "item in list.items | orderBy: '-timestamp' ">
         <td>{{item.loin_number ? item.loin_number : list.items.length - $index}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
         <td ng-if="item.weight">{{(item.weight).toFixed(2)}}kg</td>
