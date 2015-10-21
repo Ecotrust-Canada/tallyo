@@ -17,13 +17,16 @@
       
 
       </div>
-      <supplierlist></supplierlist>  
-      <div ng-controller="formCtrl" ng-init="init('supplier')">
+      <supplierlist></supplierlist>
+      <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Supplier</span><span ng-hide="addnew">Hide</span></button>
+
+      <div ng-controller="formCtrl" ng-init="init('supplier')" ng-hide="addnew">
         <createform></createform>
       </div>
 
       <hr>
-      <div ng-controller="DropDownCtrl" ng-init="init('supplier')">
+      <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
+      <div ng-controller="DropDownCtrl" ng-init="init('supplier')" ng-hide="editdrop">
         <div class="block">
           <select ng-model="model.id">
             <option value="">-- select --</option>

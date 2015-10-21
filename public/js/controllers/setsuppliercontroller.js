@@ -9,7 +9,8 @@ angular.module('scanthisApp.setsupplierController', [])
    *sets the supplier
    */
 
-  
+  $scope.editdrop = true;
+  $scope.addnew = true;
 
   /*display all suppliers*/
   $scope.ListSuppliers = function(){
