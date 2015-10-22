@@ -59,9 +59,9 @@ var DateRangeCurrent = function(date, start_date, end_date){
 };
 
 /*checks that a json object has no "" values*/
-var NoMissingValues = function(jsonobj){
+var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {
-      if (jsonobj.hasOwnProperty(key)) {
+      if (jsonobj.hasOwnProperty(key) && key !== except) {
         if (jsonobj[key] === '' || jsonobj[key] === undefined){
             return false;
         }
@@ -161,7 +161,7 @@ var ClearForm = function($scope){
 
 /*clear an entry*/
 var ClearEntry = function(scopevar, $scope){
-    for (var key in $scope[scopevar]){
+    for (var key in $scope.entry[scopevar]){
       if (key !== 'station_id' && key !== 'stage_id'){
         $scope.entry[scopevar][key] = "";
       }

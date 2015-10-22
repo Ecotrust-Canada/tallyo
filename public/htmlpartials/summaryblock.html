@@ -8,7 +8,7 @@
   <div class = "summary">
     <table>
       <tr ng-repeat = "total in list.totals">
-        <td>Total {{total.grade}}:</td>
+        <td>Total {{total.grade}} {{total.state}}:</td>
         <td>{{(total.weight1).toFixed(2)}}kg</td>
         <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
       </tr>
@@ -20,8 +20,8 @@
         <td>timestamp</td>
         <td></td>
       </tr>
-      <tr ng-repeat = "item in list.items | orderBy: '-timestamp' ">
-        <td>{{item.loin_number ? item.loin_number : list.items.length - $index}}</td>
+      <tr ng-repeat = "item in list.scan | orderBy: '-timestamp' ">
+        <td>{{item.loin_number ? item.loin_number : list.scan.length - $index}}</td>
         <td ng-if="item.grade">{{item.grade}}</td>
         <td ng-if="item.weight">{{(item.weight).toFixed(2)}}kg</td>
         <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>

@@ -10,37 +10,37 @@ angular.module('scanthisApp.itemController', [])
   
 
   /*removes an item from the database*/
-  $scope.RemoveItem = function(item_id){
-    var query = '?id=eq.' + item_id;
+  $scope.RemoveItem = function(scan_id){
+    var query = '?id=eq.' + scan_id;
     var func = function(){
-      removeFromArray($scope.list.items, item_id);
+      removeFromArray($scope.list.scan, scan_id);
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
 
   /*creates a new row in the database, item table*/
-  $scope.DatabaseItem = function(form){
-    $scope.MakeItemEntry(form);
+  $scope.DatabaseScan = function(form){
+    $scope.MakeScanEntry(form);
     var func = function(response){
-      $scope.list.items.push(response.data);
-      Clear('item', $scope);
+      $scope.list.scan.push(response.data);
+      Clear('scan', $scope);
     };
-    if (NoMissingValues($scope.entry.item)){
-      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.item, func);
+    if (NoMissingValues($scope.entry.scan)){
+      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
     }
     else{ alert("missing values"); }
   };
 
 
   /*fills in fields in json to submit to database*/
-  $scope.MakeItemEntry = function(form){
-    $scope.entry.item.lot_number = $scope.current.lot;
-    $scope.entry.item.timestamp = moment(new Date()).format();
-    MakeEntry(form, 'item', $scope);
+  $scope.MakeScanEntry = function(form){
+    $scope.entry.scan.lot_number = $scope.current.lot;
+    $scope.entry.scan.timestamp = moment(new Date()).format();
+    MakeEntry(form, 'scan', $scope);
   };
 
   $scope.Submit = function(form){
-    $scope.DatabaseItem(form);
+    $scope.DatabaseScan(form);
   };
 
   /*switch between scanning and view summary*/
@@ -59,13 +59,13 @@ angular.module('scanthisApp.itemController', [])
 
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
-    $scope.entry.item = {'timestamp': '', 'lot_number': '', 'station_id': $scope.station_id};
+    $scope.entry.scan = {'timestamp': '', 'lot_number': '', 'station_id': $scope.station_id};
     $scope.fields = fields;
     $scope.options = options;
 
 
     for (var key in fields){
-      $scope.entry.item[key] = '';
+      $scope.entry.scan[key] = '';
     }
     if (options.summaryhidden === 'true'){
       InitShowSummary($scope);
@@ -88,31 +88,48 @@ angular.module('scanthisApp.itemController', [])
       if (response.data.length >0){
         num = response.data[0].max_loin + 1;
       }
-      $scope.DatabaseItem(form, num);
+      $scope.MakeLoinScanEntry(form, num);
+      $scope.DatabaseLoin();
     };
     DatabaseServices.GetEntries('loin_number', func, query);
   };
 
   /*removes an item from the database*/
-  $scope.RemoveItem = function(item_id){
-    var query = '?id=eq.' + item_id;
+  $scope.RemoveItem = function(id){
+    var query = '?id=eq.' + id;
     var func = function(){
-      removeFromArray($scope.list.items, item_id);
+      $scope.RemoveScan(id);
     };
     DatabaseServices.RemoveEntry('loin', query, func);
   };
 
-  /*creates a new row in the database, item table*/
-  $scope.DatabaseItem = function(form, num){
-    $scope.MakeItemEntry(form, num);
-    var func = function(response){
-      $scope.list.items.push(response.data);
-      Clear('item', $scope);     
+  $scope.RemoveScan = function(id){
+    var query = '?loin_id=eq.' + id;
+    var func = function(){
+      $scope.ListItems($scope.current.lot, $scope.station_id);
     };
-    if (NoMissingValues($scope.entry.item)){
-      DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.item, func);
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+  /*creates a new row in the database, item table*/
+  $scope.DatabaseLoin = function(){    
+    var func = function(response){
+      //$scope.list.items.push(response.data);
+      $scope.entry.scan.loin_id = response.data.id;
+      Clear('loin', $scope);
+      $scope.DatabaseScan();     
+    };
+    if (NoMissingValues($scope.entry.scan, 'loin_id')){
+      DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.loin, func);
     }
     else{ alert("missing values"); }
+  };
+
+  $scope.DatabaseScan = function(){    
+    var func = function(response){
+    Clear('scan', $scope);  
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
   $scope.Submit = function(form){
@@ -120,11 +137,14 @@ angular.module('scanthisApp.itemController', [])
   };
   
   /*fills in fields in json to submit to database*/
-  $scope.MakeItemEntry = function(form, num){
-    $scope.entry.item.loin_number = num;
-    $scope.entry.item.lot_number = $scope.current.lot;
-    $scope.entry.item.timestamp = moment(new Date()).format();
-    MakeEntry(form, 'item', $scope);
+  $scope.MakeLoinScanEntry = function(form, num){
+    $scope.entry.loin.loin_number = num;
+    $scope.entry.loin.lot_number = $scope.current.lot;
+    $scope.entry.scan.lot_number = $scope.current.lot;
+    $scope.entry.loin.timestamp = moment(new Date()).format();
+    $scope.entry.scan.timestamp = $scope.entry.loin.timestamp;
+    $scope.entry.scan.station_id = $scope.station_id;
+    MakeEntry(form, 'scan', $scope);
   };
 
   /*switch between scanning and view summary*/
@@ -143,13 +163,16 @@ angular.module('scanthisApp.itemController', [])
 
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
-    $scope.entry.item = {'timestamp': '', 'lot_number': ''};
+    $scope.entry.loin = {'timestamp': '', 'lot_number': '', 'loin_number':''};
+    $scope.entry.scan = {'station_id':'', 'timestamp':'', 'loin_id':'', 'lot_number':''};
     $scope.fields = fields;
     $scope.options = options;
 
     for (var key in fields){
-      $scope.entry.item[key] = '';
+      $scope.entry.scan[key] = '';
     }
+
+
     if (options.summaryhidden === 'true'){
       InitShowSummary($scope);
     }
