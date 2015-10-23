@@ -200,17 +200,7 @@ angular.module('scanthisApp.itemController', [])
   };
   $scope.ListItems();
 
-  /*$scope.ItemTotals = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    var func = function(response){
-      $scope.list.totals = response.data;
-    };
-    DatabaseServices.GetEntries('scan_total', func, query);
-  };
 
-  $scope.$watch('list.scan.length', function(newValue, oldValue) {
-    $scope.ItemTotals($scope.current.lot, $scope.station_id);
-  });*/
 
   $scope.MakeBoxScanEntry = function(form){
     $scope.entry.box.lot_number = $scope.current.lot;
@@ -241,7 +231,6 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.MakeBox = function(){
-    console.log("function called");
     $scope.MakeBoxScanEntry($scope.form);
     $scope.DatabaseBox();
   };
@@ -253,16 +242,6 @@ angular.module('scanthisApp.itemController', [])
     $scope.fields = fields;
     $scope.options = options;
 
-    /*for (var key in fields){
-      $scope.entry.item[key] = '';
-    }
-    if (options.summaryhidden === 'true'){
-      InitShowSummary($scope);
-    }
-    else{
-      $scope.showScan = true;
-      $scope.showSummary = true;
-    }*/
   };
 
 
