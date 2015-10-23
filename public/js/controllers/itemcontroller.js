@@ -125,6 +125,10 @@ angular.module('scanthisApp.itemController', [])
     else{ alert("missing values"); }
   };
 
+
+
+
+
   $scope.DatabaseScan = function(){    
     var func = function(response){
     Clear('scan', $scope);  
@@ -228,6 +232,13 @@ angular.module('scanthisApp.itemController', [])
     $scope.ListItems();  
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+  $scope.BoxSecondScan = function(box_id){
+    $scope.entry.scan.timestamp = moment(new Date()).format();
+    $scope.entry.scan.station_id = $scope.station_id;
+    $scope.entry.scan.box_id = box_id;
+    $scope.DatabaseScan();
   };
 
   $scope.MakeBox = function(){
