@@ -11,6 +11,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.editdrop = true;
   $scope.addnew = true;
+  $scope.current.bool = true;
 
   /*display all suppliers*/
   $scope.ListSuppliers = function(){
@@ -46,6 +47,7 @@ angular.module('scanthisApp.setsupplierController', [])
   var DatabaseLot = function(lot_number){
     var func = function(){
       $scope.currentlot = lot_number;
+      $scope.current.lot = lot_number;
       $scope.SupplierFromLotNumber($scope.currentlot);
     };
     DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
@@ -56,6 +58,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       if (response.data.length > 0){
         $scope.currentlot = response.data[0].lot_number;
+        $scope.current.lot = response.data[0].lot_number;
         $scope.SupplierFromLotNumber($scope.currentlot);
       }//end if
       else{
@@ -70,7 +73,7 @@ angular.module('scanthisApp.setsupplierController', [])
   
 
   /*gets selected supplier, creates querystring for lot*/
-  $scope.SupplierFromStage = function(supplier_id){  
+  $scope.SupplierFromStage = function(supplier_id){ 
     var date = new Date();
     var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
     $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
@@ -112,8 +115,7 @@ angular.module('scanthisApp.setsupplierController', [])
   /*Sets the current lot number for the stage*/
   $scope.PatchStageWithLot = function(lot_number){
     var func = function(response){
-      //$scope.currentlot = lot_number;
-      //$scope.SupplierFromLotNumber($scope.currentlot);
+      $scope.current.bool = !$scope.current.bool;
     };
     var patch = {'current_lot_number': lot_number};
     var query = '?id=eq.' + $scope.stage_id;
@@ -121,6 +123,58 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   
+
+
+
+})
+
+.controller('NewBoxCtrl',function($scope, $http, DatabaseServices){
+  $scope.ScanIn = function(id){
+    $scope.SupplierFromStage(id);
+  };
+
+  $scope.$watch('current.bool', function(newValue, oldValue) {
+    if ($scope.form){
+      $scope.MakeBox();
+    }
+  });
+
+
+
+})
+
+
+
+
+
+
+.controller('DropDownCtrl',function($scope, $http, DatabaseServices){
+  $scope.FormData = function(table){
+      var func = function(response){
+        $scope.formjson = response.data[0].form;  
+      };
+      var query = '?tablename=eq.' + table;
+      DatabaseServices.GetEntryNoAlert('form', func, query);
+    };
+
+  $scope.New = function(value){
+    if (value){
+      $scope.formjson.fields[$scope.model.id].value.push({"name": value});
+    }    
+    
+    var func = function(response){
+    };
+    var query = '?tablename=eq.' + $scope.tablename;
+    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
+  };
+
+  $scope.init = function(table){
+    $scope.tablename = table;
+    $scope.FormData(table);
+    $scope.model = {};
+    $scope.search = {};
+    $scope.search.type = "select";
+  };
 
 
 

@@ -1,14 +1,36 @@
 <div class="step" ng-controller="SetStage" ng-init="init(6)">
-  <div class = "wrapper">
+  <div class="block" ng-controller="SetStation" ng-init="init(4)">  
+    <div ng-controller="SetSupplierCtrl">
+      <div ng-controller="BoxCtrl" ng-init="init({}, {'print':'false','summaryhidden':'true'})">
 
-    <div class="block" ng-controller="SetStation" ng-init="init(4)">  
-      <div ng-controller="ItemCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'false'})">
-        <div ng-controller="IncomingCtrl">
-          String from scanner: <input  type="text" ng-model="inString" ng-change="ReadScan(inString)">
-          <summaryblock></summaryblock>
+        <div>
+          Supplier: {{supplier_lot.supplier}}  Fleet: {{supplier_lot.fleet_vessel}}<br>
+        {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        Internal Lot Code:
+        <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}
+          <input type="button" ng-click="LotCode('', supplier_lot.internal_lot_code)" value="edit">
+        </span>
+        <input ng-if-start="!supplier_lot.internal_lot_code" type="text" ng-model="$parent.lot_code">
+          <input ng-if-end type="button" ng-click="LotCode(lot_code, null)" value="submit"><br>
+        
+
         </div>
-      </div>
-    </div>      
+        <br>
+        <br>
+        <div ng-controller="NewBoxCtrl">
+          supplier id:<input type="text" ng-model="supplier_id"><button ng-click="ScanIn(supplier_id)">Scan</button><br>
+        </div>
 
-  </div>
+        size: <input  type="text" ng-model="form.size" ><br>
+        grade: <input  type="text" ng-model="form.grade" ><br>
+        pieces: <input  type="text" ng-model="form.pieces" ><br>
+        weight: <input  type="text" ng-model="form.weight" ><br>
+        case number: <input  type="text" ng-model="form.ft_box_num" ><br><br>
+
+
+        <boxsummary></boxsummary>
+
+      </div>
+    </div>
+  </div>      
 </div>

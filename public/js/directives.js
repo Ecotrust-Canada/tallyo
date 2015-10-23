@@ -27,6 +27,8 @@ angular.module('scanthisApp.directives', [])
 /**/
 .directive('loinlist', function() { return { templateUrl: 'htmlpartials/loinlist.html' }; })
 
+.directive('boxsummary', function() { return { templateUrl: 'htmlpartials/boxsummary.html' }; })
+
 /**/
 .directive('boxinfo', function() { return { 
   scope: { box: '=' },
