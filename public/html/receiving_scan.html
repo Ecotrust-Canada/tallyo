@@ -1,24 +1,17 @@
 <div class="step" ng-controller="SetStage" ng-init="init(6)">
   <div class="block" ng-controller="SetStation" ng-init="init(4)">  
-    <div ng-controller="SetSupplierCtrl">
-      <div ng-controller="BoxCtrl" ng-init="init({}, {'print':'false','summaryhidden':'true'})">
+    <div ng-controller="BoxCtrl" ng-init="init()">
+      size: <input  type="text" ng-model="form.size" ><br>
+      grade: <input  type="text" ng-model="form.grade" ><br>
+      pieces: <input  type="text" ng-model="form.pieces" ><br>
+      weight: <input  type="text" ng-model="form.weight" ><br>
+      case number: <input  type="text" ng-model="form.ft_box_num" ><br>
+      Lot Number: <input type="text" ng-model="form.lot_number"><br>
+      supplier id:<input type="text" ng-model="form.supplier_id"><br>
+      <button ng-click="MakeBox()">submit</button><br><br>
 
+      <boxsummary></boxsummary>
 
-        
-
-        size: <input  type="text" ng-model="form.size" ><br>
-        grade: <input  type="text" ng-model="form.grade" ><br>
-        pieces: <input  type="text" ng-model="form.pieces" ><br>
-        weight: <input  type="text" ng-model="form.weight" ><br>
-        case number: <input  type="text" ng-model="form.ft_box_num" ><br><br>
-
-        <div ng-controller="NewBoxCtrl">
-          supplier id:<input type="text" ng-model="supplier_id"><br><button ng-click="ScanIn(supplier_id)">submit</button><br><br>
-        </div>
-
-        <boxsummary></boxsummary>
-
-      </div>
     </div>
   </div>      
 </div>

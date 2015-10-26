@@ -1,8 +1,11 @@
 <div class="step" ng-controller="SetStage" ng-init="init(7)">
   <div ng-controller="SetStation" ng-init="init(5)">
-    <div ng-controller="BoxCtrl" ng-init="init({}, {'print':'false','summaryhidden':'true'})">
+    <div ng-controller="StartNewLotCtrl">
 
-      <input type="text" ng-model="box_id"><br><button ng-click="BoxSecondScan(box_id)">submit</button>
+      <button ng-click="StartNewLot()">New Lot!</button><br>
+      {{current.lot.lot_number}}<br>
+      {{current.supplier_id}}<br>
+      <input type="text" ng-model="box_id"><button ng-click="ScanBox(box_id)">submit</button>
       <br>
       <boxsummary></boxsummary>
 

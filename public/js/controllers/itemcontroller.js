@@ -207,8 +207,6 @@ angular.module('scanthisApp.itemController', [])
 
 
   $scope.MakeBoxScanEntry = function(form){
-    $scope.entry.box.lot_number = $scope.current.lot;
-    $scope.entry.scan.lot_number = $scope.current.lot;
     $scope.entry.box.timestamp = moment(new Date()).format();
     $scope.entry.scan.timestamp = $scope.entry.box.timestamp;
     $scope.entry.scan.station_id = $scope.station_id;
@@ -217,7 +215,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.DatabaseBox = function(){    
     var func = function(response){
       $scope.entry.scan.box_id = response.data.id;
-      Clear('box', $scope);
+      //Clear('box', $scope);
       $scope.DatabaseScan();     
     };
     if (NoMissingValues($scope.entry.scan, 'box_id')){
@@ -228,31 +226,27 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-    Clear('scan', $scope);
+    //Clear('scan', $scope);
     $scope.ListItems();  
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
-  $scope.BoxSecondScan = function(box_id){
+  /*$scope.BoxSecondScan = function(box_id){
     $scope.entry.scan.timestamp = moment(new Date()).format();
     $scope.entry.scan.station_id = $scope.station_id;
     $scope.entry.scan.box_id = box_id;
     $scope.DatabaseScan();
-  };
+  };*/
 
   $scope.MakeBox = function(){
     $scope.MakeBoxScanEntry($scope.form);
     $scope.DatabaseBox();
   };
 
-  /*initialize with correct entry json object and display*/
-  $scope.init = function(fields, options){
+  $scope.init = function(){
     $scope.entry.box = {'timestamp': '', 'lot_number': ''};
-    $scope.entry.scan = {'lot_number':'', 'station_id': '', 'timestamp': '', 'box_id':''};
-    $scope.fields = fields;
-    $scope.options = options;
-
+    $scope.entry.scan = {'station_id': '', 'timestamp': '', 'box_id':''};
   };
 
 

@@ -40,6 +40,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.MakeLotEntry = function(date, lot_number){
     $scope.lot_entry.lot_number = lot_number;        
     CreateEntryPeriod(date, 'week', $scope);
+    $scope.lot_entry.station_id = $scope.station_id;
   };
 
   
@@ -127,24 +128,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 })
-
-.controller('NewBoxCtrl',function($scope, $http, DatabaseServices){
-  $scope.ScanIn = function(id){
-    $scope.SupplierFromStage(id);
-  };
-
-  $scope.$watch('current.bool', function(newValue, oldValue) {
-    if ($scope.form){
-      $scope.MakeBox();
-    }
-  });
-
-
-
-})
-
-
-
 
 
 
