@@ -39,28 +39,7 @@ angular.module('scanthisApp.directives', [])
   templateUrl: 'htmlpartials/shipinfo.html' }; })
 
 /*Creates a searchable table of items in order to reprint labels*/
-.directive('reprint', function() {
-  return {
-    templateUrl: 'htmlpartials/reprint.html',
-    controller: function($scope, $injector, DatabaseServices) {
-
-        $scope.ListAllItems = function(station_id){
-            var query = '?station_id=eq.' + station_id;
-            var func = function(response){
-              $scope.items = response.data;
-              for (var i=0;i<$scope.items.length;i++){
-                $scope.items[i].internal_lot_code = $scope.items[i].internal_lot_code ? $scope.items[i].internal_lot_code : $scope.items[i].lot_number;
-              }
-            };
-            DatabaseServices.GetEntries('item_lot', func, query);
-          };
-
-        $scope.ListAllItems($scope.station_id);        
-    }
-  };
-})
-
-
+.directive('reprint', function() { return { templateUrl: 'htmlpartials/reprint.html'}; })
 
 
 ;
