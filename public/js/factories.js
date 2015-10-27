@@ -100,4 +100,12 @@ angular.module('scanthisApp.factories', [])
 
 
   return factory;
+})
+
+
+.factory('aService', function() {
+  var shinyNewServiceInstance;
+  //factory function body that constructs shinyNewServiceInstance
+  shinyNewServiceInstance = shinyNewServiceInstance || {foo:''};
+  return shinyNewServiceInstance;
 });

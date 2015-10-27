@@ -150,8 +150,8 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
+.controller('StartNewLotCtrl', function($scope, $http, DatabaseServices, $window) {
 
-.controller('StartNewLotCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.StartNewLot = function(){
     $scope.current.supplier_id = null;
@@ -235,4 +235,22 @@ angular.module('scanthisApp.createlotController', [])
 
 
 
-});
+})
+
+
+
+.controller('ACtrl', function(aService, $scope, $window) {
+  $scope.WindowOpen = function(aString){
+    var newWin = $window.open('/#/qrcode');
+    newWin.aString = aString;
+  };
+})
+
+.controller('BCtrl', function(aService, $scope) {
+  //aService.foo += 1;
+  //console.log("B"+ aService.foo);
+  $scope.foo = window.aString;
+  //console.log(window.aString);
+})
+
+;

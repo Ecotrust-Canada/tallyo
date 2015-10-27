@@ -58,4 +58,9 @@ angular.module('scanthisApp.directives', [])
         $scope.ListAllItems($scope.station_id);        
     }
   };
-});
+})
+
+
+
+
+;

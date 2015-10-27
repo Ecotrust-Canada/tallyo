@@ -52,6 +52,16 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
       templateUrl: 'html/harsam_shipping.html'
     })
 
+
+
+    .state('qrcode', {
+      url: "/qrcode",
+      templateUrl: 'html/qrcode.html'
+    })
+
+
+
+
     .state('amanda_external_receiving', {
       url: "/amanda_external_receiving",
       templateUrl: 'html/amanda_external_receiving.html'
