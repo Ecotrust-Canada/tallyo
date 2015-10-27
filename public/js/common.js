@@ -34,7 +34,7 @@ var createLotNum = function(stage_id, date){
 var LotQuery = function(params){
     var queryString = '?';
     //todo: first without &, rest with
-    queryString = queryString + ['supplier_id','previous_lot_number','product_id','lot_number'].map(function(param){
+    queryString = queryString + ['harvester_id','previous_lot_number','product_id','lot_number'].map(function(param){
       if (typeof params[param] !== 'undefined'){
         return param + '=eq.' + params[param];
       }

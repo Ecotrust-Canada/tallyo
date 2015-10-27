@@ -14,7 +14,7 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.lots = response.data;
     };
-    DatabaseServices.GetEntries('supplier_lot', func, query);
+    DatabaseServices.GetEntries('harvester_lot', func, query);
   };
 
   /*Sets the current lot number for the stage*/
@@ -67,7 +67,7 @@ angular.module('scanthisApp.createlotController', [])
       $scope.ListItems(lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
+    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
   };
 
   /*gets lot number from stage*/
@@ -129,7 +129,7 @@ angular.module('scanthisApp.createlotController', [])
       $scope.ListItems(lot_number, $scope.station_id);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
+    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
   };
 
   /*gets lot number from stage*/

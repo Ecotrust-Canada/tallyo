@@ -44,7 +44,16 @@ angular.module('scanthisApp', [
     $scope.stage_id = stage_id;
     $scope.current = {};
   };
-});
+})
+
+.controller('SetProcessor', function($scope, $http) {
+  $scope.init = function(processor){
+    $scope.processor = processor;
+  };
+})
+
+
+;
 
 
 

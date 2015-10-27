@@ -16,9 +16,9 @@ angular.module('scanthisApp.setsupplierController', [])
   /*display all suppliers*/
   $scope.ListSuppliers = function(){
     var func = function(response){
-      $scope.list.supplier = response.data;
+      $scope.list.harvester = response.data;
     };
-    DatabaseServices.GetEntries('supplier', func);
+    DatabaseServices.GetEntries('harvester', func);
   };
 
   $scope.ListSuppliers();
@@ -33,7 +33,7 @@ angular.module('scanthisApp.setsupplierController', [])
       $scope.PatchStageWithLot(lot_number);
     };
     var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('supplier_lot', func, query);
+    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
   };
 
   /*fill in fields in json obj*/
@@ -74,11 +74,11 @@ angular.module('scanthisApp.setsupplierController', [])
   
 
   /*gets selected supplier, creates querystring for lot*/
-  $scope.SupplierFromStage = function(supplier_id){ 
+  $scope.SupplierFromStage = function(harvester_id){ 
     var date = new Date();
-    var queryString = LotQuery({'supplier_id': supplier_id, 'date': date});
-    $scope.lot_entry = {'stage_id': $scope.stage_id, 'supplier_id': supplier_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
-    $scope.selectedsupplier = supplier_id;
+    var queryString = LotQuery({'harvester_id': harvester_id, 'date': date});
+    $scope.lot_entry = {'stage_id': $scope.stage_id, 'harvester_id': harvester_id, 'lot_number': '', 'start_date': '', 'end_date': ''};
+    $scope.selectedsupplier = harvester_id;
     $scope.CreateLot(queryString, date);
   };
 

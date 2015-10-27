@@ -11,7 +11,7 @@ angular.module('scanthisApp.movelotController', [])
     var func = function(response){
       $scope.lot_stage[stage_id] = response.data;
     };
-    DatabaseServices.GetEntries('supplier_lot', func, query);
+    DatabaseServices.GetEntries('harvester_lot', func, query);
   };
 
 

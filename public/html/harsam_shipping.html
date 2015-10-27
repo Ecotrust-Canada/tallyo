@@ -1,47 +1,49 @@
-<div ng-controller="SetStage" ng-init="init(9)">
-<div ng-controller="SetStation" ng-init="init(8)">
-  <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box')">
-    <div class="step">
-      Create Shipping Entry:<br><br>
-      <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
-        <createform></createform>
+<div ng-controller="SetProcessor" ng-init="init('HS0')">
+  <div ng-controller="SetStage" ng-init="init(9)">
+    <div ng-controller="SetStation" ng-init="init(8)">
+      <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box')">
+        <div class="step">
+          Create Shipping Entry:<br><br>
+          <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
+            <createform></createform>
+          </div>
+        </div>
+        <br>
+        <div class="step">
+          Add Cases: <br><br>
+          <form>
+            Box ID: <input type="text" ng-model="obj_id">
+            <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
+          </form>
+        </div>
+        <br>
+        <div class="step">
+          Review: <br><br>
+          <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+            <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+          </select>
+          <div shipinfo ship="current.shipping_unit"></div>
+            <div class="block verticalLine">
+            <table>
+              <tr>
+                <td>Box id</td>
+                <td>weight</td>
+                <td>lot number</td>
+                <td>FT box number</td>
+              </tr>  
+              <tr ng-repeat="box in list.included">
+                <td>{{box.id}}</td>
+                <td>{{box.weight}}kg</td>
+                <td>{{box.lot_number}}</td>
+                <td>{{box.ft_box_num}}</td>
+                <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
       </div>
     </div>
-    <br>
-    <div class="step">
-      Add Cases: <br><br>
-      <form>
-        Box ID: <input type="text" ng-model="obj_id">
-        <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-      </form>
-    </div>
-    <br>
-    <div class="step">
-      Review: <br><br>
-      <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-        <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
-      </select>
-      <div shipinfo ship="current.shipping_unit"></div>
-        <div class="block verticalLine">
-        <table>
-          <tr>
-            <td>Box id</td>
-            <td>weight</td>
-            <td>lot number</td>
-            <td>FT box number</td>
-          </tr>  
-          <tr ng-repeat="box in list.included">
-            <td>{{box.id}}</td>
-            <td>{{box.weight}}kg</td>
-            <td>{{box.lot_number}}</td>
-            <td>{{box.ft_box_num}}</td>
-            <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
-          </tr>
-        </table>
-      </div>
-
-    </div>
-
   </div>
-</div>
 </div>

@@ -1,18 +1,17 @@
-<div class="step" ng-controller="SetStage" ng-init="init(7)">
-  <div ng-controller="SetStation" ng-init="init(5)">
-    <div ng-controller="StartNewLotCtrl">
+<div ng-controller="SetProcessor" ng-init="init('AM2')">
+  <div class="step" ng-controller="SetStage" ng-init="init(7)">
+    <div ng-controller="SetStation" ng-init="init(5)">
+      
 
+      <div ng-controller="StartNewLotCtrl">
+        <button ng-click="StartNewLot()">New Lot!</button><br>
+        {{current.lot.lot_number}}<br>
+        {{current.supplier_id}}<br>
+        <input type="text" ng-model="box_id"><button ng-click="ScanBox(box_id)">submit</button>
+        <br>
 
-      <button ng-click="StartNewLot()">New Lot!</button><br>
-      {{current.lot.lot_number}}<br>
-      {{current.supplier_id}}<br>
-      <input type="text" ng-model="box_id"><button ng-click="ScanBox(box_id)">submit</button>
-      <br>
-
-      <boxsummary></boxsummary>
-
-      <button ng-click="QRWindowOpen('this is a string')">window</button>
-
+        <boxsummary></boxsummary>
+      </div>
 
 
     </div>

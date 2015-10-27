@@ -59,8 +59,8 @@ angular.module('scanthisApp.incomingController', [])
   };
 
   /*makes lot*/
-  $scope.CreateLot = function(lot_number, supplier_id, form){
-    var entry = {'lot_number': lot_number, 'stage_id': $scope.stage_id, 'supplier_id': supplier_id};
+  $scope.CreateLot = function(lot_number, harvester_id, form){
+    var entry = {'lot_number': lot_number, 'stage_id': $scope.stage_id, 'harvester_id': harvester_id};
     //receive_date?
     var func = function(response){
       $scope.current.lot = lot_number;

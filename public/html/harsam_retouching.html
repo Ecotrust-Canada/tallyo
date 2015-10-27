@@ -1,16 +1,17 @@
 
+<div ng-controller="SetProcessor" ng-init="init('HS0')">
+  <div ng-controller="SetStage" ng-init="init(3)">
+    <div ng-controller="SetStation" ng-init="init(3)">
+      <nav>
+        <ul>
+          <li><a ui-sref="harsam_retouching.main">Main</a></li>
+          <li><a ui-sref="harsam_retouching.reprint">Reprint Label</a></li>
+        </ul>
+      </nav>
 
-<div ng-controller="SetStage" ng-init="init(3)">
-  <div ng-controller="SetStation" ng-init="init(3)">
-    <nav>
-      <ul>
-        <li><a ui-sref="harsam_retouching.main">Main</a></li>
-        <li><a ui-sref="harsam_retouching.reprint">Reprint Label</a></li>
-      </ul>
-    </nav>
-
-    
-    <div ui-view></div>
+      
+      <div ui-view></div>
+    </div>
   </div>
 </div>
 
