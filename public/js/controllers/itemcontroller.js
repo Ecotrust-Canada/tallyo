@@ -74,8 +74,6 @@ angular.module('scanthisApp.itemController', [])
       $scope.showScan = true;
       $scope.showSummary = true;
     }
-
-
   };
 })
 
@@ -114,7 +112,6 @@ angular.module('scanthisApp.itemController', [])
   /*creates a new row in the database, item table*/
   $scope.DatabaseLoin = function(){    
     var func = function(response){
-      //$scope.list.items.push(response.data);
       $scope.entry.scan.loin_id = response.data.id;
       Clear('loin', $scope);
       $scope.DatabaseScan();     
@@ -126,18 +123,17 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
-
-
-
   $scope.DatabaseScan = function(){    
     var func = function(response){
-    Clear('scan', $scope);  
+    $scope.QRWindowOpen($scope.entry.scan.loin_id);
+    Clear('scan', $scope);    
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
   $scope.Submit = function(form){
-    $scope.GetMaxLoin(form);
+   $scope.GetMaxLoin(form);
+   //$scope.qrtest();
   };
   
   /*fills in fields in json to submit to database*/
@@ -187,6 +183,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
+
 })
 
 
@@ -231,13 +228,6 @@ angular.module('scanthisApp.itemController', [])
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
-
-  /*$scope.BoxSecondScan = function(box_id){
-    $scope.entry.scan.timestamp = moment(new Date()).format();
-    $scope.entry.scan.station_id = $scope.station_id;
-    $scope.entry.scan.box_id = box_id;
-    $scope.DatabaseScan();
-  };*/
 
   $scope.MakeBox = function(){
     $scope.MakeBoxScanEntry($scope.form);
