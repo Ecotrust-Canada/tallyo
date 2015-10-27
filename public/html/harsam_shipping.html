@@ -6,6 +6,9 @@
           Create Shipping Entry:<br><br>
           <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
             <createform></createform>
+            <div ng-controller="formsubmitCtrl">
+              <input type="submit" ng-click="Submit(form)" value="Save" />
+            </div>
           </div>
         </div>
         <br>

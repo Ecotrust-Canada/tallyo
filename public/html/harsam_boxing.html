@@ -5,7 +5,10 @@
         
         <div class="step" ng-controller="formCtrl" ng-init="init('box')">
           Create Case:<br><br>
-          <createform></createform>               
+          <createform></createform>
+          <div ng-controller="formsubmitCtrl">
+            <input type="submit" ng-click="Submit(form)" value="Save" />
+          </div>               
         </div>
 
         

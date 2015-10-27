@@ -1,6 +1,7 @@
 <div ng-controller="SetProcessor" ng-init="init('HS0')">
   <div ng-controller="SetStage" class="step" ng-init="init(2)">
     <div ng-controller="SetStation" ng-init="init(6)">
+      
       <div ng-controller="SetSupplierCtrl">  
         <div class="block rmarg">
           <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
@@ -23,7 +24,12 @@
 
         <div ng-controller="formCtrl" ng-init="init('harvester')" ng-hide="addnew">
           <createform></createform>
+          <div ng-controller="formsubmitCtrl" ng-init="init('harvester')" ng-hide="addnew">
+            <input type="submit" ng-click="Submit(form)" value="Save" />
+          </div>
         </div>
+
+
 
         <hr>
         <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
@@ -42,11 +48,8 @@
           </div>
         </div>
 
-
-
-
-
       </div>
+
     </div>
   </div>
 </div>
