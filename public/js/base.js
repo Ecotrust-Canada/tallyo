@@ -25,11 +25,17 @@ angular.module('scanthisApp', [
  *Controllers used on most pages to set station and stage
  */
 
-.controller('SetStation', function($scope, $http) {
+.controller('SetStation', function($scope, $http, $window) {
   $scope.init = function(station_id){
     $scope.station_id = station_id;
     $scope.entry = {};
     $scope.list = {};
+  };
+
+
+  $scope.QRWindowOpen = function(aString){
+    var newWin = $window.open('/#/qrcode');
+    newWin.aString = aString;
   };
 })
 

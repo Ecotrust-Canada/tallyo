@@ -239,18 +239,9 @@ angular.module('scanthisApp.createlotController', [])
 
 
 
-.controller('ACtrl', function(aService, $scope, $window) {
-  $scope.WindowOpen = function(aString){
-    var newWin = $window.open('/#/qrcode');
-    newWin.aString = aString;
-  };
-})
 
-.controller('BCtrl', function(aService, $scope) {
-  //aService.foo += 1;
-  //console.log("B"+ aService.foo);
+.controller('BCtrl', function( $scope) {
   $scope.foo = window.aString;
-  //console.log(window.aString);
 })
 
 ;
