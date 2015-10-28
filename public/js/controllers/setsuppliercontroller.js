@@ -18,7 +18,8 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       $scope.list.harvester = response.data;
     };
-    DatabaseServices.GetEntries('harvester', func);
+    var query = '?processor_code=eq.' + $scope.processor;
+    DatabaseServices.GetEntries('harvester', func, query);
   };
 
   $scope.ListSuppliers();
@@ -63,7 +64,7 @@ angular.module('scanthisApp.setsupplierController', [])
         $scope.SupplierFromLotNumber($scope.currentlot);
       }//end if
       else{
-        var lot_number = createLotNum($scope.stage_id, date);
+        var lot_number = createLotNum($scope.processor, $scope.station_id, date);
         $scope.MakeLotEntry(date, lot_number);
         DatabaseLot(lot_number);  
       }

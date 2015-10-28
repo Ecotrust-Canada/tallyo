@@ -25,9 +25,9 @@ var dateManipulation = function(date, period){
 };
 
 /* for now creates unique id by using stage id and current date and time*/
-var createLotNum = function(stage_id, date){
-    var datestring = moment(date.valueOf()).format('-DDMMYYYY-HHmmss');
-    return String(stage_id) + datestring;
+var createLotNum = function(processor_code, station_id, date){
+    var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
+    return String(processor_code) + String(station_id) +  datestring;
 };
 
 /*creates a querystring from a json object*/

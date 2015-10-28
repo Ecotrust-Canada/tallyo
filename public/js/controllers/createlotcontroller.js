@@ -157,7 +157,7 @@ angular.module('scanthisApp.createlotController', [])
     $scope.current.supplier_id = null;
     $scope.entry.lot = {};
     var date = new Date();
-    $scope.entry.lot.lot_number = createLotNum($scope.station_id, date);
+    $scope.entry.lot.lot_number = createLotNum($scope.processor, $scope.station_id, date);
     $scope.entry.lot.timestamp = moment(new Date()).format();
     $scope.entry.lot.station_id = $scope.station_id;
 
@@ -166,10 +166,11 @@ angular.module('scanthisApp.createlotController', [])
       $scope.current.lot = response.data;
     };
     DatabaseServices.DatabaseEntryReturn('lot', $scope.entry.lot, func);
-
-
-
   };
+
+
+
+  
 
   $scope.ScanBox = function(box_id){
     var func = function(response){

@@ -77,6 +77,10 @@ angular.module('scanthisApp.itemController', [])
   };
 })
 
+
+
+
+
 .controller('LoinCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.GetMaxLoin = function(form){
