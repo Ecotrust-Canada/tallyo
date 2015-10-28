@@ -52,7 +52,10 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
       templateUrl: 'html/harsam_shipping.html'
     })
 
-
+    .state('amanda_admin', {
+      url: "/amanda_admin",
+      templateUrl: 'html/amanda_admin.html',
+    })
 
     .state('qrcode', {
       url: "/qrcode",
