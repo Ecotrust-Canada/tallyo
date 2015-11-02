@@ -14,7 +14,7 @@ angular.module('scanthisApp.packingController', [])
    */
    
    //"init('box', 'item')"
-  $scope.init = function(table, obj){
+  $scope.init = function(table, obj, displayobj){
 
     var fk = table + '_id';
     
@@ -26,7 +26,7 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       var query = '?' + fk + '=eq.' + id;
-      DatabaseServices.GetEntries(obj, func, query);
+      DatabaseServices.GetEntries(displayobj, func, query);
     };
     
 
@@ -55,9 +55,9 @@ angular.module('scanthisApp.packingController', [])
 
     /*calculate the weight and lot_number of a box*/
     $scope.CalcBox = function(){
-      var box_weight = CalculateBoxWeight($scope.included.items);
-      var lot_num = GetBoxLotNumber($scope.included.items);
-      var num = $scope.included.items.length;
+      var box_weight = CalculateBoxWeight($scope.list.included);
+      var lot_num = GetBoxLotNumber($scope.list.included);
+      var num = $scope.list.included.length;
       $scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
     };
 
@@ -85,11 +85,21 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.GetEntry(obj, func, query);
     };
 
-    /*writes the foreignkey of the object, adds object to list*/
-    $scope.PatchObjWithContainer = function(id){
+    $scope.GetDisplayObj = function(id){
       var func = function(response){
         $scope.obj_id = null;
         $scope.list.included.push(response.data[0]);
+      };
+      var query = '?id=eq.' + id;
+      DatabaseServices.GetEntry(displayobj, func, query);
+    };
+
+    /*writes the foreignkey of the object, adds object to list*/
+    $scope.PatchObjWithContainer = function(id){
+      var func = function(response){
+        $scope.GetDisplayObj(id);
+        //$scope.obj_id = null;
+        //$scope.list.included.push(response.data[0]);
       };
       var patch = {};
       patch[fk] = $scope.current[table].id;
@@ -102,7 +112,7 @@ angular.module('scanthisApp.packingController', [])
     /*remove an object from a acontainer*/
     $scope.PatchObjRemoveContainer = function(id){
       var func = function(response){
-        $scope.included.items = removeFromArray($scope.included.items, id);
+        $scope.list.included = removeFromArray($scope.list.included, id);
       };
       var patch = {};
       patch[fk] = null;
@@ -115,7 +125,7 @@ angular.module('scanthisApp.packingController', [])
       var func = function(response){
         $scope.current[table] = response.data[0];
       };
-      var patch = {'weight': box_weight, 'lot_number': lot_num, 'num_loins': num};
+      var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num};
       var query = '?id=eq.' + $scope.current[table].id;
       DatabaseServices.PatchEntry('box', patch, query, func);
     };

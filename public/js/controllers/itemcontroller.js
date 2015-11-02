@@ -194,7 +194,16 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('BoxCtrl', function($scope, $http, DatabaseServices) {
 
-
+  $scope.change = function(){
+    var rawArray = $scope.form.raw.split("|");
+    $scope.form.size = rawArray[0];
+    $scope.form.grade = rawArray[1];
+    $scope.form.pieces = rawArray[2];
+    $scope.form.weight = rawArray[3];
+    $scope.form.case_number = rawArray[4];
+    $scope.form.lot_number = rawArray[5];
+    $scope.form.supplier_id = rawArray[6];
+  };
 
   $scope.ListItems = function(){
     var query = '?station_id=eq.' + $scope.station_id;

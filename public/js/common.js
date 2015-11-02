@@ -124,7 +124,9 @@ var CreateEntryPeriod = function(today, period, $scope){
 var CalculateBoxWeight = function(array){
     var totalweight = 0;
     for (var i=0;i<array.length;i++){
-        totalweight += array[i].weight_1;
+        if (array[i].weight_1){
+            totalweight += array[i].weight_1;
+        }
     }
     return totalweight;
 };

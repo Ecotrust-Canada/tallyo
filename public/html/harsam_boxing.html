@@ -1,7 +1,7 @@
 <div ng-controller="SetProcessor" ng-init="init('HS0')">
   <div ng-controller="SetStage" ng-init="init(8)">
     <div ng-controller="SetStation" ng-init="init(7)">
-      <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'loin')">    
+      <div id="packing" ng-controller="PackingCtrl" ng-init = "init('box', 'loin', 'loin_scan')">    
         
         <div class="step" ng-controller="formCtrl" ng-init="init('box')">
           Create Case:<br><br>
@@ -35,4 +35,5 @@
           
       </div>
     </div>
-</div></div>
+  </div>
+</div>
