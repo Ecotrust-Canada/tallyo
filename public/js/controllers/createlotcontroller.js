@@ -257,7 +257,7 @@ angular.module('scanthisApp.createlotController', [])
 
 
 
-.controller('BCtrl', function( $scope) {
+.controller('QRCtrl', function( $scope) {
   $scope.foo = window.aString;
 })
 

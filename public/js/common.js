@@ -198,3 +198,38 @@ var ClearFormToDefault = function(form_arr, def_arr){
   };
 
 
+var ObjSubset = function(jsonobj, fields){
+  //console.log(jsonobj);
+  var anarray = [];
+  anarray[0] = jsonobj;
+  var result = [];
+  var pluckFields = function(item){
+    var pluckField = fjs.pluck(item);
+    var field = pluckField(anarray);
+    result.push(field);
+  };
+  var pluckFieldsToResult = fjs.each(pluckFields); 
+  pluckFieldsToResult(fields);
+
+  var newarray = [];
+   var addTo = function (item) {
+    return newarray.push(item[0]);
+   };
+   var addToNewarray = fjs.each(addTo); 
+   addToNewarray(result);
+
+   //console.log(newarray);
+   return newarray;
+
+};
+
+
+var QRCombine = function (stringarray){
+   var qrstring = function (arg1, arg2){
+     return String(arg1) + '|' + String(arg2);
+   };
+   var qrstringReduce = fjs.reduce(qrstring);
+   return qrstringReduce(stringarray);
+};
+
+

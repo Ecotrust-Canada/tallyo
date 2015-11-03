@@ -38,6 +38,10 @@ angular.module('scanthisApp.directives', [])
   scope: { ship: '=' },
   templateUrl: 'htmlpartials/shipinfo.html' }; })
 
+.directive('qrscan', function() { return { 
+  scope: { thedata: '=' },
+  templateUrl: 'htmlpartials/qrscan.html' }; })
+
 /*Creates a searchable table of items in order to reprint labels*/
 .directive('reprint', function() { return { templateUrl: 'htmlpartials/reprint.html'}; })
 

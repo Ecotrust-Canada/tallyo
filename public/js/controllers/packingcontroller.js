@@ -55,10 +55,22 @@ angular.module('scanthisApp.packingController', [])
 
     /*calculate the weight and lot_number of a box*/
     $scope.CalcBox = function(){
-      var box_weight = CalculateBoxWeight($scope.list.included);
+      //var box_weight = CalculateBoxWeight($scope.list.included);
       var lot_num = GetBoxLotNumber($scope.list.included);
-      var num = $scope.list.included.length;
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
+      //var num = $scope.list.included.length;
+      //$scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
+      $scope.GetHarvester(lot_num);
+    };
+
+    $scope.GetHarvester = function(lot_num){
+      var func = function(response){
+        var harvester_id = response.data[0].harvester_id;
+        var box_weight = CalculateBoxWeight($scope.list.included);
+        var num = $scope.list.included.length;
+        $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_id);
+      };
+      var query = '?lot_number=eq.' + lot_num;
+      DatabaseServices.GetEntry('harvester_lot', func, query);
     };
 
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
@@ -121,11 +133,11 @@ angular.module('scanthisApp.packingController', [])
     };
 
     /*adds final info to box*/
-    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num){
+    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_id){
       var func = function(response){
         $scope.current[table] = response.data[0];
       };
-      var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num};
+      var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_id': harvester_id};
       var query = '?id=eq.' + $scope.current[table].id;
       DatabaseServices.PatchEntry('box', patch, query, func);
     };
@@ -133,5 +145,19 @@ angular.module('scanthisApp.packingController', [])
     
   };
     
+
+})
+
+
+
+
+.controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.BoxQR = function(){
+    var stringarray = ObjSubset($scope.current.box, ["lot_number", "weight"]);
+    var qrstring = QRCombine(stringarray);
+    console.log(qrstring);
+  };
+
 
 });
