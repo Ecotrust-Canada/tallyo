@@ -14,7 +14,6 @@ angular.module('scanthisApp', [
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.movelotController',
-  'scanthisApp.incomingController',
   'monospaced.qrcode'
 ])
 
@@ -25,11 +24,25 @@ angular.module('scanthisApp', [
  *Controllers used on most pages to set station and stage
  */
 
-.controller('SetStation', function($scope, $http, $window) {
+.controller('SetStation', function($scope, $http, DatabaseServices) {
+
+  $scope.GetStationInfo = function(station_id){
+    var query = '?id=eq.' + station_id;
+    var func = function(response){
+      $scope.station_info = response.data[0].station_info;
+    };
+    DatabaseServices.GetEntries('station', func, query);
+  };
+
+
   $scope.init = function(station_id){
     $scope.station_id = station_id;
+    $scope.GetStationInfo(station_id);
     $scope.entry = {};
     $scope.list = {};
+    $scope.qr = {};
+    $scope.scan = {};
+    $scope.form = {};
   };
 
 

@@ -1,8 +1,8 @@
 <div class = "outline" ng-show="showScan">
   <div class = "admin" style="font-size:20px;">
-    Supplier: {{current.supplier_lot.supplier}} Fleet:{{current.supplier_lot.fleet_vessel}}<br>
-    {{current.supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-    Internal Lot number: {{current.supplier_lot.internal_lot_code}}
+    Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
+    {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot number: {{current.harvester_lot.internal_lot_code}}
   </div>
   <hr>
   <div class = "input">
@@ -31,7 +31,7 @@
     <br>
     Most Recent:
     <table class = "fill">
-      <tr ng-repeat = "item in list.scan | orderBy: '-timestamp' | filter: item.lot_number=currentlot | limitTo: 1">
+      <tr ng-repeat = "item in list.included | orderBy: '-timestamp' | filter: item.lot_number=currentlot | limitTo: 1">
         <td ng-if="item.grade">{{item.grade}}</td>
         <td ng-if="item.weight">{{(item.weight).toFixed(2)}}kg</td>
         <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>

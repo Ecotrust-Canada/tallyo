@@ -23,9 +23,14 @@
         <br>
         <div class="step">
           Review: <br><br>
-          <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-            <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
-          </select>
+
+          <div ng-controller="SelectDropDownCtrl" ng-init="init('shipping_unit')">
+            <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+              <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+            </select>
+          </div>
+
+
           <div shipinfo ship="current.shipping_unit"></div>
             <div class="block verticalLine">
             <table>

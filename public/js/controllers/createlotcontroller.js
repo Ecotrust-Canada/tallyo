@@ -3,112 +3,80 @@
 
 angular.module('scanthisApp.createlotController', [])
 
-.controller('CreateLotCtrl', function($scope, $http, DatabaseServices) {
-  /*
-   *Selecting current lot from drop down
-   */
 
-  /*list the available lots for the current stage*/
-  $scope.ListLots = function(stage_id){
-    var query = '?stage_id=eq.' + stage_id;
+.controller('SelectDropDownCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.ListCollections = function(queryOn){
+    var query = '';
+    if (queryOn !== undefined){
+      query = '?' + queryOn + '=eq.' + $scope[queryOn];
+    }
+    else query = '';
     var func = function(response){
-      $scope.lots = response.data;
+      $scope.list[$scope.station_info.collectiontable] = response.data;
     };
-    DatabaseServices.GetEntries('harvester_lot', func, query);
+    DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query);
   };
 
-  /*Sets the current lot number for the stage*/
-  $scope.PatchStageWithLot = function(lot_number){
-    var func = function(response){
-      $scope.current.lot = lot_number;
-    };
-    var patch = {'current_lot_number': lot_number};
-    var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.PatchEntryNoAlert('stage', patch, query, func);
+  $scope.init = function(queryOn){
+    $scope.$watch('station_info', function(newValue, oldValue) {
+      if ($scope.station_info !== undefined){
+        $scope.ListCollections(queryOn);
+      }
+    });
   };
-
-  $scope.ListLots($scope.stage_id);
 
 })
 
 
+.controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
 
-
-
-
-
-
-.controller('CurrentCtrl', function($scope, $http, DatabaseServices) {
-  /*displays items in the summary table*/
-  $scope.ListItems = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
+  $scope.ListCollectionItems = function(queryOn){
+    var query = '';
+    if (queryOn !== undefined){
+      query = '?' + queryOn + '=eq.' + $scope[queryOn] + '&' + $scope.station_info.itemquery + '=eq.' + $scope.current.collectionid;
+    }
+    else query = '?' + $scope.station_info.itemquery + '=eq.' + $scope.current.collectionid;
     var func = function(response){
-      $scope.list.scan = response.data;
+      $scope.list.included = [];
+      for (var i in response.data){
+        $scope.list.included.push(response.data[i]);
+      }
     };
-    DatabaseServices.GetEntries('scan', func, query);
-  };
-
-  $scope.ItemTotals = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    var func = function(response){
-      $scope.list.totals = response.data;
-    };
-    DatabaseServices.GetEntries('scan_total', func, query);
-  };
-
-  $scope.$watch('list.scan.length', function(newValue, oldValue) {
-    $scope.ItemTotals($scope.current.lot, $scope.station_id);
-  });
-
-   /*supplier information from lot number*/
-  $scope.SupplierFromLotNumber = function(lot_number){
-    var func = function(response){
-      $scope.current.supplier_lot = response.data[0];
-      $scope.ListItems(lot_number, $scope.station_id);
-    };
-    var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
-  };
-
-  /*gets lot number from stage*/
-  $scope.GetCurrentLot = function(){
-    var func = function(response){
-      $scope.current.lot = response.data[0].current_lot_number;
-    };
-    var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.GetEntries('stage', func, query);
-  };
-
-  $scope.GetCurrentLot();
-
-  $scope.$watch('current.lot', function(newValue, oldValue) {
-    $scope.SupplierFromLotNumber($scope.current.lot);
-  });
-
-})
-
-
-
-
-
-
-
-
-
-
-.controller('CurrentCtrlloin', function($scope, $http, DatabaseServices) {
-  /*displays items in the summary table*/
-  $scope.ListItems = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
-    var func = function(response){
-      $scope.list.scan = response.data;
-    };
-    DatabaseServices.GetEntries('loin_scan', func, query);
+    DatabaseServices.GetEntries($scope.station_info.itemtable, func, query);
   };
 
   $scope.$watch('entry.scan.loin_id', function(newValue, oldValue) {
-    $scope.ListItems($scope.current.lot, $scope.station_id);
+    if ($scope.current.collectionid !== undefined){
+      $scope.ListCollectionItems('station_id');
+    }
   });
+
+
+  $scope.DisplayCollectionInfo = function(queryOn){
+    var func = function(response){
+      $scope.current[$scope.station_info.collectiontable] = response.data[0];
+      $scope.ListCollectionItems(queryOn);
+    };
+    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
+    DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
+  };
+
+  $scope.init = function(queryOn){
+    $scope.$watch('current.collectionid', function() {
+      if ($scope.station_info !== undefined){
+        $scope.DisplayCollectionInfo(queryOn);
+      }
+    });
+    $scope.$watch('station_info', function() {
+      if ($scope.station_info !== undefined){
+        $scope.DisplayCollectionInfo(queryOn);
+      }
+    });
+  };
+})
+
+.controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(lot_number, station_id){
     var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
@@ -118,24 +86,16 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries('scan_total', func, query);
   };
 
-  $scope.$watch('list.scan.length', function(newValue, oldValue) {
-    $scope.ItemTotals($scope.current.lot, $scope.station_id);
+  $scope.$watch('list.included.length', function(newValue, oldValue) {
+    $scope.ItemTotals($scope.current.collectionid, $scope.station_id);
   });
 
-   /*supplier information from lot number*/
-  $scope.SupplierFromLotNumber = function(lot_number){
-    var func = function(response){
-      $scope.current.supplier_lot = response.data[0];
-      $scope.ListItems(lot_number, $scope.station_id);
-    };
-    var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
-  };
+})
 
-  /*gets lot number from stage*/
+.controller('CurrentCtrl', function($scope, $http, DatabaseServices) {
   $scope.GetCurrentLot = function(){
     var func = function(response){
-      $scope.current.lot = response.data[0].current_lot_number;
+      $scope.current.collectionid = response.data[0].current_lot_number;
     };
     var query = '?id=eq.' + $scope.stage_id;
     DatabaseServices.GetEntries('stage', func, query);
@@ -143,11 +103,8 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.GetCurrentLot();
 
-  $scope.$watch('current.lot', function(newValue, oldValue) {
-    $scope.SupplierFromLotNumber($scope.current.lot);
-  });
-
 })
+
 
 
 .controller('StartNewLotCtrl', function($scope, $http, DatabaseServices, $window) {
@@ -169,9 +126,6 @@ angular.module('scanthisApp.createlotController', [])
   };
 
 
-
-  
-
   $scope.ScanBox = function(box_id){
     var func = function(response){
       if (response.data.length > 0){
@@ -184,8 +138,6 @@ angular.module('scanthisApp.createlotController', [])
     var query = '?station_id=eq.' + $scope.station_id + '&box_id=eq.' + box_id;
     DatabaseServices.GetEntry('scan', func, query);
   };
-
-
 
   $scope.BoxToLot = function(box_id){
     var func = function(response){

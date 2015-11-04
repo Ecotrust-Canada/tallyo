@@ -13,14 +13,18 @@
 
 
 <div ng-controller="BoxCtrl" ng-init="init()">
-  Raw String: <input  type="text" ng-model="form.raw" ng-change="change()" ><br>
+  <form ng-submit="change()">
+    Raw String: <input  type="text" ng-model="raw.string">
+  </form>
+  <br>
+
   size: <input  type="text" ng-model="form.size" ><br>
   grade: <input  type="text" ng-model="form.grade" ><br>
   pieces: <input  type="text" ng-model="form.pieces" ><br>
   weight: <input  type="text" ng-model="form.weight" ><br>
   case number: <input  type="text" ng-model="form.case_number" ><br>
   Lot Number: <input type="text" ng-model="form.lot_number"><br>
-  supplier id:<input type="text" ng-model="form.supplier_id"><br>
+  harvester id:<input type="text" ng-model="form.harvester_id"><br>
   <button ng-click="MakeBox()">submit</button><br><br>
 
   <boxsummary></boxsummary>

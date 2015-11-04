@@ -1,12 +1,15 @@
-<div class="step" ng-controller="LoinCtrl">
-  <div ng-controller="CreateLotCtrl">
-    <selectlot></selectlot>
+<div class="step">
+  <div ng-controller="SelectDropDownCtrl" ng-init="init('stage_id')">
+    <selectlot></selectlot>    
   </div>
   <br>
-  <div ng-controller="CurrentCtrlloin">
-    <div ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'false'})">
-      <makeitem></makeitem>
-      <summaryblock></summaryblock>
+    <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
+      <div ng-controller="TotalsCtrl">
+        <div ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
+          <makeitem></makeitem>
+          <summaryblock></summaryblock>
+          <viewsummarybutton></viewsummarybutton>
+        </div>
+      </div>
     </div>
-  </div>
 </div>

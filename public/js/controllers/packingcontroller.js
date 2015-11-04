@@ -30,10 +30,10 @@ angular.module('scanthisApp.packingController', [])
     };
     
 
-    var func = function(response){
+    /*var func = function(response){
       $scope.list[table] = response.data;
     };
-    DatabaseServices.GetEntries(table, func);
+    DatabaseServices.GetEntries(table, func);*/
 
     /*get container object from selected id*/
     $scope.ContainerFromId = function(id){
@@ -43,8 +43,6 @@ angular.module('scanthisApp.packingController', [])
       var query = '?id=eq.' + id;
       DatabaseServices.GetEntry(table, func, query);
     };
-
-    /*list all the items in a given container*/
     
 
     /*select a previous container form drop down*/
@@ -55,10 +53,7 @@ angular.module('scanthisApp.packingController', [])
 
     /*calculate the weight and lot_number of a box*/
     $scope.CalcBox = function(){
-      //var box_weight = CalculateBoxWeight($scope.list.included);
       var lot_num = GetBoxLotNumber($scope.list.included);
-      //var num = $scope.list.included.length;
-      //$scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
       $scope.GetHarvester(lot_num);
     };
 
@@ -110,8 +105,6 @@ angular.module('scanthisApp.packingController', [])
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
         $scope.GetDisplayObj(id);
-        //$scope.obj_id = null;
-        //$scope.list.included.push(response.data[0]);
       };
       var patch = {};
       patch[fk] = $scope.current[table].id;
@@ -152,10 +145,12 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
+  //$scope.qr = {};
 
   $scope.BoxQR = function(){
-    var stringarray = ObjSubset($scope.current.box, ["lot_number", "weight"]);
+    var stringarray = ObjSubset($scope.current.box, ["size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_id"]);
     var qrstring = QRCombine(stringarray);
+    $scope.qr.string = qrstring;
     console.log(qrstring);
   };
 

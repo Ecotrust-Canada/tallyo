@@ -13,7 +13,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.RemoveItem = function(scan_id){
     var query = '?id=eq.' + scan_id;
     var func = function(){
-      removeFromArray($scope.list.scan, scan_id);
+      removeFromArray($scope.list.included, scan_id);
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -22,7 +22,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.DatabaseScan = function(form){
     $scope.MakeScanEntry(form);
     var func = function(response){
-      $scope.list.scan.push(response.data);
+      $scope.list.included.push(response.data);
       Clear('scan', $scope);
     };
     if (NoMissingValues($scope.entry.scan)){
@@ -34,7 +34,7 @@ angular.module('scanthisApp.itemController', [])
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
-    $scope.entry.scan.lot_number = $scope.current.lot;
+    $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.scan.timestamp = moment(new Date()).format();
     MakeEntry(form, 'scan', $scope);
   };
@@ -84,7 +84,7 @@ angular.module('scanthisApp.itemController', [])
 .controller('LoinCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.GetMaxLoin = function(form){
-    var query = '?lot_number=eq.' + $scope.current.lot;
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
     var func = function(response){
       var num = 1;
       if (response.data.length >0){
@@ -108,7 +108,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.RemoveScan = function(id){
     var query = '?loin_id=eq.' + id;
     var func = function(){
-      $scope.ListItems($scope.current.lot, $scope.station_id);
+      $scope.ListCollectionItems('station_id');
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -129,7 +129,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-    $scope.QRWindowOpen($scope.entry.scan.loin_id);
+    //$scope.QRWindowOpen($scope.entry.scan.loin_id);
     Clear('scan', $scope);    
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -143,8 +143,8 @@ angular.module('scanthisApp.itemController', [])
   /*fills in fields in json to submit to database*/
   $scope.MakeLoinScanEntry = function(form, num){
     $scope.entry.loin.loin_number = num;
-    $scope.entry.loin.lot_number = $scope.current.lot;
-    $scope.entry.scan.lot_number = $scope.current.lot;
+    $scope.entry.loin.lot_number = $scope.current.collectionid;
+    $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.loin.timestamp = moment(new Date()).format();
     $scope.entry.scan.timestamp = $scope.entry.loin.timestamp;
     $scope.entry.scan.station_id = $scope.station_id;
@@ -194,15 +194,17 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('BoxCtrl', function($scope, $http, DatabaseServices) {
 
+
   $scope.change = function(){
-    var rawArray = $scope.form.raw.split("|");
+    var rawArray = $scope.raw.string.split("|");
     $scope.form.size = rawArray[0];
     $scope.form.grade = rawArray[1];
     $scope.form.pieces = rawArray[2];
     $scope.form.weight = rawArray[3];
     $scope.form.case_number = rawArray[4];
     $scope.form.lot_number = rawArray[5];
-    $scope.form.supplier_id = rawArray[6];
+    $scope.form.harvester_id = rawArray[6];
+    $scope.MakeBox();
   };
 
   $scope.ListItems = function(){
@@ -254,11 +256,6 @@ angular.module('scanthisApp.itemController', [])
 
 
 })
-
-
-
-
-
 
 
 ;

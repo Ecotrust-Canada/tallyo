@@ -17,7 +17,6 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.ListSuppliers = function(){
     var func = function(response){
       $scope.list.harvester = response.data;
-      console.log($scope.list.harvester);
     };
     var query = '?processor_code=eq.' + $scope.processor;
     DatabaseServices.GetEntries('harvester', func, query);

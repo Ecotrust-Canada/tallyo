@@ -24,12 +24,16 @@
           <form>
             <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
             <input type="button" ng-click="BoxQR()"   value="Make qr!">
-            <qrscan thedata="current.box"></qrscan>
+            <qrscan thedata="qr.string"></qrscan>
           </form>
           <br>
-          <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-            <option ng-repeat = "box in list.box">{{box.id}}</option>
-          </select>
+
+          <div ng-controller="SelectDropDownCtrl" ng-init="init('box')">
+            <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+              <option ng-repeat = "box in list.box">{{box.id}}</option>
+            </select>
+          </div>
+
             <div boxinfo box="current.box"></div>
           <loinlist></loinlist>
         </div>

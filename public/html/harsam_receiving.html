@@ -3,11 +3,15 @@
     <div class = "wrapper">
 
       <div class="block" ng-controller="SetStation" ng-init="init(1)">
-        <div ng-controller="CurrentCtrl">  
-          <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
-            <makeitem></makeitem>
-            <summaryblock></summaryblock>
-            <viewsummarybutton></viewsummarybutton>
+        <div ng-controller="CurrentCtrl">
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
+            <div ng-controller="TotalsCtrl">
+              <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
+                <makeitem></makeitem>
+                <summaryblock></summaryblock>
+                <viewsummarybutton></viewsummarybutton>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -15,10 +19,14 @@
 
       <div class="block" ng-controller="SetStation" ng-init="init(2)">
         <div ng-controller="CurrentCtrl">
-          <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
-            <makeitem></makeitem>
-            <summaryblock></summaryblock>
-            <viewsummarybutton></viewsummarybutton>
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
+            <div ng-controller="TotalsCtrl">
+              <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
+                <makeitem></makeitem>
+                <summaryblock></summaryblock>
+                <viewsummarybutton></viewsummarybutton>
+              </div>
+            </div>
           </div>
         </div>
       </div>      
