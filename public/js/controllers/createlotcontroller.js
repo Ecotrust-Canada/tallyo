@@ -4,6 +4,12 @@
 angular.module('scanthisApp.createlotController', [])
 
 
+/*
+ * Fills in the list for a drop-down menu to select correct collection
+ * Selected item will be stored as $scope.current.collectionid
+ * queryOn is station_id or stage_id
+ * Table and primary key field is determined by station
+ */
 .controller('SelectDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(queryOn){
@@ -28,7 +34,12 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-
+/*
+ * Displays information about the collection and the list of items
+ * queryOn is station_id or stage_id
+ * Tables and primary key field are determined by station
+ * Collection and Item tables often views (eg. harvester_lot & loin_scan)
+ */
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollectionItems = function(queryOn){
@@ -46,6 +57,8 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries($scope.station_info.itemtable, func, query);
   };
 
+
+  //this is specifically for harsam station 2
   $scope.$watch('entry.scan.loin_id', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
       $scope.ListCollectionItems('station_id');
@@ -76,6 +89,11 @@ angular.module('scanthisApp.createlotController', [])
   };
 })
 
+
+/*
+ * Specifically gets the scan Totals for HarSam stations 1 & 2
+ * Will need to abstract if other stations have 'totals' views
+ */
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(lot_number, station_id){
@@ -92,6 +110,11 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
+
+/*
+ * This gets the lot which is stored as current for the stage
+ * Might Abstract some of this later
+ */
 .controller('CurrentCtrl', function($scope, $http, DatabaseServices) {
   $scope.GetCurrentLot = function(){
     var func = function(response){
@@ -106,6 +129,69 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
+/*
+ * Gets the id of collection table given station
+ */
+.controller('GetCurrentCtrl', function($scope, $http, DatabaseServices) {
+  $scope.GetCurrent = function(){
+    var func = function(response){
+      $scope.current.collectionid = response.data[0].current_collectionid;
+    };
+    var query = '?id=eq.' + $scope.station_id;
+    DatabaseServices.GetEntries('station', func, query);
+  };
+
+  $scope.GetCurrent();
+
+})
+
+
+.controller('SubmitSetCurrentCtrl', function($scope, $http, DatabaseServices) {
+
+  /*submits the form to the database*/
+    $scope.ToDatabase = function(){
+      var func = function(response){
+        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+        var thedata = response.data;
+        
+        //If I add a drop-down then will need this - if statement, I guess
+        //$scope.list[$scope.table].push(thedata);
+
+        //not sure where this shortcut is needed or not now..
+        //$scope.current[$scope.table] = thedata;
+
+        $scope.list.included = [];
+        $scope.StationCurrent(thedata[$scope.station_info.collectionid]);
+      };
+      if (NotEmpty($scope.form)){
+        DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+      }
+      else{ alert("empty form"); }  
+    };
+
+    $scope.StationCurrent = function(id){
+      var patch = {'current_collectionid': id};
+      var query = '?id=eq.' + $scope.station_id;
+      var func = function(response){
+        $scope.current.collectionid = id;
+      };
+      DatabaseServices.PatchEntry('station', patch, query, func);
+    };
+
+    /*fills in entry json obj from form, sends to database*/
+    $scope.Submit = function(form){
+      if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
+      MakeEntry(form, $scope.table, $scope);
+      $scope.ToDatabase();
+    };
+
+})
+
+
+
+
+//Most of this stuff is already written elsewhere I think
 
 .controller('StartNewLotCtrl', function($scope, $http, DatabaseServices, $window) {
 

@@ -26,8 +26,8 @@ angular.module('scanthisApp', [
 
 .controller('SetStation', function($scope, $http, DatabaseServices) {
 
-  $scope.GetStationInfo = function(station_id){
-    var query = '?id=eq.' + station_id;
+  $scope.GetStationInfo = function(station_code){
+    var query = '?code=eq.' + station_code;
     var func = function(response){
       $scope.station_info = response.data[0].station_info;
     };
@@ -35,14 +35,15 @@ angular.module('scanthisApp', [
   };
 
 
-  $scope.init = function(station_id){
-    $scope.station_id = station_id;
-    $scope.GetStationInfo(station_id);
+  $scope.init = function(station_code){
+    $scope.processor = station_code.substring(0, 3);
+    $scope.station_code = station_code;    
     $scope.entry = {};
     $scope.list = {};
     $scope.qr = {};
     $scope.scan = {};
     $scope.form = {};
+    $scope.GetStationInfo(station_code);
   };
 
 
@@ -59,12 +60,11 @@ angular.module('scanthisApp', [
   };
 })
 
+
 .controller('SetProcessor', function($scope, $http) {
-  $scope.init = function(processor){
-    $scope.processor = processor;
+  $scope.init = function(id){
   };
 })
-
 
 ;
 

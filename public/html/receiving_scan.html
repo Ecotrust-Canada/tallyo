@@ -1,33 +1,47 @@
+<div class="stationframe" ng-controller="GetCurrentCtrl">
+  <div class="columnframe block" ng-controller="DisplayCollectionCtrl" ng-init="init()">
+    
+    <div class="sectionframe"><!--collection info -->
+      PO num: {{current.shipping_unit.po_number}}<br>
+    </div>
 
-<div ng-controller="formCtrl" ng-init="init('shipping_unit')">
-  <createform></createform>
-  <div ng-controller="formsubmitCtrl">
-    <input type="submit" ng-click="Submit(form)" value="Save" />
+    <div class="sectionframe"><!-- summary info  -->
+    </div>
+
+    <div class="sectionframe itemsframe"><!--full items list -->
+      <boxsummary></boxsummary>
+    </div>
+
+  </div>
+  <div class="columnframe block">
+
+    <div class="sectionframe"><!-- choose collection -->
+      <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
+        <createform></createform>
+        <div ng-controller="SubmitSetCurrentCtrl">
+          <input type="submit" ng-click="Submit(form)" value="Save" />
+        </div>
+      </div>
+    </div>
+
+    <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()"><!--add scan info-->
+      <form ng-submit="change()">
+        Raw String: <input  type="text" ng-model="raw.string">
+      </form>
+      <br>
+
+      size: <input  type="text" ng-model="form.size" ><br>
+      grade: <input  type="text" ng-model="form.grade" ><br>
+      pieces: <input  type="text" ng-model="form.pieces" ><br>
+      weight: <input  type="text" ng-model="form.weight" ><br>
+      case number: <input  type="text" ng-model="form.case_number" ><br>
+      Lot Number: <input type="text" ng-model="form.lot_number"><br>
+      harvester id:<input type="text" ng-model="form.harvester_id"><br>
+      <button ng-click="MakeBox()">submit</button><br><br>
+    </div>
+
   </div>
 </div>
-<br>
-<br>
 
 
-
-
-
-<div ng-controller="BoxCtrl" ng-init="init()">
-  <form ng-submit="change()">
-    Raw String: <input  type="text" ng-model="raw.string">
-  </form>
-  <br>
-
-  size: <input  type="text" ng-model="form.size" ><br>
-  grade: <input  type="text" ng-model="form.grade" ><br>
-  pieces: <input  type="text" ng-model="form.pieces" ><br>
-  weight: <input  type="text" ng-model="form.weight" ><br>
-  case number: <input  type="text" ng-model="form.case_number" ><br>
-  Lot Number: <input type="text" ng-model="form.lot_number"><br>
-  harvester id:<input type="text" ng-model="form.harvester_id"><br>
-  <button ng-click="MakeBox()">submit</button><br><br>
-
-  <boxsummary></boxsummary>
-
-</div>
 

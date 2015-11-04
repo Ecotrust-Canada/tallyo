@@ -2,7 +2,7 @@
   <div ng-controller="SetStage" ng-init="init(9)">
     <div ng-controller="SetStation" ng-init="init(8)">
       
-      <div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box')">
+      <!--<div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box')">
         <div class="step">
           Create Shipping Entry:<br><br>
           <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
@@ -49,6 +49,67 @@
               </tr>
             </table>
           </div>
+          </div>
+        </div>
+      </div>-->
+
+
+      <div class="stationframe" ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box')">
+        <div class="columnframe block" ng-controller="DisplayCollectionCtrl" ng-init="init()">
+          <div class="sectionframe"><!--collection info -->
+            <div shipinfo ship="current.shipping_unit"></div>
+
+
+          </div>
+
+          <div class="sectionframe"><!-- summary info  -->
+            
+
+
+
+          </div>
+          <div class="sectionframe itemsframe"><!--full items list -->
+            <table class="fill">
+              <tr>
+                <td>Box id</td>
+                <td>weight</td>
+                <td>lot number</td>
+                <td>Case Number</td>
+              </tr>  
+              <tr ng-repeat="box in list.included">
+                <td>{{box.id}}</td>
+                <td>{{box.weight}}kg</td>
+                <td>{{box.lot_number}}</td>
+                <td>{{box.case_number}}</td>
+                <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+              </tr>
+            </table>
+
+
+          </div>
+        </div>
+        <div class="columnframe block">
+          <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')"><!-- choose collection -->
+            
+            <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+              <select name="singleSelect" ng-model="current.collectionid">
+                <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+              </select>
+            </div>
+            <br>
+            Create Shipping Entry:<br><br>
+              <createform></createform>
+              <div ng-controller="formsubmitCtrl">
+                <input type="submit" ng-click="Submit(form)" value="Save" />
+              </div>
+
+          </div>
+          <div class="sectionframe"><!--add scan info-->
+            Add Cases: <br><br>
+            <form>
+              Box ID: <input type="text" ng-model="obj_id">
+              <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
+            </form>
           </div>
         </div>
       </div>

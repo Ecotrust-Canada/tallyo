@@ -29,6 +29,10 @@ angular.module('scanthisApp.directives', [])
 
 .directive('boxsummary', function() { return { templateUrl: 'htmlpartials/boxsummary.html' }; })
 
+.directive('harsamscan', function() { return { templateUrl: 'htmlpartials/harsamscan.html' }; })
+
+.directive('scansummary', function() { return { templateUrl: 'htmlpartials/scansummary.html' }; })
+
 /**/
 .directive('boxinfo', function() { return { 
   scope: { box: '=' },
