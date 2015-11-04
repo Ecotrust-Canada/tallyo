@@ -5,69 +5,10 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('PackingCtrl', function($scope, $http, DatabaseServices) {
-  /*
-   *
-   *creating a 'container' and assigning other objects as being in container
-   *
-   *Items in boxes and boxes in shipments
-   *
-   */
-   
-   //"init('box', 'item')"
-  $scope.init = function(table, obj, displayobj){
 
+  $scope.init = function(table, obj, displayobj){
     var fk = table + '_id';
     
-    $scope.ListContainerItems = function(id){
-      var func = function(response){
-        $scope.list.included = [];
-        for (var i in response.data){
-          $scope.list.included.push(response.data[i]);
-        }
-      };
-      var query = '?' + fk + '=eq.' + id;
-      DatabaseServices.GetEntries(displayobj, func, query);
-    };
-    
-
-    /*var func = function(response){
-      $scope.list[table] = response.data;
-    };
-    DatabaseServices.GetEntries(table, func);*/
-
-    /*get container object from selected id*/
-    $scope.ContainerFromId = function(id){
-      var func = function(response){
-        $scope.current[table] = response.data[0];
-      };
-      var query = '?id=eq.' + id;
-      DatabaseServices.GetEntry(table, func, query);
-    };
-    
-
-    /*select a previous container form drop down*/
-    $scope.CurrentContainer = function(id){
-      $scope.ContainerFromId(id);
-      $scope.ListContainerItems(id);
-    };
-
-    /*calculate the weight and lot_number of a box*/
-    $scope.CalcBox = function(){
-      var lot_num = GetBoxLotNumber($scope.list.included);
-      $scope.GetHarvester(lot_num);
-    };
-
-    $scope.GetHarvester = function(lot_num){
-      var func = function(response){
-        var harvester_id = response.data[0].harvester_id;
-        var box_weight = CalculateBoxWeight($scope.list.included);
-        var num = $scope.list.included.length;
-        $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_id);
-      };
-      var query = '?lot_number=eq.' + lot_num;
-      DatabaseServices.GetEntry('harvester_lot', func, query);
-    };
-
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
     $scope.PutObjInContainer = function(id){
       var func = function(response){
@@ -123,21 +64,37 @@ angular.module('scanthisApp.packingController', [])
       patch[fk] = null;
       var query = '?id=eq.' + id;
       DatabaseServices.PatchEntry(obj, patch, query, func);
+    };     
+  };
+})
+
+
+.controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
+  $scope.CalcBox = function(){
+    var lot_num = GetBoxLotNumber($scope.list.included);
+    $scope.GetHarvester(lot_num);
+  };
+
+  $scope.GetHarvester = function(lot_num){
+    var func = function(response){
+      var harvester_id = response.data[0].harvester_id;
+      var box_weight = CalculateBoxWeight($scope.list.included);
+      var num = $scope.list.included.length;
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_id);
     };
+    var query = '?lot_number=eq.' + lot_num;
+    DatabaseServices.GetEntry('harvester_lot', func, query);
+  };
 
     /*adds final info to box*/
-    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_id){
-      var func = function(response){
-        $scope.current[table] = response.data[0];
-      };
-      var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_id': harvester_id};
-      var query = '?id=eq.' + $scope.current[table].id;
-      DatabaseServices.PatchEntry('box', patch, query, func);
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_id){
+    var func = function(response){
+      $scope.current[$scope.station_info.collectiontable] = response.data[0];
     };
-
-    
-  };
-    
+    var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_id': harvester_id};
+    var query = '?id=eq.' + $scope.current[$scope.station_info.collectiontable].id;
+    DatabaseServices.PatchEntry('box', patch, query, func);
+  }; 
 
 })
 

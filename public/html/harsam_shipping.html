@@ -24,13 +24,13 @@
         <div class="step">
           Review: <br><br>
 
-          <div ng-controller="SelectDropDownCtrl" ng-init="init('shipping_unit')">
-            <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+          <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+            <select name="singleSelect" ng-model="current.collectionid">
               <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
             </select>
           </div>
 
-
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init()">
           <div shipinfo ship="current.shipping_unit"></div>
             <div class="block verticalLine">
             <table>
@@ -48,6 +48,7 @@
                 <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
               </tr>
             </table>
+          </div>
           </div>
         </div>
       </div>

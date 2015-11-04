@@ -21,21 +21,22 @@
         
         <div class="step" ng-controller="BoxLabelCtrl">
           Verify:<br><br>
-          <form>
+          <div ng-controller="CalculateBoxCtrl">
             <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
-            <input type="button" ng-click="BoxQR()"   value="Make qr!">
-            <qrscan thedata="qr.string"></qrscan>
-          </form>
+          </div>
+          <input type="button" ng-click="BoxQR()"   value="Make qr!">
+          <qrscan thedata="qr.string"></qrscan>
           <br>
 
-          <div ng-controller="SelectDropDownCtrl" ng-init="init('box')">
-            <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
+          <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+            <select name="singleSelect" ng-model="current.collectionid">
               <option ng-repeat = "box in list.box">{{box.id}}</option>
             </select>
           </div>
-
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init()">
             <div boxinfo box="current.box"></div>
-          <loinlist></loinlist>
+            <loinlist></loinlist>
+          </div>
         </div>
 
       </div>

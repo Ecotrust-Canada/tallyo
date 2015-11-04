@@ -69,7 +69,7 @@ angular.module('scanthisApp.createlotController', [])
       }
     });
     $scope.$watch('station_info', function() {
-      if ($scope.station_info !== undefined){
+      if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
         $scope.DisplayCollectionInfo(queryOn);
       }
     });
