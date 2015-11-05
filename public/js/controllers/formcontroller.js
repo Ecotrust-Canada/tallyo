@@ -11,7 +11,7 @@ angular.module('scanthisApp.formController', [])
       $scope.form = {};
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);      
     };
-    var query = '?tablename=eq.' + table + '&station_id=eq.' + $scope.station_id + '&processor_code=eq.' + $scope.processor;
+    var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;
     DatabaseServices.GetEntryNoAlert('form', func, query);
   };
 

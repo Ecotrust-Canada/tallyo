@@ -2,9 +2,9 @@
   <div class="step" ng-controller="SetStage" ng-init="init(2)">
     <div class = "wrapper">
 
-      <div class="block" ng-controller="SetStation" ng-init="init(1)">
-        <div ng-controller="CurrentCtrl">
-          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
+      <div class="block" ng-controller="SetStation" ng-init="init('HS0-001')">
+        <div ng-controller="GetCurrentCtrl">
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_code')">
             <div ng-controller="TotalsCtrl">
               <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
                 <makeitem></makeitem>
@@ -17,9 +17,9 @@
       </div>
       
 
-      <div class="block" ng-controller="SetStation" ng-init="init(2)">
-        <div ng-controller="CurrentCtrl">
-          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
+      <div class="block" ng-controller="SetStation" ng-init="init('HS0-002')">
+        <div ng-controller="GetCurrentCtrl">
+          <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_code')">
             <div ng-controller="TotalsCtrl">
               <div ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
                 <makeitem></makeitem>

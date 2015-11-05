@@ -59,7 +59,7 @@ angular.module('scanthisApp.itemController', [])
 
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
-    $scope.entry.scan = {'timestamp': '', 'lot_number': '', 'station_id': $scope.station_id};
+    $scope.entry.scan = {'timestamp': '', 'lot_number': '', 'station_code': $scope.station_code};
     $scope.fields = fields;
     $scope.options = options;
 
@@ -108,7 +108,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.RemoveScan = function(id){
     var query = '?loin_id=eq.' + id;
     var func = function(){
-      $scope.ListCollectionItems('station_id');
+      $scope.ListCollectionItems('station_code');
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -147,7 +147,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.loin.timestamp = moment(new Date()).format();
     $scope.entry.scan.timestamp = $scope.entry.loin.timestamp;
-    $scope.entry.scan.station_id = $scope.station_id;
+    $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, 'scan', $scope);
   };
 
@@ -168,7 +168,7 @@ angular.module('scanthisApp.itemController', [])
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
     $scope.entry.loin = {'timestamp': '', 'lot_number': '', 'loin_number':''};
-    $scope.entry.scan = {'station_id':'', 'timestamp':'', 'loin_id':'', 'lot_number':''};
+    $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_id':'', 'lot_number':''};
     $scope.fields = fields;
     $scope.options = options;
 
@@ -208,7 +208,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.ListItems = function(){
-    var query = '?station_id=eq.' + $scope.station_id;
+    var query = '?station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.list.box_total = response.data;
     };
@@ -221,7 +221,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.MakeBoxScanEntry = function(form){
     $scope.entry.box.timestamp = moment(new Date()).format();
     $scope.entry.scan.timestamp = $scope.entry.box.timestamp;
-    $scope.entry.scan.station_id = $scope.station_id;
+    $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, 'box', $scope);
   };
   $scope.DatabaseBox = function(){    
@@ -251,7 +251,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.init = function(){
     $scope.entry.box = {'timestamp': '', 'lot_number': ''};
-    $scope.entry.scan = {'station_id': '', 'timestamp': '', 'box_id':''};
+    $scope.entry.scan = {'station_code': '', 'timestamp': '', 'box_id':''};
   };
 
 

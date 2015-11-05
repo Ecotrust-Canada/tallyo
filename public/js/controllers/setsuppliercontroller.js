@@ -27,36 +27,17 @@ angular.module('scanthisApp.setsupplierController', [])
   
 
   /*gets the the supplier from the current lot number*/
-  $scope.SupplierFromLotNumber = function(lot_number){
+  $scope.GetHarvesterLot = function(lot_number){
     var func = function(response){
-      $scope.supplier_lot = response.data[0];
-      $scope.selectedsupplier = $scope.supplier_lot.id;
-      $scope.PatchStageWithLot(lot_number);
+      $scope.current.harvester_lot = response.data[0];
     };
     var query = '?lot_number=eq.' + lot_number;
     DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
   };
 
-  /*fill in fields in json obj*/
-  $scope.MakeLotEntry = function(date, lot_number){
-    $scope.lot_entry.lot_number = lot_number;        
-    CreateEntryPeriod(date, 'week', $scope);
-    $scope.lot_entry.station_code = $scope.station_code;
-  };
 
 
-
-
-
-
-  
-  
-
-
-
-
-
-  $scope.LotCode = function(lot_code, form){
+  /*$scope.LotCode = function(lot_code, form){
     var func = function(response){
       $scope.CurrentLot();
     };
@@ -64,15 +45,10 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?lot_number=eq.' + $scope.supplier_lot.lot_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
     $scope.lot_code = form;
-  };
+  };*/
 
 
-
-
-
-
-
-  $scope.CurrentLot = function(){
+  /*$scope.CurrentLot = function(){
     var func = function(response){
       $scope.SupplierFromLotNumber(response.data[0].current_lot_number);
     };
@@ -80,41 +56,47 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('stage', func, query);
   };
 
-  $scope.CurrentLot();
-
-
-
+  $scope.CurrentLot();*/
 
   /*Sets the current lot number for the stage*/
-  $scope.PatchStageWithLot = function(lot_number){
+  $scope.PatchStationWithLot = function(lot_number, station_code){
     var func = function(response){
-      $scope.current.bool = !$scope.current.bool;
     };
-    var patch = {'current_lot_number': lot_number};
-    var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.PatchEntry('stage', patch, query, func);
+    var patch = {'current_collectionid': lot_number};
+    var query = '?code=eq.' + station_code;
+    DatabaseServices.PatchEntry('station', patch, query, func);
   };
 
 
+  $scope.$watch('current.lot', function(newValue, oldValue) {
+    if ($scope.current.lot !== undefined){
+      $scope.PatchStationWithLot($scope.current.lot, 'HS0-001');
+      $scope.PatchStationWithLot($scope.current.lot, 'HS0-002');
+      $scope.PatchStationWithLot($scope.current.lot, 'HS0-ADM');
+      $scope.GetHarvesterLot($scope.current.lot);
+    }
 
-})
+  });
 
-.controller('LotCreatorCtrl',function($scope, $http, DatabaseServices){
 
+  /*
+   * This creates a new lot from a harvester id and sets it for the first stations
+   */
+
+  
 
   /*make a new lot in the database*/
   var DatabaseLot = function(lot_number){
     var func = function(){
-      //$scope.currentlot = lot_number;
       $scope.current.lot = lot_number;
-      //$scope.SupplierFromLotNumber($scope.currentlot);
     };
     DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
   };
 
   /*fill in fields in json obj*/
   $scope.MakeLotEntry = function(date, lot_number){
-    $scope.lot_entry.lot_number = lot_number;        
+    $scope.lot_entry.lot_number = lot_number;
+    $scope.lot_entry.timestamp = moment(new Date()).format();        
     CreateEntryPeriod(date, 'week', $scope);
     $scope.lot_entry.station_code = $scope.station_code;
   };
@@ -123,9 +105,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.CreateLot = function(queryString, date){
     var func = function(response){
       if (response.data.length > 0){
-        //$scope.currentlot = response.data[0].lot_number;
         $scope.current.lot = response.data[0].lot_number;
-        //$scope.SupplierFromLotNumber($scope.currentlot);
       }//end if
       else{
         var lot_number = createLotNum($scope.station_code, date);
@@ -137,13 +117,12 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   
-
   /*gets selected supplier, creates querystring for lot*/
   $scope.SetCurrentHarvester = function(harvester_id){
     $scope.current.harvester = harvester_id; 
     var date = new Date();
     var queryString = LotQuery({'harvester_id': harvester_id, 'date': date});
-    
+    $scope.lot_entry = {"harvester_id": harvester_id, "stage_id": $scope.stage_id, "station_code": $scope.station_code};
     $scope.CreateLot(queryString, date);
   };
 

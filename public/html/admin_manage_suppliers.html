@@ -7,8 +7,8 @@
       </div>
       <div class="block">
         <h1>...........Manage Sources......</h1>
-        Supplier: {{supplier_lot.supplier}}  Fleet: {{supplier_lot.fleet_vessel}}<br>
-      {{supplier_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{supplier_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        Supplier: {{current.harvester_lot.supplier}}  Fleet: {{current.harvester_lot.fleet_vessel}}<br>
+      {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
       Internal Lot Code:
       <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}
         <input type="button" ng-click="LotCode('', supplier_lot.internal_lot_code)" value="edit">

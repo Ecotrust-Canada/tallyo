@@ -164,7 +164,7 @@ var ClearForm = function($scope){
 /*clear an entry*/
 var ClearEntry = function(scopevar, $scope){
     for (var key in $scope.entry[scopevar]){
-      if (key !== 'station_id' && key !== 'stage_id'){
+      if (key !== 'station_code'){
         $scope.entry[scopevar][key] = "";
       }
     }

@@ -7,7 +7,7 @@ angular.module('scanthisApp.createlotController', [])
 /*
  * Fills in the list for a drop-down menu to select correct collection
  * Selected item will be stored as $scope.current.collectionid
- * queryOn is station_id or stage_id
+ * queryOn is station_code or stage_id
  * Table and primary key field is determined by station
  */
 .controller('SelectDropDownCtrl', function($scope, $http, DatabaseServices) {
@@ -36,7 +36,7 @@ angular.module('scanthisApp.createlotController', [])
 
 /*
  * Displays information about the collection and the list of items
- * queryOn is station_id or stage_id
+ * queryOn is station_code or stage_id
  * Tables and primary key field are determined by station
  * Collection and Item tables often views (eg. harvester_lot & loin_scan)
  */
@@ -61,7 +61,7 @@ angular.module('scanthisApp.createlotController', [])
   //this is specifically for harsam station 2
   $scope.$watch('entry.scan.loin_id', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
-      $scope.ListCollectionItems('station_id');
+      $scope.ListCollectionItems('station_code');
     }
   });
 
@@ -77,7 +77,7 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.init = function(queryOn){
     $scope.$watch('current.collectionid', function() {
-      if ($scope.station_info !== undefined){
+      if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
         $scope.DisplayCollectionInfo(queryOn);
       }
     });
@@ -96,8 +96,8 @@ angular.module('scanthisApp.createlotController', [])
  */
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.ItemTotals = function(lot_number, station_id){
-    var query = '?lot_number=eq.' + lot_number + '&station_id=eq.' + station_id;
+  $scope.ItemTotals = function(lot_number, station_code){
+    var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + station_code;
     var func = function(response){
       $scope.list.totals = response.data;
     };
@@ -105,7 +105,9 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.$watch('list.included.length', function(newValue, oldValue) {
-    $scope.ItemTotals($scope.current.collectionid, $scope.station_id);
+    if ($scope.current.collectionid !== undefined){
+      $scope.ItemTotals($scope.current.collectionid, $scope.station_code);
+    }
   });
 
 })
@@ -137,7 +139,7 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.current.collectionid = response.data[0].current_collectionid;
     };
-    var query = '?id=eq.' + $scope.station_id;
+    var query = '?code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('station', func, query);
   };
 
@@ -171,7 +173,7 @@ angular.module('scanthisApp.createlotController', [])
 
     $scope.StationCurrent = function(id){
       var patch = {'current_collectionid': id};
-      var query = '?id=eq.' + $scope.station_id;
+      var query = '?code=eq.' + $scope.station_code;
       var func = function(response){
         $scope.current.collectionid = id;
       };
@@ -200,9 +202,9 @@ angular.module('scanthisApp.createlotController', [])
     $scope.current.supplier_id = null;
     $scope.entry.lot = {};
     var date = new Date();
-    $scope.entry.lot.lot_number = createLotNum($scope.processor, $scope.station_id, date);
+    $scope.entry.lot.lot_number = createLotNum(scope.station_code, date);
     $scope.entry.lot.timestamp = moment(new Date()).format();
-    $scope.entry.lot.station_id = $scope.station_id;
+    $scope.entry.lot.station_code = $scope.station_code;
 
     var func = function(response){
       $scope.current.lot_number = response.data.lot_number;
@@ -221,7 +223,7 @@ angular.module('scanthisApp.createlotController', [])
         $scope.BoxToLot(box_id);
       }
     };
-    var query = '?station_id=eq.' + $scope.station_id + '&box_id=eq.' + box_id;
+    var query = '?station_code=eq.' + $scope.station_code + '&box_id=eq.' + box_id;
     DatabaseServices.GetEntry('scan', func, query);
   };
 
@@ -247,14 +249,14 @@ angular.module('scanthisApp.createlotController', [])
   $scope.MakeScan = function(box_id){
     $scope.entry.scan = {};
     $scope.entry.scan.timestamp = moment(new Date()).format();
-    $scope.entry.scan.station_id = $scope.station_id;
+    $scope.entry.scan.station_code = $scope.station_code;
     $scope.entry.scan.box_id = box_id;
     $scope.entry.scan.lot_number = $scope.current.lot_number;
     $scope.DatabaseScan();
   };
 
   $scope.ListItems = function(){
-    var query = '?station_id=eq.' + $scope.station_id;
+    var query = '?station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.list.box_total = response.data;
     };
@@ -278,8 +280,8 @@ angular.module('scanthisApp.createlotController', [])
 
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
-  $scope.ListAllItems = function(station_id){
-      var query = '?station_id=eq.' + station_id;
+  $scope.ListAllItems = function(station_code){
+      var query = '?station_code=eq.' + station_code;
       var func = function(response){
         $scope.items = response.data;
         for (var i=0;i<$scope.items.length;i++){
@@ -289,7 +291,7 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_lot', func, query);
     };
 
-  $scope.ListAllItems($scope.station_id);        
+  $scope.ListAllItems($scope.station_code);        
 })
 
 
