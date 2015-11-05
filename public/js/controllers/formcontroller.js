@@ -43,6 +43,7 @@ angular.module('scanthisApp.formController', [])
     /*fills in entry json obj from form, sends to database*/
     $scope.Submit = function(form){
       if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[$scope.table].station_code === ''){$scope.entry[$scope.table].timestamp = $scope.station_code;}
       if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
       MakeEntry(form, $scope.table, $scope);
       $scope.ToDatabase();
