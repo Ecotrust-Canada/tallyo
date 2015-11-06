@@ -1,13 +1,18 @@
 <div class="stationframe">
   <div class="columnframe block">
+  
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+      <!--begin collection info -->
       <div class = "admin" style="font-size:20px;">
         Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
         {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
         Internal Lot number: {{current.harvester_lot.internal_lot_code}}
       </div>
+      <!--end collection info -->
     </div>
+
     <div class="sectionframe" ng-controller="TotalsCtrl">
+      <!-- begin summary info  -->
       Totals:
       <table class="fill">
         <tr ng-repeat = "total in list.totals">
@@ -16,21 +21,33 @@
           <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
         </tr>
       </table>
+      <!-- end summary info  -->
     </div>
+
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+      <!--begin full items list -->
       <scansummary></scansummary>
+      <!--end full items list -->
     </div>
+
   </div>
   <div class="columnframe block">
+    
     <div class="sectionframe">
+      <!-- begin choose collection -->
       <div ng-controller="SelectDropDownCtrl" ng-init="init('stage_id')">
         <selectlot></selectlot>    
       </div>
+      <!-- end choose collection -->
     </div>
+    
     <div class="sectionframe">
+      <!--begin add scan info-->
       <div ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
         <harsamscan></harsamscan>
       </div>
+      <!--end add scan info-->
     </div>
+
   </div>
 </div>

@@ -166,11 +166,4 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListAllItems($scope.station_code);        
 })
 
-
-
-
-.controller('QRCtrl', function( $scope) {
-  $scope.foo = window.aString;
-})
-
 ;
