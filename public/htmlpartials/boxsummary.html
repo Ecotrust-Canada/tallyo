@@ -8,7 +8,7 @@
         <td>Size</td>
         <td>Total Weight</td>
       </tr>
-      <tr ng-repeat = "item in list.box_total | orderBy: '-timestamp' ">
+      <tr ng-repeat = "item in list.totals | orderBy: '-timestamp' ">
         <td>{{item.scan_lot_number}}</td>
         <td ng-if="item.lot_number!==list.box_total[$index - 1].lot_number">{{item.lot_number}}</td>
         <td ng-if="item.lot_number===list.box_total[$index - 1].lot_number"></td>

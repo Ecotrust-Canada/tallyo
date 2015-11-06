@@ -1,24 +1,6 @@
-<!--<div class="step">
-  <div ng-controller="SelectDropDownCtrl" ng-init="init('stage_id')">
-    <selectlot></selectlot>    
-  </div>
-  <br>
-    <div ng-controller="DisplayCollectionCtrl" ng-init="init('station_id')">
-      <div ng-controller="TotalsCtrl">
-        <div ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
-          <makeitem></makeitem>
-          <summaryblock></summaryblock>
-          <viewsummarybutton></viewsummarybutton>
-        </div>
-      </div>
-    </div>
-</div>-->
-
-
-
-<div class="stationframe" ng-controller="DisplayCollectionCtrl" ng-init="init('station_code')">
+<div class="stationframe">
   <div class="columnframe block">
-    <div class="sectionframe">
+    <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <div class = "admin" style="font-size:20px;">
         Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
         {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
@@ -35,7 +17,7 @@
         </tr>
       </table>
     </div>
-    <div class="sectionframe itemsframe">
+    <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <scansummary></scansummary>
     </div>
   </div>

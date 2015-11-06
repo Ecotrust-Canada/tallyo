@@ -158,7 +158,11 @@ var InitShowSummary = function($scope){
 
 /*clear a form*/
 var ClearForm = function($scope){
-    $scope.form = null;
+    for (var key in $scope.form) {
+      if ($scope.form.hasOwnProperty(key)) {
+        $scope.form[key] = "";
+      }
+}
   };
 
 /*clear an entry*/

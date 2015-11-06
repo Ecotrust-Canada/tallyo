@@ -1,25 +1,24 @@
-<div ng-controller="SetProcessor" ng-init="init('AM2')">
-  <div class="step" ng-controller="SetStation" ng-init="init(9)">
-    
-    <b>Create Processor Entry:</b>
-    <div ng-controller="formCtrl" ng-init="init('processor')">
-      <createform></createform>
-      <div ng-controller="formsubmitCtrl" ng-init="init('processor')">
-        <input type="submit" ng-click="Submit(form)" value="Save" />
-      </div>
+<div class="step" ng-controller="SetStation" ng-init="init('AM2-ADM')">
+  
+  <b>Create Processor Entry:</b>
+  <div ng-controller="formCtrl" ng-init="init('processor')">
+    <createform></createform>
+    <div ng-controller="formsubmitCtrl" ng-init="init('processor')">
+      <input type="submit" ng-click="Submit(form)" value="Save" />
     </div>
-    <br>
-    <br>
-
-
-
-    <b>Create Harvester Entry:</b>
-    <div ng-controller="formCtrl" ng-init="init('harvester')">
-      <createform></createform>
-      <div ng-controller="formsubmitCtrl" ng-init="init('harvester')">
-        <input type="submit" ng-click="Submit(form)" value="Save" />
-      </div>
-    </div>
-
   </div>
+  <br>
+  <br>
+
+
+
+  <b>Create Harvester Entry:</b>
+  <div ng-controller="formCtrl" ng-init="init('harvester')">
+    <createform></createform>
+    <div ng-controller="formsubmitCtrl" ng-init="init('harvester')">
+      <input type="submit" ng-click="Submit(form)" value="Save" />
+    </div>
+  </div>
+
 </div>
+

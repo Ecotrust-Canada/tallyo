@@ -6,7 +6,7 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('PackingCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.init = function(table, obj, displayobj){
+  $scope.init = function(table, obj, displayobj, scanobj){
     var fk = table + '_id';
     
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
@@ -33,19 +33,20 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.GetEntry(obj, func, query);
     };
 
-    $scope.GetDisplayObj = function(id){
+    $scope.MakeScan = function(id){
+      $scope.entry.scan = {"station_code": $scope.station_code,};
+      $scope.entry.scan[scanobj] = id;
+      $scope.entry.scan.timestamp = moment(new Date()).format();
       var func = function(response){
-        $scope.obj_id = null;
-        $scope.list.included.push(response.data[0]);
+        $scope.current.itemchange = !$scope.current.itemchange;
       };
-      var query = '?id=eq.' + id;
-      DatabaseServices.GetEntry(displayobj, func, query);
+      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
     };
 
     /*writes the foreignkey of the object, adds object to list*/
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
-        $scope.GetDisplayObj(id);
+        $scope.MakeScan(id);
       };
       var patch = {};
       patch[fk] = $scope.current[table].id;

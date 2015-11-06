@@ -149,6 +149,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.entry.scan.timestamp = $scope.entry.loin.timestamp;
     $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, 'scan', $scope);
+    MakeEntry(form, 'loin', $scope);
   };
 
   /*switch between scanning and view summary*/
@@ -194,32 +195,10 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('BoxCtrl', function($scope, $http, DatabaseServices) {
 
-
-  $scope.change = function(){
-    var rawArray = $scope.raw.string.split("|");
-    $scope.form.size = rawArray[0];
-    $scope.form.grade = rawArray[1];
-    $scope.form.pieces = rawArray[2];
-    $scope.form.weight = rawArray[3];
-    $scope.form.case_number = rawArray[4];
-    $scope.form.lot_number = rawArray[5];
-    $scope.form.harvester_id = rawArray[6];
-    $scope.MakeBox();
-  };
-
-  $scope.ListItems = function(){
-    var query = '?station_code=eq.' + $scope.station_code;
-    var func = function(response){
-      $scope.list.box_total = response.data;
-    };
-    DatabaseServices.GetEntries('box_total', func, query);
-  };
-  $scope.ListItems();
-
-
-
   $scope.MakeBoxScanEntry = function(form){
     $scope.entry.box.timestamp = moment(new Date()).format();
+    $scope.entry.box.station_code = $scope.station_code;
+    $scope.entry.box.shipping_unit_id = $scope.current.collectionid;
     $scope.entry.scan.timestamp = $scope.entry.box.timestamp;
     $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, 'box', $scope);
@@ -227,7 +206,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.DatabaseBox = function(){    
     var func = function(response){
       $scope.entry.scan.box_id = response.data.id;
-      //Clear('box', $scope);
+      Clear('box', $scope);
       $scope.DatabaseScan();     
     };
     if (NoMissingValues($scope.entry.scan, 'box_id')){
@@ -238,8 +217,8 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-    //Clear('scan', $scope);
-    $scope.ListItems();  
+      $scope.current.itemchange = !$scope.current.itemchange;
+      Clear('scan', $scope);
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };

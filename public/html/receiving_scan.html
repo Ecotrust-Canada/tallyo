@@ -1,33 +1,57 @@
 <div class="stationframe" ng-controller="GetCurrentCtrl">
-  <div class="columnframe block" ng-controller="DisplayCollectionCtrl" ng-init="init()">
+  <div class="columnframe block">
     
-    <div class="sectionframe"><!--collection info -->
+    <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+      <!--begin collection info -->
       PO num: {{current.shipping_unit.po_number}}<br>
+      <!--end collection info -->
     </div>
 
-    <div class="sectionframe"><!-- summary info  -->
-    </div>
-
-    <div class="sectionframe itemsframe"><!--full items list -->
+    <div class="sectionframe" ng-controller="TotalsCtrl">
+      <!-- begin summary info  -->
       <boxsummary></boxsummary>
+      <!-- end summary info  -->
+    </div>
+
+    <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+      <!--begin full items list -->
+      <table class="fill">
+        <tr>
+          <td>Box id</td>
+          <td>weight</td>
+          <td>lot number</td>
+          <td>Case Number</td>
+        </tr>  
+        <tr ng-repeat="box in list.included">
+          <td>{{box.id}}</td>
+          <td>{{box.weight}}kg</td>
+          <td>{{box.lot_number}}</td>
+          <td>{{box.case_number}}</td>
+          <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+        </tr>
+      </table>
+      <!--end full items list -->
     </div>
 
   </div>
   <div class="columnframe block">
 
-    <div class="sectionframe"><!-- choose collection -->
-      <div ng-controller="formCtrl" ng-init="init('shipping_unit')">
-        <createform></createform>
-        <div ng-controller="SubmitSetCurrentCtrl">
-          <input type="submit" ng-click="Submit(form)" value="Save" />
-        </div>
+    <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
+      <!-- begin choose collection -->
+      <createform></createform>
+      <div ng-controller="SubmitSetCurrentCtrl">
+        <input type="submit" ng-click="Submit(form)" value="Save" />
       </div>
+      <!-- end choose collection -->
     </div>
 
-    <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()"><!--add scan info-->
-      <form ng-submit="change()">
-        Raw String: <input  type="text" ng-model="raw.string">
-      </form>
+    <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()">
+      <!--begin add scan info-->
+      <div ng-controller="QRScanCtrl" ng-init="init(['size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_id'])">
+        <form ng-submit="change()">
+          Scan Field: <input  type="text" ng-model="raw.string">
+        </form>
+      </div>
       <br>
 
       size: <input  type="text" ng-model="form.size" ><br>
@@ -38,6 +62,7 @@
       Lot Number: <input type="text" ng-model="form.lot_number"><br>
       harvester id:<input type="text" ng-model="form.harvester_id"><br>
       <button ng-click="MakeBox()">submit</button><br><br>
+      <!--end add scan info-->
     </div>
 
   </div>
