@@ -41,11 +41,9 @@
       <!-- end choose collection -->
     </div>
     
-    <div class="sectionframe">
+    <div class="sectionframe" ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
       <!--begin add scan info-->
-      <div ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
         <harsamscan></harsamscan>
-      </div>
       <!--end add scan info-->
     </div>
 
