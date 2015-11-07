@@ -47,10 +47,7 @@ angular.module('scanthisApp', [
   };
 
 
-  $scope.QRWindowOpen = function(aString){
-    var newWin = $window.open('/#/qrcode');
-    newWin.aString = aString;
-  };
+ 
 })
 
 .controller('SetStage', function($scope, $http) {
