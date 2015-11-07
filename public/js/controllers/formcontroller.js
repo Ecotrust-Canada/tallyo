@@ -1,78 +1,147 @@
 'use strict';
 
-
 angular.module('scanthisApp.formController', [])
 
 .controller('formCtrl', function($scope, $http, DatabaseServices) {
-  /*
-   *
-   *Creates and submits a form for a new database row using two json files
-   *
-   */
 
-  $scope.init = function(jsonname, table, name){
-
-
-    /*define urls to get entry json and form info*/
-    var jsonentry = '../json/' + jsonname + 'entry.json';
-    var jsonform = '../json/' + jsonname + 'form.json';
-
-    var entry = table + '_entry';
-
-    /*resets the form to default values*/
-    $scope.ClearForm = function(){
-      for (var i=0;i<$scope.formarray.length;i++){
-        if ($scope.formarray[i].type === 'text'){
-          $scope.form[$scope.formarray[i].fieldname] = $scope.formarray[i].value;
-        }
-        else{
-          $scope.form[$scope.formarray[i].fieldname] = "";
-        }
-      }
-    };
-
-    /*Get the entry and form info from json files*/
-
-    $http.get(jsonform).success(function(data) {
-      $scope.formarray = data.fields;
+  $scope.FormData = function(table){
+    var func = function(response){
+      $scope.formarray = response.data[0].form.fields;
+      $scope.entry[table] = response.data[0].entry;
       $scope.form = {};
-      $scope.ClearForm();
-    });
+      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);      
+    };
+    var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;
+    DatabaseServices.GetEntryNoAlert('form', func, query);
+  };
 
-    $http.get(jsonentry).success(function(data) {
-      $scope[entry] = data;
-    });
+  $scope.init = function(table){
+    $scope.table = table;
+    $scope.FormData($scope.table);
+  };
 
-    
-    /*submits the form to the database*/
+})
+
+
+.controller('formsubmitCtrl', function($scope, $http, DatabaseServices) {
+
+  /*submits the form to the database*/
     $scope.ToDatabase = function(){
       var func = function(response){
-        //Clear(entry, $scope);
-        $scope.ClearForm();
+        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
         var thedata = response.data;
-        $scope[name].push(thedata);
-        if ($scope.current){
-          $scope.current[0] = thedata;
-        }
-        if ($scope.included){
-          $scope.included.items = [];
-        }
+        $scope.list[$scope.table].push(thedata);
+        $scope.current[$scope.table] = thedata;
+        $scope.list.included = [];
       };
       if (NotEmpty($scope.form)){
-        DatabaseServices.DatabaseEntryReturn(table, $scope[entry], func);
+        DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
       }
-      else{ alert("empty"); }  
+      else{ alert("empty form"); }  
     };
 
     /*fills in entry json obj from form, sends to database*/
     $scope.Submit = function(form){
-      if ($scope[entry].packing_date === ''){$scope[entry].packing_date = moment(new Date()).format();}
-      if ($scope[entry].best_before_date === '') {$scope[entry].best_before_date = moment(new Date()).add(2, 'years').format();}
-      MakeEntry(form, entry, $scope);
+      if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[$scope.table].station_code === ''){$scope.entry[$scope.table].station_code = $scope.station_code;}
+      if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
+      MakeEntry(form, $scope.table, $scope);
+      //console.log($scope.entry[$scope.table]);
       $scope.ToDatabase();
     };
 
+})
+
+
+.controller('FormSubmitCurrentCtrl', function($scope, $http, DatabaseServices) {
+
+  /*submits the form to the database*/
+    $scope.ToDatabase = function(){
+      var func = function(response){
+        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+        var thedata = response.data;
+        $scope.list[$scope.table].push(thedata);
+        //$scope.current[$scope.table] = thedata;
+        //$scope.list.included = [];
+        $scope.current.collectionid = thedata[$scope.station_info.collectionid];
+      };
+      if (NotEmpty($scope.form)){
+        DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+      }
+      else{ alert("empty form"); }  
+    };
+
+    /*fills in entry json obj from form, sends to database*/
+    $scope.Submit = function(form){
+      if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[$scope.table].station_code === ''){$scope.entry[$scope.table].station_code = $scope.station_code;}
+      if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
+      MakeEntry(form, $scope.table, $scope);
+      //console.log($scope.entry[$scope.table]);
+      $scope.ToDatabase();
+    };
+
+})
+
+
+
+.controller('SubmitSetCurrentCtrl', function($scope, $http, DatabaseServices) {
+
+  /*submits the form to the database*/
+    $scope.ToDatabase = function(){
+      var func = function(response){
+        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+        var thedata = response.data;
+        
+        //If I add a drop-down then will need this - if statement, I guess
+        //$scope.list[$scope.table].push(thedata);
+
+        //not sure where this shortcut is needed or not now..
+        //$scope.current[$scope.table] = thedata;
+
+        $scope.list.included = [];
+        $scope.StationCurrent(thedata[$scope.station_info.collectionid]);
+      };
+      if (NotEmpty($scope.form)){
+        DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+      }
+      else{ alert("empty form"); }  
+    };
+
+    $scope.StationCurrent = function(id){
+      var patch = {'current_collectionid': id};
+      var query = '?code=eq.' + $scope.station_code;
+      var func = function(response){
+        $scope.current.collectionid = id;
+      };
+      DatabaseServices.PatchEntry('station', patch, query, func);
+    };
+
+    /*fills in entry json obj from form, sends to database*/
+    $scope.Submit = function(form){
+      if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
+      if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
+      MakeEntry(form, $scope.table, $scope);
+      $scope.ToDatabase();
+    };
+
+})
+
+
+.controller('QRScanCtrl', function($scope, $http, DatabaseServices) {
+
+
+  $scope.change = function(){
+    var rawArray = $scope.raw.string.split("|");
+    for (var i=0;i<$scope.valuesarray.length;i++){
+      $scope.form[$scope.valuesarray[i]] = rawArray[i];
+    }
+    //This is still only for one page
+    $scope.MakeBox();
   };
 
+  $scope.init = function(valuesArray){
+    $scope.valuesarray = valuesArray;
+  };
 
-});
+  });

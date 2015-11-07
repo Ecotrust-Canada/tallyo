@@ -24,24 +24,30 @@ angular.module('scanthisApp.directives', [])
 /*table with suppliers with button to set as current*/
 .directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
+/**/
+.directive('loinlist', function() { return { templateUrl: 'htmlpartials/loinlist.html' }; })
+
+.directive('boxsummary', function() { return { templateUrl: 'htmlpartials/boxsummary.html' }; })
+
+.directive('harsamscan', function() { return { templateUrl: 'htmlpartials/harsamscan.html' }; })
+
+.directive('scansummary', function() { return { templateUrl: 'htmlpartials/scansummary.html' }; })
+
+/**/
+.directive('boxinfo', function() { return { 
+  scope: { box: '=' },
+  templateUrl: 'htmlpartials/boxinfo.html' }; })
+
+.directive('shipinfo', function() { return { 
+  scope: { ship: '=' },
+  templateUrl: 'htmlpartials/shipinfo.html' }; })
+
+.directive('qrscan', function() { return { 
+  scope: { thedata: '=' },
+  templateUrl: 'htmlpartials/qrscan.html' }; })
+
 /*Creates a searchable table of items in order to reprint labels*/
-.directive('reprint', function() {
-  return {
-    templateUrl: 'htmlpartials/reprint.html',
-    controller: function($scope, $injector, DatabaseServices) {
+.directive('reprint', function() { return { templateUrl: 'htmlpartials/reprint.html'}; })
 
-        $scope.ListAllItems = function(station_id){
-            var query = '?station_id=eq.' + station_id;
-            var func = function(response){
-              $scope.items = response.data;
-              for (var i=0;i<$scope.items.length;i++){
-                $scope.items[i].internal_lot_code = $scope.items[i].internal_lot_code ? $scope.items[i].internal_lot_code : $scope.items[i].lot_number;
-              }
-            };
-            DatabaseServices.GetEntries('item_lot', func, query);
-          };
 
-        $scope.ListAllItems($scope.station_id);        
-    }
-  };
-});
+;

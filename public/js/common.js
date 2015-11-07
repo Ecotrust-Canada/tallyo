@@ -25,16 +25,16 @@ var dateManipulation = function(date, period){
 };
 
 /* for now creates unique id by using stage id and current date and time*/
-var createLotNum = function(stage_id, date){
-    var datestring = moment(date.valueOf()).format('-DDMMYYYY-HHmmss');
-    return String(stage_id) + datestring;
+var createLotNum = function(station_code, date){
+    var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
+    return String(station_code) +  datestring;
 };
 
 /*creates a querystring from a json object*/
 var LotQuery = function(params){
     var queryString = '?';
     //todo: first without &, rest with
-    queryString = queryString + ['supplier_id','previous_lot_number','product_id','lot_number'].map(function(param){
+    queryString = queryString + ['harvester_id','previous_lot_number','product_id','lot_number'].map(function(param){
       if (typeof params[param] !== 'undefined'){
         return param + '=eq.' + params[param];
       }
@@ -59,9 +59,9 @@ var DateRangeCurrent = function(date, start_date, end_date){
 };
 
 /*checks that a json object has no "" values*/
-var NoMissingValues = function(jsonobj){
+var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {
-      if (jsonobj.hasOwnProperty(key)) {
+      if (jsonobj.hasOwnProperty(key) && key !== except) {
         if (jsonobj[key] === '' || jsonobj[key] === undefined){
             return false;
         }
@@ -124,7 +124,9 @@ var CreateEntryPeriod = function(today, period, $scope){
 var CalculateBoxWeight = function(array){
     var totalweight = 0;
     for (var i=0;i<array.length;i++){
-        totalweight += array[i].weight_1;
+        if (array[i].weight_1){
+            totalweight += array[i].weight_1;
+        }
     }
     return totalweight;
 };
@@ -156,14 +158,18 @@ var InitShowSummary = function($scope){
 
 /*clear a form*/
 var ClearForm = function($scope){
-    $scope.form = null;
+    for (var key in $scope.form) {
+      if ($scope.form.hasOwnProperty(key)) {
+        $scope.form[key] = "";
+      }
+}
   };
 
 /*clear an entry*/
 var ClearEntry = function(scopevar, $scope){
-    for (var key in $scope[scopevar]){
-      if (key !== 'station_id' && key !== 'stage_id'){
-        $scope[scopevar][key] = "";
+    for (var key in $scope.entry[scopevar]){
+      if (key !== 'station_code'){
+        $scope.entry[scopevar][key] = "";
       }
     }
   };
@@ -178,7 +184,56 @@ var Clear = function(scopevar, $scope){
 /*fill in fields in entry*/
 var MakeEntry = function(form, scopevar, $scope){
     for (var key in form){
-        $scope[scopevar][key] = form[key];
+        $scope.entry[scopevar][key] = form[key];
     }
   };
+
+
+var ClearFormToDefault = function(form_arr, def_arr){
+    for (var i=0;i<def_arr.length;i++){
+      if (def_arr[i].type === 'text'){
+        form_arr[def_arr[i].fieldname] = def_arr[i].value;
+      }
+      else{
+        form_arr[def_arr[i].fieldname] = "";
+      }
+    }
+    return form_arr;
+  };
+
+
+var ObjSubset = function(jsonobj, fields){
+  //console.log(jsonobj);
+  var anarray = [];
+  anarray[0] = jsonobj;
+  var result = [];
+  var pluckFields = function(item){
+    var pluckField = fjs.pluck(item);
+    var field = pluckField(anarray);
+    result.push(field);
+  };
+  var pluckFieldsToResult = fjs.each(pluckFields); 
+  pluckFieldsToResult(fields);
+
+  var newarray = [];
+   var addTo = function (item) {
+    return newarray.push(item[0]);
+   };
+   var addToNewarray = fjs.each(addTo); 
+   addToNewarray(result);
+
+   //console.log(newarray);
+   return newarray;
+
+};
+
+
+var QRCombine = function (stringarray){
+   var qrstring = function (arg1, arg2){
+     return String(arg1) + '|' + String(arg2);
+   };
+   var qrstringReduce = fjs.reduce(qrstring);
+   return qrstringReduce(stringarray);
+};
+
 

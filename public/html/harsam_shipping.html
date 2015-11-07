@@ -1,53 +1,72 @@
-<div ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'shipping_container', 'shipping_unit', 'ship_units', 'box')">
-  <div class="step">
-    Create Shipping Entry:<br><br>
-    <div ng-controller="formCtrl" ng-init="init('shipping', 'shipping_unit', 'ship_units')">
-      <createform></createform>
-    </div>
-  </div>
-  <br>
-  <div class="step">
-    Add Cases: <br><br>
-    <form>
-      Box ID: <input type="text" ng-model="obj_id">
-      <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-    </form>
-  </div>
-  <br>
-  <div class="step">
-    Review: <br><br>
-    <select name="singleSelect" ng-model="Selected" ng-change="CurrentContainer(Selected)">
-      <option ng-repeat = "ship in ship_units">{{ship.id}}</option>
-    </select>
-    <table>
-      <tr>
-        <td>P.O. Number: {{current[0].po_number}}</td>
-        <td>Customer: {{current[0].customer}}</td>
-        <td>Bill of Lading: {{current[0].bill_of_lading}}</td>
-      </tr>
-      <tr>
-        <td>Vessel Name: {{current[0].vessel_name}}</td>
-        <td>Container Number: {{current[0].container_number}}</td>
-      </tr>
-    </table>
-      <div class="block verticalLine">
-      <table>
-        <tr>
-          <td>Box id</td>
-          <td>weight</td>
-          <td>lot number</td>
-          <td>FT box number</td>
-        </tr>  
-        <tr ng-repeat="box in included.items">
-          <td>{{box.id}}</td>
-          <td>{{box.weight}}kg</td>
-          <td>{{box.lot_number}}</td>
-          <td>{{box.ft_box_num}}</td>
-          <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
-        </tr>
-      </table>
+<div ng-controller="SetStage" ng-init="init(9)">
+  <div ng-controller="SetStation" ng-init="init('HS0-005')">
+    
+    <div class="stationframe">
+      <div class="columnframe block">
+        
+        <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+          <!--begin collection info -->
+          <div shipinfo ship="current.shipping_unit"></div>
+          <!--end collection info -->
+        </div>
+
+        <div class="sectionframe">
+          <!-- begin summary info  -->
+          <!-- end summary info  -->
+        </div>
+
+        <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+          <!--begin full items list -->
+          <table class="fill">
+            <tr>
+              <td>Box id</td>
+              <td>weight</td>
+              <td>lot number</td>
+              <td>Case Number</td>
+            </tr>  
+            <tr ng-repeat="box in list.included">
+              <td>{{box.id}}</td>
+              <td>{{box.weight}}kg</td>
+              <td>{{box.lot_number}}</td>
+              <td>{{box.case_number}}</td>
+              <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+            </tr>
+          </table>
+          <!--end full items list -->
+        </div>
+  
+      </div>
+      <div class="columnframe block">
+      
+        <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
+          <!-- begin choose collection -->
+          <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+            <select name="singleSelect" ng-model="current.collectionid">
+              <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+            </select>
+          </div>
+          <br>
+          Create Shipping Entry:<br><br>
+            <createform></createform>
+            <div ng-controller="formsubmitCtrl">
+              <input type="submit" ng-click="Submit(form)" value="Save" />
+            </div>
+          <!-- end choose collection -->
+        </div>
+
+        <div class="sectionframe" ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box', 'box_id')">
+          <!--begin add scan info-->
+          Add Cases: <br><br>
+          <form>
+            Box ID: <input type="text" ng-model="obj_id">
+            <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
+          </form>
+          <!--end add scan info-->
+        </div>
+
+      </div>
     </div>
 
   </div>
-
 </div>
+

@@ -5,69 +5,14 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('PackingCtrl', function($scope, $http, DatabaseServices) {
-  /*
-   *
-   *creating a 'container' and assigning other objects as being in container
-   *
-   *Items in boxes and boxes in shipments
-   *
-   */
-   
 
-  $scope.init = function(table, fk, view, name, obj){
-    $scope.included = {};
-    $scope.included.items = [];
-    $scope.current = [];
+  $scope.init = function(table, obj, displayobj, scanobj){
+    var fk = table + '_id';
     
-    
-
-    $scope.ListContainerItems = function(id){
-      var func = function(response){
-        $scope.included.items = [];
-        for (var i in response.data){
-          $scope.included.items.push(response.data[i]);
-        }
-      };
-      var query = '?' + fk + '=eq.' + id;
-      DatabaseServices.GetEntries(obj, func, query);
-    };
-    
-
-    var func = function(response){
-      $scope[name] = response.data;
-    };
-    DatabaseServices.GetEntries(view, func);
-
-    /*get container object from selected id*/
-    $scope.ContainerFromId = function(id){
-      var func = function(response){
-        $scope.current[0] = response.data[0];
-      };
-      var query = '?id=eq.' + id;
-      DatabaseServices.GetEntry(table, func, query);
-    };
-
-    /*list all the items in a given container*/
-    
-
-    /*select a previous container form drop down*/
-    $scope.CurrentContainer = function(id){
-      $scope.ContainerFromId(id);
-      $scope.ListContainerItems(id);
-    };
-
-    /*calculate the weight and lot_number of a box*/
-    $scope.CalcBox = function(){
-      var box_weight = CalculateBoxWeight($scope.included.items);
-      var lot_num = GetBoxLotNumber($scope.included.items);
-      var num = $scope.included.items.length;
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num);
-    };
-
     /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
     $scope.PutObjInContainer = function(id){
       var func = function(response){
-        if (response.data[0][fk] && response.data[0][fk] != $scope.current[0].id){
+        if (response.data[0][fk] && response.data[0][fk] != $scope.current[table].id){
           var overwrite = confirm("overwrite from previous?");
           if (overwrite === true){
             $scope.PatchObjWithContainer(id);
@@ -76,7 +21,7 @@ angular.module('scanthisApp.packingController', [])
             $scope.obj_id = null;
           }
         }
-        else if (response.data[0][fk] == $scope.current[0].id){
+        else if (response.data[0][fk] == $scope.current[table].id){
           alert("already added");
           $scope.obj_id = null;
         }
@@ -88,16 +33,25 @@ angular.module('scanthisApp.packingController', [])
       DatabaseServices.GetEntry(obj, func, query);
     };
 
+    $scope.MakeScan = function(id){
+      $scope.entry.scan = {"station_code": $scope.station_code,};
+      $scope.entry.scan[scanobj] = id;
+      $scope.entry.scan.timestamp = moment(new Date()).format();
+      var func = function(response){
+        $scope.current.itemchange = !$scope.current.itemchange;
+      };
+      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+    };
+
     /*writes the foreignkey of the object, adds object to list*/
     $scope.PatchObjWithContainer = function(id){
       var func = function(response){
-        $scope.obj_id = null;
-        $scope.included.items.push(response.data[0]);
+        $scope.MakeScan(id);
       };
       var patch = {};
-      patch[fk] = $scope.current[0].id;
+      patch[fk] = $scope.current[table].id;
       var query = '?id=eq.' + id;    
-      if (id && idNotInArray($scope.included.items, id)){
+      if (id && idNotInArray($scope.list.included, id)){
         DatabaseServices.PatchEntry(obj, patch, query, func);
       }
     };
@@ -105,26 +59,58 @@ angular.module('scanthisApp.packingController', [])
     /*remove an object from a acontainer*/
     $scope.PatchObjRemoveContainer = function(id){
       var func = function(response){
-        $scope.included.items = removeFromArray($scope.included.items, id);
+        $scope.list.included = removeFromArray($scope.list.included, id);
       };
       var patch = {};
       patch[fk] = null;
       var query = '?id=eq.' + id;
       DatabaseServices.PatchEntry(obj, patch, query, func);
+    };     
+  };
+})
+
+
+.controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
+  $scope.CalcBox = function(){
+    var lot_num = GetBoxLotNumber($scope.list.included);
+    $scope.GetHarvester(lot_num);
+  };
+
+  $scope.GetHarvester = function(lot_num){
+    var func = function(response){
+      var harvester_id = response.data[0].harvester_id;
+      var box_weight = CalculateBoxWeight($scope.list.included);
+      var num = $scope.list.included.length;
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_id);
     };
+    var query = '?lot_number=eq.' + lot_num;
+    DatabaseServices.GetEntry('harvester_lot', func, query);
+  };
 
     /*adds final info to box*/
-    $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num){
-      var func = function(response){
-        $scope.current[0] = response.data[0];
-      };
-      var patch = {'weight': box_weight, 'lot_number': lot_num, 'num_loins': num};
-      var query = '?id=eq.' + $scope.current[0].id;
-      DatabaseServices.PatchEntry('box', patch, query, func);
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_id){
+    var func = function(response){
+      $scope.current[$scope.station_info.collectiontable] = response.data[0];
     };
+    var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_id': harvester_id};
+    var query = '?id=eq.' + $scope.current[$scope.station_info.collectiontable].id;
+    DatabaseServices.PatchEntry('box', patch, query, func);
+  }; 
 
-    
+})
+
+
+
+
+.controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
+  //$scope.qr = {};
+
+  $scope.BoxQR = function(){
+    var stringarray = ObjSubset($scope.current.box, ["size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_id"]);
+    var qrstring = QRCombine(stringarray);
+    $scope.qr.string = qrstring;
+    console.log(qrstring);
   };
-    
+
 
 });

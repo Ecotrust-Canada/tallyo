@@ -7,10 +7,10 @@ angular.module('scanthisApp.factories', [])
 
   var databaseurl = globalurl;
      
-  var factory = {};
+  var db_service = {};
 
   /*creates new row in database*/
-  factory.DatabaseEntry = function(table, entry, func){
+  db_service.DatabaseEntry = function(table, entry, func){
     $http.post(databaseurl + table, entry).then(function(response){
       func();
     }, function(response){
@@ -19,7 +19,7 @@ angular.module('scanthisApp.factories', [])
   };
 
   /*creates a new row in the database and returns the result*/
-  factory.DatabaseEntryReturn = function(table, entry, func){
+  db_service.DatabaseEntryReturn = function(table, entry, func){
     $http.post(databaseurl + table, entry, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       func(response);
     }, function(response){
@@ -28,7 +28,7 @@ angular.module('scanthisApp.factories', [])
   };
 
   /*sends a patch to the database and returns the result*/
-  factory.PatchEntry = function(table, patch, querystring, func){
+  db_service.PatchEntry = function(table, patch, querystring, func){
     $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
@@ -39,7 +39,7 @@ angular.module('scanthisApp.factories', [])
     });
   };
 
-  factory.PatchEntryNoAlert = function(table, patch, querystring, func){
+  db_service.PatchEntryNoAlert = function(table, patch, querystring, func){
     $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
@@ -50,7 +50,7 @@ angular.module('scanthisApp.factories', [])
   };
 
 /*deletes from the database*/
-  factory.RemoveEntry = function(table, querystring, func){
+  db_service.RemoveEntry = function(table, querystring, func){
     $http.delete(databaseurl + table + querystring).then(function(response){
       func();
     }, function(response){
@@ -59,7 +59,7 @@ angular.module('scanthisApp.factories', [])
   };
 
 /*sends a get request, alerts if nothign matching query*/
-  factory.GetEntry = function(table, func, querystring){
+  db_service.GetEntry = function(table, func, querystring){
     var url = databaseurl + table + querystring;
     $http.get(url).then(function(response){
       if (response.data.length >0){
@@ -71,7 +71,7 @@ angular.module('scanthisApp.factories', [])
     });
   };
 
-  factory.GetEntryNoAlert = function(table, func, querystring){
+  db_service.GetEntryNoAlert = function(table, func, querystring){
     var url = databaseurl + table + querystring;
     $http.get(url).then(function(response){
       if (response.data.length >0){
@@ -83,7 +83,7 @@ angular.module('scanthisApp.factories', [])
   };
 
 /*sends a get request with or without a query*/
-  factory.GetEntries = function(table, func, querystring){
+  db_service.GetEntries = function(table, func, querystring){
     var url;
     if (querystring){
       url = databaseurl + table + querystring;
@@ -99,5 +99,8 @@ angular.module('scanthisApp.factories', [])
   };
 
 
-  return factory;
-});
+  return db_service;
+})
+
+
+;

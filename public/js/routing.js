@@ -50,5 +50,33 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
     .state('harsam_shipping', {
       url: "/harsam_shipping",
       templateUrl: 'html/harsam_shipping.html'
+    })
+
+    .state('amanda_admin', {
+      url: "/amanda_admin",
+      templateUrl: 'html/amanda_admin.html',
+    })
+
+    .state('amanda_external_receiving', {
+      url: "/amanda_external_receiving",
+      templateUrl: 'html/amanda_external_receiving.html'
+    })
+    .state('amanda_external_receiving.scan', {
+      url: "/scan",
+      templateUrl: "html/receiving_scan.html"
+    })
+    .state('amanda_external_receiving.print', {
+      url: "/print",
+      templateUrl: "html/receiving_print.html"
+    })
+
+    .state('amanda_internal_receiving', {
+      url: "/amanda_internal_receiving",
+      templateUrl: 'html/amanda_internal_receiving.html'
     });
+
+
+
+
+
 });

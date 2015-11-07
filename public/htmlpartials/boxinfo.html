@@ -1,0 +1,12 @@
+<table class="info">
+  <tr><td>Box id: </td><td>{{box.id}}</td></tr>
+  <tr><td>Case Number: </td><td>{{box.case_number}}</td></tr>      
+  <tr><td>Size: </td><td>{{box.size}}</td></tr>
+  <tr><td>Grade: </td><td>{{box.grade}}</td></tr>
+  <tr><td>Timestamp: </td><td>{{box.timestamp | stringtodate |date : format : shortDate}}</td></tr>
+  <tr><td>Best Before Date: </td><td>{{box.best_before_date}}</td></tr>
+  <tr><td>Weight: </td><td>{{box.weight}}kg</td></tr>
+  <tr><td>Number of Pieces: </td><td>{{box.pieces}}</td></tr>
+  <tr><td>Lot Number: </td><td>{{box.lot_number}}</td></tr>
+  <tr><td>Harvester Id: </td><td>{{box.harvester_id}}</td></tr>
+</table>

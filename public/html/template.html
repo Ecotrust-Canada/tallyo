@@ -1,0 +1,39 @@
+<div ng-controller="SetStage" ng-init="init(8)">
+  <div ng-controller="SetStation" ng-init="init('HS0-004')">
+
+
+    <div class="stationframe" >
+      <div class="columnframe block">
+        
+        <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
+          <!--begin collection info -->
+          <!--end collection info -->
+        </div>
+
+        <div class="sectionframe" ng-controller="TotalsCtrl">
+          <!-- begin summary info  -->
+          <!-- end summary info  -->
+        </div>
+        
+        <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
+          <!--begin full items list -->
+          <!--end full items list -->
+        </div>
+
+      </div>
+      <div class="columnframe block">
+        
+        <div class="sectionframe">
+          <!-- begin choose collection -->
+          <!-- end choose collection -->
+        </div>
+
+        <div class="sectionframe">
+          <!--begin add scan info-->
+          <!--end add scan info-->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

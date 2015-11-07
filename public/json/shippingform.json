@@ -1,8 +1,0 @@
-{"fields":[
-    {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
-    {"type":"text", "fieldname":"customer", "title":"Customer", "value":"Amanda"}, 
-    {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
-    {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
-    {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
-  ]}
-

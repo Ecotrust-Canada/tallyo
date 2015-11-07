@@ -1,3 +1,51 @@
+.stationframe{
+  width:900px;
+  margin-left:50px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+}
+
+.columnframe{
+  width:446px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+}
+
+
+.stationframe2{
+  width:900px;
+  margin-left:50px;
+  height:400px;
+  outline: solid 3px;
+  background-color: white;
+}
+
+.columnframe2{
+  width:446px;
+  height:400px;
+  outline: solid 3px;
+  background-color: white;
+}
+
+.sectionframe{
+  width:100%;
+  outline: solid 2px #336B7D;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.itemsframe{
+  height: 200px;
+  overflow:scroll;
+}
+
+
+
+
+
+
 
 .outline{ 
   width: 425px;
@@ -95,6 +143,10 @@ td{
     text-align:center;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+.info td{
+  text-align:left;
 }
 
 .block{
