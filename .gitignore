@@ -6,3 +6,4 @@ public/js/app_config.js
 tmp
 .DS_Store
 .idea
+config.js
