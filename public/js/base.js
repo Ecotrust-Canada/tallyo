@@ -58,10 +58,10 @@ angular.module('scanthisApp', [
 })
 
 
-.controller('SetProcessor', function($scope, $http) {
+/*.controller('SetProcessor', function($scope, $http) {
   $scope.init = function(id){
   };
-})
+})*/
 
 ;
 

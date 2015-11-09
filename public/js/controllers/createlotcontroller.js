@@ -34,6 +34,26 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
+.controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.ListCollections = function(station1, station2){
+    var query = '?stations=like.*HS0-001*';
+    var func = function(response){
+      $scope.list.lot = response.data;
+    };
+    DatabaseServices.GetEntries('lot_aggregated', func, query);
+  };
+
+  $scope.init = function(station1, station2){
+    $scope.$watch('station_info', function(newValue, oldValue) {
+      if ($scope.station_info !== undefined){
+        $scope.ListCollections(station1, station2);
+      }
+    });
+  };
+
+})
+
 /*
  * Displays information about the collection
  * Tables and primary key field are determined by station
