@@ -18,3 +18,28 @@
       <movelot></movelot>
     </div>
 </div>-->
+
+
+<div class="stationframe" ng-controller="LotCtrl">
+  <table class="fill">
+    <tr>
+      <td>Lot Number</td>
+      <td>Weigh</td>
+      <td>Trim</td>
+      <td>Retouching</td>
+      <td>Boxing</td>
+      <td>Shipping</td>
+    </tr>
+    <tr ng-repeat="lot in list.lot_location">
+      <td>{{lot.lot_number}}</td>
+      <td ng-class="{bluefill: lot.stations.indexOf('HS0-001') !== -1}"></td>
+      <td ng-class="{bluefill: lot.stations.indexOf('HS0-002') !== -1}"></td>
+      <td ng-class="{bluefill: lot.stations.indexOf('HS0-003') !== -1}"></td>
+      <td ng-class="{bluefill: lot.stations.indexOf('HS0-004') !== -1}"></td>
+      <td ng-class="{bluefill: lot.stations.indexOf('HS0-005') !== -1}"></td>
+    </tr>
+  </table>
+
+
+
+</div>

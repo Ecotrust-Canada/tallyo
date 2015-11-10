@@ -6,6 +6,33 @@ angular.module('scanthisApp.movelotController', [])
 
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
   
+  $scope.GetLotLocations = function(){
+    var query = '';
+    var func = function(response){
+      //var array1 = response.data;
+      $scope.list.lot_location = response.data;
+      /*for (var i =0;i<array1.length;i++){
+        array1[i].stations = array1[i].stations.split(',');        
+      }
+      console.log(array1);*/
+    };
+    DatabaseServices.GetEntries('lot_aggregated', func, query);
+  };
+
+  $scope.GetLotLocations();
+
+})
+
+
+
+
+
+
+
+
+
+/*.controller('LotCtrl', function($scope, $http, DatabaseServices) {
+  
   $scope.ListLots = function(stage_id){
     var query = '?stage_id=eq.' + stage_id;
     var func = function(response){
@@ -32,12 +59,7 @@ angular.module('scanthisApp.movelotController', [])
 
   };
 
-
-
-
-
-
-})
+})*/
 
 
 

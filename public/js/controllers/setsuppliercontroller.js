@@ -58,7 +58,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.CurrentLot();*/
 
-  /*Sets the current lot number for the stage*/
+  /*Sets the current lot number for the station*/
   $scope.PatchStationWithLot = function(lot_number, station_code){
     var func = function(response){
     };
@@ -122,7 +122,7 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.current.harvester = harvester_id; 
     var date = new Date();
     var queryString = LotQuery({'harvester_id': harvester_id, 'date': date});
-    $scope.lot_entry = {"harvester_id": harvester_id, "stage_id": $scope.stage_id, "station_code": $scope.station_code};
+    $scope.lot_entry = {"harvester_id": harvester_id, "station_code": $scope.station_code};
     $scope.CreateLot(queryString, date);
   };
 
