@@ -1,54 +1,53 @@
-<div ng-controller="SetStage" class="step" ng-init="init(2)">
-  <div ng-controller="SetStation" ng-init="init('HS0-ADM')">
+<div class="step" ng-controller="SetStation" ng-init="init('HS0-ADM')">
+  
+  <div ng-controller="SetSupplierCtrl">  
+    <div class="block rmarg">
+      <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
+    </div>
+    <div class="block">
+      <h1>...........Manage Sources......</h1>
+      Supplier: {{current.harvester_lot.supplier}}  Fleet: {{current.harvester_lot.fleet_vessel}}<br>
+    {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot Code:
+    <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}
+      <input type="button" ng-click="LotCode('', supplier_lot.internal_lot_code)" value="edit">
+    </span>
+    <input ng-if-start="!supplier_lot.internal_lot_code" type="text" ng-model="$parent.lot_code">
+      <input ng-if-end type="button" ng-click="LotCode(lot_code, null)" value="submit"><br>
     
-    <div ng-controller="SetSupplierCtrl">  
-      <div class="block rmarg">
-        <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
+
+    </div>
+    <supplierlist></supplierlist>
+    <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Supplier</span><span ng-hide="addnew">Hide</span></button>
+
+    <div ng-controller="formCtrl" ng-init="init('harvester')" ng-hide="addnew">
+      <createform></createform>
+      <div ng-controller="formsubmitCtrl" ng-init="init('harvester')" ng-hide="addnew">
+        <input type="submit" ng-click="Submit(form)" value="Save" />
+      </div>
+    </div>
+
+
+
+    <hr>
+    <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
+    <div ng-controller="DropDownCtrl" ng-init="init('harvester')" ng-hide="editdrop">
+      <div class="block">
+        <select ng-model="model.id">
+          <option value="">-- select --</option>
+          <option ng-repeat="option in formjson.fields | filter: search" value="{{option.id}}">{{option.title}}</option>
+        </select>
       </div>
       <div class="block">
-        <h1>...........Manage Sources......</h1>
-        Supplier: {{current.harvester_lot.supplier}}  Fleet: {{current.harvester_lot.fleet_vessel}}<br>
-      {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-      Internal Lot Code:
-      <span ng-if="supplier_lot.internal_lot_code">{{supplier_lot.internal_lot_code}}
-        <input type="button" ng-click="LotCode('', supplier_lot.internal_lot_code)" value="edit">
-      </span>
-      <input ng-if-start="!supplier_lot.internal_lot_code" type="text" ng-model="$parent.lot_code">
-        <input ng-if-end type="button" ng-click="LotCode(lot_code, null)" value="submit"><br>
-      
-
+      <ul>
+        <li ng-repeat="selection in formjson.fields[model.id].value">{{selection.name}}</li>
+        <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new)" value="Add" /></li>
+      </ul>
       </div>
-      <supplierlist></supplierlist>
-      <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Supplier</span><span ng-hide="addnew">Hide</span></button>
-
-      <div ng-controller="formCtrl" ng-init="init('harvester')" ng-hide="addnew">
-        <createform></createform>
-        <div ng-controller="formsubmitCtrl" ng-init="init('harvester')" ng-hide="addnew">
-          <input type="submit" ng-click="Submit(form)" value="Save" />
-        </div>
-      </div>
-
-
-
-      <hr>
-      <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
-      <div ng-controller="DropDownCtrl" ng-init="init('harvester')" ng-hide="editdrop">
-        <div class="block">
-          <select ng-model="model.id">
-            <option value="">-- select --</option>
-            <option ng-repeat="option in formjson.fields | filter: search" value="{{option.id}}">{{option.title}}</option>
-          </select>
-        </div>
-        <div class="block">
-        <ul>
-          <li ng-repeat="selection in formjson.fields[model.id].value">{{selection.name}}</li>
-          <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new)" value="Add" /></li>
-        </ul>
-        </div>
-      </div>
-
     </div>
 
   </div>
+
 </div>
+
 

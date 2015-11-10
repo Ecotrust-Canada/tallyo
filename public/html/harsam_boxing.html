@@ -1,68 +1,66 @@
-
-<div ng-controller="SetStage" ng-init="init(8)">
-  <div ng-controller="SetStation" ng-init="init('HS0-004')">
+<div ng-controller="SetStation" ng-init="init('HS0-004')">
 
 
-    <div class="stationframe" >
-      <div class="columnframe block">
-        
-        <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-          <!--begin collection info -->
-          <boxinfo box="current.box"></boxinfo>
-          <!--end collection info -->
-        </div>
-
-        <div class="sectionframe">
-          <!-- begin summary info  -->
-          <!-- end summary info  -->
-        </div>
-        
-        <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-          <!--begin full items list -->
-          <loinlist></loinlist>
-          <!--end full items list -->
-        </div>
-
+  <div class="stationframe" >
+    <div class="columnframe block">
+      
+      <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
+        <!--begin collection info -->
+        <boxinfo box="current.box"></boxinfo>
+        <!--end collection info -->
       </div>
-      <div class="columnframe block">
-        
-        <div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
-          <!-- begin choose collection -->
-          <div ng-controller="SelectDropDownCtrl" ng-init="init()">
-            <select name="singleSelect" ng-model="current.collectionid">
-              <option ng-repeat = "box in list.box">{{box["id"]}}</option>
-            </select>
-          </div>
-          <br>
-          Create Case:<br>
-          <createform></createform>
-          <div ng-controller="FormSubmitCurrentCtrl">
-            <input type="submit" ng-click="Submit(form)" value="Save" />
-          </div>
-          <!-- end choose collection -->
-        </div>
 
-        <div class="sectionframe" ng-controller="PackingCtrl" ng-init = "init('box', 'loin', 'loin_scan', 'loin_id')">
-          <!--begin add scan info-->
-          Add Items:<br><br>
-          Item Id: <input type="text" ng-model="obj_id">
-          <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-          <div ng-controller="CalculateBoxCtrl">
-            <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
-          </div>
-          <div ng-controller="BoxLabelCtrl">
-            <input type="button" ng-click="BoxQR()"   value="Make qr!">
-            <qrscan thedata="qr.string"></qrscan>
-          </div>
-          <!--end add scan info-->
-        </div>
-
+      <div class="sectionframe">
+        <!-- begin summary info  -->
+        <!-- end summary info  -->
       </div>
+      
+      <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
+        <!--begin full items list -->
+        <loinlist></loinlist>
+        <!--end full items list -->
+      </div>
+
     </div>
+    <div class="columnframe block">
+      
+      <div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
+        <!-- begin choose collection -->
+        <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+          <select name="singleSelect" ng-model="current.collectionid">
+            <option ng-repeat = "box in list.box">{{box["id"]}}</option>
+          </select>
+        </div>
+        <br>
+        Create Case:<br>
+        <createform></createform>
+        <div ng-controller="FormSubmitCurrentCtrl">
+          <input type="submit" ng-click="Submit(form)" value="Save" />
+        </div>
+        <!-- end choose collection -->
+      </div>
 
+      <div class="sectionframe" ng-controller="PackingCtrl" ng-init = "init('box', 'loin', 'loin_scan', 'loin_id')">
+        <!--begin add scan info-->
+        Add Items:<br><br>
+        Item Id: <input type="text" ng-model="obj_id">
+        <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
+        <div ng-controller="CalculateBoxCtrl">
+          <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
+        </div>
+        <div ng-controller="BoxLabelCtrl">
+          <input type="button" ng-click="BoxQR()"   value="Make qr!">
+          <qrscan thedata="qr.string"></qrscan>
+        </div>
+        <!--end add scan info-->
+      </div>
 
-
-
+    </div>
   </div>
+
+
+
+
 </div>
+
 

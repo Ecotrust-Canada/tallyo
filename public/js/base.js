@@ -43,6 +43,7 @@ angular.module('scanthisApp', [
     $scope.qr = {};
     $scope.scan = {};
     $scope.form = {};
+    $scope.current = {};
     $scope.GetStationInfo(station_code);
   };
 
@@ -50,12 +51,12 @@ angular.module('scanthisApp', [
  
 })
 
-.controller('SetStage', function($scope, $http) {
+/*.controller('SetStage', function($scope, $http) {
   $scope.init = function(stage_id){
     $scope.stage_id = stage_id;
-    $scope.current = {};
+    
   };
-})
+})*/
 
 
 /*.controller('SetProcessor', function($scope, $http) {

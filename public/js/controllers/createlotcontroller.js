@@ -34,12 +34,14 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
+
+/*selects lot which have a scan object at a first station and have not gotten toa second station*/
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(station1, station2){
-    var query = '?stations=like.*HS0-001*';
+    var query = '?stations=like.*' + station1 + '*&stations=not.like.*' + station2 + '*';
     var func = function(response){
-      $scope.list.lot = response.data;
+      $scope.list.harvester_lot = response.data;
     };
     DatabaseServices.GetEntries('lot_aggregated', func, query);
   };

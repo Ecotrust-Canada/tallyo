@@ -1,106 +1,104 @@
-<div ng-controller="SetStage" ng-init="init(2)">
-  <div class="stationframe2" ng-controller="SetStation" ng-init="init('HS0-001')">
-    <div class="columnframe2 block">
+<div class="stationframe2" ng-controller="SetStation" ng-init="init('HS0-001')">
+  <div class="columnframe2 block">
+  
     
-      
 
-      <div class="sectionframe" ng-controller="TotalsCtrl">
-        <!-- begin summary info  -->
-        Totals:
-        <table class="fill">
-          <tr ng-repeat = "total in list.totals">
-            <td>Total {{total.grade}} {{total.state}}:</td>
-            <td>{{(total.weight1).toFixed(2)}}kg</td>
-            <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
-          </tr>
-        </table>
-        <!-- end summary info  -->
-      </div>
-
-      <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-        <!--begin full items list -->
-        <scansummary></scansummary>
-        <!--end full items list -->
-      </div>
-
+    <div class="sectionframe" ng-controller="TotalsCtrl">
+      <!-- begin summary info  -->
+      Totals:
+      <table class="fill">
+        <tr ng-repeat = "total in list.totals">
+          <td>Total {{total.grade}} {{total.state}}:</td>
+          <td>{{(total.weight1).toFixed(2)}}kg</td>
+          <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
+        </tr>
+      </table>
+      <!-- end summary info  -->
     </div>
-    <div class="columnframe2 block">
 
-      <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
-        <!--begin collection info -->
-        <div class = "admin" style="font-size:20px;">
-          Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
-          {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-          Internal Lot number: {{current.harvester_lot.internal_lot_code}}
-        </div>
-        <!--end collection info -->
-      </div>
-      
-      <div class="sectionframe" ng-controller="GetCurrentCtrl">
-        <!-- begin choose collection -->
-        <!-- end choose collection -->
-      </div>
-      
-      <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
-        <!--begin add scan info-->
-        <harsamscan></harsamscan>
-        <!--end add scan info-->
-      </div>
-
+    <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+      <!--begin full items list -->
+      <scansummary></scansummary>
+      <!--end full items list -->
     </div>
+
   </div>
+  <div class="columnframe2 block">
 
-
-  <div class="stationframe2" ng-controller="SetStation" ng-init="init('HS0-002')">
-    <div class="columnframe2 block">
+    <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+      <!--begin collection info -->
+      <div class = "admin" style="font-size:20px;">
+        Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
+        {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        Internal Lot number: {{current.harvester_lot.internal_lot_code}}
+      </div>
+      <!--end collection info -->
+    </div>
     
-      <div class="sectionframe" ng-controller="TotalsCtrl">
-        <!-- begin summary info  -->
-        Totals:
-        <table class="fill">
-          <tr ng-repeat = "total in list.totals">
-            <td>Total {{total.grade}} {{total.state}}:</td>
-            <td>{{(total.weight1).toFixed(2)}}kg</td>
-            <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
-          </tr>
-        </table>
-        <!-- end summary info  -->
-      </div>
-
-      <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-        <!--begin full items list -->
-        <scansummary></scansummary>
-        <!--end full items list -->
-      </div>
-
+    <div class="sectionframe" ng-controller="GetCurrentCtrl">
+      <!-- begin choose collection -->
+      <!-- end choose collection -->
     </div>
-    <div class="columnframe2 block">
-
-      <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
-        <!--begin collection info -->
-        <div class = "admin" style="font-size:20px;">
-          Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
-          {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-          Internal Lot number: {{current.harvester_lot.internal_lot_code}}
-        </div>
-        <!--end collection info -->
-      </div>
-      
-      <div class="sectionframe"  ng-controller="GetCurrentCtrl">
-        <!-- begin choose collection -->
-        <!-- end choose collection -->
-      </div>
-      
-      <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
-        <!--begin add scan info-->
-        <harsamscan></harsamscan>
-        <!--end add scan info-->
-      </div>
-
+    
+    <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
+      <!--begin add scan info-->
+      <harsamscan></harsamscan>
+      <!--end add scan info-->
     </div>
+
   </div>
-
 </div>
+
+
+<div class="stationframe2" ng-controller="SetStation" ng-init="init('HS0-002')">
+  <div class="columnframe2 block">
+  
+    <div class="sectionframe" ng-controller="TotalsCtrl">
+      <!-- begin summary info  -->
+      Totals:
+      <table class="fill">
+        <tr ng-repeat = "total in list.totals">
+          <td>Total {{total.grade}} {{total.state}}:</td>
+          <td>{{(total.weight1).toFixed(2)}}kg</td>
+          <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
+        </tr>
+      </table>
+      <!-- end summary info  -->
+    </div>
+
+    <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+      <!--begin full items list -->
+      <scansummary></scansummary>
+      <!--end full items list -->
+    </div>
+
+  </div>
+  <div class="columnframe2 block">
+
+    <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+      <!--begin collection info -->
+      <div class = "admin" style="font-size:20px;">
+        Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
+        {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        Internal Lot number: {{current.harvester_lot.internal_lot_code}}
+      </div>
+      <!--end collection info -->
+    </div>
+    
+    <div class="sectionframe"  ng-controller="GetCurrentCtrl">
+      <!-- begin choose collection -->
+      <!-- end choose collection -->
+    </div>
+    
+    <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
+      <!--begin add scan info-->
+      <harsamscan></harsamscan>
+      <!--end add scan info-->
+    </div>
+
+  </div>
+</div>
+
 
 
 
