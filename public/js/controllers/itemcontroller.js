@@ -109,6 +109,7 @@ angular.module('scanthisApp.itemController', [])
     $scope.entry.loin.timestamp = moment(new Date()).format();
     $scope.entry.scan.timestamp = $scope.entry.loin.timestamp;
     $scope.entry.scan.station_code = $scope.station_code;
+    $scope.entry.loin.station_code = $scope.station_code;
     MakeEntry(form, 'scan', $scope);
     MakeEntry(form, 'loin', $scope);
   };

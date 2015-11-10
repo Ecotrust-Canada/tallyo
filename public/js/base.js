@@ -13,7 +13,6 @@ angular.module('scanthisApp', [
   'scanthisApp.packingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
-  'scanthisApp.movelotController',
   'monospaced.qrcode'
 ])
 

@@ -4,27 +4,25 @@
     <br>
     <label>Id<input ng-model="search.id"></label><br>
     <label>Loin Number<input ng-model="search.loin_number"></label><br>
-    <label>Weight<input ng-model="search.weight_1"></label><br>
-    <label>Grade<input ng-model="search.grade"></label><br>
-    <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br><br>
+    <label>Lot Number<input ng-model="search.lot_number"></label><br>
+    <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
+    <label>Harvester<input ng-model="search.supplier"></label><br><br>
     <div style="height:500px;overflow:scroll;">
         <table class = "fill">
           <tr>
             <td>ID</td>
-            <td>Internal Lot code:</td>
-            <td>Loin Number</td>
-            <td colspan="2">Scan Info</td>
-            <td>timestamp</td>
+            <td>Number</td>
+            <td>Lot Number</td>
+            <td>Internal Lot Code</td>
+            <td>Harvester</td>
             <td></td>
           </tr>
-          <tr ng-repeat = "item in items | orderBy: '-timestamp' | filter: search">
+          <tr ng-repeat = "item in items | orderBy: '-lot_number' | filter: search">
             <td>{{item.id}}</td>
-            <td>{{item.internal_lot_code ? item.internal_lot_code : item.lot_number}}</td>
             <td>{{item.loin_number}}</td>
-            <td ng-if="item.grade">{{item.grade}}</td>
-            <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
-            <td ng-if="item.weight_2">{{(item.weight_2).toFixed(2)}}kg</td>
-            <td>{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</td>
+            <td>{{item.lot_number}}</td>
+            <td>{{item.internal_lot_code}}</td>
+            <td>{{item.supplier_group}}-{{item.supplier}} {{item.fleet_vessel}}</td>
             <td>Reprint</td>
           </tr>
         </table>
