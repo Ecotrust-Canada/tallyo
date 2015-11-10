@@ -171,4 +171,18 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 
+})
+
+.controller('LotCtrl', function($scope, $http, DatabaseServices) {
+ 
+  $scope.GetLotLocations = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.lot_location = response.data;
+    };
+    DatabaseServices.GetEntries('lot_aggregated', func, query);
+  };
+
+  $scope.GetLotLocations();
+
 });

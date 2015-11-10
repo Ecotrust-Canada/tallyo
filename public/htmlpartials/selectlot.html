@@ -1,7 +1,7 @@
 <form name="myForm">
   <label for="singleSelect"> Choose Lot: </label><br>
   <select name="singleSelect" ng-model="current.collectionid">
-    <option ng-repeat = "lot in list.harvester_lot" value={{lot.lot_number}}>{{lot.internal_lot_code ? lot.internal_lot_code : lot.lot_number}}</option>
+    <option ng-repeat = "lot in list.harvester_lot" value={{lot.lot_number}}>{{lot.lot_number}} {{lot.internal_lot_code}} {{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</option>
   </select>
 </form>
 
