@@ -5,37 +5,34 @@ angular.module('scanthisApp.createlotController', [])
 
 
 /*
- * Fills in the list for a drop-down menu to select correct collection
+ * Fills in the list for a drop-down menu to select current collection
+ * Finds collection objects which match station_code, so useful for viewing recent objects created at current station
  * Selected item will be stored as $scope.current.collectionid
- * queryOn is station_code or stage_id
  * Table and primary key field is determined by station
  */
 .controller('SelectDropDownCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.ListCollections = function(queryOn){
-    var query = '';
-    if (queryOn !== undefined){
-      query = '?' + queryOn + '=eq.' + $scope[queryOn];
-    }
-    else query = '';
+  $scope.ListCollections = function(){
+    var query = '?station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.list[$scope.station_info.collectiontable] = response.data;
     };
     DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query);
   };
 
-  $scope.init = function(queryOn){
-    $scope.$watch('station_info', function(newValue, oldValue) {
-      if ($scope.station_info !== undefined){
-        $scope.ListCollections(queryOn);
-      }
-    });
-  };
+  $scope.$watch('station_info', function(newValue, oldValue) {
+    if ($scope.station_info !== undefined){
+      $scope.ListCollections();
+    }
+  });
 
 })
 
-
-/*selects lot which have a scan object at a first station and have not gotten toa second station*/
+/*
+ * Fills in dropdown menu for selection current lot
+ * lot_number gets saved as $scope.current.collectionid
+ * selects lot which have a scan object at a first station and have not gotten to a second station
+ */
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(station1, station2){
@@ -71,6 +68,7 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
   };
 
+  //Display items trigered by this variable changing
   $scope.current.itemchange = true;
 
   $scope.$watch('current.collectionid', function() {
@@ -78,15 +76,14 @@ angular.module('scanthisApp.createlotController', [])
       $scope.DisplayCollectionInfo();
     }
   });
-  $scope.$watch('station_info', function() {
-    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
-      $scope.DisplayCollectionInfo();
-    }
-  });
 
 })
 
-
+/*
+ * Loads list of all included items in a collection
+ * stores as $scope.list.included
+ * table specified in station
+ */
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollectionItems = function(){
@@ -103,28 +100,15 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
-  $scope.$watch('current.collectionid', function() {
-    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
-      $scope.ListCollectionItems();
-    }
-  });
-
-
-  //this is specifically for harsam station 2
-  $scope.$watch('entry.scan.loin_id', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined){
-      $scope.ListCollectionItems('station_code');
-    }
-  });
-
 })
 
 
 
 /*
- * Summary information for Scans
+ * This displays total/summary information about items in a collection
+ * table specified for station
+ * stores as list.totals
  */
-
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(){
@@ -135,14 +119,8 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
   };
 
-  $scope.$watch('current.collectionid', function() {
+  $scope.$watch('current.itemchange', function() {
     if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
-      $scope.ItemTotals();
-    }
-  });
-
-  $scope.$watch('list.included.length', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined){
       $scope.ItemTotals();
     }
   });
@@ -151,7 +129,8 @@ angular.module('scanthisApp.createlotController', [])
 
 
 /*
- * Gets the id of collection table given station
+ * Gets the id of collection table from station_table 
+ * collectionid is set in database when set on different page
  */
 .controller('GetCurrentCtrl', function($scope, $http, DatabaseServices) {
   $scope.GetCurrent = function(){
@@ -167,25 +146,25 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
-
-
-
-
-
+/*
+ * Listing all loins for lot in order to reprint labels
+ */
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
   $scope.ListAllItems = function(station_code){
       var query = '?station_code=eq.' + station_code;
       var func = function(response){
         $scope.items = response.data;
-        for (var i=0;i<$scope.items.length;i++){
-          $scope.items[i].internal_lot_code = $scope.items[i].internal_lot_code ? $scope.items[i].internal_lot_code : $scope.items[i].lot_number;
-        }
       };
+      //TODO: create database view
       DatabaseServices.GetEntries('loin_lot', func, query);
     };
 
-  $scope.ListAllItems($scope.station_code);        
-})
+  $scope.Reprint = function(loin_id){
+    //TODO: write this function
+  };
 
+  $scope.ListAllItems($scope.station_code);
+
+})
 ;

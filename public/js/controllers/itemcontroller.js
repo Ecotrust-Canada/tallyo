@@ -130,6 +130,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.DatabaseScan = function(){    
     var func = function(response){
     //$scope.QRWindowOpen($scope.entry.scan.loin_id);
+    $scope.current.itemchange = !$scope.current.itemchange;
     Clear('scan', $scope);    
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);

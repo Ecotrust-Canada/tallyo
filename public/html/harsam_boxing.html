@@ -26,7 +26,7 @@
       
       <div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
         <!-- begin choose collection -->
-        <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+        <div ng-controller="SelectDropDownCtrl">
           <select name="singleSelect" ng-model="current.collectionid">
             <option ng-repeat = "box in list.box">{{box["id"]}}</option>
           </select>
@@ -34,8 +34,8 @@
         <br>
         Create Case:<br>
         <createform></createform>
-        <div ng-controller="FormSubmitCurrentCtrl">
-          <input type="submit" ng-click="Submit(form)" value="Save" />
+        <div ng-controller="FormSubmitCtrl">
+          <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
         </div>
         <!-- end choose collection -->
       </div>

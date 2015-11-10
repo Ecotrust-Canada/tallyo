@@ -39,7 +39,7 @@
     
       <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
         <!-- begin choose collection -->
-        <div ng-controller="SelectDropDownCtrl" ng-init="init()">
+        <div ng-controller="SelectDropDownCtrl">
           <select name="singleSelect" ng-model="current.collectionid">
             <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
           </select>
@@ -47,8 +47,8 @@
         <br>
         Create Shipping Entry:<br><br>
           <createform></createform>
-          <div ng-controller="formsubmitCtrl">
-            <input type="submit" ng-click="Submit(form)" value="Save" />
+          <div ng-controller="FormSubmitCtrl">
+            <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
           </div>
         <!-- end choose collection -->
       </div>
