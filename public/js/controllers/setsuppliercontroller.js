@@ -37,26 +37,24 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 
-  /*$scope.LotCode = function(lot_code, form){
+  $scope.LotCode = function(lot_code, form){
     var func = function(response){
-      $scope.CurrentLot();
+      //$scope.CurrentLot();
+      $scope.GetHarvesterLot($scope.current.harvester_lot.lot_number);
     };
     var patch = {'internal_lot_code': lot_code};
-    var query = '?lot_number=eq.' + $scope.supplier_lot.lot_number;
+    var query = '?lot_number=eq.' + $scope.current.harvester_lot.lot_number ;
     DatabaseServices.PatchEntry('lot', patch, query, func);
     $scope.lot_code = form;
-  };*/
-
-
-  /*$scope.CurrentLot = function(){
-    var func = function(response){
-      $scope.SupplierFromLotNumber(response.data[0].current_lot_number);
-    };
-    var query = '?id=eq.' + $scope.stage_id;
-    DatabaseServices.GetEntries('stage', func, query);
   };
 
-  $scope.CurrentLot();*/
+  $scope.$watch('current.collectionid', function() {
+    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
+      $scope.GetHarvesterLot($scope.current.collectionid);
+    }
+  });
+
+
 
   /*Sets the current lot number for the station*/
   $scope.PatchStationWithLot = function(lot_number, station_code){
