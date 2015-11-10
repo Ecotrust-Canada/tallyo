@@ -6,23 +6,11 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices) {
 
-
-  
-
-  /*removes an item from the database*/
-  $scope.RemoveItem = function(scan_id){
-    var query = '?id=eq.' + scan_id;
-    var func = function(){
-      removeFromArray($scope.list.included, scan_id);
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
-  };
-
   /*creates a new row in the database, item table*/
   $scope.DatabaseScan = function(form){
     $scope.MakeScanEntry(form);
     var func = function(response){
-      $scope.list.included.push(response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
       Clear('scan', $scope);
     };
     if (NoMissingValues($scope.entry.scan)){
@@ -43,37 +31,26 @@ angular.module('scanthisApp.itemController', [])
     $scope.DatabaseScan(form);
   };
 
-  /*switch between scanning and view summary*/
-  $scope.show = function(){
-    if ($scope.showSummary === false){
-      $scope.showSummary = true;
-      $scope.showScan = false;
-      $scope.view_summary = "Back to scan";
-    }
-    else {
-      $scope.showSummary = false;
-      $scope.showScan = true;
-      $scope.view_summary = "view summary";
-    }
-  };
-
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
     $scope.entry.scan = {'timestamp': '', 'lot_number': '', 'station_code': $scope.station_code};
     $scope.fields = fields;
     $scope.options = options;
 
-
     for (var key in fields){
       $scope.entry.scan[key] = '';
     }
-    if (options.summaryhidden === 'true'){
-      InitShowSummary($scope);
-    }
-    else{
-      $scope.showScan = true;
-      $scope.showSummary = true;
-    }
+
+  };
+})
+
+.controller('RemoveScanCtrl', function($scope, $http, DatabaseServices) {
+  $scope.RemoveItem = function(scan_id){
+    var query = '?id=eq.' + scan_id;
+    var func = function(){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
   };
 })
 
@@ -94,23 +71,6 @@ angular.module('scanthisApp.itemController', [])
       $scope.DatabaseLoin();
     };
     DatabaseServices.GetEntries('loin_number', func, query);
-  };
-
-  /*removes an item from the database*/
-  $scope.RemoveItem = function(id){
-    var query = '?id=eq.' + id;
-    var func = function(){
-      $scope.RemoveScan(id);
-    };
-    DatabaseServices.RemoveEntry('loin', query, func);
-  };
-
-  $scope.RemoveScan = function(id){
-    var query = '?loin_id=eq.' + id;
-    var func = function(){
-      $scope.ListCollectionItems('station_code');
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
   };
 
   /*creates a new row in the database, item table*/
@@ -153,19 +113,6 @@ angular.module('scanthisApp.itemController', [])
     MakeEntry(form, 'loin', $scope);
   };
 
-  /*switch between scanning and view summary*/
-  $scope.show = function(){
-    if ($scope.showSummary === false){
-      $scope.showSummary = true;
-      $scope.showScan = false;
-      $scope.view_summary = "Back to scan";
-    }
-    else {
-      $scope.showSummary = false;
-      $scope.showScan = true;
-      $scope.view_summary = "view summary";
-    }
-  };
 
   /*initialize with correct entry json object and display*/
   $scope.init = function(fields, options){
@@ -178,18 +125,25 @@ angular.module('scanthisApp.itemController', [])
       $scope.entry.scan[key] = '';
     }
 
+  };
+})
 
-    if (options.summaryhidden === 'true'){
-      InitShowSummary($scope);
-    }
-    else{
-      $scope.showScan = true;
-      $scope.showSummary = true;
-    }
+.controller('RemoveLoinCtrl', function($scope, $http, DatabaseServices) {
+  $scope.RemoveItem = function(id){
+    var query = '?id=eq.' + id;
+    var func = function(){
+      $scope.RemoveScan(id);
+    };
+    DatabaseServices.RemoveEntry('loin', query, func);
   };
 
-
-
+  $scope.RemoveScan = function(id){
+    var query = '?loin_id=eq.' + id;
+    var func = function(){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
 })
 
 
@@ -235,6 +189,24 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
+})
+
+.controller('RemoveBoxCtrl', function($scope, $http, DatabaseServices) {
+  $scope.RemoveItem = function(id){
+    var query = '?id=eq.' + id;
+    var func = function(){
+      $scope.RemoveScan(id);
+    };
+    DatabaseServices.RemoveEntry('box', query, func);
+  };
+
+  $scope.RemoveScan = function(id){
+    var query = '?box_id=eq.' + id;
+    var func = function(){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
 })
 
 

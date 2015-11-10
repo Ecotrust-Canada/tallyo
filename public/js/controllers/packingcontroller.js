@@ -37,6 +37,7 @@ angular.module('scanthisApp.packingController', [])
       $scope.entry.scan = {"station_code": $scope.station_code,};
       $scope.entry.scan[scanobj] = id;
       $scope.entry.scan.timestamp = moment(new Date()).format();
+      $scope.entry.scan[$scope.station_info.itemquery] = $scope.current.collectionid;
       var func = function(response){
         $scope.current.itemchange = !$scope.current.itemchange;
       };
@@ -69,6 +70,24 @@ angular.module('scanthisApp.packingController', [])
   };
 })
 
+.controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
+  
+  $scope.init = function(table, obj, displayobj, scanobj){
+    var fk = table + '_id';
+
+    $scope.PatchObjRemoveContainer = function(id){
+      var func = function(response){
+        $scope.current.itemchange = !$scope.current.itemchange;
+      };
+      var patch = {};
+      patch[fk] = null;
+      var query = '?id=eq.' + id;
+      DatabaseServices.PatchEntry(obj, patch, query, func);
+    };
+  };
+
+
+})
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
@@ -103,7 +122,6 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
-  //$scope.qr = {};
 
   $scope.BoxQR = function(){
     var stringarray = ObjSubset($scope.current.box, ["size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_id"]);

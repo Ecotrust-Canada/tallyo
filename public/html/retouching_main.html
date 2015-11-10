@@ -26,7 +26,9 @@
 
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <!--begin full items list -->
-      <scansummary></scansummary>
+      <div ng-controller="RemoveLoinCtrl">
+        <scansummary></scansummary>
+      </div>
       <!--end full items list -->
     </div>
 

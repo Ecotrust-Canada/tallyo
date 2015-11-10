@@ -17,7 +17,9 @@
       
       <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
         <!--begin full items list -->
-        <loinlist></loinlist>
+        <div ng-controller="RemovePatchCtrl" ng-init = "init('box', 'loin', 'loin_scan', 'loin_id')">
+          <loinlist></loinlist>
+        </div>
         <!--end full items list -->
       </div>
 

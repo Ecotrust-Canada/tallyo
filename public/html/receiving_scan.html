@@ -15,21 +15,23 @@
 
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <!--begin full items list -->
-      <table class="fill">
-        <tr>
-          <td>Box id</td>
-          <td>weight</td>
-          <td>lot number</td>
-          <td>Case Number</td>
-        </tr>  
-        <tr ng-repeat="box in list.included">
-          <td>{{box.id}}</td>
-          <td>{{box.weight}}kg</td>
-          <td>{{box.lot_number}}</td>
-          <td>{{box.case_number}}</td>
-          <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
-        </tr>
-      </table>
+      <div ng-controller="RemoveBoxCtrl">
+        <table class="fill">
+          <tr>
+            <td>Box id</td>
+            <td>weight</td>
+            <td>lot number</td>
+            <td>Case Number</td>
+          </tr>  
+          <tr ng-repeat="box in list.included">
+            <td>{{box.id}}</td>
+            <td>{{box.weight}}kg</td>
+            <td>{{box.lot_number}}</td>
+            <td>{{box.case_number}}</td>
+            <td ng-click="RemoveItem(box.id)">Remove</td>
+          </tr>
+        </table>
+      </div>
       <!--end full items list -->
     </div>
 
