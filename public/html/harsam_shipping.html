@@ -2,6 +2,37 @@
   
   <div class="stationframe">
     <div class="columnframe block">
+      <b>Shipping</b>
+      <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
+        <!-- begin choose collection -->
+        <div ng-controller="SelectDropDownCtrl">
+          Recent Shipments:
+          <select name="singleSelect" ng-model="current.collectionid">
+            <option ng-repeat = "ship in list.shipping_unit | orderBy: '-timestamp' | limitTo: 5" value={{ship.id}}>{{ship.po_number}}</option>
+          </select>
+        </div>
+        <br>
+        Create Shipping Entry:<br><br>
+          <createform></createform>
+          <div ng-controller="FormSubmitCtrl">
+            <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
+          </div>
+        <!-- end choose collection -->
+      </div>
+
+      <div class="sectionframe" ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box', 'box_id')">
+        <!--begin add scan info-->
+        Add Cases: <br><br>
+        <form>
+          Box ID: <input type="text" ng-model="obj_id">
+          <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
+        </form>
+        <!--end add scan info-->
+      </div>
+
+    </div>
+
+    <div class="columnframe block">
       
       <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
         <!--begin collection info -->
@@ -37,36 +68,7 @@
       </div>
 
     </div>
-    <div class="columnframe block">
     
-      <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
-        <!-- begin choose collection -->
-        <div ng-controller="SelectDropDownCtrl">
-          Recent Shipments:
-          <select name="singleSelect" ng-model="current.collectionid">
-            <option ng-repeat = "ship in list.shipping_unit | orderBy: '-timestamp' | limitTo: 5" value={{ship.id}}>{{ship.po_number}}</option>
-          </select>
-        </div>
-        <br>
-        Create Shipping Entry:<br><br>
-          <createform></createform>
-          <div ng-controller="FormSubmitCtrl">
-            <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
-          </div>
-        <!-- end choose collection -->
-      </div>
-
-      <div class="sectionframe" ng-controller="PackingCtrl" ng-init = "init('shipping_unit', 'box', 'box', 'box_id')">
-        <!--begin add scan info-->
-        Add Cases: <br><br>
-        <form>
-          Box ID: <input type="text" ng-model="obj_id">
-          <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-        </form>
-        <!--end add scan info-->
-      </div>
-
-    </div>
   </div>
 
 </div>

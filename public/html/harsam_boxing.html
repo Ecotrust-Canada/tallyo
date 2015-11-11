@@ -3,29 +3,7 @@
 
   <div class="stationframe" >
     <div class="columnframe block">
-      
-      <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-        <!--begin collection info -->
-        <boxinfo box="current.box"></boxinfo>
-        <!--end collection info -->
-      </div>
-
-      <div class="sectionframe">
-        <!-- begin summary info  -->
-        <!-- end summary info  -->
-      </div>
-      
-      <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-        <!--begin full items list -->
-        <div ng-controller="RemovePatchCtrl" ng-init = "init('box', 'loin', 'loin_scan', 'loin_id')">
-          <loinlist></loinlist>
-        </div>
-        <!--end full items list -->
-      </div>
-
-    </div>
-    <div class="columnframe block">
-      
+      <b>Packing</b>
       <div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
         <!-- begin choose collection -->
         <div ng-controller="SelectDropDownCtrl">
@@ -59,6 +37,30 @@
       </div>
 
     </div>
+
+    <div class="columnframe block">
+      
+      <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
+        <!--begin collection info -->
+        <boxinfo box="current.box"></boxinfo>
+        <!--end collection info -->
+      </div>
+
+      <div class="sectionframe">
+        <!-- begin summary info  -->
+        <!-- end summary info  -->
+      </div>
+      
+      <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
+        <!--begin full items list -->
+        <div ng-controller="RemovePatchCtrl" ng-init = "init('box', 'loin', 'loin_scan', 'loin_id')">
+          <loinlist></loinlist>
+        </div>
+        <!--end full items list -->
+      </div>
+
+    </div>
+    
   </div>
 
 

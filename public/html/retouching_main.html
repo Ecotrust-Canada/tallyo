@@ -1,5 +1,25 @@
 <div class="stationframe">
   <div class="columnframe block">
+  <b>Retouching</b>  
+    <div class="sectionframe">
+      <!-- begin choose collection -->
+      <div ng-controller="SelectLotDropDownCtrl" ng-init="init('HS0-001', 'HS0-005')">
+        <selectlot></selectlot>    
+      </div>
+      <!-- end choose collection -->
+    </div>
+    
+    <div class="sectionframe" ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
+      <!--begin add scan info-->
+      <div ng-controller="RemoveLoinCtrl">
+        <harsamscan></harsamscan>
+      </div>
+      <!--end add scan info-->
+    </div>
+
+  </div>
+
+  <div class="columnframe block">
   
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
@@ -33,21 +53,5 @@
     </div>
 
   </div>
-  <div class="columnframe block">
-    
-    <div class="sectionframe">
-      <!-- begin choose collection -->
-      <div ng-controller="SelectLotDropDownCtrl" ng-init="init('HS0-001', 'HS0-005')">
-        <selectlot></selectlot>    
-      </div>
-      <!-- end choose collection -->
-    </div>
-    
-    <div class="sectionframe" ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
-      <!--begin add scan info-->
-        <harsamscan></harsamscan>
-      <!--end add scan info-->
-    </div>
-
-  </div>
+  
 </div>

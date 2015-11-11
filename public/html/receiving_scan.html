@@ -1,5 +1,42 @@
 <div class="stationframe" ng-controller="GetCurrentCtrl">
   <div class="columnframe block">
+  <b>External Receiving</b>
+    <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
+      <!-- begin choose collection -->
+      <div ng-controller="SelectDropDownCtrl">
+        <select name="singleSelect" ng-model="current.collectionid">
+          <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+        </select>
+      </div>
+      <createform></createform>
+      <div ng-controller="FormSubmitCtrl">
+        <input type="submit" ng-click="SubmitAddSetCurrentDB(form)" value="Save" />
+      </div>
+      <!-- end choose collection -->
+    </div>
+
+    <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()">
+      <!--begin add scan info-->
+      <div ng-controller="QRScanCtrl" ng-init="init(['size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_id'])">
+        <form ng-submit="change()">
+          Scan Field: <input  type="text" ng-model="raw.string">
+        </form>
+      </div>
+      <br>
+
+      size: <input  type="text" ng-model="form.size" ><br>
+      grade: <input  type="text" ng-model="form.grade" ><br>
+      pieces: <input  type="text" ng-model="form.pieces" ><br>
+      weight: <input  type="text" ng-model="form.weight" ><br>
+      case number: <input  type="text" ng-model="form.case_number" ><br>
+      Lot Number: <input type="text" ng-model="form.lot_number"><br>
+      harvester id:<input type="text" ng-model="form.harvester_id"><br>
+      <button ng-click="MakeBox()">submit</button><br><br>
+      <!--end add scan info-->
+    </div>
+
+  </div>
+  <div class="columnframe block">
     
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
@@ -36,43 +73,7 @@
     </div>
 
   </div>
-  <div class="columnframe block">
-
-    <div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
-      <!-- begin choose collection -->
-      <div ng-controller="SelectDropDownCtrl">
-        <select name="singleSelect" ng-model="current.collectionid">
-          <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
-        </select>
-      </div>
-      <createform></createform>
-      <div ng-controller="FormSubmitCtrl">
-        <input type="submit" ng-click="SubmitAddSetCurrentDB(form)" value="Save" />
-      </div>
-      <!-- end choose collection -->
-    </div>
-
-    <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()">
-      <!--begin add scan info-->
-      <div ng-controller="QRScanCtrl" ng-init="init(['size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_id'])">
-        <form ng-submit="change()">
-          Scan Field: <input  type="text" ng-model="raw.string">
-        </form>
-      </div>
-      <br>
-
-      size: <input  type="text" ng-model="form.size" ><br>
-      grade: <input  type="text" ng-model="form.grade" ><br>
-      pieces: <input  type="text" ng-model="form.pieces" ><br>
-      weight: <input  type="text" ng-model="form.weight" ><br>
-      case number: <input  type="text" ng-model="form.case_number" ><br>
-      Lot Number: <input type="text" ng-model="form.lot_number"><br>
-      harvester id:<input type="text" ng-model="form.harvester_id"><br>
-      <button ng-click="MakeBox()">submit</button><br><br>
-      <!--end add scan info-->
-    </div>
-
-  </div>
+  
 </div>
 
 

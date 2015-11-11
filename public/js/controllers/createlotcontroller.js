@@ -39,7 +39,6 @@ angular.module('scanthisApp.createlotController', [])
     var query = '?stations=like.*' + station1 + '*&stations=not.like.*' + station2 + '*';
     var func = function(response){
       $scope.list.harvester_lot = response.data;
-      console.log(response.data);
     };
     DatabaseServices.GetEntries('select_lot', func, query);
   };
