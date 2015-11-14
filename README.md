@@ -8,7 +8,13 @@ git clone https://github.com/Ecotrust-Canada/scanthis
 
 ### Installation
 
-Install node v4.0.0. We recommend using [nvm](https://github.com/creationix/nvm) for this 
+Install node v4.0.0. We recommend using [nvm](https://github.com/creationix/nvm) for this. Then, install package dependencies:
+
+```
+cd scanthis
+npm install
+bower install
+```
 
 Install nodemon using npm
 ```
