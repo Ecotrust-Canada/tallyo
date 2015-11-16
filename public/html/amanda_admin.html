@@ -1,6 +1,6 @@
 <div class="step" ng-controller="SetStation" ng-init="init('AM2-ADM')">
   
-  <b>Create Processor Entry:</b>
+  <!--<b>Create Processor Entry:</b>
   <div ng-controller="formCtrl" ng-init="init('processor')">
     <createform></createform>
     <div ng-controller="FormSubmitCtrl">
@@ -18,6 +18,24 @@
     <div ng-controller="FormSubmitCtrl">
       <input type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
     </div>
+  </div>-->
+
+  <div>Something to print!!</div>
+  
+  <div ng-controller="PrintCtrl">
+    <div id="printableAreaA">
+      <qr type-number="4" correction-level="'M'" size="100" text="'what is this'" image="true"></qr>
+    </div>
+    <button ng-click="printADiv('printableAreaA');">Print Div</button>
+  </div>
+  <br>
+  <br>
+
+  <div ng-controller="PrintCtrl">
+    <div id="printableArea">
+      <qrcode version="4" error-correction-level="medium" size="100" data="{{aqr}}"></qrcode>
+    </div>
+    <button ng-click="printDiv('printableArea');">Print Div</button>
   </div>
 
 </div>

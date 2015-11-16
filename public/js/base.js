@@ -13,7 +13,8 @@ angular.module('scanthisApp', [
   'scanthisApp.packingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
-  'monospaced.qrcode'
+  'monospaced.qrcode',
+  'ja.qr'
 ])
 
 
@@ -50,18 +51,28 @@ angular.module('scanthisApp', [
  
 })
 
-/*.controller('SetStage', function($scope, $http) {
-  $scope.init = function(stage_id){
-    $scope.stage_id = stage_id;
-    
-  };
-})*/
 
+.controller('PrintCtrl', function($scope, $http, DatabaseServices) {
 
-/*.controller('SetProcessor', function($scope, $http) {
-  $scope.init = function(id){
+  $scope.aqr = 'what is this';
+  $scope.printDiv = function(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var popupWin = window.open('', '_blank', 'width=800,height=300');
+    popupWin.document.open();
+    popupWin.document.write('<!DOCTYPE html><html data-ng-app="monospaced.qrcode"><head><script src="bower_components/angular/angular.js"></script><script src="bower_components/qrcode-generator/js/qrcode.js"></script><script src="bower_components/angular-qrcode/angular-qrcode.js"></script></head><body>' + printContents + '</body></html>');    
+    popupWin.document.close();
+    popupWin.window.onload = function(){popupWin.window.print(); popupWin.window.close();};
   };
-})*/
+
+  $scope.printADiv = function(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var popupWin = window.open('', '_blank', 'width=800,height=300');
+    popupWin.document.open();
+    popupWin.document.write('<!DOCTYPE html><html data-ng-app="monospaced.qrcode"><head><script src="bower_components/angular/angular.js"></script><script src="bower_components/angular-qr/angular-qr.min.js"></script><script src="bower_components/qrcode/lib/qrcode.min.js"></script></head><body>' + printContents + '</body></html>');    
+    popupWin.document.close();
+    popupWin.window.onload = function(){popupWin.window.print(); popupWin.window.close();};
+  };  
+})
 
 ;
 
