@@ -63,6 +63,7 @@ var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {
       if (jsonobj.hasOwnProperty(key) && key !== except) {
         if (jsonobj[key] === '' || jsonobj[key] === undefined){
+            console.log(key);
             return false;
         }
       }

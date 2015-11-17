@@ -3,11 +3,7 @@
   <b>Receiving</b>
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
-      <div class = "admin" style="font-size:20px;">
-        Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
-        {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        Internal Lot number: {{current.harvester_lot.internal_lot_code}}
-      </div>
+      <currentlot></currentlot>
       <!--end collection info -->
     </div>
     
@@ -16,11 +12,11 @@
       <!-- end choose collection -->
     </div>
     
-    <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Plastic', 'weight_2': 'No Plastic', 'state': 'State'}, {'print':'false','summaryhidden':'true'})">
+    <div class="sectionframe" >
       <!--begin add scan info-->
-      <div ng-controller="RemoveScanCtrl">
-        <harsamscan></harsamscan>
-      </div>
+      <createform ng-controller="formCtrl" ng-init="init('scan')"></createform>
+      <clearsubmit ng-controller="ScanOnlyCtrl"></clearsubmit>
+      <mostrecentscan ng-controller="RemoveScanCtrl"></mostrecentscan>
       <!--end add scan info-->
     </div>
 
@@ -29,22 +25,13 @@
 
     <div class="sectionframe" ng-controller="TotalsCtrl">
       <!-- begin summary info  -->
-      Totals:
-      <table class="fill">
-        <tr ng-repeat = "total in list.totals">
-          <td>Total {{total.grade}} {{total.state}}:</td>
-          <td>{{(total.weight1).toFixed(2)}}kg</td>
-          <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
-        </tr>
-      </table>
+      <scantotals></scantotals>
       <!-- end summary info  -->
     </div>
 
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <!--begin full items list -->
-      <div ng-controller="RemoveScanCtrl">
-        <scansummary></scansummary>
-      </div>
+      <scansummary ng-controller="RemoveScanCtrl"></scansummary>
       <!--end full items list -->
     </div>
 
@@ -58,11 +45,7 @@
   <b>Trimming</b>
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
-      <div class = "admin" style="font-size:20px;">
-        Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
-        {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        Internal Lot number: {{current.harvester_lot.internal_lot_code}}
-      </div>
+      <currentlot></currentlot>
       <!--end collection info -->
     </div>
     
@@ -71,11 +54,11 @@
       <!-- end choose collection -->
     </div>
     
-    <div class="sectionframe" ng-controller="ScanOnlyCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'false','summaryhidden':'true'})">
+    <div class="sectionframe">
       <!--begin add scan info-->
-      <div ng-controller="RemoveScanCtrl">
-        <harsamscan></harsamscan>
-      </div>
+      <createform ng-controller="formCtrl" ng-init="init('scan')"></createform>
+      <clearsubmit ng-controller="ScanOnlyCtrl"></clearsubmit>
+      <mostrecentscan ng-controller="RemoveScanCtrl"></mostrecentscan>
       <!--end add scan info-->
     </div>
 
@@ -85,22 +68,13 @@
   
     <div class="sectionframe" ng-controller="TotalsCtrl">
       <!-- begin summary info  -->
-      Totals:
-      <table class="fill">
-        <tr ng-repeat = "total in list.totals">
-          <td>Total {{total.grade}} {{total.state}}:</td>
-          <td>{{(total.weight1).toFixed(2)}}kg</td>
-          <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
-        </tr>
-      </table>
+      <scantotals></scantotals>
       <!-- end summary info  -->
     </div>
 
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <!--begin full items list -->
-      <div ng-controller="RemoveScanCtrl">
-        <scansummary></scansummary>
-      </div>
+      <scansummary ng-controller="RemoveScanCtrl"></scansummary>
       <!--end full items list -->
     </div>
 

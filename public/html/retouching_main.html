@@ -3,17 +3,15 @@
   <b>Retouching</b>  
     <div class="sectionframe">
       <!-- begin choose collection -->
-      <div ng-controller="SelectLotDropDownCtrl" ng-init="init('HS0-001', 'HS0-005')">
-        <selectlot></selectlot>    
-      </div>
+      <selectlot ng-controller="SelectLotDropDownCtrl" ng-init="init('HS0-001', 'HS0-005')"></selectlot>    
       <!-- end choose collection -->
     </div>
     
-    <div class="sectionframe" ng-controller="LoinCtrl" ng-init="init({'weight_1': 'Weight', 'grade': 'Grade'}, {'print':'true','summaryhidden':'true'})">
+    <div class="sectionframe">
       <!--begin add scan info-->
-      <div ng-controller="RemoveLoinCtrl">
-        <harsamscan></harsamscan>
-      </div>
+      <createform ng-controller="formCtrl" ng-init="init('loin')"></createform>
+      <clearsubmit ng-controller="LoinCtrl"></clearsubmit>
+      <mostrecentscan ng-controller="RemoveLoinCtrl"></mostrecentscan>
       <!--end add scan info-->
     </div>
 
@@ -23,32 +21,19 @@
   
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
-      <div class = "admin" style="font-size:20px;">
-        Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
-        {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        Internal Lot number: {{current.harvester_lot.internal_lot_code}}
-      </div>
+      <currentlot></currentlot>
       <!--end collection info -->
     </div>
 
     <div class="sectionframe" ng-controller="TotalsCtrl">
       <!-- begin summary info  -->
-      Totals:
-      <table class="fill">
-        <tr ng-repeat = "total in list.totals">
-          <td>Total {{total.grade}} {{total.state}}:</td>
-          <td>{{(total.weight1).toFixed(2)}}kg</td>
-          <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>
-        </tr>
-      </table>
+      <scantotals></scantotals>
       <!-- end summary info  -->
     </div>
 
     <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
       <!--begin full items list -->
-      <div ng-controller="RemoveLoinCtrl">
-        <scansummary></scansummary>
-      </div>
+      <scansummary ng-controller="RemoveLoinCtrl"></scansummary>
       <!--end full items list -->
     </div>
 

@@ -1,6 +1,7 @@
 <form>
   <span ng-repeat="row in formarray">
     <span ng-if="row.type === 'text'">{{row.title}}: <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ><br></span>
+    <span ng-if="row.type === 'number'">{{row.title}}: <input  type="number" value={{row.value}} ng-model="form[row.fieldname]" ><br></span>
     <span ng-if="row.type === 'radio'">{{row.title}}: 
       <span ng-repeat="option in row.value"><input  type="radio" ng-model="form[row.fieldname]" value={{option.val}} />{{option.label}}</span>
       <br>

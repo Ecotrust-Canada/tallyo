@@ -13,7 +13,7 @@ angular.module('scanthisApp.formController', [])
     var func = function(response){
       $scope.formarray = response.data[0].form.fields;
       $scope.entry[table] = response.data[0].entry;
-      $scope.form = {};
+      //$scope.form = {};
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);      
     };
     var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;

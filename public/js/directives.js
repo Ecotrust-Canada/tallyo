@@ -18,9 +18,15 @@ angular.module('scanthisApp.directives', [])
 
 .directive('boxsummary', function() { return { templateUrl: 'htmlpartials/boxsummary.html' }; })
 
-.directive('harsamscan', function() { return { templateUrl: 'htmlpartials/harsamscan.html' }; })
-
 .directive('scansummary', function() { return { templateUrl: 'htmlpartials/scansummary.html' }; })
+
+.directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
+
+.directive('clearsubmit', function() { return { templateUrl: 'htmlpartials/clearsubmit.html' }; })
+
+.directive('mostrecentscan', function() { return { templateUrl: 'htmlpartials/mostrecentscan.html' }; })
+
+.directive('scantotals', function() { return { templateUrl: 'htmlpartials/scantotals.html' }; })
 
 /**/
 .directive('boxinfo', function() { return { 

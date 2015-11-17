@@ -22,6 +22,7 @@ angular.module('scanthisApp.itemController', [])
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
+    $scope.entry.scan.station_code = $scope.station_code;
     $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.scan.timestamp = moment(new Date()).format();
     MakeEntry(form, 'scan', $scope);
@@ -31,17 +32,6 @@ angular.module('scanthisApp.itemController', [])
     $scope.DatabaseScan(form);
   };
 
-  /*initialize with correct entry json object and display*/
-  $scope.init = function(fields, options){
-    $scope.entry.scan = {'timestamp': '', 'lot_number': '', 'station_code': $scope.station_code};
-    $scope.fields = fields;
-    $scope.options = options;
-
-    for (var key in fields){
-      $scope.entry.scan[key] = '';
-    }
-
-  };
 })
 
 .controller('RemoveScanCtrl', function($scope, $http, DatabaseServices) {
@@ -59,6 +49,8 @@ angular.module('scanthisApp.itemController', [])
 
 
 .controller('LoinCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_id':'', 'lot_number':''};
 
   $scope.GetMaxLoin = function(form){
     var query = '?lot_number=eq.' + $scope.current.collectionid;
@@ -98,7 +90,6 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.Submit = function(form){
    $scope.GetMaxLoin(form);
-   //$scope.qrtest();
   };
   
   /*fills in fields in json to submit to database*/
@@ -115,18 +106,6 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
-  /*initialize with correct entry json object and display*/
-  $scope.init = function(fields, options){
-    $scope.entry.loin = {'timestamp': '', 'lot_number': '', 'loin_number':''};
-    $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_id':'', 'lot_number':''};
-    $scope.fields = fields;
-    $scope.options = options;
-
-    for (var key in fields){
-      $scope.entry.scan[key] = '';
-    }
-
-  };
 })
 
 .controller('RemoveLoinCtrl', function($scope, $http, DatabaseServices) {
