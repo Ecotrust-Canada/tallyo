@@ -9,7 +9,6 @@
     "angular": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
-    "angular-qr": "*",
     "angular-route": "~1.4.0",
     "angular-ui-router": "~0.2.15",
     "async": "~1.4.2",
