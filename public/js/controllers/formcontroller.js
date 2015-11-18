@@ -71,6 +71,8 @@ angular.module('scanthisApp.formController', [])
     if ($scope.entry[$scope.table].timestamp === ''){$scope.entry[$scope.table].timestamp = moment(new Date()).format();}
     if ($scope.entry[$scope.table].station_code === ''){$scope.entry[$scope.table].station_code = $scope.station_code;}
     if ($scope.entry[$scope.table].best_before_date === '') {$scope.entry[$scope.table].best_before_date = moment(new Date()).add(2, 'years').format();}
+    if ($scope.table === 'box'){$scope.entry.box.box_number = createBoxNum(moment(new Date()).format());}
+    if ($scope.table === 'shipping_unit'){$scope.entry.shipping_unit.shipping_unit_number = createShipNum(moment(new Date()).format());}
     MakeEntry(form, $scope.table, $scope);
     $scope.ToDatabase(responsefunction);
   };

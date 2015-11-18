@@ -6,7 +6,7 @@ angular.module('scanthisApp.createlotController', [])
 
 /*
  * Fills in the list for a drop-down menu to select current collection
- * Finds collection objects which match station_code, so useful for viewing recent objects created at current station
+ * Finds collection objects which match station_code -> view recent objects created at current station
  * Selected item will be stored as $scope.current.collectionid
  * Table and primary key field is determined by station
  */
@@ -87,7 +87,7 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollectionItems = function(){
-    var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.itemquery + '=eq.' + $scope.current.collectionid;
+    var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
     var func = function(response){
       $scope.list.included = response.data;
     };
@@ -112,7 +112,7 @@ angular.module('scanthisApp.createlotController', [])
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(){
-    var query = '?' + $scope.station_info.itemquery + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.list.totals = response.data;
     };

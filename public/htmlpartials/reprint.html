@@ -3,7 +3,6 @@
     <h1>Reprint Label:</h1>
     <br>
     <b>Filter by: </b><br>
-    <label>Id<input ng-model="search.id"></label><br>
     <label>Loin Number<input ng-model="search.loin_number"></label><br>
     <label>Lot Number<input ng-model="search.lot_number"></label><br>
     <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
@@ -11,15 +10,13 @@
     <div style="height:400px;overflow:scroll;">
         <table class = "fill">
           <tr>
-            <td>ID</td>
-            <td>Number</td>
+            <td>Loin Number</td>
             <td>Lot Number</td>
             <td>Internal Lot Code</td>
             <td>Harvester</td>
             <td></td>
           </tr>
           <tr ng-repeat = "item in items | orderBy: '-lot_number' | filter: search">
-            <td>{{item.id}}</td>
             <td>{{item.loin_number}}</td>
             <td>{{item.lot_number}}</td>
             <td>{{item.internal_lot_code}}</td>

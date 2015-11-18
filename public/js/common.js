@@ -30,25 +30,20 @@ var createLotNum = function(station_code, date){
     return String(station_code) +  datestring;
 };
 
-/*creates a querystring from a json object*/
-var LotQuery = function(params){
-    var queryString = '?';
-    //todo: first without &, rest with
-    queryString = queryString + ['harvester_id','previous_lot_number','product_id','lot_number'].map(function(param){
-      if (typeof params[param] !== 'undefined'){
-        return param + '=eq.' + params[param];
-      }
-      else{
-        return '';
-      }      
-    }).join('');
+var createLoinNum = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'L' +  datestring;
+};
 
-    if (typeof params.date !== 'undefined'){
-      var date = moment(params.date).format();
-      queryString = queryString.concat('&start_date=lt.' + date + '&end_date=gt.' + date);
-    }
-    return queryString;
-  };
+var createBoxNum = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'B' +  datestring;
+};
+
+var createShipNum = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'S' +  datestring;
+};
 
 /*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){

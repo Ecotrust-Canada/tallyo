@@ -11,7 +11,7 @@
       <td>{{item.loin_number}}</td>
       <td ng-if="item.grade">{{item.grade}}</td>
       <td ng-if="item.weight_1">{{(item.weight_1).toFixed(2)}}kg</td>
-      <td ng-click="PatchObjRemoveContainer(item.id)">Remove</td>
+      <td ng-click="PatchObjRemoveContainer(item.loin_number)">Remove</td>
     </tr>
   </table>
 

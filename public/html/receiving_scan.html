@@ -5,7 +5,7 @@
       <!-- begin choose collection -->
       <div ng-controller="SelectDropDownCtrl">
         <select name="singleSelect" ng-model="current.collectionid">
-          <option ng-repeat = "ship in list.shipping_unit">{{ship.id}}</option>
+          <option ng-repeat = "ship in list.shipping_unit" value={{ship.shipping_unit_number}}>{{ship.po_number}}</option>
         </select>
       </div>
       <createform></createform>
@@ -17,20 +17,20 @@
 
     <div class="sectionframe" ng-controller="BoxCtrl" ng-init="init()">
       <!--begin add scan info-->
-      <div ng-controller="QRScanCtrl" ng-init="init(['size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_id'])">
+      <div ng-controller="QRScanCtrl" ng-init="init(['box_number', 'size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_code'])">
         <form ng-submit="change()">
           Scan Field: <input  type="text" ng-model="raw.string">
         </form>
       </div>
       <br>
-
+      Box Number: <input type="text" ng-model="form.box_number"><br>
       size: <input  type="text" ng-model="form.size" ><br>
       grade: <input  type="text" ng-model="form.grade" ><br>
       pieces: <input  type="text" ng-model="form.pieces" ><br>
       weight: <input  type="text" ng-model="form.weight" ><br>
       case number: <input  type="text" ng-model="form.case_number" ><br>
       Lot Number: <input type="text" ng-model="form.lot_number"><br>
-      harvester id:<input type="text" ng-model="form.harvester_id"><br>
+      harvester Code:<input type="text" ng-model="form.harvester_code"><br>
       <button ng-click="MakeBox()">submit</button><br><br>
       <!--end add scan info-->
     </div>
@@ -55,17 +55,17 @@
       <div ng-controller="RemoveBoxCtrl">
         <table class="fill">
           <tr>
-            <td>Box id</td>
+            <td>Box number</td>
             <td>weight</td>
             <td>lot number</td>
             <td>Case Number</td>
           </tr>  
           <tr ng-repeat="box in list.included">
-            <td>{{box.id}}</td>
+            <td>{{box.box_number}}</td>
             <td>{{box.weight}}kg</td>
             <td>{{box.lot_number}}</td>
             <td>{{box.case_number}}</td>
-            <td ng-click="RemoveItem(box.id)">Remove</td>
+            <td ng-click="RemoveItem(box.box_number)">Remove</td>
           </tr>
         </table>
       </div>
