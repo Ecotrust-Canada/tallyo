@@ -73,7 +73,8 @@ angular.module('scanthisApp.itemController', [])
   $scope.DatabaseScan = function(){    
     var func = function(response){
     $scope.current.itemchange = !$scope.current.itemchange;
-    Clear('scan', $scope);    
+    $scope.printDiv($scope.entry.scan.loin_number);
+    Clear('scan', $scope);
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
@@ -102,6 +103,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
 })
+
 
 .controller('RemoveLoinCtrl', function($scope, $http, DatabaseServices) {
   $scope.RemoveItem = function(id){
@@ -157,6 +159,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.MakeBox = function(){
     var func = function(response){
       if (response.data.length >0){
+        Clear('scan', $scope);
         alert("already exists");
       }
       else{

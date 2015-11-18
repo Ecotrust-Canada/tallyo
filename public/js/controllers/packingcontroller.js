@@ -114,7 +114,7 @@ angular.module('scanthisApp.packingController', [])
   $scope.BoxQR = function(){
     var stringarray = ObjSubset($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
     var qrstring = QRCombine(stringarray);
-    $scope.qr.string = qrstring;
+    $scope.printDiv(qrstring);
   };
 
 

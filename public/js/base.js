@@ -54,24 +54,17 @@ angular.module('scanthisApp', [
 
 .controller('PrintCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.aqr = 'what is this';
-  $scope.printDiv = function(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
+  $scope.printDiv = function(qrString) {
+    //var printContents = document.getElementById(divName).innerHTML;
+    var thediv = '<qrcode version="4" error-correction-level="medium" size="100" data="' + qrString + '"></qrcode>' + '<br><div>' + qrString + '</div>';
     var popupWin = window.open('', '_blank', 'width=800,height=300');
     popupWin.document.open();
-    popupWin.document.write('<!DOCTYPE html><html data-ng-app="monospaced.qrcode"><head><script src="bower_components/angular/angular.js"></script><script src="bower_components/qrcode-generator/js/qrcode.js"></script><script src="bower_components/angular-qrcode/angular-qrcode.js"></script></head><body>' + printContents + '</body></html>');    
+    popupWin.document.write('<!DOCTYPE html><html data-ng-app="monospaced.qrcode"><head><script src="bower_components/angular/angular.js"></script><script src="bower_components/qrcode-generator/js/qrcode.js"></script><script src="bower_components/angular-qrcode/angular-qrcode.js"></script></head><body>' + thediv + '</body></html>');    
     popupWin.document.close();
     popupWin.window.onload = function(){popupWin.window.print(); popupWin.window.close();};
   };
 
-  $scope.printADiv = function(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var popupWin = window.open('', '_blank', 'width=800,height=300');
-    popupWin.document.open();
-    popupWin.document.write('<!DOCTYPE html><html data-ng-app="monospaced.qrcode"><head><script src="bower_components/angular/angular.js"></script><script src="bower_components/angular-qr/angular-qr.min.js"></script><script src="bower_components/qrcode/lib/qrcode.min.js"></script></head><body>' + printContents + '</body></html>');    
-    popupWin.document.close();
-    popupWin.window.onload = function(){popupWin.window.print(); popupWin.window.close();};
-  };  
+   
 })
 
 ;

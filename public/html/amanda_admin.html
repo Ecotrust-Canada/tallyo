@@ -23,21 +23,11 @@
   <br>
   <br>
   
-  <div ng-controller="PrintCtrl">
-    <div id="printableAreaA">
-      <qr type-number="4" correction-level="'M'" size="100" text="'what is this'" image="true"></qr>
-    </div>
-    <button ng-click="printADiv('printableAreaA');">Print Div</button>
-  </div>
-  <br>
-  <br>
 
-  <div ng-controller="PrintCtrl">
-    <div id="printableArea">
-      <qrcode version="4" error-correction-level="medium" size="100" data="{{aqr}}"></qrcode>
-    </div>
-    <button ng-click="printDiv('printableArea');">Print Div</button>
-  </div>
+
+
+  <button ng-controller="PrintCtrl" ng-click="printDiv('printableArea');">Print Div</button>
+
 
 </div>
 

@@ -29,9 +29,10 @@
         <div ng-controller="CalculateBoxCtrl">
           <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
         </div>
-        <div ng-controller="BoxLabelCtrl">
-          <input type="button" ng-click="BoxQR()"   value="Make qr!">
-          <qrscan thedata="qr.string"></qrscan>
+        <div ng-controller="PrintCtrl">
+          <div ng-controller="BoxLabelCtrl">
+            <input type="button" ng-click="BoxQR()"   value="Make qr!">
+          </div>
         </div>
         <!--end add scan info-->
       </div>
