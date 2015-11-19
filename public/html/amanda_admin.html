@@ -1,6 +1,6 @@
 <div class="step" ng-controller="SetStation" ng-init="init('AM2-ADM')">
   
-  <b>Create Processor Entry:</b>
+  <!--<b>Create Processor Entry:</b>
   <div ng-controller="formCtrl" ng-init="init('processor')">
     <createform></createform>
     <div ng-controller="FormSubmitCtrl">
@@ -18,7 +18,7 @@
     <div ng-controller="FormSubmitCtrl">
       <input type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
     </div>
-  </div>
+  </div>-->
 
   <br>
   <br>
@@ -27,6 +27,11 @@
 
 
   <button ng-controller="PrintCtrl" ng-click="printDiv('printableArea');">Print Div</button>
+  <br>
+  <br>
+  <div ng-controller="CSVCtrl">
+  <button type="button" ng-csv="csvcontent" field-separator="," filename="test.csv">Export CSV</button>
+  </div>
 
 
 </div>

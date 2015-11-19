@@ -13,7 +13,9 @@ angular.module('scanthisApp', [
   'scanthisApp.packingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
-  'monospaced.qrcode'
+  'monospaced.qrcode',
+  'ngSanitize', 
+  'ngCsv'
 ])
 
 
@@ -66,6 +68,12 @@ angular.module('scanthisApp', [
    
 })
 
+.controller('CSVCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.csvcontent = [{a: 1, b:2}, {a:3, b:4}];
+
+
+})
 ;
 
 
