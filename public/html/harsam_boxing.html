@@ -26,9 +26,7 @@
         Add Items:<br><br>
         Loin Number: <input type="text" ng-model="obj_id">
         <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-        <div ng-controller="CalculateBoxCtrl">
-          <input type="button" ng-click="CalcBox()" value="Calculate Total Weight">
-        </div>
+        
         <div ng-controller="PrintCtrl">
           <div ng-controller="BoxLabelCtrl">
             <input type="button" ng-click="BoxQR()"   value="Make qr!">
@@ -47,8 +45,10 @@
         <!--end collection info -->
       </div>
 
-      <div class="sectionframe">
+      <div class="sectionframe" >
         <!-- begin summary info  -->
+        <div ng-controller="CalculateBoxCtrl">
+        </div>
         <!-- end summary info  -->
       </div>
       

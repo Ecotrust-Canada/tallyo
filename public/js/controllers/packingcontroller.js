@@ -74,13 +74,20 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
   };
 
-
 })
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
     var lot_num = GetBoxLotNumber($scope.list.included);
-    $scope.GetHarvester(lot_num);
+    if (lot_num !== undefined){
+      $scope.GetHarvester(lot_num);
+    }
+    else{
+      var harvester_code = '';
+      var box_weight = 0;
+      var num = 0;
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code);
+    }
   };
 
   $scope.GetHarvester = function(lot_num){
@@ -104,6 +111,12 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
 
+  $scope.$watch('list.included', function() {
+    if ($scope.list.included !== undefined){
+      $scope.CalcBox();
+    }
+  });
+
 })
 
 
@@ -114,6 +127,7 @@ angular.module('scanthisApp.packingController', [])
   $scope.BoxQR = function(){
     var stringarray = ObjSubset($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
     var qrstring = QRCombine(stringarray);
+    console.log(qrstring);
     $scope.printDiv(qrstring);
   };
 
