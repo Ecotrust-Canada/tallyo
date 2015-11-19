@@ -6,6 +6,14 @@
   background-color: white;
 }
 
+.stationframewide{
+  width:1200px;
+  margin-left:50px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+}
+
 .columnframe{
   width:446px;
   height:700px;
@@ -43,6 +51,7 @@
 
 .bluefill{
   background-color: #225363;
+  color:#B8BFC2;
 }
 
 

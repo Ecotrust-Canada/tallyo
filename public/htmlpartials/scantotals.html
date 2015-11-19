@@ -1,6 +1,6 @@
 Totals:
 <table class="fill">
-  <tr ng-repeat = "total in list.totals">
+  <tr ng-repeat = "total in list.totals | orderBy: 'grade'">
     <td>{{total.grade}} {{total.state}}:</td>
     <td>{{(total.weight1).toFixed(2)}}kg</td>
     <td ng-if ="total.weight2">{{(total.weight2).toFixed(2)}}kg</td>

@@ -186,4 +186,44 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.GetLotLocations();
 
+  $scope.GetTotals1 = function(){
+    var query = '?station_code=eq.HS0-001';
+    var func = function(response){
+      $scope.list.s_one_totals = response.data;
+    };
+    DatabaseServices.GetEntries('scan_total', func, query);
+  };
+
+  $scope.GetTotals1();
+
+  $scope.GetTotals2 = function(){
+    var query = '?station_code=eq.HS0-002';
+    var func = function(response){
+      $scope.list.s_two_totals = response.data;
+    };
+    DatabaseServices.GetEntries('scan_total', func, query);
+  };
+
+  $scope.GetTotals2();
+
+  $scope.GetTotals3 = function(){
+    var query = '?station_code=eq.HS0-003';
+    var func = function(response){
+      $scope.list.s_three_totals = response.data;
+    };
+    DatabaseServices.GetEntries('scan_total', func, query);
+  };
+
+  $scope.GetTotals3();
+
+  $scope.GetTotals4 = function(){
+    var query = '?station_code=eq.HS0-004';
+    var func = function(response){
+      $scope.list.s_four_totals = response.data;
+    };
+    DatabaseServices.GetEntries('box_total', func, query);
+  };
+
+  $scope.GetTotals4();
+
 });
