@@ -131,6 +131,50 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 
+.controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices) {
+  //patches station with current_collectionid
+
+
+  //response functions
+
+
+
+  var AddtoList = function(response){
+    var thedata = response.data;
+    $scope.list[$scope.table].push(thedata);
+  };
+
+  //database entry
+  $scope.ToDatabase = function(responsefunction){
+    var func = function(response){
+      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+      responsefunction(response);
+    };
+    if (NotEmpty($scope.form)){
+      DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+    }
+    else{ alert("empty form"); }  
+  };
+
+  //fills out entry from form
+  $scope.Submit = function(form, responsefunction){
+    $scope.entry[$scope.table].processor_code = $scope.processor;
+    $scope.entry[$scope.table].harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
+    MakeEntry(form, $scope.table, $scope);
+    $scope.ToDatabase(responsefunction);
+  };
+
+  //The different submit buttons
+  $scope.SubmitAddtoList = function(form){
+    $scope.Submit(form, AddtoList);
+  };
+
+
+
+
+})
+
+
 
 
 

@@ -1,24 +1,29 @@
 <div class="step" ng-controller="SetStation" ng-init="init('AM2-ADM')">
   
-  <!--<b>Create Processor Entry:</b>
-  <div ng-controller="formCtrl" ng-init="init('processor')">
-    <createform></createform>
-    <div ng-controller="FormSubmitCtrl">
-      <input type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
+
+
+  <div ng-controller="NewFormScope">
+    <b>Create Processor Entry:</b>
+    <div ng-controller="formCtrl" ng-init="init('processor')">
+      <createform></createform>
+      <div ng-controller="FormSubmitCtrl">
+        <input type="submit" ng-click="SubmitAddDB(form)" value="Save" />
+      </div>
     </div>
   </div>
   <br>
   <br>
 
 
-
-  <b>Create Harvester Entry:</b>
-  <div ng-controller="formCtrl" ng-init="init('harvester')">
-    <createform></createform>
-    <div ng-controller="FormSubmitCtrl">
-      <input type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
+  <div ng-controller="NewFormScope">
+    <b>Create Harvester Entry:</b>
+    <div ng-controller="formCtrl" ng-init="init('harvester')">
+      <createform></createform>
+      <div ng-controller="FormSubmitCtrl">
+        <input type="submit" ng-click="SubmitAddDB(form)" value="Save" />
+      </div>
     </div>
-  </div>-->
+  </div>
 
   <br>
   <br>

@@ -1,9 +1,24 @@
+
+.overallframe{
+  width:900px;
+  height:804px;
+}
 .stationframe{
   width:900px;
   margin-left:50px;
   height:700px;
   outline: solid 3px;
   background-color: white;
+
+}
+
+.stationframevertical{
+  width:450px;
+  margin-left:50px;
+  height:804px;
+  outline: solid 3px;
+  background-color: white;
+  margin-right: -50px;
 }
 
 .stationframewide{
@@ -31,7 +46,7 @@
 }
 
 .columnframe2{
-  width:446px;
+  width:450px;
   height:400px;
   outline: solid 3px;
   background-color: white;

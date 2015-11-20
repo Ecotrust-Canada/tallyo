@@ -39,6 +39,11 @@ angular.module('scanthisApp.formController', [])
   };
 
   //response functions
+
+  var AddDB = function(response){
+
+  };
+
   var AddtoList = function(response){
     var thedata = response.data;
     $scope.list[$scope.table].push(thedata);
@@ -88,6 +93,10 @@ angular.module('scanthisApp.formController', [])
 
   $scope.SubmitAddSetCurrentDB = function(form){
     $scope.Submit(form, AddSetCurrentDB);
+  };
+
+  $scope.SubmitAddDB = function(form){
+    $scope.Submit(form, AddDB);
   };
 
 
@@ -201,4 +210,10 @@ angular.module('scanthisApp.formController', [])
     $scope.valuesarray = valuesArray;
   };
 
-  });
+  })
+
+
+.controller('NewFormScope', function($scope, $http, DatabaseServices) {
+  $scope.form = {};
+
+});

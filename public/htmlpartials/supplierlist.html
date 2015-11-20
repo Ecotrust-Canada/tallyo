@@ -3,18 +3,20 @@
   <table>
     <tr>
       <th></th>
-      <th colspan="2">Choose Supplier:</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td colspan="3"><label><b>Filter by: </b> Supplier Group: <input ng-model="search.supplier_group"></label></td>
-      <td colspan="3"><label>Supplier: <input ng-model="search.supplier"></label></td>
+      <th colspan="2">Search:</th>
+      <th><input ng-model="searchText"></input></th>
     </tr>
     <tr>
       <td></td>
-      <td colspan="2"><label>Fleet: <input ng-model="search.fleet_vessel"></label></td>
+      <td>Supplier Group</td>
+      <td>Supplier</td>
+      <td>Fleet_vessel</td>
+      <td>species_common</td>
+      <td></td>
+      <td></td>
     </tr>
-    <tr ng-repeat-start="supplier in list.harvester | filter: search" ng-class="{selected: supplier.harvester_code === current.harvester_code}">
+
+    <tr ng-repeat-start="supplier in list.harvester | filter: searchText" ng-class="{selected: supplier.harvester_code === current.harvester_code}">
       <td>
         <button ng-if="supplier.expanded" ng-click="supplier.expanded = false">-</button>
         <button ng-if="!supplier.expanded" ng-click="supplier.expanded = true">+</button>
