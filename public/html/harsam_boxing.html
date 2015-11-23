@@ -25,9 +25,10 @@
         <!--begin add scan info-->
         <div ng-controller="HighlightScanCtrl">
           Add Items:<br><br>
-          Scan Loin: <input id="scaninput" type="text" ng-model="obj_id">
-          <input type="button" ng-click="PutObjInContainer(obj_id)" value="Add"><br>
-          
+          <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id='';">
+            Scan Loin: <input id="scaninput" type="text" ng-model="obj_id">
+          </form>
+
           <div ng-controller="PrintCtrl">
             <div ng-controller="BoxLabelCtrl">
               <input type="button" ng-click="BoxQR()"   value="Print Box Label">

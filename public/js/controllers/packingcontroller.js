@@ -38,7 +38,6 @@ angular.module('scanthisApp.packingController', [])
       alert("please select or create collection");
     }
   };
-
   $scope.MakeScan = function(id){
     $scope.entry.scan = {"station_code": $scope.station_code,};
     $scope.entry.scan[$scope.station_info.itemid] = id;
