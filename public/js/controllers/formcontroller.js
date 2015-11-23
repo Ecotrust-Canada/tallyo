@@ -215,5 +215,6 @@ angular.module('scanthisApp.formController', [])
 
 .controller('NewFormScope', function($scope, $http, DatabaseServices) {
   $scope.form = {};
+  $scope.addnew = true;
 
 });

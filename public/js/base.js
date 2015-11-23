@@ -13,6 +13,7 @@ angular.module('scanthisApp', [
   'scanthisApp.packingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
+  'scanthisApp.AdminController',
   'monospaced.qrcode',
   'ngSanitize', 
   'ngCsv'

@@ -9,6 +9,23 @@
         </select>
       </div>
       <createform></createform>
+      <div ng-controller="FormSelectionCtrl">
+        <form class="form-text">
+          <table>
+            <tr>
+              <td>
+                Received from: 
+              </td>
+              <td class="field">
+                <select ng-model="form.received_from">
+                  <option value="">-- select --</option>
+                  <option ng-repeat="option in list.processor" value={{option.processor_code}}>{{option.name}}</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
       <div ng-controller="FormSubmitCtrl">
         <input type="submit" ng-click="SubmitAddSetCurrentDB(form)" value="Save" />
       </div>
@@ -19,6 +36,23 @@
       <!--begin add scan info-->
       <div ng-controller="formCtrl" ng-init="init('box')">
         <createform></createform>
+        <div ng-controller="HarvesterDropDownCtrl">
+        <form class="form-text">
+          <table>
+            <tr>
+              <td>
+                Harvester Code:
+              </td>
+              <td class="field">
+                <select ng-model="form.harvester_code">
+                  <option value="">-- select --</option>
+                  <option ng-repeat="option in list.harvester" value={{option.harvester_code}}>{{option.supplier}}</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
       </div>
       <button ng-click="MakeBox()">submit</button>
       <!--end add scan info-->
@@ -30,6 +64,7 @@
     <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
       <!--begin collection info -->
       PO num: {{current.shipping_unit.po_number}}<br>
+      Received From: {{current.shipping_unit.received_from}}<br>
       <!--end collection info -->
     </div>
 

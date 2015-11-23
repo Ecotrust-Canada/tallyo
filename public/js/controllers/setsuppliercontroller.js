@@ -132,16 +132,13 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 .controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices) {
-  //patches station with current_collectionid
-
-
-  //response functions
-
 
 
   var AddtoList = function(response){
     var thedata = response.data;
-    $scope.list[$scope.table].push(thedata);
+    if ($scope.list[$scope.table] !== undefined){
+      $scope.list[$scope.table].push(thedata);
+    }    
   };
 
   //database entry
@@ -158,7 +155,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
-    $scope.entry[$scope.table].processor_code = $scope.processor;
+    if ($scope.entry[$scope.table].processor_code === "") $scope.entry[$scope.table].processor_code = $scope.processor;
     $scope.entry[$scope.table].harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
     MakeEntry(form, $scope.table, $scope);
     $scope.ToDatabase(responsefunction);
@@ -191,7 +188,7 @@ angular.module('scanthisApp.setsupplierController', [])
       var func = function(response){
         $scope.formjson = response.data[0].form;  
       };
-      var query = '?tablename=eq.' + table;
+      var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;
       DatabaseServices.GetEntryNoAlert('form', func, query);
     };
 
@@ -202,7 +199,7 @@ angular.module('scanthisApp.setsupplierController', [])
     
     var func = function(response){
     };
-    var query = '?tablename=eq.' + $scope.tablename;
+    var query = '?tablename=eq.' + $scope.tablename + '&station_code=eq.' + $scope.station_code;
     DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
   };
 
@@ -217,6 +214,59 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 })
+
+.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices){
+  $scope.FormData = function(){
+    console.log('function called');
+      var func = function(response){
+        $scope.formjson = response.data[0].form; 
+        console.log($scope.formjson); 
+        $scope.New($scope.codepatch);
+      };
+      var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
+      DatabaseServices.GetEntryNoAlert('form', func, query);
+    };
+
+  $scope.New = function(value){
+    if (value){
+      $scope.formjson.fields[14].value.push({"name": value});
+    }    
+    
+    var func = function(response){
+    };
+    var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
+    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
+  };
+
+
+  //database entry
+  $scope.ToDatabase = function(responsefunction){
+    var func = function(response){
+      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+      responsefunction(response);
+    };
+    if (NotEmpty($scope.form)){
+      DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+    }
+    else{ alert("empty form"); }  
+  };
+
+  //fills out entry from form
+  $scope.Submit = function(form, responsefunction){
+    MakeEntry(form, $scope.table, $scope);
+    $scope.codepatch = $scope.form.processor_code;
+    console.log($scope.codepatch);
+    $scope.ToDatabase(responsefunction);
+  };
+
+  //The different submit buttons
+  $scope.SubmitAddtoList = function(form){
+    $scope.Submit(form, $scope.FormData);
+  };
+
+})
+
+
 
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
  

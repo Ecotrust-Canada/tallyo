@@ -2,27 +2,37 @@
   
 
 
-  <div ng-controller="NewFormScope">
-    <b>Create Processor Entry:</b>
-    <div ng-controller="formCtrl" ng-init="init('processor')">
+  <div ng-controller="NewFormScope" class="block">
+
+    <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Processor</span><span ng-hide="addnew">Hide</span></button>
+
+    <div ng-controller="formCtrl" ng-init="init('processor')" ng-hide="addnew">
       <createform></createform>
-      <div ng-controller="FormSubmitCtrl">
-        <input type="submit" ng-click="SubmitAddDB(form)" value="Save" />
+     
+      <div ng-controller="SubmitProcessorCtrl">
+        <input class="form-button" type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
       </div>
     </div>
+
+
+
   </div>
   <br>
   <br>
 
 
-  <div ng-controller="NewFormScope">
-    <b>Create Harvester Entry:</b>
-    <div ng-controller="formCtrl" ng-init="init('harvester')">
+  <div ng-controller="NewFormScope" class="block">
+
+    <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Harvester</span><span ng-hide="addnew">Hide</span></button>
+
+    <div ng-controller="formCtrl" ng-init="init('harvester')" ng-hide="addnew">
       <createform></createform>
-      <div ng-controller="FormSubmitCtrl">
-        <input type="submit" ng-click="SubmitAddDB(form)" value="Save" />
+      <div ng-controller="HarvesterSubmitCtrl">
+        <input class="form-button" type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
       </div>
     </div>
+
+
   </div>
 
   <br>
@@ -31,12 +41,12 @@
 
 
 
-  <button ng-controller="PrintCtrl" ng-click="printDiv('printableArea');">Print Div</button>
+  <!--<button ng-controller="PrintCtrl" ng-click="printDiv('printableArea');">Print Div</button>
   <br>
   <br>
   <div ng-controller="CSVCtrl">
   <button type="button" ng-csv="csvcontent" field-separator="," filename="test.csv">Export CSV</button>
-  </div>
+  </div>-->
 
 
 </div>

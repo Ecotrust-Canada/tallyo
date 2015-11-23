@@ -116,6 +116,24 @@
 }
 
 
+.form-button{
+  margin-left:50px;
+  font-size: 18px;
+  background-color: #006b98;
+  color: #B8BFC2;
+  border: 1px #B8BFC2;
+  box-shadow: none;
+}
+
+.form-button:hover{
+  font-size: 18px;
+  background-color: #006b98;
+  color: #8B8C8C;
+  border: 2px #8B8C8C;
+  box-shadow: none;
+}
+
+
 
 .selected{
   background-color: #B1D3DE;
