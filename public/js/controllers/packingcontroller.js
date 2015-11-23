@@ -74,6 +74,13 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
   };
 
+}).
+
+controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
+  $scope.$watch('current.collectionid', function() {
+    var scaninput = document.getElementById('scaninput');
+    scaninput.focus()
+  });
 })
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
