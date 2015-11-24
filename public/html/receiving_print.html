@@ -41,7 +41,7 @@
           <table>
             <tr>
               <td>
-                Harvester Code:
+                Harvester:
               </td>
               <td class="field">
                 <select ng-model="form.harvester_code">
@@ -81,13 +81,11 @@
           <tr>
             <td>Box number</td>
             <td>weight</td>
-            <td>lot number</td>
             <td>Case Number</td>
           </tr>  
           <tr ng-repeat="box in list.included">
             <td>{{box.box_number}}</td>
             <td>{{box.weight}}kg</td>
-            <td>{{box.lot_number}}</td>
             <td>{{box.case_number}}</td>
             <td ng-click="RemoveItem(box.box_number)">Remove</td>
           </tr>

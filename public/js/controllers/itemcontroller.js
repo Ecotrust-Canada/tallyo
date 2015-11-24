@@ -129,9 +129,14 @@ angular.module('scanthisApp.itemController', [])
   $scope.form = {};
 
   $scope.MakeBoxScanEntry = function(form){
-    $scope.entry.box.timestamp = moment(new Date()).format();
+    var date = new Date();
+    $scope.entry.box.timestamp = moment(date).format();
     $scope.entry.box.station_code = $scope.station_code;
     $scope.entry.box.shipping_unit_number = $scope.current.collectionid;
+    $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+    if ($scope.form.box_number === undefined){
+      $scope.entry.box.box_number = createBoxNum(date);
+    }
     $scope.entry.scan.timestamp = $scope.entry.box.timestamp;
     $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, 'box', $scope);
@@ -189,7 +194,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.RemoveScan = function(id){
-    var query = '?box_number=eq.' + id;
+    var query = '?box_number=eq.' + id + '&station_code=eq.' + $scope.station_code;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
     };

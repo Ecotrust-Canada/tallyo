@@ -167,4 +167,9 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListAllItems($scope.station_code);
 
 })
+
+
+
+
+
 ;
