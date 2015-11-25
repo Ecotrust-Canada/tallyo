@@ -22,7 +22,7 @@ angular.module('scanthisApp.packingController', [])
       }
       //if it is already in current collection
       else if (itemcollection === $scope.current.collectionid){
-        toastr.warning('Already added!');
+        toastr.warning('already added');
         $scope.obj_id = null; //this is the ng-model for the input form
       }
       else{
@@ -35,7 +35,7 @@ angular.module('scanthisApp.packingController', [])
     }
     else
     {
-      alert("please select or create collection");
+      toastr.error("please select or create collection");
     }
   };
   $scope.MakeScan = function(id){
@@ -52,7 +52,7 @@ angular.module('scanthisApp.packingController', [])
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
     var func = function(response){
-      toastr.success('Added to box!'); // show success toast.
+      toastr.success('added to box'); // show success toast.
       $scope.MakeScan(id);
     };
     var patch = {};

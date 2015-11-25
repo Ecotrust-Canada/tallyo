@@ -27,7 +27,7 @@ angular.module('scanthisApp.formController', [])
 
 })
 
-.controller('FormSubmitCtrl', function($scope, $http, DatabaseServices) {
+.controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
   //patches station with current_collectionid
   $scope.StationCurrent = function(id){
     var patch = {'current_collectionid': id};
@@ -68,7 +68,7 @@ angular.module('scanthisApp.formController', [])
     if (NotEmpty($scope.form)){
       DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
     }
-    else{ alert("empty form"); }  
+    else{ toastr.error("empty form"); }  
   };
 
   //fills out entry from form
@@ -112,7 +112,7 @@ angular.module('scanthisApp.formController', [])
  * pushes responses to arbitrary table
  * sets current.collectionid
  */
-.controller('FormSubmitCurrentCtrl', function($scope, $http, DatabaseServices) {
+.controller('FormSubmitCurrentCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   /*submits the form to the database*/
     $scope.ToDatabase = function(){
@@ -125,7 +125,7 @@ angular.module('scanthisApp.formController', [])
       if (NotEmpty($scope.form)){
         DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
       }
-      else{ alert("empty form"); }  
+      else{ toastr.error("empty form"); }  
     };
 
     /*fills in entry json obj from form, sends to database*/
@@ -147,7 +147,7 @@ angular.module('scanthisApp.formController', [])
  * databse patch for collectionid in station
  * resets list.included
  */
-.controller('SubmitSetCurrentCtrl', function($scope, $http, DatabaseServices) {
+.controller('SubmitSetCurrentCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   /*submits the form to the database*/
     $scope.ToDatabase = function(){
@@ -167,7 +167,7 @@ angular.module('scanthisApp.formController', [])
       if (NotEmpty($scope.form)){
         DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
       }
-      else{ alert("empty form"); }  
+      else{ toastr.error("empty form"); }  
     };
 
     $scope.StationCurrent = function(id){

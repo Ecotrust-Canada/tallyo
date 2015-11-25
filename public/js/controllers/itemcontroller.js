@@ -4,7 +4,7 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices) {
+.controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   /*creates a new row in the database, item table*/
   $scope.DatabaseScan = function(form){
@@ -16,7 +16,7 @@ angular.module('scanthisApp.itemController', [])
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
     }
-    else{ alert("missing values"); }
+    else{ toastr.error("missing values"); }
   };
 
 
@@ -52,7 +52,7 @@ angular.module('scanthisApp.itemController', [])
 
 
 
-.controller('LoinCtrl', function($scope, $http, DatabaseServices) {
+.controller('LoinCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_number':'', 'lot_number':''};
 
@@ -66,7 +66,7 @@ angular.module('scanthisApp.itemController', [])
     if (NoMissingValues($scope.entry.scan, 'loin_number')){
       DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.loin, func);
     }
-    else{ alert("missing values"); }
+    else{ toastr.error("missing values"); }
   };
 
 
@@ -125,7 +125,7 @@ angular.module('scanthisApp.itemController', [])
 
 
 
-.controller('BoxCtrl', function($scope, $http, DatabaseServices) {
+.controller('BoxCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.form = {};
 
   $scope.MakeBoxScanEntry = function(form){
@@ -150,7 +150,7 @@ angular.module('scanthisApp.itemController', [])
     if (NoMissingValues($scope.entry.scan, 'box_number')){
       DatabaseServices.DatabaseEntryReturn('box', $scope.entry.box, func);
     }
-    else{ alert("missing values"); }
+    else{ toastr.error("missing values"); }
   };
 
   $scope.DatabaseScan = function(){    
@@ -165,7 +165,7 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){
       if (response.data.length >0){
         Clear('scan', $scope);
-        alert("already exists");
+        toastr.warning("already exists");
       }
       else{
         $scope.MakeBoxScanEntry($scope.form);

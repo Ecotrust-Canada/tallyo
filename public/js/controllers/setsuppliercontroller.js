@@ -131,7 +131,7 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 
-.controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices) {
+.controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
 
 
   var AddtoList = function(response){
@@ -150,7 +150,7 @@ angular.module('scanthisApp.setsupplierController', [])
     if (NotEmpty($scope.form)){
       DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
     }
-    else{ alert("empty form"); }  
+    else{ toastr.error("empty form"); }  
   };
 
   //fills out entry from form
@@ -166,21 +166,7 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.Submit(form, AddtoList);
   };
 
-
-
-
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
@@ -215,7 +201,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
 })
 
-.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices){
+.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices, toastr){
   $scope.FormData = function(){
     console.log('function called');
       var func = function(response){
@@ -248,7 +234,7 @@ angular.module('scanthisApp.setsupplierController', [])
     if (NotEmpty($scope.form)){
       DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
     }
-    else{ alert("empty form"); }  
+    else{ toastr.error("empty form"); }  
   };
 
   //fills out entry from form
