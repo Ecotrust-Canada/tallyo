@@ -15,7 +15,8 @@
     "functional.js": "~0.6.16",
     "html5-boilerplate": "~5.2.0",
     "moment": "~2.10.6",
-    "ng-csv": "~0.3.6"
+    "ng-csv": "~0.3.6",
+    "angular-toastr": "~1.6.0"
   },
   "resolutions": {
     "angular": "~1.4.x"

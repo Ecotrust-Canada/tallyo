@@ -4,7 +4,7 @@
 angular.module('scanthisApp.packingController', [])
 
 
-.controller('PackingCtrl', function($scope, $http, DatabaseServices) {
+.controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(id){
@@ -22,7 +22,7 @@ angular.module('scanthisApp.packingController', [])
       }
       //if it is already in current collection
       else if (itemcollection === $scope.current.collectionid){
-        alert("already added");
+        toastr.warning('Already added!');
         $scope.obj_id = null; //this is the ng-model for the input form
       }
       else{
@@ -52,6 +52,7 @@ angular.module('scanthisApp.packingController', [])
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
     var func = function(response){
+      toastr.success('Added to box!'); // show success toast.
       $scope.MakeScan(id);
     };
     var patch = {};

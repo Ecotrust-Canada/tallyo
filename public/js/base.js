@@ -16,11 +16,18 @@ angular.module('scanthisApp', [
   'scanthisApp.AdminController',
   'monospaced.qrcode',
   'ngSanitize', 
-  'ngCsv'
+  'ngCsv',
+  'toastr'
 ])
 
-
-
+/*
+ *counfigure toastr
+ */
+.config(function(toastrConfig) {
+    angular.extend(toastrConfig, {
+        positionClass: 'toast-top-full-width'
+    });
+})
 
 /*
  *Controllers used on most pages to set station and stage
