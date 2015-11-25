@@ -95,16 +95,25 @@ angular.module('scanthisApp.AdminController', [])
   $scope.GetLots = function(){
     var date = moment(new Date());
     var today = date.startOf('day').format();
-    var query = '?start_date=eq.' + today;
+    var query = '?start_date=eq.' + today + '&station_code=eq.AM2-002';
     var func = function(response){
-      $scope.list.todaylots = response.data;
+      console.log(response.data);
+      $scope.todaylots = response.data;
+      console.log($scope.todaylots);
     };
     DatabaseServices.GetEntries('lot', func, query);
   };
   $scope.GetLots();
 
+
+  /*$scope.StationLot = function(lot_number){
+    var patch = {"current_collectionid": lot_number};
+    var query = '?code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.current.collectionid = response.data[0].current_collectionid;
+    };
+    DatabaseServices.PatchEntry('station', patch, query, func);
+  };*/
+
 })
-
-
-
 ;

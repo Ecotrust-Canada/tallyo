@@ -69,6 +69,10 @@
   color:#B8BFC2;
 }
 
+.selectedlot{
+  outline: solid 3px #5AC8ED;
+}
+
 
 
 .form-text{

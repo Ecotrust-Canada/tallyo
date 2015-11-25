@@ -1,17 +1,23 @@
 <div class="stationframe" ng-controller="SetStation" ng-init="init('AM2-003')">
     <div class="columnframe block">
     <b>Weigh Production</b>
-      <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+      <!--<div class="sectionframe" ng-controller="DisplayCollectionCtrl">-->
         <!--begin collection info -->
+        <!--<div ng-controller="GetCurrentCtrl">
+          Lot Number: {{current.collectionid}}<br>
+          Start Time: {{current.lot.timestamp|stringtodate|date:'HH:mm'}}
+        </div>-->
         <!--end collection info -->
-      </div>
+      <!--</div>-->
       
       <div class="sectionframe" ng-controller="WeighLotCtrl">
         <!-- begin choose collection -->
+        Queue:
         <table class="fill">
-          <tr ng-repeat="lot in list.todaylots">
+          <tr ng-repeat="lot in todaylots" >
             <td>{{lot.lot_number}}</td>
-            <td>{{lot.start_date|stringtodate|date:format:"HH:MM"}}</td>
+            <td>{{lot.timestamp|stringtodate|date:'HH:mm'}}</td>
+            <td><button ng-click="StationLot(lot.lot_number)">Set</button></td>
           </tr>
         </table>
         <!-- end choose collection -->
