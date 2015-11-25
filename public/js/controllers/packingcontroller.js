@@ -38,7 +38,6 @@ angular.module('scanthisApp.packingController', [])
       alert("please select or create collection");
     }
   };
-
   $scope.MakeScan = function(id){
     $scope.entry.scan = {"station_code": $scope.station_code,};
     $scope.entry.scan[$scope.station_info.itemid] = id;
@@ -74,6 +73,13 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
   };
 
+}).
+
+controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
+  $scope.$watch('current.collectionid', function() {
+    var scaninput = document.getElementById('scaninput');
+    scaninput.focus()
+  });
 })
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
