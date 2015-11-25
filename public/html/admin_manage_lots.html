@@ -9,7 +9,7 @@
       <td>Boxing</td>
       <td>Shipping</td>
     </tr>
-    <tr ng-repeat="lot in list.lot_location">
+    <tr ng-repeat="lot in list.lot_location" ng-if="lot.lot_number.substring(0, 3) === 'HS0'">
       <td>{{lot.lot_number}}</td>
       <td ng-class="{bluefill: lot.stations.indexOf('HS0-001') !== -1}">
         plastic/no plastic <br>

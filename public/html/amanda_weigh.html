@@ -1,23 +1,26 @@
 <div class="stationframe" ng-controller="SetStation" ng-init="init('AM2-003')">
     <div class="columnframe block">
     <b>Weigh Production</b>
-      <!--<div class="sectionframe" ng-controller="DisplayCollectionCtrl">-->
+      <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
         <!--begin collection info -->
-        <!--<div ng-controller="GetCurrentCtrl">
+        <div ng-controller="GetCurrentCtrl">
           Lot Number: {{current.collectionid}}<br>
-          Start Time: {{current.lot.timestamp|stringtodate|date:'HH:mm'}}
-        </div>-->
+          Start Time: {{current.lot.timestamp|stringtodate|date:'HH:mm'}}<br>
+          {{current.index}}
+        </div>
+        <button ng-controller="WeighLotCtrl" ng-click="StationLot(list.todaylots[current.index+1].lot_number, current.index+1)">Move to Next Lot</button>
         <!--end collection info -->
-      <!--</div>-->
+      </div>
       
       <div class="sectionframe" ng-controller="WeighLotCtrl">
         <!-- begin choose collection -->
         Queue:
         <table class="fill">
-          <tr ng-repeat="lot in todaylots" >
+          <tr ng-repeat="lot in list.todaylots" ng-class="{selectedlot: lot.lot_number === current.collectionid}">
+            <td>{{$index}}</td>
             <td>{{lot.lot_number}}</td>
             <td>{{lot.timestamp|stringtodate|date:'HH:mm'}}</td>
-            <td><button ng-click="StationLot(lot.lot_number)">Set</button></td>
+            <td><button ng-click="StationLot(lot.lot_number, $index)">Set</button></td>
           </tr>
         </table>
         <!-- end choose collection -->
