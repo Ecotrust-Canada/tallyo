@@ -8,6 +8,9 @@ angular.module('scanthisApp.packingController', [])
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(id){
+    if (!id) {
+      toastr.error('no loin id');
+    };
     var func = function(response){
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
@@ -29,9 +32,14 @@ angular.module('scanthisApp.packingController', [])
         $scope.PatchObjWithContainer(id);
       }      
     };
+
+    var onErr = function() {
+      toastr.error('invalid object'); // show failure toast.
+    };
+
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;
     if ($scope.current.collectionid){
-      DatabaseServices.GetEntry($scope.station_info.patchtable, func, query);
+      DatabaseServices.GetEntryPlusError($scope.station_info.patchtable, func, query, onErr);
     }
     else
     {
@@ -55,10 +63,14 @@ angular.module('scanthisApp.packingController', [])
       toastr.success('added to box'); // show success toast.
       $scope.MakeScan(id);
     };
+    var onErr = function(){
+      toastr.error('invalid object'); // show failure toast.
+    };
+
     var patch = {};
     patch[$scope.station_info.collectionid] = $scope.current.collectionid;
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;   
-    DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
+    DatabaseServices.PatchEntryPlusError($scope.station_info.patchtable, patch, query, func, onErr);
   };     
 })
 

@@ -26,7 +26,8 @@ angular.module('scanthisApp', [
 .config(function(toastrConfig) {
     angular.extend(toastrConfig, {
         maxOpened: 3,
-        positionClass: 'toast-top-full-width'
+        positionClass: 'toast-top-full-width',
+        preventOpenDuplicates: true
     });
 })
 

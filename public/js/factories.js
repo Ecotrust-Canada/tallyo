@@ -39,6 +39,18 @@ angular.module('scanthisApp.factories', [])
     });
   };
 
+  /*sends a patch to the database and returns the result calls onErr on failure*/
+  db_service.PatchEntryPlusError = function(table, patch, querystring, func, onErr){
+    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+      if (response.data.length >0){
+        func(response);
+      }
+      else onErr();
+    }, function(response){
+      alert(response.statusText);
+    });
+  };
+
   db_service.PatchEntryNoAlert = function(table, patch, querystring, func){
     $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
@@ -66,6 +78,19 @@ angular.module('scanthisApp.factories', [])
         func(response);
       }
       else alert("invalid object");
+    }, function(response){
+      alert(response.status);
+    });
+  };
+
+/*sends a get request, calls onErr if nothign matching query*/
+  db_service.GetEntryPlusError = function(table, func, querystring, onErr){
+    var url = databaseurl + table + querystring;
+    $http.get(url).then(function(response){
+      if (response.data.length >0){
+        func(response);
+      }
+      else onErr();
     }, function(response){
       alert(response.status);
     });
