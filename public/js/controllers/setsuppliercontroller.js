@@ -181,12 +181,38 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.New = function(value){
     if (value){
       $scope.formjson.fields[$scope.model.id].value.push({"name": value});
+      $scope.SaveDB();
     }    
     
+    /*var func = function(response){
+    };
+    var query = '?tablename=eq.' + $scope.tablename + '&station_code=eq.' + $scope.station_code;
+    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);*/
+  };
+
+  $scope.SaveDB = function(){
     var func = function(response){
     };
     var query = '?tablename=eq.' + $scope.tablename + '&station_code=eq.' + $scope.station_code;
     DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
+  };
+
+  $scope.Edit = function(index, name){
+    //console.log($scope.formjson.fields[$scope.model.id].value[index]);
+    $scope.formjson.fields[$scope.model.id].value[index].name = name;
+  };
+
+  $scope.Save = function(index, name){
+    //console.log($scope.formjson.fields[$scope.model.id].value[index]);
+    $scope.formjson.fields[$scope.model.id].value[index].name = name;
+    $scope.SaveDB();
+  };
+
+  $scope.Delete = function(index, name){
+    $scope.formjson.fields[$scope.model.id].value = $scope.formjson.fields[$scope.model.id].value.filter(function (el) {
+                        return el.name !== name;
+                       });
+    $scope.SaveDB();
   };
 
   $scope.init = function(table){

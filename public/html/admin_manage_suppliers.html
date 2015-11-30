@@ -42,7 +42,17 @@
       </div>
       <div class="block">
       <ul>
-        <li ng-repeat="selection in formjson.fields[model.id].value">{{selection.name}}</li>
+        <li ng-repeat="selection in formjson.fields[model.id].value">
+          <span ng-if="selection.name !== ''">
+            {{selection.name}}
+            <input type="button" ng-click="Edit($index, '')" value="Edit" />
+            <input type="button" ng-click="Delete($index, selection.name)" value="Delete" />
+          </span>
+          <span ng-if="selection.name === ''">
+            <input  type="text" ng-model="model.test">
+            <input type="button" ng-click="Save($parent.$index, model.test)" value="Save" />
+          </span>
+        </li>
         <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new)" value="Add" /></li>
       </ul>
       </div>
