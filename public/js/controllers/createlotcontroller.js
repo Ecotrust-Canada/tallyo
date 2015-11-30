@@ -135,7 +135,13 @@ angular.module('scanthisApp.createlotController', [])
 .controller('GetCurrentCtrl', function($scope, $http, DatabaseServices) {
   $scope.GetCurrent = function(){
     var func = function(response){
-      $scope.current.collectionid = response.data[0].current_collectionid;
+      var station = response.data[0];
+      var today = moment(new Date()).startOf('day').format();
+      //console.log(today);
+      //console.log(station.collectionid_date);
+      if (moment(station.collectionid_date).startOf('day').format() === today){
+        $scope.current.collectionid = station.current_collectionid;
+      }
     };
     var query = '?code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('station', func, query);

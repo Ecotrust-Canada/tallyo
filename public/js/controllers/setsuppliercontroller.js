@@ -63,7 +63,8 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.PatchStationWithLot = function(lot_number, station_code){
     var func = function(response){
     };
-    var patch = {'current_collectionid': lot_number};
+    var today = moment(new Date()).format();
+    var patch = {'current_collectionid': lot_number, 'collectionid_date': today};
     var query = '?code=eq.' + station_code;
     DatabaseServices.PatchEntry('station', patch, query, func);
   };

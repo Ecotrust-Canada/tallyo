@@ -106,7 +106,8 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.StationLot = function(lot_number, index){
     $scope.current.index = index;
-    var patch = {"current_collectionid": lot_number};
+    var today = moment(new Date()).format();
+    var patch = {'current_collectionid': lot_number, 'collectionid_date': today};
     var query = '?code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.current.collectionid = response.data[0].current_collectionid;

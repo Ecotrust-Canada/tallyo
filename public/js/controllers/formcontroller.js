@@ -30,7 +30,8 @@ angular.module('scanthisApp.formController', [])
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
   //patches station with current_collectionid
   $scope.StationCurrent = function(id){
-    var patch = {'current_collectionid': id};
+    var today = moment(new Date()).format();
+    var patch = {'current_collectionid': id, 'collectionid_date': today};
     var query = '?code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.current.collectionid = id;
