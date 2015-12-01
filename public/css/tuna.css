@@ -36,6 +36,20 @@
   background-color: white;
 }
 
+.columnframewide{
+  width:546px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+}
+
+.columnframenarrow{
+  width:346px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+}
+
 
 .stationframe2{
   width:900px;
@@ -71,6 +85,10 @@
 
 .selectedlot{
   outline: solid 3px #5AC8ED;
+}
+
+.small td{
+  font-size: 12px;
 }
 
 

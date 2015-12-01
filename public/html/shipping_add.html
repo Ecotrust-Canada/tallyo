@@ -1,0 +1,73 @@
+<div class="stationframe" ng-controller="ShipListCtrl">
+    <div class="columnframewide block">
+      <b>Add Shipment Info</b>
+      <div class="sectionframe">
+        <!-- begin choose collection -->
+        <table class="fill small">
+          <tr>
+            <td>Ship Date</td>
+            <td>Po Number</td>
+            <td>Customer</td>
+            <td>Container Number</td>
+            <td>Bill of Lading</td>
+            <td>Vessel Name</td>
+            <td></td>
+          </tr>
+          <tr ng-repeat="ship in list.shipments | orderBy: '-timestamp'">
+            <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
+            <td>{{ship.po_number}}</td>
+            <td>{{ship.customer}}</td>
+            <td>{{ship.container_number}}</td>
+            <td>{{ship.bill_of_lading}}</td>
+            <td>{{ship.vessel_name}}</td>
+            <td><input type="button" ng-click="Edit(ship.shipping_unit_number)" value="Edit"></td>
+          </tr>
+        </table>
+        <!-- end choose collection -->
+      </div>
+
+    </div>
+    
+    <div class="columnframenarrow block">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="sectionframe">
+        <!--begin collection info -->
+        <table ng-hide="current.shipment === undefined || current.shipment === null">
+          <tr>
+            <td>Ship Date:</td>
+            <td><b>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</b></td>
+          </tr>
+          <tr>
+            <td>PO Number:</td>
+            <td><b>{{current.shipment.po_number}}</b></td>
+          </tr>
+          <tr>
+            <td>Customer:</td>
+            <td><input type="text" ng-model="current.shipment.customer" ></td>
+          </tr>
+          <tr>
+            <td>Container Number:</td>
+            <td><input type="text" ng-model="current.shipment.container_number"></td>
+          </tr>
+          <tr>
+            <td>Bill of Lading:</td>
+            <td><input type="text" ng-model="current.shipment.bill_of_lading"></td>
+          </tr>
+          <tr>
+            <td>Vessel Name:</td>
+            <td><input type="text" ng-model="current.shipment.vessel_name"></td>
+          </tr>
+          <tr>
+            <td><input type="button" ng-click="ShipInfo()" value="Save"></td>
+            <td></td>
+          </tr>
+        </table>
+
+        <!--end collection info -->
+      </div>
+
+    </div>    
+  </div>

@@ -52,6 +52,16 @@ angular.module('scanthisApp.routing', ['ngRoute', 'ui.router'])
       templateUrl: 'html/harsam_shipping.html'
     })
 
+    .state('harsam_shipping.create', {
+      url: "/create",
+      templateUrl: 'html/shipping_create.html'
+    })
+
+    .state('harsam_shipping.add', {
+      url: "/add",
+      templateUrl: 'html/shipping_add.html'
+    })
+
     .state('amanda_admin', {
       url: "/amanda_admin",
       templateUrl: 'html/amanda_admin.html',
