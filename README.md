@@ -30,6 +30,22 @@ npm start
 
 You run the project in VM environment using Vagrant. To do so, checkout out: https://github.com/Ecotrust-Canada/scanthis-vagrant
 
+### Add git-ignored files
+
+add a file config.js to the scanthis folder with contents (replacing '8000' if you want to run on a different port)
+```
+'use strict';
+module.exports = function(app){
+    app.set('port', 8000);
+};
+```
+
+add a file app_config.js to /public/js/  with contents (this is the url for the database, modify if running on a different port)
+```
+'use strict';
+var globalurl = 'http://[your ip address]:3000/';
+```
+
 ### Database Setup
 
 Install postgreSQL
