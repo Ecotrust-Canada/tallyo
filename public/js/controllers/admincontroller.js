@@ -115,5 +115,15 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.PatchEntry('station', patch, query, func);
   };
 
+  $scope.$watch('current.collectionid', function() {
+    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined  && $scope.list.todaylots !== undefined){
+      var myArray = $scope.list.todaylots;
+      var property = $scope.station_info.collectionid;
+      var searchTerm = $scope.current.collectionid;
+
+      $scope.current.index = arrayObjectIndexOf(myArray, searchTerm, property);
+    }
+  });
+
 })
 ;
