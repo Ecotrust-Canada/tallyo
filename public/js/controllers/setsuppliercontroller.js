@@ -18,7 +18,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       $scope.list.harvester = response.data;
     };
-    var query = '?processor_code=eq.' + $scope.processor;
+    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
     DatabaseServices.GetEntries('harvester', func, query);
   };
 
@@ -128,6 +128,40 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.CreateLot(queryString, date);
   };
 
+  $scope.PatchHarvester = function(harvester_code){
+    var func = function(response){
+      $scope.ListHarvesters();
+    };
+    var query = '?harvester_code=eq.' + harvester_code;
+    var patch = {'active': false};
+    DatabaseServices.PatchEntry('harvester', patch, query, func);
+  };
+
+  $scope.DeleteHarvester = function(harvester_code){
+    var func = function(response){
+      $scope.ListHarvesters();
+    };
+    var query = '?harvester_code=eq.' + harvester_code;
+    DatabaseServices.RemoveEntry('harvester', query, func);
+  };
+
+  $scope.RemoveHarvester = function(harvester_code){
+    var func = function(response){
+      if (response.data.length > 0){
+        $scope.PatchHarvester(harvester_code);
+      }
+      else{
+        $scope.DeleteHarvester(harvester_code);
+      }
+    };
+    var query = '?harvester_code=eq.' + harvester_code;
+    var r = confirm("Are you sure you want to delete this?");
+    if (r === true) {
+      DatabaseServices.GetEntries('lot', func, query);
+    }
+    
+  };
+
 
 })
 
@@ -158,6 +192,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.Submit = function(form, responsefunction){
     if ($scope.entry[$scope.table].processor_code === "") $scope.entry[$scope.table].processor_code = $scope.processor;
     $scope.entry[$scope.table].harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
+    $scope.entry[$scope.table].active = true;
     MakeEntry(form, $scope.table, $scope);
     $scope.ToDatabase(responsefunction);
   };

@@ -29,6 +29,7 @@
       <td>{{supplier.fair_trade|isfairtrade}}</td>
       <td>{{supplier.harvester_code}}</td>
       <td><button ng-click="SetCurrentHarvester(supplier.harvester_code)">Set Current</button></td>
+      <td><button ng-click="RemoveHarvester(supplier.harvester_code)">Hide/Delete</button></td>
     </tr>
     <tr ng-if-start="supplier.expanded">
       <td></td>
