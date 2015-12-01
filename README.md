@@ -47,7 +47,9 @@ sudo -u postgres pg_restore -i -d [database name] st.dump
 ```
 
 download postgREST
+
 https://github.com/begriffs/postgrest/releases/download/v0.3.0.1/postgrest-0.3.0.1-ubuntu.tar.xz
+
 un-tar:
 ```
 tar zxf postgrest-0.3.0.1-ubuntu.tar.xz
