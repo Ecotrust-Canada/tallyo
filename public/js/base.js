@@ -62,27 +62,19 @@ angular.module('scanthisApp', [
  
 })
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
-    $scope.stations = stationlist;
-    console.log($scope.stations);
-    $scope.terminals = terminals;
-    console.log($scope.terminals);
-    //console.log($routeParams);
-    if ($routeParams.terminal_id){
-        var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
-        //console.log(current_terminal);
-        var stations = current_terminal.stations;
-        $scope.currentstations = [];
+  $scope.stations = stationlist;
+  $scope.terminals = terminals;
+  if ($routeParams.terminal_id){
+    var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+    var stations = current_terminal.stations;
+    $scope.currentstations = [];
 
-        for (var i = 0;i<stations.length;i++){
-            var index = stations[i];
-            console.log(index);
-            //console.log($scope.stations[index].type);
-            $scope.currentstations[i] = {};
-            //console.log(stations[i].type);
-            $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
-        //$scope.include = '/html/harsam_receiving.html';
-        }
+    for (var i = 0;i<stations.length;i++){
+      var index = stations[i];
+      $scope.currentstations[i] = {};
+      $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
     }
+  }
 })
 
 .controller('PrintCtrl', function($scope, $http, DatabaseServices) {
