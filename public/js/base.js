@@ -73,8 +73,36 @@ angular.module('scanthisApp', [
       var index = stations[i];
       $scope.currentstations[i] = {};
       $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
+      $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
   }
+})
+
+.controller('StationCtrl', function($scope, $http, $sce) {
+
+  $scope.init = function(settings){
+    $scope.station_code = settings.station_code;
+    $scope.processor = $scope.station_code.substring(0, 3);
+    $scope.title = settings.title;
+        
+    $scope.entry = {};
+    $scope.list = {};
+    $scope.qr = {};
+    $scope.scan = {};
+    $scope.form = {};
+    $scope.current = {};
+    $scope.station_info = settings.station_info;
+    $scope.includes = {};
+    $scope.includes.col1 = []; 
+    for (var i=0;i<settings.includes.col1.length;i++){ 
+      $scope.includes.col1[i] = 'htmlcomponents/' + settings.includes.col1[i]+ '.html';
+    }
+    $scope.includes.col2 = []; 
+    for (var j=0;j<settings.includes.col2.length;j++){ 
+      $scope.includes.col2[j] = 'htmlcomponents/' + settings.includes.col2[j]+ '.html';
+    }
+  };
+
 })
 
 .controller('PrintCtrl', function($scope, $http, DatabaseServices) {

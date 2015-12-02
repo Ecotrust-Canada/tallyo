@@ -1,39 +1,16 @@
-<div ng-controller="SetStation" ng-init="init('HS0-004')">
+<div ng-controller="StationCtrl" ng-init="init(station.settings)" ng-class="station.settings.css.station">
 
-
-  <div class="stationframe" >
-    <div class="columnframe block">
-      
-      <div class="sectionframe">
-        <!-- begin choose collection -->
-        <!-- end choose collection -->
-      </div>
-
-      <div class="sectionframe">
-        <!--begin add scan info-->
-        <!--end add scan info-->
-      </div>
-
-    </div>
-    
-    <div class="columnframe block">
-      
-      <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-        <!--begin collection info -->
-        <!--end collection info -->
-      </div>
-
-      <div class="sectionframe" ng-controller="TotalsCtrl">
-        <!-- begin summary info  -->
-        <!-- end summary info  -->
-      </div>
-      
-      <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-        <!--begin full items list -->
-        <!--end full items list -->
-      </div>
-
-    </div>    
+  <div ng-class="station.settings.css.column">
+    <b>{{title}}</b>
+    <div ng-repeat="component in includes.col1" ng-include="component"></div>
   </div>
+  
+  <div ng-class="station.settings.css.column">
+    <div ng-repeat="component in includes.col2" ng-include="component"></div>
+  </div>
+
 </div>
+
+
+
 

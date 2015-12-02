@@ -2,6 +2,8 @@
 .overallframe{
   width:900px;
   height:804px;
+  display: inline-block;
+  vertical-align: top;
 }
 .stationframe{
   width:900px;
@@ -19,6 +21,8 @@
   outline: solid 3px;
   background-color: white;
   margin-right: -50px;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .stationframewide{
@@ -34,6 +38,8 @@
   height:700px;
   outline: solid 3px;
   background-color: white;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .columnframewide{
@@ -64,6 +70,8 @@
   height:400px;
   outline: solid 3px;
   background-color: white;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .sectionframe{
