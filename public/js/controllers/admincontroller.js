@@ -4,14 +4,21 @@
 angular.module('scanthisApp.AdminController', [])
 
 
-.controller('StartNewLotCtrl', function($scope, $injector, DatabaseServices) {
+.controller('StartNewLotCtrl', function($scope, $injector, $timeout, toastr, DatabaseServices) {
 
+  $scope.isDisabled = false;
   $scope.StartNewLot = function(){
     var func = function(response){
       $scope.current.collectionid = response.data.lot_number;
       //$scope.current.lot = response.data;
       $scope.list.lot.push(response.data);
+      toastr.success('lot created');
     };
+    $scope.isDisabled = true;
+    // reenable button after two seconds have passed
+    $timeout(function(){
+      $scope.isDisabled = false;},
+      2000);
     var entry = {};
     var date = new Date();
     entry.lot_number = createLotNum($scope.station_code, date);

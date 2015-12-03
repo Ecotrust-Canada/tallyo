@@ -4,7 +4,7 @@
       <b>Internal Receiving</b>
       <div class="sectionframe" ng-controller="StartNewLotCtrl">
         <!-- begin choose collection -->
-        <input type="submit" ng-click="StartNewLot()" value="Start New Lot" />
+        <input type="submit" ng-click="StartNewLot()" ng-disabled="isDisabled" ng-model="isDisabled" value="Start New Lot" />
         <div ng-controller="SelectDropDownCtrl">
           Recent Lots:
           <select name="singleSelect" ng-model="current.collectionid">

@@ -12,6 +12,7 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       Clear('scan', $scope);
+      toastr.success("success (say somthing more useful here)");
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -38,11 +39,12 @@ angular.module('scanthisApp.itemController', [])
 
 })
 
-.controller('RemoveScanCtrl', function($scope, $http, DatabaseServices) {
+.controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
   $scope.RemoveItem = function(scan_id){
     var query = '?serial_id=eq.' + scan_id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
+      toastr.success('item removed');
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
