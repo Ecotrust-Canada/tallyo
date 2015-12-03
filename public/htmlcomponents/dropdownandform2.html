@@ -1,0 +1,16 @@
+<div class="sectionframe" ng-controller="formCtrl" ng-init="init('shipping_unit')">
+  <!-- begin choose collection -->
+  <div ng-controller="SelectDropDownCtrl">
+    Recent Shipments:
+    <select name="singleSelect" ng-model="current.collectionid">
+      <option ng-repeat = "ship in list.shipping_unit | orderBy: '-timestamp' | limitTo: 5" value={{ship.shipping_unit_number}}>{{ship.po_number}}</option>
+    </select>
+  </div>
+  <br>
+  Create Shipping Entry:<br><br>
+    <createform></createform>
+    <div ng-controller="FormSubmitCtrl">
+      <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
+    </div>
+  <!-- end choose collection -->
+</div>

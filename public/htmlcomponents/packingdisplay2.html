@@ -1,0 +1,32 @@
+<div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+  <!--begin collection info -->
+  <div shipinfo ship="current.shipping_unit"></div>
+  <!--end collection info -->
+</div>
+
+<div class="sectionframe">
+  <!-- begin summary info  -->
+  <!-- end summary info  -->
+</div>
+
+<div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
+  <!--begin full items list -->
+  <div ng-controller="RemovePatchCtrl">
+    <table class="fill">
+      <tr>
+        <td>Box Number</td>
+        <td>weight</td>
+        <td>lot number</td>
+        <td>Case Number</td>
+      </tr>  
+      <tr ng-repeat="box in list.included">
+        <td>{{box.box_number}}</td>
+        <td>{{box.weight}}kg</td>
+        <td>{{box.lot_number}}</td>
+        <td>{{box.case_number}}</td>
+        <td ng-click="PatchObjRemoveContainer(box.id)">Remove</td>
+      </tr>
+    </table>
+  </div>
+  <!--end full items list -->
+</div>

@@ -1,0 +1,16 @@
+<div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
+  <!-- begin choose collection -->
+  <div ng-controller="SelectDropDownCtrl">
+    Recent Cases:
+    <select name="singleSelect" ng-model="current.collectionid">
+      <option ng-repeat = "box in list.box | orderBy: '-timestamp' | limitTo: 5" value={{box.box_number}}>{{box.case_number}}</option>
+    </select>
+  </div>
+  <br>
+  Create Case:<br>
+  <createform></createform>
+  <div ng-controller="FormSubmitCtrl">
+    <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
+  </div>
+  <!-- end choose collection -->
+</div>
