@@ -317,16 +317,39 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.sumStations = 
+  [
+    {'name': 'Receiving', 'code': 'HS0-001'},
+    {'name': 'Trimming', 'code': 'HS0-002'},
+    {'name': 'Retouching', 'code': 'HS0-003'},
+    {'name': 'Boxing', 'code': 'HS0-004'},
+    {'name': 'Shipping', 'code': 'HS0-005'},
+  ];
+
  
   $scope.GetLotLocations = function(){
     var query = '';
     var func = function(response){
       $scope.list.lot_location = response.data;
     };
-    DatabaseServices.GetEntries('lot_aggregated', func, query);
+    DatabaseServices.GetEntries('select_lot', func, query);
   };
 
   $scope.GetLotLocations();
+
+
+  $scope.GetLotSummary = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.lot_summary = response.data;
+    };
+    DatabaseServices.GetEntries('lot_summary', func, query);
+  };
+
+  $scope.GetLotSummary();
+
+  
 
   $scope.GetTotals1 = function(){
     var query = '?station_code=eq.HS0-001';

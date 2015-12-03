@@ -35,7 +35,7 @@ angular.module('scanthisApp', [
  *Controllers used on most pages to set station and stage
  */
 
-.controller('SetStation', function($scope, $http, DatabaseServices) {
+/*.controller('SetStation', function($scope, $http, DatabaseServices) {
 
   $scope.GetStationInfo = function(station_code){
     var query = '?code=eq.' + station_code;
@@ -60,7 +60,7 @@ angular.module('scanthisApp', [
 
 
  
-})
+})*/
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
   $scope.stations = stationlist;
   $scope.terminals = terminals;
@@ -87,10 +87,11 @@ angular.module('scanthisApp', [
         
     $scope.entry = {};
     $scope.list = {};
-    $scope.qr = {};
+    //$scope.qr = {};
     $scope.scan = {};
     $scope.form = {};
     $scope.current = {};
+    
     $scope.station_info = settings.station_info;
     $scope.includes = {};
     $scope.includes.col1 = []; 

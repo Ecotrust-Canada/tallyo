@@ -26,12 +26,15 @@
 }
 
 .stationframewide{
-  width:1200px;
+  width: 1000px;
   margin-left:50px;
   height:700px;
   outline: solid 3px;
   background-color: white;
+  overflow-x: scroll;
+  white-space: nowrap;
 }
+
 
 .columnframe{
   width:446px;
@@ -89,6 +92,9 @@
 .bluefill{
   background-color: #225363;
   color:#B8BFC2;
+}
+.bluefill td{
+    width: 50px;
 }
 
 .selectedlot{
@@ -290,7 +296,7 @@ nav ul li {
         position: relative;
     }
         nav ul ul li a {
-            padding: 15px 40px;
+            padding: 10px 20px;
             color: #fff;
         }   
             nav ul ul li a:hover {

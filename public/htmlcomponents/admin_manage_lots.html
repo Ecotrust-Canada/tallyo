@@ -1,5 +1,5 @@
 
-<div ng-controller="LotCtrl">
+<div ng-controller="LotCtrl" class="innerframe">
 
   <table class="fill">
     <tr>
@@ -11,16 +11,25 @@
       <td>Shipping</td>
     </tr>
     <tr ng-repeat="lot in list.lot_location" ng-if="lot.lot_number.substring(0, 3) === 'HS0'">
-      <td>{{lot.lot_number}}</td>
+      <td>
+        {{lot.lot_number}}<br>
+        {{lot.internal_lot_code}}
+      </td>
       <td ng-class="{bluefill: lot.stations.indexOf('HS0-001') !== -1}">
+        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:'HS0-001'} ">
+          <b>Pieces: {{sum.pieces}} | Weight: {{sum.weight.toFixed(2)}}kg</b>
+        </div>
         plastic/no plastic <br>
-        <div ng-repeat = "total in list.s_one_totals | filter: lot_number = lot.lot_number | orderBy: 'state'">
+        <div ng-repeat = "total in list.s_one_totals | filter: {lot_number: lot.lot_number} | orderBy: 'state'">
           {{total.state}}: {{total.pieces}}pcs: 
           {{(total.weight1).toFixed(2)}}kg/{{(total.weight2).toFixed(2)}}kg
         </div>
       </td>
 
       <td ng-class="{bluefill: lot.stations.indexOf('HS0-002') !== -1}">
+        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:'HS0-002'} ">
+          <b>Pieces: {{sum.pieces}} | Weight: {{sum.weight.toFixed(2)}}kg</b>
+        </div>
         <div ng-repeat = "total in list.s_two_totals | filter: lot_number = lot.lot_number | orderBy: 'grade'">
           {{total.grade}}: {{total.pieces}}pcs: 
           {{(total.weight1).toFixed(2)}}kg
@@ -28,6 +37,9 @@
       </td>
 
       <td ng-class="{bluefill: lot.stations.indexOf('HS0-003') !== -1}">
+        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:'HS0-003'} ">
+          <b>Pieces: {{sum.pieces}} | Weight: {{sum.weight.toFixed(2)}}kg</b>
+        </div>
         <div ng-repeat = "total in list.s_three_totals | filter: lot_number = lot.lot_number | orderBy: 'grade'">
           {{total.grade}}: {{total.pieces}}pcs: 
           {{(total.weight1).toFixed(2)}}kg
@@ -35,7 +47,10 @@
       </td>
 
       <td ng-class="{bluefill: lot.stations.indexOf('HS0-004') !== -1}">
-        <div ng-repeat = "total in list.s_four_totals | filter: lot_number = lot.lot_number | orderBy: 'grade'">
+        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:'HS0-004'} ">
+          <b>Pieces: {{sum.pieces}} | Weight: {{sum.weight.toFixed(2)}}kg</b>
+        </div>
+        <div ng-repeat = "total in list.s_four_totals | filter: lot_number = lot.lot_number | orderBy: 'shipping_unit_number'">
           {{total.grade}} {{total.size}}: 
           {{(total.sum).toFixed(2)}}kg
         </div>
