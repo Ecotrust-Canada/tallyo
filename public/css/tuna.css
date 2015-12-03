@@ -186,6 +186,18 @@
   background-color: #C2C4C4;
 }
 
+.fill tr.fill2 {
+  background-color: #597F80;
+}
+.fill tr.fill2 td {
+  background-color: #597F80;
+  font-size: 12px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top:0px;
+}
+
+
 
 .step{
   display:inline-block;
@@ -224,8 +236,6 @@ td{
     font-size: 15px;
     font-style: normal;
     text-align:center;
-    padding-right: 10px;
-    padding-left: 10px;
 }
 
 .info td{

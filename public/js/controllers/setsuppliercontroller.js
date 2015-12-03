@@ -349,9 +349,19 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.GetLotSummary();
 
-  
+  $scope.GetLotTotals = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.totals_by_lot = response.data;
+    };
+    DatabaseServices.GetEntries('totals_by_lot', func, query);
+  };
 
-  $scope.GetTotals1 = function(){
+  $scope.GetLotTotals();
+
+
+
+  /*$scope.GetTotals1 = function(){
     var query = '?station_code=eq.HS0-001';
     var func = function(response){
       $scope.list.s_one_totals = response.data;
@@ -389,6 +399,6 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('box_total', func, query);
   };
 
-  $scope.GetTotals4();
+  $scope.GetTotals4();*/
 
 });
