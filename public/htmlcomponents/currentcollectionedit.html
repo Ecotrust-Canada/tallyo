@@ -1,0 +1,17 @@
+<div ng-controller="CurrentLotCtrl">
+  <div class="block rmarg" ng-controller="GetCurrentCtrl">
+    <img src="../../images/scanthis_black_qr_360.jpg" height="100" width="200">
+  </div>
+
+  <div class="block">
+    <h1>...........Manage Sources......</h1>
+    Supplier: {{current.harvester_lot.supplier}}  Fleet: {{current.harvester_lot.fleet_vessel}}<br>
+    {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Internal Lot Code:
+    <span ng-if="current.harvester_lot.internal_lot_code">{{current.harvester_lot.internal_lot_code}}
+      <input type="button" ng-click="LotCode('', current.harvester_lot.internal_lot_code)" value="edit">
+    </span>
+    <input ng-if-start="!current.harvester_lot.internal_lot_code" type="text" ng-model="form.internal_lot_code">
+    <input ng-if-end type="button" ng-click="LotCode(form.internal_lot_code, null)" value="submit"><br>    
+  </div>
+</div>
