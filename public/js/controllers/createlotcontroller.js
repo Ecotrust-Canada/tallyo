@@ -5,7 +5,7 @@ angular.module('scanthisApp.createlotController', [])
 
 
 /*
- * Fills in the list for a drop-down menu to select current collection
+ * Fills in the list for a drop-down menu to select current collection for shipping, boxing, etc
  * Finds collection objects which match station_code -> view recent objects created at current station
  * Selected item will be stored as $scope.current.collectionid
  * Table and primary key field is determined by station
@@ -35,7 +35,7 @@ angular.module('scanthisApp.createlotController', [])
  */
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.ListCollections = function(station1, station2){
+  /*$scope.ListCollections = function(station1, station2){
     var query = '?stations=like.*' + station1 + '*&stations=not.like.*' + station2 + '*';
     var func = function(response){
       $scope.list.harvester_lot = response.data;
@@ -49,7 +49,33 @@ angular.module('scanthisApp.createlotController', [])
         $scope.ListCollections(station1, station2);
       }
     });
+  };*/
+  $scope.currentlots = function(){
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    var func = function(response){
+      $scope.list.harvester_lot = response.data;
+      //console.log(response.data);
+    };
+    DatabaseServices.GetEntries('expandedlotlocations', func, query);
   };
+  //$scope.currentlots();
+
+  $scope.completedlots = function(){
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
+    var func = function(response){
+      $scope.list.old_harvester_lot = response.data;
+      //console.log(response.data);
+    };
+    DatabaseServices.GetEntries('expandedlotlocations', func, query);
+  };
+  //$scope.completedlots();
+
+  $scope.$watch('current.lotlistchange', function() {
+    if ($scope.station_info !== undefined && $scope.current.lotlistchange !== undefined){
+      $scope.currentlots();
+      $scope.completedlots();
+    }
+  });
 
 })
 
@@ -137,19 +163,59 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       var station = response.data[0];
       var today = moment(new Date()).startOf('day').format();
-      //console.log(today);
-      //console.log(station.collectionid_date);
-      if (moment(station.collectionid_date).startOf('day').format() === today){
+      /*if (moment(station.collectionid_date).startOf('day').format() === today){
         $scope.current.collectionid = station.current_collectionid;
+      }*/
+      if(station){
+        if (moment(station.in_progress_date).startOf('day').format() === today){
+          $scope.current.collectionid = station.collectionid;
+        }
       }
     };
-    var query = '?code=eq.' + $scope.station_code;
-    DatabaseServices.GetEntries('station', func, query);
+    //var query = '?code=eq.' + $scope.station_code;
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    //DatabaseServices.GetEntries('station', func, query);
+    DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
   $scope.GetCurrent();
 
+  
+
 })
+
+.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
+
+  $scope.CompleteLot = function(lot_number){
+    var patch = {'in_progress': false};
+    var func = function(response){
+      //todo: toast - lot completed
+      $scope.current.collectionid = null;
+      $scope.current[$scope.station_info.collectiontable] = null;
+      $scope.current.lotlistchange = !$scope.current.lotlistchange;
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&collectionid=eq.' + lot_number;
+    var r = confirm("Are you sure you want to complete this lot?");
+    if (r === true) {
+      DatabaseServices.PatchEntry('lotlocations',patch, query, func);
+    }     
+  };
+
+})
+
+/*.controller('MoveLotCtrl', function($scope, $injector, DatabaseServices) {
+
+  $scope.AddLot = function(lot_number, station_code){
+    var func = function(response){
+    };
+    var today = moment(new Date()).format();
+    var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': false};
+    DatabaseServices.DatabaseEntry('lotlocations', entry, func);
+  };
+
+})*/
+
+
 
 
 /*
@@ -162,7 +228,6 @@ angular.module('scanthisApp.createlotController', [])
       var func = function(response){
         $scope.items = response.data;
       };
-      //TODO: create database view
       DatabaseServices.GetEntries('loin_lot', func, query);
     };
 
