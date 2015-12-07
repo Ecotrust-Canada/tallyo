@@ -110,11 +110,11 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.sumStations = 
   [
-    {'name': 'Receiving', 'code': 'HS0-001'},
-    {'name': 'Trimming', 'code': 'HS0-002'},
-    {'name': 'Retouching', 'code': 'HS0-003'},
-    {'name': 'Boxing', 'code': 'HS0-004'},
-    {'name': 'Shipping', 'code': 'HS0-005'},
+    {'name': 'Receiving', 'code': 'HS0-001', 'completelot': false},
+    {'name': 'Trimming', 'code': 'HS0-002', 'completelot': true},
+    {'name': 'Retouching', 'code': 'HS0-003', 'completelot': true},
+    {'name': 'Boxing', 'code': 'HS0-004', 'completelot': false},
+    {'name': 'Shipping', 'code': 'HS0-005', 'completelot': false},
   ];
 
  
@@ -148,6 +148,30 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.GetLotTotals();
+
+  $scope.GetLotStations = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.stationlot = response.data;
+    };
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
+  $scope.GetLotStations();
+
+  $scope.CompleteLot = function(lot_number, station_code){
+    console.log(lot_number);
+    console.log(station_code);
+    /*var patch = {'in_progress': false};
+    var func = function(response){
+      $scope.current.lotlistchange = !$scope.current.lotlistchange;
+    };
+    var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number;
+    var r = confirm("Are you sure you want to complete this lot?");
+    if (r === true) {
+      DatabaseServices.PatchEntry('lotlocations',patch, query, func);
+    }*/     
+  };
 
 })
 

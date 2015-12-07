@@ -96,6 +96,15 @@
 .bluefill td{
     width: 50px;
 }
+.redfill{
+  background-color: red;
+}
+.greenfill{
+  background-color: green;
+}
+.blueoutline{
+  outline: blue solid 2px;
+}
 
 .selectedlot{
   outline: solid 3px #5AC8ED;
