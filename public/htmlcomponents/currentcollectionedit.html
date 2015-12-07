@@ -6,7 +6,7 @@
   <div class="block">
     <h1>...........Manage Sources......</h1>
     Supplier: {{current.harvester_lot.supplier}}  Fleet: {{current.harvester_lot.fleet_vessel}}<br>
-    {{current.harvester_lot.start_date|stringtodate|date:format:"MMM dd"}} - {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+    Receive Date: {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
     Internal Lot Code:
     <span ng-if="current.harvester_lot.internal_lot_code">{{current.harvester_lot.internal_lot_code}}
       <input type="button" ng-click="LotCode('', current.harvester_lot.internal_lot_code)" value="edit">

@@ -90,6 +90,7 @@ angular.module('scanthisApp', [
     $scope.scan = {};
     $scope.form = {};
     $scope.current = {};
+    $scope.current.lotlistchange = true;
     
     $scope.station_info = settings.station_info;
     $scope.includes = {};

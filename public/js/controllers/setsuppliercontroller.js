@@ -36,17 +36,17 @@ angular.module('scanthisApp.setsupplierController', [])
 
   
 
-  $scope.AddNew = function(lot_number, station_code){
+  $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
     var today = moment(new Date()).format();
-    var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': true};
+    var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': bool};
     DatabaseServices.DatabaseEntry('lotlocations', entry, func);
   };
 
-  $scope.RemoveOld = function(lot_number, station_code){
+  $scope.RemoveOld = function(lot_number, station_code, bool){
     var func = function(response){
-      $scope.AddNew(lot_number, station_code);
+      $scope.AddNew(lot_number, station_code, bool);
     };
     var query = '?station_code=eq.' + station_code; 
     DatabaseServices.RemoveEntry('lotlocations', query, func);
@@ -55,13 +55,26 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.StationLot = function(lot_number, station_code){
     var func = function(response){
       if(response.data.length>0){
-        $scope.RemoveOld(lot_number, station_code);
+        $scope.RemoveOld(lot_number, station_code, true);
       }
       else{
-        $scope.AddNew(lot_number, station_code);
+        $scope.AddNew(lot_number, station_code, true);
       }      
     };
     var query = '?station_code=eq.' + station_code; 
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
+
+  $scope.AddStationLot = function(lot_number, station_code){
+    var func = function(response){
+      if(response.data.length>0){        
+      }
+      else{
+        $scope.AddNew(lot_number, station_code, true);
+      }      
+    };
+    var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
@@ -72,11 +85,12 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.$watch('current.lot', function(newValue, oldValue) {
     if ($scope.current.lot !== undefined){
-      $scope.PatchStationWithLot($scope.current.lot, 'HS0-001');
-      $scope.PatchStationWithLot($scope.current.lot, 'HS0-002');
-      $scope.PatchStationWithLot($scope.current.lot, 'HS0-ADM');
+      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-001');
+      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-002');
+      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-ADM');
       $scope.StationLot($scope.current.lot, 'HS0-001');
       $scope.StationLot($scope.current.lot, 'HS0-002');
+      $scope.AddStationLot($scope.current.lot, 'HS0-003');
       $rootScope.$broadcast('collection-change', {id: $scope.current.lot});
     }
 
@@ -96,7 +110,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.MakeLotEntry = function(date, lot_number){
     $scope.lot_entry.lot_number = lot_number;
     $scope.lot_entry.timestamp = moment(new Date()).format();        
-    CreateEntryPeriod(date, 'week', $scope);
+    CreateEntryPeriod(date, 'day', $scope);
     $scope.lot_entry.station_code = $scope.station_code;
   };
 
