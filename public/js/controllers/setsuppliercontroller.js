@@ -131,7 +131,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.SetCurrentHarvester = function(harvester_code){
     $scope.current.harvester_code = harvester_code;
     var date = moment(new Date()).format();
-    var queryString = '?harvester_code=eq.' + harvester_code + '&start_date=lt.' + date + '&end_date=gt.' + date;
+    var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date;
     $scope.lot_entry = {"harvester_code": harvester_code, "station_code": $scope.station_code};
     $scope.CreateLot(queryString, date);
   };

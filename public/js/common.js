@@ -247,3 +247,9 @@ var arrayObjectIndexOf = function(myArray, searchTerm, property) {
 };
 
 
+var cleanQueryString = function(querystring){
+  var queryStringNew = querystring.replace("+", "&#x2B;");
+  return queryStringNew;
+};
+
+

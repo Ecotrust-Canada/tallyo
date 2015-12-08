@@ -29,7 +29,7 @@ angular.module('scanthisApp.factories', [])
 
   /*sends a patch to the database and returns the result*/
   db_service.PatchEntry = function(table, patch, querystring, func){
-    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    $http.patch(databaseurl + table + cleanQueryString(querystring), patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
       }
@@ -41,7 +41,7 @@ angular.module('scanthisApp.factories', [])
 
   /*sends a patch to the database and returns the result calls onErr on failure*/
   db_service.PatchEntryPlusError = function(table, patch, querystring, func, onErr){
-    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    $http.patch(databaseurl + table + cleanQueryString(querystring), patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
       }
@@ -52,7 +52,7 @@ angular.module('scanthisApp.factories', [])
   };
 
   db_service.PatchEntryNoAlert = function(table, patch, querystring, func){
-    $http.patch(databaseurl + table + querystring, patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
+    $http.patch(databaseurl + table + cleanQueryString(querystring), patch, {headers: {'Prefer': 'return=representation'}}).then(function(response){
       if (response.data.length >0){
         func(response);
       }
@@ -63,7 +63,7 @@ angular.module('scanthisApp.factories', [])
 
 /*deletes from the database*/
   db_service.RemoveEntry = function(table, querystring, func){
-    $http.delete(databaseurl + table + querystring).then(function(response){
+    $http.delete(databaseurl + table + cleanQueryString(querystring)).then(function(response){
       func();
     }, function(response){
       alert(response.statusText);
@@ -72,7 +72,7 @@ angular.module('scanthisApp.factories', [])
 
 /*sends a get request, alerts if nothign matching query*/
   db_service.GetEntry = function(table, func, querystring){
-    var url = databaseurl + table + querystring;
+    var url = databaseurl + table + cleanQueryString(querystring);
     $http.get(url).then(function(response){
       if (response.data.length >0){
         func(response);
@@ -85,7 +85,7 @@ angular.module('scanthisApp.factories', [])
 
 /*sends a get request, calls onErr if nothign matching query*/
   db_service.GetEntryPlusError = function(table, func, querystring, onErr){
-    var url = databaseurl + table + querystring;
+    var url = databaseurl + table + cleanQueryString(querystring);
     $http.get(url).then(function(response){
       if (response.data.length >0){
         func(response);
@@ -97,7 +97,7 @@ angular.module('scanthisApp.factories', [])
   };
 
   db_service.GetEntryNoAlert = function(table, func, querystring){
-    var url = databaseurl + table + querystring;
+    var url = databaseurl + table + cleanQueryString(querystring);
     $http.get(url).then(function(response){
       if (response.data.length >0){
         func(response);
@@ -111,7 +111,7 @@ angular.module('scanthisApp.factories', [])
   db_service.GetEntries = function(table, func, querystring){
     var url;
     if (querystring){
-      url = databaseurl + table + querystring;
+      url = databaseurl + table + cleanQueryString(querystring);
     }
     else{
       url = databaseurl + table;
