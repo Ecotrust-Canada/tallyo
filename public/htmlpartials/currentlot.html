@@ -2,7 +2,7 @@
   Supplier: {{current.harvester_lot.supplier}} Fleet:{{current.harvester_lot.fleet_vessel}}<br>
   Receive Date: {{current.harvester_lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
   Internal Lot number: {{current.harvester_lot.internal_lot_code}}<bR>
-  <div ng-controller="CompleteLotCtrl">
+  <!--<div ng-controller="CompleteLotCtrl">
     <input type="button" ng-click="CompleteLot(current.harvester_lot.lot_number)" value="Complete Lot" />
-  </div>
+  </div>-->
 </div>

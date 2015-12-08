@@ -161,7 +161,10 @@ var InitShowSummary = function($scope){
 var ClearForm = function($scope){
     for (var key in $scope.form) {
       if ($scope.form.hasOwnProperty(key)) {
-        $scope.form[key] = "";
+        if (key !== 'state'){
+          $scope.form[key] = "";
+        }
+        
       }
 }
   };
@@ -169,7 +172,7 @@ var ClearForm = function($scope){
 /*clear an entry*/
 var ClearEntry = function(scopevar, $scope){
     for (var key in $scope.entry[scopevar]){
-      if (key !== 'station_code'){
+      if (key !== 'station_code'  && key !== 'state'){
         $scope.entry[scopevar][key] = "";
       }
     }

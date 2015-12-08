@@ -10,27 +10,28 @@
         {{lot.lot_number}}<br>
         {{lot.internal_lot_code}}
       </td>
-      <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: stnlot.length>0}" ng-init="index=$index; stnlot= (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code} )">
+      <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0}" >
+        <div>
+          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:(sumStations[$index-1].code ? sumStations[$index-1].code : 'random')} " >
+            <!--<b>Pieces: {{sum.pieces}} | Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>-->
+            <div ng-init="$parent.prev=sum.pieces"></div>
+          </div>
+          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
+            <b ng-class="{redfill: sum.pieces>prev, greenfill: sum.pieces===prev}">Pieces: {{sum.pieces}} | Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>
+          </div>
 
-        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:(sumStations[index-1].code ? sumStations[index-1].code : 'random')} " >
-          <!--<b>Pieces: {{sum.pieces}} | Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>-->
-          <div ng-init="$parent.prev=sum.pieces"></div>
-        </div>
-        <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
-          <b ng-class="{redfill: sum.pieces>prev, greenfill: sum.pieces===prev}">Pieces: {{sum.pieces}} | Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>
-        </div>
+          <br>
+          <table>
+            <tr class="fill2" ng-repeat = "total in list.totals_by_lot | filter: {lot_number:lot.lot_number, station_code:stn.code} | orderBy: 'state'">
+              <td>{{total.state}} {{total.grade}}: </td>
+              <td>{{total.pieces}}pcs </td> 
+              <td>{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
+            </tr>
+          </table>
+          <div ng-init>
+            <button ng-if="stn.completelot && (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0" ng-click="CompleteLot(lot.lot_number, stn.completelot)">Complete Lot</button>
 
-        <br>
-        <table>
-          <tr class="fill2" ng-repeat = "total in list.totals_by_lot | filter: {lot_number:lot.lot_number, station_code:stn.code} | orderBy: 'state'">
-            <td>{{total.state}} {{total.grade}}: </td>
-            <td>{{total.pieces}}pcs </td> 
-            <td>{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
-          </tr>
-        </table>
-        <div ng-init>
-          <button ng-if="stn.completelot===true && stnlot.length>0" ng-click="CompleteLot(lot.lot_number, sumStations[index].code)">Complete Lot</button>
-
+          </div>
         </div>
       </td>
 
