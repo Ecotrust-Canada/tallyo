@@ -37,6 +37,12 @@ angular.module('scanthisApp.directives', [])
   scope: { box: '=' },
   templateUrl: 'htmlpartials/boxinfo.html' }; })
 
+.directive('list', function() { return { 
+  scope: { itemlist: '=',  
+           config: '=' ,
+           updateFn: '&'},
+  templateUrl: 'htmlpartials/list.html' }; })
+
 .directive('shipinfo', function() { return { 
   scope: { ship: '=' },
   templateUrl: 'htmlpartials/shipinfo.html' }; })

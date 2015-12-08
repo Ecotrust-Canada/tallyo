@@ -1,0 +1,9 @@
+<table ng-class="config.class">
+  <tr>
+    <td ng-repeat="title in config.headers">{{title}}</td>
+  </tr>
+  <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit">
+    <td ng-repeat="name in config.fields">{{item[name]}}</td>
+    <td ng-click="updateFn({str: item[config.id]})">A button</td>
+  </tr>
+</table>
