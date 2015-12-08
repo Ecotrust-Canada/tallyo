@@ -160,11 +160,8 @@ angular.module('scanthisApp.AdminController', [])
   $scope.GetLotStations();
 
   $scope.CompleteLot = function(lot_number, station_codes){
-    //console.log(lot_number);
-    //console.log(station_code);
     var patch = {'in_progress': false};
     var func = function(response){
-      //$scope.current.lotlistchange = !$scope.current.lotlistchange;
       window.location.reload();
     };
     var r = confirm("Are you sure you want to complete this lot?");

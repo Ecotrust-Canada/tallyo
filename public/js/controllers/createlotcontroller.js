@@ -35,30 +35,15 @@ angular.module('scanthisApp.createlotController', [])
  */
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
-  /*$scope.ListCollections = function(station1, station2){
-    var query = '?stations=like.*' + station1 + '*&stations=not.like.*' + station2 + '*';
-    var func = function(response){
-      $scope.list.harvester_lot = response.data;
-    };
-    DatabaseServices.GetEntries('select_lot', func, query);
-  };
-
-  $scope.init = function(station1, station2){
-    $scope.$watch('station_info', function(newValue, oldValue) {
-      if ($scope.station_info !== undefined){
-        $scope.ListCollections(station1, station2);
-      }
-    });
-  };*/
   $scope.currentlots = function(){
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
     var func = function(response){
       $scope.list.harvester_lot = response.data;
-      //console.log(response.data);
+
     };
     DatabaseServices.GetEntries('expandedlotlocations', func, query);
   };
-  //$scope.currentlots();
+
 
   $scope.completedlots = function(){
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
@@ -68,7 +53,6 @@ angular.module('scanthisApp.createlotController', [])
     };
     DatabaseServices.GetEntries('expandedlotlocations', func, query);
   };
-  //$scope.completedlots();
 
   $scope.$watch('current.lotlistchange', function() {
     if ($scope.station_info !== undefined && $scope.current.lotlistchange !== undefined){
@@ -163,18 +147,13 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       var station = response.data[0];
       var today = moment(new Date()).startOf('day').format();
-      /*if (moment(station.collectionid_date).startOf('day').format() === today){
-        $scope.current.collectionid = station.current_collectionid;
-      }*/
       if(station){
         if (moment(station.in_progress_date).startOf('day').format() === today){
           $scope.current.collectionid = station.collectionid;
         }
       }
     };
-    //var query = '?code=eq.' + $scope.station_code;
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
-    //DatabaseServices.GetEntries('station', func, query);
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
@@ -202,21 +181,6 @@ angular.module('scanthisApp.createlotController', [])
   };
 
 })
-
-/*.controller('MoveLotCtrl', function($scope, $injector, DatabaseServices) {
-
-  $scope.AddLot = function(lot_number, station_code){
-    var func = function(response){
-    };
-    var today = moment(new Date()).format();
-    var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': false};
-    DatabaseServices.DatabaseEntry('lotlocations', entry, func);
-  };
-
-})*/
-
-
-
 
 /*
  * Listing all loins for lot in order to reprint labels

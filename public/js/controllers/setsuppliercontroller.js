@@ -24,18 +24,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.ListHarvesters();
 
-  /*Sets the current lot number for the station*/
-  /*$scope.PatchStationWithLot = function(lot_number, station_code){
-    var func = function(response){
-    };
-    var today = moment(new Date()).format();
-    var patch = {'current_collectionid': lot_number, 'collectionid_date': today};
-    var query = '?code=eq.' + station_code;
-    DatabaseServices.PatchEntry('station', patch, query, func);
-  };*/
-
-  
-
   $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
@@ -53,7 +41,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.patchtrue = function(lot_number, station_code){
-    console.log('function called');
     var patch = {'in_progress': true};
     var func = function(response){
     };

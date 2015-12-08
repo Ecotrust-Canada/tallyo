@@ -13,7 +13,6 @@
       <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0}" >
         <div>
           <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:(sumStations[$index-1].code ? sumStations[$index-1].code : 'random')} " >
-            <!--<b>Pieces: {{sum.pieces}} | Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>-->
             <div ng-init="$parent.prev=sum.pieces"></div>
           </div>
           <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
