@@ -30,36 +30,8 @@ angular.module('scanthisApp', [
     });
 })
 
-/*
- *Controllers used on most pages to set station and stage
- */
-
-/*.controller('SetStation', function($scope, $http, DatabaseServices) {
-
-  $scope.GetStationInfo = function(station_code){
-    var query = '?code=eq.' + station_code;
-    var func = function(response){
-      $scope.station_info = response.data[0].station_info;
-    };
-    DatabaseServices.GetEntries('station', func, query);
-  };
 
 
-  $scope.init = function(station_code){
-    $scope.processor = station_code.substring(0, 3);
-    $scope.station_code = station_code;    
-    $scope.entry = {};
-    $scope.list = {};
-    $scope.qr = {};
-    $scope.scan = {};
-    $scope.form = {};
-    $scope.current = {};
-    $scope.GetStationInfo(station_code);
-  };
-
-
- 
-})*/
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
   $scope.stations = stationlist;
   $scope.terminals = terminals;
@@ -83,16 +55,21 @@ angular.module('scanthisApp', [
     $scope.station_code = settings.station_code;
     $scope.processor = $scope.station_code.substring(0, 3);
     $scope.title = settings.title;
+    $scope.station_info = settings.station_info;
         
     $scope.entry = {};
     $scope.list = {};
-    //$scope.qr = {};
-    $scope.scan = {};
     $scope.form = {};
     $scope.current = {};
     $scope.current.lotlistchange = true;
     
-    $scope.station_info = settings.station_info;
+    $scope.listconfigs = [];
+    if(settings.lists){
+      for (var k=0;k<settings.lists.length;k++){
+        $scope.listconfigs.push(listconfigs[settings.lists[k]]);
+      }
+    }
+
     $scope.includes = {};
     $scope.includes.col1 = []; 
     for (var i=0;i<settings.includes.col1.length;i++){ 

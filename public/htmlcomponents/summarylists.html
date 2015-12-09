@@ -5,7 +5,8 @@
 </div>
 
 <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-  <!--begin full items list -->
-  <scansummary ng-controller="RemoveScanCtrl"></scansummary>
-  <!--end full items list -->
+  <!--<scansummary ng-controller="RemoveScanCtrl"></scansummary>-->
+  <div ng-controller="RemoveScanCtrl">
+    <list itemlist="list.included"  config="listconfigs[0]" update-fn="RemoveItem(str)" ></list>
+  </div>
 </div>

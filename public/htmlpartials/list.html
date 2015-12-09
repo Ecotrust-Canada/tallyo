@@ -1,9 +1,14 @@
-<table ng-class="config.class">
+<table ng-class="config.cssclass">
   <tr>
     <td ng-repeat="title in config.headers">{{title}}</td>
   </tr>
   <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit">
-    <td ng-repeat="name in config.fields">{{item[name]}}</td>
-    <td ng-click="updateFn({str: item[config.id]})">A button</td>
+    <td ng-repeat="name in config.fields">
+    <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
+    <span ng-if="name==='timestamp'">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+    <span ng-if="name.substring(0,6)==='weight'">{{(item[name]).toFixed(2)}}kg</span>
+    <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'" >{{item[name]}}</span>
+    </td>
+    <td ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
   </tr>
 </table>

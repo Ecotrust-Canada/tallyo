@@ -231,19 +231,22 @@ angular.module('scanthisApp.formController', [])
   };
 
   $scope.testFn = function(string){
-    console.log(string);
+    $scope.current.test = string;
   };
 
   $scope.GetArray();
 
+
+
   $scope.listconfig = {
     
-    "class": "fill", 
+    "cssclass": "fill", 
     "headers": ["Lot number", "Weight", "Grade", ""], 
     "fields": ["lot_number", "weight_1", "grade"], 
     "limit": "6",
     "order": "", 
-    "id": "lot_number"
+    "arg": "lot_number", 
+    "button": "A button"
 
   };
 
