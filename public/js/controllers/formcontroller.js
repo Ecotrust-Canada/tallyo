@@ -220,39 +220,6 @@ angular.module('scanthisApp.formController', [])
 
 })
 
-.controller('ListTestCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.GetArray = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.scan = response.data;
-    };
-    DatabaseServices.GetEntries('scan', func, query);
-  };
-
-  $scope.testFn = function(string){
-    $scope.current.test = string;
-  };
-
-  $scope.GetArray();
-
-
-
-  $scope.listconfig = {
-    
-    "cssclass": "fill", 
-    "headers": ["Lot number", "Weight", "Grade", ""], 
-    "fields": ["lot_number", "weight_1", "grade"], 
-    "limit": "6",
-    "order": "", 
-    "arg": "lot_number", 
-    "button": "A button"
-
-  };
-
-})
-
-
 
 
 ;

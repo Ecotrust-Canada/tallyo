@@ -1,11 +1,13 @@
 <div class="sectionframe" ng-controller="TotalsCtrl">
   <!-- begin summary info  -->
-  <scantotals></scantotals>
+  <!--<scantotals></scantotals>-->
   <!-- end summary info  -->
+  <list itemlist="list.totals"  config="totallistconfig" ></list>
 </div>
 
 <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-  <!--begin full items list -->
-  <loinscansummary ng-controller="RemoveLoinCtrl"></loinscansummary>
-  <!--end full items list -->
+  <!--<loinscansummary ng-controller="RemoveLoinCtrl"></loinscansummary>-->
+  <div ng-controller="RemoveLoinCtrl">
+    <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
+  </div>
 </div>

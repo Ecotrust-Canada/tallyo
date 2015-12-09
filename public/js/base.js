@@ -63,13 +63,10 @@ angular.module('scanthisApp', [
     $scope.current = {};
     $scope.current.lotlistchange = true;
     
-    $scope.listconfigs = [];
     if(settings.lists){
-      for (var k=0;k<settings.lists.length;k++){
-        $scope.listconfigs.push(listconfigs[settings.lists[k]]);
-      }
+      $scope.itemlistconfig = listconfigs[settings.lists.items];
+      $scope.totallistconfig = listconfigs[settings.lists.totals];
     }
-
     $scope.includes = {};
     $scope.includes.col1 = []; 
     for (var i=0;i<settings.includes.col1.length;i++){ 
