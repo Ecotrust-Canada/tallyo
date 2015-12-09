@@ -20,7 +20,6 @@ angular.module('scanthisApp.itemController', [])
     else{ toastr.error("missing values"); }
   };
 
-
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
     $scope.entry.scan.station_code = $scope.station_code;
@@ -57,6 +56,9 @@ angular.module('scanthisApp.itemController', [])
 .controller('LoinCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_number':'', 'lot_number':''};
+  $scope.entry.loin = {"loin_number":"", "lot_number":"", "weight_1":"", "grade":"", "timestamp": "", "station_code":""};
+  $scope.form = {};
+  $scope.formchange = true;
 
   /*creates a new row in the database, item table*/
   $scope.DatabaseLoin = function(){    
@@ -71,11 +73,10 @@ angular.module('scanthisApp.itemController', [])
     else{ toastr.error("missing values"); }
   };
 
-
   $scope.DatabaseScan = function(){    
     var func = function(response){
     $scope.current.itemchange = !$scope.current.itemchange;
-    $scope.printDiv($scope.entry.scan.loin_number);
+    //$scope.printDiv($scope.entry.scan.loin_number);
     Clear('scan', $scope);
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -84,6 +85,8 @@ angular.module('scanthisApp.itemController', [])
   $scope.Submit = function(form){
     $scope.MakeLoinScanEntry(form);
     $scope.DatabaseLoin();
+    //$scope.form = {};
+    $scope.formchange = !$scope.formchange;
   };
   
   /*fills in fields in json to submit to database*/
@@ -100,9 +103,9 @@ angular.module('scanthisApp.itemController', [])
     MakeEntry(form, 'loin', $scope);
   };
 
-  $scope.Clear = function(){
+  /*$scope.Clear = function(form){
     Clear('scan', $scope);
-  };
+  };*/
 
 })
 

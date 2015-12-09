@@ -62,6 +62,8 @@ angular.module('scanthisApp', [
     $scope.form = {};
     $scope.current = {};
     $scope.current.lotlistchange = true;
+
+    $scope.formconfigs = formconfigs;
     
     if(settings.lists){
       $scope.itemlistconfig = listconfigs[settings.lists.items];

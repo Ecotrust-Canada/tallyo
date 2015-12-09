@@ -1,5 +1,11 @@
 <div class="sectionframe">
-  <createform ng-controller="formCtrl" ng-init="init('loin')"></createform>
-  <div ng-controller="PrintCtrl"><clearsubmit ng-controller="LoinCtrl"></clearsubmit></div>
+  <!--<createform ng-controller="formCtrl" ng-init="init('loin')"></createform>
+  <div ng-controller="PrintCtrl"><clearsubmit ng-controller="LoinCtrl"></clearsubmit></div>-->
   <!--<mostrecentloin ng-controller="RemoveLoinCtrl"></mostrecentloin>-->
+
+  <div ng-controller="LoinCtrl">
+    <entryform table="'loin'" config="formconfigs[10]" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
+  </div>
+
+
 </div>

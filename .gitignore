@@ -2,7 +2,7 @@ logs/*
 !.gitkeep
 node_modules/
 public/bower_components/
-public/js/app_config.js
+public/js/configs/app_config.js
 tmp
 .DS_Store
 .idea
