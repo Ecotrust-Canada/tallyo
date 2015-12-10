@@ -59,16 +59,20 @@ angular.module('scanthisApp', [
         
     $scope.entry = {};
     $scope.list = {};
-    $scope.form = {};
+    //$scope.form = {};
     $scope.current = {};
     $scope.current.lotlistchange = true;
 
-    $scope.formconfigs = formconfigs;
+    if (settings.forms){
+      $scope.scanform = formconfigs[settings.forms.scanform];
+      $scope.collectionform = formconfigs[settings.forms.collectionform];
+    }
     
     if(settings.lists){
       $scope.itemlistconfig = listconfigs[settings.lists.items];
       $scope.totallistconfig = listconfigs[settings.lists.totals];
     }
+
     $scope.includes = {};
     $scope.includes.col1 = []; 
     for (var i=0;i<settings.includes.col1.length;i++){ 

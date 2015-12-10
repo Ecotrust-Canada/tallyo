@@ -13,13 +13,7 @@ angular.module('scanthisApp.directives', [])
 /*table with suppliers with button to set as current*/
 .directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
-.directive('loinlist', function() { return { templateUrl: 'htmlpartials/loinlist.html' }; })
-
-.directive('boxsummary', function() { return { templateUrl: 'htmlpartials/boxsummary.html' }; })
-
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
-
-.directive('clearsubmit', function() { return { templateUrl: 'htmlpartials/clearsubmit.html' }; })
 
 .directive('boxinfo', function() { return { 
   scope: { box: '=' },

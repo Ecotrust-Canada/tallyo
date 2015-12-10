@@ -1,5 +1,4 @@
-<div class="sectionframe" ng-controller="formCtrl" ng-init="init('box')">
-  <!-- begin choose collection -->
+<div class="sectionframe">
   <div ng-controller="SelectDropDownCtrl">
     Recent Cases:
     <select name="singleSelect" ng-model="current.collectionid">
@@ -8,9 +7,7 @@
   </div>
   <br>
   Create Case:<br>
-  <createform></createform>
   <div ng-controller="FormSubmitCtrl">
-    <input type="submit" ng-click="SubmitAddSetCurrent(form)" value="Save" />
+      <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
   </div>
-  <!-- end choose collection -->
 </div>

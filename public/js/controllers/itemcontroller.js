@@ -6,12 +6,15 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-  /*creates a new row in the database, item table*/
-  $scope.DatabaseScan = function(form){
-    $scope.MakeScanEntry(form);
+  $scope.entry.scan = {};
+  $scope.entry.loin = {};
+  $scope.form = {};
+  $scope.formchange = true;
+
+  $scope.DatabaseScan = function(form){    
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
-      Clear('scan', $scope);
+      $scope.formchange = !$scope.formchange;
       toastr.success("success (say somthing more useful here)");
     };
     if (NoMissingValues($scope.entry.scan)){
@@ -28,43 +31,9 @@ angular.module('scanthisApp.itemController', [])
     MakeEntry(form, 'scan', $scope);
   };
 
-  $scope.Submit = function(form){
-    $scope.DatabaseScan(form);
-  };
-
-  $scope.Clear = function(){
-    Clear('scan', $scope);
-  };
-
-})
-
-.controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
-  $scope.RemoveItem = function(scan_id){
-    var query = '?serial_id=eq.' + scan_id;
-    var func = function(){
-      $scope.current.itemchange = !$scope.current.itemchange;
-      toastr.success('item removed');
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
-  };
-})
-
-
-
-
-
-.controller('LoinCtrl', function($scope, $http, DatabaseServices, toastr) {
-
-  $scope.entry.scan = {'station_code':'', 'timestamp':'', 'loin_number':'', 'lot_number':''};
-  $scope.entry.loin = {"loin_number":"", "lot_number":"", "weight_1":"", "grade":"", "timestamp": "", "station_code":""};
-  $scope.form = {};
-  $scope.formchange = true;
-
-  /*creates a new row in the database, item table*/
   $scope.DatabaseLoin = function(){    
     var func = function(response){
       $scope.entry.scan.loin_number = response.data.loin_number;
-      Clear('loin', $scope);
       $scope.DatabaseScan();     
     };
     if (NoMissingValues($scope.entry.scan, 'loin_number')){
@@ -73,23 +42,6 @@ angular.module('scanthisApp.itemController', [])
     else{ toastr.error("missing values"); }
   };
 
-  $scope.DatabaseScan = function(){    
-    var func = function(response){
-    $scope.current.itemchange = !$scope.current.itemchange;
-    //$scope.printDiv($scope.entry.scan.loin_number);
-    Clear('scan', $scope);
-    };
-    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
-  };
-
-  $scope.Submit = function(form){
-    $scope.MakeLoinScanEntry(form);
-    $scope.DatabaseLoin();
-    //$scope.form = {};
-    $scope.formchange = !$scope.formchange;
-  };
-  
-  /*fills in fields in json to submit to database*/
   $scope.MakeLoinScanEntry = function(form){
     var date = moment(new Date()).format();
     $scope.entry.loin.loin_number = createLoinNum(date);
@@ -103,15 +55,38 @@ angular.module('scanthisApp.itemController', [])
     MakeEntry(form, 'loin', $scope);
   };
 
-  /*$scope.Clear = function(form){
-    Clear('scan', $scope);
-  };*/
-
+  $scope.Submit = function(form){
+    if($scope.station_info.itemtable === 'scan'){
+      $scope.MakeScanEntry(form);
+      $scope.DatabaseScan(form);
+    }
+    else if ($scope.station_info.itemtable === 'loin_scan'){
+      $scope.MakeLoinScanEntry(form);
+      $scope.DatabaseLoin();
+    }
+  };
 })
 
-
-.controller('RemoveLoinCtrl', function($scope, $http, DatabaseServices) {
+.controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
   $scope.RemoveItem = function(id){
+    if($scope.station_info.itemtable === 'scan'){
+      $scope.RemoveScanOnly(id);
+    }
+    else if ($scope.station_info.itemtable === 'loin_scan'){
+      $scope.RemoveLoin(id);
+    }    
+  };
+
+  $scope.RemoveScanOnly = function(scan_id){
+    var query = '?serial_id=eq.' + scan_id;
+    var func = function(){
+      $scope.current.itemchange = !$scope.current.itemchange;
+      toastr.success('item removed');
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+  $scope.RemoveLoin = function(id){
     var query = '?loin_number=eq.' + id;
     var func = function(){
       $scope.RemoveScan(id);
@@ -127,7 +102,6 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.RemoveEntry('scan', query, func);
   };
 })
-
 
 
 .controller('BoxCtrl', function($scope, $http, DatabaseServices, toastr) {

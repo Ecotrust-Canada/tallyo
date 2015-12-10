@@ -8,15 +8,7 @@ var formconfigs =
       {"type":"text", "fieldname":"case_number", "title":"Case Number", "value":""}, 
       {"type": "select", "fieldname":"size", "title":"Size", "value":[{"name":"3"}, {"name":"3-5"}, {"name":">5"}]}, 
       {"type": "select", "fieldname":"grade", "title":"Grade", "value":[{"name":"A"}, {"name":"AA"}, {"name":"AAA"}]}
-    ], 
-    entry: {
-      "case_number":"",
-      "size":"", 
-      "grade":"", 
-      "lot_number":"", 
-      "timestamp": "", 
-      "best_before_date":"",
-      "station_code":""}
+    ]
   },
   {//box, AM2-001
     id: 1, 
@@ -114,13 +106,7 @@ var formconfigs =
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
       {"type":"text", "fieldname":"customer", "title":"Customer", "value":"Amanda"},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
-    ],
-    entry: {
-      "po_number":"", 
-      "customer": "", 
-      "container_number":"", 
-      "timestamp":"", 
-      "station_code":""}
+    ]
   },
   {//shipping_unit, AM2-001
     id: 5, 
@@ -156,27 +142,14 @@ var formconfigs =
       {"value":"","fieldname":"weight_1","id":"0","title":"Plastic (kg)","type":"number"},
       {"value":"","fieldname":"weight_2","id":"1","title":"No Plastic","type":"number"},
       {"value":[{"val":"Dirty","label":"Dirty"},{"val":"Clean","label":"Clean"}],"fieldname":"state","id":"2","title":"State","type":"radio"}
-    ],
-    entry: {
-      "lot_number":"",
-      "weight_1":"", 
-      "weight_2":"", 
-      "state":"", 
-      "timestamp": "", 
-      "station_code":""}
+    ]
   },
-  {//scan. HS0-002
+  {//scan. HS0-002, 003
     id: 8, 
     fields:[
       {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"},
       {"value":[{"val":"A","label":"A"},{"val":"B","label":"B"},{"val":"C","label":"C"},{"val":"D","label":"D"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"}
-    ],
-    entry: {
-      "lot_number":"",
-      "weight_1":"", 
-      "grade":"", 
-      "timestamp": "", 
-      "station_code":""}
+    ]
   },
   {//scan, AM2-003
     id: 9, 
@@ -188,20 +161,6 @@ var formconfigs =
       "weight_1":"", 
       "timestamp": "", 
       "station_code":""}
-  },
-  {//loin, HS0-003
-    id: 10, 
-    fields:[
-      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"},
-      {"value":[{"val":"A","label":"A"},{"val":"B","label":"B"},{"val":"C","label":"C"},{"val":"D","label":"D"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"}
-    ]/*,
-    entry: {
-      "loin_number":"",
-      "lot_number":"",
-      "weight_1":"", 
-      "grade":"", 
-      "timestamp": "", 
-      "station_code":""}*/
   }
 
 ];
