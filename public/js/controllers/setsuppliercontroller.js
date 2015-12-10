@@ -175,32 +175,37 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 .controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.form = {};
+  $scope.entry.harvester = {};
+  $scope.formchange = true;
+
+
 
   var AddtoList = function(response){
     var thedata = response.data;
-    if ($scope.list[$scope.table] !== undefined){
-      $scope.list[$scope.table].push(thedata);
+    if ($scope.list.harvester !== undefined){
+      $scope.list.harvester.push(thedata);
     }    
   };
 
   //database entry
   $scope.ToDatabase = function(responsefunction){
     var func = function(response){
-      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+      $scope.formchange = !$scope.formchange;
       responsefunction(response);
     };
     if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+      DatabaseServices.DatabaseEntryReturn('harvester', $scope.entry.harvester, func);
     }
-    else{ toastr.error("empty form"); }  
+    else{ toastr.error("empty form"); }
   };
 
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
-    if ($scope.entry[$scope.table].processor_code === "") $scope.entry[$scope.table].processor_code = $scope.processor;
-    $scope.entry[$scope.table].harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
-    $scope.entry[$scope.table].active = true;
-    MakeEntry(form, $scope.table, $scope);
+    $scope.entry.harvester.processor_code = $scope.processor;
+    $scope.entry.harvester.harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
+    $scope.entry.harvester.active = true;
+    MakeEntry(form, 'harvester', $scope);
     $scope.ToDatabase(responsefunction);
   };
 

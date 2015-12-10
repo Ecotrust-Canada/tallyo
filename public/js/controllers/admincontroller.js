@@ -179,42 +179,36 @@ angular.module('scanthisApp.AdminController', [])
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
   $scope.FormData = function(table){
       var func = function(response){
-        $scope.formjson = response.data[0].form;  
+        $scope.formoptions = response.data; 
       };
-      var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;
-      DatabaseServices.GetEntryNoAlert('form', func, query);
+      var query = '?table_name=eq.' + table;
+      DatabaseServices.GetEntryNoAlert('formoptions', func, query);
     };
 
-  $scope.New = function(value){
-    if (value){
-      $scope.formjson.fields[$scope.model.id].value.push({"name": value});
-      $scope.SaveDB();
-    }    
-    
-  };
 
-  $scope.SaveDB = function(){
-    var func = function(response){
+
+    $scope.Delete = function(value, field){
+        var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
+        var func = function(response){
+          $scope.FormData($scope.tablename);
+        };
+
+        DatabaseServices.RemoveEntry('formoptions', query, func);
     };
-    var query = '?tablename=eq.' + $scope.tablename + '&station_code=eq.' + $scope.station_code;
-    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
-  };
 
-  $scope.Edit = function(index, name){
-    $scope.formjson.fields[$scope.model.id].value[index].name = name;
-  };
+    $scope.New = function(value, field){
+      if (value){
+        var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
+        var func = function(response){
+          $scope.FormData($scope.tablename);
+        };
+        DatabaseServices.DatabaseEntry('formoptions', entry, func);
+      }
 
-  $scope.Save = function(index, name){
-    $scope.formjson.fields[$scope.model.id].value[index].name = name;
-    $scope.SaveDB();
-  };
+      
+    };
 
-  $scope.Delete = function(index, name){
-    $scope.formjson.fields[$scope.model.id].value = $scope.formjson.fields[$scope.model.id].value.filter(function (el) {
-                        return el.name !== name;
-                       });
-    $scope.SaveDB();
-  };
+
 
   $scope.init = function(table){
     $scope.tablename = table;

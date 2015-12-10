@@ -7,9 +7,6 @@ angular.module('scanthisApp.directives', [])
 /*select lot from dropdown*/
 .directive('selectlot', function() { return { templateUrl: 'htmlpartials/selectlot.html' }; })
 
-/*form with submit button*/
-.directive('createform', function() { return { templateUrl: 'htmlpartials/createform.html' }; })
-
 /*table with suppliers with button to set as current*/
 .directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 

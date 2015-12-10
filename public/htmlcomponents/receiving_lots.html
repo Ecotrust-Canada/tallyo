@@ -3,11 +3,9 @@
     
     <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Supplier</span><span ng-hide="addnew">Hide</span></button>
 
-    <div ng-controller="formCtrl" ng-init="init('harvester')" ng-hide="addnew">
-      <createform></createform>
-      <div ng-controller="HarvesterSubmitCtrl">
-        <input class="form-button" type="submit" ng-click="SubmitAddtoList(form)" value="Save" />
-      </div>
+
+    <div ng-controller="HarvesterSubmitCtrl" ng-hide="addnew">
+      <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
 
     <hr>
@@ -16,23 +14,18 @@
       <div class="block">
         <select ng-model="model.id">
           <option value="">-- select --</option>
-          <option ng-repeat="option in formjson.fields | filter: search" value="{{option.id}}">{{option.title}}</option>
+          <option ng-repeat="option in collectionform.fields|filter:{value:'dboptions'}" value="{{option.fieldname}}">{{option.title}}</option>
         </select>
       </div>
       <div class="block">
-      <ul>
-        <li ng-repeat="selection in formjson.fields[model.id].value">
-          <span ng-if="selection.name !== ''">
-            {{selection.name}}
-            <input type="button" ng-click="Edit($index, '')" value="Edit" />
-            <input type="button" ng-click="Delete($index, selection.name)" value="Delete" />
-          </span>
-          <span ng-if="selection.name === ''">
-            <input  type="text" ng-model="model.test">
-            <input type="button" ng-click="Save($parent.$index, model.test)" value="Save" />
+      <ul ng-if="model.id">
+        <li ng-repeat="selection in formoptions|filter:{field_name:model.id}">
+          <span>
+            {{selection.value}}
+            <input type="button" ng-click="Delete(selection.value, model.id)" value="Delete" />
           </span>
         </li>
-        <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new)" value="Add" /></li>
+        <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new, model.id)" value="Add" /></li>
       </ul>
       </div>
     </div>

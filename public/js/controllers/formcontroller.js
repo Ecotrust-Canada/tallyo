@@ -4,30 +4,20 @@ angular.module('scanthisApp.formController', [])
 
 
 
-/*
- * Creates a form from info in form table
- */
-.controller('formCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.FormData = function(table){
-    var func = function(response){
-      $scope.formarray = response.data[0].form.fields;
-      $scope.entry[table] = response.data[0].entry;
-      //$scope.form = {};
-      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);      
-    };
-    var query = '?tablename=eq.' + table + '&station_code=eq.' + $scope.station_code;
-    DatabaseServices.GetEntryNoAlert('form', func, query);
-  };
-
-  $scope.init = function(table){
-    $scope.table = table;
-    $scope.FormData($scope.table);
-  };
-
-})
 
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
+
+    if($scope.config.dboptions){
+      var table = $scope.config.dboptions;
+      var func = function(response){
+        $scope.formoptions = response.data; 
+        //console.log($scope.formjson); 
+      };
+      //console.log($scope.station_code);
+      //var query = '?table_name=eq.' + table + '&station_code=eq.' + $scope.station_code;
+      var query = '?table_name=eq.' + table;
+      DatabaseServices.GetEntries('formoptions', func, query);
+    }
   
     $scope.formarray = $scope.config.fields;  
     //$scope.form = ClearFormToDefault($scope.form, $scope.formarray);
