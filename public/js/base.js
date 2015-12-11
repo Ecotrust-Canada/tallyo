@@ -88,13 +88,26 @@ angular.module('scanthisApp', [
 
 .controller('PrintCtrl', function($scope, $http, DatabaseServices) {
   // rewrite printDiv to use koozie instead of qztray
+  $scope.printString = (codeString, fieldData) => 
+    `^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR4,4~SD15^LRN^CI0
+      ^MMT
+      ^PW812
+      ^LL0406
+      ^LS0
+      ^BY312,312^FT764,47^BXI,6,200,52,52,1,~
+      ^FH\^FD${codeString}^FS
+      ^FT420,165^A0I,28,28^FH\^FD${fieldData[2]}^FS
+      ^FT422,220^A0I,28,28^FH\^FD${fieldData[1]}^FS
+      ^FT422,272^A0I,28,28^FH\^FD${fieldData[0]}^FS
+      ^FT422,324^A0I,28,28^FH\^FD${codeString}^FS
+      ^PQ1,0,1,Y^XZ`;
   $scope.printDiv = function(qrString) {
     $http({
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       url: printurl + 'print',
       transformRequest: transformRequestAsFormPost,
-      data: {data:'^XA^FO50,100^FD' + qrString + '^FS^BXN,10,200^FD' + qrString + '^FS^XZ'}
+      data: {data:$scope.printString(qrString, ['Field 0','Field 1','Field 2'])}
     });
   };
 
