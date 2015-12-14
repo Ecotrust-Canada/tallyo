@@ -174,7 +174,16 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
+
+
+  $scope.getData = function(lot_number, station){
+    console.log(lot_number);
+    console.log(station);
+  };
+
 })
+
+
 
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
   $scope.FormData = function(table){
