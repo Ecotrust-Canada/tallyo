@@ -22,6 +22,12 @@ angular.module('scanthisApp.directives', [])
            updateFn: '&'},
   templateUrl: 'htmlpartials/list.html' }; })
 
+.directive('dropdown', function() { return { 
+  scope: { itemlist: '=',  
+           cfg: '=',
+           changeFn: '&' },
+  templateUrl: 'htmlpartials/dropdown.html' }; })
+
 .directive('entryform', function() { return { 
   scope: {table: '=',  
           config: '=', 

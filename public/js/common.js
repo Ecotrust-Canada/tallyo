@@ -239,6 +239,14 @@ var QRCombine = function (stringarray){
    return qrstringReduce(stringarray);
 };
 
+var dataCombine = function (json, stringarray){
+  var newarray = [];
+  for (var i=0;i<stringarray.length;i++){
+    newarray.push(json[stringarray[i]]);
+  }
+  return QRCombine(newarray);
+};
+
 var arrayObjectIndexOf = function(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
         if (myArray[i][property] === searchTerm) return i;

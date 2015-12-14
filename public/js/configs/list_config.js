@@ -61,3 +61,22 @@ var listconfigs = [
 
 
 ];
+
+
+var dropdownconfigs = [
+  { id: 0, 
+    title: "Recent Cases", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "box_number", 
+    fields: ["case_number"]
+  },
+  { id: 1, 
+    title: "Recent Shipments", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["po_number"]
+  }
+
+];

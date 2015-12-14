@@ -31,8 +31,12 @@ angular.module('scanthisApp.itemController', [])
     MakeEntry(form, 'scan', $scope);
   };
 
-  $scope.DatabaseLoin = function(){    
+  $scope.DatabaseLoin = function(){   
     var func = function(response){
+      if($scope.datastring){
+        var data = dataCombine($scope.entry.loin, $scope.datastring);
+        console.log(data);
+      }
       $scope.entry.scan.loin_number = response.data.loin_number;
       $scope.DatabaseScan();     
     };

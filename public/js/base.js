@@ -56,6 +56,11 @@ angular.module('scanthisApp', [
     $scope.processor = $scope.station_code.substring(0, 3);
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
+
+    if(settings.datastring){
+      $scope.datastring = settings.datastring;
+    }
+    
         
     $scope.entry = {};
     $scope.list = {};
@@ -66,6 +71,10 @@ angular.module('scanthisApp', [
     if (settings.forms){
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
+    }
+
+    if (settings.dropdowns){
+      $scope.collectiondropdown = dropdownconfigs[settings.dropdowns.collectiondropdown];
     }
     
     if(settings.lists){
@@ -101,13 +110,14 @@ angular.module('scanthisApp', [
       ^FT422,272^A0I,28,28^FH\^FD${fieldData[0]}^FS
       ^FT422,324^A0I,28,28^FH\^FD${codeString}^FS
       ^PQ1,0,1,Y^XZ`;
-  $scope.printDiv = function(qrString) {
+      
+  $scope.printDiv = function(qrString, fieldarray) {
     $http({
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       url: printurl + 'print',
       transformRequest: transformRequestAsFormPost,
-      data: {data:$scope.printString(qrString, ['Field 0','Field 1','Field 2'])}
+      data: {data:$scope.printString(qrString, fieldarray)}
     });
   };
 

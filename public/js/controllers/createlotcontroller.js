@@ -28,6 +28,30 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
+.controller('CollectionTableDropDownCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.ListCollections = function(){
+    var query = '?station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.list.collection = response.data;
+    };
+    DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query);
+  };
+
+  $scope.changeFn = function(selected){
+    $scope.current.collectionid = selected;
+  };
+
+  $scope.$watch('station_info', function(newValue, oldValue) {
+    if ($scope.station_info !== undefined){
+      $scope.ListCollections();
+    }
+  });
+
+})
+
+
+
 /*
  * Fills in dropdown menu for selection current lot
  * lot_number gets saved as $scope.current.collectionid

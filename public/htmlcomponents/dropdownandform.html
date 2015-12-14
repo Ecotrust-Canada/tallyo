@@ -1,12 +1,10 @@
 <div class="sectionframe">
-  <div ng-controller="SelectDropDownCtrl">
-    Recent Cases:
-    <select name="singleSelect" ng-model="current.collectionid">
-      <option ng-repeat = "box in list.box | orderBy: '-timestamp' | limitTo: 5" value={{box.box_number}}>{{box.case_number}}</option>
-    </select>
+
+  <div ng-controller="CollectionTableDropDownCtrl"> 
+    <dropdown itemlist="list.collection"  cfg="collectiondropdown" change-fn="changeFn(selected)"></dropdown>
   </div>
+
   <br>
-  Create Case:<br>
   <div ng-controller="FormSubmitCtrl">
       <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
   </div>
