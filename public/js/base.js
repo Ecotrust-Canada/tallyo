@@ -57,8 +57,12 @@ angular.module('scanthisApp', [
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
 
-    if(settings.datastring){
-      $scope.datastring = settings.datastring;
+    if(settings.onLabel){
+      $scope.onLabel = settings.onLabel;
+    }
+
+    if(settings.packingconfig){
+      $scope.packingconfig = packingconfigs[settings.packingconfig.id];    
     }
     
         
@@ -82,7 +86,7 @@ angular.module('scanthisApp', [
       $scope.totallistconfig = listconfigs[settings.lists.totals];
     }
 
-    $scope.includes = {};
+    /*$scope.includes = {};
     $scope.includes.col1 = []; 
     for (var i=0;i<settings.includes.col1.length;i++){ 
       $scope.includes.col1[i] = 'htmlcomponents/' + settings.includes.col1[i]+ '.html';
@@ -90,6 +94,10 @@ angular.module('scanthisApp', [
     $scope.includes.col2 = []; 
     for (var j=0;j<settings.includes.col2.length;j++){ 
       $scope.includes.col2[j] = 'htmlcomponents/' + settings.includes.col2[j]+ '.html';
+    }*/
+    $scope.includes = [];
+    for (var i=0;i<settings.includes.length;i++){ 
+      $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
   };
 

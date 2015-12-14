@@ -110,3 +110,19 @@ var formconfigs =
   }
 
 ];
+
+
+var packingconfigs = [
+  {
+    id: 0, 
+    sectiontitle: "Add Items", 
+    scantitle: "Scan Loin"     
+  },
+  {
+    id: 1, 
+    sectiontitle: "Add Cases", 
+    scantitle: "Box ID"    
+  }
+
+
+];

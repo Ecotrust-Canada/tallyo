@@ -91,7 +91,7 @@ angular.module('scanthisApp.packingController', [])
 controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
   $scope.$watch('current.collectionid', function() {
     var scaninput = document.getElementById('scaninput');
-    scaninput.focus()
+    scaninput.focus();
   });
 })
 

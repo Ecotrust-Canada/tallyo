@@ -33,8 +33,8 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseLoin = function(){   
     var func = function(response){
-      if($scope.datastring){
-        var data = dataCombine($scope.entry.loin, $scope.datastring);
+      if($scope.onLabel){
+        var data = dataCombine($scope.entry.loin, $scope.onLabel);
         console.log(data);
       }
       $scope.entry.scan.loin_number = response.data.loin_number;
