@@ -31,7 +31,10 @@ angular.module('scanthisApp.formController', [])
       //TODO: if something in config
       var state = $scope.form.state;
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
-      $scope.form.state = state;
+      if (state){
+        $scope.form.state = state;
+      }
+      
     }
   });
 
