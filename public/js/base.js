@@ -96,25 +96,28 @@ angular.module('scanthisApp', [
   // rewrite printDiv to use koozie instead of qztray
   $scope.printString = (codeString, fieldData) => 
     `^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR4,4~SD15^LRN^CI0
-      ^MMT
-      ^PW812
-      ^LL0406
-      ^LS0
-      ^BY312,312^FT764,47^BXI,6,200,52,52,1,~
-      ^FH\^FD${codeString}^FS
-      ^FT420,165^A0I,28,28^FH\^FD${fieldData[2]}^FS
-      ^FT422,220^A0I,28,28^FH\^FD${fieldData[1]}^FS
-      ^FT422,272^A0I,28,28^FH\^FD${fieldData[0]}^FS
-      ^FT422,324^A0I,28,28^FH\^FD${codeString}^FS
-      ^PQ1,0,1,Y^XZ`;
-      
-  $scope.printDiv = function(qrString, fieldarray) {
+    ^MMT
+    ^PW812
+    ^LL0406
+    ^LS0
+    ^BY208,208^FT765,153^BXI,4,200,52,52,1,~
+    ^FH\^FD${codeString}^FS
+    ^FT519,120^A0I,28,28^FH\^FD${fieldData[4]}^FS
+    ^FT519,178^A0I,28,28^FH\^FD${fieldData[3]}^FS
+    ^FT519,236^A0I,28,28^FH\^FD${fieldData[2]}^FS
+    ^FT519,294^A0I,28,28^FH\^FD${fieldData[1]}^FS
+    ^FT519,352^A0I,28,28^FH\^FD${fieldData[0]}^FS
+    ^FT770,102^A0I,28,28^FH\^FD${codeString}^FS
+    ^PQ1,0,1,Y^XZ`;
+  $scope.printurl = printurl;
+  $scope.printDiv = function(codeString, fieldarray) {
     $http({
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      url: printurl + 'print',
+      url: $scope.printurl + 'print',
       transformRequest: transformRequestAsFormPost,
-      data: {data:$scope.printString(qrString, fieldarray)}
+      data: {data:$scope.printString(codeString, fieldarray)}
+
     });
   };
 
