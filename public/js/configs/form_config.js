@@ -4,7 +4,7 @@ var formconfigs =
 [
   { //box, HS0-004 
     id: 0, 
-    title: "Create Case", 
+    hide: "Create Case", 
     fields:[
       {"type":"text", "fieldname":"case_number", "title":"Case Number", "value":""}, 
       {"type": "select", "fieldname":"size", "title":"Size", "value":[{"name":"3"}, {"name":"3-5"}, {"name":">5"}]}, 
@@ -63,7 +63,7 @@ var formconfigs =
   },
   {//shipping_unit, HS0-005
     id: 4, 
-    title: "Create Shipping Entry", 
+    hide: "Create Shipping Entry", 
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
       {"type":"text", "fieldname":"customer", "title":"Customer", "value":"Amanda"},

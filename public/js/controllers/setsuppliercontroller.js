@@ -82,9 +82,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.$watch('current.lot', function(newValue, oldValue) {
     if ($scope.current.lot !== undefined){
-      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-001');
-      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-002');
-      //$scope.PatchStationWithLot($scope.current.lot, 'HS0-ADM');
       $scope.StationLot($scope.current.lot, 'HS0-001');
       $scope.StationLot($scope.current.lot, 'HS0-002');
       $scope.AddStationLot($scope.current.lot, 'HS0-003');

@@ -7,6 +7,11 @@ angular.module('scanthisApp.formController', [])
 
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
 
+    $scope.hideform = false;
+    if ($scope.config.hide){
+      $scope.hideform = true;
+    }
+
     if($scope.config.dboptions){
       var table = $scope.config.dboptions;
       var func = function(response){
