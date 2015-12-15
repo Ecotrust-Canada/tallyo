@@ -70,7 +70,7 @@ angular.module('scanthisApp.packingController', [])
     var patch = {};
     patch[$scope.station_info.collectionid] = $scope.current.collectionid;
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;   
-    DatabaseServices.PatchEntryPlusError($scope.station_info.patchtable, patch, query, func, onErr);
+    DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };     
 })
 
