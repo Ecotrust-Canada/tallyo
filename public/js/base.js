@@ -61,6 +61,14 @@ angular.module('scanthisApp', [
       $scope.onLabel = settings.onLabel;
     }
 
+    if(settings.printurl){
+      $scope.printurl = settings.printurl;
+    }
+
+    if(settings.printString){
+      $scope.printString = settings.printString;
+    }
+    
     if(settings.packingconfig){
       $scope.packingconfig = packingconfigs[settings.packingconfig.id];    
     }
@@ -89,22 +97,6 @@ angular.module('scanthisApp', [
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
   };
-  $scope.printString = (codeString, fieldData) => 
-    `^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR4,4~SD15^LRN^CI0
-    ^MMT
-    ^PW812
-    ^LL0406
-    ^LS0
-    ^BY208,208^FT765,153^BXI,4,200,52,52,1,~
-    ^FH\^FD${codeString}^FS
-    ^FT519,120^A0I,28,28^FH\^FD${fieldData[4]}^FS
-    ^FT519,178^A0I,28,28^FH\^FD${fieldData[3]}^FS
-    ^FT519,236^A0I,28,28^FH\^FD${fieldData[2]}^FS
-    ^FT519,294^A0I,28,28^FH\^FD${fieldData[1]}^FS
-    ^FT519,352^A0I,28,28^FH\^FD${fieldData[0]}^FS
-    ^FT770,90^A0I,28,28^FH\^FD${codeString}^FS
-    ^PQ1,0,1,Y^XZ`;
-  $scope.printurl = printurl;
   $scope.printLabel = function(codeString, fieldarray) {
     $http({
       method: 'POST',
@@ -126,22 +118,6 @@ angular.module('scanthisApp', [
 
 .controller('PrintCtrl', function($scope, $http, DatabaseServices) {
   // rewrite printDiv to use koozie instead of qztray
-  $scope.printString = (codeString, fieldData) => 
-    `^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR4,4~SD15^LRN^CI0
-    ^MMT
-    ^PW812
-    ^LL0406
-    ^LS0
-    ^BY208,208^FT765,153^BXI,4,200,52,52,1,~
-    ^FH\^FD${codeString}^FS
-    ^FT519,120^A0I,28,28^FH\^FD${fieldData[4]}^FS
-    ^FT519,178^A0I,28,28^FH\^FD${fieldData[3]}^FS
-    ^FT519,236^A0I,28,28^FH\^FD${fieldData[2]}^FS
-    ^FT519,294^A0I,28,28^FH\^FD${fieldData[1]}^FS
-    ^FT519,352^A0I,28,28^FH\^FD${fieldData[0]}^FS
-    ^FT770,90^A0I,28,28^FH\^FD${codeString}^FS
-    ^PQ1,0,1,Y^XZ`;
-  $scope.printurl = printurl;
   $scope.printDiv = function(codeString, fieldarray) {
     $http({
       method: 'POST',
