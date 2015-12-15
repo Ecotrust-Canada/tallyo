@@ -36,6 +36,10 @@ angular.module('scanthisApp.itemController', [])
       if($scope.onLabel){
         var data = dataCombine($scope.entry.loin, $scope.onLabel);
         console.log(data);
+        $scope.printLabel(data,[
+          $scope.entry.loin.weight_1,
+          $scope.entry.loin.grade,
+          $scope.current.harvester_lot.internal_lot_code]);
       }
       $scope.entry.scan.loin_number = response.data.loin_number;
       $scope.DatabaseScan();     

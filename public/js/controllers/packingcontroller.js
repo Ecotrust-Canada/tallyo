@@ -7,10 +7,16 @@ angular.module('scanthisApp.packingController', [])
 .controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
-  $scope.PutObjInContainer = function(id){
-    if (!id) {
-      toastr.error('no loin id');
-    };
+  $scope.PutObjInContainer = function(raw_id){
+    if (!raw_id) {
+      toastr.error('please scan a code');
+    }
+
+    var id_array = raw_id.split("/");
+    var id = id_array[0];
+    //console.log(id);
+
+
     var func = function(response){
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
