@@ -33,7 +33,6 @@ angular.module('scanthisApp.AdminController', [])
 })
 
 
-
 .controller('FormSelectionCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.getProcessors = function(){
