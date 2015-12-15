@@ -8,7 +8,15 @@ git clone https://github.com/Ecotrust-Canada/scanthis
 
 ### Installation
 
-Install node v4.0.0. We recommend using [nvm](https://github.com/creationix/nvm) for this. Then, install package dependencies:
+Install the latest stable version of node v4 (ie, v4.0.0) . We recommend using [nvm](https://github.com/creationix/nvm) for this.
+
+Install environmental dependencies using npm
+```
+npm install -g nodemon
+npm install -g bower
+```
+
+Then, install package dependencies:
 
 ```
 cd scanthis
@@ -16,10 +24,6 @@ npm install
 bower install
 ```
 
-Install nodemon using npm
-```
-npm install -g nodemon
-```
 
 ### Starting the Node Server
 ```
