@@ -18,7 +18,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('list', function() { return { 
   scope: { itemlist: '=',  
-           config: '=' ,
+           config: '=' , 
+           filterstring: '=', 
            updateFn: '&'},
   templateUrl: 'htmlpartials/list.html' }; })
 

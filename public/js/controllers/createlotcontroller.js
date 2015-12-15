@@ -211,6 +211,17 @@ angular.module('scanthisApp.createlotController', [])
  */
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
+  $scope.reprintconfig = 
+  { id: 0,    
+    cssclass: "fill small", 
+    headers: ["Loin Number", "Lot Number", "Internal Lot Code", "Supplier Group","Supplier", "Fleet", ""], 
+    fields: ["loin_number", "lot_number", "internal_lot_code", "supplier_group", "supplier", "fleet_vessel"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "loin_number", 
+    button: "Remove"
+  };
+
   $scope.ListAllItems = function(station_code){
       var query = '?station_code=eq.' + station_code;
       var func = function(response){
@@ -219,8 +230,9 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_lot', func, query);
     };
 
-  $scope.Reprint = function(loin_id){
+  $scope.Reprint = function(loin_number){
     //TODO: write this function
+    console.log(loin_number);
   };
 
   $scope.ListAllItems($scope.station_code);

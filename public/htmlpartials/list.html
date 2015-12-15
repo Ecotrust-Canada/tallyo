@@ -2,7 +2,7 @@
   <tr ng-if="config.headers">
     <td ng-repeat="title in config.headers">{{title}}</td>
   </tr>
-  <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit">
+  <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring">
     <td ng-repeat="name in config.fields">
     <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
     <span ng-if="name==='timestamp'">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
