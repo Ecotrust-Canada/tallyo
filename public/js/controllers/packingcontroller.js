@@ -14,7 +14,6 @@ angular.module('scanthisApp.packingController', [])
 
     var id_array = raw_id.split("/");
     var id = id_array[0];
-    //console.log(id);
 
 
     var func = function(response){
@@ -45,7 +44,7 @@ angular.module('scanthisApp.packingController', [])
 
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;
     if ($scope.current.collectionid){
-      DatabaseServices.GetEntryPlusError($scope.station_info.patchtable, func, query, onErr);
+      DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
     }
     else
     {
