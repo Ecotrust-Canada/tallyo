@@ -61,12 +61,24 @@ angular.module('scanthisApp', [
       $scope.onLabel = settings.onLabel;
     }
 
-    if(settings.printurl){
+    if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
-    }
-
-    if(settings.printString){
       $scope.printString = settings.printString;
+      $scope.printLabel = function(codeString, fieldarray) {
+        $http({
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          url: $scope.printurl + 'print',
+          transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: {data:$scope.printString(codeString, fieldarray)}
+
+    });
+  };
     }
     
     if(settings.packingconfig){
@@ -96,23 +108,6 @@ angular.module('scanthisApp', [
     for (var i=0;i<settings.includes.length;i++){ 
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
-  };
-  $scope.printLabel = function(codeString, fieldarray) {
-    $http({
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      url: $scope.printurl + 'print',
-      transformRequest: transformRequestAsFormPost,
-      data: {data:$scope.printString(codeString, fieldarray)}
-
-    });
-  };
-
-  var transformRequestAsFormPost = function(obj) {
-    var str = [];
-    for(var p in obj)
-    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    return str.join("&");
   };
 })
 

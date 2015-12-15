@@ -236,17 +236,14 @@ angular.module('scanthisApp.createlotController', [])
       var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
       var func = function(response){
         var loinData = response.data[0];
-        console.log(loinData);
         $scope.printLabel(loin_number,[
           loinData.weight_1,
           loinData.grade,
           internal_lot_code]);
       };
       DatabaseServices.GetEntries('loin_scan', func, query);
-      // var data = dataCombine($scope.entry.loin, $scope.onLabel);
       
     }
-    // console.log($scope.items[0]);
   };
 
   $scope.ListAllItems($scope.station_code);
