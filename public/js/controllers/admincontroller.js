@@ -110,11 +110,11 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.sumStations = 
   [
-    {'name': 'Receiving', 'code': 'HS0-001'},
-    {'name': 'Trimming', 'code': 'HS0-002', 'completelot': ['HS0-001', 'HS0-002']},
-    {'name': 'Retouching', 'code': 'HS0-003', 'completelot': ['HS0-003']},
-    {'name': 'Boxing', 'code': 'HS0-004'},
-    {'name': 'Shipping', 'code': 'HS0-005'},
+    {'name': 'Receiving', 'code': 'HS0-001', 'csv':'scan'},
+    {'name': 'Trimming', 'code': 'HS0-002', 'completelot': ['HS0-001', 'HS0-002'], 'csv': 'scan'},
+    {'name': 'Retouching', 'code': 'HS0-003', 'completelot': ['HS0-003'], 'csv': 'loin_scan'},
+    {'name': 'Boxing', 'code': 'HS0-004', 'csv': 'box_scan'},
+    {'name': 'Shipping', 'code': 'HS0-005', 'csv': 'box_scan'},
   ];
 
  
@@ -174,14 +174,57 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
+  $scope.GetScan = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.scan = response.data;
+    };
+    DatabaseServices.GetEntries('scan', func, query);
+  };
+  $scope.GetScan();
+
+  $scope.GetBoxScan = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.box_scan = response.data;
+    };
+    DatabaseServices.GetEntries('box_scan', func, query);
+  };
+  $scope.GetBoxScan();
+
+  $scope.GetLoinScan = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.loin_scan = response.data;
+    };
+    DatabaseServices.GetEntries('loin_scan', func, query);
+  };
+  $scope.GetLoinScan();
+
 
 
   $scope.getData = function(lot_number, station){
-    console.log(lot_number);
-    console.log(station);
+    var csvarray = [];
+    var stations = stationlist;
+
+    var isStation = function(value){
+      return value.code === station;
+    };
+    var filtered = $scope.sumStations.filter(isStation);
+
+    var table = $scope.list[filtered[0].csv];
+
+    var cellFilter = function(value){
+      return value.lot_number === lot_number && value.station_code === station;
+    };
+    var cellData = table.filter(cellFilter);
+    return cellData;
+
+
   };
 
 })
+
 
 
 

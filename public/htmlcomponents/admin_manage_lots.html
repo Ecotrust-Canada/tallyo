@@ -27,9 +27,10 @@
               <td>{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
             </tr>
           </table>
-          <div ng-init>
+          <div>
             <button ng-if="stn.completelot && (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0" ng-click="CompleteLot(lot.lot_number, stn.completelot)">Complete Lot</button>
-
+            <button ng-if="lot.stations.indexOf(stn.code) !== -1" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
+            <!--<button ng-if="lot.stations.indexOf(stn.code) !== -1" ng-click="getData(lot.lot_number, stn.code)">CSV</button>-->
           </div>
         </div>
       </td>
