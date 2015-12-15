@@ -116,28 +116,6 @@ angular.module('scanthisApp', [
   };
 })
 
-.controller('PrintCtrl', function($scope, $http, DatabaseServices) {
-  // rewrite printDiv to use koozie instead of qztray
-  $scope.printDiv = function(codeString, fieldarray) {
-    $http({
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      url: $scope.printurl + 'print',
-      transformRequest: transformRequestAsFormPost,
-      data: {data:$scope.printString(codeString, fieldarray)}
-
-    });
-  };
-
-  var transformRequestAsFormPost = function(obj) {
-    var str = [];
-    for(var p in obj)
-    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    return str.join("&");
-  };
-   
-})
-
 .controller('CSVCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.csvcontent = [{a: 1, b:2}, {a:3, b:4}];

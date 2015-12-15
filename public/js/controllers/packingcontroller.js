@@ -152,7 +152,7 @@ controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
     var stringarray = ObjSubset($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
     var qrstring = QRCombine(stringarray);
     console.log(qrstring);
-    $scope.printDiv(qrstring, []);
+    $scope.printLabel(qrstring, []);
   };
 
 

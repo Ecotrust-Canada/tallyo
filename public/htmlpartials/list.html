@@ -10,6 +10,7 @@
     <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'" >{{item[name]}}</span>
     <span ng-if="name==='pieces'">pcs</span>
     </td>
-    <td ng-if="config.button" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
+    <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
+    <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
   </tr>
 </table>

@@ -219,6 +219,7 @@ angular.module('scanthisApp.createlotController', [])
     limit: "10000",
     order: "-timestamp", 
     arg: "loin_number", 
+    arg2: "internal_lot_code", 
     button: "Reprint"
   };
 
@@ -230,9 +231,22 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_lot', func, query);
     };
 
-  $scope.Reprint = function(loin_number){
-    //TODO: write this function
-    console.log(loin_number);
+  $scope.Reprint = function(loin_number, internal_lot_code){
+    if($scope.onLabel){
+      var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
+      var func = function(response){
+        var loinData = response.data[0];
+        console.log(loinData);
+        $scope.printLabel(loin_number,[
+          loinData.weight_1,
+          loinData.grade,
+          internal_lot_code]);
+      };
+      DatabaseServices.GetEntries('loin_scan', func, query);
+      // var data = dataCombine($scope.entry.loin, $scope.onLabel);
+      
+    }
+    // console.log($scope.items[0]);
   };
 
   $scope.ListAllItems($scope.station_code);

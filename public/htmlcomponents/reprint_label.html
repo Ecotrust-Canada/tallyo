@@ -9,7 +9,7 @@
     <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
     <label>Supplier<input ng-model="search.supplier"></label><br><br>
     <div style="height:400px;overflow:scroll;">
-      <list itemlist="items"  config="reprintconfig" update-fn="Reprint(str)" filterstring="search"></list>
+      <list itemlist="items"  config="reprintconfig" update-fn="Reprint(str, str2)" filterstring="search"></list>
     </div>
   </div>
 </div>

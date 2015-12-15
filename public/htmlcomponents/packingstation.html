@@ -19,10 +19,8 @@
       {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id">
     </form>
 
-    <div ng-if="onLabel" ng-controller="PrintCtrl">
-      <div ng-controller="BoxLabelCtrl">
-        <input type="button" ng-click="BoxQR()"   value="Print Box Label">
-      </div>
+    <div ng-controller="BoxLabelCtrl">
+      <input type="button" ng-click="BoxQR()"   value="Print Box Label">
     </div>
 
   </div>
