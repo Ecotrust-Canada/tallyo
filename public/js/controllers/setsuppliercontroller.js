@@ -219,6 +219,8 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('CurrentLotCtrl', function($scope, $http, DatabaseServices) {
 /*Gets the harvester_lot entry for the given lot_number*/
+
+  $scope.form = {};
   $scope.GetHarvesterLot = function(lot_number){
     var func = function(response){
       $scope.current.harvester_lot = response.data[0];

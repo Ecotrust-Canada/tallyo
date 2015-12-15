@@ -219,7 +219,7 @@ angular.module('scanthisApp.createlotController', [])
     limit: "10000",
     order: "-timestamp", 
     arg: "loin_number", 
-    button: "Remove"
+    button: "Reprint"
   };
 
   $scope.ListAllItems = function(station_code){

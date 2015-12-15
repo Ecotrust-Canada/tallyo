@@ -5,13 +5,15 @@
       <td>Lot Number</td>
       <td ng-repeat="stn in sumStations">{{stn.name}}</td>
     </tr>
-    <tr ng-repeat="lot in list.lot_location" ng-if="lot.lot_number.substring(0, 3) === 'HS0'">
+    <tr ng-repeat="lot in list.lot_location | orderBy: '-end_date'">
       <td>
         {{lot.lot_number}}<br>
-        {{lot.internal_lot_code}}
+        {{lot.internal_lot_code}}<br>
+        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        {{lot.supplier_group}} {{lot.supplier}} {{lot.fleet_vessel}}
       </td>
       <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0}" >
-        <div>
+        <div class="cellWrapper">
           <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:(sumStations[$index-1].code ? sumStations[$index-1].code : 'random')} " >
             <div ng-init="$parent.prev=sum.pieces"></div>
           </div>
@@ -28,8 +30,8 @@
             </tr>
           </table>
           <div>
-            <button ng-if="stn.completelot && (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0" ng-click="CompleteLot(lot.lot_number, stn.completelot)">Complete Lot</button>
-            <button ng-if="lot.stations.indexOf(stn.code) !== -1" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
+            <button class="bottomright" ng-if="stn.completelot && (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0" ng-click="CompleteLot(lot.lot_number, stn.completelot)">Complete Lot</button>
+            <button class="bottomleft" ng-if="lot.stations.indexOf(stn.code) !== -1" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
             <!--<button ng-if="lot.stations.indexOf(stn.code) !== -1" ng-click="getData(lot.lot_number, stn.code)">CSV</button>-->
           </div>
         </div>
