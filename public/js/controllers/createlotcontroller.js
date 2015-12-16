@@ -42,9 +42,17 @@ angular.module('scanthisApp.createlotController', [])
     $scope.current.collectionid = selected;
   };
 
+  $scope.current.selected = "no selected";
+
   $scope.$watch('station_info', function(newValue, oldValue) {
     if ($scope.station_info !== undefined){
       $scope.ListCollections();
+    }
+  });
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      $scope.current.selected = $scope.current.collectionid;
     }
   });
 
@@ -107,7 +115,14 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.$watch('current.collectionid', function() {
     if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
-      $scope.DisplayCollectionInfo();
+      if ($scope.current.collectionid === 'no selected'){
+        $scope.current[$scope.station_info.collectiontable] = null;
+        $scope.current.itemchange = !$scope.current.itemchange;
+      }
+      else{
+        $scope.DisplayCollectionInfo();
+      }
+      
     }
   });
 
@@ -130,7 +145,12 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
-      $scope.ListCollectionItems();
+      if ($scope.current.collectionid === 'no selected'){
+        $scope.list.included = null;
+      }
+      else{
+        $scope.ListCollectionItems();
+      }
     }
   });
 
@@ -211,18 +231,6 @@ angular.module('scanthisApp.createlotController', [])
  */
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
-  $scope.reprintconfig = 
-  { id: 0,    
-    cssclass: "fill small", 
-    headers: ["Loin Number", "Lot Number", "Internal Lot Code", "Supplier Group","Supplier", "Fleet", ""], 
-    fields: ["loin_number", "lot_number", "internal_lot_code", "supplier_group", "supplier", "fleet_vessel"], 
-    limit: "10000",
-    order: "-timestamp", 
-    arg: "loin_number", 
-    arg2: "internal_lot_code", 
-    button: "Reprint"
-  };
-
   $scope.ListAllItems = function(station_code){
       var query = '?station_code=eq.' + station_code;
       var func = function(response){
@@ -249,9 +257,6 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListAllItems($scope.station_code);
 
 })
-
-
-
 
 
 ;

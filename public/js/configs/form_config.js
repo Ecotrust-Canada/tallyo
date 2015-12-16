@@ -115,13 +115,15 @@ var formconfigs =
 var packingconfigs = [
   {
     id: 0, 
-    sectiontitle: "Add Items", 
-    scantitle: "Scan Loin"     
+    sectiontitle: "Add Loins", 
+    scantitle: "Scan Loin", 
+    completetitle: "Complete Box/Print Label"    
   },
   {
     id: 1, 
     sectiontitle: "Add Cases", 
-    scantitle: "Box ID"    
+    scantitle: "Box ID", 
+    completetitle: "Complete Shipment"   
   }
 
 

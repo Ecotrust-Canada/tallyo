@@ -42,8 +42,8 @@ var listconfigs = [
   },
   { id: 5,    
     cssclass: "fill small", 
-    headers: ["Lot Number", "Internal Lot Code", "Loin Number", "Grade", "Weight", ""], 
-    fields: ["lot_number", "internal_lot_code", "loin_number", "weight_1", "grade"], 
+    headers: ["Internal Lot Code", "Loin Number", "Grade", "Weight", ""], 
+    fields: ["internal_lot_code", "loin_number", "weight_1", "grade"], 
     limit: "20",
     order: "-timestamp", 
     arg: "loin_number", 
@@ -57,6 +57,16 @@ var listconfigs = [
     order: "-timestamp", 
     arg: "box_number", 
     button: "Remove"
+  },
+  { id: 7,    
+    cssclass: "fill small", 
+    headers: ["Loin Number", "Weight", "Grade", "Lot Number", "Internal Lot Code", "Supplier Group","Supplier", "Fleet", ""], 
+    fields: ["loin_number", "weight_1", "grade", "lot_number", "internal_lot_code", "supplier_group", "supplier", "fleet_vessel"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "loin_number", 
+    arg2: "internal_lot_code", 
+    button: "Reprint"
   }
 
 

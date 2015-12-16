@@ -1,7 +1,8 @@
 <div class="sectionframe">
 
-  <div ng-controller="CollectionTableDropDownCtrl"> 
-    <dropdown itemlist="list.collection"  cfg="collectiondropdown" change-fn="changeFn(selected)"></dropdown>
+  <div ng-controller="CollectionTableDropDownCtrl">
+
+    <dropdown itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
   </div>
 
   <br>
@@ -18,10 +19,10 @@
     <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;">
       {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id">
     </form>
+    <br>
 
-    <div ng-controller="BoxLabelCtrl">
-      <input type="button" ng-click="BoxQR()"   value="Print Box Label">
-    </div>
+    <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+
 
   </div>
 </div>

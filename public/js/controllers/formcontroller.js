@@ -75,7 +75,6 @@ angular.module('scanthisApp.formController', [])
   };
   var AddSetCurrent = function(response){
     var thedata = response.data;
-    //$scope.list[table].push(thedata);
     $scope.list.collection.push(thedata);
     $scope.current.collectionid = thedata[$scope.station_info.collectionid];
   };

@@ -3,24 +3,22 @@
 /*period defaults to day*/
 /*creates a start date and end date from input date and period*/
 var dateManipulation = function(date, period){
-    if (period !== 'day' && period !== 'week'){
-        period = 'day';
-    }
+    var momentper;
     var dates;
     if (period === 'week'){
-        dates = {
-        'postgres_date': moment(date).format(),
-        'start_date': moment(date).startOf('isoWeek'),
-        'end_date': moment(date).endOf('isoWeek')
-        };
+      momentper = 'isoWeek';
     }
     else if (period === 'day'){
-        dates = {
-        'postgres_date': moment(date).format(),
-        'start_date': moment(date).startOf('day'),
-        'end_date': moment(date).endOf('day')
-        };
+      momentper = 'day';
     }
+    else{
+      momentper = 'day';
+    }
+    dates = {
+      'postgres_date': moment(date).format(),
+      'start_date': moment(date).startOf(momentper),
+      'end_date': moment(date).endOf(momentper)
+    };
     return dates;
 };
 
@@ -82,37 +80,6 @@ var NotEmpty = function(jsonobj){
     return false;
 };
 
-
-/*checks if a json object with id parameter is in an array*/
-var idNotInArray = function(array, id){
-    for (var i=0;i<array.length;i++){
-        if (String(array[i].id) === String(id)){
-            return false;
-        }
-    }
-    return true;
-};
-
-/*removes object with given id from array*/
-var removeFromArray = function(array, id){
-    for (var i=0;i<array.length;i++){
-        if (String(array[i].id) === String(id)){
-            array.splice(i,1);
-        }
-    }           
-    return array;
-};
-
-/*checks if a value is in an array*/
-var valueNotInArray = function(array, value){
-    for (var i=0;i<array.length;i++){
-        if (String(array[i]) === String(value)){
-            return false;
-        }
-    }
-    return true;
-};
-
 /*assigns results from date manipulation to scope*/
 var CreateEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
@@ -149,41 +116,6 @@ var GetBoxLotNumber = function(arr) {
 };
 
 
-/*initialize display of scan/summary table*/
-var InitShowSummary = function($scope){
-    $scope.showScan = true;
-    $scope.showSummary = false;
-    $scope.view_summary = "view summary";
-};
-
-/*clear a form*/
-var ClearForm = function($scope){
-    for (var key in $scope.form) {
-      if ($scope.form.hasOwnProperty(key)) {
-        if (key !== 'state'){
-          $scope.form[key] = "";
-        }
-        
-      }
-}
-  };
-
-/*clear an entry*/
-var ClearEntry = function(scopevar, $scope){
-    for (var key in $scope.entry[scopevar]){
-      if (key !== 'station_code'  && key !== 'state'){
-        $scope.entry[scopevar][key] = "";
-      }
-    }
-  };
-
-
-/*clear form and entry*/
-var Clear = function(scopevar, $scope){
-    ClearForm($scope);
-    ClearEntry(scopevar, $scope);
-  };
-
 /*fill in fields in entry*/
 var MakeEntry = function(form, scopevar, $scope){
     for (var key in form){
@@ -204,33 +136,6 @@ var ClearFormToDefault = function(form_arr, def_arr){
     return form_arr;
   };
 
-
-var ObjSubset = function(jsonobj, fields){
-  //console.log(jsonobj);
-  var anarray = [];
-  anarray[0] = jsonobj;
-  var result = [];
-  var pluckFields = function(item){
-    var pluckField = fjs.pluck(item);
-    var field = pluckField(anarray);
-    result.push(field);
-  };
-  var pluckFieldsToResult = fjs.each(pluckFields); 
-  pluckFieldsToResult(fields);
-
-  var newarray = [];
-   var addTo = function (item) {
-    return newarray.push(item[0]);
-   };
-   var addToNewarray = fjs.each(addTo); 
-   addToNewarray(result);
-
-   //console.log(newarray);
-   return newarray;
-
-};
-
-
 var QRCombine = function (stringarray){
    var qrstring = function (arg1, arg2){
      return String(arg1) + '/' + String(arg2);
@@ -239,14 +144,21 @@ var QRCombine = function (stringarray){
    return qrstringReduce(stringarray);
 };
 
-var dataCombine = function (json, stringarray){
+var ArrayFromJson = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
     newarray.push(json[stringarray[i]]);
   }
+  return newarray;
+};
+
+var dataCombine = function (json, stringarray){
+  var newarray = ArrayFromJson(json, stringarray);
   return QRCombine(newarray);
 };
 
+
+//indexOf for an array of json objects
 var arrayObjectIndexOf = function(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
         if (myArray[i][property] === searchTerm) return i;
@@ -254,7 +166,7 @@ var arrayObjectIndexOf = function(myArray, searchTerm, property) {
     return -1;
 };
 
-
+// + character disapears from url, this fixes that
 var cleanQueryString = function(querystring){
   var queryStringNew = querystring.replace("+", "&#x2B;");
   return queryStringNew;

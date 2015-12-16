@@ -25,7 +25,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('dropdown', function() { return { 
   scope: { itemlist: '=',  
-           cfg: '=',
+           cfg: '=', 
+           selectedoption: '=', 
            changeFn: '&' },
   templateUrl: 'htmlpartials/dropdown.html' }; })
 

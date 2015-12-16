@@ -1,6 +1,7 @@
 
   <span ng-if="cfg.title">{{cfg.title}}: </span>
-  <select name="singleSelect" ng-model="selected" ng-change="changeFn({selected: selected})">
+  <select name="singleSelect" ng-model="selectedoption" ng-change="changeFn({selected: selectedoption})">
+    <option value="no selected">--select--</option>
     <option ng-repeat="item in itemlist | orderBy: cfg.order | limitTo: cfg.limit" value="{{item[cfg.arg]}}">
       {{item[cfg.fields[0]]}} 
       <span ng-if="cfg.fields[1]">{{item[cfg.fields[1]]}} </span>

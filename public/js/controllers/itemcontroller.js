@@ -15,7 +15,7 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      toastr.success("success (say somthing more useful here)");
+      toastr.success("submit successful");
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);

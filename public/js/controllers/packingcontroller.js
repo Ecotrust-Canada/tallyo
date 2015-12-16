@@ -76,7 +76,24 @@ angular.module('scanthisApp.packingController', [])
     patch[$scope.station_info.collectionid] = $scope.current.collectionid;
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
-  };     
+  };  
+
+
+  $scope.MakeQR = function(){
+    var qrstring = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel);
+    var labelarray = ArrayFromJson($scope.current[$scope.station_info.collectiontable], ['case_number', 'size', 'weight', 'pieces', 'internal_lot_code']);
+    console.log(qrstring);
+    $scope.printLabel(qrstring, labelarray);
+  };
+
+
+
+  $scope.Complete = function(){
+    if ($scope.onLabel){
+      $scope.MakeQR();
+    }
+    $scope.current.selected = 'no selected';
+  };
 })
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
@@ -91,9 +108,9 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
   };
 
-}).
+})
 
-controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
+.controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
   $scope.$watch('current.collectionid', function() {
     var scaninput = document.getElementById('scaninput');
     scaninput.focus();
@@ -116,27 +133,28 @@ controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.GetHarvester = function(lot_num){
     var func = function(response){
+      var internal_lot_code = response.data[0].internal_lot_code;
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code);
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code){
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
     };
-    var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_code': harvester_code};
+    var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_code': harvester_code, 'internal_lot_code': internal_lot_code};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
 
   $scope.$watch('list.included', function() {
-    if ($scope.list.included !== undefined){
+    if ($scope.list.included !== undefined && $scope.list.included !== null){
       $scope.CalcBox();
     }
   });
@@ -149,8 +167,7 @@ controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
 .controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.BoxQR = function(){
-    var stringarray = ObjSubset($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
-    var qrstring = QRCombine(stringarray);
+    var qrstring = dataCombine($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
     console.log(qrstring);
     $scope.printLabel(qrstring, []);
   };
