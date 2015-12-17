@@ -20,6 +20,7 @@ angular.module('scanthisApp.directives', [])
   scope: { itemlist: '=',  
            config: '=' , 
            filterstring: '=', 
+           istotal: '=', 
            updateFn: '&'},
   templateUrl: 'htmlpartials/list.html' }; })
 

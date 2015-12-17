@@ -179,6 +179,8 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
+  $scope.istotal = true;
+
 })
 
 .controller('prevStationCtrl', function($scope, $http, DatabaseServices) {

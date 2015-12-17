@@ -6,7 +6,7 @@
 <div ng-if="prevStation" ng-controller="prevStationCtrl">
   Previous Station Info:
   <div class="sectionframe" ng-controller="TotalsCtrl">
-    <list itemlist="totals"  config="totallistconfig" ></list>
+    <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
   </div>
 </div>
 
@@ -21,7 +21,7 @@
 
 
 <div class="sectionframe" ng-controller="TotalsCtrl">
-  <list itemlist="totals"  config="totallistconfig" ></list>
+  <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
 </div>
 
 <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">

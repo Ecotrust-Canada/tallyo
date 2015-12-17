@@ -13,4 +13,10 @@
     <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
     <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
   </tr>
+  <tr ng-if="istotal === true">
+    <td>Total:</td>
+    <td ng-if="itemlist[0].weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</td>
+    <td ng-if="itemlist[0].weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</td>
+    <td ng-if="itemlist[0].pieces">{{itemlist | sumOfValue:'pieces'}}pcs</td>
+  </tr>
 </table>
