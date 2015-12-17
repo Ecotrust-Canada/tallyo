@@ -57,8 +57,12 @@ angular.module('scanthisApp', [
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
 
+
     if(settings.onLabel){
       $scope.onLabel = settings.onLabel;
+    }
+    if(settings.sumStations){
+      $scope.sumStations = settings.sumStations;
     }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
@@ -114,11 +118,5 @@ angular.module('scanthisApp', [
   };
 })
 
-.controller('CSVCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.csvcontent = [{a: 1, b:2}, {a:3, b:4}];
-
-
-})
 ;
 

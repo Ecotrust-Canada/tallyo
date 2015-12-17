@@ -105,17 +105,9 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
+
+//Lot summary page
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.sumStations = 
-  [
-    {'name': 'Receiving', 'code': 'HS0-001', 'csv':'scan'},
-    {'name': 'Trimming', 'code': 'HS0-002', 'completelot': ['HS0-001', 'HS0-002'], 'csv': 'scan'},
-    {'name': 'Retouching', 'code': 'HS0-003', 'completelot': ['HS0-003'], 'csv': 'loin_scan'},
-    {'name': 'Boxing', 'code': 'HS0-004', 'csv': 'box_scan'},
-    {'name': 'Shipping', 'code': 'HS0-005', 'csv': 'box_scan'},
-  ];
-
  
   $scope.GetLotLocations = function(){
     var query = '';
@@ -124,7 +116,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('select_lot', func, query);
   };
-
   $scope.GetLotLocations();
 
 
@@ -135,7 +126,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('lot_summary', func, query);
   };
-
   $scope.GetLotSummary();
 
   $scope.GetLotTotals = function(){
@@ -145,7 +135,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('totals_by_lot', func, query);
   };
-
   $scope.GetLotTotals();
 
   $scope.GetLotStations = function(){
@@ -155,7 +144,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-
   $scope.GetLotStations();
 
   $scope.CompleteLot = function(lot_number, station_codes){
@@ -217,6 +205,9 @@ angular.module('scanthisApp.AdminController', [])
       return value.lot_number === lot_number && value.station_code === station;
     };
     var cellData = table.filter(cellFilter);
+
+    cleanJsonArray(cellData);
+    
     return cellData;
 
 
@@ -226,7 +217,7 @@ angular.module('scanthisApp.AdminController', [])
 
 
 
-
+//editing drop-down options for forms
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
   $scope.FormData = function(table){
       var func = function(response){

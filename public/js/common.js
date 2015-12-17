@@ -173,3 +173,21 @@ var cleanQueryString = function(querystring){
 };
 
 
+
+
+var cleanJsonArray = function(array){
+
+  var cleanJson = function(element, index, array){
+    for (var key in element) {
+      if (element.hasOwnProperty(key)) {
+        if (element[key] === '' || element[key] === undefined  || element[key] === null){
+            delete element[key];
+        }
+      }
+    }
+  };
+
+  array.forEach(cleanJson);
+};
+
+
