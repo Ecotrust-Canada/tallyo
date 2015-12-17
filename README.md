@@ -72,9 +72,9 @@ https://github.com/begriffs/postgrest/releases/download/v0.3.0.1/postgrest-0.3.0
 
 un-tar:
 ```
-tar zxf postgrest-0.3.0.1-ubuntu.tar.xz
+tar xvf postgrest-0.3.0.1-ubuntu.tar.xz
 ```
 and run on database/user created earlier:
 ```
-postgrest --db-host localhost --db-port 5432 --db-name [database] --db-user [user] --db-pass [password] --db-pool 200 --anonymous [user] --port 3000 --v1schema public
+./postgrest postgres://[user]:[password]@localhost:5432/[database name] --port 3000 --schema public --anonymous [user] --pool 200
 ```
