@@ -72,8 +72,8 @@ https://github.com/begriffs/postgrest/releases/download/v0.3.0.1/postgrest-0.3.0
 
 un-tar:
 ```
-tar zxf postgrest-0.3.0.1-ubuntu.tar.xz
+tar xvf postgrest-0.3.0.1-ubuntu.tar.xz
 ```
 and run on database/user created earlier:
 ```
-postgrest postgres://tuna_processor:salmon@localhost:5432/scanthis_mike --port 3000 --schema public --anonymous tuna_processor --pool 200```
+./postgrest postgres://tuna_processor:salmon@localhost:5432/scanthis_mike --port 3000 --schema public --anonymous tuna_processor --pool 200```
