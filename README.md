@@ -76,5 +76,4 @@ tar zxf postgrest-0.3.0.1-ubuntu.tar.xz
 ```
 and run on database/user created earlier:
 ```
-postgrest --db-host localhost --db-port 5432 --db-name [database] --db-user [user] --db-pass [password] --db-pool 200 --anonymous [user] --port 3000 --v1schema public
-```
+postgrest postgres://tuna_processor:salmon@localhost:5432/scanthis_mike --port 3000 --schema public --anonymous tuna_processor --pool 200```
