@@ -60,6 +60,9 @@ angular.module('scanthisApp', [
     if(settings.onLabel){
       $scope.onLabel = settings.onLabel;
     }
+    if(settings.prevStation){
+      $scope.prevStation = settings.prevStation;
+    }
 
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;

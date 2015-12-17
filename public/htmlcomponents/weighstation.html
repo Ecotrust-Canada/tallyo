@@ -1,13 +1,27 @@
 <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
   <currentlot></currentlot>
 </div>
+
+
+<div ng-if="prevStation" ng-controller="prevStationCtrl">
+  Previous Station Info:
+  <div class="sectionframe" ng-controller="TotalsCtrl">
+    <list itemlist="totals"  config="totallistconfig" ></list>
+  </div>
+</div>
+
+
 <div class="sectionframe" >
   <div ng-controller="ScanOnlyCtrl">
     <entryform config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
   </div>
 </div>
+
+
+
+
 <div class="sectionframe" ng-controller="TotalsCtrl">
-  <list itemlist="list.totals"  config="totallistconfig" ></list>
+  <list itemlist="totals"  config="totallistconfig" ></list>
 </div>
 
 <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">

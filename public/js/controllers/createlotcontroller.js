@@ -168,7 +168,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ItemTotals = function(){
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
-      $scope.list.totals = response.data;
+      $scope.totals = response.data;
     };
     DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
   };
@@ -179,6 +179,11 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
+})
+
+.controller('prevStationCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.station_code = $scope.prevStation;
 })
 
 

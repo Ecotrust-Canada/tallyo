@@ -17,7 +17,7 @@
 .stationframevertical{
   width:450px;
   margin-left:50px;
-  height:804px;
+  height:100%;
   outline: solid 3px;
   background-color: white;
   margin-right: -50px;
