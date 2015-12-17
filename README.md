@@ -76,5 +76,5 @@ tar xvf postgrest-0.3.0.1-ubuntu.tar.xz
 ```
 and run on database/user created earlier:
 ```
-./postgrest postgres://[user]:[password]@localhost:5432/scanthis_mike --port 3000 --schema public --anonymous [user] --pool 200
+./postgrest postgres://[user]:[password]@localhost:5432/[database name] --port 3000 --schema public --anonymous [user] --pool 200
 ```
