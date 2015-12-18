@@ -215,8 +215,6 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
-
-
 //editing drop-down options for forms
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
   $scope.FormData = function(table){

@@ -16,7 +16,8 @@ angular.module('scanthisApp', [
   'scanthisApp.AdminController',
   'ngSanitize', 
   'ngCsv',
-  'toastr'
+  'toastr',
+  'gridshore.c3js.chart'
 ])
 
 /*
