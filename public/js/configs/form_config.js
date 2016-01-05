@@ -72,6 +72,7 @@ var formconfigs =
   },
   {//shipping_unit, AM2-001
     id: 5, 
+    hide: "Create Shipping Entry", 
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
       {"type":"text", "fieldname":"received_from", "title":"Received From", "value":""}, 
@@ -107,7 +108,14 @@ var formconfigs =
     fields:[
       {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"}
     ]
-  }
+  },
+  { //lot, amanda internal receiving 
+    id: 10, 
+    hide: "Start New Lot", 
+    fields:[
+      {"type":"text", "fieldname":"internal_lot_code", "title":"Lot code", "value":""}
+    ]
+  },
 
 ];
 
@@ -124,6 +132,12 @@ var packingconfigs = [
     sectiontitle: "Add Cases", 
     scantitle: "Box ID", 
     completetitle: "Complete Shipment"   
+  },
+  {
+    id: 2, 
+    sectiontitle: "Add Boxes", 
+    scantitle: "Scan Box", 
+    completetitle: "Complete Lot"   
   }
 
 

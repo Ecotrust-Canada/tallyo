@@ -112,114 +112,9 @@ angular.module('scanthisApp.itemController', [])
 })
 
 
-.controller('BoxCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
-
-  $scope.MakeBoxScanEntry = function(form){
-    var date = new Date();
-    $scope.entry.box.timestamp = moment(date).format();
-    $scope.entry.box.station_code = $scope.station_code;
-    $scope.entry.box.shipping_unit_number = $scope.current.collectionid;
-    $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
-    if ($scope.form.box_number === undefined){
-      $scope.entry.box.box_number = createBoxNum(date);
-    }
-    $scope.entry.scan.timestamp = $scope.entry.box.timestamp;
-    $scope.entry.scan.station_code = $scope.station_code;
-    MakeEntry(form, 'box', $scope);
-  };
-  $scope.DatabaseBox = function(){    
-    var func = function(response){
-      $scope.entry.scan.box_number = response.data.box_number;
-      Clear('box', $scope);
-      $scope.DatabaseScan();     
-    };
-    if (NoMissingValues($scope.entry.scan, 'box_number')){
-      DatabaseServices.DatabaseEntryReturn('box', $scope.entry.box, func);
-    }
-    else{ toastr.error("missing values"); }
-  };
-
-  $scope.DatabaseScan = function(){    
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
-      Clear('scan', $scope);
-    };
-    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
-  };
-
-  $scope.MakeBox = function(){
-    var func = function(response){
-      if (response.data.length >0){
-        Clear('scan', $scope);
-        toastr.warning("already exists");
-      }
-      else{
-        $scope.MakeBoxScanEntry($scope.form);
-        $scope.DatabaseBox();
-      }
-    };
-    var query = '?box_number=eq.' + $scope.form.box_number + '&station_code=eq.' + $scope.station_code;
-    DatabaseServices.GetEntries('box', func, query);
-  };
-
-  $scope.init = function(){
-    $scope.entry.box = {'timestamp': '', 'lot_number': ''};
-    $scope.entry.scan = {'station_code': '', 'timestamp': '', 'box_number':''};
-  };
 
 
-})
-
-.controller('RemoveBoxCtrl', function($scope, $http, DatabaseServices) {
-  $scope.RemoveItem = function(id){
-    var query = '?box_number=eq.' + id;
-    var func = function(){
-      $scope.RemoveScan(id);
-    };
-    DatabaseServices.RemoveEntry('box', query, func);
-  };
-
-  $scope.RemoveScan = function(id){
-    var query = '?box_number=eq.' + id + '&station_code=eq.' + $scope.station_code;
-    var func = function(){
-      $scope.current.itemchange = !$scope.current.itemchange;
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
-  };
-})
-
-.controller('LotBoxScanCtrl', function($scope, $http, DatabaseServices) {
-  
-  $scope.MakeScan = function(box_number){
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
-    };
-    var entry = {};
-    var date = new Date();
-    entry.lot_number = $scope.current.collectionid;
-    entry.timestamp = moment(date).format();
-    entry.station_code = $scope.station_code;
-    entry.box_number = box_number;
-    DatabaseServices.DatabaseEntryReturn('scan', entry, func);
-  };
-  
-})
-
-
-.controller('RemoveBoxScanCtrl', function($scope, $http, DatabaseServices) {
-  $scope.RemoveItem = function(id){
-    var query = '?box_number=eq.' + id + '&station_code=eq.' + $scope.station_code;
-    var func = function(){
-      $scope.current.itemchange = !$scope.current.itemchange;
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
-  };
-
-})
-
-
-.controller('WeighLotCtrl', function($scope, $http, DatabaseServices) {
+/*.controller('WeighLotCtrl', function($scope, $http, DatabaseServices) {
   $scope.GetLots = function(){
     var date = moment(new Date());
     var today = date.startOf('day').format();
@@ -253,6 +148,6 @@ angular.module('scanthisApp.itemController', [])
     }
   });
 
-})
+})*/
 ;
 

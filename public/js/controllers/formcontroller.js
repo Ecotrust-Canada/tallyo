@@ -110,9 +110,15 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].shipping_unit_number = createShipNum(moment(new Date()).format());
     }
+    if ($scope.station_info.collectiontable === 'lot'){
+      $scope.entry[table].timestamp = date;
+      $scope.entry[table].station_code = $scope.station_code;
+      $scope.entry[table].lot_number = createLotNum($scope.station_code, moment(new Date()).format());
+    }
     
 
     MakeEntry(form, table, $scope);
+    //console.log($scope.entry[table]);
     $scope.ToDatabase(responsefunction);
   };
 
@@ -133,46 +139,6 @@ angular.module('scanthisApp.formController', [])
     $scope.Submit(form, AddDB);
   };
 
-
-
-
 })
-
-
-
-
-
-
-
-
-/*
- * Splits String into several fields
- */
-.controller('QRScanCtrl', function($scope, $http, DatabaseServices) {
-
-
-  $scope.change = function(){
-    var rawArray = $scope.raw.string.split("|");
-    for (var i=0;i<$scope.valuesarray.length;i++){
-      $scope.form[$scope.valuesarray[i]] = rawArray[i];
-    }
-    //This is still only for one page
-    $scope.MakeBox();
-  };
-
-  $scope.init = function(valuesArray){
-    $scope.valuesarray = valuesArray;
-  };
-
-  })
-
-
-.controller('NewFormScope', function($scope, $http, DatabaseServices) {
-  $scope.form = {};
-  $scope.addnew = true;
-
-})
-
-
 
 ;

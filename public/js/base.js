@@ -11,6 +11,7 @@ angular.module('scanthisApp', [
   'scanthisApp.formController',
   'scanthisApp.itemController',
   'scanthisApp.packingController',
+  'scanthisApp.receivingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',

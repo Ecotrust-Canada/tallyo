@@ -67,6 +67,15 @@ var listconfigs = [
     arg: "loin_number", 
     arg2: "internal_lot_code", 
     button: "Reprint"
+  },
+  { id: 8,    
+    cssclass: "fill small", 
+    headers: ["Box Number", "Harvester Code"], 
+    fields: ["box_number", "harvester_code"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number",  
+    button: "Remove"
   }
 
 
@@ -87,6 +96,13 @@ var dropdownconfigs = [
     order: "-timestamp", 
     arg: "shipping_unit_number", 
     fields: ["po_number"]
+  },
+  { id: 2, 
+    title: "Recent Lots", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "lot_number", 
+    fields: ["internal_lot_code"]
   }
 
 ];

@@ -37,6 +37,7 @@
       <script src="js/controllers/createlotcontroller.js"></script>
       <script src="js/controllers/setsuppliercontroller.js"></script>
       <script src="js/controllers/admincontroller.js"></script>
+      <script src="js/controllers/receivingcontroller.js"></script>
 
       <script src="js/base.js"></script>
 
@@ -44,7 +45,7 @@
     <body div ng-controller="RoutingCtrl">
          <nav>
             <ul>
-                <li><a>HarSam</a>
+                <li><a>Stations</a>
                     <ul>
                     <li ng-repeat="terminal in terminals"><a href="/#/terminal/{{ terminal.id }}">{{ terminal.name }}</a></li>
                         <!--<li><a ui-sref="harsam_admin.manage_suppliers">Admin</a></li>
