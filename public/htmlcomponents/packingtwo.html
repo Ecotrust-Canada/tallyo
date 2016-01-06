@@ -1,0 +1,16 @@
+
+
+
+
+<div ng-controller="SelectMultipleCtrl" class="form-text">
+  <entryform config="collectionform" form="form" formchange="formchange" list1="list.lots" list2="list.products" submit-fn="SubmitAddtoList(form)"></entryform>
+
+
+  <hr>
+  <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
+  <div ng-controller="DropDownCtrl" ng-init="init('label')" ng-hide="editdrop">
+    <formoptionedit></formoptionedit>
+  </div>
+  <entryform config="scanform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+  <hr>
+</div>

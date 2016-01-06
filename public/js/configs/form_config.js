@@ -106,7 +106,8 @@ var formconfigs =
   {//scan, AM2-003
     id: 9, 
     fields:[
-      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"}
+      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"},
+      {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"}
     ]
   },
   { //lot, amanda internal receiving 
@@ -115,6 +116,26 @@ var formconfigs =
     fields:[
       {"type":"text", "fieldname":"internal_lot_code", "title":"Lot code", "value":""}
     ]
+  },
+  {//label, AM2-003
+    id: 11, 
+    fields:[
+      {"type": "select", "fieldname":"lot_number", "title":"Lot Code", "value": {"list": "list1", "name": "internal_lot_code", "val":"lot_number"}},
+      {"type": "select", "fieldname":"product_number", "title":"Product Type", "value": {"list": "list2", "name": "type", "val":"product_number"}},
+      {"value":"dboptions","fieldname":"trade_unit","id":"0","title":"Trade Unit","type":"select"}      
+    ], 
+    dboptions: 'label'
+  },
+  {//product, AM2-003
+    id: 12, 
+    hide: "Add Product", 
+    fields:[
+      {"type":"text", "fieldname":"type", "title":"Type", "value":""}, 
+      {"type":"text", "fieldname":"handling", "title":"Handling", "value":""}, 
+      {"type":"text", "fieldname":"state", "title":"State", "value":""},
+      {"type":"text", "fieldname":"sap_item_code", "title":"SAP Item Code", "value":""},
+      {"type":"number", "fieldname":"best_before", "title":"Best Before Interval (years)", "value":""}
+    ], 
   },
 
 ];

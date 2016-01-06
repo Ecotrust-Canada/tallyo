@@ -1,0 +1,17 @@
+<div class="block">
+  <select ng-model="model.id">
+    <option value="">-- select --</option>
+    <option ng-repeat="option in collectionform.fields|filter:{value:'dboptions'}" value="{{option.fieldname}}">{{option.title}}</option>
+  </select>
+</div>
+<div class="block">
+<ul ng-if="model.id">
+  <li ng-repeat="selection in formoptions|filter:{field_name:model.id}">
+    <span>
+      {{selection.value}}
+      <input type="button" ng-click="Delete(selection.value, model.id)" value="Delete" />
+    </span>
+  </li>
+  <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new, model.id)" value="Add" /></li>
+</ul>
+</div>

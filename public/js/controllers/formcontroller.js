@@ -7,6 +7,7 @@ angular.module('scanthisApp.formController', [])
 
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
 
+
     $scope.hideform = false;
     if ($scope.config.hide){
       $scope.hideform = true;
@@ -16,16 +17,13 @@ angular.module('scanthisApp.formController', [])
       var table = $scope.config.dboptions;
       var func = function(response){
         $scope.formoptions = response.data; 
-        //console.log($scope.formjson); 
       };
-      //console.log($scope.station_code);
-      //var query = '?table_name=eq.' + table + '&station_code=eq.' + $scope.station_code;
+
       var query = '?table_name=eq.' + table;
       DatabaseServices.GetEntries('formoptions', func, query);
     }
   
     $scope.formarray = $scope.config.fields;  
-    //$scope.form = ClearFormToDefault($scope.form, $scope.formarray);
 
     $scope.Clear = function(){
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
@@ -33,7 +31,6 @@ angular.module('scanthisApp.formController', [])
 
     $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
-      //TODO: if something in config
       var state = $scope.form.state;
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
       if (state){

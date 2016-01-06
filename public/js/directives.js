@@ -12,6 +12,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
 
+.directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
+
 .directive('boxinfo', function() { return { 
   scope: { box: '=' },
   templateUrl: 'htmlpartials/boxinfo.html' }; })
@@ -36,6 +38,8 @@ angular.module('scanthisApp.directives', [])
           config: '=', 
           form: '=',  
           formchange: '=',
+          list1: '=', 
+          list2: '=', 
           submitFn: '&'},
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })

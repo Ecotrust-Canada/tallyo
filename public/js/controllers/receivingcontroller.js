@@ -90,4 +90,34 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 
+.controller('SelectMultipleCtrl', function($scope, $http, DatabaseServices) {
+  $scope.editdrop = true;
+
+  $scope.ListLots = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.lots = response.data;
+    };
+    DatabaseServices.GetEntries('lot', func, query);
+  };
+
+  $scope.ListLots();
+
+  $scope.ListProducts = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.products = response.data;
+    };
+    DatabaseServices.GetEntries('product', func, query);
+  };
+
+  $scope.ListProducts();
+
+  $scope.selected = {};
+  $scope.selected.lot = 'no selected';
+  $scope.selected.product = 'no selected';
+
+})
+
+
 ;
