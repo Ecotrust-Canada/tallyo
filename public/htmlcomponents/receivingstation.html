@@ -1,7 +1,6 @@
 <div class="sectionframe">
 
   <div ng-controller="CollectionTableDropDownCtrl">
-
     <dropdown itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
   </div>
 
@@ -13,8 +12,6 @@
 
 
 <div class="sectionframe">
-
-
     {{packingconfig.sectiontitle}}:<br><br>
     <div ng-controller="QRScanCtrl" >
         <form ng-submit="readQR()">
@@ -24,17 +21,11 @@
     <br>
 
     <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
-
-
 </div>
 
 
 <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-  <boxinfo ng-if="station_info.collectiontable==='box'" box="current.box"></boxinfo>
-  <div ng-if="station_info.collectiontable==='shipping_unit'" shipinfo ship="current.shipping_unit"></div>
-  <div ng-if="station_info.collectiontable==='lot'">
-  {{current.lot.internal_lot_code}}
-  </div>
+  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
 <div ng-if="station_info.collectiontable==='box'" ng-controller="CalculateBoxCtrl"></div>
@@ -44,3 +35,5 @@
     <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
   </div>
 </div>
+
+

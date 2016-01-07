@@ -115,3 +115,25 @@ var dropdownconfigs = [
   }
 
 ];
+
+
+var displayconfigs = [
+  { id: 0, 
+    layout: [[{'name':'P.O. Number', 'val':'po_number'}, {'name':'Customer', 'val':'customer'}], 
+      [{'name':'Container Number', 'val':'container_number'}]]
+  },
+  { id: 1, 
+    layout: [[{'name':'P.O. Number', 'val':'po_number'}, {'name':'Received From', 'val':'received_from'}], 
+      [{'name':'Vessel Name', 'val':'vessel_name'}]]
+  },
+  { id: 2, 
+    layout: [[{'name':'Case Number', 'val':'case_number'}], 
+      [{'name':'', 'val':'size'}, {'name':'', 'val':'grade'}, {'name':'', 'val':'weight'}, {'name':'', 'val':'pieces'}],
+      [{'name':'Best Before', 'val':'best_before_date'}],
+      [{'name':'Internal Lot Number', 'val':'internal_lot_code'}, {'name':'Timestamp', 'val':'timestamp'}]]
+  },
+  { id: 3, 
+    layout: [[{'name':'Lot', 'val':'internal_lot_code'}]]
+  }
+];
+

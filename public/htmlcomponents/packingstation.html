@@ -26,11 +26,12 @@
 
 
 <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-  <boxinfo ng-if="station_info.collectiontable==='box'" box="current.box"></boxinfo>
+  <!--<boxinfo ng-if="station_info.collectiontable==='box'" box="current.box"></boxinfo>
   <div ng-if="station_info.collectiontable==='shipping_unit'" shipinfo ship="current.shipping_unit"></div>
   <div ng-if="station_info.collectiontable==='lot'">
   {{current.lot.internal_lot_code}}<br>
-  </div>
+  </div>-->
+  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
 <div ng-if="station_info.collectiontable==='box'" ng-controller="CalculateBoxCtrl"></div>

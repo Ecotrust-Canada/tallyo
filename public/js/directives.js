@@ -14,9 +14,10 @@ angular.module('scanthisApp.directives', [])
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
 
-.directive('boxinfo', function() { return { 
-  scope: { box: '=' },
-  templateUrl: 'htmlpartials/boxinfo.html' }; })
+.directive('display', function() { return { 
+  scope: {config: '=',
+          obj: '='},
+  templateUrl: 'htmlpartials/display.html' }; })
 
 .directive('list', function() { return { 
   scope: { itemlist: '=',  
@@ -44,8 +45,5 @@ angular.module('scanthisApp.directives', [])
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 
-.directive('shipinfo', function() { return { 
-  scope: { ship: '=' },
-  templateUrl: 'htmlpartials/shipinfo.html' }; })
 
 ;

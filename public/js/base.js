@@ -120,6 +120,10 @@ angular.module('scanthisApp', [
       $scope.totallistconfig = listconfigs[settings.lists.totals];
     }
 
+    if(settings.displays){
+      $scope.collectiondisplay = displayconfigs[settings.displays.collectiondisplay];
+    }
+
     $scope.includes = [];
     for (var i=0;i<settings.includes.length;i++){ 
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';

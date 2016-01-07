@@ -65,7 +65,7 @@ angular.module('scanthisApp.packingController', [])
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
     var func = function(response){
-      toastr.success('added to box'); // show success toast.
+      toastr.success('added'); // show success toast.
       $scope.MakeScan(id);
     };
     var onErr = function(){
