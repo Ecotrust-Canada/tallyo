@@ -76,6 +76,15 @@ var listconfigs = [
     order: "-timestamp", 
     arg: "box_number",  
     button: "Remove"
+  },
+  { id: 9,    
+    cssclass: "fill small", 
+    headers: ["Box Number", "Product Code", "Trade Unit"], 
+    fields: ["box_number", "product_code", "trade_unit"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number",  
+    button: "Remove"
   }
 
 

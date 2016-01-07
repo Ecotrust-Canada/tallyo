@@ -12,15 +12,30 @@
 
 
 <div class="sectionframe" >
-  <div ng-controller="ScanOnlyCtrl">
-    <entryform config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
+  <div ng-controller="ScanCtrl">
+    <entryform ng-if="!tableinform" config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
+    <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" submit-fn="Submit(form)"></entryform>
   </div>
+</div>
+
+<div ng-if="formedit">
+  <hr>
+  <div ng-init="editdrop = true">
+    <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
+    <div ng-controller="DropDownCtrl" ng-init="init('label')" ng-hide="editdrop">
+      <formoptionedit></formoptionedit>
+    </div>
+  </div>
+
+  <div ng-controller="ProductSubmitCtrl">
+    <entryform config="addform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+  </div>
+  <hr>
 </div>
 
 
 
-
-<div class="sectionframe" ng-controller="TotalsCtrl">
+<div ng-if="station_info.itemtotals" class="sectionframe" ng-controller="TotalsCtrl">
   <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
 </div>
 

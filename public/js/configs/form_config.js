@@ -120,8 +120,8 @@ var formconfigs =
   {//label, AM2-003
     id: 11, 
     fields:[
-      {"type": "select", "fieldname":"lot_number", "title":"Lot Code", "value": {"list": "list1", "name": "internal_lot_code", "val":"lot_number"}},
-      {"type": "select", "fieldname":"product_number", "title":"Product Type", "value": {"list": "list2", "name": "type", "val":"product_number"}},
+      //{"type": "select", "fieldname":"lot_number", "title":"Lot Code", "value": {"list": "list1", "name": "internal_lot_code", "val":"lot_number"}},
+      {"type": "select", "fieldname":"product_code", "title":"Product Type", "value": {"list": "list2", "name": "product_type", "val":"product_code", "table": "product"}},
       {"value":"dboptions","fieldname":"trade_unit","id":"0","title":"Trade Unit","type":"select"}      
     ], 
     dboptions: 'label'
@@ -130,7 +130,7 @@ var formconfigs =
     id: 12, 
     hide: "Add Product", 
     fields:[
-      {"type":"text", "fieldname":"type", "title":"Type", "value":""}, 
+      {"type":"text", "fieldname":"product_type", "title":"Type", "value":""}, 
       {"type":"text", "fieldname":"handling", "title":"Handling", "value":""}, 
       {"type":"text", "fieldname":"state", "title":"State", "value":""},
       {"type":"text", "fieldname":"sap_item_code", "title":"SAP Item Code", "value":""},

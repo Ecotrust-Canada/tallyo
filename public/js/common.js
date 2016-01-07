@@ -43,6 +43,11 @@ var createShipNum = function(date){
   return 'S' +  datestring;
 };
 
+var createProdCode = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'P' +  datestring;
+};
+
 var createHarvesterCode = function(processor, date){
   var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
   return processor +  datestring;
@@ -85,6 +90,12 @@ var CreateEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
     $scope.lot_entry.start_date = dates.start_date;
     $scope.lot_entry.end_date = dates.end_date;
+  };
+
+var CreateLotEntryPeriod = function(today, period, $scope){
+    var dates = dateManipulation(today, period);
+    $scope.entry.lot.start_date = dates.start_date;
+    $scope.entry.lot.end_date = dates.end_date;
   };
 
 /*sums weights of all objects in array*/

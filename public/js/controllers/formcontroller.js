@@ -13,6 +13,7 @@ angular.module('scanthisApp.formController', [])
       $scope.hideform = true;
     }
 
+
     if($scope.config.dboptions){
       var table = $scope.config.dboptions;
       var func = function(response){
@@ -30,15 +31,21 @@ angular.module('scanthisApp.formController', [])
     };
 
     $scope.$watch('formchange', function(newValue, oldValue) {
-    if ($scope.formchange !== undefined){
-      var state = $scope.form.state;
-      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
-      if (state){
-        $scope.form.state = state;
+      if ($scope.formchange !== undefined){
+        var state = $scope.form.state;
+        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+        if (state){
+          $scope.form.state = state;
+        }
+        
       }
-      
-    }
-  });
+    });
+
+    $scope.hidefn = function(){
+      if ($scope.config.hide){
+        $scope.hideform = true;
+      }
+    };
 
 })
 
@@ -109,6 +116,7 @@ angular.module('scanthisApp.formController', [])
     }
     if ($scope.station_info.collectiontable === 'lot'){
       $scope.entry[table].timestamp = date;
+      CreateLotEntryPeriod(date, 'day', $scope);
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].lot_number = createLotNum($scope.station_code, moment(new Date()).format());
     }

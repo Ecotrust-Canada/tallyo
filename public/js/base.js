@@ -69,6 +69,12 @@ angular.module('scanthisApp', [
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
     }
+    if(settings.formedit){
+      $scope.formedit = settings.formedit;
+    }
+    if(settings.tableinform){
+      $scope.tableinform = settings.tableinform;
+    }
 
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
@@ -102,6 +108,7 @@ angular.module('scanthisApp', [
     if (settings.forms){
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
+      $scope.addform = formconfigs[settings.forms.addform];
     }
 
     if (settings.dropdowns){

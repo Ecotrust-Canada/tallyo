@@ -110,7 +110,7 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
   };
 
-  //Display items trigered by this variable changing
+  //Display items triggered by this variable changing
   $scope.current.itemchange = true;
 
   $scope.$watch('current.collectionid', function() {

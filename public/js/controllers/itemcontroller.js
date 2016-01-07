@@ -4,10 +4,11 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ScanOnlyCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('ScanCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.entry.scan = {};
   $scope.entry.loin = {};
+  $scope.entry.box = {};
   $scope.form = {};
   $scope.formchange = true;
 
@@ -18,6 +19,7 @@ angular.module('scanthisApp.itemController', [])
       toastr.success("submit successful");
     };
     if (NoMissingValues($scope.entry.scan)){
+      console.log($scope.entry.scan);
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
     }
     else{ toastr.error("missing values"); }
@@ -33,6 +35,8 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseLoin = function(){   
     var func = function(response){
+      
+      //print a label if onLabel specified in config
       if($scope.onLabel){
         var data = dataCombine($scope.entry.loin, $scope.onLabel);
         console.log(data);
@@ -41,6 +45,7 @@ angular.module('scanthisApp.itemController', [])
           $scope.entry.loin.grade,
           $scope.current.harvester_lot.internal_lot_code]);
       }
+
       $scope.entry.scan.loin_number = response.data.loin_number;
       $scope.DatabaseScan();     
     };
@@ -48,6 +53,29 @@ angular.module('scanthisApp.itemController', [])
       DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.loin, func);
     }
     else{ toastr.error("missing values"); }
+  };
+
+  $scope.DatabaseBox = function(){   
+    var func = function(response){
+      $scope.entry.scan.box_number = response.data.box_number;
+      $scope.DatabaseScan();     
+    };
+    if (NoMissingValues($scope.entry.scan, 'box_number')){
+      DatabaseServices.DatabaseEntryReturn('box', $scope.entry.box, func);
+    }
+    else{ toastr.error("missing values"); }
+  };
+
+  $scope.MakeBoxScanEntry = function(form){
+    var date = moment(new Date()).format();
+    $scope.entry.box.box_number = createBoxNum(date);
+    $scope.entry.box.lot_number = $scope.current.collectionid;
+    $scope.entry.scan.lot_number = $scope.current.collectionid;
+    $scope.entry.box.timestamp = date;
+    $scope.entry.scan.timestamp = date;
+    $scope.entry.scan.station_code = $scope.station_code;
+    $scope.entry.box.station_code = $scope.station_code;
+    MakeEntry(form, 'box', $scope);
   };
 
   $scope.MakeLoinScanEntry = function(form){
@@ -72,7 +100,21 @@ angular.module('scanthisApp.itemController', [])
       $scope.MakeLoinScanEntry(form);
       $scope.DatabaseLoin();
     }
+    else if ($scope.station_info.itemtable === 'box'){
+      $scope.MakeBoxScanEntry(form);
+      $scope.DatabaseBox();
+    }
   };
+
+  $scope.ListProducts = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.product = response.data;
+    };
+    DatabaseServices.GetEntries('product', func, query);
+  };
+
+  $scope.ListProducts();
 })
 
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {

@@ -90,34 +90,59 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 
-.controller('SelectMultipleCtrl', function($scope, $http, DatabaseServices) {
-  $scope.editdrop = true;
+.controller('ProductSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.form = {};
+  $scope.entry.product = {};
+  $scope.formchange = true;
+
+
+  var AddtoList = function(response){
+    var thedata = response.data;
+    if ($scope.list.product !== undefined){
+      $scope.list.product.push(thedata);
+      toastr.success("product added");
+    }    
+  };
+
+  //database entry
+  $scope.ToDatabase = function(responsefunction){
+    var func = function(response){
+      $scope.formchange = !$scope.formchange;
+      responsefunction(response);
+    };
+    if (NotEmpty($scope.form)){
+      DatabaseServices.DatabaseEntryReturn('product', $scope.entry.product, func);
+    }
+    else{ toastr.error("empty form"); }
+  };
+
+  //fills out entry from form
+  $scope.Submit = function(form, responsefunction){
+    $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
+    MakeEntry(form, 'product', $scope);
+    $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+    $scope.ToDatabase(responsefunction);
+  };
+
+  $scope.SubmitAddtoList = function(form){
+    $scope.Submit(form, AddtoList);
+  };
+
+})
+
+
+.controller('LotSelectCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.ListLots = function(){
-    var query = '';
+    var query = '?end_date=gte.'+ moment(new Date()).format();
     var func = function(response){
-      $scope.list.lots = response.data;
+      $scope.list.lot = response.data;
     };
     DatabaseServices.GetEntries('lot', func, query);
   };
 
   $scope.ListLots();
 
-  $scope.ListProducts = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.products = response.data;
-    };
-    DatabaseServices.GetEntries('product', func, query);
-  };
-
-  $scope.ListProducts();
-
-  $scope.selected = {};
-  $scope.selected.lot = 'no selected';
-  $scope.selected.product = 'no selected';
 
 })
-
-
 ;
