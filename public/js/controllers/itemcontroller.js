@@ -19,7 +19,6 @@ angular.module('scanthisApp.itemController', [])
       toastr.success("submit successful");
     };
     if (NoMissingValues($scope.entry.scan)){
-      console.log($scope.entry.scan);
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
     }
     else{ toastr.error("missing values"); }
@@ -57,6 +56,17 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseBox = function(){   
     var func = function(response){
+
+      if($scope.onLabel){
+        var data = dataCombine($scope.entry.box, $scope.onLabel);
+        console.log(data);
+        $scope.printLabel(data,[
+          $scope.entry.box.box_number,
+          $scope.entry.box.product_code,
+          $scope.entry.box.trade_unit]);
+      }
+
+
       $scope.entry.scan.box_number = response.data.box_number;
       $scope.DatabaseScan();     
     };

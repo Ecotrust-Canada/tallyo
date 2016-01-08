@@ -17,6 +17,8 @@ angular.module('scanthisApp.packingController', [])
 
 
     var func = function(response){
+
+      $scope.current.patchitem = response.data[0];
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
       if (itemcollection && itemcollection !== $scope.current.collectionid){
@@ -64,9 +66,11 @@ angular.module('scanthisApp.packingController', [])
 
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
+
     var func = function(response){
       toastr.success('added'); // show success toast.
       $scope.MakeScan(id);
+
     };
     var onErr = function(){
       toastr.error('invalid object'); // show failure toast.
@@ -126,7 +130,7 @@ angular.module('scanthisApp.packingController', [])
     }
     else{
       var harvester_code = '';
-      var box_weight = 0;
+      var box_weight = CalculateBoxWeight($scope.list.included);
       var num = 0;
       $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code);
     }
@@ -159,6 +163,53 @@ angular.module('scanthisApp.packingController', [])
       $scope.CalcBox();
     }
   });
+
+})
+
+.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr) { 
+
+  $scope.harvesterArray = [];
+  $scope.collectionid = '';
+
+  $scope.CheckHarvester = function(harvester){
+    if(harvester){
+      if ($scope.harvesterArray.length === 0){
+        $scope.harvesterArray.push(harvester);
+      }
+      else if ($scope.harvesterArray.indexOf(harvester) !== -1){
+
+      }
+      else{
+        $scope.harvesterArray.push(harvester);
+        toastr.error('Warning: Mixing Harvesters in Lot');
+      }
+    }
+      
+  };
+
+  $scope.$watch('list.included', function() {
+    if($scope.current.collectionid !== $scope.collectionid){
+      $scope.collectionid = $scope.current.collectionid;
+      //$scope.harvesterArray = [];
+      var all = fjs.pluck('harvester_code', $scope.list.included);
+      var unique = fjs.nub(function (arg1, arg2) {
+        return arg1 === arg2;
+      });
+      $scope.harvesterArray = unique(all);
+    }else{
+      if ($scope.current.patchitem){
+        if ($scope.current.patchitem.harvester_code){
+          $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
+        }
+      }
+    }
+
+
+    
+  });
+
+  
+
 
 })
 

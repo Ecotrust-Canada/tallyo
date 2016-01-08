@@ -93,7 +93,7 @@ var formconfigs =
     fields:[
       {"value":"","fieldname":"weight_1","id":"0","title":"Plastic (kg)","type":"number"},
       {"value":"","fieldname":"weight_2","id":"1","title":"No Plastic","type":"number"},
-      {"value":[{"val":"Dirty","label":"Dirty"},{"val":"Clean","label":"Clean"}],"fieldname":"state","id":"2","title":"State","type":"radio"}
+      {"value":[{"val":"Dirty","label":"Dirty"},{"val":"Clean","label":"Clean"}],"fieldname":"state","id":"2","title":"State","type":"radio", "stay": "true"}
     ]
   },
   {//scan. HS0-002, 003

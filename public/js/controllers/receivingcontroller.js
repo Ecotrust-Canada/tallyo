@@ -8,10 +8,6 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.form = {};
 
-  $scope.valuesarray = ['box_number', 'size', 'grade', 'pieces', 'weight', 'case_number', 'lot_number', 'harvester_code'];
-
-  //{collectiontable: "shipping_unit", collectionid: "shipping_unit_number", itemtable: "box", patchtable: "box", itemid:"box_number"}
-
   $scope.readQR = function(){
     var rawArray = $scope.raw.string.split("/");
     for (var i=0;i<$scope.valuesarray.length;i++){
@@ -40,7 +36,7 @@ angular.module('scanthisApp.receivingController', [])
       $scope.entry.scan[$scope.station_info.itemid] = response.data[$scope.station_info.itemid];
       $scope.DatabaseScan();
       $scope.raw.string = null;
-      toastr.success("box added");     
+      toastr.success("added");     
     };
     if (NoMissingValues($scope.entry.scan, $scope.station_info.itemid)){
       DatabaseServices.DatabaseEntryReturn($scope.station_info.itemtable, $scope.entry[$scope.station_info.itemtable], func);
@@ -72,7 +68,7 @@ angular.module('scanthisApp.receivingController', [])
     }
     else{
       $scope.raw.string = null; 
-      toastr.error("select a Shipment");
+      toastr.error("select Collection");
     }
   };
 
@@ -90,17 +86,19 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 
-.controller('ProductSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {
+  var table = $scope.tableinform;
+
   $scope.form = {};
-  $scope.entry.product = {};
+  $scope.entry[table] = {};
   $scope.formchange = true;
 
 
   var AddtoList = function(response){
     var thedata = response.data;
-    if ($scope.list.product !== undefined){
-      $scope.list.product.push(thedata);
-      toastr.success("product added");
+    if ($scope.list[table] !== undefined){
+      $scope.list[table].push(thedata);
+      toastr.success("added");
     }    
   };
 
@@ -111,16 +109,21 @@ angular.module('scanthisApp.receivingController', [])
       responsefunction(response);
     };
     if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn('product', $scope.entry.product, func);
+      DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
     }
     else{ toastr.error("empty form"); }
   };
 
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
-    $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
-    MakeEntry(form, 'product', $scope);
-    $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+    if (table === 'product'){
+      $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
+      MakeEntry(form, 'product', $scope);
+      $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+    }
+    else{
+      MakeEntry(form, table, $scope);
+    }
     $scope.ToDatabase(responsefunction);
   };
 
@@ -147,27 +150,28 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+
   $scope.entry.scan = {};
 
   $scope.ScanIn = function(){
-    var rawArray = $scope.raw.string.split("/");
-    var id = rawArray[0];
+    if (!$scope.raw.string) {
+      toastr.error('please scan a code');
+    }
+    else{
+      var rawArray = $scope.raw.string.split("/");
+      var id = rawArray[0];
 
-    var func = function(response){
-      $scope.CheckScan(id);
-    };
-
-    var onErr = function() {
-      toastr.error('invalid object'); // show failure toast.
-    };
-
-    var query = '?' + $scope.station_info.itemid + '=eq.' + id;
-    DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+      var func = function(response){
+        $scope.CheckScan(id);
+      };
+      var onErr = function() {
+        toastr.error('invalid object'); // show failure toast.
+      };
+      var query = '?' + $scope.station_info.itemid + '=eq.' + id;
+      DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+      } 
   };
-
-
-
-  
+ 
 
   $scope.CheckScan = function(id){
     var func = function(response){
@@ -178,6 +182,7 @@ angular.module('scanthisApp.receivingController', [])
       else{
         $scope.entry.scan[$scope.station_info.itemid] = id;
         $scope.entry.scan.station_code = $scope.station_code;
+        $scope.entry.scan.timestamp = moment(new Date()).format();
         $scope.DatabaseScan();
       }
     };

@@ -138,10 +138,14 @@ var MakeEntry = function(form, scopevar, $scope){
 var ClearFormToDefault = function(form_arr, def_arr){
     for (var i=0;i<def_arr.length;i++){
       if (def_arr[i].type === 'text'){
-        form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        }
       }
       else{
-        form_arr[def_arr[i].fieldname] = "";
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = "";
+        }        
       }
     }
     return form_arr;

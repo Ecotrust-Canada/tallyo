@@ -75,6 +75,9 @@ angular.module('scanthisApp', [
     if(settings.tableinform){
       $scope.tableinform = settings.tableinform;
     }
+    if(settings.valuesarray){
+      $scope.valuesarray = settings.valuesarray;
+    }
 
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;

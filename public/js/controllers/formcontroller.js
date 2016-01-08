@@ -32,11 +32,11 @@ angular.module('scanthisApp.formController', [])
 
     $scope.$watch('formchange', function(newValue, oldValue) {
       if ($scope.formchange !== undefined){
-        var state = $scope.form.state;
+        //var state = $scope.form.state;
         $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
-        if (state){
+        /*if (state){
           $scope.form.state = state;
-        }
+        }*/
         
       }
     });
