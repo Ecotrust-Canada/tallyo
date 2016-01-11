@@ -205,4 +205,32 @@ var cleanJsonArray = function(array){
   array.forEach(cleanJson);
 };
 
+var padz = function(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+var tableInfo = function(table){
+  if (table === 'box'){
+    return {letter:'B', field: 'box_number'};
+  }
+  else if (table === 'loin'){
+    return {letter:'T', field:'loin_number'};
+  }
+  else if (table === 'lot'){
+    return {letter:'L', field:'lot_number'};
+  }
+  else if (table === 'shipping_unit'){
+    return {letter:'S', field:'shipping_unit_number'};
+  }
+  else if (table === 'harvester'){
+    return {letter:'H', field:'harvester_code'};
+  }
+};
+
+var isInArray = function(value, array) {
+  return array.indexOf(value) > -1;
+};
+
 

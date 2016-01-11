@@ -33,11 +33,10 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.DatabaseLoin = function(){   
-    var func = function(response){
-      
+    var func = function(response){      
       //print a label if onLabel specified in config
       if($scope.onLabel){
-        var data = dataCombine($scope.entry.loin, $scope.onLabel);
+        var data = dataCombine((response.data[0] || response.data), $scope.onLabel);
         console.log(data);
         $scope.printLabel(data,[
           $scope.entry.loin.weight_1,
@@ -45,40 +44,36 @@ angular.module('scanthisApp.itemController', [])
           $scope.current.harvester_lot.internal_lot_code]);
       }
 
-      $scope.entry.scan.loin_number = response.data.loin_number;
+      $scope.entry.scan.loin_number = (response.data[0].loin_number || response.data.loin_number);
       $scope.DatabaseScan();     
     };
     if (NoMissingValues($scope.entry.scan, 'loin_number')){
-      DatabaseServices.DatabaseEntryReturn('loin', $scope.entry.loin, func);
+      DatabaseServices.DatabaseEntryCreateCode('loin', $scope.entry.loin, $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
   };
 
-  $scope.DatabaseBox = function(){   
+  $scope.DatabaseBox = function(){ 
     var func = function(response){
-
       if($scope.onLabel){
-        var data = dataCombine($scope.entry.box, $scope.onLabel);
+        var data = dataCombine((response.data[0] || response.data), $scope.onLabel);
         console.log(data);
-        $scope.printLabel(data,[
+          $scope.printLabel(data,[
           $scope.entry.box.box_number,
           $scope.entry.box.product_code,
           $scope.entry.box.trade_unit]);
       }
-
-
-      $scope.entry.scan.box_number = response.data.box_number;
+      $scope.entry.scan.box_number = (response.data[0].box_number || response.data.box_number);
       $scope.DatabaseScan();     
     };
     if (NoMissingValues($scope.entry.scan, 'box_number')){
-      DatabaseServices.DatabaseEntryReturn('box', $scope.entry.box, func);
+      DatabaseServices.DatabaseEntryCreateCode('box', $scope.entry.box, $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
   };
 
   $scope.MakeBoxScanEntry = function(form){
     var date = moment(new Date()).format();
-    $scope.entry.box.box_number = createBoxNum(date);
     $scope.entry.box.lot_number = $scope.current.collectionid;
     $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.box.timestamp = date;
@@ -90,7 +85,6 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.MakeLoinScanEntry = function(form){
     var date = moment(new Date()).format();
-    $scope.entry.loin.loin_number = createLoinNum(date);
     $scope.entry.loin.lot_number = $scope.current.collectionid;
     $scope.entry.scan.lot_number = $scope.current.collectionid;
     $scope.entry.loin.timestamp = date;

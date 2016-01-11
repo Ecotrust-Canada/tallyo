@@ -21,9 +21,11 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
     DatabaseServices.GetEntries('harvester', func, query);
   };
-
   $scope.ListHarvesters();
 
+
+
+  //lotlocations functions
   $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
@@ -31,7 +33,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': bool};
     DatabaseServices.DatabaseEntry('lotlocations', entry, func);
   };
-
   $scope.RemoveOld = function(lot_number, station_code, bool){
     var func = function(response){
       $scope.AddNew(lot_number, station_code, bool);
@@ -39,7 +40,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code; 
     DatabaseServices.RemoveEntry('lotlocations', query, func);
   };
-
   $scope.patchtrue = function(lot_number, station_code){
     var patch = {'in_progress': true};
     var func = function(response){
@@ -47,7 +47,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number;
     DatabaseServices.PatchEntry('lotlocations',patch, query, func);
   };
-
   $scope.StationLot = function(lot_number, station_code){
     var func = function(response){
       if(response.data.length>0){
@@ -60,8 +59,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-
-
   $scope.AddStationLot = function(lot_number, station_code){
     var func = function(response){
       if(response.data.length>0){ 
@@ -74,12 +71,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-
-
-
-
-
-
   $scope.$watch('current.lot', function(newValue, oldValue) {
     if ($scope.current.lot !== undefined){
       $scope.StationLot($scope.current.lot, 'HS0-001');
@@ -87,22 +78,23 @@ angular.module('scanthisApp.setsupplierController', [])
       $scope.AddStationLot($scope.current.lot, 'HS0-003');
       $rootScope.$broadcast('collection-change', {id: $scope.current.lot});
     }
-
   });
 
-  
+
+
 
   /*make a new lot in the database*/
-  $scope.DatabaseLot = function(lot_number){
-    var func = function(){
-      $scope.current.lot = lot_number;
+  $scope.DatabaseLot = function(){
+    var func = function(response){
+      $scope.current.lot = (response.data[0].lot_number || response.data.lot_number);
     };
-    DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
+    //DatabaseServices.DatabaseEntry('lot', $scope.lot_entry, func);
+    DatabaseServices.DatabaseEntryCreateCode('lot', $scope.lot_entry, $scope.processor, func);
   };
 
   /*fill in fields in json obj*/
-  $scope.MakeLotEntry = function(date, lot_number){
-    $scope.lot_entry.lot_number = lot_number;
+  $scope.MakeLotEntry = function(date){
+    $scope.lot_entry.lot_number = 'placeholder';
     $scope.lot_entry.timestamp = moment(new Date()).format();        
     CreateEntryPeriod(date, 'day', $scope);
     $scope.lot_entry.station_code = $scope.station_code;
@@ -115,9 +107,8 @@ angular.module('scanthisApp.setsupplierController', [])
         $scope.current.lot = response.data[0].lot_number;
       }//end if
       else{
-        var lot_number = createLotNum($scope.station_code, date);
-        $scope.MakeLotEntry(date, lot_number);
-        $scope.DatabaseLot(lot_number);  
+        $scope.MakeLotEntry(date);
+        $scope.DatabaseLot();  
       }
     };
     DatabaseServices.GetEntries('lot', func, queryString);
@@ -179,7 +170,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
   var AddtoList = function(response){
-    var thedata = response.data;
+    var thedata = (response.data[0] || response.data);
     if ($scope.list.harvester !== undefined){
       $scope.list.harvester.push(thedata);
     }    
@@ -192,7 +183,7 @@ angular.module('scanthisApp.setsupplierController', [])
       responsefunction(response);
     };
     if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn('harvester', $scope.entry.harvester, func);
+      DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
     }
     else{ toastr.error("empty form"); }
   };
@@ -200,7 +191,6 @@ angular.module('scanthisApp.setsupplierController', [])
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
     $scope.entry.harvester.processor_code = $scope.processor;
-    $scope.entry.harvester.harvester_code = createHarvesterCode($scope.processor, moment(new Date()).format());
     $scope.entry.harvester.active = true;
     MakeEntry(form, 'harvester', $scope);
     $scope.ToDatabase(responsefunction);

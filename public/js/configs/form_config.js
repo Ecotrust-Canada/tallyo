@@ -137,6 +137,15 @@ var formconfigs =
       {"type":"number", "fieldname":"best_before", "title":"Best Before Interval (years)", "value":""}
     ], 
   },
+  {//shipping_unit, AM2-006
+    id: 13, 
+    hide: "Create Shipping Entry", 
+    fields:[
+      {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
+      {"type":"text", "fieldname":"customer", "title":"Customer", "value":""},
+      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
+    ]
+  },
 
 ];
 

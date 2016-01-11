@@ -177,20 +177,17 @@ angular.module('scanthisApp.packingController', [])
         $scope.harvesterArray.push(harvester);
       }
       else if ($scope.harvesterArray.indexOf(harvester) !== -1){
-
       }
       else{
         $scope.harvesterArray.push(harvester);
         toastr.error('Warning: Mixing Harvesters in Lot');
       }
-    }
-      
+    }      
   };
 
   $scope.$watch('list.included', function() {
     if($scope.current.collectionid !== $scope.collectionid){
       $scope.collectionid = $scope.current.collectionid;
-      //$scope.harvesterArray = [];
       var all = fjs.pluck('harvester_code', $scope.list.included);
       var unique = fjs.nub(function (arg1, arg2) {
         return arg1 === arg2;
@@ -202,27 +199,8 @@ angular.module('scanthisApp.packingController', [])
           $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
         }
       }
-    }
-
-
-    
+    }    
   });
-
-  
-
-
 })
 
-
-
-
-.controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.BoxQR = function(){
-    var qrstring = dataCombine($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, []);
-  };
-
-
-});
+;
