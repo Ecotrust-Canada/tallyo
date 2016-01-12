@@ -31,6 +31,9 @@ angular.module('scanthisApp.itemController', [])
       $scope.scalePromise = null;
       return;
     }
+    if (!$scope.scaleURL) {
+      return;
+    }
     scalePromise = $interval(function() {
       $http({
         method: 'GET',
