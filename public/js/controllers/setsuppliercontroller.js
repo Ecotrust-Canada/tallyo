@@ -90,7 +90,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   /*fill in fields in json obj*/
   $scope.MakeLotEntry = function(date){
-    $scope.lot_entry.lot_number = 'placeholder';
     $scope.lot_entry.timestamp = moment(new Date()).format();        
     CreateEntryPeriod(date, 'day', $scope);
     $scope.lot_entry.station_code = $scope.station_code;

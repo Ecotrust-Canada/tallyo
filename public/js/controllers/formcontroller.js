@@ -83,7 +83,6 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].station_code = $scope.station_code;
     }
     if ($scope.station_info.collectiontable === 'lot'){
-      $scope.entry.lot.lot_number = 'placeholder';
       $scope.entry[table].timestamp = date;
       CreateLotEntryPeriod(date, 'day', $scope);
       $scope.entry[table].station_code = $scope.station_code;
