@@ -37,7 +37,6 @@ angular.module('scanthisApp.itemController', [])
         url: $scope.scaleURL + 'weight',
       }).then(
         function successCallback(response) {
-          console.log(response.data.value);
           $scope.form[fieldName] = response.data.value;
         },
         function errorCallback(response) {
