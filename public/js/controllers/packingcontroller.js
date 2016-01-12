@@ -15,9 +15,7 @@ angular.module('scanthisApp.packingController', [])
     var id_array = raw_id.split("/");
     var id = id_array[0];
 
-
     var func = function(response){
-
       $scope.current.patchitem = response.data[0];
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
@@ -84,13 +82,11 @@ angular.module('scanthisApp.packingController', [])
 
 
   $scope.MakeQR = function(){
-    var qrstring = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel);
-    var labelarray = ArrayFromJson($scope.current[$scope.station_info.collectiontable], ['case_number', 'size', 'weight', 'pieces', 'internal_lot_code']);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, labelarray);
+    var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
+    var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
+    console.log(data, labels);
+    $scope.printLabel(data, labels);
   };
-
-
 
   $scope.Complete = function(){
     if ($scope.onLabel){

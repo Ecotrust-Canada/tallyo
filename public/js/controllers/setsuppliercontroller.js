@@ -9,10 +9,6 @@ angular.module('scanthisApp.setsupplierController', [])
    *sets the supplier
    */
 
-  $scope.editdrop = true;
-  $scope.addnew = true;
-  $scope.current.bool = true;
-
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
@@ -158,47 +154,6 @@ angular.module('scanthisApp.setsupplierController', [])
     
   };
 
-
-})
-
-
-.controller('HarvesterSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
-  $scope.entry.harvester = {};
-  $scope.formchange = true;
-
-
-
-  var AddtoList = function(response){
-    var thedata = (response.data[0] || response.data);
-    if ($scope.list.harvester !== undefined){
-      $scope.list.harvester.push(thedata);
-    }    
-  };
-
-  //database entry
-  $scope.ToDatabase = function(responsefunction){
-    var func = function(response){
-      $scope.formchange = !$scope.formchange;
-      responsefunction(response);
-    };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
-    }
-    else{ toastr.error("empty form"); }
-  };
-
-  //fills out entry from form
-  $scope.Submit = function(form, responsefunction){
-    $scope.entry.harvester.processor_code = $scope.processor;
-    $scope.entry.harvester.active = true;
-    MakeEntry(form, 'harvester', $scope);
-    $scope.ToDatabase(responsefunction);
-  };
-
-  $scope.SubmitAddtoList = function(form){
-    $scope.Submit(form, AddtoList);
-  };
 
 })
 

@@ -88,6 +88,10 @@ angular.module('scanthisApp.formController', [])
       CreateLotEntryPeriod(date, 'day', $scope);
       $scope.entry[table].station_code = $scope.station_code;
     }
+    if ($scope.station_info.collectiontable === 'harvester'){
+      $scope.entry.harvester.processor_code = $scope.processor;
+      $scope.entry.harvester.active = true;
+    }
     MakeEntry(form, table, $scope);
     $scope.ToDatabase(responsefunction);
   };

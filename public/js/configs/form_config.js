@@ -22,7 +22,8 @@ var formconfigs =
     ]
   },
   {//harvester, HS0-ADM
-    id: 2, 
+    id: 2,
+    hide: "Add New Supplier",  
     fields:[
       {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
       {"value":"Thunnus abacares","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
