@@ -13,7 +13,7 @@
 
 <div class="sectionframe" >
   <div ng-controller="ScanCtrl">
-    <entryform ng-if="!tableinform" config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
+    <entryform ng-if="!tableinform" config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)" poll-fn="startPolling(field)"></entryform>
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" submit-fn="Submit(form)"></entryform>
   </div>
 </div>

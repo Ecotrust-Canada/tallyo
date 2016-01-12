@@ -79,6 +79,10 @@ angular.module('scanthisApp', [
       $scope.valuesarray = settings.valuesarray;
     }
 
+    if(settings.scaleURL){
+      $scope.scaleURL = settings.scaleURL;
+    }
+
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
       $scope.printString = settings.printString;
@@ -89,13 +93,14 @@ angular.module('scanthisApp', [
           url: $scope.printurl + 'print',
           transformRequest: function(obj) {
             var str = [];
-            for(var p in obj)
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            for(var p in obj) {
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
             return str.join("&");
           },
           data: {data:$scope.printString(codeString, fieldarray)}
 
-    });
+        });
   };
     }
     

@@ -41,7 +41,8 @@ angular.module('scanthisApp.directives', [])
           formchange: '=',
           list1: '=', 
           list2: '=', 
-          submitFn: '&'},
+          submitFn: '&',
+          pollFn: '&'},
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 

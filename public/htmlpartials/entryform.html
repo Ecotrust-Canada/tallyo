@@ -29,6 +29,9 @@
             <option ng-repeat="option in list2" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
           </select>
         </td>
+        <td ng-if="row.pollarg">
+          <input type="button" ng-click="pollFn({field: row.pollarg})" value="store">
+        </td>
       </tr>
     </table>
   </form>

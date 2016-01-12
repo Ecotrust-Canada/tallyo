@@ -4,7 +4,8 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ScanCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr) {
+  var scalePromise;
 
   $scope.entry.scan = {};
   $scope.entry.loin = {};
@@ -12,7 +13,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.form = {};
   $scope.formchange = true;
 
-  $scope.DatabaseScan = function(form){    
+  $scope.DatabaseScan = function(form){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
@@ -23,6 +24,37 @@ angular.module('scanthisApp.itemController', [])
     }
     else{ toastr.error("missing values"); }
   };
+
+  $scope.startPolling = function(fieldName) {
+    $scope.stopPolling();
+    if (fieldName==='stop') {
+      $scope.scalePromise = null;
+      return;
+    }
+    scalePromise = $interval(function() {
+      $http({
+        method: 'GET',
+        url: $scope.scaleURL + 'weight',
+      }).then(
+        function successCallback(response) {
+          console.log(response.data.value);
+          $scope.form[fieldName] = response.data.value;
+        },
+        function errorCallback(response) {
+          console.log(response);
+        }
+      );
+    }, 500);
+  }
+  $scope.stopPolling = function() {
+    $interval.cancel(scalePromise);
+  }
+
+
+  if ($scope.scanform.startpolling) {
+    $scope.startPolling($scope.scanform.startpolling);
+  };
+  
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
@@ -114,6 +146,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.MakeBoxScanEntry(form);
       $scope.DatabaseBox();
     }
+
   };
 
   $scope.ListProducts = function(){

@@ -90,16 +90,18 @@ var formconfigs =
   },
   { //scan, HS0-001
     id: 7, 
+    startpolling: "weight_1",
     fields:[
-      {"value":"","fieldname":"weight_1","id":"0","title":"Plastic (kg)","type":"number"},
-      {"value":"","fieldname":"weight_2","id":"1","title":"No Plastic","type":"number"},
+      {"value":"","fieldname":"weight_1","id":"0","title":"Plastic (kg)","type":"number", "pollarg": "weight_2"},
+      {"value":"","fieldname":"weight_2","id":"1","title":"No Plastic","type":"number", "pollarg": "stop"},
       {"value":[{"val":"Dirty","label":"Dirty"},{"val":"Clean","label":"Clean"}],"fieldname":"state","id":"2","title":"State","type":"radio", "stay": "true"}
     ]
   },
   {//scan. HS0-002, 003
     id: 8, 
+    startpolling: "weight_1",
     fields:[
-      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"},
+      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
       {"value":[{"val":"A","label":"A"},{"val":"B","label":"B"},{"val":"C","label":"C"},{"val":"D","label":"D"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"}
     ]
   },

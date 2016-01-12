@@ -2,9 +2,6 @@
 
 angular.module('scanthisApp.formController', [])
 
-
-
-
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
 
 
@@ -28,12 +25,15 @@ angular.module('scanthisApp.formController', [])
 
     $scope.Clear = function(){
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+      if ($scope.config.startpolling) {
+        $scope.pollFn({field: $scope.config.startpolling});
+      }
     };
 
     $scope.$watch('formchange', function(newValue, oldValue) {
       if ($scope.formchange !== undefined){
         //var state = $scope.form.state;
-        $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+        $scope.Clear();
         /*if (state){
           $scope.form.state = state;
         }*/
