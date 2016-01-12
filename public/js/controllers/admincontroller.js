@@ -4,36 +4,9 @@
 angular.module('scanthisApp.AdminController', [])
 
 
-.controller('StartNewLotCtrl', function($scope, $injector, $timeout, toastr, DatabaseServices) {
-
-  $scope.isDisabled = false;
-  $scope.StartNewLot = function(){
-    var func = function(response){
-      $scope.current.collectionid = response.data.lot_number;
-      //$scope.current.lot = response.data;
-      $scope.list.lot.push(response.data);
-      toastr.success('lot created');
-    };
-    $scope.isDisabled = true;
-    // reenable button after two seconds have passed
-    $timeout(function(){
-      $scope.isDisabled = false;},
-      2000);
-    var entry = {};
-    var date = new Date();
-    entry.lot_number = createLotNum($scope.station_code, date);
-    entry.timestamp = moment(date).format();
-    var dates = dateManipulation(date, 'day');
-    entry.start_date = dates.start_date;
-    entry.end_date = dates.end_date;
-    entry.station_code = $scope.station_code;
-    DatabaseServices.DatabaseEntryReturn('lot', entry, func);
-  };
-
-})
 
 
-.controller('FormSelectionCtrl', function($scope, $http, DatabaseServices) {
+/*.controller('FormSelectionCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.getProcessors = function(){
 
@@ -45,11 +18,11 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getProcessors();
-})
+})*/
 
 
 
-.controller('HarvesterDropDownCtrl', function($scope, $http, DatabaseServices) {
+/*.controller('HarvesterDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.getHarvesters = function(processor){
 
@@ -65,7 +38,7 @@ angular.module('scanthisApp.AdminController', [])
        $scope.getHarvesters($scope.current.shipping_unit.received_from);
     }
   }); 
-})
+})*/
 
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
@@ -76,11 +49,9 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?station_code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
-
   $scope.ListShipments();
 
   $scope.Edit = function(ship_id){
-
     var index = arrayObjectIndexOf($scope.list.shipments, ship_id, 'shipping_unit_number');
     $scope.current.shipment = {};
     for (var name in $scope.list.shipments[index]){
@@ -88,13 +59,9 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-
-
   $scope.form={};
-
   
   $scope.ShipInfo = function(){
-
     var func = function(response){
       $scope.current.shipment = null;
       $scope.ListShipments();
@@ -117,7 +84,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('select_lot', func, query);
   };
   $scope.GetLotLocations();
-
 
   $scope.GetLotSummary = function(){
     var query = '';
@@ -188,29 +154,20 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.GetLoinScan();
 
-
-
   $scope.getData = function(lot_number, station){
     var csvarray = [];
     var stations = stationlist;
-
     var isStation = function(value){
       return value.code === station;
     };
     var filtered = $scope.sumStations.filter(isStation);
-
     var table = $scope.list[filtered[0].csv];
-
     var cellFilter = function(value){
       return value.lot_number === lot_number && value.station_code === station;
     };
     var cellData = table.filter(cellFilter);
-
-    cleanJsonArray(cellData);
-    
+    cleanJsonArray(cellData);    
     return cellData;
-
-
   };
 
 })
@@ -218,37 +175,30 @@ angular.module('scanthisApp.AdminController', [])
 //editing drop-down options for forms
 .controller('DropDownCtrl',function($scope, $http, DatabaseServices){
   $scope.FormData = function(table){
+    var func = function(response){
+      $scope.formoptions = response.data; 
+    };
+    var query = '?table_name=eq.' + table;
+    DatabaseServices.GetEntryNoAlert('formoptions', func, query);
+    };
+
+  $scope.Delete = function(value, field){
+    var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
+    var func = function(response){
+      $scope.FormData($scope.tablename);
+    };
+    DatabaseServices.RemoveEntry('formoptions', query, func);
+  };
+
+  $scope.New = function(value, field){
+    if (value){
+      var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
       var func = function(response){
-        $scope.formoptions = response.data; 
+        $scope.FormData($scope.tablename);
       };
-      var query = '?table_name=eq.' + table;
-      DatabaseServices.GetEntryNoAlert('formoptions', func, query);
-    };
-
-
-
-    $scope.Delete = function(value, field){
-        var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
-        var func = function(response){
-          $scope.FormData($scope.tablename);
-        };
-
-        DatabaseServices.RemoveEntry('formoptions', query, func);
-    };
-
-    $scope.New = function(value, field){
-      if (value){
-        var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
-        var func = function(response){
-          $scope.FormData($scope.tablename);
-        };
-        DatabaseServices.DatabaseEntry('formoptions', entry, func);
-      }
-
-      
-    };
-
-
+      DatabaseServices.DatabaseEntry('formoptions', entry, func);
+    }    
+  };
 
   $scope.init = function(table){
     $scope.tablename = table;
@@ -262,7 +212,7 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
-.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices, toastr){
+/*.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices, toastr){
   $scope.FormData = function(){
     console.log('function called');
       var func = function(response){
@@ -311,5 +261,5 @@ angular.module('scanthisApp.AdminController', [])
     $scope.Submit(form, $scope.FormData);
   };
 
-})
+})*/
 ;

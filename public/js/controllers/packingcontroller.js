@@ -15,9 +15,7 @@ angular.module('scanthisApp.packingController', [])
     var id_array = raw_id.split("/");
     var id = id_array[0];
 
-
     var func = function(response){
-
       $scope.current.patchitem = response.data[0];
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
@@ -84,13 +82,11 @@ angular.module('scanthisApp.packingController', [])
 
 
   $scope.MakeQR = function(){
-    var qrstring = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel);
-    var labelarray = ArrayFromJson($scope.current[$scope.station_info.collectiontable], ['case_number', 'size', 'weight', 'pieces', 'internal_lot_code']);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, labelarray);
+    var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
+    var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
+    console.log(data, labels);
+    $scope.printLabel(data, labels);
   };
-
-
 
   $scope.Complete = function(){
     if ($scope.onLabel){
@@ -177,20 +173,17 @@ angular.module('scanthisApp.packingController', [])
         $scope.harvesterArray.push(harvester);
       }
       else if ($scope.harvesterArray.indexOf(harvester) !== -1){
-
       }
       else{
         $scope.harvesterArray.push(harvester);
         toastr.error('Warning: Mixing Harvesters in Lot');
       }
-    }
-      
+    }      
   };
 
   $scope.$watch('list.included', function() {
     if($scope.current.collectionid !== $scope.collectionid){
       $scope.collectionid = $scope.current.collectionid;
-      //$scope.harvesterArray = [];
       var all = fjs.pluck('harvester_code', $scope.list.included);
       var unique = fjs.nub(function (arg1, arg2) {
         return arg1 === arg2;
@@ -202,27 +195,8 @@ angular.module('scanthisApp.packingController', [])
           $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
         }
       }
-    }
-
-
-    
+    }    
   });
-
-  
-
-
 })
 
-
-
-
-.controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.BoxQR = function(){
-    var qrstring = dataCombine($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, []);
-  };
-
-
-});
+;

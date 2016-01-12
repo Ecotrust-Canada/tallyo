@@ -15,7 +15,7 @@
     {{packingconfig.sectiontitle}}:<br><br>
     <div ng-controller="QRScanCtrl" >
         <form ng-submit="readQR()">
-          Scan Field: <input  type="text" ng-model="raw.string">
+          Scan Field: <input  type="text" ng-model="raw.string" autocomplete="off">
         </form>
       </div>
     <br>
@@ -28,7 +28,6 @@
   <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
-<div ng-if="station_info.collectiontable==='box'" ng-controller="CalculateBoxCtrl"></div>
 
 <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
   <div ng-controller="RemoveItemCtrl">

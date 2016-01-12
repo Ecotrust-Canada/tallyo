@@ -22,7 +22,8 @@ var formconfigs =
     ]
   },
   {//harvester, HS0-ADM
-    id: 2, 
+    id: 2,
+    hide: "Add New Supplier",  
     fields:[
       {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
       {"value":"Thunnus abacares","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
@@ -138,6 +139,15 @@ var formconfigs =
       {"type":"text", "fieldname":"sap_item_code", "title":"SAP Item Code", "value":""},
       {"type":"number", "fieldname":"best_before", "title":"Best Before Interval (years)", "value":""}
     ], 
+  },
+  {//shipping_unit, AM2-006
+    id: 13, 
+    hide: "Create Shipping Entry", 
+    fields:[
+      {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
+      {"type":"text", "fieldname":"customer", "title":"Customer", "value":""},
+      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
+    ]
   },
 
 ];

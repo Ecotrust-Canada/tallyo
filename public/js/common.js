@@ -22,8 +22,8 @@ var dateManipulation = function(date, period){
     return dates;
 };
 
-/* for now creates unique id by using stage id and current date and time*/
-var createLotNum = function(station_code, date){
+
+/*var createLotNum = function(station_code, date){
     var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
     return String(station_code) +  datestring;
 };
@@ -41,17 +41,17 @@ var createBoxNum = function(date){
 var createShipNum = function(date){
   var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
   return 'S' +  datestring;
-};
+};*/
 
 var createProdCode = function(date){
   var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
   return 'P' +  datestring;
 };
 
-var createHarvesterCode = function(processor, date){
+/*var createHarvesterCode = function(processor, date){
   var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
   return processor +  datestring;
-};
+};*/
 
 /*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){
@@ -203,6 +203,47 @@ var cleanJsonArray = function(array){
   };
 
   array.forEach(cleanJson);
+};
+
+var padz = function(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+var tableInfo = function(table){
+  if (table === 'box'){
+    return {letter:'B', field: 'box_number'};
+  }
+  else if (table === 'loin'){
+    return {letter:'T', field:'loin_number'};
+  }
+  else if (table === 'lot'){
+    return {letter:'L', field:'lot_number'};
+  }
+  else if (table === 'shipping_unit'){
+    return {letter:'S', field:'shipping_unit_number'};
+  }
+  else if (table === 'harvester'){
+    return {letter:'H', field:'harvester_code'};
+  }
+};
+
+var isInArray = function(value, array) {
+  return array.indexOf(value) > -1;
+};
+
+var AddtoEntryNonFormData = function($scope, date, table){
+  $scope.entry[table].lot_number = $scope.current.collectionid;
+  $scope.entry[table].timestamp = date;
+  $scope.entry[table].station_code = $scope.station_code;
+  $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+};
+
+var AddtoEntryFormData = function(form, scopevar, $scope){
+  for (var key in form){
+      $scope.entry[scopevar][key] = form[key];
+  }
 };
 
 
