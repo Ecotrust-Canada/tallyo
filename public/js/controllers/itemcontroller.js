@@ -12,6 +12,9 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.box = {};
   $scope.form = {};
   $scope.formchange = true;
+  if ($scope.scanform.startpolling) {
+    $scope.scaleon = true;
+  };
 
   $scope.DatabaseScan = function(form){
     var func = function(response){
@@ -26,12 +29,16 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.startPolling = function(fieldName) {
+    //stop polling scale
     $scope.stopPolling();
-    if (fieldName==='stop') {
-      $scope.scalePromise = null;
+    // if toggle_state command is sent flip scale state and start polling
+    if (fieldName === 'toggle_state') {
+      $scope.scaleon = !$scope.scaleon;
+      $scope.startPolling($scope.scanform.startpolling);
       return;
     }
-    if (!$scope.scaleURL) {
+    // if no scale url, or stop command is set, or scale is 'off' exit
+    if (!$scope.scaleURL || fieldName==='stop' || !$scope.scaleon) {
       return;
     }
     scalePromise = $interval(function() {
@@ -47,10 +54,13 @@ angular.module('scanthisApp.itemController', [])
         }
       );
     }, 500);
-  }
+  };
+
+  // stop polling scale and clear scalePromise
   $scope.stopPolling = function() {
     $interval.cancel(scalePromise);
-  }
+    scalePromise = null;
+  };
 
 
   if ($scope.scanform.startpolling) {

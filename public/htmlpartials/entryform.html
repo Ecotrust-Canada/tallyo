@@ -38,7 +38,7 @@
 
 
   <form>
-    <input ng-if="config.startpolling" type="button" ng-click="config.startpolling=null;pollFn({field: 'stop'})" value="Stop Scale">
+    <input ng-if="config.startpolling" type="button" ng-click="pollFn({field: 'toggle_state'})" value="Toggle Scale">
     <input type="button" ng-click="Clear()" value="Clear">
     <input type="button" ng-click="submitFn({form: form});hidefn()" value="Submit">
   </form>
