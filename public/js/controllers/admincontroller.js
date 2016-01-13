@@ -4,42 +4,6 @@
 angular.module('scanthisApp.AdminController', [])
 
 
-
-
-/*.controller('FormSelectionCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.getProcessors = function(){
-
-    var func = function(response){
-      $scope.list.processor = response.data;
-    };
-    var query = '';
-    DatabaseServices.GetEntries('processor', func, query);
-  };
-
-  $scope.getProcessors();
-})*/
-
-
-
-/*.controller('HarvesterDropDownCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.getHarvesters = function(processor){
-
-    var func = function(response){
-      $scope.list.harvester = response.data;
-    };
-    var query = '?processor_code=eq.' + processor;
-    DatabaseServices.GetEntries('harvester', func, query);
-  };
-
-  $scope.$watch('current.shipping_unit.received_from', function(newValue, oldValue) {
-    if ($scope.current.shipping_unit !== undefined){
-       $scope.getHarvesters($scope.current.shipping_unit.received_from);
-    }
-  }); 
-})*/
-
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListShipments = function(){
@@ -212,54 +176,50 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
-/*.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices, toastr){
-  $scope.FormData = function(){
-    console.log('function called');
-      var func = function(response){
-        $scope.formjson = response.data[0].form; 
-        console.log($scope.formjson); 
-        $scope.New($scope.codepatch);
-      };
-      var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
-      DatabaseServices.GetEntryNoAlert('form', func, query);
-    };
+.controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {
+  var table = $scope.tableinform;
 
-  $scope.New = function(value){
-    if (value){
-      $scope.formjson.fields[14].value.push({"name": value});
+  $scope.form = {};
+  $scope.entry[table] = {};
+  $scope.formchange = true;
+
+
+  var AddtoList = function(response){
+    var thedata = response.data;
+    if ($scope.list[table] !== undefined){
+      $scope.list[table].push(thedata);
+      toastr.success("added");
     }    
-    
-    var func = function(response){
-    };
-    var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
-    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
   };
-
 
   //database entry
   $scope.ToDatabase = function(responsefunction){
     var func = function(response){
-      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+      $scope.formchange = !$scope.formchange;
       responsefunction(response);
     };
     if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
+      DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
     }
-    else{ toastr.error("empty form"); }  
+    else{ toastr.error("empty form"); }
   };
 
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
-    MakeEntry(form, $scope.table, $scope);
-    $scope.codepatch = $scope.form.processor_code;
-    console.log($scope.codepatch);
+    if (table === 'product'){
+      $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
+      MakeEntry(form, 'product', $scope);
+      $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+    }
+    else{
+      MakeEntry(form, table, $scope);
+    }
     $scope.ToDatabase(responsefunction);
   };
 
-  //The different submit buttons
   $scope.SubmitAddtoList = function(form){
-    $scope.Submit(form, $scope.FormData);
+    $scope.Submit(form, AddtoList);
   };
 
-})*/
+})
 ;

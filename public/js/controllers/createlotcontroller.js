@@ -264,5 +264,18 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
+.controller('LotSelectCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.ListLots = function(){
+    var query = '?end_date=gte.'+ moment(new Date()).format();
+    var func = function(response){
+      $scope.list.lot = response.data;
+    };
+    DatabaseServices.GetEntries('lot', func, query);
+  };
+
+  $scope.ListLots();
+})
+
 
 ;

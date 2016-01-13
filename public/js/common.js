@@ -22,36 +22,11 @@ var dateManipulation = function(date, period){
     return dates;
 };
 
-
-/*var createLotNum = function(station_code, date){
-    var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
-    return String(station_code) +  datestring;
-};
-
-var createLoinNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'L' +  datestring;
-};
-
-var createBoxNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'B' +  datestring;
-};
-
-var createShipNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'S' +  datestring;
-};*/
-
 var createProdCode = function(date){
   var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
   return 'P' +  datestring;
 };
 
-/*var createHarvesterCode = function(processor, date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return processor +  datestring;
-};*/
 
 /*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){

@@ -42,24 +42,20 @@ var formconfigs =
     ], 
     dboptions: 'harvester'
   },
-  {//harvester, AM2-ADM
-    id: 3, 
+  {//harvester, AM2-011
+    id: 3,
+    hide: "Add Harvesting Info",  
     fields:[
-      {"value":"Yellowfin Tuna","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
-      {"value":"Thunnus abacares","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
-      {"value":"Fresh","fieldname":"state","id":"2","title":"State","type":"text"},
-      {"value":"Loined","fieldname":"handling","id":"3","title":"Handling","type":"text"},
-      {"value":"","fieldname":"supplier_group","id":"4","title":"Supplier Group","type":"text"},
-      {"value":"","fieldname":"supplier","id":"5","title":"Supplier","type":"text"},
+      {"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
+      {"value":"","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
+      {"value":"","fieldname":"state","id":"2","title":"State","type":"text"},
+      {"value":"","fieldname":"handling","id":"3","title":"Handling","type":"text"},
       {"value":"","fieldname":"fleet_vessel","id":"6","title":"Fleet/Vessel","type":"text"},
       {"value":"","fieldname":"fishing_area","id":"7","title":"Fishing Area","type":"text"},
       {"value":"","fieldname":"fishing_method","id":"8","title":"Fishing Method","type":"text"},
       {"value":"","fieldname":"landing_location","id":"9","title":"Landing Location","type":"text"},
       {"value":"","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"text"},
       {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},
-      {"value":"","fieldname":"ft_fa_code","id":"12","title":"FT FA Code","type":"text"},
-      {"value":[{"val":"true","label":"Yes"},{"val":"false","label":"No"}],"fieldname":"fair_trade","id":"13","title":"Fair Trade","type":"radio"},
-      {"value":[{"name":"HS0"},{"name":"AM1"}, {"name":"FIJ"}, {"name":"PAC"}, {"name":"ATL"}],"fieldname":"processor_code","id":"14","title":"Processor code","type":"select"}
     ]
   },
   {//shipping_unit, HS0-005
@@ -76,17 +72,31 @@ var formconfigs =
     hide: "Create Shipping Entry", 
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
-      {"type":"text", "fieldname":"received_from", "title":"Received From", "value":""}, 
+      {"type":"text", "fieldname":"received_from", "title":"Received From", "value":"HarSam Ambon"}, 
       {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
       {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
     ]
   },
-  {//processor, AM2-ADM
-    id: 6, 
+  {//shipping_unit, AM2-011
+    id: 6,  
+    hide: "Add receiving info",  
     fields:[
-      {"type":"text", "fieldname":"name", "title":"Name", "value":""}, 
-      {"type":"text", "fieldname":"processor_code", "title":"Code", "value":""}
+      {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""},  
+      {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
+      {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
+      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""},
+      {"fieldname": "split"},
+      {"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
+      {"value":"","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
+      {"value":"","fieldname":"state","id":"2","title":"State","type":"text"},
+      {"value":"","fieldname":"handling","id":"3","title":"Handling","type":"text"},
+      {"value":"","fieldname":"fleet_vessel","id":"6","title":"Fleet/Vessel","type":"text"},
+      {"value":"","fieldname":"fishing_area","id":"7","title":"Fishing Area","type":"text"},
+      {"value":"","fieldname":"fishing_method","id":"8","title":"Fishing Method","type":"text"},
+      {"value":"","fieldname":"landing_location","id":"9","title":"Landing Location","type":"text"},
+      {"value":"","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"text"},
+      {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},
     ]
   },
   { //scan, HS0-001
@@ -147,6 +157,12 @@ var formconfigs =
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
       {"type":"text", "fieldname":"customer", "title":"Customer", "value":""},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
+    ]
+  },
+  {//box, AM2-006
+    id: 14, 
+    fields:[
+      {"type":"number", "fieldname":"num_boxes", "title":"Number of boxes to print", "value":""}
     ]
   },
 

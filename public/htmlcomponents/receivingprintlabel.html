@@ -1,0 +1,19 @@
+
+<br>
+<div ng-controller="ReceivingPrintCtrl">
+  <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+</div>
+
+<hr>
+
+
+<div ng-controller="NewBoxCtrl">
+  Harvester Code: {{current.harvester.harvester_code}}<br>
+  Shipping_unit Number: {{current.shipping_unit.shipping_unit_number}}<br>
+  <entryform config="scanform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+</div>
+
+
+
+      
+

@@ -199,4 +199,58 @@ angular.module('scanthisApp.packingController', [])
   });
 })
 
+
+.controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.entry.scan = {};
+
+  $scope.ScanIn = function(){
+    if (!$scope.raw.string) {
+      toastr.error('please scan a code');
+    }
+    else{
+      var rawArray = $scope.raw.string.split("/");
+      var id = rawArray[0];
+
+      var func = function(response){
+        $scope.CheckScan(id);
+      };
+      var onErr = function() {
+        toastr.error('invalid object'); // show failure toast.
+      };
+      var query = '?' + $scope.station_info.itemid + '=eq.' + id;
+      DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+      } 
+  };
+ 
+  $scope.CheckScan = function(id){
+    var func = function(response){
+      if (response.data.length >0){
+        $scope.raw.string = null;
+        toastr.warning("already exists");
+      }
+      else{
+        $scope.entry.scan[$scope.station_info.itemid] = id;
+        $scope.entry.scan.station_code = $scope.station_code;
+        $scope.entry.scan.timestamp = moment(new Date()).format();
+        $scope.DatabaseScan();
+      }
+    };
+    var query = '?' + $scope.station_info.itemid + '=eq.' + id + '&station_code=eq.' + $scope.station_code;
+    DatabaseServices.GetEntries('scan', func, query);
+  };
+
+  $scope.DatabaseScan = function(){    
+    var func = function(response){
+      console.log(response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
+      toastr.success('added');
+      $scope.raw.string = null;
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+
+})
+
 ;
