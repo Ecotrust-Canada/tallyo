@@ -136,4 +136,99 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+.controller('ListCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.getArray = function(){
+    return copyArrayPart($scope.itemlist, $scope.config.fields);
+  };
+  $scope.getHeader = function(){
+    return $scope.config.headers;
+  };
+
+})
+
+.controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {
+  var table = $scope.tableinform;
+
+  $scope.form = {};
+  $scope.entry[table] = {};
+  $scope.formchange = true;
+
+
+  var AddtoList = function(response){
+    var thedata = response.data;
+    if ($scope.list[table] !== undefined){
+      $scope.list[table].push(thedata);
+      toastr.success("added");
+    }    
+  };
+
+  //database entry
+  $scope.ToDatabase = function(responsefunction){
+    var func = function(response){
+      $scope.formchange = !$scope.formchange;
+      responsefunction(response);
+    };
+    if (NotEmpty($scope.form)){
+      DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
+    }
+    else{ toastr.error("empty form"); }
+  };
+
+  //fills out entry from form
+  $scope.Submit = function(form, responsefunction){
+    if (table === 'product'){
+      $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
+      MakeEntry(form, 'product', $scope);
+      $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+    }
+    else{
+      MakeEntry(form, table, $scope);
+    }
+    $scope.ToDatabase(responsefunction);
+  };
+
+  $scope.SubmitAddtoList = function(form){
+    $scope.Submit(form, AddtoList);
+  };
+
+})
+
+//editing drop-down options for forms
+.controller('DropDownCtrl',function($scope, $http, DatabaseServices){
+  $scope.FormData = function(table){
+    var func = function(response){
+      $scope.formoptions = response.data; 
+    };
+    var query = '?table_name=eq.' + table;
+    DatabaseServices.GetEntryNoAlert('formoptions', func, query);
+    };
+
+  $scope.Delete = function(value, field){
+    var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
+    var func = function(response){
+      $scope.FormData($scope.tablename);
+    };
+    DatabaseServices.RemoveEntry('formoptions', query, func);
+  };
+
+  $scope.New = function(value, field){
+    if (value){
+      var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
+      var func = function(response){
+        $scope.FormData($scope.tablename);
+      };
+      DatabaseServices.DatabaseEntry('formoptions', entry, func);
+    }    
+  };
+
+  $scope.init = function(table){
+    $scope.tablename = table;
+    $scope.FormData(table);
+    $scope.model = {};
+    $scope.search = {};
+    $scope.search.type = "select";
+  };
+
+})
+
 ;

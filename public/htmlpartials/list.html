@@ -23,3 +23,6 @@
     <td ng-if="itemlist[0].boxes">{{itemlist | sumOfValue:'boxes'}}</td>
   </tr>
 </table>
+
+<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>
+

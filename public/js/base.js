@@ -127,6 +127,7 @@ angular.module('scanthisApp', [
     if(settings.lists){
       $scope.itemlistconfig = listconfigs[settings.lists.items];
       $scope.totallistconfig = listconfigs[settings.lists.totals];
+      $scope.item2listconfig = listconfigs[settings.lists.additem];
     }
 
     if(settings.displays){

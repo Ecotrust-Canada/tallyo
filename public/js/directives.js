@@ -25,6 +25,7 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=', 
            istotal: '=', 
            updateFn: '&'},
+  controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 
 .directive('dropdown', function() { return { 

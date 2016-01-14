@@ -221,4 +221,20 @@ var AddtoEntryFormData = function(form, scopevar, $scope){
   }
 };
 
+var onlyUnique = function(value, index, self) { 
+    return self.indexOf(value) === index;
+};
+
+var copyArrayPart = function(array, fields){
+  var newarray = [];
+  for (var i=0;i<array.length;i++){
+    var obj = {};
+    for (var j=0;j<fields.length;j++){
+      obj[fields[j]] = array[i][fields[j]];
+    }
+    newarray.push(obj);
+  }
+  return newarray;
+};
+
 

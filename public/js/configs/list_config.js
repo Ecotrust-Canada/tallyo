@@ -97,10 +97,25 @@ var listconfigs = [
   },
   { id: 11,    
     cssclass: "fill small", 
-    headers: ["Size", "Grade", "Weight", "Cases"], 
+    headers: ["Size", "Grade", "Total Weight", "Cases"], 
     fields: ["size", "grade", "weight", "boxes"], 
     limit: "10000",
-    order: "-timestamp"
+    order: "-timestamp",
+    csv: true
+  },
+  { id: 12,    
+    cssclass: "fill small", 
+    headers: ["Size", "Grade", "Weight/Box", "Cases"], 
+    fields: ["size", "grade", "weight", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
+  },
+  { id: 13,    
+    cssclass: "fill small", 
+    headers: ["Trade Unit", "Product Code", "Cases"], 
+    fields: ["trade_unit", "product_code", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
   }
 
 
@@ -144,11 +159,18 @@ var dropdownconfigs = [
     fields: ["received_from", "timestamp"]
   },
   { id: 5, 
-    title: "View Shipment totals", 
+    title: "View Incoming Shipment totals", 
     limit: "1000",
     order: "-timestamp", 
     arg: "shipping_unit_number", 
     fields: ["received_from", "timestamp"]
+  },
+  { id: 6, 
+    title: "View Inventory", 
+    limit: "1000",
+    order: "-timestamp", 
+    arg: "station_code", 
+    fields: ["name"]
   }
 
 ];

@@ -1,5 +1,23 @@
-<div ng-controller="InventoryCtrl">
-    <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
+<div ng-controller="ViewShipmentCtrl">
+  <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
 
-    <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
+  <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
+
+  <div ng-init="showexpanded=false">
+    <button ng-hide="showexpanded" ng-click="showexpanded=!showexpanded">View totals by Origin</button>
+    <button ng-show="showexpanded" ng-click="showexpanded=!showexpanded">Hide</button>
+
+    <div ng-show="showexpanded" ng-repeat="harvester in list.origin" >
+      {{list[harvester].harvester.supplier}}<br>
+      <list itemlist="list[harvester].summary"  config="totallistconfig" istotal="istotal"></list>
+    </div>
+  </div>
+</div>
+<br>
+<hr>
+<br>
+
+<div ng-controller="InventoryCtrl">
+  <dropdown itemlist="stations"  cfg="collectiondropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
+  <list itemlist="list.boxes"  config="listconfig"></list>
 </div>
