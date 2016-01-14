@@ -94,6 +94,13 @@ var listconfigs = [
     order: "-timestamp", 
     arg: "box_number", 
     button: "Remove"
+  },
+  { id: 11,    
+    cssclass: "fill small", 
+    headers: ["Size", "Grade", "Weight", "Cases"], 
+    fields: ["size", "grade", "weight", "boxes"], 
+    limit: "10000",
+    order: "-timestamp"
   }
 
 
@@ -132,6 +139,13 @@ var dropdownconfigs = [
   { id: 4, 
     title: "Select Recent", 
     limit: "5",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["received_from", "timestamp"]
+  },
+  { id: 5, 
+    title: "View Shipment totals", 
+    limit: "1000",
     order: "-timestamp", 
     arg: "shipping_unit_number", 
     fields: ["received_from", "timestamp"]

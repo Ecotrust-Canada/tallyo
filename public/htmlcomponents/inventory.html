@@ -1,0 +1,5 @@
+<div ng-controller="InventoryCtrl">
+    <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
+
+    <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
+</div>

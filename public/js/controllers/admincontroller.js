@@ -222,4 +222,38 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
+
+.controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.istotal = true;
+  $scope.selected = "no selected";
+  $scope.ListShipments = function(){
+    var func = function(response){
+      $scope.list.shipping_unit = response.data;
+    };
+    var query = '';
+    DatabaseServices.GetEntries('shipping_unit', func, query);
+  };
+  $scope.ListShipments();
+
+  $scope.SetCurrent = function(selected){
+     var filtered = $scope.list.shipping_unit.filter(
+      function(value){
+        return value.shipping_unit_number === selected;
+      });
+     $scope.current.shipping_unit = filtered[0];
+     $scope.ShipSummary(selected);
+    //$scope.addinfo = false;
+  };
+
+
+  $scope.ShipSummary = function(ship_num){
+    var func = function(response){
+      $scope.list.included = response.data;
+    };
+    var query = '?shipping_unit_number=eq.' + ship_num;
+    DatabaseServices.GetEntries('shipment_summary', func, query);
+  };
+  $scope.ListShipments();
+
+})
 ;

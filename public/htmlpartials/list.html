@@ -15,8 +15,11 @@
   </tr>
   <tr ng-if="istotal === true">
     <td>Total:</td>
+    <td ng-if="itemlist[0].grade && itemlist[0].size"></td>
     <td ng-if="itemlist[0].weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</td>
     <td ng-if="itemlist[0].weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</td>
+    <td ng-if="itemlist[0].weight">{{itemlist | sumOfValue:'weight'| weightstring}}</td>
     <td ng-if="itemlist[0].pieces">{{itemlist | sumOfValue:'pieces'}}pcs</td>
+    <td ng-if="itemlist[0].boxes">{{itemlist | sumOfValue:'boxes'}}</td>
   </tr>
 </table>

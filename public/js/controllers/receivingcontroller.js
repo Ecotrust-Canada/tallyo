@@ -91,6 +91,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
+  $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
     MakeEntry(form, 'shipping_unit', $scope);
@@ -136,6 +137,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.harvester = {};
+  $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
     MakeEntry(form, 'harvester', $scope);
