@@ -1,16 +1,61 @@
 
 <br>
-<div ng-controller="ReceivingPrintCtrl">
-  <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+<div ng-controller="SetShipmentCtrl">
+  <entryform ng-show="addinfo" config="collectionform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+  <div ng-hide="addinfo">
+    Bill of Lading: {{current.shipping_unit.bill_of_lading}}<br>
+    Supplier: {{current.shipping_unit.received_from}}
+  </div>
+  <span ng-show="addinfo"> -or-</span> <br>
+  <dropdown ng-show="addinfo" itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="current.selected" change-fn="SetCurrent(selected)"></dropdown>
+  <button ng-hide="addinfo" ng-click="current.shipping_unit=null;addinfo=!addinfo">Edit</button>
+</div>
+
+<hr>
+
+<div ng-controller="SetOriginCtrl">
+  <dropdown ng-show="addinfo" itemlist="list.harvester"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="SetCurrent(selected)"></dropdown>
+  <span ng-show="addinfo"> -or-</span> <br>
+  <entryform ng-show="addinfo" config="addform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+  <div ng-hide="addinfo">
+    Country of Origin: {{current.harvester.country_origin}}<br>
+    Company: {{current.harvester.supplier}}<br>
+    Species: {{current.harvester.species_common}}
+  </div>
+  <button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo">Edit</button>
 </div>
 
 <hr>
 
 
 <div ng-controller="NewBoxCtrl">
-  Harvester Code: {{current.harvester.harvester_code}}<br>
-  Shipping_unit Number: {{current.shipping_unit.shipping_unit_number}}<br>
-  <entryform config="scanform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+   <fieldset  data-ng-repeat="choice in choices">
+      grade:<select ng-model="choice.grade">
+         <option>A</option>
+         <option>AA</option>
+         <option>AAA</option>
+         <option>B</option>
+         <option>AB</option>
+      </select>
+      size:<select ng-model="choice.size">
+         <option>1-3</option>
+         <option>3-5</option>
+         <option>5-8</option>
+         <option>8-up</option>
+         <option>3-4</option>
+         <option>4-8</option>
+      </select>
+      weight:<select ng-model="choice.weight">
+         <option>25</option>
+         <option>30</option>
+      </select>
+      <input class="short" type="number" ng-model="choice.num_boxes" placeholder="number of boxes">
+      <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+   </fieldset>
+   <button class="addfields" ng-click="addNewChoice()">Add fields</button>
+   <br>
+   <input type="button" ng-click="SubmitForm()" value="Print Box Labels">
+   <br>
 </div>
 
 

@@ -86,56 +86,70 @@ angular.module('scanthisApp.receivingController', [])
 
 
 
-.controller('ReceivingPrintCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.form = {};
   $scope.formchange = true;
-
+  $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
-  $scope.entry.harvester = {};
-
-  var fieldarray = fjs.pluck('fieldname', $scope.collectionform.fields);
-  var shippingfields = fieldarray.slice(0, fieldarray.indexOf("split"));
-  var harvesterfields = fieldarray.slice(fieldarray.indexOf("split")+1, fieldarray.length + 1);
 
   $scope.SubmitForm = function(form){  
-    //console.log(shippingfields, harvesterfields);
-
-    for (var i=0;i<shippingfields.length;i++){
-      if ($scope.form[shippingfields[i]]){
-        $scope.entry.shipping_unit[shippingfields[i]] = $scope.form[shippingfields[i]];
-      }
-    }
-    for (var j=0;j<harvesterfields.length;j++){
-      if ($scope.form[harvesterfields[j]]){
-        $scope.entry.harvester[harvesterfields[j]] = $scope.form[harvesterfields[j]];
-      }
-    }
-
-    var date = moment(new Date()).format();
-    $scope.entry.shipping_unit.timestamp = date;
-    $scope.entry.shipping_unit.station_code = $scope.station_code;
-    $scope.entry.harvester.fair_trade = false;
-
-    //console.log($scope.entry.shipping_unit, $scope.entry.harvester);
-
+    MakeEntry(form, 'shipping_unit', $scope);
+    $scope.entry.shipping_unit.timestamp = moment(new Date()).format();
     $scope.MakeShippingEntry();
+    $scope.formchange = !$scope.formchange;
+    $scope.addinfo = false;
   };
 
   $scope.MakeShippingEntry = function(){
     var func = function(response){
       $scope.current.shipping_unit = (response.data[0] || response.data);
-      $scope.MakeHarvesterEntry();
+      $scope.list.shipping_unit.push($scope.current.shipping_unit);
     };
     if (NotEmpty($scope.form)){
       DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
     }
-    else{ toastr.error("empty shipping info form"); } 
+    else{ toastr.error("empty form"); } 
+  };
+
+  $scope.ListShipments = function(){
+    var func = function(response){
+      $scope.list.shipping_unit = response.data;
+    };
+    var query = '';
+    DatabaseServices.GetEntries('shipping_unit', func, query);
+  };
+  $scope.ListShipments();
+
+  $scope.SetCurrent = function(selected){
+     var filtered = $scope.list.shipping_unit.filter(
+      function(value){
+        return value.shipping_unit_number === selected;
+      });
+     $scope.current.shipping_unit = filtered[0];
+    $scope.addinfo = false;
+  };
+
+})
+
+.controller('SetOriginCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.form = {};
+  $scope.formchange = true;
+  $scope.addinfo = true;
+  $scope.entry.harvester = {};
+
+  $scope.SubmitForm = function(form){  
+    MakeEntry(form, 'harvester', $scope);
+    $scope.entry.harvester.processor_code = $scope.processor;
+    $scope.MakeHarvesterEntry();
+    $scope.formchange = !$scope.formchange;
+    $scope.addinfo = false;
   };
 
   $scope.MakeHarvesterEntry = function(){
     var func = function(response){
       $scope.formchange = !$scope.formchange;
       $scope.current.harvester = (response.data[0] || response.data);
+      $scope.list.harvester.push($scope.current.harvester);
     };
     if (NotEmpty($scope.form)){
       DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
@@ -143,41 +157,86 @@ angular.module('scanthisApp.receivingController', [])
     else{ toastr.error("empty harvester info form"); } 
   };
 
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor;
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
+
+  $scope.SetCurrent = function(selected){
+     var filtered = $scope.list.harvester.filter(
+      function(value){
+        return value.harvester_code === selected;
+      });
+     $scope.current.harvester = filtered[0];
+    $scope.addinfo = false;
+  };
+
 })
 
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+  $scope.choices = [{id: 'choice1'}];
+  
+  $scope.addNewChoice = function() {
+    var newItemNo = $scope.choices.length+1;
+    $scope.choices.push({'id':'choice'+newItemNo});
+  };
+    
+  $scope.removeChoice = function() {
+    var lastItem = $scope.choices.length-1;
+    $scope.choices.splice(lastItem);
+  };
+
   $scope.entry.box = {};
-
-  $scope.$watch('current.harvester.harvester_code', function(newValue, oldValue) {
-    if ($scope.current.harvester !== undefined){
-      $scope.form.harvester_code = $scope.current.harvester.harvester_code;
-      $scope.form.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-
-      $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
-      $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-    }
-  });
-
   $scope.SubmitForm = function(form){
-    for (var i=1;i<form.num_boxes;i++){
-      $scope.MakeBox();
+    if ($scope.current.harvester !== undefined){
+      $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
+
+      if ($scope.current.shipping_unit !== undefined){
+        $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
+        $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+
+        var date = moment(new Date()).format();
+        for (var j=0;j<$scope.choices.length;j++){
+          var formrow = $scope.choices[j];
+          $scope.entry.box.grade = formrow.grade;
+          $scope.entry.box.size = formrow.size;
+          $scope.entry.box.weight = formrow.weight;
+
+          for (var i=1;i<=formrow.num_boxes;i++){
+            $scope.MakeBox($scope.entry.box, date);
+          }
+        }    
+      }else{
+        toastr.error("missing shipment info");
+      }
+    }else{
+      toastr.error("missing origin info");
     }
+    
+    
   };
   
-  $scope.MakeBox = function(){
+  $scope.MakeBox = function(entry, date){
     var func = function(response){
-      var data = dataCombine(response.data[0], $scope.onLabel.qr);
-      var labels = ArrayFromJson(response.data[0], $scope.onLabel.print);
+      var values = response.data[0];
+      values.origin = $scope.current.harvester.supplier;
+      var data = dataCombine(values, $scope.onLabel.qr);
+      var labels = ArrayFromJson(values, $scope.onLabel.print);
       console.log(data, labels);
-      $scope.printLabel(data, labels);
+      //$scope.printLabel(data, labels);
     };
     if (NoMissingValues($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('box', $scope.entry.box, $scope.processor, func);
+      entry.timestamp = date;
+      DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
     }
     else{ toastr.error("missing values"); } 
   };
 })
+
 
 
 ;

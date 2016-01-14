@@ -16,10 +16,24 @@
             <option value="">-- select --</option>
             <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
           </select>
+
           <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]">
             <option value="">-- select --</option>
             <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" value={{option.value}}>{{option.value}}</option>
           </select>
+
+          <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">
+            
+            <div ng-hide="editdrop[row.fieldname]">
+                  <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}">
+                      {{selection.value}}
+                      <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
+                  </div><br>
+                  <input  class="short" type="text" ng-model="new"><input type="button" ng-click="New(new, row.fieldname)" value="Add" />
+            </div>
+          </div>
+
+
           <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
             <option value="">-- select --</option>
             <option ng-repeat="option in list1" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
@@ -32,6 +46,12 @@
         <td ng-if="row.pollarg">
           <input type="button" ng-click="pollFn({field: row.pollarg})" value="store">
         </td>
+        <td ng-if="row.value ==='dboptions' && config.editinform === true">
+             <button ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]">Edit Drop-down choices</span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
+        </td>
+
+
+
       </tr>
     </table>
   </form>

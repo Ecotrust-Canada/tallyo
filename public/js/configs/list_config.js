@@ -121,6 +121,20 @@ var dropdownconfigs = [
     order: "-timestamp", 
     arg: "lot_number", 
     fields: ["internal_lot_code"]
+  },
+  { id: 3, 
+    title: "Select Origin", 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "harvester_code", 
+    fields: ["supplier"]
+  },
+  { id: 4, 
+    title: "Select Recent", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["received_from", "timestamp"]
   }
 
 ];

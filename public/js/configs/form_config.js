@@ -44,9 +44,12 @@ var formconfigs =
   },
   {//harvester, AM2-011
     id: 3,
-    hide: "Add Harvesting Info",  
+    hide: "Add New Origin",  
     fields:[
-      {"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
+      {"value":"dboptions","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"select"},
+      {"value":"dboptions","fieldname":"supplier","id":"5","title":"Name","type":"select"},
+      {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
+      /*{"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
       {"value":"","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
       {"value":"","fieldname":"state","id":"2","title":"State","type":"text"},
       {"value":"","fieldname":"handling","id":"3","title":"Handling","type":"text"},
@@ -55,8 +58,10 @@ var formconfigs =
       {"value":"","fieldname":"fishing_method","id":"8","title":"Fishing Method","type":"text"},
       {"value":"","fieldname":"landing_location","id":"9","title":"Landing Location","type":"text"},
       {"value":"","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"text"},
-      {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},
-    ]
+      {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},*/
+    ],
+    dboptions: 'harvester',
+    editinform: true
   },
   {//shipping_unit, HS0-005
     id: 4, 
@@ -80,24 +85,16 @@ var formconfigs =
   },
   {//shipping_unit, AM2-011
     id: 6,  
-    hide: "Add receiving info",  
+    hide: "Create New Shipment",  
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""},  
       {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
       {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""},
-      {"fieldname": "split"},
-      {"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
-      {"value":"","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
-      {"value":"","fieldname":"state","id":"2","title":"State","type":"text"},
-      {"value":"","fieldname":"handling","id":"3","title":"Handling","type":"text"},
-      {"value":"","fieldname":"fleet_vessel","id":"6","title":"Fleet/Vessel","type":"text"},
-      {"value":"","fieldname":"fishing_area","id":"7","title":"Fishing Area","type":"text"},
-      {"value":"","fieldname":"fishing_method","id":"8","title":"Fishing Method","type":"text"},
-      {"value":"","fieldname":"landing_location","id":"9","title":"Landing Location","type":"text"},
-      {"value":"","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"text"},
-      {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},
-    ]
+      {"type":"select", "fieldname":"received_from", "title":"Supplier", "value":"dboptions"},
+    ],
+    dboptions: 'shipping_unit',
+    editinform: true
   },
   { //scan, HS0-001
     id: 7, 
@@ -130,16 +127,15 @@ var formconfigs =
       {"type":"text", "fieldname":"internal_lot_code", "title":"Lot code", "value":""}
     ]
   },
-  {//label, AM2-003
+  {//label, AM2-004
     id: 11, 
     fields:[
-      //{"type": "select", "fieldname":"lot_number", "title":"Lot Code", "value": {"list": "list1", "name": "internal_lot_code", "val":"lot_number"}},
       {"type": "select", "fieldname":"product_code", "title":"Product Type", "value": {"list": "list2", "name": "product_type", "val":"product_code", "table": "product"}},
       {"value":"dboptions","fieldname":"trade_unit","id":"0","title":"Trade Unit","type":"select"}      
     ], 
     dboptions: 'label'
   },
-  {//product, AM2-003
+  {//product, AM2-004
     id: 12, 
     hide: "Add Product", 
     fields:[

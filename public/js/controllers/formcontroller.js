@@ -4,7 +4,7 @@ angular.module('scanthisApp.formController', [])
 
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
 
-
+  $scope.editdrop = {};
   $scope.hideform = false;
   if ($scope.config.hide){
     $scope.hideform = true;
@@ -40,6 +40,37 @@ angular.module('scanthisApp.formController', [])
       $scope.hideform = true;
     }
   };
+
+
+  $scope.FormData = function(table){
+    var func = function(response){
+      $scope.formoptions = response.data; 
+    };
+    var query = '?table_name=eq.' + table;
+    DatabaseServices.GetEntryNoAlert('formoptions', func, query);
+    };
+
+  $scope.Delete = function(value, field){
+    var query='?table_name=eq.' + $scope.config.dboptions + '&value=eq.' + value + '&field_name=eq.' + field;
+    var func = function(response){
+      $scope.FormData($scope.config.dboptions);
+    };
+    DatabaseServices.RemoveEntry('formoptions', query, func);
+  };
+
+  $scope.New = function(value, field){
+    if (value){
+      var entry ={"table_name": $scope.config.dboptions, "value": value, "field_name": field};
+      var func = function(response){
+        $scope.FormData($scope.config.dboptions);
+      };
+      DatabaseServices.DatabaseEntry('formoptions', entry, func);
+    }    
+  };
+
+  if ($scope.config.dboptions){
+    $scope.FormData($scope.config.dboptions);
+  }
 })
 
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
