@@ -40,7 +40,8 @@ var formconfigs =
       {"value":"dboptions","fieldname":"ft_fa_code","id":"12","title":"FT FA Code","type":"select"},
       {"value":[{"val":"true","label":"Yes"},{"val":"false","label":"No"}],"fieldname":"fair_trade","id":"13","title":"Fair Trade","type":"radio"}
     ], 
-    dboptions: 'harvester'
+    dboptions: 'harvester',
+    editinform: true
   },
   {//harvester, AM2-011
     id: 3,
@@ -49,16 +50,6 @@ var formconfigs =
       {"value":"dboptions","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"select"},
       {"value":"dboptions","fieldname":"supplier","id":"5","title":"Name","type":"select"},
       {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
-      /*{"value":"","fieldname":"species_common","id":"0","title":"Species (Common)","type":"text"},
-      {"value":"","fieldname":"species_latin","id":"1","title":"Species (Latin)","type":"text"},
-      {"value":"","fieldname":"state","id":"2","title":"State","type":"text"},
-      {"value":"","fieldname":"handling","id":"3","title":"Handling","type":"text"},
-      {"value":"","fieldname":"fleet_vessel","id":"6","title":"Fleet/Vessel","type":"text"},
-      {"value":"","fieldname":"fishing_area","id":"7","title":"Fishing Area","type":"text"},
-      {"value":"","fieldname":"fishing_method","id":"8","title":"Fishing Method","type":"text"},
-      {"value":"","fieldname":"landing_location","id":"9","title":"Landing Location","type":"text"},
-      {"value":"","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"text"},
-      {"value":"","fieldname":"country_production","id":"11","title":"Country of Production","type":"text"},*/
     ],
     dboptions: 'harvester',
     editinform: true
@@ -115,9 +106,10 @@ var formconfigs =
   },
   {//scan, AM2-003
     id: 9, 
+    startpolling: "weight_1",
     fields:[
-      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number"},
-      {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"}
+      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
+      {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio", "stay": "true"}
     ]
   },
   { //lot, amanda internal receiving 

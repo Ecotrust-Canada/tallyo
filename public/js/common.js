@@ -120,6 +120,9 @@ var ClearFormToDefault = function(form_arr, def_arr){
       else{
         if (!def_arr[i].stay){
           form_arr[def_arr[i].fieldname] = "";
+        }
+        else if (!form_arr[def_arr[i].fieldname]){
+          form_arr[def_arr[i].fieldname] = "";
         }        
       }
     }

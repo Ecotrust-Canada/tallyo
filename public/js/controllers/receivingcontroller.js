@@ -229,7 +229,7 @@ angular.module('scanthisApp.receivingController', [])
       var data = dataCombine(values, $scope.onLabel.qr);
       var labels = ArrayFromJson(values, $scope.onLabel.print);
       console.log(data, labels);
-      //$scope.printLabel(data, labels);
+      $scope.printLabel(data, labels);
     };
     if (NoMissingValues($scope.form)){
       entry.timestamp = date;

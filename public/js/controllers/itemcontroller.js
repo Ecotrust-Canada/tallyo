@@ -89,7 +89,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.entry.scan[itemid] = (response.data[0][itemid] || response.data[itemid]);
       $scope.DatabaseScan();     
     };
-    if (NoMissingValues($scope.entry.scan, itemid)){
+    if (NoMissingValues($scope.entry[table], itemid)){
       DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
@@ -111,7 +111,7 @@ angular.module('scanthisApp.itemController', [])
       }
       delete $scope.entry.box.trade_unit_w;
     }
-    console.log($scope.entry[table]);
+    //console.log($scope.entry[table]);
   };
 
   $scope.Submit = function(form){

@@ -18,13 +18,15 @@
             <div ng-init="$parent.prev=sum[station_info.trackBy]"></div>
           </div>
           <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
-            <b ng-class="{redfill: sum[station_info.trackBy]>prev, greenfill: sum[station_info.trackBy]===prev}"><span ng-if="station_info.trackBy==='pieces'">Pieces: {{sum[station_info.trackBy]}} | </span>Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>
+            <b ng-class="{redfill: sum[station_info.trackBy]>prev, greenfill: sum[station_info.trackBy]===prev}"><span ng-if="sum.pieces">Pieces: {{sum.pieces}} | </span><span ng-if="sum.boxes">Boxes: {{sum.boxes}} | </span>Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>
           </div>
 
           <br>
           <table>
             <tr class="fill2" ng-repeat = "total in list.totals_by_lot | filter: {lot_number:lot.lot_number, station_code:stn.code} | orderBy: 'state'">
+              <td ng-if="total.trade_unit || total.product_code">{{total.trade_unit}} {{total.product_code}}: </td>
               <td ng-if="total.state || total.grade">{{total.state}} {{total.grade}}: </td>
+              <td ng-if="total.boxes">{{total.boxes}} boxes </td> 
               <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
               <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
             </tr>

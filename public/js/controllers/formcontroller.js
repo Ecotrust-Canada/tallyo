@@ -193,42 +193,4 @@ angular.module('scanthisApp.formController', [])
 
 })
 
-//editing drop-down options for forms
-.controller('DropDownCtrl',function($scope, $http, DatabaseServices){
-  $scope.FormData = function(table){
-    var func = function(response){
-      $scope.formoptions = response.data; 
-    };
-    var query = '?table_name=eq.' + table;
-    DatabaseServices.GetEntryNoAlert('formoptions', func, query);
-    };
-
-  $scope.Delete = function(value, field){
-    var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
-    var func = function(response){
-      $scope.FormData($scope.tablename);
-    };
-    DatabaseServices.RemoveEntry('formoptions', query, func);
-  };
-
-  $scope.New = function(value, field){
-    if (value){
-      var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
-      var func = function(response){
-        $scope.FormData($scope.tablename);
-      };
-      DatabaseServices.DatabaseEntry('formoptions', entry, func);
-    }    
-  };
-
-  $scope.init = function(table){
-    $scope.tablename = table;
-    $scope.FormData(table);
-    $scope.model = {};
-    $scope.search = {};
-    $scope.search.type = "select";
-  };
-
-})
-
 ;
