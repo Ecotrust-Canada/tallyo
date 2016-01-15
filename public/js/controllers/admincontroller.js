@@ -204,7 +204,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.selected = "no selected";
   $scope.stations = [
     {name: 'Received', station_code: 'AM2-001', list:'itemlistconfig'},
-    {name: 'In Processing', station_code:'AM2-002', list:'itemlistconfig'},
     {name: 'In Inventory', station_code: 'AM2-005', list:'item2listconfig'}
   ];
 

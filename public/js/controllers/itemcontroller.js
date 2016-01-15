@@ -14,7 +14,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
     $scope.scaleon = true;
-  };
+  }
 
   $scope.DatabaseScan = function(form){
     var func = function(response){
@@ -65,7 +65,7 @@ angular.module('scanthisApp.itemController', [])
 
   if ($scope.scanform.startpolling) {
     $scope.startPolling($scope.scanform.startpolling);
-  };
+  }
   
 
   /*fills in fields in json to submit to database*/
@@ -101,6 +101,17 @@ angular.module('scanthisApp.itemController', [])
     AddtoEntryNonFormData($scope, date, table);
     AddtoEntryNonFormData($scope, date, 'scan');
     AddtoEntryFormData(form, table, $scope);
+    if (table==='box'){
+      $scope.entry.box.trade_unit = $scope.form.trade_unit_w + ' ' + $scope.form.trade_unit;
+      if ($scope.form.trade_unit === 'lb'){
+        $scope.entry.box.weight = $scope.form.trade_unit_w / 2.2;
+      }
+      else if ($scope.form.trade_unit === 'kg'){
+        $scope.entry.box.weight = $scope.form.trade_unit_w;
+      }
+      delete $scope.entry.box.trade_unit_w;
+    }
+    console.log($scope.entry[table]);
   };
 
   $scope.Submit = function(form){

@@ -131,7 +131,8 @@ var formconfigs =
     id: 11, 
     fields:[
       {"type": "select", "fieldname":"product_code", "title":"Product Type", "value": {"list": "list2", "name": "product_type", "val":"product_code", "table": "product"}},
-      {"value":"dboptions","fieldname":"trade_unit","id":"0","title":"Trade Unit","type":"select"}      
+      {"value":[{"name":"10"},{"name":"20"},{"name":"50"}],"fieldname":"trade_unit_w","id":"1","title":"Trade Unit - Weight","type":"select"}, 
+      {"value":[{"name":"kg"},{"name":"lb"}],"fieldname":"trade_unit","id":"2","title":"Units","type":"select"}      
     ], 
     dboptions: 'label'
   },
