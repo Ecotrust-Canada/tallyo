@@ -116,7 +116,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.shipping_unit = response.data;
     };
-    var query = '';
+    var query = '?received_from=neq.null';
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
   $scope.ListShipments();
@@ -180,20 +180,9 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.choices = [{id: 'choice1'}];
-  
-  $scope.addNewChoice = function() {
-    var newItemNo = $scope.choices.length+1;
-    $scope.choices.push({'id':'choice'+newItemNo});
-  };
-    
-  $scope.removeChoice = function() {
-    var lastItem = $scope.choices.length-1;
-    $scope.choices.splice(lastItem);
-  };
 
   $scope.entry.box = {};
-  $scope.SubmitForm = function(form){
+  $scope.SubmitForm = function(form, choices){
     if ($scope.current.harvester !== undefined){
       $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
 
@@ -202,8 +191,8 @@ angular.module('scanthisApp.receivingController', [])
         $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
         var date = moment(new Date()).format();
-        for (var j=0;j<$scope.choices.length;j++){
-          var formrow = $scope.choices[j];
+        for (var j=0;j<choices.length;j++){
+          var formrow = choices[j];
           $scope.entry.box.grade = formrow.grade;
           $scope.entry.box.size = formrow.size;
           $scope.entry.box.weight = formrow.weight;
@@ -233,6 +222,7 @@ angular.module('scanthisApp.receivingController', [])
     };
     if (NoMissingValues($scope.form)){
       entry.timestamp = date;
+      //console.log(entry);
       DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
     }
     else{ toastr.error("missing values"); } 

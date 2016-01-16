@@ -47,5 +47,9 @@ angular.module('scanthisApp.directives', [])
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 
-
+.directive('fieldsetrepeat', function() { return { 
+  scope: { config: '=' , 
+           submitFn: '&'},
+  controller: 'FieldsetCtrl',
+  templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })
 ;

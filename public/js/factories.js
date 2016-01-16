@@ -27,7 +27,6 @@ angular.module('scanthisApp.factories', [])
   var databaseurl = globalurl;
 
   var db_service = {};
-
   /**
    * Creates new row in database
    */

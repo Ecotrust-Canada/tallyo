@@ -7,19 +7,19 @@ var formconfigs =
     hide: "Create Case", 
     fields:[
       {"type":"text", "fieldname":"case_number", "title":"Case Number", "value":""}, 
-      {"type": "select", "fieldname":"size", "title":"Size", "value":[{"name":"3"}, {"name":"3-5"}, {"name":">5"}]}, 
+      {"type": "select", "fieldname":"size", "title":"Size", "value":[{"name":"3 lb"}, {"name":"3-5 lb"}, {"name":"5-up lb"}]}, 
       {"type": "select", "fieldname":"grade", "title":"Grade", "value":[{"name":"A"}, {"name":"AA"}, {"name":"AAA"}]}
     ]
   },
-  {//box, AM2-001
+  {//box, AM2-011
     id: 1, 
     fields:[
-      {"type":"text", "fieldname":"size", "title":"Size", "value":""}, 
-      {"type":"text", "fieldname":"grade", "title":"Grade", "value":""}, 
-      {"type":"text", "fieldname":"pieces", "title":"Pieces", "value":""}, 
-      {"type":"text", "fieldname":"weight", "title":"Weight", "value":""}, 
-      {"type":"text", "fieldname":"case_number", "title":"Case Number", "value":""}
-    ]
+      {"value":[{"name":"A"},{"name":"AA"},{"name":"AAA"},{"name":"B"},{"name":"AB"}],"fieldname":"grade","id":"0","title":"grade:","type":"select"}, 
+      {"value":[{"name":"1-3 lb"},{"name":"3-5 lb"}, {"name":"5-8 lb"},{"name":"8-up lb"},{"name":"3-4 lb"}, {"name":"4-8 lb"}],"fieldname":"size","id":"1","title":"size:","type":"select"},
+      {"value":[{"name":"25"},{"name":"30"}],"fieldname":"weight","id":"2","title":"weight:","type":"select"},
+      {"type":"number", "fieldname":"num_boxes", "placeholder":"number of boxes", "value":""}
+    ],
+    title: "Print Box Labels"
   },
   {//harvester, HS0-ADM
     id: 2,
@@ -147,13 +147,7 @@ var formconfigs =
       {"type":"text", "fieldname":"customer", "title":"Customer", "value":""},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
     ]
-  },
-  {//box, AM2-006
-    id: 14, 
-    fields:[
-      {"type":"number", "fieldname":"num_boxes", "title":"Number of boxes to print", "value":""}
-    ]
-  },
+  }
 
 ];
 
