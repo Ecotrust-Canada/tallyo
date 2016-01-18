@@ -7,3 +7,7 @@ tmp
 .DS_Store
 .idea
 config.js
+*~
+*.pyc
+*.swp
+*.log
