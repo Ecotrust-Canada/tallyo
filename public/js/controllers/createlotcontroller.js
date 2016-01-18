@@ -110,7 +110,7 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
   };
 
-  //Display items trigered by this variable changing
+  //Display items triggered by this variable changing
   $scope.current.itemchange = true;
 
   $scope.$watch('current.collectionid', function() {
@@ -250,11 +250,10 @@ angular.module('scanthisApp.createlotController', [])
     if($scope.onLabel){
       var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
       var func = function(response){
-        var loinData = response.data[0];
-        $scope.printLabel(loin_number,[
-          loinData.weight_1,
-          loinData.grade,
-          internal_lot_code]);
+        var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
+        var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
+        console.log(data, labels);
+        $scope.printLabel(data, labels);
       };
       DatabaseServices.GetEntries('loin_scan', func, query);
       
@@ -263,6 +262,19 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.ListAllItems($scope.station_code);
 
+})
+
+.controller('LotSelectCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.ListLots = function(){
+    var query = '?end_date=gte.'+ moment(new Date()).format();
+    var func = function(response){
+      $scope.list.lot = response.data;
+    };
+    DatabaseServices.GetEntries('lot', func, query);
+  };
+
+  $scope.ListLots();
 })
 
 

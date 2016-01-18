@@ -11,17 +11,16 @@
 </div>
 
 
-<div class="sectionframe" ng-controller="PackingCtrl">
-  <div ng-controller="HighlightScanCtrl">
-
+<div class="sectionframe">
     {{packingconfig.sectiontitle}}:<br><br>
-    <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;">
-      {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off">
-    </form>
+    <div ng-controller="QRScanCtrl" >
+        <form ng-submit="readQR()">
+          Scan Field: <input  type="text" ng-model="raw.string" autocomplete="off">
+        </form>
+      </div>
     <br>
 
     <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
-  </div>
 </div>
 
 
@@ -29,11 +28,11 @@
   <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
-<div ng-if="station_info.collectiontable==='box'" ng-controller="CalculateBoxCtrl"></div>
-<div ng-if="station_info.collectiontable==='lot'" ng-controller="HarvesterBoxCtrl"></div>
 
 <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-  <div ng-controller="RemovePatchCtrl">
-    <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
+  <div ng-controller="RemoveItemCtrl">
+    <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
   </div>
 </div>
+
+

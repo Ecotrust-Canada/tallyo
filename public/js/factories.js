@@ -27,7 +27,6 @@ angular.module('scanthisApp.factories', [])
   var databaseurl = globalurl;
 
   var db_service = {};
-
   /**
    * Creates new row in database
    */
@@ -89,6 +88,30 @@ angular.module('scanthisApp.factories', [])
       url = databaseurl + table;
     }
     $http.get(url).then(func, handleDbError);
+  };
+
+  var CreateCode = function(table, processor_code, func, onErr){
+    return function(response){
+      var table_info = tableInfo(table);
+      var id = response.data.serial_id;
+      var querystring = '?serial_id=eq.' + id;
+      var url = databaseurl + table + cleanQueryString(querystring);
+      var id36 = (parseInt(id)).toString(36).toUpperCase();
+      var newid = table_info.letter + '-' + processor_code + '-' + padz(id36, 4);
+      var patch = {};
+      patch[table_info.field] = newid;
+      $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func), handleDbError);
+    };
+  };
+
+  db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
+    var url = databaseurl + table;
+    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
+      $http.post(url, entry, patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
+    }
+    else{
+      $http.post(url, entry, patchHeaders).then(func, handleDbError);
+    }
   };
 
 

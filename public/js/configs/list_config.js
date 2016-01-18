@@ -67,6 +67,55 @@ var listconfigs = [
     arg: "loin_number", 
     arg2: "internal_lot_code", 
     button: "Reprint"
+  },
+  { id: 8,    
+    cssclass: "fill small", 
+    headers: ["Box Number", "Harvester Code"], 
+    fields: ["box_number", "harvester_code"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number",  
+    button: "Remove"
+  },
+  { id: 9,    
+    cssclass: "fill small", 
+    headers: ["Box Number", "Product Code", "Trade Unit"], 
+    fields: ["box_number", "product_code", "trade_unit"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number",  
+    button: "Remove"
+  },
+  { id: 10,    
+    cssclass: "fill small", 
+    headers: ["Number", "Size", "Grade", "Weight", ""], 
+    fields: ["numindex", "size", "grade", "weight"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number", 
+    button: "Remove"
+  },
+  { id: 11,    
+    cssclass: "fill small", 
+    headers: ["Size", "Grade", "Total Weight", "Cases"], 
+    fields: ["size", "grade", "weight", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
+    csv: true
+  },
+  { id: 12,    
+    cssclass: "fill small", 
+    headers: ["Size", "Grade", "Weight/Box", "Cases"], 
+    fields: ["size", "grade", "weight", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
+  },
+  { id: 13,    
+    cssclass: "fill small", 
+    headers: ["Trade Unit", "Product Code", "Cases"], 
+    fields: ["trade_unit", "product_code", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
   }
 
 
@@ -87,6 +136,63 @@ var dropdownconfigs = [
     order: "-timestamp", 
     arg: "shipping_unit_number", 
     fields: ["po_number"]
+  },
+  { id: 2, 
+    title: "Recent Lots", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "lot_number", 
+    fields: ["internal_lot_code"]
+  },
+  { id: 3, 
+    title: "Select Origin", 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "harvester_code", 
+    fields: ["supplier"]
+  },
+  { id: 4, 
+    title: "Select Recent", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["received_from", "timestamp"]
+  },
+  { id: 5, 
+    title: "View Incoming Shipment totals", 
+    limit: "1000",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["received_from", "timestamp"]
+  },
+  { id: 6, 
+    title: "View Inventory", 
+    limit: "1000",
+    order: "-timestamp", 
+    arg: "station_code", 
+    fields: ["name"]
   }
 
 ];
+
+
+var displayconfigs = [
+  { id: 0, 
+    layout: [[{'name':'P.O. Number', 'val':'po_number'}, {'name':'Customer', 'val':'customer'}], 
+      [{'name':'Container Number', 'val':'container_number'}]]
+  },
+  { id: 1, 
+    layout: [[{'name':'P.O. Number', 'val':'po_number'}, {'name':'Received From', 'val':'received_from'}], 
+      [{'name':'Vessel Name', 'val':'vessel_name'}]]
+  },
+  { id: 2, 
+    layout: [[{'name':'Case Number', 'val':'case_number'}], 
+      [{'name':'', 'val':'size'}, {'name':'', 'val':'grade'}, {'name':'', 'val':'weight'}, {'name':'', 'val':'pieces'}],
+      [{'name':'Best Before', 'val':'best_before_date'}],
+      [{'name':'Internal Lot Number', 'val':'internal_lot_code'}, {'name':'Timestamp', 'val':'timestamp'}]]
+  },
+  { id: 3, 
+    layout: [[{'name':'Lot', 'val':'internal_lot_code'}]]
+  }
+];
+

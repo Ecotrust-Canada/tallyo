@@ -15,8 +15,8 @@ angular.module('scanthisApp.packingController', [])
     var id_array = raw_id.split("/");
     var id = id_array[0];
 
-
     var func = function(response){
+      $scope.current.patchitem = response.data[0];
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
       if (itemcollection && itemcollection !== $scope.current.collectionid){
@@ -64,9 +64,11 @@ angular.module('scanthisApp.packingController', [])
 
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
+
     var func = function(response){
-      toastr.success('added to box'); // show success toast.
+      toastr.success('added'); // show success toast.
       $scope.MakeScan(id);
+
     };
     var onErr = function(){
       toastr.error('invalid object'); // show failure toast.
@@ -80,13 +82,11 @@ angular.module('scanthisApp.packingController', [])
 
 
   $scope.MakeQR = function(){
-    var qrstring = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel);
-    var labelarray = ArrayFromJson($scope.current[$scope.station_info.collectiontable], ['case_number', 'size', 'weight', 'pieces', 'internal_lot_code']);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, labelarray);
+    var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
+    var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
+    console.log(data, labels);
+    $scope.printLabel(data, labels);
   };
-
-
 
   $scope.Complete = function(){
     if ($scope.onLabel){
@@ -126,7 +126,7 @@ angular.module('scanthisApp.packingController', [])
     }
     else{
       var harvester_code = '';
-      var box_weight = 0;
+      var box_weight = CalculateBoxWeight($scope.list.included);
       var num = 0;
       $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code);
     }
@@ -162,16 +162,95 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
+.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr) { 
+
+  $scope.harvesterArray = [];
+  $scope.collectionid = '';
+
+  $scope.CheckHarvester = function(harvester){
+    if(harvester){
+      if ($scope.harvesterArray.length === 0){
+        $scope.harvesterArray.push(harvester);
+      }
+      else if ($scope.harvesterArray.indexOf(harvester) !== -1){
+      }
+      else{
+        $scope.harvesterArray.push(harvester);
+        toastr.error('Warning: Mixing Harvesters in Lot');
+      }
+    }      
+  };
+
+  $scope.$watch('list.included', function() {
+    if($scope.current.collectionid !== $scope.collectionid){
+      $scope.collectionid = $scope.current.collectionid;
+      var all = fjs.pluck('harvester_code', $scope.list.included);
+      var unique = fjs.nub(function (arg1, arg2) {
+        return arg1 === arg2;
+      });
+      $scope.harvesterArray = unique(all);
+    }else{
+      if ($scope.current.patchitem){
+        if ($scope.current.patchitem.harvester_code){
+          $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
+        }
+      }
+    }    
+  });
+})
 
 
+.controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-.controller('BoxLabelCtrl', function($scope, $http, DatabaseServices) {
+  $scope.entry.scan = {};
 
-  $scope.BoxQR = function(){
-    var qrstring = dataCombine($scope.current.box, ["box_number", "size", "grade", "pieces", "weight", "case_number", "lot_number", "harvester_code"]);
-    console.log(qrstring);
-    $scope.printLabel(qrstring, []);
+  $scope.ScanIn = function(){
+    if (!$scope.raw.string) {
+      toastr.error('please scan a code');
+    }
+    else{
+      var rawArray = $scope.raw.string.split("/");
+      var id = rawArray[0];
+
+      var func = function(response){
+        $scope.CheckScan(id);
+      };
+      var onErr = function() {
+        toastr.error('invalid object'); // show failure toast.
+      };
+      var query = '?' + $scope.station_info.itemid + '=eq.' + id;
+      DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+      } 
+  };
+ 
+  $scope.CheckScan = function(id){
+    var func = function(response){
+      if (response.data.length >0){
+        $scope.raw.string = null;
+        toastr.warning("already exists");
+      }
+      else{
+        $scope.entry.scan[$scope.station_info.itemid] = id;
+        $scope.entry.scan.station_code = $scope.station_code;
+        $scope.entry.scan.timestamp = moment(new Date()).format();
+        $scope.DatabaseScan();
+      }
+    };
+    var query = '?' + $scope.station_info.itemid + '=eq.' + id + '&station_code=eq.' + $scope.station_code;
+    DatabaseServices.GetEntries('scan', func, query);
+  };
+
+  $scope.DatabaseScan = function(){    
+    var func = function(response){
+      console.log(response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
+      toastr.success('added');
+      $scope.raw.string = null;
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
 
-});
+})
+
+;

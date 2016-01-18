@@ -1,0 +1,18 @@
+
+   <fieldset  data-ng-repeat="choice in choices">
+      <span ng-repeat="field in config.fields">
+         {{field.title}}<select ng-if="field.type==='select'" ng-model="choice[field.fieldname]">
+            <option ng-repeat="obj in field.value">{{obj.name}}</option>
+         </select>
+         <input ng-if="field.type==='number'" class="short" type="number" ng-model="choice[field.fieldname]" placeholder="{{field.placeholder}}">
+         <input ng-if="field.type==='text'" class="short" type="text" ng-model="choice[field.fieldname]" placeholder="field.placeholder">
+      </span>
+      
+      <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+   </fieldset>
+   <button class="addfields" ng-click="addNewChoice()">Add fields</button>
+   <br>
+   <input type="button" ng-click="submitFn({form: form, choices: choices})" value="{{config.title}}">
+   <br>
+
+

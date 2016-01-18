@@ -12,9 +12,12 @@ angular.module('scanthisApp.directives', [])
 
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
 
-.directive('boxinfo', function() { return { 
-  scope: { box: '=' },
-  templateUrl: 'htmlpartials/boxinfo.html' }; })
+.directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
+
+.directive('display', function() { return { 
+  scope: {config: '=',
+          obj: '='},
+  templateUrl: 'htmlpartials/display.html' }; })
 
 .directive('list', function() { return { 
   scope: { itemlist: '=',  
@@ -22,6 +25,7 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=', 
            istotal: '=', 
            updateFn: '&'},
+  controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 
 .directive('dropdown', function() { return { 
@@ -36,12 +40,16 @@ angular.module('scanthisApp.directives', [])
           config: '=', 
           form: '=',  
           formchange: '=',
-          submitFn: '&'},
+          list1: '=', 
+          list2: '=', 
+          submitFn: '&',
+          pollFn: '&'},
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 
-.directive('shipinfo', function() { return { 
-  scope: { ship: '=' },
-  templateUrl: 'htmlpartials/shipinfo.html' }; })
-
+.directive('fieldsetrepeat', function() { return { 
+  scope: { config: '=' , 
+           submitFn: '&'},
+  controller: 'FieldsetCtrl',
+  templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })
 ;

@@ -4,69 +4,6 @@
 angular.module('scanthisApp.AdminController', [])
 
 
-.controller('StartNewLotCtrl', function($scope, $injector, $timeout, toastr, DatabaseServices) {
-
-  $scope.isDisabled = false;
-  $scope.StartNewLot = function(){
-    var func = function(response){
-      $scope.current.collectionid = response.data.lot_number;
-      //$scope.current.lot = response.data;
-      $scope.list.lot.push(response.data);
-      toastr.success('lot created');
-    };
-    $scope.isDisabled = true;
-    // reenable button after two seconds have passed
-    $timeout(function(){
-      $scope.isDisabled = false;},
-      2000);
-    var entry = {};
-    var date = new Date();
-    entry.lot_number = createLotNum($scope.station_code, date);
-    entry.timestamp = moment(date).format();
-    var dates = dateManipulation(date, 'day');
-    entry.start_date = dates.start_date;
-    entry.end_date = dates.end_date;
-    entry.station_code = $scope.station_code;
-    DatabaseServices.DatabaseEntryReturn('lot', entry, func);
-  };
-
-})
-
-
-.controller('FormSelectionCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.getProcessors = function(){
-
-    var func = function(response){
-      $scope.list.processor = response.data;
-    };
-    var query = '';
-    DatabaseServices.GetEntries('processor', func, query);
-  };
-
-  $scope.getProcessors();
-})
-
-
-
-.controller('HarvesterDropDownCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.getHarvesters = function(processor){
-
-    var func = function(response){
-      $scope.list.harvester = response.data;
-    };
-    var query = '?processor_code=eq.' + processor;
-    DatabaseServices.GetEntries('harvester', func, query);
-  };
-
-  $scope.$watch('current.shipping_unit.received_from', function(newValue, oldValue) {
-    if ($scope.current.shipping_unit !== undefined){
-       $scope.getHarvesters($scope.current.shipping_unit.received_from);
-    }
-  }); 
-})
-
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListShipments = function(){
@@ -76,11 +13,9 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?station_code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
-
   $scope.ListShipments();
 
   $scope.Edit = function(ship_id){
-
     var index = arrayObjectIndexOf($scope.list.shipments, ship_id, 'shipping_unit_number');
     $scope.current.shipment = {};
     for (var name in $scope.list.shipments[index]){
@@ -88,13 +23,9 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-
-
   $scope.form={};
-
   
   $scope.ShipInfo = function(){
-
     var func = function(response){
       $scope.current.shipment = null;
       $scope.ListShipments();
@@ -117,7 +48,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('select_lot', func, query);
   };
   $scope.GetLotLocations();
-
 
   $scope.GetLotSummary = function(){
     var query = '';
@@ -188,128 +118,116 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.GetLoinScan();
 
-
-
   $scope.getData = function(lot_number, station){
     var csvarray = [];
     var stations = stationlist;
-
     var isStation = function(value){
       return value.code === station;
     };
     var filtered = $scope.sumStations.filter(isStation);
-
     var table = $scope.list[filtered[0].csv];
-
     var cellFilter = function(value){
       return value.lot_number === lot_number && value.station_code === station;
     };
     var cellData = table.filter(cellFilter);
-
-    cleanJsonArray(cellData);
-    
+    cleanJsonArray(cellData);    
     return cellData;
-
-
   };
 
 })
 
-//editing drop-down options for forms
-.controller('DropDownCtrl',function($scope, $http, DatabaseServices){
-  $scope.FormData = function(table){
-      var func = function(response){
-        $scope.formoptions = response.data; 
-      };
-      var query = '?table_name=eq.' + table;
-      DatabaseServices.GetEntryNoAlert('formoptions', func, query);
+.controller('ViewShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.istotal = true;
+  $scope.selected = "no selected";
+  $scope.ListShipments = function(){
+    var func = function(response){
+      $scope.list.shipping_unit = response.data;
     };
+    var query = '?received_from=neq.null';
+    DatabaseServices.GetEntries('shipping_unit', func, query);
+  };
+  $scope.ListShipments();
+
+  $scope.SetCurrent = function(selected){
+     var filtered = $scope.list.shipping_unit.filter(
+      function(value){
+        return value.shipping_unit_number === selected;
+      });
+     $scope.current.shipping_unit = filtered[0];
+     $scope.ShipSummary(selected);
+     $scope.OriginSummary(selected);
+    //$scope.addinfo = false;
+  };
 
 
-
-    $scope.Delete = function(value, field){
-        var query='?table_name=eq.' + $scope.tablename + '&value=eq.' + value + '&field_name=eq.' + field;
-        var func = function(response){
-          $scope.FormData($scope.tablename);
-        };
-
-        DatabaseServices.RemoveEntry('formoptions', query, func);
+  $scope.ShipSummary = function(ship_num){
+    var func = function(response){
+      $scope.list.included = response.data;
     };
+    var query = '?shipping_unit_number=eq.' + ship_num;
+    DatabaseServices.GetEntries('shipment_summary', func, query);
+  };
 
-    $scope.New = function(value, field){
-      if (value){
-        var entry ={"table_name": $scope.tablename, "value": value, "field_name": field};
-        var func = function(response){
-          $scope.FormData($scope.tablename);
-        };
-        DatabaseServices.DatabaseEntry('formoptions', entry, func);
+  $scope.OriginSummary = function(ship_num){
+    var func = function(response){
+      $scope.list.containersummary = response.data;
+      var origins = fjs.pluck('harvester_code', $scope.list.containersummary);
+      $scope.list.origin = origins.filter(onlyUnique);
+      //$scope.list.container = {};
+      for (var i=0;i<$scope.list.origin.length;i++){
+        $scope.list[$scope.list.origin[i]] = {};
+        $scope.list[$scope.list.origin[i]].summary = $scope.list.containersummary.filter(
+          function(value){
+            return value.harvester_code === $scope.list.origin[i];
+          }
+          );
+        $scope.GetOrigin($scope.list.origin[i]);
       }
-
-      
+      //console.log($scope.list.origin);
     };
-
-
-
-  $scope.init = function(table){
-    $scope.tablename = table;
-    $scope.FormData(table);
-    $scope.model = {};
-    $scope.search = {};
-    $scope.search.type = "select";
+    var query = '?shipping_unit_number=eq.' + ship_num;
+    DatabaseServices.GetEntries('shipment_summary_more', func, query);
   };
 
-
+  $scope.GetOrigin = function(origin){
+    var func = function(response){
+      $scope.list[origin].harvester = response.data[0];
+    };
+    var query = '?harvester_code=eq.' + origin;
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
 
 })
 
-.controller('SubmitProcessorCtrl',function($scope, $http, DatabaseServices, toastr){
-  $scope.FormData = function(){
-    console.log('function called');
-      var func = function(response){
-        $scope.formjson = response.data[0].form; 
-        console.log($scope.formjson); 
-        $scope.New($scope.codepatch);
-      };
-      var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
-      DatabaseServices.GetEntryNoAlert('form', func, query);
-    };
 
-  $scope.New = function(value){
-    if (value){
-      $scope.formjson.fields[14].value.push({"name": value});
-    }    
-    
+.controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.selected = "no selected";
+  $scope.stations = [
+    {name: 'Received', station_code: 'AM2-001', list:'itemlistconfig'},
+    {name: 'In Inventory', station_code: 'AM2-005', list:'item2listconfig'}
+  ];
+
+  $scope.ListStations = function(){
     var func = function(response){
+      $scope.list.box_inventory = response.data;
     };
-    var query = '?tablename=eq.harvester' + '&station_code=eq.' + $scope.station_code;
-    DatabaseServices.PatchEntry('form', {'form': $scope.formjson }, query, func);
+    var query = '';
+    DatabaseServices.GetEntries('box_inventory', func, query);
   };
+  $scope.ListStations();
 
+  $scope.SetCurrent = function(selected){
+     var filtered = $scope.list.box_inventory.filter(
+      function(value){
+        return value.station_code === selected;
+      });
+     $scope.list.boxes = filtered;
 
-  //database entry
-  $scope.ToDatabase = function(responsefunction){
-    var func = function(response){
-      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
-      responsefunction(response);
-    };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn($scope.table, $scope.entry[$scope.table], func);
-    }
-    else{ toastr.error("empty form"); }  
+     var lists = $scope.stations.filter(
+      function(value){
+        return value.station_code === selected;
+      });
+     $scope.listconfig = $scope[lists[0].list];
   };
-
-  //fills out entry from form
-  $scope.Submit = function(form, responsefunction){
-    MakeEntry(form, $scope.table, $scope);
-    $scope.codepatch = $scope.form.processor_code;
-    console.log($scope.codepatch);
-    $scope.ToDatabase(responsefunction);
-  };
-
-  //The different submit buttons
-  $scope.SubmitAddtoList = function(form){
-    $scope.Submit(form, $scope.FormData);
-  };
-
 })
 ;

@@ -15,7 +15,7 @@
 }
 
 .stationframevertical{
-  width:450px;
+  width:500px;
   margin-left:50px;
   height:100%;
   outline: solid 3px;
@@ -198,6 +198,15 @@
 }
 
 
+.dropdownoptions{
+  font-size: 10px;
+}
+
+.short{
+  max-width:115px;
+}
+
+
 .fill{
   width: 100%;
 }
@@ -258,6 +267,7 @@ td{
     font-size: 15px;
     font-style: normal;
     text-align:center;
+    vertical-align: top;
 }
 
 .info td{
@@ -340,6 +350,43 @@ nav ul li {
             nav ul ul li a:hover {
                 background: #4b545f;
             }
+
+
+
+
+fieldset{
+    background: #FCFCFC;
+    padding: 16px;
+    border: 1px solid #D5D5D5;
+    font-size: 10px;
+}
+.addfields{
+    margin: 10px 0;
+}
+
+#choicesDisplay {
+    padding: 10px;
+    background: rgb(227, 250, 227);
+    border: 1px solid rgb(171, 239, 171);
+    color: rgb(9, 56, 9);
+}
+.remove{
+    background: #C76868;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 21px;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 9px;
+    vertical-align: top;
+    line-height: 100%;   
+}
+input[type="text"],
+select{
+    padding:5px;
+}
+
 
 
 

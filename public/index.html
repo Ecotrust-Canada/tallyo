@@ -24,7 +24,7 @@
 
       <script src="js/configs/form_config.js"></script>
       <script src="js/configs/list_config.js"></script>
-      <script src="js/configs/app_config.js"></script>  
+      <script src="config"></script>  
       <script src="js/common.js"></script>      
       <script src="js/directives.js"></script>
       <script src="js/routing.js"></script>
@@ -37,6 +37,7 @@
       <script src="js/controllers/createlotcontroller.js"></script>
       <script src="js/controllers/setsuppliercontroller.js"></script>
       <script src="js/controllers/admincontroller.js"></script>
+      <script src="js/controllers/receivingcontroller.js"></script>
 
       <script src="js/base.js"></script>
 
@@ -44,14 +45,9 @@
     <body div ng-controller="RoutingCtrl">
          <nav>
             <ul>
-                <li><a>HarSam</a>
+                <li><a>Stations</a>
                     <ul>
                     <li ng-repeat="terminal in terminals"><a href="/#/terminal/{{ terminal.id }}">{{ terminal.name }}</a></li>
-                        <!--<li><a ui-sref="harsam_admin.manage_suppliers">Admin</a></li>
-                        <li><a ui-sref="harsam_receiving">Station 1</a></li>
-                        <li><a ui-sref="harsam_retouching.main">Station 2</a></li>
-                        <li><a ui-sref="harsam_boxing">Packing</a></li>
-                        <li><a ui-sref="harsam_shipping.create">Shipping</a></li>-->
                     </ul>
                 </li>
             </ul>

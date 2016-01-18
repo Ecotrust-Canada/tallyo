@@ -11,6 +11,7 @@ angular.module('scanthisApp', [
   'scanthisApp.formController',
   'scanthisApp.itemController',
   'scanthisApp.packingController',
+  'scanthisApp.receivingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',
@@ -68,6 +69,19 @@ angular.module('scanthisApp', [
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
     }
+    if(settings.formedit){
+      $scope.formedit = settings.formedit;
+    }
+    if(settings.tableinform){
+      $scope.tableinform = settings.tableinform;
+    }
+    if(settings.valuesarray){
+      $scope.valuesarray = settings.valuesarray;
+    }
+
+    if(settings.scaleURL){
+      $scope.scaleURL = settings.scaleURL;
+    }
 
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
@@ -79,13 +93,14 @@ angular.module('scanthisApp', [
           url: $scope.printurl + 'print',
           transformRequest: function(obj) {
             var str = [];
-            for(var p in obj)
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            for(var p in obj) {
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
             return str.join("&");
           },
           data: {data:$scope.printString(codeString, fieldarray)}
 
-    });
+        });
   };
     }
     
@@ -101,15 +116,22 @@ angular.module('scanthisApp', [
     if (settings.forms){
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
+      $scope.addform = formconfigs[settings.forms.addform];
     }
 
     if (settings.dropdowns){
       $scope.collectiondropdown = dropdownconfigs[settings.dropdowns.collectiondropdown];
+      $scope.adddropdown = dropdownconfigs[settings.dropdowns.adddropdown];
     }
     
     if(settings.lists){
       $scope.itemlistconfig = listconfigs[settings.lists.items];
       $scope.totallistconfig = listconfigs[settings.lists.totals];
+      $scope.item2listconfig = listconfigs[settings.lists.additem];
+    }
+
+    if(settings.displays){
+      $scope.collectiondisplay = displayconfigs[settings.displays.collectiondisplay];
     }
 
     $scope.includes = [];

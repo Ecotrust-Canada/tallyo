@@ -22,31 +22,11 @@ var dateManipulation = function(date, period){
     return dates;
 };
 
-/* for now creates unique id by using stage id and current date and time*/
-var createLotNum = function(station_code, date){
-    var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
-    return String(station_code) +  datestring;
+var createProdCode = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'P' +  datestring;
 };
 
-var createLoinNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'L' +  datestring;
-};
-
-var createBoxNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'B' +  datestring;
-};
-
-var createShipNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'S' +  datestring;
-};
-
-var createHarvesterCode = function(processor, date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return processor +  datestring;
-};
 
 /*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){
@@ -85,6 +65,12 @@ var CreateEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
     $scope.lot_entry.start_date = dates.start_date;
     $scope.lot_entry.end_date = dates.end_date;
+  };
+
+var CreateLotEntryPeriod = function(today, period, $scope){
+    var dates = dateManipulation(today, period);
+    $scope.entry.lot.start_date = dates.start_date;
+    $scope.entry.lot.end_date = dates.end_date;
   };
 
 /*sums weights of all objects in array*/
@@ -127,10 +113,17 @@ var MakeEntry = function(form, scopevar, $scope){
 var ClearFormToDefault = function(form_arr, def_arr){
     for (var i=0;i<def_arr.length;i++){
       if (def_arr[i].type === 'text'){
-        form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        }
       }
       else{
-        form_arr[def_arr[i].fieldname] = "";
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = "";
+        }
+        else if (!form_arr[def_arr[i].fieldname]){
+          form_arr[def_arr[i].fieldname] = "";
+        }        
       }
     }
     return form_arr;
@@ -188,6 +181,63 @@ var cleanJsonArray = function(array){
   };
 
   array.forEach(cleanJson);
+};
+
+var padz = function(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+var tableInfo = function(table){
+  if (table === 'box'){
+    return {letter:'B', field: 'box_number'};
+  }
+  else if (table === 'loin'){
+    return {letter:'T', field:'loin_number'};
+  }
+  else if (table === 'lot'){
+    return {letter:'L', field:'lot_number'};
+  }
+  else if (table === 'shipping_unit'){
+    return {letter:'S', field:'shipping_unit_number'};
+  }
+  else if (table === 'harvester'){
+    return {letter:'H', field:'harvester_code'};
+  }
+};
+
+var isInArray = function(value, array) {
+  return array.indexOf(value) > -1;
+};
+
+var AddtoEntryNonFormData = function($scope, date, table){
+  $scope.entry[table].lot_number = $scope.current.collectionid;
+  $scope.entry[table].timestamp = date;
+  $scope.entry[table].station_code = $scope.station_code;
+  $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+};
+
+var AddtoEntryFormData = function(form, scopevar, $scope){
+  for (var key in form){
+      $scope.entry[scopevar][key] = form[key];
+  }
+};
+
+var onlyUnique = function(value, index, self) { 
+    return self.indexOf(value) === index;
+};
+
+var copyArrayPart = function(array, fields){
+  var newarray = [];
+  for (var i=0;i<array.length;i++){
+    var obj = {};
+    for (var j=0;j<fields.length;j++){
+      obj[fields[j]] = array[i][fields[j]];
+    }
+    newarray.push(obj);
+  }
+  return newarray;
 };
 
 
