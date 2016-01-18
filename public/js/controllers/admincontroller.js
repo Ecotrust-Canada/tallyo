@@ -202,10 +202,7 @@ angular.module('scanthisApp.AdminController', [])
 
 .controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.selected = "no selected";
-  $scope.stations = [
-    {name: 'Received', station_code: 'AM2-001', list:'itemlistconfig'},
-    {name: 'In Inventory', station_code: 'AM2-005', list:'item2listconfig'}
-  ];
+  $scope.stations = $scope.sumStations;
 
   $scope.ListStations = function(){
     var func = function(response){
