@@ -41,7 +41,7 @@ angular.module('scanthisApp.AdminController', [])
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
  
   $scope.GetLotLocations = function(){
-    var query = '';
+    var query = '?processor_code=eq.' + $scope.processor;
     var func = function(response){
       $scope.list.lot_location = response.data;
     };

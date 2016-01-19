@@ -1,11 +1,13 @@
 <div ng-controller="SetSupplierCtrl">
-  <supplierlist></supplierlist>
-  
-  <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
-    <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+  <div ng-controller="NewLotCtrl">
+    <supplierlist></supplierlist>
+    
+    <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
+      <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    </div>
+    
+    <hr>
   </div>
-
-  <hr>
 </div>
 
 

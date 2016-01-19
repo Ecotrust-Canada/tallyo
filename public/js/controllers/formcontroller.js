@@ -116,6 +116,7 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].timestamp = date;
       CreateLotEntryPeriod(date, 'day', $scope);
       $scope.entry[table].station_code = $scope.station_code;
+      $scope.entry[table].processor_code = $scope.processor;
     }
     if ($scope.station_info.collectiontable === 'harvester'){
       $scope.entry.harvester.processor_code = $scope.processor;

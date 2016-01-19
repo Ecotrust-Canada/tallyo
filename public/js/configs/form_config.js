@@ -145,9 +145,18 @@ var formconfigs =
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""}, 
       {"type":"text", "fieldname":"customer", "title":"Customer", "value":""},
-      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""}
+      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""},
+      {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
+      {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
+      {"type":"text", "fieldname":"seal_number", "title":"Seal Number", "value":""}
     ]
-  }
+  },
+  { //lot, amanda internal receiving 
+    id: 14, 
+    fields:[
+      {"type":"text", "fieldname":"internal_lot_code", "title":"Lot code", "value":""}
+    ]
+  },
 
 ];
 

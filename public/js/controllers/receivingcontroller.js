@@ -96,6 +96,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.SubmitForm = function(form){  
     MakeEntry(form, 'shipping_unit', $scope);
     $scope.entry.shipping_unit.timestamp = moment(new Date()).format();
+    $scope.entry.shipping_unit.station_code = $scope.station_code;
     $scope.MakeShippingEntry();
     $scope.formchange = !$scope.formchange;
     $scope.addinfo = false;
@@ -116,7 +117,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.shipping_unit = response.data;
     };
-    var query = '?received_from=neq.null';
+    var query = '?station_code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
   $scope.ListShipments();
@@ -206,9 +207,7 @@ angular.module('scanthisApp.receivingController', [])
       }
     }else{
       toastr.error("missing origin info");
-    }
-    
-    
+    }    
   };
   
   $scope.MakeBox = function(entry, date){

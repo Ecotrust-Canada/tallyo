@@ -70,8 +70,8 @@ var listconfigs = [
   },
   { id: 8,    
     cssclass: "fill small", 
-    headers: ["Box Number", "Harvester Code"], 
-    fields: ["box_number", "harvester_code"], 
+    headers: ["Number", "Harvester Code", "Grade", "Size"], 
+    fields: ["numindex", "harvester_code", "grade", "size"], 
     limit: "10000",
     order: "-timestamp", 
     arg: "box_number",  
@@ -149,7 +149,7 @@ var dropdownconfigs = [
     limit: "10000",
     order: "-timestamp", 
     arg: "harvester_code", 
-    fields: ["supplier"]
+    fields: ["country_origin", "supplier"]
   },
   { id: 4, 
     title: "Select Recent", 

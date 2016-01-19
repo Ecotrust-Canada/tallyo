@@ -66,6 +66,9 @@ angular.module('scanthisApp', [
     if(settings.sumStations){
       $scope.sumStations = settings.sumStations;
     }
+    if(settings.setstation){
+      $scope.setstation = settings.setstation;
+    }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
     }
