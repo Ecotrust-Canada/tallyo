@@ -157,6 +157,56 @@ var formconfigs =
       {"type":"text", "fieldname":"internal_lot_code", "title":"Lot code", "value":""}
     ]
   },
+  {//harvester, AM1-001
+    id: 15,
+    hide: "Add New Origin",  
+    fields:[
+      {"value":"dboptions","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"select"},
+      {"value":"dboptions","fieldname":"supplier","id":"5","title":"Name","type":"select"},
+      {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
+    ],
+    dboptions: 'origin',
+    editinform: true
+  },
+  {//shipping_unit, AM1-001
+    id: 16,  
+    hide: "Create New Shipment",  
+    fields:[
+      {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""},  
+      {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
+      {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
+      {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""},
+      {"type":"select", "fieldname":"received_from", "title":"Supplier", "value":"dboptions"},
+    ],
+    dboptions: 'shipment',
+    editinform: true
+  },
+  { //scan, AM1-002
+    id: 17, 
+    startpolling: "weight_1",
+    fields:[
+      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
+      {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"},
+      {"value":[{"val":"YF","label":"YF"},{"val":"BE","label":"BE"}],"fieldname":"species","id":"2","title":"Species","type":"radio", "stay": "true"}
+    ]
+  },
+  { //scan, AM1-002
+    id: 18, 
+    startpolling: "weight_1",
+    fields:[
+      {"value":"","fieldname":"weight_1","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
+      {"value":"","fieldname":"pieces","id":"0","title":"Pieces","type":"number"}
+    ]
+  },
+  { //scan, AM1-002
+    id: 19, 
+    startpolling: "weight",
+    fields:[
+      {"value":"","fieldname":"weight","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
+      {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"},
+      {"value":[{"val":"YF","label":"YF"},{"val":"BE","label":"BE"}],"fieldname":"species","id":"2","title":"Species","type":"radio", "stay": "true"}
+    ]
+  },
 
 ];
 

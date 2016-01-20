@@ -81,6 +81,9 @@ angular.module('scanthisApp', [
     if(settings.valuesarray){
       $scope.valuesarray = settings.valuesarray;
     }
+    if(settings.options){
+      $scope.options = settings.options;
+    }
 
     if(settings.scaleURL){
       $scope.scaleURL = settings.scaleURL;
