@@ -41,7 +41,8 @@ var formconfigs =
       {"value":[{"val":"true","label":"Yes"},{"val":"false","label":"No"}],"fieldname":"fair_trade","id":"13","title":"Fair Trade","type":"radio"}
     ], 
     dboptions: 'harvester',
-    editinform: true
+    editinform: true,
+    table: 'harvester'
   },
   {//harvester, AM2-011
     id: 3,

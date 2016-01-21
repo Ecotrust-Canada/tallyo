@@ -101,7 +101,9 @@ angular.module('scanthisApp.itemController', [])
     AddtoEntryNonFormData($scope, date, table);
     AddtoEntryNonFormData($scope, date, 'scan');
     AddtoEntryFormData(form, table, $scope);
-    if (table==='box'){
+
+    //assign trade_unit and weight(kg) from weight and units 
+    if ($scope.options.trade_unit){
       $scope.entry.box.trade_unit = $scope.form.trade_unit_w + ' ' + $scope.form.trade_unit;
       if ($scope.form.trade_unit === 'lb'){
         $scope.entry.box.weight = $scope.form.trade_unit_w / 2.2;
@@ -111,7 +113,13 @@ angular.module('scanthisApp.itemController', [])
       }
       delete $scope.entry.box.trade_unit_w;
     }
-    //console.log($scope.entry[table]);
+    //attach harvester, shipment
+    if ($scope.options.lot_info){
+      $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
+      $scope.entry.box.shipping_unit_number = $scope.current.harvester_lot.shipping_unit_number;
+      $scope.entry.box.lot = $scope.current.harvester_lot.lot_number;
+    }
+
   };
 
   $scope.Submit = function(form){
@@ -122,6 +130,7 @@ angular.module('scanthisApp.itemController', [])
     else{
       $scope.MakeItemScanEntry(form);
       $scope.DatabaseItem();
+      //console.log($scope.entry.box);
     }
 
   };

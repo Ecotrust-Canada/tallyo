@@ -163,7 +163,6 @@ angular.module('scanthisApp.packingController', [])
 })
 
 .controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr) { 
-
   $scope.harvesterArray = [];
   $scope.collectionid = '';
 

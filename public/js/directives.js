@@ -4,15 +4,24 @@
 angular.module('scanthisApp.directives', [])
 
 
-/*select lot from dropdown*/
-.directive('selectlot', function() { return { templateUrl: 'htmlpartials/selectlot.html' }; })
-
 /*table with suppliers with button to set as current*/
 .directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
+
+.directive('loadcurrentcollection', function() { return { templateUrl: 'htmlpartials/loadcurrentcollection.html' }; })
+
+.directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
+
+.directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
+
+.directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
+
+.directive('shipmenttotals', function() { return { templateUrl: 'htmlpartials/shipmenttotals.html' }; })
+
+.directive('inventory', function() { return { templateUrl: 'htmlpartials/inventory.html' }; })
 
 .directive('display', function() { return { 
   scope: {config: '=',

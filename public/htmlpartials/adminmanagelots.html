@@ -1,4 +1,3 @@
-
 <div ng-controller="LotCtrl" class="innerframe">
   <table class="fill">
     <tr>
@@ -24,9 +23,14 @@
           <br>
           <table>
             <tr class="fill2" ng-repeat = "total in list.totals_by_lot | filter: {lot_number:lot.lot_number, station_code:stn.code} | orderBy: 'state'">
-              <td ng-if="total.trade_unit || total.product_code">{{total.trade_unit}} {{total.product_code}}: </td>
-              <td ng-if="total.state || total.grade">{{total.state}} {{total.grade}}: </td>
-              <td ng-if="total.boxes">{{total.boxes}} boxes </td> 
+
+              <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
+              <td ng-if="total.product_code">{{total.product_code}} </td>
+              <td ng-if="total.state">{{total.state}} </td>
+              <td ng-if="total.grade">{{total.grade}} </td>
+              <td ng-if="total.species">{{total.species}} </td>
+
+              <td ng-if="total.boxes">{{total.boxes}} boxes </td>
               <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
               <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
             </tr>
@@ -41,5 +45,3 @@
     </tr>
   </table>
 </div>
-
-

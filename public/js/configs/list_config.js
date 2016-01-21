@@ -147,11 +147,20 @@ var listconfigs = [
     limit: "10000",
     order: "grade", 
   },
-  { id: 16,    
+  { id: 18,    
     cssclass: "fill",  
     fields: ["species", "grade", "weight1", "boxes"], 
     limit: "10000",
     order: "", 
+  },
+  { id: 19,    
+    cssclass: "fill", 
+    headers: ["Number", "Weight 1", "Grade", "Species", "Timestamp", ""], 
+    fields: ["numindex", "weight_1", "grade", "species", "timestamp"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "box_number", 
+    button: "Remove"
   },
 
 
@@ -229,6 +238,10 @@ var displayconfigs = [
   },
   { id: 3, 
     layout: [[{'name':'Lot', 'val':'internal_lot_code'}]]
+  },
+  { id: 4, 
+    layout: [[{'name':'Supplier', 'val':'supplier'}, {'name':'Fleet', 'val':'fleet_vessel'}], 
+      [{'name':'Receive Date', 'val':'end_date'}]]
   }
 ];
 

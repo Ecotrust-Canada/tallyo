@@ -138,6 +138,7 @@ angular.module('scanthisApp', [
 
     if(settings.displays){
       $scope.collectiondisplay = displayconfigs[settings.displays.collectiondisplay];
+      $scope.adddisplay = displayconfigs[settings.displays.adddisplay];
     }
 
     $scope.includes = [];

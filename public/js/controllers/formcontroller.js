@@ -75,7 +75,13 @@ angular.module('scanthisApp.formController', [])
 
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.form = {};
-  var table = $scope.station_info.collectiontable;
+  var table;
+  if($scope.formtable){
+    table = $scope.formtable;
+  }else{
+    table = $scope.station_info.collectiontable;
+  }
+  
   $scope.entry[table] = {};
   $scope.formchange = true;
 
@@ -118,11 +124,12 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].processor_code = $scope.processor;
     }
-    if ($scope.station_info.collectiontable === 'harvester'){
+    if ($scope.options.receivelot){
       $scope.entry.harvester.processor_code = $scope.processor;
       $scope.entry.harvester.active = true;
     }
     MakeEntry(form, table, $scope);
+    //console.log(table);
     $scope.ToDatabase(responsefunction);
   };
 

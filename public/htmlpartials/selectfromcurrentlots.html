@@ -1,0 +1,20 @@
+<div class="sectionframe">
+  <div ng-controller="SelectLotDropDownCtrl">
+      <form name="myForm">
+          <label for="singleSelect"> Choose Lot: </label><br>
+          <select name="singleSelect" ng-model="current.collectionid">
+            <option ng-repeat = "lot in list.harvester_lot" value={{lot.lot_number}}>{{lot.lot_number}} {{lot.internal_lot_code}} {{lot.supplier_group}}-{{lot.supplier}} 
+            {{lot.fleet_vessel}} {{lot.end_date|stringtodate|date:format:"MMM dd"}}</option>
+          </select>
+        </form>
+        <br>
+        <form>
+          <label for="singleSelect"> Recently completed: </label><br>
+          <select name="singleSelect" ng-model="current.collectionid">
+            <option ng-repeat = "lot in list.old_harvester_lot" value={{lot.lot_number}}>{{lot.lot_number}} {{lot.internal_lot_code}} {{lot.supplier_group}}-{{lot.supplier}} 
+            {{lot.fleet_vessel}} {{lot.end_date|stringtodate|date:format:"MMM dd"}}</option>
+          </select>
+        </form>
+        <br>
+  </div>   
+</div>

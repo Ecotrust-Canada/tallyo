@@ -116,7 +116,8 @@ angular.module('scanthisApp.setsupplierController', [])
         var station1 = $scope.setstation.add[j];
         $scope.AddStationLot($scope.current.lot.lot_number, station1);
       }
-      $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+      //$rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+      $scope.current.collectionid = $scope.current.lot.lot_number;
     }
   });
 
@@ -176,40 +177,22 @@ angular.module('scanthisApp.setsupplierController', [])
 
 })
 
-.controller('CurrentLotCtrl', function($scope, $http, DatabaseServices) {
-/*Gets the harvester_lot entry for the given lot_number*/
+//collectiontable: "harvester", collectionid: "harvester_code", displaytable: "harvester_lot", patchtable: "lot", patchid: "lot_number"
+
+.controller('EditFieldCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.form = {};
-  $scope.GetHarvesterLot = function(lot_number){
-    var func = function(response){
-      $scope.current.harvester_lot = response.data[0];
-    };
-    var query = '?lot_number=eq.' + lot_number;
-    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
-  };
-
+  
   $scope.LotCode = function(PatchTo, SetFormTo){
     var func = function(response){
       $scope.form.internal_lot_code = SetFormTo;//this is to fill in with previous when clicking edit
-      $scope.GetHarvesterLot($scope.current.harvester_lot.lot_number);
+       $scope.DisplayCollectionInfo();
     };
     var patch = {'internal_lot_code': PatchTo};
     var query = '?lot_number=eq.' + $scope.current.harvester_lot.lot_number ;
     DatabaseServices.PatchEntry('lot', patch, query, func);    
   };
 
-
-  //This is to update at beginning once getCurrentCtrl executes
-  $scope.$watch('current.collectionid', function() {
-    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
-      $scope.GetHarvesterLot($scope.current.collectionid);
-    }
-  });
-
-  $scope.$on('collection-change', function(event, args) {
-    var id = args.id;
-    $scope.GetHarvesterLot(id);
-  });
 })
 
 
