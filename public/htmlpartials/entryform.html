@@ -2,56 +2,61 @@
 
 <button ng-if="config.hide" ng-click="$parent.hideform = !hideform"><span ng-show="hideform">{{config.hide}}</span><span ng-hide="hideform">Hide Form</span></button>
 
+
+
 <div ng-hide="hideform">
   <form class="form-text">
     <table>
       <tr ng-repeat="row in formarray"> <!--For each object in config.fields -->
 
-        <!--text-->
-        <td ng-if-start="row.type === 'text'">{{row.title}}:</td><td class="field" ng-if-end> <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ></td>
-        <!--number-->
-        <td ng-if-start="row.type === 'number'">{{row.title}}:</td>
-        <td ng-if-end class="field">
-          <span ng-if="row.pollarg"><input type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-focus="pollFn({field: row.fieldname})"></span>
-          <span ng-if="!row.pollarg"><input type="number" value={{row.value}} ng-model="form[row.fieldname]" ></span>
-        </td>
-        <!--radio-->
-        <td ng-if-start="row.type === 'radio'">{{row.title}}: </td><td class="field" ng-if-end>
-          <span ng-repeat="option in row.value"><input  type="radio" ng-model="form[row.fieldname]" value={{option.val}} />{{option.label}}</span>
-        </td>
-        <!--select-->
-        <td ng-if-start="row.type === 'select'">{{row.title}}:</td><td class="field" ng-if-end>
-          <!--static select options-->
-          <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]">
-            <option value="">-- select --</option>
-            <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
-          </select>
+        <td>{{row.title}}:</td>
+        <td class="field">
+          <!--text-->
+          <span ng-if="row.type === 'text'"> <input  type="text" value={{row.value}} ng-model="form[row.fieldname]" ></span>
 
-          <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]">
-            <option value="">-- select --</option>
-            <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" value={{option.value}}>{{option.value}}</option>
-          </select>
+          <!--number-->
+          <span ng-if="row.type === 'number'">
+            <span ng-if="row.pollarg"><input id="{{row.fieldname}}" type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-focus="pollFn({field: row.fieldname})"></span>
+            <span ng-if="!row.pollarg"><input type="number" value={{row.value}} ng-model="form[row.fieldname]" ></span>
+          </span>
+          <!--radio-->
+          <span ng-if="row.type === 'radio'">
+            <span ng-repeat="option in row.value"><input  type="radio" ng-model="form[row.fieldname]" value={{option.val}} />{{option.label}}</span>
+          </span>
+          <!--select-->
+          <span ng-if="row.type === 'select'">
+            <!--static select options-->
+            <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]">
+              <option value="">-- select --</option>
+              <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
+            </select>
 
-          <!--editing dropdown options-->
-          <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">            
-            <div ng-hide="editdrop[row.fieldname]">
-                  <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
-                      {{selection.value}}
-                      <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
-                  </div><br>
-                  <input  class="short" type="text" ng-model="new"><input type="button" ng-click="New(new, row.fieldname)" value="Add" />
+            <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]">
+              <option value="">-- select --</option>
+              <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" value={{option.value}}>{{option.value}}</option>
+            </select>
+
+            <!--editing dropdown options-->
+            <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">            
+              <div ng-hide="editdrop[row.fieldname]">
+                    <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
+                        {{selection.value}}
+                        <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
+                    </div><br>
+                    <input  class="short" type="text" ng-model="new"><input type="button" ng-click="New(new, row.fieldname)" value="Add" />
+              </div>
             </div>
-          </div>
 
-          <!--options from another datbase table-->
-          <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
-            <option value="">-- select --</option>
-            <option ng-repeat="option in list1" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
-          </select>
-          <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
-            <option value="">-- select --</option>
-            <option ng-repeat="option in list2" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
-          </select>
+            <!--options from another datbase table-->
+            <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
+              <option value="">-- select --</option>
+              <option ng-repeat="option in list1" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
+            </select>
+            <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
+              <option value="">-- select --</option>
+              <option ng-repeat="option in list2" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
+            </select>
+          </span>
         </td>
 
         <!--button to set scale weight-->
@@ -77,6 +82,7 @@
     <input type="button" ng-click="Clear()" value="Clear">
     
     <input type="button" ng-click="submitFn({form: form});hidefn()" value="Submit">
+
   </form>
 </div>
 <br>

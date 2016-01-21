@@ -41,6 +41,12 @@ angular.module('scanthisApp.itemController', [])
     if (!$scope.scaleURL || fieldName==='stop' || !$scope.scaleon) {
       return;
     }
+
+    /*var el = document.getElementById(fieldName);
+    if(el){
+      el.focus();
+    }*/
+
     scalePromise = $interval(function() {
       $http({
         method: 'GET',
@@ -62,10 +68,10 @@ angular.module('scanthisApp.itemController', [])
     scalePromise = null;
   };
 
-
-  if ($scope.scanform.startpolling) {
+  //not needed because clear is always called at beginning
+  /*if ($scope.scanform.startpolling) {
     $scope.startPolling($scope.scanform.startpolling);
-  }
+  }*/
   
 
   /*fills in fields in json to submit to database*/

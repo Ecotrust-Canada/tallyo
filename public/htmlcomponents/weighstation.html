@@ -5,14 +5,14 @@
 
 
 <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
-  <currentlot></currentlot>
+  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
 
 <div ng-if="prevStation" ng-controller="prevStationCtrl">
   Previous Station Info:
   <div class="sectionframe" ng-controller="TotalsCtrl">
-    <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
+    <list itemlist="totals"  config="item2listconfig" istotal="istotal"></list>
   </div>
 </div>
 

@@ -242,6 +242,11 @@ var displayconfigs = [
   { id: 4, 
     layout: [[{'name':'Supplier', 'val':'supplier'}, {'name':'Fleet', 'val':'fleet_vessel'}], 
       [{'name':'Receive Date', 'val':'end_date'}]]
+  },
+  { id: 5, 
+    layout: [[{'name':'Supplier', 'val':'supplier'}, {'name':'Fleet', 'val':'fleet_vessel'}], 
+      [{'name':'Receive Date', 'val':'end_date'}],
+      [{'name':'Internal Lot Code', 'val':'internal_lot_code'}]]
   }
 ];
 

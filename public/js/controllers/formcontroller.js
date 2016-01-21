@@ -84,6 +84,7 @@ angular.module('scanthisApp.formController', [])
   if ($scope.config.dboptions){
     $scope.FormData($scope.config.dboptions);
   }
+
 })
 
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
