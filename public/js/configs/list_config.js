@@ -247,6 +247,15 @@ var displayconfigs = [
     layout: [[{'name':'Supplier', 'val':'supplier'}, {'name':'Fleet', 'val':'fleet_vessel'}], 
       [{'name':'Receive Date', 'val':'end_date'}],
       [{'name':'Internal Lot Code', 'val':'internal_lot_code'}]]
-  }
+  },
+  { id: 6, 
+    layout: [[{'name':'Bill of Lading', 'val':'bill_of_lading'}], 
+      [{'name':'Supplier', 'val':'received_from'}]]
+  },
+  { id: 7, 
+    layout: [[{'name':'Country of Origin', 'val':'country_origin'}], 
+      [{'name':'Company', 'val':'supplier'}],
+      [{'name':'Species', 'val':'species_common'}]]
+  },
 ];
 

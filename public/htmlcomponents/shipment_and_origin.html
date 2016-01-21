@@ -2,8 +2,7 @@
 <div ng-controller="SetShipmentCtrl">
   <entryform ng-show="addinfo" config="collectionform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
   <div ng-hide="addinfo">
-    Bill of Lading: {{current.shipping_unit.bill_of_lading}}<br>
-    Supplier: {{current.shipping_unit.received_from}}
+    <display obj="current.shipping_unit" config="collectiondisplay"></display>
   </div>
   <span ng-show="addinfo"> -or-</span> <br>
   <dropdown ng-show="addinfo" itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
@@ -17,9 +16,7 @@
   <span ng-show="addinfo"> -or-</span> <br>
   <entryform ng-show="addinfo" config="addform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
   <div ng-hide="addinfo">
-    Country of Origin: {{current.harvester.country_origin}}<br>
-    Company: {{current.harvester.supplier}}<br>
-    Species: {{current.harvester.species_common}}
+    <display obj="current.harvester" config="adddisplay"></display>
   </div>
   <button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo">Edit</button>
 </div>

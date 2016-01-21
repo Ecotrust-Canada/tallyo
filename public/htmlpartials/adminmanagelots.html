@@ -6,10 +6,12 @@
     </tr>
     <tr ng-repeat="lot in list.lot_location | orderBy: '-end_date'">
       <td>
-        {{lot.lot_number}}<br>
-        {{lot.internal_lot_code}}<br>
+        Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
         {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        {{lot.supplier_group}} {{lot.supplier}} {{lot.fleet_vessel}}
+        
+        <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
+        <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
+
       </td>
       <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0}" >
         <div class="cellWrapper">
