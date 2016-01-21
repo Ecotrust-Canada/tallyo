@@ -22,10 +22,10 @@
             <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" value={{option.value}}>{{option.value}}</option>
           </select>
 
-          <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">
-            
+          <!--editing dropdown options-->
+          <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">            
             <div ng-hide="editdrop[row.fieldname]">
-                  <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}">
+                  <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
                       {{selection.value}}
                       <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
                   </div><br>
