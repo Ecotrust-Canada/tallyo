@@ -3,7 +3,9 @@
 angular.module('scanthisApp.formController', [])
 
 .controller('entryformCtrl', function($scope, $http, DatabaseServices) {
-
+  if ($scope.config.startpolling){
+    $scope.pollScale = true;
+  }
   $scope.editdrop = {};
   $scope.hideform = false;
   if ($scope.config.hide){
@@ -39,6 +41,10 @@ angular.module('scanthisApp.formController', [])
     if ($scope.config.hide){
       $scope.hideform = true;
     }
+  };
+
+  $scope.scalefn = function(){
+    $scope.pollScale = !$scope.pollScale;
   };
 
 

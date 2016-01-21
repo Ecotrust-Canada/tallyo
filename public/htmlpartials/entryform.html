@@ -12,8 +12,8 @@
         <!--number-->
         <td ng-if-start="row.type === 'number'">{{row.title}}:</td>
         <td ng-if-end class="field">
-          <span ng-if="row.pollarg"><input  type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-focus="pollFn({field: row.fieldname})"></span>
-          <span ng-if="!row.pollarg"><input  type="number" value={{row.value}} ng-model="form[row.fieldname]" ></span>
+          <span ng-if="row.pollarg"><input type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-focus="pollFn({field: row.fieldname})"></span>
+          <span ng-if="!row.pollarg"><input type="number" value={{row.value}} ng-model="form[row.fieldname]" ></span>
         </td>
         <!--radio-->
         <td ng-if-start="row.type === 'radio'">{{row.title}}: </td><td class="field" ng-if-end>
@@ -54,10 +54,12 @@
           </select>
         </td>
 
-
-        <td ng-if="row.pollarg">
+        <!--button to set scale weight-->
+        <td ng-if="row.pollarg" ng-show="pollScale">
           <input type="button" ng-click="pollFn({field: row.pollarg})" value="store">
         </td>
+
+        <!--button to edit dropdown options-->
         <td ng-if="row.value ==='dboptions' && config.editinform === true">
              <button ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]">Edit Drop-down choices</span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
         </td>
@@ -68,8 +70,12 @@
 
 
   <form>
-    <input ng-if="config.startpolling" type="button" ng-click="pollFn({field: 'toggle_state'})" value="Toggle Scale">
+
+    <input ng-if="config.startpolling" ng-show="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Manual Input">
+    <input ng-if="config.startpolling" ng-hide="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Scale On">
+    
     <input type="button" ng-click="Clear()" value="Clear">
+    
     <input type="button" ng-click="submitFn({form: form});hidefn()" value="Submit">
   </form>
 </div>
