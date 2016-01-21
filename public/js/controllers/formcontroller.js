@@ -44,6 +44,13 @@ angular.module('scanthisApp.formController', [])
   };
 
   $scope.scalefn = function(){
+    if ($scope.pollScale===true){
+      for (var i=0;i<$scope.formarray.length;i++){
+        if ($scope.formarray[i].pollarg){
+          $scope.form[$scope.formarray[i].fieldname]= null;
+        }
+      }
+    }
     $scope.pollScale = !$scope.pollScale;
   };
 
