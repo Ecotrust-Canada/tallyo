@@ -1,0 +1,22 @@
+
+
+<div ng-init="showforms=false">
+
+  <loadcurrentcollection></loadcurrentcollection>
+  <div ng-controller="DisplayCollectionCtrl" ng-hide="showforms">
+    <display ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
+  </div>
+  <button ng-hide="showforms" ng-click="showforms=!showforms">Start New Lot</button>
+
+
+
+  <setshipmentinfo ng-show="showforms"></setshipmentinfo>
+  <setharvesterinfo ng-show="showforms"></setharvesterinfo>
+
+
+  <div ng-controller="NewLotCtrl" ng-show="showforms">
+    <span class="formheader"> Set Lot Code:<br>
+    <entryform config="scanform" form="form" formchange="formchange" submit-fn="SubmitNewLot(form);$parent.showforms=!showforms"></entryform>
+  </div>
+
+</div>

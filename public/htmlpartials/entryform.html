@@ -66,7 +66,7 @@
 
         <!--button to edit dropdown options-->
         <td ng-if="row.value ==='dboptions' && config.editinform === true">
-             <button ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]">Edit Drop-down choices</span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
+             <button ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
         </td>
 
       </tr>
@@ -81,7 +81,7 @@
     
     <input type="button" ng-click="Clear()" value="Clear">
     
-    <input type="button" ng-click="submitFn({form: form});hidefn()" value="Submit">
+    <input type="button" ng-click="submitFn({form: form});hidefn()" value="{{config.submit||'Submit'}}">
 
   </form>
 </div>

@@ -1,0 +1,12 @@
+<div ng-controller="SetOriginCtrl">
+
+  <span class="formheader"> Set Harvester Info:<br>
+
+  <dropdown ng-show="addinfo" itemlist="list.harvester"  cfg="collectiondropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
+
+  <entryform ng-show="addinfo" config="addform" form="form" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+ 
+  <display ng-hide="addinfo" obj="current.harvester" config="collection2display"></display>
+
+  <button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo">Edit</button>
+</div>

@@ -160,24 +160,26 @@ var formconfigs =
   },
   {//harvester, AM1-001
     id: 15,
-    hide: "Add New Origin",  
+    submit: 'Set', 
+    //hide: "Add New Origin",  
     fields:[
-      {"value":"dboptions","fieldname":"country_origin","id":"10","title":"Country of Origin","type":"select"},
-      {"value":"dboptions","fieldname":"supplier","id":"5","title":"Name","type":"select"},
-      {"fieldname":"species_common","id":"0","title":"Species (Common)","type":"text", "value":"Yellowfin Tuna"},
+      {"value":"dboptions","fieldname":"fleet_vessel","id":"0","title":"Fishing Vessel","type":"select"},
+      {"value":"dboptions","fieldname":"fishing_area","id":"1","title":"Fishing Area","type":"select"},
+      {"fieldname":"fishing_method","id":"2","title":"Fishing Method","type":"select", "value":"dboptions"},
     ],
     dboptions: 'origin',
     editinform: true
   },
   {//shipping_unit, AM1-001
     id: 16,  
-    hide: "Create New Shipment",  
+    //hide: "Create New Shipment",
+    submit: 'Set',  
     fields:[
       {"type":"text", "fieldname":"po_number", "title":"P.O. Number", "value":""},  
       {"type":"text", "fieldname":"bill_of_lading", "title":"Bill of Lading", "value":""},
       {"type":"text", "fieldname":"vessel_name", "title":"Vessel Name", "value":""},
       {"type":"text", "fieldname":"container_number", "title":"Container Number", "value":""},
-      {"type":"select", "fieldname":"received_from", "title":"Supplier", "value":"dboptions"},
+      {"type":"select", "fieldname":"received_from", "title":"Supplier Code", "value":"dboptions"},
     ],
     dboptions: 'shipment',
     editinform: true

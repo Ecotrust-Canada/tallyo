@@ -102,6 +102,7 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.DisplayCollectionInfo = function(){
+    console.log('function called');
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       $scope.current.itemchange = !$scope.current.itemchange;

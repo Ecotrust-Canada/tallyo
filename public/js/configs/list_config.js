@@ -197,7 +197,7 @@ var dropdownconfigs = [
     fields: ["country_origin", "supplier"]
   },
   { id: 4, 
-    title: "Select Recent", 
+    title: "Recent Shipments", 
     limit: "5",
     order: "-timestamp", 
     arg: "shipping_unit_number", 
@@ -216,7 +216,21 @@ var dropdownconfigs = [
     order: "-timestamp", 
     arg: "station_code", 
     fields: ["name"]
-  }
+  },
+  { id: 7, 
+    title: "Select Existing", 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "harvester_code", 
+    fields: ["fleet_vessel"]
+  },
+  { id: 8, 
+    title: "Recent Shipments", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "shipping_unit_number", 
+    fields: ["po_number", "received_from", "timestamp"]
+  },
 
 ];
 
@@ -256,6 +270,23 @@ var displayconfigs = [
     layout: [[{'name':'Country of Origin', 'val':'country_origin'}], 
       [{'name':'Company', 'val':'supplier'}],
       [{'name':'Species', 'val':'species_common'}]]
+  },
+  { id: 8, 
+    layout: [[{'name':'Lot', 'val':'internal_lot_code'}],
+    [{'name':'Supplier', 'val':'received_from'}],
+    [{'name':'Fishing Vessel', 'val':'fleet_vessel'}]]
+  },
+  { id: 9, 
+    layout: [[{'name':'P.O. Number', 'val':'po_number'}], 
+      [{'name':'Bill of Lading', 'val':'bill_of_lading'}],
+      [{'name':'Vessel Name', 'val':'vessel_name'}],
+      [{'name':'Container Number', 'val':'container_number'}]
+      [{'name':'Supplier', 'val':'received_from'}]]
+  },
+  { id: 10, 
+    layout: [[{'name':'Fishing Vessel', 'val':'fleet_vessel'}], 
+      [{'name':'Fishing Area', 'val':'fishing_area'}],
+      [{'name':'Fishing Method', 'val':'fishing_method'}]]
   },
 ];
 

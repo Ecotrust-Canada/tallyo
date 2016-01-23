@@ -23,6 +23,10 @@ angular.module('scanthisApp.directives', [])
 
 .directive('inventory', function() { return { templateUrl: 'htmlpartials/inventory.html' }; })
 
+.directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
+
+.directive('setharvesterinfo', function() { return { templateUrl: 'htmlpartials/setharvesterinfo.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '='},
