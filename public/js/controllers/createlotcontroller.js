@@ -81,7 +81,6 @@ angular.module('scanthisApp.createlotController', [])
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
     var func = function(response){
       $scope.list.old_harvester_lot = response.data;
-      //console.log(response.data);
     };
     DatabaseServices.GetEntries('expandedlotlocations', func, query);
   };
@@ -102,7 +101,6 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.DisplayCollectionInfo = function(){
-    console.log('function called');
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       $scope.current.itemchange = !$scope.current.itemchange;

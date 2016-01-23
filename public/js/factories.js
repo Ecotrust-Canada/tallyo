@@ -73,7 +73,7 @@ angular.module('scanthisApp.factories', [])
    */
   db_service.GetEntryNoAlert = function(table, func, querystring){
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.get(url).then(nonzeroLengthCheck(func), handleDbError);
+    $http.get(url).then(func, handleDbError);
   };
 
   /**

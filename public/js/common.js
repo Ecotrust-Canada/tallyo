@@ -241,3 +241,21 @@ var copyArrayPart = function(array, fields){
 };
 
 
+
+var sizefromweight = function(weight_kg){
+  var size;
+  if (weight_kg < 1.36){
+    size = "1-3 lb";
+  }
+  else if (weight_kg > 1.36 && weight_kg < 2.27){
+    size = "3-5 lb";
+  }
+  else if (weight_kg > 2.27 && weight_kg < 3.63){
+    size = "5-8 lb";
+  }
+  else if (weight_kg > 3.63){
+    size = "8-up lb";
+  }
+};
+
+
