@@ -207,7 +207,9 @@ var formconfigs =
     fields:[
       {"value":"","fieldname":"weight","id":"0","title":"Weight (kg)","type":"number", "pollarg": "stop"},
       {"value":[{"val":"A","label":"A"},{"val":"AA","label":"AA"},{"val":"AAA","label":"AAA"}],"fieldname":"grade","id":"1","title":"Grade","type":"radio"},
-      {"value":[{"val":"YF","label":"YF"},{"val":"BE","label":"BE"}],"fieldname":"species","id":"2","title":"Species","type":"radio", "stay": "true"}
+      {"value":[{"val":"YF","label":"YF"},{"val":"BE","label":"BE"}],"fieldname":"species","id":"2","title":"Species","type":"radio", "stay": "true"},
+      {"type": "select", "fieldname":"size", "title":"Size", "value":[{"name":"3 lb"}, {"name":"3-5 lb"}, {"name":"5-up lb"}]},
+      {"value":"","fieldname":"pieces","id":"0","title":"Pieces","type":"number"}
     ]
   },
 

@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var TraceabilityProvider = require('./lib/traceability_provider');
 var configpath = './public/js/configs/'+(process.argv[2] || 'app_config');
-var config = require(configpath);
+var config = require(configpath+"_local");
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public' )));
@@ -18,7 +18,12 @@ app.get('/config', function(req, res, next){
     if (err){
       throw err;
     }
-    res.send(data);
+    fs.readFile(configpath + '_local.js', function(err, localdata){
+      if (err){
+        throw err;
+      }
+      res.send(localdata + data);
+    });
   });
 });
 
