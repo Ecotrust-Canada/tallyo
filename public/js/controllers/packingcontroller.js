@@ -253,3 +253,4 @@ angular.module('scanthisApp.packingController', [])
 })
 
 ;
+
