@@ -76,6 +76,10 @@ angular.module('scanthisApp.itemController', [])
     var date = moment(new Date()).format();
     AddtoEntryNonFormData($scope, date, 'scan');
     AddtoEntryFormData(form, 'scan', $scope);
+
+    if ($scope.options.sizefromweight){
+      $scope.entry.scan.size = sizefromweight(form.weight_1);
+    }
   };
 
   $scope.DatabaseItem = function(){ 
@@ -133,7 +137,6 @@ angular.module('scanthisApp.itemController', [])
     else{
       $scope.MakeItemScanEntry(form);
       $scope.DatabaseItem();
-      //console.log($scope.entry.box);
     }
 
   };

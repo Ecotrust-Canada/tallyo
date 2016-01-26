@@ -215,7 +215,9 @@ var AddtoEntryNonFormData = function($scope, date, table){
   $scope.entry[table].lot_number = $scope.current.collectionid;
   $scope.entry[table].timestamp = date;
   $scope.entry[table].station_code = $scope.station_code;
-  $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+  if($scope.current[$scope.station_info.collectiontable].internal_lot_code){
+    $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+  }
 };
 
 var AddtoEntryFormData = function(form, scopevar, $scope){
@@ -256,6 +258,7 @@ var sizefromweight = function(weight_kg){
   else if (weight_kg > 3.63){
     size = "8-up lb";
   }
+  return size;
 };
 
 
