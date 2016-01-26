@@ -42,10 +42,7 @@ angular.module('scanthisApp.itemController', [])
       return;
     }
 
-    /*var el = document.getElementById(fieldName);
-    if(el){
-      el.focus();
-    }*/
+  
 
     scalePromise = $interval(function() {
       $http({
@@ -149,6 +146,7 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntries('product', func, query);
   };
   $scope.ListProducts();
+
 })
 
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {

@@ -19,7 +19,7 @@ angular.module('scanthisApp.packingController', [])
       $scope.current.patchitem = response.data[0];
       //if the object is in another collection
       var itemcollection = response.data[0][$scope.station_info.collectionid];
-      if (itemcollection && itemcollection !== $scope.current.collectionid){
+      if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){
         var overwrite = confirm("overwrite from previous?");
         if (overwrite === true){
           $scope.PatchObjWithContainer(id);
