@@ -65,6 +65,10 @@ angular.module('scanthisApp.itemController', [])
     scalePromise = null;
   };
 
+
+  $scope.$on('$locationChangeStart', function( event ) {
+      $scope.stopPolling();
+  });
   //not needed because clear is always called at beginning
   /*if ($scope.scanform.startpolling) {
     $scope.startPolling($scope.scanform.startpolling);
