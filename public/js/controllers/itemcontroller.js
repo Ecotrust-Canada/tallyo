@@ -53,7 +53,7 @@ angular.module('scanthisApp.itemController', [])
           $scope.form[fieldName] = response.data.value;
         },
         function errorCallback(response) {
-          console.log(response);
+          //console.log(response);
         }
       );
     }, 500);
@@ -177,17 +177,17 @@ angular.module('scanthisApp.itemController', [])
     var itemid = $scope.station_info.itemid;
     var query = '?' + itemid + '=eq.' + id;
     var func = function(){
-      $scope.RemoveScan(id, itemid);
+      $scope.RemoveObject(id, itemid, table);
     };
-    DatabaseServices.RemoveEntry(table, query, func);
+    DatabaseServices.RemoveEntry('scan', query, func);
   };
 
-  $scope.RemoveScan = function(id, itemid){
+  $scope.RemoveObject = function(id, itemid, table){
     var query = '?' + itemid + '=eq.' + id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
     };
-    DatabaseServices.RemoveEntry('scan', query, func);
+    DatabaseServices.RemoveEntry(table, query, func);
   };
 })
 
