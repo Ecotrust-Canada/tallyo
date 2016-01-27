@@ -4,8 +4,9 @@
       <td>Lot Number</td>
       <td ng-repeat="stn in sumStations">{{stn.name}}</td>
     </tr>
-    <tr ng-repeat="lot in list.lot_location | orderBy: '-end_date'">
+    <tr ng-repeat-start="lot in list.lot_location | orderBy: '-end_date'" ng-if="lot.expanded">
       <td>
+        <button ng-click="lot.expanded = false">-</button>
         Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
         {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
         
@@ -46,5 +47,27 @@
       </td>
 
     </tr>
+
+
+    <tr ng-repeat-end ng-if="!lot.expanded">
+      <td>
+        <button ng-click="lot.expanded = true">+</button>
+        Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
+        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
+        
+        <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
+        <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
+
+      </td>
+      <td ng-repeat="stn in sumStations">
+          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
+            <span ng-if="sum.pieces">Pieces: {{sum.pieces}} | </span><span ng-if="sum.boxes">Boxes: {{sum.boxes}} | </span>Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span>
+          </div>
+      </td>
+    </tr>
+
+
+
+
   </table>
 </div>
