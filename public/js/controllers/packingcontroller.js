@@ -215,6 +215,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.CheckScan(id);
       };
       var onErr = function() {
+        $scope.raw.string = null;
         toastr.error('invalid object'); // show failure toast.
       };
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
