@@ -35,6 +35,9 @@ angular.module('scanthisApp', [
 
 
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
+
+  $scope.terminal = {};
+  $scope.terminal.showsection = "default";
   $scope.stations = stationlist;
   $scope.terminals = terminals;
   if ($routeParams.terminal_id){
@@ -83,6 +86,9 @@ angular.module('scanthisApp', [
     }
     if(settings.options){
       $scope.options = settings.options;
+    }
+    if(settings.visibility){
+      $scope.visibility = settings.visibility;
     }
 
     if(settings.scaleURL){
@@ -146,6 +152,8 @@ angular.module('scanthisApp', [
     for (var i=0;i<settings.includes.length;i++){ 
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
+
+    //$scope.showsection = "before";
   };
 })
 

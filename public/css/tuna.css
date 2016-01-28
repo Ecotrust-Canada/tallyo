@@ -128,6 +128,13 @@
   left:0;
 }
 
+.navbutton{
+  margin-left: 70px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
 
 .form-text{
   font-family: "proxima-nova-1", "proxima-nova-2", Verdana, sans-serif;
