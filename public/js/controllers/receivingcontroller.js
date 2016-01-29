@@ -21,11 +21,9 @@ angular.module('scanthisApp.receivingController', [])
     $scope.entry.scan = {};
     $scope.entry[$scope.station_info.itemtable] = {};
 
-    $scope.entry[$scope.station_info.itemtable].timestamp = date;
     $scope.entry[$scope.station_info.itemtable].station_code = $scope.station_code;
     $scope.entry[$scope.station_info.itemtable][$scope.station_info.collectionid] = $scope.current.collectionid;
     
-    $scope.entry.scan.timestamp = date;
     $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, $scope.station_info.itemtable, $scope);
   };
@@ -95,7 +93,6 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.SubmitForm = function(form){  
     MakeEntry(form, 'shipping_unit', $scope);
-    $scope.entry.shipping_unit.timestamp = moment(new Date()).format();
     $scope.entry.shipping_unit.station_code = $scope.station_code;
     $scope.MakeShippingEntry();
     $scope.formchange = !$scope.formchange;
@@ -220,8 +217,6 @@ angular.module('scanthisApp.receivingController', [])
       $scope.printLabel(data, labels);
     };
     if (NoMissingValues($scope.form)){
-      entry.timestamp = date;
-      //console.log(entry);
       DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
     }
     else{ toastr.error("missing values"); } 

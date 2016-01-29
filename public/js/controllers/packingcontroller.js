@@ -54,7 +54,6 @@ angular.module('scanthisApp.packingController', [])
   $scope.MakeScan = function(id){
     $scope.entry.scan = {"station_code": $scope.station_code,};
     $scope.entry.scan[$scope.station_info.itemid] = id;
-    $scope.entry.scan.timestamp = moment(new Date()).format();
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
@@ -125,10 +124,12 @@ angular.module('scanthisApp.packingController', [])
       $scope.GetHarvester(lot_num);
     }
     else{
-      var harvester_code = '';
+      var harvester_code = 'none';
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = 0;
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code);
+      var internal_lot_code = '';
+      lot_num = 'none';
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
     }
   };
 
@@ -149,7 +150,14 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
     };
-    var patch = {'weight': box_weight, 'lot_number': lot_num, 'pieces': num, 'harvester_code': harvester_code, 'internal_lot_code': internal_lot_code};
+    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code};
+    if (lot_num !== 'none'){
+      patch.lot_number = lot_num;
+    }
+    if (harvester_code !== 'none'){
+      patch.harvester_code = harvester_code;
+    }
+    console.log(patch);
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
@@ -232,7 +240,6 @@ angular.module('scanthisApp.packingController', [])
       else{
         $scope.entry.scan[$scope.station_info.itemid] = id;
         $scope.entry.scan.station_code = $scope.station_code;
-        $scope.entry.scan.timestamp = moment(new Date()).format();
         $scope.DatabaseScan();
       }
     };

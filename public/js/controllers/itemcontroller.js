@@ -69,16 +69,13 @@ angular.module('scanthisApp.itemController', [])
   $scope.$on('$locationChangeStart', function( event ) {
       $scope.stopPolling();
   });
-  //not needed because clear is always called at beginning
-  /*if ($scope.scanform.startpolling) {
-    $scope.startPolling($scope.scanform.startpolling);
-  }*/
+
   
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
     var date = moment(new Date()).format();
-    AddtoEntryNonFormData($scope, date, 'scan');
+    AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, 'scan', $scope);
 
     if ($scope.options.sizefromweight){
@@ -109,8 +106,8 @@ angular.module('scanthisApp.itemController', [])
   $scope.MakeItemScanEntry = function(form){
     var table = $scope.station_info.itemtable.split('_')[0];
     var date = moment(new Date()).format();
-    AddtoEntryNonFormData($scope, date, table);
-    AddtoEntryNonFormData($scope, date, 'scan');
+    AddtoEntryNonFormData($scope, table);
+    AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, table, $scope);
 
     //assign trade_unit and weight(kg) from weight and units 

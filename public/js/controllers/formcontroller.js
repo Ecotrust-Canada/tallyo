@@ -124,16 +124,13 @@ angular.module('scanthisApp.formController', [])
   $scope.Submit = function(form, responsefunction){
     var date = moment(new Date()).format();    
     if ($scope.station_info.collectiontable === 'box'){
-      $scope.entry[table].timestamp = date;
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
     }
     if ($scope.station_info.collectiontable === 'shipping_unit'){
-      $scope.entry[table].timestamp = date;
       $scope.entry[table].station_code = $scope.station_code;
     }
     if ($scope.station_info.collectiontable === 'lot'){
-      $scope.entry[table].timestamp = date;
       CreateLotEntryPeriod(date, 'day', $scope);
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].processor_code = $scope.processor;
@@ -143,7 +140,6 @@ angular.module('scanthisApp.formController', [])
       $scope.entry.harvester.active = true;
     }
     MakeEntry(form, table, $scope);
-    //console.log(table);
     $scope.ToDatabase(responsefunction);
   };
 

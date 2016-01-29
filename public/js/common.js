@@ -211,9 +211,8 @@ var isInArray = function(value, array) {
   return array.indexOf(value) > -1;
 };
 
-var AddtoEntryNonFormData = function($scope, date, table){
-  $scope.entry[table].lot_number = $scope.current.collectionid;
-  $scope.entry[table].timestamp = date;
+var AddtoEntryNonFormData = function($scope, table){
+  $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
   if($scope.current[$scope.station_info.collectiontable].internal_lot_code){
     $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
