@@ -162,6 +162,15 @@ var listconfigs = [
     arg: "box_number", 
     button: "Remove"
   },
+  { id: 20,     
+    headers: ["Supplier Group", "Supplier", "Fleet", "Species", "Harvester_code", ""], 
+    fields: ["supplier_group", "supplier", "fleet_vessel", "species_common", "harvester_code"], 
+    limit: "10000",
+    order: "-timestamp", 
+    arg: "harvester_code", 
+    button: "Set Current",
+    button2: "Hide/Delete"
+  }
 
 
 ];
@@ -232,6 +241,7 @@ var dropdownconfigs = [
     fields: ["po_number", "received_from", "timestamp"]
   },
 
+
 ];
 
 
@@ -287,6 +297,12 @@ var displayconfigs = [
     layout: [[{'name':'Fishing Vessel', 'val':'fleet_vessel'}], 
       [{'name':'Fishing Area', 'val':'fishing_area'}],
       [{'name':'Fishing Method', 'val':'fishing_method'}]]
+  },
+  { id: 11, 
+    layout: [[{'name':'Latin name', 'val':'species_latin'}, {'name':'Fishing Area', 'val':'fishing_area'}], 
+      [{'name':'State', 'val':'state'}, {'name':'Landing Location', 'val':'landing_location'}],
+      [{'name':'Handling', 'val':'handling'}, {'name':'Country of Origin', 'val':'country_origin'}],
+      [{'name':'Fishing Method', 'val':'fishing_method'}, {'name':'Country of Production', 'val':'country_production'}]]
   },
 ];
 

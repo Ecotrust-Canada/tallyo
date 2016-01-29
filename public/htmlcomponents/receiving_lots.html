@@ -17,8 +17,10 @@
 
 <div ng-controller="SetSupplierCtrl">
   <div ng-controller="NewLotCtrl">
-    <supplierlist></supplierlist>
 
+    <searchtext></searchtext>
+
+    <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" hide-fn="RemoveHarvester(str)" filterstring="searchText" displaycfg="adddisplay"></expandedlist>
 
     <div ng-init="formtable='harvester'">  
       <div ng-controller="FormSubmitCtrl" ng-hide="addnew">

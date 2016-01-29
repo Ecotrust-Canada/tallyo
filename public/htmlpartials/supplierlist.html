@@ -17,7 +17,7 @@
       <td></td>
     </tr>
 
-    <tr ng-repeat-start="supplier in list.harvester | filter: searchText" ng-class="{selected: supplier.harvester_code === current.harvester_code}">
+    <tr ng-repeat-start="supplier in list.harvester | filter: searchText">
       <td>
         <button ng-if="supplier.expanded" ng-click="supplier.expanded = false">-</button>
         <button ng-if="!supplier.expanded" ng-click="supplier.expanded = true">+</button>

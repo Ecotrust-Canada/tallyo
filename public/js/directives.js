@@ -27,6 +27,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('setharvesterinfo', function() { return { templateUrl: 'htmlpartials/setharvesterinfo.html' }; })
 
+.directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '='},
@@ -40,6 +42,16 @@ angular.module('scanthisApp.directives', [])
            updateFn: '&'},
   controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
+
+.directive('expandedlist', function() { return { 
+  scope: { itemlist: '=', 
+           displaycfg: '=', 
+           config: '=' , 
+           filterstring: '=',  
+           updateFn: '&',
+           hideFn: '&'},
+  controller: 'ListCtrl',
+  templateUrl: 'htmlpartials/expandedlist.html' }; })
 
 .directive('dropdown', function() { return { 
   scope: { itemlist: '=',  
