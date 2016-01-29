@@ -6,7 +6,8 @@ angular.module('scanthisApp.filters', [])
 /*turns a string into a date object*/
 .filter('stringtodate', function() {
   return function(input) {
-    return new Date(input);
+    var day = input.substring(0,19);
+    return new Date(day);
   };
 })
 
