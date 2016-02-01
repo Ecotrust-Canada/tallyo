@@ -19,16 +19,21 @@
   <div ng-controller="NewLotCtrl">
 
     <searchtext></searchtext>
-
+    
     <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" hide-fn="RemoveHarvester(str)" filterstring="searchText" displaycfg="adddisplay"></expandedlist>
 
     <div ng-init="formtable='harvester'">  
       <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
-        <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
       </div>
     </div>
+
+    
     
     <hr>
+
+
+
   </div>
 </div>
 

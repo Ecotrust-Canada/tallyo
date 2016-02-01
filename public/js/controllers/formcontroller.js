@@ -2,47 +2,53 @@
 
 angular.module('scanthisApp.formController', [])
 
-.controller('entryformCtrl', function($scope, $http, DatabaseServices) {
+.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr) {
+  
+  //display scale buttons
   if ($scope.config.startpolling){
     $scope.pollScale = true;
   }
+
+  //booleans for show/hide edit dropdown
   $scope.editdrop = {};
+  if (!$scope.form){
+    $scope.form = {};
+  }
+
+  //default show or hide form
   $scope.hideform = false;
   if ($scope.config.hide){
     $scope.hideform = true;
   }
 
-  if($scope.config.dboptions){
-    var table = $scope.config.dboptions;
-    var func = function(response){
-      $scope.formoptions = response.data; 
-    };
-
-    var query = '?table_name=eq.' + table;
-    DatabaseServices.GetEntries('formoptions', func, query);
-  }
-
+  //all the fields in the form
   $scope.formarray = $scope.config.fields;  
 
+  //clear fields to default
   $scope.Clear = function(){
+    $scope.submitted=false;
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       $scope.pollFn({field: $scope.config.startpolling});
     }
   };
 
+  //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
       $scope.Clear();
     }
   });
 
+
+  //hide the form once it's submitted
   $scope.hidefn = function(){
     if ($scope.config.hide){
       $scope.hideform = true;
     }
   };
 
+  //turn the scale on or off
   $scope.scalefn = function(){
     if ($scope.pollScale===true){
       for (var i=0;i<$scope.formarray.length;i++){
@@ -54,7 +60,35 @@ angular.module('scanthisApp.formController', [])
     $scope.pollScale = !$scope.pollScale;
   };
 
+  $scope.submitted=false;
 
+  $scope.isValid = function(form){
+    $scope.submitted = true;
+    console.log(form);
+    var form_error = false;
+    for (var i=0;i<$scope.formarray.length;i++){
+      var row = $scope.formarray[i];
+      var req_error = $scope.theform[row.fieldname].$error.required;
+      var neg_error = $scope.theform[row.fieldname].$error.negative;
+      if (req_error === true || neg_error === true){
+        form_error = true;
+        
+      }
+    }
+    if (form_error === true){
+      toastr.error('errors in form');
+      form = null;
+    }
+    if (form){
+      if ($scope.config.hide){
+        $scope.hideform = true;
+      }
+    }
+    return form;
+  };
+
+
+  //functions for editing dropdown choices
   $scope.FormData = function(table){
     var func = function(response){
       $scope.formoptions = response.data; 
@@ -88,7 +122,7 @@ angular.module('scanthisApp.formController', [])
 })
 
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+  //$scope.form = {};
   var table;
   if($scope.formtable){
     table = $scope.formtable;
@@ -114,10 +148,7 @@ angular.module('scanthisApp.formController', [])
       $scope.formchange = !$scope.formchange;
       responsefunction((response.data[0] ? response.data[0] : response.data));
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func);
-    }
-    else{ toastr.error("empty form"); }  
+    DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func); 
   };
 
   //fills out entry from form
@@ -135,7 +166,7 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].processor_code = $scope.processor;
     }
-    if ($scope.options.receivelot){
+    if ($scope.options && $scope.options.receivelot){
       $scope.entry.harvester.processor_code = $scope.processor;
       $scope.entry.harvester.active = true;
     }
@@ -145,11 +176,15 @@ angular.module('scanthisApp.formController', [])
 
   //The different submit buttons
   $scope.SubmitAddtoList = function(form){
-    $scope.Submit(form, AddtoList);
+    if(form){
+      $scope.Submit(form, AddtoList);
+    }
   };
 
   $scope.SubmitAddSetCurrent = function(form){
-    $scope.Submit(form, AddSetCurrent);
+    if(form){
+      $scope.Submit(form, AddSetCurrent);
+    }
   };
 
 })
@@ -167,10 +202,9 @@ angular.module('scanthisApp.formController', [])
 .controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {
   var table = $scope.tableinform;
 
-  $scope.form = {};
+  //$scope.form = {};
   $scope.entry[table] = {};
   $scope.formchange = true;
-
 
   var AddtoList = function(response){
     var thedata = response.data;
@@ -186,18 +220,15 @@ angular.module('scanthisApp.formController', [])
       $scope.formchange = !$scope.formchange;
       responsefunction(response);
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
-    }
-    else{ toastr.error("empty form"); }
+    DatabaseServices.DatabaseEntryReturn(table, $scope.entry[table], func);
   };
 
   //fills out entry from form
   $scope.Submit = function(form, responsefunction){
     if (table === 'product'){
-      $scope.entry.product.product_code = ($scope.form.sap_item_code ? $scope.form.sap_item_code : createProdCode(new Date()));
+      $scope.entry.product.product_code = (form.sap_item_code ? form.sap_item_code : createProdCode(new Date()));
       MakeEntry(form, 'product', $scope);
-      $scope.entry.product.best_before = ($scope.form.best_before ? moment.duration($scope.form.best_before, 'years') : moment.duration(1, 'years'));
+      $scope.entry.product.best_before = (form.best_before ? moment.duration(form.best_before, 'years') : moment.duration(1, 'years'));
     }
     else{
       MakeEntry(form, table, $scope);

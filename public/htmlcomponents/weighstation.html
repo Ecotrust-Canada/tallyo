@@ -19,8 +19,11 @@
 
 <div class="sectionframe" >
   <div ng-controller="ScanCtrl">
-    <entryform ng-if="!tableinform" config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)" poll-fn="startPolling(field)"></entryform>
+
+    <entryform ng-if="!tableinform" config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)" poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
+
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" submit-fn="Submit(form)"></entryform>
+
   </div>
 </div>
 
@@ -28,7 +31,7 @@
   <hr>
 
   <div ng-controller="AddtoTableCtrl">
-    <entryform config="addform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
   </div>
   <hr>
 </div>

@@ -85,18 +85,20 @@ angular.module('scanthisApp.receivingController', [])
 
 
 .controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
   $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
-    MakeEntry(form, 'shipping_unit', $scope);
-    $scope.entry.shipping_unit.station_code = $scope.station_code;
-    $scope.MakeShippingEntry();
-    $scope.formchange = !$scope.formchange;
-    $scope.addinfo = false;
+    if (form){
+      MakeEntry(form, 'shipping_unit', $scope);
+      $scope.entry.shipping_unit.station_code = $scope.station_code;
+      $scope.MakeShippingEntry();
+      $scope.formchange = !$scope.formchange;
+      $scope.addinfo = false;
+    }
   };
 
   $scope.MakeShippingEntry = function(){
@@ -104,10 +106,7 @@ angular.module('scanthisApp.receivingController', [])
       $scope.current.shipping_unit = (response.data[0] || response.data);
       $scope.list.shipping_unit.push($scope.current.shipping_unit);
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
-    }
-    else{ toastr.error("empty form"); } 
+    DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
   };
 
   $scope.ListShipments = function(){
@@ -131,18 +130,21 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 .controller('SetOriginCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.harvester = {};
   $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
-    MakeEntry(form, 'harvester', $scope);
-    $scope.entry.harvester.processor_code = $scope.processor;
-    $scope.MakeHarvesterEntry();
-    $scope.formchange = !$scope.formchange;
-    $scope.addinfo = false;
+    if (form){
+      MakeEntry(form, 'harvester', $scope);
+      $scope.entry.harvester.processor_code = $scope.processor;
+      $scope.MakeHarvesterEntry();
+      $scope.formchange = !$scope.formchange;
+      $scope.addinfo = false;
+    }
+    
   };
 
   $scope.MakeHarvesterEntry = function(){
@@ -151,10 +153,8 @@ angular.module('scanthisApp.receivingController', [])
       $scope.current.harvester = (response.data[0] || response.data);
       $scope.list.harvester.push($scope.current.harvester);
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
-    }
-    else{ toastr.error("empty harvester info form"); } 
+    DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
+
   };
 
   $scope.ListHarvesters = function(){

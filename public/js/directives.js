@@ -67,6 +67,7 @@ angular.module('scanthisApp.directives', [])
           formchange: '=',
           list1: '=', 
           list2: '=', 
+          formdisabled: '=', 
           submitFn: '&',
           pollFn: '&'},
   controller: 'entryformCtrl', 
@@ -77,4 +78,28 @@ angular.module('scanthisApp.directives', [])
            submitFn: '&'},
   controller: 'FieldsetCtrl',
   templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })
+
+
+.directive('negative', function (){ 
+   return {
+      require: 'ngModel',
+      link: function(scope, elem, attr, ngModel) {
+
+          //For DOM -> model validation
+          ngModel.$parsers.unshift(function(value) {
+             var valid = value >= 0;
+             ngModel.$setValidity('negative', valid);
+             return valid ? value : undefined;
+          });
+
+          //For model -> DOM validation
+          ngModel.$formatters.unshift(function(value) {
+             ngModel.$setValidity('negative', value >= 0);
+             return value;
+          });
+      }
+   };
+})
+
+
 ;

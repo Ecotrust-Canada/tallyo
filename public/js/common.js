@@ -214,7 +214,7 @@ var isInArray = function(value, array) {
 var AddtoEntryNonFormData = function($scope, table){
   $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
-  if($scope.current[$scope.station_info.collectiontable].internal_lot_code){
+  if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
     $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
   }
 };
@@ -260,4 +260,18 @@ var sizefromweight = function(weight_kg){
   return size;
 };
 
+
+var formIsValid = function($scope){
+  
+};
+
+var confirmTrue = function(message, func, elsefunc){
+  var alert = confirm(message);
+  if (alert === true){
+    func();
+  }
+  else{
+    elsefunc(); //this is the ng-model for the input form
+  }
+};
 

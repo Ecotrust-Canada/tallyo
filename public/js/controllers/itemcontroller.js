@@ -16,17 +16,6 @@ angular.module('scanthisApp.itemController', [])
     $scope.scaleon = true;
   }
 
-  $scope.DatabaseScan = function(form){
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
-      $scope.formchange = !$scope.formchange;
-      toastr.success("submit successful");
-    };
-    if (NoMissingValues($scope.entry.scan)){
-      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
-    }
-    else{ toastr.error("missing values"); }
-  };
 
   $scope.startPolling = function(fieldName) {
     //stop polling scale
@@ -51,6 +40,7 @@ angular.module('scanthisApp.itemController', [])
       }).then(
         function successCallback(response) {
           $scope.form[fieldName] = response.data.value;
+          console.log(response.data.value);
         },
         function errorCallback(response) {
           //console.log(response);
@@ -65,11 +55,21 @@ angular.module('scanthisApp.itemController', [])
     scalePromise = null;
   };
 
-
   $scope.$on('$locationChangeStart', function( event ) {
       $scope.stopPolling();
   });
 
+$scope.DatabaseScan = function(form){
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.formchange = !$scope.formchange;
+      toastr.success("submit successful");
+    };
+    if (NoMissingValues($scope.entry.scan)){
+      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+    }
+    else{ toastr.error("missing values"); }
+  };
   
 
   /*fills in fields in json to submit to database*/
@@ -78,7 +78,7 @@ angular.module('scanthisApp.itemController', [])
     AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, 'scan', $scope);
 
-    if ($scope.options.sizefromweight){
+    if ($scope.options && $scope.options.sizefromweight){
       $scope.entry.scan.size = sizefromweight(form.weight_1);
     }
   };
@@ -111,7 +111,7 @@ angular.module('scanthisApp.itemController', [])
     AddtoEntryFormData(form, table, $scope);
 
     //assign trade_unit and weight(kg) from weight and units 
-    if ($scope.options.trade_unit){
+    if ($scope.options && $scope.options.trade_unit){
       $scope.entry.box.trade_unit = $scope.form.trade_unit_w + ' ' + $scope.form.trade_unit;
       if ($scope.form.trade_unit === 'lb'){
         $scope.entry.box.weight = $scope.form.trade_unit_w / 2.2;
@@ -122,7 +122,7 @@ angular.module('scanthisApp.itemController', [])
       delete $scope.entry.box.trade_unit_w;
     }
     //attach harvester, shipment
-    if ($scope.options.lot_info){
+    if ($scope.options && $scope.options.lot_info){
       $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
       $scope.entry.box.shipping_unit_number = $scope.current.harvester_lot.shipping_unit_number;
       $scope.entry.box.lot = $scope.current.harvester_lot.lot_number;
@@ -131,13 +131,15 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.Submit = function(form){
-    if($scope.station_info.itemtable === 'scan'){
-      $scope.MakeScanEntry(form);
-      $scope.DatabaseScan(form);
-    }
-    else{
-      $scope.MakeItemScanEntry(form);
-      $scope.DatabaseItem();
+    if (form){
+      if($scope.station_info.itemtable === 'scan'){
+        $scope.MakeScanEntry(form);
+        $scope.DatabaseScan(form);
+      }
+      else{
+        $scope.MakeItemScanEntry(form);
+        $scope.DatabaseItem();
+      }
     }
 
   };
@@ -150,6 +152,16 @@ angular.module('scanthisApp.itemController', [])
     DatabaseServices.GetEntries('product', func, query);
   };
   $scope.ListProducts();
+
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+      $scope.formdisabled = true;
+    }
+    else{
+      $scope.formdisabled = false;
+    }
+  });
 
 })
 

@@ -58,7 +58,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 
-  $scope.form = {};
+  //$scope.form = {};
 
   //lotlocations functions
   $scope.AddNew = function(lot_number, station_code, bool){
@@ -162,13 +162,16 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
   $scope.SubmitNewLot = function(form){
-    var harvester_code = $scope.current.harvester.harvester_code;
-    var ship_code = $scope.current.shipping_unit.shipping_unit_number;
-    var date = moment(new Date()).format();
-    var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
-    $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
-    AddtoEntryFormData(form, 'lot', $scope);
-    $scope.CreateLot(queryString, date);
+    if (form){
+      var harvester_code = $scope.current.harvester.harvester_code;
+      var ship_code = $scope.current.shipping_unit.shipping_unit_number;
+      var date = moment(new Date()).format();
+      var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
+      $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
+      AddtoEntryFormData(form, 'lot', $scope);
+      $scope.CreateLot(queryString, date);
+    }
+    
   };
 
 

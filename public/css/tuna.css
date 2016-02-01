@@ -36,6 +36,7 @@
 }
 
 
+
 .columnframe{
   width:446px;
   height:700px;
@@ -111,6 +112,15 @@
 
 .selectedlot{
   outline: solid 3px #5AC8ED;
+}
+
+.errortext{
+  font-size: 10px;
+  color: red;
+}
+
+ng-submitted ng-invalid { 
+  background: red; 
 }
 
 .small td{

@@ -6,7 +6,7 @@
 
   <br>
   <div ng-controller="FormSubmitCtrl">
-      <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
+      <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
   </div>
 </div>
 
@@ -15,12 +15,15 @@
   <div ng-controller="HighlightScanCtrl">
 
     {{packingconfig.sectiontitle}}:<br><br>
-    <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;">
-      {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off">
+    <fieldset ng-disabled="formdisabled">
+    <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+      <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span><br>
+      {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off" >
     </form>
     <br>
 
     <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+    </fieldset>
   </div>
 </div>
 
