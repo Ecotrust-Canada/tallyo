@@ -191,12 +191,15 @@ angular.module('scanthisApp.receivingController', [])
         var date = moment(new Date()).format();
         for (var j=0;j<choices.length;j++){
           var formrow = choices[j];
-          $scope.entry.box.grade = formrow.grade;
+          $scope.entry.box.grade = formrow.grade; 
           $scope.entry.box.size = formrow.size;
           $scope.entry.box.weight = formrow.weight;
 
           for (var i=1;i<=formrow.num_boxes;i++){
-            $scope.MakeBox($scope.entry.box, date);
+            //console.log($scope.entry.box);
+            //var entry = $scope.entry.box;
+            var entry = JSON.parse(JSON.stringify($scope.entry.box));
+            $scope.MakeBox(entry, date);
           }
         }    
       }else{
@@ -208,18 +211,17 @@ angular.module('scanthisApp.receivingController', [])
   };
   
   $scope.MakeBox = function(entry, date){
+    //console.log(entry);
     var func = function(response){
       var values = response.data[0];
+      //console.log(values);
       values.origin = $scope.current.harvester.supplier;
       var data = dataCombine(values, $scope.onLabel.qr);
       var labels = ArrayFromJson(values, $scope.onLabel.print);
       console.log(data, labels);
       $scope.printLabel(data, labels);
     };
-    if (NoMissingValues($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
-    }
-    else{ toastr.error("missing values"); } 
+    DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
 })
 
