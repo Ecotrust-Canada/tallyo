@@ -196,8 +196,6 @@ angular.module('scanthisApp.receivingController', [])
           $scope.entry.box.weight = formrow.weight;
 
           for (var i=1;i<=formrow.num_boxes;i++){
-            //console.log($scope.entry.box);
-            //var entry = $scope.entry.box;
             var entry = JSON.parse(JSON.stringify($scope.entry.box));
             $scope.MakeBox(entry, date);
           }
@@ -211,10 +209,8 @@ angular.module('scanthisApp.receivingController', [])
   };
   
   $scope.MakeBox = function(entry, date){
-    //console.log(entry);
     var func = function(response){
       var values = response.data[0];
-      //console.log(values);
       values.origin = $scope.current.harvester.supplier;
       var data = dataCombine(values, $scope.onLabel.qr);
       var labels = ArrayFromJson(values, $scope.onLabel.print);

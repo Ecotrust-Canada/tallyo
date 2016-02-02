@@ -92,17 +92,14 @@ angular.module('scanthisApp.factories', [])
 
   var CreateCode = function(table, processor_code, func, onErr){
     return function(response){
-      //console.log(response.data);
       var table_info = tableInfo(table);
       var id = response.data.serial_id;
-      //console.log(id);
       var querystring = '?serial_id=eq.' + id;
       var url = databaseurl + table + cleanQueryString(querystring);
       var id36 = (parseInt(id)).toString(36).toUpperCase();
       var newid = table_info.letter + '-' + processor_code + '-' + padz(id36, 4);
       var patch = {};
       patch[table_info.field] = newid;
-      console.log(patch);
       $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func), handleDbError);
     };
   };
@@ -110,7 +107,6 @@ angular.module('scanthisApp.factories', [])
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
     var url = databaseurl + table;
     if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
-      //console.log(entry);
       $http.post(url, entry, patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
     }
     else{
