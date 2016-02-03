@@ -4,8 +4,6 @@
 angular.module('scanthisApp.directives', [])
 
 
-/*table with suppliers with button to set as current*/
-.directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
 
@@ -80,6 +78,7 @@ angular.module('scanthisApp.directives', [])
   templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })
 
 
+//to validate forms - return error if number is negative
 .directive('negative', function (){ 
    return {
       require: 'ngModel',
