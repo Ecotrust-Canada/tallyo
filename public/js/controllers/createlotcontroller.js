@@ -124,6 +124,19 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
+  $scope.delete = function(){
+    var id = $scope.current[$scope.station_info.collectiontable][$scope.station_info.collectionid];
+    var querystring = '?' + $scope.station_info.collectionid + '=eq.' + id;
+    var func = function(response){
+      $scope.current.collectionid = 'no selected';
+      $scope.list.collection = $scope.list.collection
+      .filter(function (el) {
+        return el[$scope.station_info.collectionid] !== id;
+      });
+    };
+    DatabaseServices.RemoveEntry($scope.station_info.collectiontable, querystring, func);
+  };
+
 })
 
 /*

@@ -16,13 +16,12 @@
 
     {{packingconfig.sectiontitle}}:<br><br>
     <fieldset ng-disabled="formdisabled">
-    <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
-      <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span><br>
-      {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off" >
-    </form>
-    <br>
-
-    <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+      <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+        <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span><br>
+        {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off" >
+      </form>
+      <br>
+      <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
     </fieldset>
   </div>
 </div>
@@ -30,7 +29,9 @@
 
 <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
   <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+  <button ng-if="current[station_info.collectiontable]" ng-disabled="list.included.length>0" ng-click="delete()">Delete</button>
 </div>
+
 
 <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
