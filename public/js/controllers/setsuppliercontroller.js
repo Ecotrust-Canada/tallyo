@@ -65,7 +65,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
     };
     var today = moment(new Date()).format();
-    var entry = {'collectionid': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': bool};
+    var entry = {'lot_number': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': bool};
     DatabaseServices.DatabaseEntry('lotlocations', entry, func);
   };
   $scope.RemoveOld = function(lot_number, station_code, bool){
@@ -79,7 +79,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var patch = {'in_progress': true};
     var func = function(response){
     };
-    var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number;
+    var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;
     DatabaseServices.PatchEntry('lotlocations',patch, query, func);
   };
   $scope.StationLot = function(lot_number, station_code){
@@ -103,7 +103,7 @@ angular.module('scanthisApp.setsupplierController', [])
         $scope.AddNew(lot_number, station_code, true);
       }      
     };
-    var query = '?station_code=eq.' + station_code + '&collectionid=eq.' + lot_number; 
+    var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
   $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {

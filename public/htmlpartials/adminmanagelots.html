@@ -1,32 +1,39 @@
 <div ng-controller="LotCtrl" class="innerframe">
   <table class="fill">
     <tr>
+      <td></td>
       <td>Lot Number</td>
       <td ng-repeat="stn in sumStations">{{stn.name}}</td>
     </tr>
-    <tr ng-repeat-start="lot in list.lot_location | orderBy: '-end_date'" ng-if="lot.expanded">
+
+    <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp'" >
+
+      <td ng-if="!lot.expanded"><button ng-click="lot.expanded = true">+</button></td>
+      <td ng-if="lot.expanded"><button ng-click="lot.expanded = false">-</button></td>
+      
       <td>
-        <button ng-click="lot.expanded = false">-</button>
         Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
-        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        
+        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>        
         <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
         <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
-
       </td>
-      <td ng-repeat="stn in sumStations" ng-class="{bluefill: lot.stations.indexOf(stn.code) !== -1, blueoutline: (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0}" >
-        <div class="cellWrapper">
-          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:(sumStations[$index-1].code ? sumStations[$index-1].code : 'random')} " >
-            <div ng-init="$parent.prev=sum[station_info.trackBy]"></div>
-          </div>
-          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
-            <b ng-class="{redfill: sum[station_info.trackBy]>prev, greenfill: sum[station_info.trackBy]===prev}"><span ng-if="sum.pieces">Pieces: {{sum.pieces}} | </span><span ng-if="sum.boxes">Boxes: {{sum.boxes}} | </span>Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span></b>
+
+      <td ng-if="lot.expanded" ng-repeat="stn in sumStations">
+
+        <div class="cellWrapper" ng-class="{bluefill: lot[stn.code].summary, blueoutline: lot[stn.code].in_progress}">
+          
+          <div ng-if="lot[stn.code].summary.weight_1">
+            <b ng-class="{redfill: lot[stn.code].summary[station_info.trackBy]>lot[stn.code].prev, greenfill: lot[stn.code].summary[station_info.trackBy]===lot[stn.code].prev}">
+              <span ng-if="lot[stn.code].summary.pieces">Pieces: {{lot[stn.code].summary.pieces}} | </span>
+              <span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>
+              Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg 
+              <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
+            </b>
           </div>
 
           <br>
           <table>
-            <tr class="fill2" ng-repeat = "total in list.totals_by_lot | filter: {lot_number:lot.lot_number, station_code:stn.code} | orderBy: 'state'">
-
+            <tr class="fill2" ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
               <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
               <td ng-if="total.product_code">{{total.product_code}} </td>
               <td ng-if="total.state">{{total.state}} </td>
@@ -39,35 +46,28 @@
               <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
             </tr>
           </table>
+
           <div>
-            <button class="bottomright" ng-if="stn.completelot && (list.stationlot| filter: {collectionid:lot.lot_number, station_code:stn.code}).length>0" ng-click="CompleteLot(lot.lot_number, stn.completelot)">Complete Lot</button>
-            <button class="bottomleft" ng-if="lot.stations.indexOf(stn.code) !== -1" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
+            <button class="bottomright" ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+            <button class="bottomleft" ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
           </div>
+
         </div>
       </td>
 
-    </tr>
-
-
-    <tr ng-repeat-end ng-if="!lot.expanded">
-      <td>
-        <button ng-click="lot.expanded = true">+</button>
-        Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
-        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>
-        
-        <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
-        <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
-
-      </td>
-      <td ng-repeat="stn in sumStations">
-          <div ng-repeat = "sum in list.lot_summary | filter: {lot_number:lot.lot_number, station_code:stn.code} ">
-            <span ng-if="sum.pieces">Pieces: {{sum.pieces}} | </span><span ng-if="sum.boxes">Boxes: {{sum.boxes}} | </span>Weight: {{sum.weight_1.toFixed(2)}}kg <span ng-if="sum.weight_2">/{{sum.weight_2.toFixed(2)}}kg</span>
+      <td ng-if="!lot.expanded" ng-repeat="stn in sumStations">
+          <div ng-if="lot[stn.code].summary.weight_1">
+            <span ng-if="lot[stn.code].summary.pieces">Pieces: {{lot[stn.code].summary.pieces}} | </span><span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
           </div>
       </td>
+
     </tr>
+
 
 
 
 
   </table>
+
+
 </div>
