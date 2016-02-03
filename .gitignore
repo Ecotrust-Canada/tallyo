@@ -8,4 +8,6 @@ tmp
 .idea
 config.js
 database.json
-
+*.swp
+*.log
+*~
