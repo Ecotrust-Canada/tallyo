@@ -36,6 +36,14 @@ var DateRangeCurrent = function(date, start_date, end_date){
     return false;
 };
 
+var isToday = function(date){
+  var today = moment(new Date()).startOf('day').format();
+  if (moment(date).startOf('day').format() === today){
+    return true;
+  }
+  return false;
+};
+
 /*checks that a json object has no "" values*/
 var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {

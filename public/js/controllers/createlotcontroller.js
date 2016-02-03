@@ -63,7 +63,6 @@ angular.module('scanthisApp.createlotController', [])
 /*
  * Fills in dropdown menu for selection current lot
  * lot_number gets saved as $scope.current.collectionid
- * selects lot which have a scan object at a first station and have not gotten to a second station
  */
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
@@ -199,7 +198,7 @@ angular.module('scanthisApp.createlotController', [])
       var today = moment(new Date()).startOf('day').format();
       if(station){
         if (moment(station.in_progress_date).startOf('day').format() === today){
-          $scope.current.collectionid = station.collectionid;
+          $scope.current.collectionid = station.lot_number;
         }
       }
     };
