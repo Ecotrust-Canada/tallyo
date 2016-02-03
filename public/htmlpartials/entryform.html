@@ -1,10 +1,12 @@
 <span ng-if="config.title">{{config.title}}: </span>
 
-<button ng-if="config.hide" ng-click="$parent.hideform = !hideform"><span ng-show="hideform">{{config.hide}}</span><span ng-hide="hideform">Hide Form</span></button>
+<button id="toggle-{{config.id}}" 
+        ng-if="config.hide" ng-click="$parent.hideform = !hideform">
+  <span ng-show="hideform">{{config.hide}}</span>
+  <span ng-hide="hideform">Hide Form</span>
+</button>
 
-
-
-<div ng-hide="hideform">
+<div ng-hide="hideform" id="form-{{config.id}}">
 <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
 <fieldset ng-disabled="formdisabled">
   <form class="form-text" name="theform">
@@ -30,7 +32,7 @@
 
 
           <!--radio-->
-          <span ng-if="row.type === 'radio'">
+          <span ng-if="row.type === 'radio'" id="radio-{{row.fieldname}}" >
             <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" ng-model="form[row.fieldname]" value={{option.val}} ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
 
@@ -45,17 +47,20 @@
 
             <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" name="{{row.fieldname}}">
               <option value="">-- select --</option>
-              <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" value={{option.value}}>{{option.value}}</option>
+              <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
+                      value={{option.value}}>{{option.value}}</option>
             </select>
 
             <!--editing dropdown options-->
-            <div ng-if="row.value ==='dboptions' && config.editinform === true" ng-init="editdrop[row.fieldname]=true">            
+            <div ng-if="row.value ==='dboptions' && config.editinform === true" 
+                 ng-init="editdrop[row.fieldname]=true" id="edit-options-{{row.fieldname}}" class="edit-options">            
               <div ng-hide="editdrop[row.fieldname]">
                     <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
                         {{selection.value}}
                         <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
                     </div><br>
-                    <input  class="short" type="text" ng-model="new"><input type="button" ng-click="New(new, row.fieldname)" value="Add" />
+                    <input  class="short" type="text" ng-model="new"><input class="add-field-option" 
+                            type="button" ng-click="New(new, row.fieldname)" value="Add" />
               </div>
             </div>
 
@@ -80,7 +85,7 @@
 
         <!--button to edit dropdown options-->
         <td ng-if="row.value ==='dboptions' && config.editinform === true">
-             <button ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
+          <button id="{{row.fieldname}}-{{config.id}}" ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
         </td>
 
       </tr>
@@ -95,7 +100,8 @@
     
     <input type="button" ng-click="Clear()" value="Clear">
     
-    <input type="button" ng-click="submitFn({form: isValid(form)})" value="{{config.submit||'Submit'}}">
+    <input type="button" ng-click="submitFn({form: isValid(form)})" 
+           value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
 
   </form>
   </fieldset>
