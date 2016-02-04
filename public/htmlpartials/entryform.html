@@ -28,11 +28,7 @@
           <span ng-if="row.type === 'number'">
 
 
-            <span ng-if="row.scale==='on'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
-
-            <span ng-if="row.scale==='wait'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
-
-            <span ng-if="row.scale==='lock'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
+            <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'"><input ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
 
 
 
