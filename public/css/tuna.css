@@ -123,6 +123,10 @@ ng-submitted ng-invalid {
   background: red; 
 }
 
+.scaletext{
+  color: #0A7091;
+}
+
 .small td{
   font-size: 12px;
 }
