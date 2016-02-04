@@ -2,6 +2,7 @@
 
 angular.module('scanthisApp.formController', [])
 
+//controller attached to entryform directive
 .controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr) {
   
   //display scale buttons
@@ -22,13 +23,14 @@ angular.module('scanthisApp.formController', [])
   }
 
   //all the fields in the form
-  $scope.formarray = $scope.config.fields;  
+  $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
 
   //clear fields to default
   $scope.Clear = function(){
     $scope.submitted=false;
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
+      clearObj($scope.scale);
       $scope.pollFn({field: $scope.config.startpolling});
     }
   };
@@ -48,15 +50,44 @@ angular.module('scanthisApp.formController', [])
     }
   };
 
+  //stores scale value, starts polling next field
+  $scope.store = function(row){
+    $scope.form[row.fieldname] = $scope.scale[row.fieldname];
+    row.scale = "lock";
+    var index = arrayObjectIndexOf($scope.formarray, row.pollarg, 'fieldname');
+    if (index !== -1){
+      var nextrow = $scope.formarray[index];
+      nextrow.scale = 'on';
+    }
+  };
+
+  //called when scale field on focus
+  $scope.weigh = function(row){
+    var scales = $scope.formarray.filter(function(el){
+      return el.scale === 'on';
+    });
+    scales.forEach(function(el){
+      el.scale = 'lock';
+    });
+    row.scale = 'on';
+  };
+
   //turn the scale on or off
   $scope.scalefn = function(){
-    if ($scope.pollScale===true){
-      for (var i=0;i<$scope.formarray.length;i++){
-        if ($scope.formarray[i].pollarg){
-          $scope.form[$scope.formarray[i].fieldname]= null;
-        }
-      }
+    clearObj($scope.scale);
+    if ($scope.pollScale === true){
+      var scales = $scope.formarray.filter(function(el){
+        return (el.scale);
+      });
+      scales.forEach(function(el){
+        el.scale = 'off';
+      });
     }
+    else{
+      $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+      $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+    }
+    
     $scope.pollScale = !$scope.pollScale;
   };
 
@@ -64,7 +95,6 @@ angular.module('scanthisApp.formController', [])
 
   $scope.isValid = function(form){
     $scope.submitted = true;
-    console.log(form);
     var form_error = false;
     for (var i=0;i<$scope.formarray.length;i++){
       var row = $scope.formarray[i];
@@ -121,6 +151,7 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+//default controller with submit form functions
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
   //$scope.form = {};
   var table;
@@ -189,6 +220,7 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+//controller attached to list and expandedlist - ?mostly for csv?
 .controller('ListCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.getArray = function(){
     return copyArrayPart($scope.itemlist, $scope.config.fields);
@@ -199,6 +231,8 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+
+//when forms contain a dropdown with options from a given table
 .controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {
   var table = $scope.tableinform;
 
@@ -242,6 +276,7 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+//for adding more fieldsets
 .controller('FieldsetCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.choices = [{id: 'choice1'}];
   

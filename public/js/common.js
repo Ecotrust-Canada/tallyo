@@ -283,3 +283,26 @@ var confirmTrue = function(message, func, elsefunc){
   }
 };
 
+
+var copyObj = function(obj) {
+  var copy = Object.create(Object.getPrototypeOf(obj));
+  var propNames = Object.getOwnPropertyNames(obj);
+  console.log(propNames);
+
+  propNames.forEach(function(name) {
+    var desc = Object.getOwnPropertyDescriptor(obj, name);
+    console.log(desc);
+    Object.defineProperty(copy, name, desc);
+  });
+
+  return copy;
+};
+
+var clearObj = function(obj) {
+  var propNames = Object.getOwnPropertyNames(obj);
+
+  propNames.forEach(function(name) {
+    obj[name] = null;
+  });
+};
+

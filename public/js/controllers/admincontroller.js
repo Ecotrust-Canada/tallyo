@@ -4,6 +4,7 @@
 angular.module('scanthisApp.AdminController', [])
 
 
+//editentries.html - controller for listing and editing shipment entries
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListShipments = function(){
@@ -37,7 +38,7 @@ angular.module('scanthisApp.AdminController', [])
 })
 
 
-//Lot summary page
+//Lot summary page - loads all the data, has functions for exporting to csv and completing lot
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.GetHarvesterLot = function(){
@@ -109,7 +110,6 @@ angular.module('scanthisApp.AdminController', [])
         var locations = fjs.select(cellfilter, $scope.list.lotlocations);
         if (locations.length>0){
           lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
-          console.log(lot[stn.code].in_progress);
         }
         if (j>0){
           if (lot[$scope.sumStations[j-1].code].summary && (lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy])){
@@ -201,6 +201,7 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
+//shipmenttotals.html - view summary of unloaded boxes for incoming shipments
 .controller('ViewShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.istotal = true;
   $scope.selected = "no selected";
@@ -221,7 +222,6 @@ angular.module('scanthisApp.AdminController', [])
      $scope.current.shipping_unit = filtered[0];
      $scope.ShipSummary(selected);
      $scope.OriginSummary(selected);
-    //$scope.addinfo = false;
   };
 
 
@@ -238,7 +238,6 @@ angular.module('scanthisApp.AdminController', [])
       $scope.list.containersummary = response.data;
       var origins = fjs.pluck('harvester_code', $scope.list.containersummary);
       $scope.list.origin = origins.filter(onlyUnique);
-      //$scope.list.container = {};
       for (var i=0;i<$scope.list.origin.length;i++){
         $scope.list[$scope.list.origin[i]] = {};
         $scope.list[$scope.list.origin[i]].summary = $scope.list.containersummary.filter(
@@ -248,7 +247,6 @@ angular.module('scanthisApp.AdminController', [])
           );
         $scope.GetOrigin($scope.list.origin[i]);
       }
-      //console.log($scope.list.origin);
     };
     var query = '?shipping_unit_number=eq.' + ship_num;
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
@@ -264,7 +262,7 @@ angular.module('scanthisApp.AdminController', [])
 
 })
 
-
+//inventory.html - shows current totals of boxes at given stations
 .controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.selected = "no selected";
   $scope.stations = $scope.sumStations;

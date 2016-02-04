@@ -10,10 +10,11 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.scan = {};
   $scope.entry.loin = {};
   $scope.entry.box = {};
-  $scope.form = {};
+  //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
     $scope.scaleon = true;
+    $scope.scale= {};
   }
 
 
@@ -31,19 +32,16 @@ angular.module('scanthisApp.itemController', [])
       return;
     }
 
-  
-
     scalePromise = $interval(function() {
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
       }).then(
         function successCallback(response) {
-          $scope.form[fieldName] = response.data.value;
-          console.log(response.data.value);
+          $scope.scale[fieldName] = response.data.value;
         },
         function errorCallback(response) {
-          //console.log(response);
+          $scope.scale[fieldName] = 1.11;
         }
       );
     }, 500);
