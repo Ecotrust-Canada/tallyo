@@ -26,8 +26,17 @@
 
           <!--number-->
           <span ng-if="row.type === 'number'">
-            <span ng-if="row.pollarg"><input name="{{row.fieldname}}" type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-focus="pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
-            <span ng-if="!row.pollarg"><input name="{{row.fieldname}}" type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
+
+
+            <span ng-if="row.scale==='on'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
+
+            <span ng-if="row.scale==='wait'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
+
+            <span ng-if="row.scale==='lock'"><input name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
+
+
+
+            <span ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
           </span>
 
 
@@ -80,7 +89,9 @@
 
         <!--button to set scale weight-->
         <td ng-if="row.pollarg" ng-show="pollScale">
-          <input type="button" ng-click="pollFn({field: row.pollarg})" value="store">
+          <input ng-if="row.scale==='on'" type="button" ng-click="store(row);pollFn({field: row.pollarg})" value="store">
+          <input ng-if="row.scale==='lock'" type="button" ng-disabled="'true'" value="locked">
+          <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
         </td>
 
         <!--button to edit dropdown options-->

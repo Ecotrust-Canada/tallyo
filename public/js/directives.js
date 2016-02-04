@@ -61,7 +61,7 @@ angular.module('scanthisApp.directives', [])
 .directive('entryform', function() { return { 
   scope: {table: '=',  
           config: '=', 
-          form: '=',  
+          scale: '=',  
           formchange: '=',
           list1: '=', 
           list2: '=', 

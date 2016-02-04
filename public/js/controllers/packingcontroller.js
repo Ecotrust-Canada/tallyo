@@ -252,7 +252,6 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-      console.log(response.data);
       $scope.current.itemchange = !$scope.current.itemchange;
       toastr.success('added');
       $scope.raw.string = null;
