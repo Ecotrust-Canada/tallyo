@@ -1,7 +1,7 @@
-<div class="sectionframe">
+<div  any-other-click class="sectionframe">
 
-  <div ng-controller="CollectionTableDropDownCtrl">
-    <dropdown itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
+  <div  ng-controller="CollectionTableDropDownCtrl">
+    <dropdown   itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
   </div>
 
   <br>
@@ -12,19 +12,31 @@
 
 
 <div class="sectionframe" ng-controller="PackingCtrl">
-  <div ng-controller="HighlightScanCtrl">
-
     {{packingconfig.sectiontitle}}:<br><br>
+    
     <fieldset ng-disabled="formdisabled">
+      
       <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
-        <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span><br>
-        {{packingconfig.scantitle}}: <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off" >
+        <span ng-if="formdisabled===true">
+          <i class="errortext">Choose collection</i>
+        </span>
+        <br>
+        {{packingconfig.scantitle}}: 
+        <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off">
       </form>
+      
       <br>
       <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+    
     </fieldset>
-  </div>
+
+
 </div>
+
+
+
+
+
 
 
 <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">

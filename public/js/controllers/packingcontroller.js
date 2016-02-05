@@ -98,6 +98,9 @@ angular.module('scanthisApp.packingController', [])
       $scope.formdisabled = false;
     }
   });
+
+
+
 })
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
@@ -114,12 +117,9 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
-.controller('HighlightScanCtrl', function($scope, $http, DatabaseServices) {
-  $scope.$watch('current.collectionid', function() {
-    var scaninput = document.getElementById('scaninput');
-    scaninput.focus();
-  });
-})
+
+
+
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
