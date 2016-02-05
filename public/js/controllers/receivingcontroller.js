@@ -68,6 +68,23 @@ angular.module('scanthisApp.receivingController', [])
     }
   };
 
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
+      $scope.formdisabled = true;
+    }
+    else{
+      $scope.formdisabled = false;
+    }
+  });
+
+  $scope.Complete = function(){
+    if ($scope.onLabel){
+      $scope.MakeQR();
+    }
+    $scope.current.selected = 'no selected';
+    $scope.current.collectionid = 'no selected';
+  };
+
 })
 
 .controller('RemoveItemCtrl', function($scope, $http, DatabaseServices) {
