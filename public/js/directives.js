@@ -104,6 +104,7 @@ angular.module('scanthisApp.directives', [])
   return {
     restrict: 'A',
     link:  function (scope, element, attr, controller) {
+      var id = (attr.anyOtherClick || 'scaninput');
       var documentClickHandler = function (event) {
         var eventOutsideTarget = (element[0] !== event.target) && (0 === element.find(event.target).length);
         if (isDescendant(element[0], event.target)){
@@ -111,7 +112,7 @@ angular.module('scanthisApp.directives', [])
         }
         if (eventOutsideTarget) {
           scope.$apply(function () {
-            var thediv = document.getElementById('scaninput');
+            var thediv = document.getElementById(id);
             if (thediv){
               thediv.focus();
             }
