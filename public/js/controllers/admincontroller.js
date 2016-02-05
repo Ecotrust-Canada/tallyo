@@ -277,17 +277,18 @@ angular.module('scanthisApp.AdminController', [])
   $scope.ListStations();
 
   $scope.SetCurrent = function(selected){
-     var filtered = $scope.list.box_inventory.filter(
+    var filtered = $scope.list.box_inventory.filter(
       function(value){
         return isInArray(value.station_code, selected);
       });
-     $scope.list.boxes = filtered;
+    $scope.list.boxes = filtered;
 
-     var lists = $scope.stations.filter(
+    var lists = $scope.stations.filter(
       function(value){
         return value.station_code[0] === JSON.parse(selected)[0];
       });
-     $scope.listconfig = $scope[lists[0].list];
+    $scope.listconfig = $scope[lists[0].list];
+    $scope.inventorytitle = lists[0].name;
   };
 })
 ;
