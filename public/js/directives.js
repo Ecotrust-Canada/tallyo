@@ -100,5 +100,31 @@ angular.module('scanthisApp.directives', [])
    };
 })
 
+.directive('anyOtherClick', ['$document', "$parse", function ($document, $parse) {
+  return {
+    restrict: 'A',
+    link:  function (scope, element, attr, controller) {
+      var documentClickHandler = function (event) {
+        var eventOutsideTarget = (element[0] !== event.target) && (0 === element.find(event.target).length);
+        if (isDescendant(element[0], event.target)){
+          eventOutsideTarget = false;
+        }
+        if (eventOutsideTarget) {
+          scope.$apply(function () {
+            var thediv = document.getElementById('scaninput');
+            if (thediv){
+              thediv.focus();
+            }
+          });
+        }
+      };
+      $document.on("click", documentClickHandler);
+      scope.$on("$destroy", function () {
+        $document.off("click", documentClickHandler);
+      });
+    },
+  };
+}])
+
 
 ;

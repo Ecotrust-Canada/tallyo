@@ -119,7 +119,10 @@ angular.module('scanthisApp.createlotController', [])
       else{
         $scope.DisplayCollectionInfo();
       }
-      
+      var thediv = document.getElementById('scaninput');
+      if(thediv){
+        thediv.focus();
+      }
     }
   });
 
