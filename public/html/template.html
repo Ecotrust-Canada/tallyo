@@ -8,7 +8,7 @@
 
   <div ng-class="station.settings.css.station" ng-show="terminal.showsection===visibility || !visibility">
     <b>{{title}}</b>
-    <div ng-repeat="component in includes" ng-include="component"></div>
+    <div ng-repeat="component in includes" ng-include="component" ng-cloak></div>
   </div>
 
 </div>

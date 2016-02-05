@@ -69,7 +69,7 @@
               </div>
             </div>
 
-            <!--options from another datbase table-->
+            <!--options from another database table-->
             <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
               <option value="">-- select --</option>
               <option ng-repeat="option in list1" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>

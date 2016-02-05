@@ -11,16 +11,17 @@
 </div>
 
 
-<div class="sectionframe">
+<div class="sectionframe" ng-controller="QRScanCtrl">
     {{packingconfig.sectiontitle}}:<br><br>
-    <div ng-controller="QRScanCtrl" >
+  <fieldset ng-disabled="formdisabled">
+    <div>
         <form ng-submit="readQR()">
           Scan Field: <input  id="scaninput" type="text" ng-model="raw.string" autocomplete="off">
         </form>
       </div>
     <br>
-
     <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+  </fieldset>
 </div>
 
 
