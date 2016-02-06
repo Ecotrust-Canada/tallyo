@@ -259,6 +259,13 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
+  var thediv = document.getElementById('inv_input');
+      if(thediv){
+        thediv.focus();
+      }
+
+
+
 
 })
 

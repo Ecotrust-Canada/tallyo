@@ -197,31 +197,33 @@ angular.module('scanthisApp.receivingController', [])
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.entry.box = {};
-  $scope.SubmitForm = function(form, choices){
-    if ($scope.current.harvester !== undefined){
-      $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
+  $scope.SubmitForm = function(choices){
+    if (choices){
+      if ($scope.current.harvester !== undefined && $scope.current.harvester !== null){
+        $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
 
-      if ($scope.current.shipping_unit !== undefined){
-        $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-        $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+        if ($scope.current.shipping_unit !== undefined && $scope.current.shipping_unit !== null){
+          $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
+          $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
-        var date = moment(new Date()).format();
-        for (var j=0;j<choices.length;j++){
-          var formrow = choices[j];
-          $scope.entry.box.grade = formrow.grade; 
-          $scope.entry.box.size = formrow.size;
-          $scope.entry.box.weight = formrow.weight;
+          var date = moment(new Date()).format();
+          for (var j=0;j<choices.length;j++){
+            var formrow = choices[j];
+            $scope.entry.box.grade = formrow.grade; 
+            $scope.entry.box.size = formrow.size;
+            $scope.entry.box.weight = formrow.weight;
 
-          for (var i=1;i<=formrow.num_boxes;i++){
-            var entry = JSON.parse(JSON.stringify($scope.entry.box));
-            $scope.MakeBox(entry, date);
-          }
-        }    
+            for (var i=1;i<=formrow.num_boxes;i++){
+              var entry = JSON.parse(JSON.stringify($scope.entry.box));
+              $scope.MakeBox(entry, date);
+            }
+          }    
+        }else{
+          toastr.error("missing shipment info");
+        }
       }else{
-        toastr.error("missing shipment info");
+        toastr.error("missing origin info");
       }
-    }else{
-      toastr.error("missing origin info");
     }    
   };
   

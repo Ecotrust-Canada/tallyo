@@ -1,5 +1,5 @@
 
-<div ng-init="showlist=false">
+<div ng-init="showlist=(cfg.show||false)">
 
   <span ng-if="cfg.title">{{cfg.title}}: </span>
   <button ng-hide="showlist" ng-click="showlist=!showlist">></button>

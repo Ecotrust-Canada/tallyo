@@ -131,6 +131,10 @@ ng-submitted ng-invalid {
   font-size: 12px;
 }
 
+.errorfield{
+  background-color: #B37470;
+}
+
 .bottomright{
   position: absolute;
   bottom:0;
@@ -142,9 +146,6 @@ ng-submitted ng-invalid {
   left:0;
 }
 
-input:focus{
-  background-color: #7BC984;
-}
 
 a:hover {
   text-decoration: underline;
