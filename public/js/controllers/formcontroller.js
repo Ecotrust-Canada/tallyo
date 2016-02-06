@@ -280,6 +280,7 @@ angular.module('scanthisApp.formController', [])
 //for adding more fieldsets
 .controller('FieldsetCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.choices = [{id: 'choice1'}];
+  $scope.submitted=false;
   
   $scope.addNewChoice = function() {
     var newItemNo = $scope.choices.length+1;
@@ -291,7 +292,31 @@ angular.module('scanthisApp.formController', [])
     $scope.choices.splice(lastItem);
   };
 
-  
+  $scope.isValid = function(choices){
+    $scope.submitted = true;
+    var form_error = false;
+    var propNames = propertyNames($scope.theform);
+
+    for (var i=0;i<propNames.length;i++){
+      var row = propNames[i];
+      var req_error = $scope.theform[row].$error.required;
+      var neg_error = $scope.theform[row].$error.negative;
+      if (req_error === true || neg_error === true){
+        form_error = true;        
+      }
+    }
+    if (form_error === true){
+      toastr.error('errors in form');
+      choices = null;
+    }
+
+    return choices;
+  };
+
+  $scope.reset = function(){
+    $scope.submitted = false;
+    $scope.choices = [{id: 'choice1'}];
+  };
 })
 
 ;

@@ -317,3 +317,11 @@ var isDescendant = function(parent, child) {
      return false;
 };
 
+var propertyNames = function(obj){
+  var propNames = Object.getOwnPropertyNames(obj);
+  var props = propNames.filter(function(el){
+    return el.substring(0,1) !== '$';
+  });
+  return props;
+};
+
