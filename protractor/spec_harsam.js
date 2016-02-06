@@ -15,20 +15,7 @@ describe('Harsam Set Receiving Lots', function() {
     return makeid()+"_"+new Date().valueOf()+fieldname;
   }
 
-  it('should have 7 terminals', function() {
-    browser.get('http://localhost:8002/');
-    var terminalsList = element.all(by.repeater('terminal in terminals'));
-    expect(terminalsList.count()).toEqual(7);
-  });
-
-  it('click on "Add New Supplier" should show harvester form', function() {
-    browser.get('http://localhost:8002/#/terminal/1');
-    expect(element(by.id('form-2')).isDisplayed()).toBeFalsy();
-    element(by.id('toggle-2')).click();
-    expect(element(by.id('form-2')).isDisplayed()).toBeTruthy();
-  });
-
-  it('fill new supplier data, submit should add to list of suppliers', function() {
+  function filling_add_new_supplier_form(new_vessel, cb){
     browser.get('http://localhost:8002/#/terminal/1');
     // filling form
     element(by.id('toggle-2')).click();
@@ -56,7 +43,6 @@ describe('Harsam Set Receiving Lots', function() {
     });
     element(by.id('supplier-2')).click();    // click "Hide"
     // fleet_vessel
-    var new_vessel = generateOptionValue('fleet_vessel');
     element(by.id('fleet_vessel-2')).click();    // click "Edit"
     element(by.id('edit-options-fleet_vessel')).
             element(by.model('new')).sendKeys(new_vessel);
@@ -97,15 +83,100 @@ describe('Harsam Set Receiving Lots', function() {
     });
     element(by.id('ft_fa_code-2')).click();    // click "Hide"
 
-    element.all(by.css('input[type="radio"][name="fair_trade"]')).get(0).click().then(function(){
-      // fill search field
+    element(by.css('input[name="species_common"]')).sendKeys('Polloc');
+
+    element.all(by.css('input[type="radio"][name="fair_trade"]')).get(0).click().then(cb);
+  }
+
+  it('should have 7 terminals', function() {
+    browser.get('http://localhost:8002/');
+    var terminalsList = element.all(by.repeater('terminal in terminals'));
+    expect(terminalsList.count()).toEqual(7);
+  });
+
+  it('click on "Add New Supplier" should show harvester form', function() {
+    browser.get('http://localhost:8002/#/terminal/1');
+    expect(element(by.id('form-2')).isDisplayed()).toBeFalsy();
+    element(by.id('toggle-2')).click();
+    expect(element(by.id('form-2')).isDisplayed()).toBeTruthy();
+  });
+
+  it('fill new supplier data, submit should add to list of suppliers', function() {
+    var new_vessel = generateOptionValue('fleet_vessel');
+
+    filling_add_new_supplier_form( new_vessel, function(){
+      //click 'Submit'
       element(by.id('submit-2')).click().then(function(){
+        // fill search field
         element(by.model('searchText')).sendKeys(new_vessel).then(function(){
           //expect new vessel name to be in list of harvesters
           expect(element.all(by.cssContainingText('.list_item_val', new_vessel)).count()).toEqual(1);
+          expect(element.all(by.cssContainingText('.list_item_val', 'Polloc')).count()).toEqual(1);
         }); 
       }); 
     });
+  });
 
+  it('Clear Form should clear to default values', function() {
+    var new_vessel = generateOptionValue('fleet_vessel');
+
+    filling_add_new_supplier_form( new_vessel, function(){
+      //click 'Submit'
+      element(by.id('clear-2')).click().then(function(){
+        // text inputs to default
+        element(by.css('input[name="species_common"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Yellowfin Tuna'); 
+        });
+        element(by.css('input[name="species_latin"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Thunnus abacares'); 
+        });
+        element(by.css('input[name="state"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Fresh'); 
+        });
+        element(by.css('input[name="handling"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Loined'); 
+        });
+        element(by.css('input[name="fishing_method"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Handline'); 
+        });
+        element(by.css('input[name="country_origin"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Indonesia'); 
+        });
+        element(by.css('input[name="country_production"]')).getAttribute('value').then(function(value){
+          expect(value).toEqual('Indonesia'); 
+        });
+        // select none
+        expect(element(by.css('select[name="supplier_group"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="supplier"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="fleet_vessel"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="fishing_area"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="fishing_area"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="landing_location"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        expect(element(by.css('select[name="ft_fa_code"]')).$('option:checked').getText()).toEqual('-- select --'); 
+        // radiobuttons not checked
+        expect(element.all(by.css('select[name="fair_trade"]:checked')).count()).toEqual(0); 
+      }); 
+    });
+  });
+
+  it('clicking "Set Current" in harversters list row fills in the section above with supplier, fleet, receive date', function() {
+    var new_vessel = generateOptionValue('fleet_vessel');
+
+    filling_add_new_supplier_form( new_vessel, function(){
+      //click 'Submit'
+      element(by.id('submit-2')).click().then(function(){
+        // fill search field
+        element(by.model('searchText')).sendKeys(new_vessel).then(function(){
+          // click "Set Current" button
+          element(by.buttonText('Set Current')).click().then(function(){
+            // expect values from row with "Set Current" button to appear in
+            // above "display current lot" section, lot will have as end_date
+            // (Receive Date) today date
+            expect(element.all(by.cssContainingText('.display_val', new_vessel)).count()).toEqual(1);
+            //expect(element.all(by.cssContainingText('.display_val', moment().format("MMM DD"))).count()).toEqual(1);
+          });
+        }); 
+      }); 
+    });
   });
 });

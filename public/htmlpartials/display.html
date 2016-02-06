@@ -3,10 +3,11 @@
     <tr ng-repeat="row in config.layout">
       <td ng-repeat-start="col in row" ng-if="col.name">{{col.name}}: </td>
       <td ng-repeat-end>
-        <span ng-if="col.val==='timestamp'">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-        <span ng-if="col.val==='end_date'">{{obj.end_date|stringtodate|date:'MMM dd' }}</span>
-        <span ng-if="col.val.substring(0,6)==='weight'">{{(obj[col.val]).toFixed(2)}}kg</span>
-        <span ng-if="col.val !== 'numindex' && col.val !== 'timestamp' && col.val.substring(0,6)!=='weight' && col.val!=='end_date'" >{{obj[col.val]}}</span>
+        <span ng-if="col.val==='timestamp'" class="display_val">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+        <span ng-if="col.val==='end_date'" class="display_val">{{obj.end_date|stringtodate|date:'MMM dd' }}</span>
+        <span ng-if="col.val.substring(0,6)==='weight'" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
+        <span ng-if="col.val !== 'numindex' && col.val !== 'timestamp' && col.val.substring(0,6)!=='weight' && col.val!=='end_date'" 
+              class="display_val">{{obj[col.val]}}</span>
         <span ng-if="col.val==='pieces'">pcs</span>
       </td>
     </tr>
