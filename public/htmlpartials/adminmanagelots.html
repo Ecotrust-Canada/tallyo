@@ -28,7 +28,9 @@
               <span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>
               Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg 
               <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
-            </b>
+            </b><br>
+            <span ng-if="lot[stn.code].prev_yield">from previous:{{lot[stn.code].prev_yield.toFixed(1)}}%</span>
+            <span ng-if="lot[stn.code].start_yield">from start:{{lot[stn.code].start_yield.toFixed(1)}}%</span>
           </div>
 
           <br>
@@ -62,10 +64,6 @@
       </td>
 
     </tr>
-
-
-
-
 
   </table>
 

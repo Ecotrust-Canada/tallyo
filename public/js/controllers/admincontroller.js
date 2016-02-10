@@ -95,8 +95,7 @@ angular.module('scanthisApp.AdminController', [])
     for (var i=0;i<$scope.list.harvester_lot.length;i++){
       var lot = $scope.list.harvester_lot[i];
     
-      
-      for (var j=0;j<$scope.sumStations.length;j++){
+        for (var j=0;j<$scope.sumStations.length;j++){
         var stn = $scope.sumStations[j];
         lot[stn.code]= {};        
         var summary = fjs.select(cellfilter, $scope.list.lot_summary);
@@ -111,10 +110,29 @@ angular.module('scanthisApp.AdminController', [])
         if (locations.length>0){
           lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
         }
+        if (lot[$scope.sumStations[j].code].summary){ 
+          var thesum = lot[$scope.sumStations[j].code].summary;
+          var start = (thesum.weight_2 || thesum.weight_1 || 0);
+          lot[stn.code].current_weight = JSON.parse(JSON.stringify(start));
+        }  
+        if (j===0 && lot[stn.code].current_weight){
+          lot.start_weight = lot[stn.code].current_weight;
+        }
         if (j>0){
           if (lot[$scope.sumStations[j-1].code].summary && (lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy])){
             lot[stn.code].prev = JSON.parse(JSON.stringify(lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy]));
-          }            
+          }
+          if (lot[$scope.sumStations[j-1].code].summary){
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev && !lot[stn.code].in_progress){ 
+              var thesummary = lot[$scope.sumStations[j-1].code].summary;
+              var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
+              var prevWeight = JSON.parse(JSON.stringify(prev));
+              lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
+            }
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start && !lot[stn.code].in_progress){ 
+              lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
+            } 
+          }                
         }
       }
 
