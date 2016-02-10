@@ -6,6 +6,7 @@ Open source Fish Plant data collection software, geared towards generating trace
 git clone https://github.com/Ecotrust-Canada/scanthis
 ```
 
+
 ### Installation
 
 Install the latest stable version of node v4 (ie, v4.0.0) . We recommend using [nvm](https://github.com/creationix/nvm) for this.
@@ -14,16 +15,92 @@ Install environmental dependencies using npm
 ```
 npm install -g nodemon
 npm install -g bower
+npm install -g db-migrate
 ```
 
 Then, install package dependencies:
-
 ```
 cd scanthis
 npm install
 bower install
 ```
 
+### Database Setup
+
+Install postgreSQL
+
+create a user:
+```
+sudo -u postgres createuser -P -s -e [user]
+sudo -u postgres psql -c "ALTER role [user] superuser;"
+```
+when prompted, input password 
+
+create an empty database:
+```
+sudo -u postgres createdb -O [user] [dbname]
+```
+
+
+copy template_database.json as database.json
+
+Edit the environment name, database name, user and password
+
+You can add multiple databases with different environment names
+
+then run:
+```
+db-migrate up -e [environment name]
+```
+
+Database should now have correct schema
+
+###PostgREST  (with docker)
+The app communicates with the database via a REST API
+
+install docker as per instructions: https://docs.docker.com/engine/installation/linux/ubuntulinux/
+then:
+```
+sudo service docker start
+sudo groupadd docker
+sudo usermod -aG docker [linux user]
+```
+clone docker image files and navigate to correct folder
+
+To build the docker image:
+```
+./run.sh
+```
+Then run a docker image with options:
+```
+docker run --name [name this docker service] -p [port]:3000  -e POSTGREST_DBHOST=[server ip] -e POSTGREST_DBPORT=5432 -e POSTGREST_DBNAME=[] -e POSTGREST_DBUSER=[user] -e POSTGREST_DBPASS=[password] -d postgrest-ec
+```
+
+### Configuration
+Config files should go in scanthis/public/js/configs
+
+files include:
+```
+list_config.js
+form_config.js
+app_config.js
+app_config_local.js
+```
+
+list_config.js and form_config.js contain options for specific forms, list, dropdown menus, etc
+
+app_config.js specifies the type and any options for each terminal
+
+app_config_local.js contains the url for the database as well as the port to run the app on
+
+Add multiple configurations by adding additional config and config_local files
+
+For example, app_config_v2.js and app_config_v2_local.js
+
+Start the app with this configuration by running
+```
+npm start app_config_v2
+```
 
 ### Starting the Node Server
 ```
@@ -34,38 +111,9 @@ npm start
 
 You run the project in VM environment using Vagrant. To do so, checkout out: https://github.com/Ecotrust-Canada/scanthis-vagrant
 
-### Add git-ignored files
 
-add a file config.js to the scanthis folder with contents (replacing '8000' if you want to run on a different port)
-```
-'use strict';
-module.exports = function(app){
-    app.set('port', 8000);
-};
-```
 
-add a file app_config.js to /public/js/  with contents (this is the url for the database, modify if running on a different port)
-```
-'use strict';
-var globalurl = 'http://[your ip address]:3000/';
-```
-
-### Database Setup
-
-Install postgreSQL
-
-create a user:
-```
-sudo -u postgres createuser -P -s -e [user]
-```
-when prompted, input password 
-
-create database from schema:
-```
-sudo -u postgres createdb -O [user] [database name]
-sudo -u postgres pg_restore -i -d [database name] st.dump
-```
-
+###postgREST without Docker
 download postgREST
 
 https://github.com/begriffs/postgrest/releases/download/v0.3.0.1/postgrest-0.3.0.1-ubuntu.tar.xz
