@@ -139,7 +139,7 @@ npm run-script protractor -- --baseUrl='http://localhost:8002/' --specs e2e-test
 protractor e2e-tests/protractor.conf.js --baseUrl='http://localhost:8002/'  --specs e2e-tests/harsam.js
 ```
 
-For now, after running ptotractor tests, I need manually delete formoptions and latest lots and harvesters with harvester_code, 
+For now, after running protractor tests, I need manually delete formoptions and latest lots and harvesters with harvester_code, 
 obtained by running query:
 ```
 select harvester_code from harvester where active='f';
