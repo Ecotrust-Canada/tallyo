@@ -1,5 +1,7 @@
-// specs.js
+// harsam.js
 describe('Harsam Set Receiving Lots', function() {
+  var moment = require('moment');
+
   function makeid()
   {
     var text = "";
@@ -16,7 +18,7 @@ describe('Harsam Set Receiving Lots', function() {
   }
 
   function filling_add_new_supplier_form(new_vessel, cb){
-    browser.get('http://localhost:8002/#/terminal/1');
+    browser.get('#/terminal/1');
     // filling form
     element(by.id('toggle-2')).click();
     // supplier_group
@@ -89,13 +91,13 @@ describe('Harsam Set Receiving Lots', function() {
   }
 
   it('should have 7 terminals', function() {
-    browser.get('http://localhost:8002/');
+    browser.get('');
     var terminalsList = element.all(by.repeater('terminal in terminals'));
     expect(terminalsList.count()).toEqual(7);
   });
 
   it('click on "Add New Supplier" should show harvester form', function() {
-    browser.get('http://localhost:8002/#/terminal/1');
+    browser.get('#/terminal/1');
     expect(element(by.id('form-2')).isDisplayed()).toBeFalsy();
     element(by.id('toggle-2')).click();
     expect(element(by.id('form-2')).isDisplayed()).toBeTruthy();
@@ -159,7 +161,9 @@ describe('Harsam Set Receiving Lots', function() {
     });
   });
 
-  it('clicking "Set Current" in harversters list row fills in the section above with supplier, fleet, receive date', function() {
+  it('clicking "Set Current" in harversters list row creates lot, fills the section above and creates a new row in the admin-view lots', 
+    function() {
+    
     var new_vessel = generateOptionValue('fleet_vessel');
 
     filling_add_new_supplier_form( new_vessel, function(){
@@ -173,10 +177,52 @@ describe('Harsam Set Receiving Lots', function() {
             // above "display current lot" section, lot will have as end_date
             // (Receive Date) today date
             expect(element.all(by.cssContainingText('.display_val', new_vessel)).count()).toEqual(1);
-            //expect(element.all(by.cssContainingText('.display_val', moment().format("MMM DD"))).count()).toEqual(1);
+            expect(element.all(by.cssContainingText('.display_val', moment().format("MMM DD"))).count()).toEqual(1);
+
+            // setting internal_lot_code
+            var internal_lotnum = makeid();
+            element(by.model('form.internal_lot_code')).sendKeys(internal_lotnum);
+            element(by.id('set_lot_num')).click().then(function(){
+              var current_lotnum = element(by.id('current_internal_lotnum'));
+              expect(current_lotnum.isDisplayed()).toBeTruthy();  
+              expect(current_lotnum.getText()).toContain(internal_lotnum);
+              // creates a new row in the admin-view lots page 
+              browser.get('#/terminal/0');
+              var lot_row = element.all(by.repeater("lot in list.harvester_lot")).get(0);
+              var lotinfo_cell = lot_row.all(by.tagName('td')).get(1);
+              var lotinfo_cell_contents = lotinfo_cell.getText();
+              expect(lotinfo_cell_contents).toContain(internal_lotnum);
+              expect(lotinfo_cell_contents).toContain(new_vessel);
+            });
           });
         }); 
       }); 
     });
   });
+
+  it('clicking "Hide/Delete" removes supplier from list', function() {
+    var new_vessel = generateOptionValue('fleet_vessel');
+
+    filling_add_new_supplier_form( new_vessel, function(){
+      //click 'Submit'
+      element(by.id('submit-2')).click().then(function(){
+        // fill search field
+        element(by.model('searchText')).sendKeys(new_vessel).then(function(){
+          expect(element.all(by.cssContainingText('.list_item_val', new_vessel)).count()).toEqual(1);
+          element(by.buttonText('Hide/Delete')).click().then(function(){
+            browser.switchTo().alert().accept();
+            /*
+            var ptor = protractor.getInstance();
+            var alertDialog = ptor.switchTo().alert();
+            alertDialog.accept();  // Use to accept (simulate clicking ok)
+            //alertDialog.dismiss(); // Use to simulate cancel button
+            */
+            browser.sleep(100);
+            expect(element.all(by.cssContainingText('.list_item_val', new_vessel)).count()).toEqual(0);
+          });
+        }); 
+      }); 
+    });
+  });
+
 });
