@@ -4,25 +4,6 @@
 angular.module('scanthisApp.createlotController', [])
 
 
-
-/*.controller('SelectDropDownCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.ListCollections = function(){
-    var query = '?station_code=eq.' + $scope.station_code;
-    var func = function(response){
-      $scope.list[$scope.station_info.collectiontable] = response.data;
-    };
-    DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query);
-  };
-
-  $scope.$watch('station_info', function(newValue, oldValue) {
-    if ($scope.station_info !== undefined){
-      $scope.ListCollections();
-    }
-  });
-
-})*/
-
 //packingstation.html, receivingstation.html - fills in dropdown to select collection and assigns selected
 .controller('CollectionTableDropDownCtrl', function($scope, $http, DatabaseServices) {
 
