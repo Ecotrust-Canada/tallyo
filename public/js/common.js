@@ -36,6 +36,14 @@ var DateRangeCurrent = function(date, start_date, end_date){
     return false;
 };
 
+var isToday = function(date){
+  var today = moment(new Date()).startOf('day').format();
+  if (moment(date).startOf('day').format() === today){
+    return true;
+  }
+  return false;
+};
+
 /*checks that a json object has no "" values*/
 var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {
@@ -211,11 +219,12 @@ var isInArray = function(value, array) {
   return array.indexOf(value) > -1;
 };
 
-var AddtoEntryNonFormData = function($scope, date, table){
-  $scope.entry[table].lot_number = $scope.current.collectionid;
-  $scope.entry[table].timestamp = date;
+var AddtoEntryNonFormData = function($scope, table){
+  $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
-  $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+  if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
+    $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+  }
 };
 
 var AddtoEntryFormData = function(form, scopevar, $scope){
@@ -240,4 +249,79 @@ var copyArrayPart = function(array, fields){
   return newarray;
 };
 
+
+
+var sizefromweight = function(weight_kg){
+  var size;
+  if (weight_kg < 1.36){
+    size = "1-3 lb";
+  }
+  else if (weight_kg > 1.36 && weight_kg < 2.27){
+    size = "3-5 lb";
+  }
+  else if (weight_kg > 2.27 && weight_kg < 3.63){
+    size = "5-8 lb";
+  }
+  else if (weight_kg > 3.63){
+    size = "8-up lb";
+  }
+  return size;
+};
+
+
+var formIsValid = function($scope){
+  
+};
+
+var confirmTrue = function(message, func, elsefunc){
+  var alert = confirm(message);
+  if (alert === true){
+    func();
+  }
+  else{
+    elsefunc(); //this is the ng-model for the input form
+  }
+};
+
+
+var copyObj = function(obj) {
+  var copy = Object.create(Object.getPrototypeOf(obj));
+  var propNames = Object.getOwnPropertyNames(obj);
+  console.log(propNames);
+
+  propNames.forEach(function(name) {
+    var desc = Object.getOwnPropertyDescriptor(obj, name);
+    console.log(desc);
+    Object.defineProperty(copy, name, desc);
+  });
+
+  return copy;
+};
+
+var clearObj = function(obj) {
+  var propNames = Object.getOwnPropertyNames(obj);
+
+  propNames.forEach(function(name) {
+    obj[name] = null;
+  });
+};
+
+var isDescendant = function(parent, child) {
+     var node = child.parentNode;
+     while (node !== null) {
+         if (node === parent) {
+             return true;
+         }
+         node = node.parentNode;
+     }
+     return false;
+};
+
+var propertyNames = function(obj){
+  var propNames = Object.getOwnPropertyNames(obj);
+  var props = propNames.filter(function(el){
+    return el.substring(0,1) !== '$';
+  });
+  return props;
+};
 

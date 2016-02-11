@@ -1,0 +1,71 @@
+<div ng-controller="LotCtrl" class="innerframe">
+  <table class="fill">
+    <tr>
+      <td></td>
+      <td>Lot Number</td>
+      <td ng-repeat="stn in sumStations">{{stn.name}}</td>
+    </tr>
+
+    <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp'" >
+
+      <td ng-if="!lot.expanded"><button ng-click="lot.expanded = true">+</button></td>
+      <td ng-if="lot.expanded"><button ng-click="lot.expanded = false">-</button></td>
+      
+      <td>
+        Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
+        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>        
+        <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
+        <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
+      </td>
+
+      <td ng-if="lot.expanded" ng-repeat="stn in sumStations">
+
+        <div class="cellWrapper" ng-class="{bluefill: lot[stn.code].summary, blueoutline: lot[stn.code].in_progress}">
+          
+          <div ng-if="lot[stn.code].summary.weight_1">
+            <b ng-class="{redfill: lot[stn.code].summary[station_info.trackBy]>lot[stn.code].prev, greenfill: lot[stn.code].summary[station_info.trackBy]===lot[stn.code].prev}">
+              <span ng-if="lot[stn.code].summary.pieces">Pieces: {{lot[stn.code].summary.pieces}} | </span>
+              <span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>
+              Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg 
+              <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
+            </b><br>
+            <span ng-if="lot[stn.code].prev_yield">from previous:{{lot[stn.code].prev_yield.toFixed(1)}}%</span>
+            <span ng-if="lot[stn.code].start_yield">from start:{{lot[stn.code].start_yield.toFixed(1)}}%</span>
+          </div>
+
+          <br>
+          <table>
+            <tr class="fill2" ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
+              <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
+              <td ng-if="total.product_code">{{total.product_code}} </td>
+              <td ng-if="total.state">{{total.state}} </td>
+              <td ng-if="total.size">{{total.size}} </td>
+              <td ng-if="total.grade">{{total.grade}} </td>
+              <td ng-if="total.species">{{total.species}} </td>
+
+              <td ng-if="total.boxes">{{total.boxes}} boxes </td>
+              <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
+              <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
+            </tr>
+          </table>
+
+          <div>
+            <button class="bottomright" ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+            <button class="bottomleft" ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
+          </div>
+
+        </div>
+      </td>
+
+      <td ng-if="!lot.expanded" ng-repeat="stn in sumStations">
+          <div ng-if="lot[stn.code].summary.weight_1">
+            <span ng-if="lot[stn.code].summary.pieces">Pieces: {{lot[stn.code].summary.pieces}} | </span><span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
+          </div>
+      </td>
+
+    </tr>
+
+  </table>
+
+
+</div>

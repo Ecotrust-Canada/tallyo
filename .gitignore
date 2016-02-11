@@ -2,14 +2,12 @@ logs/*
 !.gitkeep
 node_modules/
 public/bower_components/
-public/js/configs/app_config.js
-public/js/configs/app_config_hs.js
-public/js/configs/app_config_am1.js
+public/js/configs/*
 tmp
 .DS_Store
 .idea
 config.js
-*~
-*.pyc
+database.json
 *.swp
 *.log
+*~

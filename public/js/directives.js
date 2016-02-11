@@ -4,15 +4,28 @@
 angular.module('scanthisApp.directives', [])
 
 
-/*select lot from dropdown*/
-.directive('selectlot', function() { return { templateUrl: 'htmlpartials/selectlot.html' }; })
-
-/*table with suppliers with button to set as current*/
-.directive('supplierlist', function() { return { templateUrl: 'htmlpartials/supplierlist.html' }; })
 
 .directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
+
+.directive('loadcurrentcollection', function() { return { templateUrl: 'htmlpartials/loadcurrentcollection.html' }; })
+
+.directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
+
+.directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
+
+.directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
+
+.directive('shipmenttotals', function() { return { templateUrl: 'htmlpartials/shipmenttotals.html' }; })
+
+.directive('inventory', function() { return { templateUrl: 'htmlpartials/inventory.html' }; })
+
+.directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
+
+.directive('setharvesterinfo', function() { return { templateUrl: 'htmlpartials/setharvesterinfo.html' }; })
+
+.directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
 
 .directive('display', function() { return { 
   scope: {config: '=',
@@ -28,6 +41,16 @@ angular.module('scanthisApp.directives', [])
   controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 
+.directive('expandedlist', function() { return { 
+  scope: { itemlist: '=', 
+           displaycfg: '=', 
+           config: '=' , 
+           filterstring: '=',  
+           updateFn: '&',
+           hideFn: '&'},
+  controller: 'ListCtrl',
+  templateUrl: 'htmlpartials/expandedlist.html' }; })
+
 .directive('dropdown', function() { return { 
   scope: { itemlist: '=',  
            cfg: '=', 
@@ -38,10 +61,11 @@ angular.module('scanthisApp.directives', [])
 .directive('entryform', function() { return { 
   scope: {table: '=',  
           config: '=', 
-          form: '=',  
+          scale: '=',  
           formchange: '=',
           list1: '=', 
           list2: '=', 
+          formdisabled: '=', 
           submitFn: '&',
           pollFn: '&'},
   controller: 'entryformCtrl', 
@@ -52,4 +76,56 @@ angular.module('scanthisApp.directives', [])
            submitFn: '&'},
   controller: 'FieldsetCtrl',
   templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })
+
+
+//to validate forms - return error if number is negative
+.directive('negative', function (){ 
+   return {
+      require: 'ngModel',
+      link: function(scope, elem, attr, ngModel) {
+
+          //For DOM -> model validation
+          ngModel.$parsers.unshift(function(value) {
+             var valid = value >= 0;
+             ngModel.$setValidity('negative', valid);
+             return valid ? value : undefined;
+          });
+
+          //For model -> DOM validation
+          ngModel.$formatters.unshift(function(value) {
+             ngModel.$setValidity('negative', value >= 0);
+             return value;
+          });
+      }
+   };
+})
+
+.directive('anyOtherClick', ['$document', "$parse", function ($document, $parse) {
+  return {
+    restrict: 'A',
+    link:  function (scope, element, attr, controller) {
+      var id = (attr.anyOtherClick || 'scaninput');
+      var documentClickHandler = function (event) {
+        var eventOutsideTarget = (element[0] !== event.target) && (0 === element.find(event.target).length);
+        if (isDescendant(element[0], event.target)){
+          eventOutsideTarget = false;
+        }
+        if (eventOutsideTarget) {
+          scope.$apply(function () {
+            var thediv = document.getElementById(id);
+            if (thediv){
+              thediv.focus();
+            }
+          });
+        }
+      };
+      $document.on("click", documentClickHandler);
+      scope.$on("$destroy", function () {
+        $document.off("click", documentClickHandler);
+      });
+    },
+  };
+}])
+
+
 ;

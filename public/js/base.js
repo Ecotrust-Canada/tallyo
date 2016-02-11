@@ -35,6 +35,9 @@ angular.module('scanthisApp', [
 
 
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
+
+  $scope.terminal = {};
+  $scope.terminal.showsection = "default";
   $scope.stations = stationlist;
   $scope.terminals = terminals;
   if ($routeParams.terminal_id){
@@ -66,6 +69,9 @@ angular.module('scanthisApp', [
     if(settings.sumStations){
       $scope.sumStations = settings.sumStations;
     }
+    if(settings.setstation){
+      $scope.setstation = settings.setstation;
+    }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
     }
@@ -77,6 +83,12 @@ angular.module('scanthisApp', [
     }
     if(settings.valuesarray){
       $scope.valuesarray = settings.valuesarray;
+    }
+    if(settings.options){
+      $scope.options = settings.options;
+    }
+    if(settings.visibility){
+      $scope.visibility = settings.visibility;
     }
 
     if(settings.scaleURL){
@@ -132,12 +144,16 @@ angular.module('scanthisApp', [
 
     if(settings.displays){
       $scope.collectiondisplay = displayconfigs[settings.displays.collectiondisplay];
+      $scope.collection2display = displayconfigs[settings.displays.collection2display];
+      $scope.adddisplay = displayconfigs[settings.displays.adddisplay];
     }
 
     $scope.includes = [];
     for (var i=0;i<settings.includes.length;i++){ 
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
+
+    //$scope.showsection = "before";
   };
 })
 

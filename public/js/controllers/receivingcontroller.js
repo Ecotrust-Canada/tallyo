@@ -21,11 +21,9 @@ angular.module('scanthisApp.receivingController', [])
     $scope.entry.scan = {};
     $scope.entry[$scope.station_info.itemtable] = {};
 
-    $scope.entry[$scope.station_info.itemtable].timestamp = date;
     $scope.entry[$scope.station_info.itemtable].station_code = $scope.station_code;
     $scope.entry[$scope.station_info.itemtable][$scope.station_info.collectionid] = $scope.current.collectionid;
     
-    $scope.entry.scan.timestamp = date;
     $scope.entry.scan.station_code = $scope.station_code;
     MakeEntry(form, $scope.station_info.itemtable, $scope);
   };
@@ -70,6 +68,23 @@ angular.module('scanthisApp.receivingController', [])
     }
   };
 
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
+      $scope.formdisabled = true;
+    }
+    else{
+      $scope.formdisabled = false;
+    }
+  });
+
+  $scope.Complete = function(){
+    if ($scope.onLabel){
+      $scope.MakeQR();
+    }
+    $scope.current.selected = 'no selected';
+    $scope.current.collectionid = 'no selected';
+  };
+
 })
 
 .controller('RemoveItemCtrl', function($scope, $http, DatabaseServices) {
@@ -87,18 +102,20 @@ angular.module('scanthisApp.receivingController', [])
 
 
 .controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
   $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
-    MakeEntry(form, 'shipping_unit', $scope);
-    $scope.entry.shipping_unit.timestamp = moment(new Date()).format();
-    $scope.MakeShippingEntry();
-    $scope.formchange = !$scope.formchange;
-    $scope.addinfo = false;
+    if (form){
+      MakeEntry(form, 'shipping_unit', $scope);
+      $scope.entry.shipping_unit.station_code = $scope.station_code;
+      $scope.MakeShippingEntry();
+      $scope.formchange = !$scope.formchange;
+      $scope.addinfo = false;
+    }
   };
 
   $scope.MakeShippingEntry = function(){
@@ -106,17 +123,14 @@ angular.module('scanthisApp.receivingController', [])
       $scope.current.shipping_unit = (response.data[0] || response.data);
       $scope.list.shipping_unit.push($scope.current.shipping_unit);
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
-    }
-    else{ toastr.error("empty form"); } 
+    DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
   };
 
   $scope.ListShipments = function(){
     var func = function(response){
       $scope.list.shipping_unit = response.data;
     };
-    var query = '?received_from=neq.null';
+    var query = '?station_code=eq.' + $scope.station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
   $scope.ListShipments();
@@ -133,18 +147,21 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 .controller('SetOriginCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.form = {};
+
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.harvester = {};
   $scope.selected = "no selected";
 
   $scope.SubmitForm = function(form){  
-    MakeEntry(form, 'harvester', $scope);
-    $scope.entry.harvester.processor_code = $scope.processor;
-    $scope.MakeHarvesterEntry();
-    $scope.formchange = !$scope.formchange;
-    $scope.addinfo = false;
+    if (form){
+      MakeEntry(form, 'harvester', $scope);
+      $scope.entry.harvester.processor_code = $scope.processor;
+      $scope.MakeHarvesterEntry();
+      $scope.formchange = !$scope.formchange;
+      $scope.addinfo = false;
+    }
+    
   };
 
   $scope.MakeHarvesterEntry = function(){
@@ -153,10 +170,8 @@ angular.module('scanthisApp.receivingController', [])
       $scope.current.harvester = (response.data[0] || response.data);
       $scope.list.harvester.push($scope.current.harvester);
     };
-    if (NotEmpty($scope.form)){
-      DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
-    }
-    else{ toastr.error("empty harvester info form"); } 
+    DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
+
   };
 
   $scope.ListHarvesters = function(){
@@ -182,33 +197,34 @@ angular.module('scanthisApp.receivingController', [])
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.entry.box = {};
-  $scope.SubmitForm = function(form, choices){
-    if ($scope.current.harvester !== undefined){
-      $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
+  $scope.SubmitForm = function(choices){
+    if (choices){
+      if ($scope.current.harvester !== undefined && $scope.current.harvester !== null){
+        $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
 
-      if ($scope.current.shipping_unit !== undefined){
-        $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-        $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+        if ($scope.current.shipping_unit !== undefined && $scope.current.shipping_unit !== null){
+          $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
+          $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
-        var date = moment(new Date()).format();
-        for (var j=0;j<choices.length;j++){
-          var formrow = choices[j];
-          $scope.entry.box.grade = formrow.grade;
-          $scope.entry.box.size = formrow.size;
-          $scope.entry.box.weight = formrow.weight;
+          var date = moment(new Date()).format();
+          for (var j=0;j<choices.length;j++){
+            var formrow = choices[j];
+            $scope.entry.box.grade = formrow.grade; 
+            $scope.entry.box.size = formrow.size;
+            $scope.entry.box.weight = formrow.weight;
 
-          for (var i=1;i<=formrow.num_boxes;i++){
-            $scope.MakeBox($scope.entry.box, date);
-          }
-        }    
+            for (var i=1;i<=formrow.num_boxes;i++){
+              var entry = JSON.parse(JSON.stringify($scope.entry.box));
+              $scope.MakeBox(entry, date);
+            }
+          }    
+        }else{
+          toastr.error("missing shipment info");
+        }
       }else{
-        toastr.error("missing shipment info");
+        toastr.error("missing origin info");
       }
-    }else{
-      toastr.error("missing origin info");
-    }
-    
-    
+    }    
   };
   
   $scope.MakeBox = function(entry, date){
@@ -220,12 +236,7 @@ angular.module('scanthisApp.receivingController', [])
       console.log(data, labels);
       $scope.printLabel(data, labels);
     };
-    if (NoMissingValues($scope.form)){
-      entry.timestamp = date;
-      //console.log(entry);
-      DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
-    }
-    else{ toastr.error("missing values"); } 
+    DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
 })
 

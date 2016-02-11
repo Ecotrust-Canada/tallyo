@@ -1,0 +1,11 @@
+{
+"env":{
+"driver":"pg",
+"user":"tuna_processor",
+"password":"salmon",
+"host":"localhost",
+"database":"dbname",
+"schema":"public"
+},
+"sql-file" :true
+}
