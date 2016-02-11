@@ -43,9 +43,14 @@
 
     </head>
     <body div ng-controller="RoutingCtrl">
+      <div class="top_frame"></div>
+      <div class="left_frame"></div>
+      <div class="right_frame"></div>
+
+      <div class="container">
          <nav>
             <ul>
-                <li><a>Stations</a>
+              <li><a>Stations</a>
                     <ul>
                     <li ng-repeat="terminal in terminals"><a href="/#/terminal/{{ terminal.id }}">{{ terminal.name }}</a></li>
                     </ul>
@@ -53,5 +58,10 @@
             </ul>
         </nav>
         <div ng-view></div>
+        <div class="footer">
+          <div id="tally_o_logo"></div>
+        </div>  
+      </div>
+      <div class="bottom_frame"></div>  
     </body>
 </html>
