@@ -1,36 +1,42 @@
-    <div ng-controller="SetSupplierCtrl">
-    <supplierlist></supplierlist>
+
+<loadcurrentcollection></loadcurrentcollection>
+
+<div class="sectionframe" ng-controller="DisplayCollectionCtrl">
+  <display obj="current[station_info.displaytable]" config="collectiondisplay"></display>
+
+  <div ng-controller="EditFieldCtrl">
+    Internal Lot Code:
+    <span ng-if="current.harvester_lot.internal_lot_code" id="current_internal_lotnum">{{current.harvester_lot.internal_lot_code}}
+      <input type="button" ng-click="LotCode('', current.harvester_lot.internal_lot_code)" value="edit">
+    </span>
+    <input ng-if-start="!current.harvester_lot.internal_lot_code" type="text" ng-model="form.internal_lot_code">
+    <input ng-if-end type="button" ng-click="LotCode(form.internal_lot_code, null)" 
+           value="submit" id="set_lot_num"><br>    
+  </div>
+
+</div>
+
+<div ng-controller="SetSupplierCtrl">
+  <div ng-controller="NewLotCtrl">
+
+    <searchtext></searchtext>
     
-    <button ng-click="addnew = !addnew"><span ng-show="addnew">Add New Supplier</span><span ng-hide="addnew">Hide</span></button>
+    <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" hide-fn="RemoveHarvester(str)" filterstring="searchText" displaycfg="adddisplay"></expandedlist>
 
-
-    <div ng-controller="HarvesterSubmitCtrl" ng-hide="addnew">
-      <entryform config="collectionform" form="form" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    <div ng-init="formtable='harvester'">  
+      <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
+        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+      </div>
     </div>
 
+    
+    
     <hr>
-    <button ng-click="editdrop = !editdrop"><span ng-show="editdrop">Edit Drop-down choices</span><span ng-hide="editdrop">Hide</span></button>
-    <div ng-controller="DropDownCtrl" ng-init="init('harvester')" ng-hide="editdrop">
-      <div class="block">
-        <select ng-model="model.id">
-          <option value="">-- select --</option>
-          <option ng-repeat="option in collectionform.fields|filter:{value:'dboptions'}" value="{{option.fieldname}}">{{option.title}}</option>
-        </select>
-      </div>
-      <div class="block">
-      <ul ng-if="model.id">
-        <li ng-repeat="selection in formoptions|filter:{field_name:model.id}">
-          <span>
-            {{selection.value}}
-            <input type="button" ng-click="Delete(selection.value, model.id)" value="Delete" />
-          </span>
-        </li>
-        <li><input  type="text" ng-model="model.new"><input type="button" ng-click="New(model.new, model.id)" value="Add" /></li>
-      </ul>
-      </div>
-    </div>
+
+
 
   </div>
+</div>
 
 
 

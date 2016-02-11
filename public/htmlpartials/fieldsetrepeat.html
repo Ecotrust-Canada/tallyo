@@ -1,0 +1,20 @@
+<form name="theform">
+  <fieldset  data-ng-repeat="choice in choices">
+    <span ng-repeat="field in config.fields">
+      {{field.title}}
+      <select ng-if="field.type==='select'" ng-model="choice[field.fieldname]" ng-required="true" name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+        <option ng-repeat="obj in field.value">{{obj.name}}</option>
+      </select>
+      <input ng-if="field.type==='number'" class="short" type="number" ng-model="choice[field.fieldname]" placeholder="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+      <input ng-if="field.type==='text'" class="short" type="text" ng-model="choice[field.fieldname]" placeholder="field.placeholder" ng-required="true" name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+    </span>    
+    <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+  </fieldset>
+</form>
+<button class="addfields" ng-click="addNewChoice()">Add fields</button>
+<br>
+<input type="button" ng-click="isValid(choices);submitFn({choices: choices})" value="{{config.title}}">
+<button ng-click="reset()">Reset Form</button>
+<br>
+
+

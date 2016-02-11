@@ -22,31 +22,11 @@ var dateManipulation = function(date, period){
     return dates;
 };
 
-/* for now creates unique id by using stage id and current date and time*/
-var createLotNum = function(station_code, date){
-    var datestring = moment(date.valueOf()).format('-DDMMYY-HHmmss');
-    return String(station_code) +  datestring;
+var createProdCode = function(date){
+  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
+  return 'P' +  datestring;
 };
 
-var createLoinNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'L' +  datestring;
-};
-
-var createBoxNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'B' +  datestring;
-};
-
-var createShipNum = function(date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return 'S' +  datestring;
-};
-
-var createHarvesterCode = function(processor, date){
-  var datestring = moment(date.valueOf()).format('-DDDYY-HHmmss');
-  return processor +  datestring;
-};
 
 /*checks whether a date is within a range*/
 var DateRangeCurrent = function(date, start_date, end_date){
@@ -54,6 +34,14 @@ var DateRangeCurrent = function(date, start_date, end_date){
         return true;
     }
     return false;
+};
+
+var isToday = function(date){
+  var today = moment(new Date()).startOf('day').format();
+  if (moment(date).startOf('day').format() === today){
+    return true;
+  }
+  return false;
 };
 
 /*checks that a json object has no "" values*/
@@ -85,6 +73,12 @@ var CreateEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
     $scope.lot_entry.start_date = dates.start_date;
     $scope.lot_entry.end_date = dates.end_date;
+  };
+
+var CreateLotEntryPeriod = function(today, period, $scope){
+    var dates = dateManipulation(today, period);
+    $scope.entry.lot.start_date = dates.start_date;
+    $scope.entry.lot.end_date = dates.end_date;
   };
 
 /*sums weights of all objects in array*/
@@ -127,10 +121,17 @@ var MakeEntry = function(form, scopevar, $scope){
 var ClearFormToDefault = function(form_arr, def_arr){
     for (var i=0;i<def_arr.length;i++){
       if (def_arr[i].type === 'text'){
-        form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        }
       }
       else{
-        form_arr[def_arr[i].fieldname] = "";
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = "";
+        }
+        else if (!form_arr[def_arr[i].fieldname]){
+          form_arr[def_arr[i].fieldname] = "";
+        }        
       }
     }
     return form_arr;
@@ -190,4 +191,137 @@ var cleanJsonArray = function(array){
   array.forEach(cleanJson);
 };
 
+var padz = function(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+var tableInfo = function(table){
+  if (table === 'box'){
+    return {letter:'B', field: 'box_number'};
+  }
+  else if (table === 'loin'){
+    return {letter:'T', field:'loin_number'};
+  }
+  else if (table === 'lot'){
+    return {letter:'L', field:'lot_number'};
+  }
+  else if (table === 'shipping_unit'){
+    return {letter:'S', field:'shipping_unit_number'};
+  }
+  else if (table === 'harvester'){
+    return {letter:'H', field:'harvester_code'};
+  }
+};
+
+var isInArray = function(value, array) {
+  return array.indexOf(value) > -1;
+};
+
+var AddtoEntryNonFormData = function($scope, table){
+  $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
+  $scope.entry[table].station_code = $scope.station_code;
+  if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
+    $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+  }
+};
+
+var AddtoEntryFormData = function(form, scopevar, $scope){
+  for (var key in form){
+      $scope.entry[scopevar][key] = form[key];
+  }
+};
+
+var onlyUnique = function(value, index, self) { 
+    return self.indexOf(value) === index;
+};
+
+var copyArrayPart = function(array, fields){
+  var newarray = [];
+  for (var i=0;i<array.length;i++){
+    var obj = {};
+    for (var j=0;j<fields.length;j++){
+      obj[fields[j]] = array[i][fields[j]];
+    }
+    newarray.push(obj);
+  }
+  return newarray;
+};
+
+
+
+var sizefromweight = function(weight_kg){
+  var size;
+  if (weight_kg < 1.36){
+    size = "1-3 lb";
+  }
+  else if (weight_kg > 1.36 && weight_kg < 2.27){
+    size = "3-5 lb";
+  }
+  else if (weight_kg > 2.27 && weight_kg < 3.63){
+    size = "5-8 lb";
+  }
+  else if (weight_kg > 3.63){
+    size = "8-up lb";
+  }
+  return size;
+};
+
+
+var formIsValid = function($scope){
+  
+};
+
+var confirmTrue = function(message, func, elsefunc){
+  var alert = confirm(message);
+  if (alert === true){
+    func();
+  }
+  else{
+    elsefunc(); //this is the ng-model for the input form
+  }
+};
+
+
+var copyObj = function(obj) {
+  var copy = Object.create(Object.getPrototypeOf(obj));
+  var propNames = Object.getOwnPropertyNames(obj);
+  console.log(propNames);
+
+  propNames.forEach(function(name) {
+    var desc = Object.getOwnPropertyDescriptor(obj, name);
+    console.log(desc);
+    Object.defineProperty(copy, name, desc);
+  });
+
+  return copy;
+};
+
+var clearObj = function(obj) {
+  var propNames = Object.getOwnPropertyNames(obj);
+
+  propNames.forEach(function(name) {
+    obj[name] = null;
+  });
+};
+
+var isDescendant = function(parent, child) {
+     var node = child.parentNode;
+     while (node !== null) {
+         if (node === parent) {
+             return true;
+         }
+         node = node.parentNode;
+     }
+     return false;
+};
+
+var propertyNames = function(obj){
+  var propNames = Object.getOwnPropertyNames(obj);
+  var props = propNames.filter(function(el){
+    return el.substring(0,1) !== '$';
+  });
+  return props;
+};
 

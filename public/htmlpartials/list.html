@@ -4,19 +4,27 @@
   </tr>
   <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring">
     <td ng-repeat="name in config.fields">
-    <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
-    <span ng-if="name==='timestamp'">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-    <span ng-if="name.substring(0,6)==='weight'">{{(item[name]).toFixed(2)}}kg</span>
-    <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'" >{{item[name]}}</span>
-    <span ng-if="name==='pieces'">pcs</span>
+      <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
+      <span ng-if="name==='timestamp'">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+      <span ng-if="name.substring(0,6)==='weight'">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'" >{{item[name]}}</span>
+      <span ng-if="name==='pieces'">pcs</span>
+      <span ng-if="name==='boxes'">boxes</span>
     </td>
     <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
     <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
   </tr>
   <tr ng-if="istotal === true">
     <td>Total:</td>
+    <td ng-if="itemlist[0].grade && itemlist[0].size"></td>
+    <td ng-if="itemlist[0].species"></td>
     <td ng-if="itemlist[0].weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</td>
     <td ng-if="itemlist[0].weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</td>
+    <td ng-if="itemlist[0].weight">{{itemlist | sumOfValue:'weight'| weightstring}}</td>
     <td ng-if="itemlist[0].pieces">{{itemlist | sumOfValue:'pieces'}}pcs</td>
+    <td ng-if="itemlist[0].boxes">{{itemlist | sumOfValue:'boxes'}} boxes</td>
   </tr>
 </table>
+
+<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>
+

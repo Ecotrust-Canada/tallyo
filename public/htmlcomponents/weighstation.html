@@ -1,26 +1,44 @@
+<loadcurrentcollection ng-if="options.loadcurrentcollection"></loadcurrentcollection>
+<selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
+<selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
+
+
+
 <div class="sectionframe" ng-controller="DisplayCollectionCtrl">
-  <currentlot></currentlot>
+  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
 </div>
 
 
 <div ng-if="prevStation" ng-controller="prevStationCtrl">
   Previous Station Info:
   <div class="sectionframe" ng-controller="TotalsCtrl">
-    <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
+    <list itemlist="totals"  config="item2listconfig" istotal="istotal"></list>
   </div>
 </div>
 
 
 <div class="sectionframe" >
-  <div ng-controller="ScanOnlyCtrl">
-    <entryform config="scanform" form="form" formchange="formchange" submit-fn="Submit(form)"></entryform>
+  <div ng-controller="ScanCtrl">
+
+    <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
+
+    <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" submit-fn="Submit(form)"></entryform>
+
   </div>
+</div>
+
+<div ng-if="formedit">
+  <hr>
+
+  <div ng-controller="AddtoTableCtrl">
+    <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+  </div>
+  <hr>
 </div>
 
 
 
-
-<div class="sectionframe" ng-controller="TotalsCtrl">
+<div ng-if="station_info.itemtotals" class="sectionframe" ng-controller="TotalsCtrl">
   <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
 </div>
 

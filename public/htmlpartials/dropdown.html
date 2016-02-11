@@ -1,12 +1,21 @@
 
+<div ng-init="showlist=(cfg.show||false)">
+
   <span ng-if="cfg.title">{{cfg.title}}: </span>
-  <select name="singleSelect" ng-model="selectedoption" ng-change="changeFn({selected: selectedoption})">
+  <button ng-hide="showlist" ng-click="showlist=!showlist">></button>
+
+  <select ng-show="showlist" name="singleSelect" ng-model="selectedoption" ng-change="changeFn({selected: selectedoption});showlist=!showlist">
     <option value="no selected">--select--</option>
     <option ng-repeat="item in itemlist | orderBy: cfg.order | limitTo: cfg.limit" value="{{item[cfg.arg]}}">
-      {{item[cfg.fields[0]]}} 
-      <span ng-if="cfg.fields[1]">{{item[cfg.fields[1]]}} </span>
-      <span ng-if="cfg.fields[2]">{{item[cfg.fields[2]]}}</span>
+      {{item[cfg.fields[0]]}}
+      {{cfg.fields[1] === 'timestamp' ? (item[cfg.fields[1]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[1]]}}
+      {{cfg.fields[2] === 'timestamp' ? (item[cfg.fields[2]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[2]]}}
     </option>
   </select>
-<br>
+
+  <button ng-show="showlist" ng-click="showlist=!showlist">X</button>
+
+
+
+</div>
 

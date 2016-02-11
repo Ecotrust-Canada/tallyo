@@ -126,3 +126,21 @@ and run on database/user created earlier:
 ```
 ./postgrest postgres://[user]:[password]@localhost:5432/[database name] --port 3000 --schema public --anonymous [user] --pool 200
 ```
+###Examples of running protractor tests:
+
+
+```
+npm run-script protractor -- --baseUrl='http://localhost:8002/'
+```
+```
+npm run-script protractor -- --baseUrl='http://localhost:8002/' --specs e2e-tests/harsam.js
+```
+```
+protractor e2e-tests/protractor.conf.js --baseUrl='http://localhost:8002/'  --specs e2e-tests/harsam.js
+```
+
+For now, after running protractor tests, I need manually delete formoptions and latest lots and harvesters with harvester_code, 
+obtained by running query:
+```
+select harvester_code from harvester where active='f';
+```

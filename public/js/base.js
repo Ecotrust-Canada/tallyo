@@ -11,6 +11,7 @@ angular.module('scanthisApp', [
   'scanthisApp.formController',
   'scanthisApp.itemController',
   'scanthisApp.packingController',
+  'scanthisApp.receivingController',
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',
@@ -34,6 +35,9 @@ angular.module('scanthisApp', [
 
 
 .controller('RoutingCtrl', function($scope, $routeParams, $http) {
+
+  $scope.terminal = {};
+  $scope.terminal.showsection = "default";
   $scope.stations = stationlist;
   $scope.terminals = terminals;
   if ($routeParams.terminal_id){
@@ -65,8 +69,30 @@ angular.module('scanthisApp', [
     if(settings.sumStations){
       $scope.sumStations = settings.sumStations;
     }
+    if(settings.setstation){
+      $scope.setstation = settings.setstation;
+    }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
+    }
+    if(settings.formedit){
+      $scope.formedit = settings.formedit;
+    }
+    if(settings.tableinform){
+      $scope.tableinform = settings.tableinform;
+    }
+    if(settings.valuesarray){
+      $scope.valuesarray = settings.valuesarray;
+    }
+    if(settings.options){
+      $scope.options = settings.options;
+    }
+    if(settings.visibility){
+      $scope.visibility = settings.visibility;
+    }
+
+    if(settings.scaleURL){
+      $scope.scaleURL = settings.scaleURL;
     }
 
     if(settings.printString && settings.printurl){
@@ -79,13 +105,14 @@ angular.module('scanthisApp', [
           url: $scope.printurl + 'print',
           transformRequest: function(obj) {
             var str = [];
-            for(var p in obj)
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            for(var p in obj) {
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
             return str.join("&");
           },
           data: {data:$scope.printString(codeString, fieldarray)}
 
-    });
+        });
   };
     }
     
@@ -101,21 +128,32 @@ angular.module('scanthisApp', [
     if (settings.forms){
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
+      $scope.addform = formconfigs[settings.forms.addform];
     }
 
     if (settings.dropdowns){
       $scope.collectiondropdown = dropdownconfigs[settings.dropdowns.collectiondropdown];
+      $scope.adddropdown = dropdownconfigs[settings.dropdowns.adddropdown];
     }
     
     if(settings.lists){
       $scope.itemlistconfig = listconfigs[settings.lists.items];
       $scope.totallistconfig = listconfigs[settings.lists.totals];
+      $scope.item2listconfig = listconfigs[settings.lists.additem];
+    }
+
+    if(settings.displays){
+      $scope.collectiondisplay = displayconfigs[settings.displays.collectiondisplay];
+      $scope.collection2display = displayconfigs[settings.displays.collection2display];
+      $scope.adddisplay = displayconfigs[settings.displays.adddisplay];
     }
 
     $scope.includes = [];
     for (var i=0;i<settings.includes.length;i++){ 
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
+
+    //$scope.showsection = "before";
   };
 })
 

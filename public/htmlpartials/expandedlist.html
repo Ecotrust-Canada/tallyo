@@ -1,0 +1,44 @@
+<table ng-class="config.cssclass">
+  
+  <!--column headers-->
+  <tr ng-if="config.headers">
+    <td></td>
+    <td ng-repeat="title in config.headers"><b>{{title}}</b></td>
+  </tr>
+
+  <tr ng-repeat-start="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring" ng-class="{selected: item[config.arg] === current[config.arg]}">
+
+    <td>
+      <button ng-if="expanded" ng-click="$parent.expanded = false">-</button>
+      <button ng-if="!expanded" ng-click="$parent.expanded = true">+</button>
+    </td>
+    <td ng-repeat="name in config.fields ">
+      <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
+      <span ng-if="name==='timestamp'" class="list_item_val">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+      <span ng-if="name.substring(0,6)==='weight'" class="list_item_val">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'"  class="list_item_val">{{item[name]}}</span>
+      <span ng-if="name==='pieces'">pcs</span>
+      <span ng-if="name==='boxes'">boxes</span>
+    </td>
+
+    <td> <button ng-if="config.button" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</button>
+    <button ng-if="config.button2" ng-click="hideFn({str: item[config.arg]})">{{config.button2}}</button>
+    </td>
+
+  </tr>
+
+  <tr ng-if-start="expanded">
+    <td>
+    </td>
+
+    <td colspan="10">
+      <display obj="item" config="displaycfg"></display>
+    </td>
+  </tr>
+
+  <tr ng-repeat-end ng-if-end>
+  </tr>
+
+</table>
+
+<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>

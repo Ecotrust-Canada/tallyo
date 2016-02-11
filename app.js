@@ -2,14 +2,30 @@
 
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var app = express();
 var TraceabilityProvider = require('./lib/traceability_provider');
+var configpath = './public/js/configs/'+(process.argv[2] || 'app_config');
+var config = require(configpath+"_local");
 
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public' )));
 
+app.get('/config', function(req, res, next){
+  fs.readFile(configpath + '.js', function(err, data){
+    if (err){
+      throw err;
+    }
+    fs.readFile(configpath + '_local.js', function(err, localdata){
+      if (err){
+        throw err;
+      }
+      res.send(localdata + data);
+    });
+  });
+});
 
 
 // catch 404 and forward to error handler
@@ -41,11 +57,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+console.log(process.argv);
 module.exports = app;
 
-require('./config')(app);
 
-app.listen(app.get('port'));
-console.log('Server running on port', app.get('port'));
+app.listen(config.port);
+console.log('Server running on port', config.port);
 TraceabilityProvider.start(); // WIP

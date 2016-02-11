@@ -1,0 +1,8 @@
+<div ng-controller="LotSelectCtrl">
+  <form>
+    <label for="singleSelect"> Choose Lot: </label><br>
+    <select name="singleSelect" ng-model="current.collectionid">
+      <option ng-repeat = "lot in list.lot | orderBy: '-timestamp'" value={{lot.lot_number}}>{{lot.internal_lot_code}} {{lot.end_date|stringtodate|date:format:"MMM dd"}}</option>
+    </select>
+  </form>
+</div>

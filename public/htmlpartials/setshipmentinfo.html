@@ -1,0 +1,12 @@
+<div ng-controller="SetShipmentCtrl">
+  
+  <span class="formheader"> Set Shipment Info:<br>
+
+  <dropdown ng-show="addinfo" itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown></span>
+
+  <entryform ng-show="addinfo" config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+
+  <display ng-hide="addinfo" obj="current.shipping_unit" config="collectiondisplay"></display>
+
+  <button ng-hide="addinfo" ng-click="current.shipping_unit=null;addinfo=!addinfo">Edit</button>
+</div>
