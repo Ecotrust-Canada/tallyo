@@ -52,11 +52,6 @@ body{
   bottom: 0;
   padding: 0;
 }
-.footer {
-  margin-top: 20px;
-  height: 80px;
-  width: 100%;
-}
 .left_frame {
   width: 10px;
   position: absolute;
@@ -77,12 +72,38 @@ body{
   background-position: right center;
   background-repeat: no-repeat;
 }
+.footer {
+  margin-top: 20px;
+  height: 80px;
+  width: 100%;
+}
 #tally_o_logo {
+  display: inline-block;
   width: 189px;
   height: 33px;
   margin-left: 20px;
   background-image: url(/images/tally_o.svg);
   background-repeat: no-repeat;
+}
+#open_license {
+  display: table-cell;
+  vertical-align: middle;
+  padding-right: 10px;
+}
+#thisfish_logo {
+  display: table-cell;
+  width: 105px;
+  height: 54px;
+  margin: 0 10px;
+  background-image: url(/images/thisfish_logo.svg);
+  background-repeat: no-repeat;
+}
+.footer #copyright {
+  height: 54px;
+  float: right;
+  margin: 0 20px 10px;
+  color: white;
+  display: table;
 }
 .overallframe{
   width:900px;
