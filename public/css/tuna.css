@@ -81,6 +81,7 @@ body{
   display: inline-block;
   width: 189px;
   height: 33px;
+  margin-top: 10px;
   margin-left: 20px;
   background-image: url(/images/tally_o.svg);
   background-repeat: no-repeat;
