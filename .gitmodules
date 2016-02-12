@@ -1,0 +1,3 @@
+[submodule "public/js/configs"]
+	path = public/js/configs
+	url = ssh://git@gitlab.ecocloud.ca:2289/ecotrust/configs.git
