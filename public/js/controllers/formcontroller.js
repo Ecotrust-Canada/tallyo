@@ -32,7 +32,17 @@ angular.module('scanthisApp.formController', [])
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
-      $scope.pollFn({field: $scope.config.startpolling});
+      if ($scope.pollscale === true){
+        $scope.pollFn({field: $scope.config.startpolling});
+      }
+      else{
+        var scales = $scope.formarray.filter(function(el){
+          return (el.scale);
+        });
+        scales.forEach(function(el){
+          el.scale = 'off';
+        });
+      }     
     }
   };
 
@@ -116,6 +126,7 @@ angular.module('scanthisApp.formController', [])
       }
     }
     return form;
+
   };
 
 
