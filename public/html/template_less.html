@@ -1,9 +1,4 @@
 <div ng-controller="StationCtrl" ng-init="init(station.settings)" ng-class="station.settings.css.station">
-
-  <b>{{title}}</b>
-  <br>
+  <div class="station_title" id="station-title-{{station_code}}">{{title}}</div>
   <div ng-repeat="component in includes" ng-include="component"></div>
-
-
-
 </div>

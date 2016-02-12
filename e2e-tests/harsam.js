@@ -90,10 +90,10 @@ describe('Harsam Set Receiving Lots', function() {
     element.all(by.css('input[type="radio"][name="fair_trade"]')).get(0).click().then(cb);
   }
 
-  it('should have 7 terminals', function() {
+  it('should have 8 terminals', function() {
     browser.get('');
     var terminalsList = element.all(by.repeater('terminal in terminals'));
-    expect(terminalsList.count()).toEqual(7);
+    expect(terminalsList.count()).toEqual(8);
   });
 
   it('click on "Add New Supplier" should show harvester form', function() {
