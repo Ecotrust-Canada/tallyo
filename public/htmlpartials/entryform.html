@@ -9,7 +9,7 @@
 <div ng-hide="hideform" id="form-{{config.id}}">
 <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
 <fieldset ng-disabled="formdisabled">
-  <form class="form-text" name="theform">
+  <form class="form-text" name="theform"  novalidate>
     
     <table>
       <tr ng-repeat="row in formarray"> <!--For each object in config.fields -->

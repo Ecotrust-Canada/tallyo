@@ -132,15 +132,6 @@ body{
   vertical-align: top;
 }
 
-.stationframewide{
-  width: 1000px;
-  margin-left:50px;
-  height:700px;
-  outline: solid 3px;
-  background-color: white;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
 
 
 
@@ -416,9 +407,88 @@ td{
   text-align:left;
 }
 
+div[ng-view] {
+  position: relative;
+  max-width: 80%; 
+  min-width: 80%; 
+  max-height: 80%; 
+  margin: auto;
+  overflow: visible;
+}
+
 .block{
-    display: inline-block;
-    vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 4px;
+  overflow: visible;
+}
+
+.stationframewide{
+  background-color: white;
+  overflow-x: scroll;
+  overflow-y: visible;
+  padding-top: 30px;
+  /*
+  width: 1000px;
+  margin-left:50px;
+  height:700px;
+  outline: solid 3px;
+  background-color: white;
+  overflow-x: scroll;
+  white-space: nowrap;
+  */
+}
+.station_title {
+  background-color: #002540;
+  padding: 12px 20px 12px 60px;
+  z-index: 4;
+  position: absolute;
+  left: 20px;
+  top: -22px;
+  color: #fffdff;
+  display: inline-block;
+}
+
+#station-title-HS0-011 {
+  background-image: url(/images/wheel_icon.png);
+  background-repeat: no-repeat;
+  background-position: 18px center;
+}
+
+#station-title-HS0-ADM {
+  background-image: url(/images/manage_lots_icon.png);
+  background-repeat: no-repeat;
+  background-position: 14px center;
+}
+
+#station-title-HS0-001 {
+  background-image: url(/images/receiving_icon.png);
+  background-repeat: no-repeat;
+  background-position: 8px center;
+}
+
+#station-title-HS0-002 {
+  background-image: url(/images/trimming_icon.png);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+
+#station-title-HS0-003 {
+  background-image: url(/images/retouching_icon.png);
+  background-repeat: no-repeat;
+  background-position: 7px center;
+}
+
+#station-title-HS0-004 {
+  background-image: url(/images/boxing_icon.png);
+  background-repeat: no-repeat;
+  background-position: 7px center;
+}
+
+#station-title-HS0-005 {
+  background-image: url(/images/shipping_icon.png);
+  background-repeat: no-repeat;
+  background-position: 7px center;
 }
 .rmarg{
   margin-right: 20px;
@@ -433,7 +503,7 @@ td{
 
 /*nav bar */
 nav {
-  margin: 10px auto 10px auto;
+  margin: 10px auto 30px auto;
   display: block;
 }
 nav ul ul {
