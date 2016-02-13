@@ -1,4 +1,5 @@
 html {
+  padding-bottom: 10px;
   height: 100%;
   box-sizing: border-box;
 }
@@ -16,15 +17,6 @@ body{
     padding: 0;
     min-height: 100%;
     position:relative;
-    /*
-    background-image: url(/images/background.png),
-                      linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(153,145,153,0) 10px),
-                      linear-gradient(0deg, rgba(10,10,10,0.4) 0%, rgba(153,145,153,0) 100%),
-                      linear-gradient(270deg, rgba(10,10,10,0.4) 0%, rgba(153,145,153,0) 10px),
-                      linear-gradient(90deg, rgba(10,10,10,0.4) 0%, rgba(153,145,153,0) 10px);
-    background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-    background-position: left top, top center, bottom center, left center, right center;
-    */
     background-image: url(/images/background.png);
     background-repeat: repeat;
     background-position: left top;
@@ -32,6 +24,7 @@ body{
 .container {
   min-height:100%;
   position:relative;
+  padding: 10px;
 }
 .top_frame {
   height: 10px;
@@ -151,6 +144,28 @@ body{
   background-color: white;
 }
 
+.panel {
+  display: inline-block;
+  box-shadow: 2px 2px 6px;
+  padding: 20px;
+}
+
+.station .panel:first-child {
+  padding-top: 30px;
+}
+
+.panel.grey {
+  background-color: #ebebeb;
+}
+
+.panel.white {
+  background-color: white;
+}
+
+#station-HS0-001 .panel {
+  width: 550px;
+}
+
 .columnframenarrow{
   width:326px;
   height:700px;
@@ -177,7 +192,7 @@ body{
 }
 
 .sectionframe{
-  width:100%;
+  width:auto;
   outline: solid 2px #336B7D;
   margin-top:10px;
   margin-bottom:10px;
@@ -409,34 +424,21 @@ td{
 
 div[ng-view] {
   position: relative;
-  max-width: 80%; 
-  min-width: 80%; 
   max-height: 80%; 
   margin: auto;
   overflow: visible;
 }
 
 .block{
-  display: inline-block;
   vertical-align: top;
   margin: 0 4px;
   overflow: visible;
 }
 
 .stationframewide{
-  background-color: white;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: visible;
-  padding-top: 30px;
-  /*
-  width: 1000px;
-  margin-left:50px;
-  height:700px;
-  outline: solid 3px;
-  background-color: white;
-  overflow-x: scroll;
-  white-space: nowrap;
-  */
+  padding-bottom: 10px;
 }
 .station_title {
   background-color: #002540;
@@ -490,6 +492,70 @@ div[ng-view] {
   background-repeat: no-repeat;
   background-position: 7px center;
 }
+
+div#station-HS0-011 {
+}
+
+#station-HS0-011 #harvester_list {
+  width: 840px;
+  margin-right: 20px;
+  padding: 30px 20px 10px 20px;
+  vertical-align: top;
+}
+
+#station-HS0-011 #harvester_list .header {
+  display: table;
+  height: 30px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#station-HS0-011 #harvester_list .header span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#harvester_list .header span.divider {
+  width: 1px;
+  background-color: #cecece;
+}
+
+#harvester_list .header span.section_head {
+  color: #215666;
+  font-size: 22px; 
+  font-weight: 500;
+  padding-right: 22px;
+  width: 90px;
+}
+
+#harvester_list .header span.add_new {
+  color: #186995;
+  font-size: 16px; 
+  padding-left: 16px;
+}
+
+#harvester_list .header input.search {
+  display: table-cell;
+  vertical-align: middle;
+  padding-right: 30px;
+  padding-left: 10px;
+  color: #235161;
+  width: 210px;
+  height: 35px;
+  float: right;
+  border: 1px solid #afafaf;
+  background-image: url(/images/search.png);
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+#station-HS0-011 #current_lot {
+  width: 280px;
+  vertical-align: top;
+  padding: 30px 20px 20px 20px;
+}
+
 .rmarg{
   margin-right: 20px;
 }

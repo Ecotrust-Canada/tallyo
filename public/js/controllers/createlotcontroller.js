@@ -79,6 +79,20 @@ angular.module('scanthisApp.createlotController', [])
 //also has a delete function
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
 
+  $scope.loadCurrent = function(){
+    var func = function(response){
+      var station = response.data[0];
+      var today = moment(new Date()).startOf('day').format();
+      if(station){
+        if (moment(station.in_progress_date).startOf('day').format() === today){
+          $scope.current.collectionid = station.lot_number;
+        }
+      }
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
   $scope.DisplayCollectionInfo = function(){
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
