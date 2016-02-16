@@ -1,3 +1,33 @@
+@font-face {
+  font-family: 'Lato-BlackItalic';
+  src: url('/fonts/Lato-BlackItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-Black';
+  src: url('/fonts/Lato-Black.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-BoldItalic';
+  src: url('/fonts/Lato-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('/fonts/Lato-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-Italic';
+  src: url('/fonts/Lato-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: url('/fonts/Lato-Regular.ttf');
+}
+
 html {
   padding-bottom: 10px;
   height: 100%;
@@ -160,6 +190,11 @@ body{
 
 .panel.white {
   background-color: white;
+}
+.panel.item-details {
+  background-color: #f6f6f4;
+  width: 100%;
+  box-sizing:border-box;
 }
 
 #station-HS0-001 .panel {
@@ -508,7 +543,7 @@ div#station-HS0-011 {
   height: 30px;
   width: 100%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 #station-HS0-011 #harvester_list .header span {
@@ -548,6 +583,107 @@ div#station-HS0-011 {
   background-image: url(/images/search.png);
   background-repeat: no-repeat;
   background-position: right 10px center;
+}
+
+#list-20 .list-header {
+  margin: 0;
+  display: table;
+  height: 30px;
+  width: 100%;
+}
+
+#station-HS0-011 #harvester_list #list-20 .list-header span {
+  color: #777777;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  display: inline-block;
+}
+
+#list-20 .item-line.panel span {
+  word-wrap: break-word;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.expanded-list span.expand-control {
+  width: 40px;
+}
+
+.expanded-list .item-line span.expand-control {
+  height: 38px;
+}
+
+.expanded-list .item-line span.expand-control.opened {
+  background-image: url(/images/close_details.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.expanded-list .item-line span.expand-control.closed {
+  background-image: url(/images/open_details.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#list-20 .list-header span:nth-child(2), 
+#list-20 .item-line span:nth-child(2){
+  width: 130px;
+  padding-right: 5px;
+}
+
+#list-20 .list-header span:nth-child(3), 
+#list-20 .item-line span:nth-child(3){
+  width: 70px;
+  padding-right: 5px;
+}
+
+#list-20 .list-header span:nth-child(4), 
+#list-20 .item-line span:nth-child(4){
+  width: 90px;
+  padding-right: 5px;
+}
+
+#list-20 .list-header span:nth-child(5), 
+#list-20 .item-line span:nth-child(5){
+  width: 100px;
+  padding-right: 5px;
+}
+
+#list-20 .list-header span:nth-child(6), 
+#list-20 .item-line span:nth-child(6){
+  width: 140px;
+  padding-right: 5px;
+}
+
+#station-HS0-011 #harvester_list #list-20 .item-line button {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+#station-HS0-011 #harvester_list #list-20 .item-line a:last-child {
+  color: #276685;
+  padding-left: 14px;
+  border-left: 1px solid #ccccca;
+  height: 36px;
+  line-height: 36px;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  font-family: 'Lato-Bold';
+}
+
+#station-HS0-011 #harvester_list #list-20 .row {
+  margin: 10px auto;
+}
+
+#station-HS0-011 #harvester_list #list-20 .panel.item-line {
+  width: 100%;
+  padding: 12px 0;
+  color: #0a2131;
+  font-size: 16px;
+  font-family: 'Lato-Regular';
 }
 
 #station-HS0-011 #current_lot {
@@ -616,6 +752,19 @@ div#station-HS0-011 {
     text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
 }
 
+.btn-blue {
+    display: inline-block;
+    background: #0d82ad; 
+    background-image: linear-gradient(180deg, #0d82ad 0%, #0e445c 100%);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    padding: 12px 20px;
+    border-radius: 8px;  
+    color: #e9ffff;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Lato-Bold';
+    text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
+}
 .rmarg{
   margin-right: 20px;
 }
