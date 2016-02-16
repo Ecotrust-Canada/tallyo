@@ -28,18 +28,22 @@
 
 
 <div class="panel white" ng-controller="DisplayCollectionCtrl" ng-init="loadCurrent()" id="current_lot">
+  <h3>Current Source</h3>
   <display obj="current[station_info.displaytable]" config="collectiondisplay"></display>
 
   <div ng-controller="EditFieldCtrl">
-    Internal Lot Code:
-    <span ng-if="current.harvester_lot.internal_lot_code" id="current_internal_lotnum">{{current.harvester_lot.internal_lot_code}}
-      <input type="button" ng-click="LotCode('', current.harvester_lot.internal_lot_code)" value="edit">
-    </span>
-    <input ng-if-start="!current.harvester_lot.internal_lot_code" type="text" ng-model="form.internal_lot_code">
-    <input ng-if-end type="button" ng-click="LotCode(form.internal_lot_code, null)" 
-           value="submit" id="set_lot_num"><br>    
-  </div>
+    <label for="internal_lot_code-value">Internal Lot Code:</label>
+    <div class="field_val" id="internal_lot_code-value" class="field_val"> 
+      <span ng-if-start="current.harvester_lot.internal_lot_code" 
+            id="current_internal_lotnum">{{current.harvester_lot.internal_lot_code}}</span>
+      <input ng-if-end type="button" ng-click="LotCode('', current.harvester_lot.internal_lot_code)" 
+             class="btn-orange" value="Edit">
 
+      <input ng-if-start="!current.harvester_lot.internal_lot_code" type="text" ng-model="form.internal_lot_code">
+      <input ng-if-end type="button" ng-click="LotCode(form.internal_lot_code, null)" 
+             class="btn-orange" value="Submit Source & Lot" id="set_lot_num">    
+    </div>      
+  </div>
 </div>
 
 

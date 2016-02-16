@@ -551,9 +551,69 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #current_lot {
-  width: 280px;
+  width: 240px;
   vertical-align: top;
   padding: 30px 20px 20px 20px;
+}
+
+#station-HS0-011 #current_lot h3  {
+  color: #1b556b;
+  padding: 0 0 10px 0;
+  margin: 0;
+  border-bottom: 1px solid #cecfca;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#station-HS0-011 #current_lot label  {
+  display: block;
+  color: #787876;
+  margin: 16px 0 0 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+}
+#station-HS0-011 #current_lot .field_val  {
+  color: #213141;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+#station-HS0-011 #current_lot #internal_lot_code-value {
+ margin-top: 5px;
+}
+#station-HS0-011 #current_lot #internal_lot_code-value span#current_internal_lotnum {
+  display: block;
+}
+
+#station-HS0-011 #current_lot #internal_lot_code-value input[type=text] {
+  display: block;
+  width: 100%;
+  background-color: #ddebee;
+  border: 1px solid #d3dee0;
+  color: #0a2339;
+  font-size: 20px;
+  padding: 8px 10px;
+  box-sizing:border-box;
+}
+
+/*  #station-HS0-011 #current_lot #internal_lot_code-value input[type=button] {
+ *  */
+.btn-orange {
+    display: block;
+    width: 100%;
+    background: #fb7e2c; 
+    background-image: linear-gradient(180deg, #fb7e2c 0%, #b94603 100%);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    padding: 12px 35px;
+    border-radius: 8px;  
+    margin-top: 10px;
+    color: #fff6e6;
+    font-weight: 600;
+    font-size: 18px;
+    text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
 }
 
 .rmarg{
