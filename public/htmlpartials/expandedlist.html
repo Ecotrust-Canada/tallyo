@@ -3,6 +3,7 @@
   <!--column headers-->
   <tr ng-if="config.headers">
     <td></td>
+    <td></td>
     <td ng-repeat="title in config.headers"><b>{{title}}</b></td>
   </tr>
 
@@ -11,6 +12,10 @@
     <td>
       <button ng-if="expanded" ng-click="$parent.expanded = false">-</button>
       <button ng-if="!expanded" ng-click="$parent.expanded = true">+</button>
+    </td>
+    <td>
+      <span ng-if="item.fair_trade">FT</span>
+      <img ng-if="item.traceable" src="../images/ECThisFishLogo_Favicon.jpg">
     </td>
     <td ng-repeat="name in config.fields ">
       <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>

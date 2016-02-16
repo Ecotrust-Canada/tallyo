@@ -106,26 +106,50 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-  $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
     if ($scope.current.lot !== undefined){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
-        $scope.StationLot($scope.current.lot.lot_number, station);
+        $scope.StationLot($scope.current.collectionid, station);
       }
       for (var j=0;j<$scope.setstation.add.length;j++){
         var station1 = $scope.setstation.add[j];
-        $scope.AddStationLot($scope.current.lot.lot_number, station1);
+        $scope.AddStationLot($scope.current.collectionid, station1);
       }
       //$rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
-      $scope.current.collectionid = $scope.current.lot.lot_number;
+      //$scope.current.collectionid = $scope.current.lot.lot_number;
     }
   });
+
+  $scope.thisfishCode = function(lotnum){
+    var query = '';
+    var func = function(response){
+      var nextcode = response.data[0].tf_code;
+      $scope.assignCode(lotnum, nextcode);
+    };
+    DatabaseServices.GetEntries('nextcode', func, query);
+  };
+
+  $scope.assignCode = function(lotnum, tf_code){
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+      $scope.current.collectionid = lotnum;
+    };
+    var patch = {lot_number: lotnum};
+    DatabaseServices.PatchEntry('thisfish',patch, query, func);
+  };
 
 
   /*make a new lot in the database*/
   $scope.DatabaseLot = function(){
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
+      if ($scope.current.harvester.traceable){
+        $scope.thisfishCode($scope.current.lot.lot_number);
+      }
+      else{
+        $scope.current.collectionid = $scope.current.lot.lot_number;
+      }
     };
     DatabaseServices.DatabaseEntryCreateCode('lot', $scope.entry.lot, $scope.processor, func);
   };
@@ -134,6 +158,8 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.MakeLotEntry = function(date){      
     CreateLotEntryPeriod(date, 'day', $scope);
     $scope.entry.lot.station_code = $scope.station_code;
+    $scope.entry.lot.receive_station = $scope.options.receivestation;
+    $scope.entry.lot.process_station = $scope.options.processstation;
   };
 
   /*Gets current lot given selected supplier, if does not exist creates a new lot*/
@@ -141,6 +167,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       if (response.data.length > 0){
         $scope.current.lot = response.data[0];
+        $scope.current.collectionid = $scope.current.lot.lot_number;
       }//end if
       else{
         $scope.MakeLotEntry(date);
@@ -153,11 +180,16 @@ angular.module('scanthisApp.setsupplierController', [])
   
   /*gets selected supplier, creates querystring for lot*/
   $scope.SetCurrentHarvester = function(harvester_code){
-    $scope.current.harvester_code = harvester_code;
-    var date = moment(new Date()).format();
-    var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date;
-    $scope.entry.lot = {"harvester_code": harvester_code, "station_code": $scope.station_code, "processor_code": $scope.processor};
-    $scope.CreateLot(queryString, date);
+    var query = '?harvester_code=eq.' + harvester_code;
+    var func = function(response){
+      $scope.current.harvester = response.data[0];
+      $scope.current.harvester_code = harvester_code;
+      var date = moment(new Date()).format();
+      var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date;
+      $scope.entry.lot = {"harvester_code": harvester_code, "station_code": $scope.station_code, "processor_code": $scope.processor};
+      $scope.CreateLot(queryString, date);
+    };
+    DatabaseServices.GetEntries('harvester', func, query);   
   };
 
 

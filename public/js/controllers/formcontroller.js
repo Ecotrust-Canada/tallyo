@@ -125,6 +125,13 @@ angular.module('scanthisApp.formController', [])
         $scope.hideform = true;
       }
     }
+    if ($scope.config.hidden){
+      $scope.config.hidden.forEach(function(entry){
+        form[entry.fieldname] = entry.val;
+      });
+    }
+    
+
     return form;
 
   };
