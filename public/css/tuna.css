@@ -195,6 +195,7 @@ body{
   background-color: #f6f6f4;
   width: 100%;
   box-sizing:border-box;
+  padding-top: 10px;
 }
 
 #station-HS0-001 .panel {
@@ -533,7 +534,7 @@ div#station-HS0-011 {
 
 #station-HS0-011 #harvester_list {
   width: 840px;
-  margin-right: 20px;
+  margin-right: 14px;
   padding: 30px 20px 10px 20px;
   vertical-align: top;
 }
@@ -631,6 +632,7 @@ div#station-HS0-011 {
 #list-20 .item-line span:nth-child(2){
   width: 130px;
   padding-right: 5px;
+  font-family: 'Lato-Black';
 }
 
 #list-20 .list-header span:nth-child(3), 
@@ -641,13 +643,13 @@ div#station-HS0-011 {
 
 #list-20 .list-header span:nth-child(4), 
 #list-20 .item-line span:nth-child(4){
-  width: 90px;
+  width: 110px;
   padding-right: 5px;
 }
 
 #list-20 .list-header span:nth-child(5), 
 #list-20 .item-line span:nth-child(5){
-  width: 100px;
+  width: 110px;
   padding-right: 5px;
 }
 
@@ -675,7 +677,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #harvester_list #list-20 .row {
-  margin: 10px auto;
+  margin: 6px auto 14px;
 }
 
 #station-HS0-011 #harvester_list #list-20 .panel.item-line {
@@ -684,6 +686,29 @@ div#station-HS0-011 {
   color: #0a2131;
   font-size: 16px;
   font-family: 'Lato-Regular';
+}
+
+#station-HS0-011 #harvester_list #list-20 .display_field {
+  display: inline-block;
+  width: 50%;
+  padding: 0 22px;
+  box-sizing:border-box;
+}
+
+#station-HS0-011 #harvester_list #list-20 .display_field label {
+  display: inline-block;
+  margin: 0;
+}
+
+#station-HS0-011 #harvester_list #list-20 .display_row {
+  margin: 0;
+}
+
+#station-HS0-011 #harvester_list #list-20 .display_field .field_val {
+  color: #111f28;
+  font-family: 'Lato-Regular', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  display: inline-flex;
 }
 
 #station-HS0-011 #current_lot {
@@ -702,17 +727,22 @@ div#station-HS0-011 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.display_field label,
+#station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
+  color: #787876;
+  text-transform: uppercase;
+  font-family: 'Lato-Bold';
+  font-size: 12px;
+}`
+
 #station-HS0-011 #current_lot label  {
   display: block;
-  color: #787876;
   margin: 16px 0 0 0;
-  text-transform: uppercase;
-  font-size: 12px;
   font-weight: 500;
 }
 #station-HS0-011 #current_lot .field_val  {
   color: #213141;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Lato-Regular', Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 22px;
 }

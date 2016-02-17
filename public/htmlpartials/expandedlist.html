@@ -7,7 +7,7 @@
   </div>
 
   <div ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring" 
-       ng-class="{selected: item[config.arg] === current[config.arg]}" class="row">
+       ng-class="{selected: item[config.arg] == current[config.arg]}" class="row">
 
     <div class="panel white item-line">   
       <span ng-if="expanded" ng-click="$parent.expanded = false" 
