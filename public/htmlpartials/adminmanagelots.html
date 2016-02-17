@@ -1,24 +1,39 @@
-<div ng-controller="LotCtrl" class="innerframe">
-  <table class="fill">
-    <tr>
-      <td></td>
-      <td>Lot Number</td>
-      <td ng-repeat="stn in sumStations">{{stn.name}}</td>
+<table ng-controller="LotCtrl" id="admin_manage_lots">
+    <tr class="adminlots_header">
+      <th class="lot_column"><span>Lot</span></th>
+      <th ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
+        <div class="icon"></div><span>{{stn.name}}<span>
+      </th>
     </tr>
 
     <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp'" >
 
-      <td ng-if="!lot.expanded"><button ng-click="lot.expanded = true">+</button></td>
-      <td ng-if="lot.expanded"><button ng-click="lot.expanded = false">-</button></td>
-      
-      <td>
-        Lot: {{lot.internal_lot_code || lot.lot_number}}<br>
-        {{lot.end_date|stringtodate|date:format:"MMM dd"}}<br>        
-        <span ng-if="lot.received_from">{{lot.country_origin}}-{{lot.supplier}} {{lot.received_from}}</span>
-        <span ng-if="lot.supplier_group">{{lot.supplier_group}}-{{lot.supplier}} {{lot.fleet_vessel}}</span>
+      <td class="lot_column">
+        <div class="display_field">
+          <div class="lot_label">
+            <label>Internal Lot:</label>
+            <span ng-if="lot.expanded" ng-click="lot.expanded = false" class="expand-control opened"></span>  
+            <span ng-if="!lot.expanded" ng-click="lot.expanded = true" class="expand-control closed"></span>
+          </div>
+          <div class="field_val lot_code">#{{lot.internal_lot_code || lot.lot_number}}</div>
+        </div>        
+        <div ng-if="lot.expanded" class="expanded"> 
+          <div class="display_field">
+            <label>Date:</Label>
+            <div class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
+          </div>
+          <div class="display_field">
+            <label>Supplier:</Label>
+            <div class="field_val">{{lot.supplier}}</div>
+          </div>
+          <div class="display_field">
+            <label>Fleet:</Label>
+            <div class="field_val">{{lot.fleet_vessel}}</div>
+          </div>
+        </div>
       </td>
 
-      <td ng-if="lot.expanded" ng-repeat="stn in sumStations">
+      <td ng-if="lot.expanded" ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
 
         <div class="cellWrapper" ng-class="{bluefill: lot[stn.code].summary, blueoutline: lot[stn.code].in_progress}">
           
@@ -65,7 +80,4 @@
 
     </tr>
 
-  </table>
-
-
-</div>
+</table>

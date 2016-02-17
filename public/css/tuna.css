@@ -401,16 +401,18 @@ a:hover {
 .fill{
   width: 100%;
 }
+
+/*
 .fill tr:nth-child(even) {
   background-color: #EBEDED;
 }
 .fill tr:nth-child(odd) {
   background-color: #C2C4C4;
 }
-
 .fill tr.fill2 {
   background-color: #597F80;
 }
+
 .fill tr.fill2 td {
   background-color: #597F80;
   font-size: 12px;
@@ -419,6 +421,7 @@ a:hover {
   padding-top:0px;
 }
 
+*/
 
 
 .step{
@@ -440,7 +443,7 @@ h1{
 tr{
     height: 30px;
 }
-
+/*
 th{
     font-size: 18px;
     font-style: normal;
@@ -453,7 +456,7 @@ td{
     text-align:center;
     vertical-align: top;
 }
-
+*/
 .info td{
   text-align:left;
 }
@@ -529,6 +532,126 @@ div[ng-view] {
   background-position: 7px center;
 }
 
+table#admin_manage_lots {
+  width: 1638px;
+  border: none;
+  text-align: left;
+}
+
+table#admin_manage_lots tr.adminlots_header {
+  height: 46px;
+  padding-bottom: 19px;
+  color: #125974;
+  font-size: 22px;
+  font-family: 'Lato-Bold';
+  padding: 0 0 20px 0;
+}
+
+table#admin_manage_lots tr .lot_column {
+  width: 160px;
+  border-top: 1px solid #cecfca;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+table#admin_manage_lots tr .lot-station-cell {
+  width: 296px;
+}
+
+table#admin_manage_lots tr.adminlots_header .lot-station-cell span{
+  display: inline-block;
+  position: relative;
+  left: 56px;
+}
+table#admin_manage_lots tr.adminlots_header .lot-station-cell {
+  position: relative;
+}
+
+table#admin_manage_lots tr.adminlots_header div.icon{
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+  width: 56px;
+  height: 44px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+table#admin_manage_lots tr.adminlots_header .station-column-HS0-001 div.icon {
+  background-image: url(/images/receiving_blue_icon.svg);
+}
+
+table#admin_manage_lots tr.adminlots_header .station-column-HS0-002 div.icon {
+  background-image: url(/images/trimming_blue_icon.svg);
+}
+
+table#admin_manage_lots tr.adminlots_header .station-column-HS0-003 div.icon {
+  background-image: url(/images/retouching_blue_icon.svg);
+}
+
+table#admin_manage_lots tr.adminlots_header .station-column-HS0-004 div.icon {
+  background-image: url(/images/boxing_blue_icon.svg);
+}
+
+table#admin_manage_lots tr.adminlots_header .station-column-HS0-005 div.icon {
+  background-image: url(/images/shipping_blue_icon.svg);
+}
+
+table#admin_manage_lots tr .lot_column .lot_label {
+  position: relative;
+  display: block;
+  padding-top: 10px;
+}
+
+table#admin_manage_lots tr .lot_column label {
+  font-size: 12px;
+}
+
+table#admin_manage_lots .field_val.lot_code {
+  color: #03223C;
+  font-size: 18px;
+  font-family: 'Lato-Regular';
+}
+
+table#admin_manage_lots tr .lot_column .lot_label span.expand-control {
+  display: block;
+  position: absolute;
+  width: 18px;
+  height: 10px;
+  right: 0;
+  top: 18px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+table#admin_manage_lots tr .lot_column .lot_label span.expand-control.opened {
+  background-image: url(/images/close_details.svg);
+}
+
+table#admin_manage_lots tr .lot_column .lot_label span.expand-control.closed {
+  background-image: url(/images/open_details.svg);
+}
+
+table#admin_manage_lots .lot_column .expanded {
+  margin-top: 20px;
+}
+table#admin_manage_lots .lot_column .expanded .display_field {
+  margin: 0 0 4px 0;
+  line-height: 15px;
+}
+
+table#admin_manage_lots .lot_column .expanded .display_field label {
+  display: inline-flex;
+}
+
+table#admin_manage_lots .lot_column .expanded .display_field .field_val {
+  display: inline-flex;
+  color: #03223C;
+  font-size: 16px;
+  font-family: 'Lato-Regular';
+}
+
 div#station-HS0-011 {
 }
 
@@ -558,11 +681,11 @@ div#station-HS0-011 {
 }
 
 #harvester_list .header span.section_head {
-  color: #215666;
-  font-size: 22px; 
-  font-weight: 500;
   padding-right: 22px;
   width: 90px;
+  color: #215666;
+  font-family: 'Lato-Black';
+  font-size: 22px; 
 }
 
 #harvester_list .header span.add_new {
@@ -698,6 +821,7 @@ div#station-HS0-011 {
 #station-HS0-011 #harvester_list #list-20 .display_field label {
   display: inline-block;
   margin: 0;
+  font-size: 12px
 }
 
 #station-HS0-011 #harvester_list #list-20 .display_row {
@@ -732,13 +856,18 @@ div#station-HS0-011 {
   color: #787876;
   text-transform: uppercase;
   font-family: 'Lato-Bold';
+}
+
+#station-HS0-011 .display_field label,
+#station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
   font-size: 12px;
-}`
+}
 
 #station-HS0-011 #current_lot label  {
   display: block;
   margin: 16px 0 0 0;
   font-weight: 500;
+  font-size: 12px;
 }
 #station-HS0-011 #current_lot .field_val  {
   color: #213141;
