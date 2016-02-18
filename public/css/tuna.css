@@ -533,9 +533,10 @@ div[ng-view] {
 }
 
 table#admin_manage_lots {
-  width: 1638px;
   border: none;
   text-align: left;
+  table-layout: fixed; 
+  width: 100%;
 }
 
 table#admin_manage_lots tr.adminlots_header {
@@ -555,7 +556,9 @@ table#admin_manage_lots tr .lot_column {
 }
 
 table#admin_manage_lots tr .lot-station-cell {
-  width: 296px;
+  min-width: 296px;
+  width: auto;
+  padding: 0 8px 8px;
 }
 
 table#admin_manage_lots tr.adminlots_header .lot-station-cell span{
@@ -650,6 +653,106 @@ table#admin_manage_lots .lot_column .expanded .display_field .field_val {
   color: #03223C;
   font-size: 16px;
   font-family: 'Lato-Regular';
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header {
+  display: inline-block;
+  box-sizing:border-box;
+  width: 100%;
+  height: 90px;
+  margin: 0;
+  padding: 10px;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details {
+  display: inline-block;
+  width: 100%;
+  height: 192px;
+  margin: 0;
+  position: relative;
+  overflow: auto;
+}
+
+.card_header.in_progress {
+  background-image: url(/images/left_edge_bg.png);
+  background-repeat: repeat-y;
+  background-position: left top;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header span.data {
+  display: table-cell;
+  padding: 12px 10px;
+  width: 100%;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header span.state {
+  display: table-cell;
+  width: 40px;
+  height: 90px;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header.warn span.state {
+  background-color: #F04A30;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header.ok span.state {
+  background-color: #0076AD;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit {
+ display: inline-block;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header .data > .card_bit:nth-child(n+2) {
+  padding-left: 10px;
+}
+
+.card_bit .value sub {
+  vertical-align: text-bottom;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit label {
+  text-align: left;
+  color: #005874;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: 'Lato-Bold';
+  display: block;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
+  border-left: 1px solid #ccccca;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
+  color: #03223C;
+  font-size: 20px;
+  font-family: 'Lato-Black';
+  display: block;
+  padding-top: 5px;
+}
+
+/* delimiter between two weight or yield values */
+.card_bit .value span:nth-child(2)::before {
+  content: url(/images/delim_icon.svg);
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details table {
+  border: none; border-collapse: collapse;
+  color: #03223C;
+  font-size: 14px;
+  font-family: 'Lato-Regular';
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details table td + td { 
+  border-left: 1px solid #ccccca;
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details table td {
+  padding: 16px;
 }
 
 div#station-HS0-011 {

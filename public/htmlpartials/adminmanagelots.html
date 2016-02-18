@@ -32,7 +32,56 @@
           </div>
         </div>
       </td>
-
+      <td ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
+        <div ng-class="{in_progress: lot[stn.code].in_progress, warn: cssWarn(lot), ok: cssOk(lot)}" 
+             class="panel white card_header">
+           <span ng-if="cssWarn(lot) || cssOk(lot)" class="state"></span>
+           <span class="data">
+             <span ng-if="lot[stn.code].summary.boxes" class="card_bit">
+               <label>boxes</label>
+               <span class="value">{{lot[stn.code].summary.boxes}}</span>
+             </span>  
+             <span ng-if="lot[stn.code].summary.weight_1" class="card_bit">
+               <label>weight</label>
+               <span class="value">
+                 <span>
+                   {{lot[stn.code].summary.weight_1.toFixed(2)}}<sub>kg</sub>
+                 </span>  
+                 <span ng-if="lot[stn.code].summary.weight_2">
+                   {{lot[stn.code].summary.weight_2.toFixed(2)}}<sub>kg</sub>
+                 </span>
+               </span>
+             </span>  
+             <span ng-if="lot[stn.code].summary.pieces" class="card_bit">
+               <label>pcs</label>
+               <span class="value">{{lot[stn.code].summary.pieces}}</span>
+             </span>  
+             <span ng-if="lot[stn.code].prev_yield || start_yield" class="card_bit">
+               <label>yield</label>
+               <span class="value">
+                 <span ng-if="lot[stn.code].prev_yield">{{lot[stn.code].prev_yield.toFixed(1)}}%</span>
+                 <span ng-if="lot[stn.code].start_yield">{lot[stn.code].start_yield.toFixed(1)}%</span>
+               </span>
+             </span>  
+           </span> 
+        </div>
+        <div ng-if="lot.expanded" class="panel item-details">
+          <table>
+            <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
+              <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
+              <td ng-if="total.product_code">{{total.product_code}} </td>
+              <td ng-if="total.state">{{total.state}} </td>
+              <td ng-if="total.size">{{total.size}} </td>
+              <td ng-if="total.grade">{{total.grade}} </td>
+              <td ng-if="total.species">{{total.species}} </td>
+              <td ng-if="total.boxes">{{total.boxes}} boxes </td>
+              <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
+              <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2">/{{total.weight2.toFixed(2)}}kg</span></td>
+            </tr>
+          </table>
+        </div>
+      </td>
+<!--
       <td ng-if="lot.expanded" ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
 
         <div class="cellWrapper" ng-class="{bluefill: lot[stn.code].summary, blueoutline: lot[stn.code].in_progress}">
@@ -77,7 +126,7 @@
             <span ng-if="lot[stn.code].summary.pieces">Pieces: {{lot[stn.code].summary.pieces}} | </span><span ng-if="lot[stn.code].summary.boxes">Boxes: {{lot[stn.code].summary.boxes}} | </span>Weight: {{lot[stn.code].summary.weight_1.toFixed(2)}}kg <span ng-if="lot[stn.code].summary.weight_2">/{{lot[stn.code].summary.weight_2.toFixed(2)}}kg</span>
           </div>
       </td>
-
+      -->
     </tr>
 
 </table>
