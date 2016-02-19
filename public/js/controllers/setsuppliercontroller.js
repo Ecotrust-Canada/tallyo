@@ -58,7 +58,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 
-  //$scope.form = {};
+
 
   //lotlocations functions
   $scope.AddNew = function(lot_number, station_code, bool){
@@ -116,8 +116,6 @@ angular.module('scanthisApp.setsupplierController', [])
         var station1 = $scope.setstation.add[j];
         $scope.AddStationLot($scope.current.collectionid, station1);
       }
-      //$rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
-      //$scope.current.collectionid = $scope.current.lot.lot_number;
     }
   });
 
@@ -158,8 +156,8 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.MakeLotEntry = function(date){      
     CreateLotEntryPeriod(date, 'day', $scope);
     $scope.entry.lot.station_code = $scope.station_code;
-    $scope.entry.lot.receive_station = $scope.options.receivestation;
-    $scope.entry.lot.process_station = $scope.options.processstation;
+    $scope.entry.lot.receive_station = $scope.settings.receive_station;
+    $scope.entry.lot.process_station = $scope.settings.process_station;
   };
 
   /*Gets current lot given selected supplier, if does not exist creates a new lot*/

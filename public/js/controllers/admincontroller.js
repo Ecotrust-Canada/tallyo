@@ -128,6 +128,7 @@ angular.module('scanthisApp.AdminController', [])
               var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
               var prevWeight = JSON.parse(JSON.stringify(prev));
               lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
+              console.log(lot[stn.code].prev_yield);
             }
             if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
               lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
@@ -173,6 +174,76 @@ angular.module('scanthisApp.AdminController', [])
       }
     }
   };
+
+
+  $scope.ThisfishHar = function(lot_number){
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      //console.log(response.data[0]);
+      var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
+      delete harvester_entry.lot_number;
+      harvester_entry.entry_unit = $scope.settings.entry_unit;
+
+      for (var key in harvester_entry) {
+        if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
+          var name = harvester_entry[key];
+          var filtered = tf_har_options[key].filter(function(el){
+            return el.name === name;
+          });
+          //console.log(key, name, filtered);
+          var id = filtered[0].id;
+          harvester_entry[key] = id;
+
+          //console.log(id);
+        }
+      }
+      console.log(harvester_entry);
+      //$http.post(posturl, harvester_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+
+      $scope.ThisfishPro(lot_number);
+    };
+    DatabaseServices.GetEntries('tf_harvester_entry', func, query);
+  };
+
+
+  $scope.ThisfishPro = function(lot_number){
+    var query = '?lotnum=eq.' + lot_number;
+    var func = function(response){
+      //console.log(response.data[0]);
+      var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
+      delete processor_entry.lot_number;
+      processor_entry.user = $scope.settings.tf_user;
+      processor_entry.entry_unit = $scope.settings.entry_unit;
+      processor_entry.location = $scope.settings.process_location;
+
+      for (var key in processor_entry) {
+        if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
+          var name = processor_entry[key];
+          var filtered = tf_pro_options[key].filter(function(el){
+            return el.name === name;
+          });
+          //console.log(key, name, filtered);
+          var id = filtered[0].id;
+          processor_entry[key] = id;
+
+          //console.log(id);
+        }
+      }
+      console.log(processor_entry);
+      //$http.post(posturl, processor_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+    };
+    DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
+  };
+
+
+  $scope.ThisfishSubmit = function(lot_number){
+    //console.log(tf_har_options);
+    $scope.ThisfishHar(lot_number);
+
+  };
+
+
+
 
   $scope.GetScan = function(){
     var query = '';
