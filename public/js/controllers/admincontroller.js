@@ -217,12 +217,18 @@ angular.module('scanthisApp.AdminController', [])
     return cellData;
   };
 
-  $scope.cssWarn = function(lot) {
-    return lot[stn.code].summary[station_info.trackBy]>lot[stn.code].prev;
+  $scope.cssWarn = function(lot, stn) {
+    if ( lot[stn.code] ) { 
+      return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
+    }
+    return false;  
   };
 
-  $scope.cssOk = function(lot) {
-    return lot[stn.code].summary[station_info.trackBy]===lot[stn.code].prev; 
+  $scope.cssOk = function(lot, stn) {
+    if ( lot[stn.code] ) { 
+      return lot[stn.code].summary[$scope.station_info.trackBy]===lot[stn.code].prev; 
+    }
+    return false;
   };  
 })
 
