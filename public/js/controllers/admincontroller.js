@@ -123,13 +123,13 @@ angular.module('scanthisApp.AdminController', [])
             lot[stn.code].prev = JSON.parse(JSON.stringify(lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy]));
           }
           if (lot[$scope.sumStations[j-1].code].summary){
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev && !lot[stn.code].in_progress){ 
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev){ 
               var thesummary = lot[$scope.sumStations[j-1].code].summary;
               var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
               var prevWeight = JSON.parse(JSON.stringify(prev));
               lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
             }
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start && !lot[stn.code].in_progress){ 
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
               lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
             } 
           }                
