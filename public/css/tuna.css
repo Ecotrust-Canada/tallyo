@@ -664,7 +664,7 @@ table#admin_manage_lots tr .lot-station-cell .card_header {
   width: 100%;
   height: 90px;
   margin: 0;
-  padding: 10px;
+  padding: 24px 8px 16px 16px;
   box-shadow: 1px 2px 5px 0px rgba(3,34,60,0.6);
   position: relative;
   z-index: 2;
@@ -689,23 +689,36 @@ table#admin_manage_lots tr .lot-station-cell .item-details {
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header span.data {
-  display: table-cell;
-  padding: 12px 10px;
-  width: 100%;
+  display: block;
+  width: auto;
+}
+
+table#admin_manage_lots tr .lot-station-cell .card_header.warn span.data,
+table#admin_manage_lots tr .lot-station-cell .card_header.ok span.data {
+  padding-left:28px;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header span.state {
-  display: table-cell;
-  width: 40px;
+  display: inline-block;
+  width: 34px;
   height: 90px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header.warn span.state {
   background-color: #F04A30;
+  background-image: url(/images/admin_card_warn_bg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header.ok span.state {
   background-color: #0076AD;
+  background-image: url(/images/admin_card_ok_bg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit {
@@ -730,16 +743,37 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit label {
   display: block;
 }
 
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield label {
+  top: 5px;
+  position: relative;
+}
+
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
   border-left: 1px solid #ccccca;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
   color: #03223C;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Lato-Black';
   display: block;
   padding-top: 5px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield .value {
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#station-HS0-ADM table#admin_manage_lots tr .lot-station-cell .card_header.warn .card_bit.pieces label {
+  color: #f24133;
+}
+
+#station-HS0-ADM table#admin_manage_lots tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
+  color: #f04a30;
 }
 
 /* delimiter between two weight or yield values */
