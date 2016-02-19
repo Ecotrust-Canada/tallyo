@@ -1,9 +1,7 @@
+<div ng-init="showforms=false" class="panel grey">
 
-
-<div ng-init="showforms=false">
-
-  <loadcurrentcollection></loadcurrentcollection>
-  <div ng-controller="DisplayCollectionCtrl" ng-hide="showforms">
+  <!-- loadcurrentcollection></loadcurrentcollection -->
+  <div ng-controller="DisplayCollectionCtrl" ng-hide="showforms" ng-init="loadCurrent()">
     <display ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
   </div>
   <button ng-hide="showforms" ng-click="showforms=!showforms">Start New Lot</button>
