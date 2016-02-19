@@ -176,7 +176,8 @@ body{
 
 .panel {
   display: inline-block;
-  box-shadow: 2px 2px 6px;
+  /* box-shadow: 2px 2px 6px; */
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.6);
   padding: 20px;
 }
 
@@ -286,13 +287,13 @@ ng-submitted ng-invalid {
 
 .bottomright{
   position: absolute;
-  bottom:0;
-  right:0;
+  bottom: 16px;
+  right: 16px;
 }
 .bottomleft{
   position: absolute;
-  bottom:0;
-  left:0;
+  bottom: 16px;
+  left: 16px;
 }
 
 
@@ -543,7 +544,7 @@ table#admin_manage_lots tr.adminlots_header {
   height: 46px;
   padding-bottom: 19px;
   color: #125974;
-  font-size: 22px;
+  font-size: 20px;
   font-family: 'Lato-Bold';
   padding: 0 0 20px 0;
 }
@@ -559,12 +560,14 @@ table#admin_manage_lots tr .lot-station-cell {
   min-width: 296px;
   width: auto;
   padding: 0 8px 8px;
+  position:relative;
 }
 
 table#admin_manage_lots tr.adminlots_header .lot-station-cell span{
   display: inline-block;
   position: relative;
-  left: 56px;
+  left: 48px;
+  top: 3px;
 }
 table#admin_manage_lots tr.adminlots_header .lot-station-cell {
   position: relative;
@@ -662,8 +665,9 @@ table#admin_manage_lots tr .lot-station-cell .card_header {
   height: 90px;
   margin: 0;
   padding: 10px;
-  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.6);
+  box-shadow: 1px 2px 5px 0px rgba(3,34,60,0.6);
   position: relative;
+  z-index: 2;
 }
 
 table#admin_manage_lots tr .lot-station-cell .item-details {
@@ -673,6 +677,9 @@ table#admin_manage_lots tr .lot-station-cell .item-details {
   margin: 0;
   position: relative;
   overflow: auto;
+  top: -2px;
+  z-index: 1;
+  padding: 0 16px 20px 16px;
 }
 
 .card_header.in_progress {
@@ -729,7 +736,7 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit:nth-child(n+
 
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
   color: #03223C;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Lato-Black';
   display: block;
   padding-top: 5px;
@@ -745,14 +752,31 @@ table#admin_manage_lots tr .lot-station-cell .item-details table {
   color: #03223C;
   font-size: 14px;
   font-family: 'Lato-Regular';
+  table-layout: fixed;
 }
 
 table#admin_manage_lots tr .lot-station-cell .item-details table td + td { 
   border-left: 1px solid #ccccca;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details table td {
-  padding: 16px;
+table#admin_manage_lots tr .lot-station-cell .item-details td {
+  padding: 12px 12px 0 12px;
+  white-space: nowrap;
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details tr:last-child td {
+  padding-bottom: 12px;
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details tr td:first-child {
+  padding-left: 0;
+  color: #125974;
+  font-size: 14px;
+  font-family: 'Lato-Bold';
+}
+
+table#admin_manage_lots tr .lot-station-cell .item-details tr td:last-child {
+  padding-right: 0;
 }
 
 div#station-HS0-011 {
@@ -1019,13 +1043,25 @@ div#station-HS0-011 {
     background: #0d82ad; 
     background-image: linear-gradient(180deg, #0d82ad 0%, #0e445c 100%);
     box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    padding: 12px 20px;
+    padding: 8px 12px;
     border-radius: 8px;  
     color: #e9ffff;
     font-weight: 600;
     font-size: 14px;
     font-family: 'Lato-Bold';
     text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
+}
+
+.btn-light {
+    display: inline-block;
+    background-color: #dbebef; 
+    /* box-shadow: 2px 2px 6px rgba(0,0,0,0.15);*/
+    padding: 8px;
+    border-radius: 5px;  
+    border: 1px solid #cae2eb;
+    color: #0076ad;
+    font-size: 14px;
+    font-family: 'Lato-Bold';
 }
 .rmarg{
   margin-right: 20px;

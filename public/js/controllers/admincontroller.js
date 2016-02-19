@@ -217,6 +217,13 @@ angular.module('scanthisApp.AdminController', [])
     return cellData;
   };
 
+  $scope.cssWarn = function(lot) {
+    return lot[stn.code].summary[station_info.trackBy]>lot[stn.code].prev;
+  };
+
+  $scope.cssOk = function(lot) {
+    return lot[stn.code].summary[station_info.trackBy]===lot[stn.code].prev; 
+  };  
 })
 
 //shipmenttotals.html - view summary of unloaded boxes for incoming shipments
