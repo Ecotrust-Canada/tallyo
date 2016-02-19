@@ -1,7 +1,7 @@
 <span ng-if="config.title">{{config.title}}: </span>
 
 <button id="toggle-{{config.id}}" 
-        ng-if="config.hide" ng-click="$parent.hideform = !hideform">
+        ng-if="config.hide" ng-click="$parent.hideform = !hideform" class="btn-blue">
   <span ng-show="hideform">{{config.hide}}</span>
   <span ng-hide="hideform">Hide Form</span>
 </button>
