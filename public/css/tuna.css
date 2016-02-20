@@ -1214,6 +1214,10 @@ nav #menu li {
   margin: 0;
 }
 
+nav #menu li.active {
+  opacity: 0.5;
+}
+
 nav #menu li a {
   text-decoration: none;
 }
