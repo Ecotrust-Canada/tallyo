@@ -50,7 +50,7 @@ angular.module('scanthisApp', [
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
 
     $timeout(function() {
-      $rootScope.current_terminal = current_terminal;
+      $scope.current_terminal = current_terminal;
     });
 
     var stations = current_terminal.stations;
