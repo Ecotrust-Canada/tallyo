@@ -34,14 +34,25 @@ angular.module('scanthisApp', [
 
 
 
-.controller('RoutingCtrl', function($scope, $routeParams, $http) {
+.controller('RoutingCtrl', function($scope, $routeParams, $timeout) {
+  $scope.current_terminal = {
+    id: -1,
+    icon: null,
+    name: "Stations"
+  };
 
   $scope.terminal = {};
   $scope.terminal.showsection = "default";
   $scope.stations = stationlist;
   $scope.terminals = terminals;
+
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+
+    $timeout(function() {
+      $rootScope.current_terminal = current_terminal;
+    });
+
     var stations = current_terminal.stations;
     $scope.currentstations = [];
 

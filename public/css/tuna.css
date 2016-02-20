@@ -1110,77 +1110,113 @@ div#station-HS0-011 {
 
 /*nav bar */
 nav {
-  margin: 10px auto 30px auto;
-  display: block;
-}
-nav ul ul {
-    display: none;
-}
-
-nav ul li:hover > ul {
-    display: block;
-    z-index: 1000;
-}
-
-nav ul {
-    background: #efefef; 
-    background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
-    background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%); 
-    background: -webkit-linear-gradient(top, #efefef 0%,#bbbbbb 100%); 
-    box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
-    padding: 0px 15px;
-    border-radius: 10px;  
-    list-style: none;
-    position: relative;
-    display: inline-block;
-    margin:0px 10px;
+  margin-top: 0;
+  margin-left: 45px;
+  display: inline-block;
+  width: auto;
+  height: 40px;
+  padding: 5px 0;
+  background-color: #03223c;
+  z-index: 3;
+  position: absolute;
+  top: 0;
 }
 
-nav ul:after {
-    content: ""; clear: both; display: block;
+nav span.icon {
+  display: inline-block;
+  width: 70px;
+  height: 40px;
+  margin: 0;
+  background-position: center center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
 }
 
-nav ul li {
-    float: left;
+nav span.icon.manage_sources {
+  background-image: url(/images/nav_manage_sources_icon.svg);
 }
 
-nav ul li:hover {
-    background: #4b545f;
-    background: linear-gradient(top, #4f5964 0%, #5f6975 40%);
-    background: -moz-linear-gradient(top, #4f5964 0%, #5f6975 40%);
-    background: -webkit-linear-gradient(top, #4f5964 0%,#5f6975 40%);
+nav span.icon.manage_lots {
+  background-image: url(/images/nav_manage_lots_icon.svg);
 }
 
-nav ul li:hover a {
-    color: #fff;
+nav span.icon.receiving {
+  background-image: url(/images/nav_receiving_icon.svg);
 }
 
-nav ul li a {
-    display: block; padding: 15px 40px;
-    color: #757575; text-decoration: none;
+nav span.icon.trimming {
+  background-image: url(/images/nav_trimming_icon.svg);
 }
 
-nav ul ul {
-    background: #5f6975; border-radius: 0px; padding: 0;
-    position: absolute; top: 100%;
+nav span.icon.retouching {
+  background-image: url(/images/nav_retouching_icon.svg);
 }
 
-nav ul ul li {
-    float: none; 
-    border-top: 1px solid #6b727c;
-    border-bottom: 1px solid #575f6a;
-    position: relative;
+nav span.icon.boxing {
+  background-image: url(/images/nav_boxing_icon.svg);
 }
-        nav ul ul li a {
-            padding: 10px 20px;
-            color: #fff;
-        }   
-            nav ul ul li a:hover {
-                background: #4b545f;
-            }
 
+nav span.icon.shipping {
+  background-image: url(/images/nav_shipping_icon.svg);
+}
 
+nav div#menu {
+  display: none;
+  position:absolute;
+  width: 240px;
+  background-color: #03223c;
+  padding: 15px 25px 10px 0;
+}
 
+nav .terminal_name {
+  line-height: 20px;
+  font-size: 20px;
+  font-family: 'Lato-Black';
+  color: #ffffff; 
+}
+nav .button {
+  display: inline-block;
+  width: auto;
+  padding-right: 20px;
+}
+
+nav .button:hover + div#menu, div#menu:hover {
+  display: inline-block;
+  z-index: 1000;
+}
+
+nav #menu h4 {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: 'Lato-Bold';
+  padding: 0px 24px;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+nav #menu ul {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+
+nav #menu li {
+  display: block; padding: 2px 0;
+  margin: 0;
+}
+
+nav #menu li a {
+  text-decoration: none;
+}
 
 fieldset{
     background: #FCFCFC;
