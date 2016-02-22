@@ -33,16 +33,30 @@ angular.module('scanthisApp', [
 })
 
 
+.controller('MainCtrl', function($scope) {
+  $scope.current_terminal = {
+    id: -1,
+    icon: null,
+    name: "Stations"
+  };
+  $scope.stations = stationlist;
+  $scope.terminals = terminals;
+})
 
-.controller('RoutingCtrl', function($scope, $routeParams, $http) {
+.controller('RoutingCtrl', function($scope, $routeParams, $rootScope) {
 
   $scope.terminal = {};
   $scope.terminal.showsection = "default";
-  $scope.stations = stationlist;
-  $scope.terminals = terminals;
+
+  //$scope.stations = stationlist;
+  //$scope.terminals = terminals;
   $scope.settings = plant_settings;
+
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+
+    $scope.$parent.current_terminal = current_terminal;
+
     var stations = current_terminal.stations;
     $scope.currentstations = [];
 

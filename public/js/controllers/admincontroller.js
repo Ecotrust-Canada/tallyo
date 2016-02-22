@@ -198,7 +198,7 @@ angular.module('scanthisApp.AdminController', [])
         }
       }
       console.log(harvester_entry);
-      //$http.post(posturl, harvester_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+      //$http.post(posturl_harvester, harvester_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
 
       $scope.ThisfishPro(lot_number);
     };
@@ -230,16 +230,16 @@ angular.module('scanthisApp.AdminController', [])
         }
       }
       console.log(processor_entry);
-      //$http.post(posturl, processor_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+      //$http.post(posturl_processor, processor_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
     };
     DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
   };
 
 
-  $scope.ThisfishSubmit = function(lot_number){
-    //console.log(tf_har_options);
-    $scope.ThisfishHar(lot_number);
-
+  $scope.SubmitLot = function(lot_number, tf_code){
+    if (tf_code){
+      $scope.ThisfishHar(lot_number);
+    }
   };
 
 

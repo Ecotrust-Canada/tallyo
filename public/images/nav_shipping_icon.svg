@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="51px" height="39px" viewBox="0 0 51 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+    <title>nav_shipping_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="nav_shipping_icon" sketch:type="MSLayerGroup" transform="translate(0.000000, 3.000000)">
+            <g id="Group-9" transform="translate(17.500000, 16.000000) scale(-1, 1) translate(-17.500000, -16.000000) " sketch:type="MSShapeGroup">
+                <g id="Group-8" stroke="#FD6A0E" stroke-width="2.2" fill="#03223C">
+                    <path d="M34.2857143,6.85714286 L34.2857143,21.0612245 L17.1428571,19.1020408 L0,21.0612245 L0,6.85714286 L17.1428571,5.91635584e-14 C17.1428569,2.42530168e-06 34.2857143,6.85714286 34.2857143,6.85714286 Z" id="Rectangle-198"></path>
+                    <path d="M17.1428571,31.0714286 L0,23.7244898 L0,7.07142857 L17.1428571,14.4183673 L34.2857143,7.07142857 L34.2857143,23.7244898 L17.1428571,31.0714286 Z" id="Rectangle-198"></path>
+                </g>
+                <path d="M17.25,16.0714286 L17.25,28.9285714" id="Path-36" stroke="#FD6A0E" stroke-width="2.5"></path>
+                <path d="M8.24785505,5.64723424 L23.2478551,12.0758057 L26.7857143,10.7142857 L11.7857143,4.28571429 L8.24785505,5.64723424 Z" id="Path-37" fill="#FD6A0E"></path>
+            </g>
+            <path d="M39.5,11.2115385 L33,11.2115385 L33,21.7884615 L39.5,21.7884615 L39.5,29.1923077 L48.5,16.5 L39.5,3.80769231 L39.5,11.2115385 Z" id="Rectangle-100-Copy" stroke="#03223C" stroke-width="2" fill="#FD6A0E" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
