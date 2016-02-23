@@ -41,6 +41,15 @@ angular.module('scanthisApp.AdminController', [])
 //Lot summary page - loads all the data, has functions for exporting to csv and completing lot
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
 
+  $scope.GetHarvesters = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.GetHarvesters();
+
   $scope.GetHarvesterLot = function(){
     var query = '?processor_code=eq.' + $scope.processor;
     var func = function(response){
@@ -229,13 +238,20 @@ angular.module('scanthisApp.AdminController', [])
     });
     var lot = filteredlots[0];
 
+
+    var filteredharvesters = $scope.list.harvester.filter(function(el){
+      return el.harvester_code === lot.harvester_code;
+    });
+    var harvester = filteredharvesters[0];
+
     var cellData = table.filter(cellFilter);
     cellData.forEach(function(el){
       delete el.lot_number;
       delete el.station_code;
-      el.fleet_vessel = lot.fleet_vessel;
+      el.fleet = lot.fleet_vessel;
       el.supplier = lot.supplier;
       el.supplier_group = lot.supplier_group;
+      el.ft_fa_code = harvester.ft_fa_code;
     });
 
     cleanJsonArray(cellData);    
