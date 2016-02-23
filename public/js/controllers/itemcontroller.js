@@ -86,9 +86,13 @@ $scope.DatabaseScan = function(form){
     var itemid = $scope.station_info.itemid;  
     var func = function(response){      
       //print a label if onLabel specified in config
+      var thedata = ((response.data[0] || response.data));
+      if ($scope.current.harvester && $scope.current.harvester.ft_fa_code){
+        thedata.ft_fa_code = $scope.current.harvester.ft_fa_code;
+      }
       if($scope.onLabel){
-        var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
-        var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
+        var data = dataCombine(thedata, $scope.onLabel.qr);
+        var labels = ArrayFromJson(thedata, $scope.onLabel.print);
         console.log(data, labels);
         $scope.printLabel(data, labels);
       }

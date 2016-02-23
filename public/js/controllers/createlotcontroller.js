@@ -83,9 +83,24 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       $scope.current.itemchange = !$scope.current.itemchange;
+      if ($scope.station_info.collectiontable === 'harvester_lot'){
+        $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+      }
     };
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
     DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
+  };
+
+  $scope.GetHarvester = function(harvester_code){
+    var query = '?harvester_code=eq.' + harvester_code;
+    var func = function(response){
+      if (response.data.length > 0){
+        $scope.current.harvester = response.data[0];
+        $scope.current.harvester_lot.ft_fa_code = $scope.current.harvester.ft_fa_code;
+      }
+      
+    };
+    DatabaseServices.GetEntryNoAlert('harvester', func, query);
   };
 
   //Display items triggered by this variable changing
@@ -227,14 +242,14 @@ angular.module('scanthisApp.createlotController', [])
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
   $scope.ListAllItems = function(station_code){
-      var query = '?station_code=eq.' + station_code;
-      var func = function(response){
-        $scope.items = response.data;
-      };
-      DatabaseServices.GetEntries('loin_lot', func, query);
+    var query = '?station_code=eq.' + station_code;
+    var func = function(response){
+      $scope.items = response.data;
     };
+    DatabaseServices.GetEntries('loin_lot', func, query);
+  };
 
-  $scope.Reprint = function(loin_number, internal_lot_code){
+  $scope.Reprint = function(loin_number, lot_number){
     if($scope.onLabel){
       var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
       var func = function(response){
@@ -243,7 +258,7 @@ angular.module('scanthisApp.createlotController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('loin_scan', func, query);
+      DatabaseServices.GetEntries('reprint_table', func, query);
       
     }
   };
