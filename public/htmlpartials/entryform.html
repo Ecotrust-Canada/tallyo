@@ -110,17 +110,19 @@
         </div>
 
       </div>
-    </div>
     
     <div class="form_buttons">
-    
-    <input type="button" ng-click="Clear()" value="Clear" id="clear-{{config.id}}">
+      <div class="pictogram_btns">
+        <span ng-click="Clear()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
+        <span ng-if="config.startpolling" ng-show="pollScale" 
+              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight">Manual Input</span>
+        <span ng-if="config.startpolling" ng-hide="pollScale" 
+              ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
 
-    <input ng-if="config.startpolling" ng-show="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Manual Input">
-    <input ng-if="config.startpolling" ng-hide="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Scale On">
-    
-    <input type="button" ng-click="submitFn({form: isValid(form)})"  class="btn-orange"
-           value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
+      </div>
+      <input type="button" ng-click="submitFn({form: isValid(form)})"  class="btn-orange"
+             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
+    </div>     
 
   </fieldset>
 </form>
