@@ -88,7 +88,7 @@
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
           <button class="bottomright btn-blue" 
                   ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress  && settings.thisfish_enabled" 
-                  ng-click="SubmitLot(lot.lot_number, lot.tf_code) ">Submit Lot</button>
+                  ng-click="SubmitLot(lot.lot_number, lot.tf_code) ">ThisFish Submit</button>
           <button class="bottomright btn-blue" 
                   ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress && !settings.thisfish_enabled" 
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>

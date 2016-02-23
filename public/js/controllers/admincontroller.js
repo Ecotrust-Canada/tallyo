@@ -128,7 +128,6 @@ angular.module('scanthisApp.AdminController', [])
               var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
               var prevWeight = JSON.parse(JSON.stringify(prev));
               lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
-              console.log(lot[stn.code].prev_yield);
             }
             if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
               lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
@@ -183,6 +182,10 @@ angular.module('scanthisApp.AdminController', [])
       var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
       delete harvester_entry.lot_number;
       harvester_entry.entry_unit = $scope.settings.entry_unit;
+      harvester_entry.shipped_to_user = $scope.settings.tf_user_id;
+      harvester_entry.landing_slip_number = '000000';
+      harvester_entry.privacy_display_date = '20';
+      //console.log(harvester_entry);
 
       for (var key in harvester_entry) {
         if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
@@ -191,16 +194,29 @@ angular.module('scanthisApp.AdminController', [])
             return el.name === name;
           });
           //console.log(key, name, filtered);
-          var id = filtered[0].id;
-          harvester_entry[key] = id;
+          if(!filtered[0]){
+            console.log(key, name);
+          }
+          else{
+            var id = filtered[0].id;
+            harvester_entry[key] = id;
+          }
+          
 
           //console.log(id);
         }
       }
       console.log(harvester_entry);
-      //$http.post(posturl_harvester, harvester_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+      $http.post(posturl_harvester, harvester_entry, tfconfig).then
+      (function(response){
+        console.log(response);
+        //var nextfunc = $scope.ThisfishPro(lot_number);
+        $scope.ThisfishPro(lot_number);
+        //window.setTimeout(nextfunc, 3000);
+      }, 
+        function(response){console.log(response);});
 
-      $scope.ThisfishPro(lot_number);
+      
     };
     DatabaseServices.GetEntries('tf_harvester_entry', func, query);
   };
@@ -211,10 +227,11 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       //console.log(response.data[0]);
       var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
-      delete processor_entry.lot_number;
+      delete processor_entry.lotnum;
       processor_entry.user = $scope.settings.tf_user;
       processor_entry.entry_unit = $scope.settings.entry_unit;
       processor_entry.location = $scope.settings.process_location;
+      processor_entry.privacy_display_date = '20';
 
       for (var key in processor_entry) {
         if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
@@ -230,7 +247,7 @@ angular.module('scanthisApp.AdminController', [])
         }
       }
       console.log(processor_entry);
-      //$http.post(posturl_processor, processor_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
+      $http.post(posturl_processor, processor_entry, tfconfig).then(function(response){console.log(response);}, function(response){console.log(response);});
     };
     DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
   };
@@ -239,6 +256,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.SubmitLot = function(lot_number, tf_code){
     if (tf_code){
       $scope.ThisfishHar(lot_number);
+      //$scope.ThisfishPro(lot_number);
     }
   };
 
@@ -283,20 +301,26 @@ angular.module('scanthisApp.AdminController', [])
     var cellFilter = function(value){
       return value.lot_number === lot_number && value.station_code === station;
     };
+
+    var filteredlots = $scope.list.harvester_lot.filter(function(el){
+      return el.lot_number === lot_number;
+    });
+    var lot = filteredlots[0];
+
     var cellData = table.filter(cellFilter);
     cleanJsonArray(cellData);    
     return cellData;
   };
 
   $scope.cssWarn = function(lot, stn) {
-    if ( lot[stn.code] ) { 
+    if ( lot[stn.code] && lot[stn.code].summary ) { 
       return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
     }
     return false;  
   };
 
   $scope.cssOk = function(lot, stn) {
-    if ( lot[stn.code] ) { 
+    if ( lot[stn.code] && lot[stn.code].summary) { 
       return lot[stn.code].summary[$scope.station_info.trackBy]===lot[stn.code].prev; 
     }
     return false;

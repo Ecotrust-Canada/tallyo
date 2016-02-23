@@ -246,7 +246,9 @@ CREATE OR REPLACE VIEW tf_harvester_entry AS
     lot l,
     thisfish tf,
     scan
-  WHERE h.harvester_code::text = l.harvester_code::text AND l.lot_number::text = tf.lot_number::text AND scan.station_code::text = l.receive_station::text AND h.traceable = true
+  WHERE h.harvester_code::text = l.harvester_code::text AND l.lot_number::text = tf.lot_number::text 
+  AND scan.station_code::text = l.receive_station::text AND scan.lot_number = l.lot_number 
+  AND h.traceable = true
   GROUP BY h.tf_user, h.fishery, h.species_common, h.state, h.handling, h.fishing_area, l.start_date, l.end_date, h.landing_location, tf.tf_code, l.lot_number;
 
 ALTER TABLE tf_harvester_entry
@@ -301,6 +303,11 @@ $BODY$
   COST 100;
 ALTER FUNCTION harvester_name()
   OWNER TO tuna_processor;
+
+CREATE TRIGGER harvester_name BEFORE INSERT OR UPDATE ON harvester
+  FOR EACH ROW EXECUTE PROCEDURE harvester_name();
+
+update harvester set fleet = fleet;
   
   CREATE OR REPLACE FUNCTION scan_weight()
   RETURNS trigger AS
@@ -322,3 +329,8 @@ $BODY$
   COST 100;
 ALTER FUNCTION scan_weight()
   OWNER TO tuna_processor;
+
+CREATE TRIGGER scan_weight BEFORE INSERT OR UPDATE ON scan
+    FOR EACH ROW EXECUTE PROCEDURE scan_weight();
+
+update scan set weight_2 = weight_2;

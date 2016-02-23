@@ -60,7 +60,9 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
 
-  //lotlocations functions
+  /*
+   * lotlocations functions
+   */
   $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
@@ -118,6 +120,11 @@ angular.module('scanthisApp.setsupplierController', [])
       }
     }
   });
+  /*
+   * end lotlocations
+   */
+
+   
 
   $scope.thisfishCode = function(lotnum){
     var query = '';

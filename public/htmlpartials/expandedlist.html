@@ -14,6 +14,7 @@
       <span ng-if="expanded" ng-click="$parent.expanded = false" 
             class="expand-control opened"></span>  
       <span ng-if="!expanded" ng-click="$parent.expanded = true"  class="expand-control closed"></span>
+
        
       <span ng-repeat="name in config.fields">
         <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
@@ -26,8 +27,6 @@
 
       <button ng-if="config.button" class="btn-blue" 
               ng-click="updateFn({str: item[config.arg]})">{{config.button}}</button>
-      <!-- button ng-if="config.button && item[config.arg] === current[config.arg]}" class="btn-current" 
-              disabled>Current</button -->
       <a ng-if="config.button2" ng-click="hideFn({str: item[config.arg]})">{{config.button2}}</a>
 
     </div>
@@ -37,6 +36,3 @@
   </div>
 
 </div>
-
-
-<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>
