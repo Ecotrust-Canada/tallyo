@@ -7,7 +7,7 @@
       <span ng-if="col.val.substring(0,6)==='weight'" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
       <span 
         ng-if="col.val !== 'numindex' && col.val !== 'timestamp' && col.val.substring(0,6)!=='weight' && col.val!=='end_date'" 
-        class="display_val">{{obj[col.val]}}</span>
+        class="display_val" ng-cloak>{{obj[col.val]}}</span>
       <span ng-if="col.val==='pieces'">pcs</span>
     </div>
   </div>

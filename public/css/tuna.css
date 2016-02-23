@@ -54,7 +54,7 @@ body{
 .container {
   min-height:100%;
   position:relative;
-  padding: 10px;
+  padding: 15px 20px;
 }
 .top_frame {
   height: 10px;
@@ -183,6 +183,7 @@ body{
 
 .station .panel:first-child {
   padding-top: 30px;
+  position: relative;
 }
 
 .panel.grey {
@@ -1002,6 +1003,11 @@ div#station-HS0-011 {
   padding: 30px 20px 20px 20px;
 }
 
+#station-HS0-011 #current_lot .btn-orange {
+  display: block;
+  width: 100%;
+}
+
 #station-HS0-011 #current_lot h3  {
   color: #1b556b;
   padding: 0 0 10px 0;
@@ -1014,7 +1020,7 @@ div#station-HS0-011 {
 
 .display_field label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
-  color: #787876;
+  color: #777777;
   text-transform: uppercase;
   font-family: 'Lato-Bold';
 }
@@ -1055,21 +1061,155 @@ div#station-HS0-011 {
   box-sizing:border-box;
 }
 
-/*  #station-HS0-011 #current_lot #internal_lot_code-value input[type=button] {
- *  */
+/* receivng station for HarSam */
+#station-HS0-001 #current_lot {
+  display: table;
+  width: 100%;
+  border-bottom: 1px solid #cccccc;
+  padding: 10px 0 13px 0;
+}
+
+#station-HS0-001 #current_lot display {
+  display: table-row;
+  width: 100%;
+}
+
+#station-HS0-001 #current_lot .display_row {
+  display: table-cell;
+  width: 50%;
+}
+
+#station-HS0-001 #current_lot .display_row:nth-child(1) {
+}
+
+#station-HS0-001 #current_lot  .field_val {
+  color: #03223c;
+  font-family: 'Lato-Regular';
+}
+
+#station-HS0-001 #current_lot #internal_lot_code-value {
+  font-size: 22px;
+}
+
+#station-HS0-001 #current_lot .display_row:nth-child(2) label {
+  display: inline-block;
+}
+
+#station-HS0-001 #current_lot .display_row:nth-child(2) .field_val {
+  font-size: 16px;
+  display: inline-block;
+}
+
+#station-HS0-001 #current_lot #internal_lot_code-value span::before {
+  content: "#";
+}
+
+#station-HS0-001 #current_lot .display_row:nth-child(2) {
+}
+
+#station-HS0-001 #current_lot label {
+  font-size: 13px;
+}
+
+#station-HS0-001 #form-7 .form_row {
+  padding-bottom: 10px;
+}
+
+#station-HS0-001 #form-7 .form_label {
+  display: inline-block;
+  width: 160px;
+  text-align: right;
+  padding-right: 15px;
+}
+
+#station-HS0-001 #form-7 .form_label label {
+  font-family: 'Lato-Bold';
+  font-size: 22px;
+  color: #125974;
+  line-height: 27px;
+}
+
+#station-HS0-001 #form-7 .field {
+  display: inline-block;
+  width: 300px;
+}
+
+#station-HS0-001 #form-7 .field input[type=number] {
+  background: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  display:inline-block;
+  width: 200px;
+  height: 58px;
+}
+
+.blue-button { /* use this for all instances of the blue gradient button objects*/
+/* Rectangle 3 Copy 19: */
+  background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+  border-radius: 5px;
+}
+
+#refresh {
+  position: absolute;
+  top: 11px;
+  right: 19px;
+  width: 58px;
+  height: 18px;
+  padding-left: 15px;
+  text-align: right;
+  background-image: url(/images/refresh_icon.svg);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+#refresh a {
+  font-family: 'Lato-Bold';
+  font-size: 15px;
+  color: #0076AD;
+  line-height: 15px;
+  text-decoration: none;
+  display: inline-flex;
+  position: relative;
+  top: -4px;
+}
+
+.toggle_bg.active {
+  left: auto;
+  right: 2px;
+}
+
+.toggle_bg_outer {
+/* Rectangle 3 Copy 13: */
+  background-image: linear-gradient(-180deg, #CBDBDF 0%, #DBEBEF 100%);
+  box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.25);
+  border-radius: 4px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.toggle_bg {
+  /* Rectangle 3 Copy 19: */
+  background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+}
+
 .btn-orange {
-    display: block;
-    width: 100%;
-    background: #fb7e2c; 
-    background-image: linear-gradient(180deg, #fb7e2c 0%, #b94603 100%);
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    padding: 12px 35px;
-    border-radius: 8px;  
-    margin-top: 10px;
-    color: #fff6e6;
-    font-weight: 600;
-    font-size: 18px;
-    text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
+    /* Rectangle 3 Copy 13: */
+    background-image: linear-gradient(-180deg, #FA8230 0%, #FD6A0E 30%, #B24400 100%);
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.45), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+    border-radius: 5px;
+    font-family: Lato-Black;
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 24px;
+    text-shadow: 1px 2px 2px rgba(0,0,0,0.20);
 }
 
 .btn-blue {
@@ -1225,8 +1365,20 @@ nav #menu li a {
 fieldset{
     background: #FCFCFC;
     padding: 16px;
-    border: 1px solid #D5D5D5;
     font-size: 10px;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    min-width: -webkit-min-content;
+    border: none;
 }
 .addfields{
     margin: 10px 0;
