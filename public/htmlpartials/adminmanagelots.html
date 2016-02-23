@@ -51,7 +51,7 @@
 
           <div>
             <button class="bottomright" ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
-            <button class="bottomleft" ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" filename="test.csv" csv-label="true">CSV</button>
+            <button class="bottomleft" ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" filename="{{lot.internal_lot_code}}_{{stn.name}}.csv" csv-label="true">CSV</button>
           </div>
 
         </div>

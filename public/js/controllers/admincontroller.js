@@ -178,6 +178,11 @@ angular.module('scanthisApp.AdminController', [])
     var query = '';
     var func = function(response){
       $scope.list.scan = response.data;
+      $scope.list.scan.forEach(function(el){
+        delete el.weight;
+        delete el.pieces;
+        delete el.serial_id;
+      });
     };
     DatabaseServices.GetEntries('scan', func, query);
   };
@@ -187,6 +192,12 @@ angular.module('scanthisApp.AdminController', [])
     var query = '';
     var func = function(response){
       $scope.list.box_scan = response.data;
+      $scope.list.box_scan.forEach(function(el){
+        delete el.shipping_unit_number;
+        delete el.harvester_code;
+        delete el.product_code;
+        delete el.box_number;
+      });
     };
     DatabaseServices.GetEntries('box_scan', func, query);
   };
@@ -212,7 +223,21 @@ angular.module('scanthisApp.AdminController', [])
     var cellFilter = function(value){
       return value.lot_number === lot_number && value.station_code === station;
     };
+
+    var filteredlots = $scope.list.harvester_lot.filter(function(el){
+      return el.lot_number === lot_number;
+    });
+    var lot = filteredlots[0];
+
     var cellData = table.filter(cellFilter);
+    cellData.forEach(function(el){
+      delete el.lot_number;
+      delete el.station_code;
+      el.fleet_vessel = lot.fleet_vessel;
+      el.supplier = lot.supplier;
+      el.supplier_group = lot.supplier_group;
+    });
+
     cleanJsonArray(cellData);    
     return cellData;
   };
