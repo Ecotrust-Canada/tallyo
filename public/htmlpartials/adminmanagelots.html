@@ -83,6 +83,7 @@
               <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2"> / {{total.weight2.toFixed(2)}}kg</span></td>
             </tr>
           </table>
+
           <button class="bottomright btn-blue" 
                   ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" 
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
@@ -95,6 +96,7 @@
           <button class="bottomleft btn-light" 
                   ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" 
                   filename="test.csv" csv-label="true">CSV</button>
+
         </div>
       </td>
     </tr>
