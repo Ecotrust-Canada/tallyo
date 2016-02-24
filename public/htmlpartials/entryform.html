@@ -8,40 +8,53 @@
 
 <div ng-hide="hideform" id="form-{{config.id}}">
 <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
-<fieldset ng-disabled="formdisabled">
-  <form class="form-text" name="theform"  novalidate>
+<form class="form-text" name="theform"  novalidate>
+  <fieldset ng-disabled="formdisabled">
     
-    <table>
-      <tr ng-repeat="row in formarray"> <!--For each object in config.fields -->
+    <div ng-repeat="row in formarray" class="form_row"> <!--For each object in config.fields -->
 
-        <td>
-          <img ng-if="row.thisfish" src="../images/ECThisFishLogo_Favicon.jpg">
-          {{row.title}}:<span ng-if="row.required===true"><i class="errortext">*</i></span><br>
-          <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
-          <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
-        </td>
-        <td class="field">
+
+        <div class="form_label">
+          <label>{{row.title}}:
+            <span ng-if="row.required===true"><i class="errortext">*</i></span><br>
+            <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
+            <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
+          </label>
+        </div>
+        <div class="field">
 
           <!--text-->
-          <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" value={{row.value}} ng-model="form[row.fieldname]" ng-disabled="row.static" ng-required="{{row.required || row.thisfish || false}}"></span>
+          <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" value={{row.value}} 
+                ng-model="form[row.fieldname]" ng-required="{{row.required || false}}"></span>
 
           <!--number-->
           <span ng-if="row.type === 'number'">
+            <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'"><input 
+                  ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="number"  
+                  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" 
+                  ng-required="{{row.required || false}}" negative></span>
 
-
-            <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'"><input ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="number"  ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" ng-required="{{row.required || false}}" negative></span>
-
-
-
-            <span ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="number" value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
+            <span ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="number" 
+                  value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
           </span>
 
 
           <!--radio-->
           <span ng-if="row.type === 'radio'" id="radio-{{row.fieldname}}" >
-            <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" ng-model="form[row.fieldname]" value={{option.val}} ng-required="{{row.required || false}}">{{option.label}}</span>
+            <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
+                  ng-model="form[row.fieldname]" value={{option.val}} 
+                  ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
-
+          <!--
+          <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" >
+            <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
+                  ng-model="form[row.fieldname]" value={{option.val}} 
+                  ng-required="{{row.required || false}}">{{option.label}}</span>
+          </span>
+          <span ng-if="row.type === 'radio' && row.value.length==2" class="toggle_bg_outer"  id="radio-{{row.fieldname}}"> 
+            <div class="toggle_bg" ng-class="{ active:row.value[0].val == form[row.fieldname]}"></div>
+          </span>
+          -->
 
           <!--select-->
           <span ng-if="row.type === 'select'">
@@ -81,41 +94,38 @@
             </select>
           </span>
 
+          <!--button to set scale weight-->
+          <span ng-if="row.pollarg" ng-show="pollScale">
+            <input ng-if="row.scale==='on'" type="button" ng-click="store(row);pollFn({field: row.pollarg})" value="store">
+            <input ng-if="row.scale==='lock'" type="button" ng-disabled="'true'" value="locked">
+            <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
+          </span>
 
-        </td>
+          <!--button to edit dropdown options-->
+          <button ng-if="row.value ==='dboptions' && config.editinform === true" 
+                  id="{{row.fieldname}}-{{config.id}}" 
+                  ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
+            <span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span>
+          </button> 
 
-        <!--button to set scale weight-->
-        <td ng-if="row.pollarg" ng-show="pollScale">
-          <input ng-if="row.scale==='on'" type="button" ng-click="store(row);pollFn({field: row.pollarg})" value="store">
-          <input ng-if="row.scale==='lock'" type="button" ng-disabled="'true'" value="locked">
-          <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
-        </td>
+        </div>
 
-        <!--button to edit dropdown options-->
-        <td ng-if="row.value ==='dboptions' && config.editinform === true">
-          <button id="{{row.fieldname}}-{{config.id}}" ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]"><span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span></button> 
-        </td>
-
-      </tr>
-    </table>
+      </div>
     
-  </form>
+    <div class="form_buttons">
+      <div class="pictogram_btns">
+        <span ng-click="Clear()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
+        <span ng-if="config.startpolling" ng-show="pollScale" 
+              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight">Manual Input</span>
+        <span ng-if="config.startpolling" ng-hide="pollScale" 
+              ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
 
+      </div>
+      <input type="button" ng-click="submitFn({form: isValid(form)})"  class="btn-orange"
+             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
+    </div>     
 
-  <form>
-
-    
-    
-    <input type="button" ng-click="Clear()" value="Clear" id="clear-{{config.id}}">
-    
-    <input type="button" ng-click="submitFn({form: isValid(form)})" 
-           value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
-
-  </form>
   </fieldset>
-
-    <input ng-if="config.startpolling" ng-show="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Manual Input">
-    <input ng-if="config.startpolling" ng-hide="pollScale" type="button" ng-click="pollFn({field: 'toggle_state'});scalefn()" value="Scale On">
+</form>
 
 </div>
-<br>

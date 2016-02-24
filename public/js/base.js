@@ -69,7 +69,7 @@ angular.module('scanthisApp', [
   }
 })
 
-.controller('StationCtrl', function($scope, $http, $sce) {
+.controller('StationCtrl', function($scope, $http, $sce, DatabaseServices) {
 
   $scope.init = function(settings){
     $scope.station_code = settings.station_code;
@@ -128,7 +128,7 @@ angular.module('scanthisApp', [
           data: {data:$scope.printString(codeString, fieldarray)}
 
         });
-  };
+      };
     }
     
     if(settings.packingconfig){
@@ -169,7 +169,25 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
+    if ($scope.options.loadcurrentcollection) {
+        $scope.loadCurrent();
+    }
   };
+
+  $scope.loadCurrent = function(){
+    var func = function(response){
+      var station = response.data[0];
+      var today = moment(new Date()).startOf('day').format();
+      if(station){
+        if (moment(station.in_progress_date).startOf('day').format() === today){
+          $scope.current.collectionid = station.lot_number;
+        }
+      }
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
 })
 
 ;

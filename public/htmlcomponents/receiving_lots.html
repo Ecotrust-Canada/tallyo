@@ -1,6 +1,9 @@
 
 <!-- loadcurrentcollection></loadcurrentcollection -->
 <div ng-controller="SetSupplierCtrl" class="panel grey" id="harvester_list">
+  <div id="refresh">
+    <a href="#">Refresh</a>
+  </div>
   <div ng-controller="NewLotCtrl">
     <div class="header">
       <span class="section_head">Suppliers</span>
@@ -32,7 +35,7 @@
 </div>
 
 
-<div class="panel white" ng-controller="DisplayCollectionCtrl" ng-init="loadCurrent()" id="current_lot">
+<div class="panel white" ng-controller="DisplayCollectionCtrl" id="current_lot">
   <h3>Current Source</h3>
   <display obj="current[station_info.displaytable]" config="collectiondisplay"></display>
 
