@@ -29,7 +29,6 @@
 }
 
 html {
-  padding-bottom: 10px;
   height: 100%;
   box-sizing: border-box;
 }
@@ -246,24 +245,26 @@ body{
 }
 
 .itemsframe{
-  height: 200px;
+  max-height: 200px;
+  height: auto;
   overflow: auto;
+  background-color: #fbfcf8;
+  padding-bottom: 20px;
 }
-.itemsframe table {
+.itemsframe table, .itemtotals table {
   border: none; 
   border-collapse: collapse;
-  background-color: #fbfcf7;
 }
-.itemsframe table td, table th {
+.itemsframe table td, .itemsframe table th {
   border: 1px solid #cccccc;
-  padding: 15px;
+  padding: 8px 15px;
   text-align: left;
 }
 .itemsframe table td:first-child, table th:first-child {
   text-align: center;
 }
 .itemsframe table th {
-  background-color: #ebebeb;
+  background-color: #eaebeb;
   color: #777777;
   font-size: 12px;
   font-family: 'Lato-Bold';
@@ -286,9 +287,54 @@ body{
   background-image: url(/images/remove_icon.svg);
   background-repeat: no-repeat;
   background-position: left 10px center;
-
 }
 
+.itemsframe table tr:last-child td {
+  border-bottom: none;
+}
+.itemtotals {
+  padding: 12px 0 0 0;
+}
+.itemtotals table td + td, .itemtotals table th + th { 
+  border-left: 1px solid #ccccca;
+}
+.itemtotals table th {
+  color: #005874;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  text-transform: uppercase;
+  text-align: left;
+  padding: 10px 15px;
+}
+.itemtotals table th:first-child {
+  font-size: 13px;
+}
+.itemtotals table td {
+  padding: 6px 12px;
+  text-align: left;
+  color: #03223c;
+  font-size: 20px;
+  font-family: 'Lato-Regular';
+}
+
+.itemtotals table td:first-child {
+  text-align: right;
+  color: #005874;
+  font-size: 20px;
+  font-family: 'Lato-Regular';
+}
+.itemtotals table td:first-child  span::after {
+  content: ":";
+}
+.itemtotals table tr:last-child td {
+  color: #0a2131;
+  font-size: 19px;
+  padding-bottom: 25px;
+  font-family: 'Lato-Bold';
+}
+.itemtotals table tr:last-child td:first-child {
+  color: #195672;
+}
 
 .bluefill{
   background-color: #225363;
@@ -918,6 +964,7 @@ div#station-HS0-011 {
   height: 35px;
   float: right;
   border: 1px solid #afafaf;
+  background-color: white;
   background-image: url(/images/search.png);
   background-repeat: no-repeat;
   background-position: right 10px center;
