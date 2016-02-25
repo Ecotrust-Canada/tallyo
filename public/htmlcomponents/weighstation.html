@@ -6,12 +6,9 @@
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
 
-
-
   <div ng-controller="DisplayCollectionCtrl" id="current_lot">
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
   </div>
-
 
   <div ng-if="prevStation" ng-controller="prevStationCtrl">
     Previous Station Info:
@@ -19,7 +16,6 @@
       <list itemlist="totals"  config="item2listconfig" istotal="istotal"></list>
     </div>
   </div>
-
 
   <div ng-controller="ScanCtrl">
 
@@ -29,24 +25,24 @@
 
   </div>
 
-<div ng-if="formedit">
-  <hr>
+  <div ng-if="formedit">
+    <hr>
 
-  <div ng-controller="AddtoTableCtrl">
-    <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    <div ng-controller="AddtoTableCtrl">
+      <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    </div>
+    <hr>
   </div>
-  <hr>
+
 </div>
 
-
-
-<div ng-if="station_info.itemtotals" class="sectionframe" ng-controller="TotalsCtrl">
-  <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
-</div>
-
-<div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-  <div ng-controller="RemoveScanCtrl">
-    <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
+<div class="panel grey">
+  <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
+    <div ng-controller="RemoveScanCtrl">
+      <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
+    </div>
   </div>
-</div>
+  <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl">
+    <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
+  </div>
 </div>

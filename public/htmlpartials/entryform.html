@@ -18,6 +18,7 @@
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
           </label>
+          <span ng-if="row.fieldname.substring(0,6)==='weight'" class="field_desc">Weight</span>
         </div>
         <div class="field">
 

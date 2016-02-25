@@ -247,8 +247,48 @@ body{
 
 .itemsframe{
   height: 200px;
-  overflow:scroll;
+  overflow: auto;
 }
+.itemsframe table {
+  border: none; 
+  border-collapse: collapse;
+  background-color: #fbfcf7;
+}
+.itemsframe table td, table th {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  text-align: left;
+}
+.itemsframe table td:first-child, table th:first-child {
+  text-align: center;
+}
+.itemsframe table th {
+  background-color: #ebebeb;
+  color: #777777;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  text-transform: uppercase;
+}
+.itemsframe table td {
+  color: #03223c;
+  font-size: 16px;
+  font-family: 'Lato-Regular';
+}
+.itemsframe table td:first-child {
+  font-size: 18px;
+}
+/* hide text, show remove icon */
+.itemsframe.entries table td:last-child {
+  /* Hide the text. */
+  color: transparent;
+  overflow: hidden;
+  /* remove icon */
+  background-image: url(/images/remove_icon.svg);
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+
+}
+
 
 .bluefill{
   background-color: #225363;
@@ -1074,6 +1114,17 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
+#station-HS0-001 .panel.white {
+  margin-bottom: 24px;
+  margin-right: 10px;
+}
+
+#station-HS0-001 .panel.grey {
+  vertical-align: top;
+  padding: 0;
+  width: 590px;
+}
+
 #station-HS0-001 #current_lot {
   display: table;
   width: 100%;
@@ -1132,6 +1183,8 @@ div#station-HS0-011 {
   width: 166px;
   text-align: right;
   padding-right: 15px;
+  position: relative;
+  top: -4px;
 }
 
 #station-HS0-001 #form-7 .form_label label {
@@ -1139,6 +1192,14 @@ div#station-HS0-011 {
   font-size: 22px;
   color: #125974;
   line-height: 27px;
+  display: block;
+}
+
+.form_label .field_desc {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  color: #125974;
 }
 
 #station-HS0-001 #form-7 .field {
@@ -1164,10 +1225,11 @@ input[name^=weight] {
 }
 
 img.weight-connector {
-  margin: 0 -7px;
+  margin: 0;
   display: inline-block;
   position: relative;
   top: -12px;
+  left: -7px;
 }
 
 input[name^=weight]:focus {
@@ -1175,9 +1237,10 @@ input[name^=weight]:focus {
 }
 
 .scale-weight-set {
-  width: 115px;
+  width: 126px;
   height: 44px;
   box-sizing: border-box;
+  margin-left: -14px;
 }
 /*
 input[name^=weight]::after {
@@ -1218,11 +1281,11 @@ input[name^=weight]::after {
 
 #station-HS0-001 #form-7 .form_buttons .btn-orange {
   display: inline-block;
-  right: 16px;
+  right: 6px;
   position: absolute;
   height: 58px;
   padding: 12px 25px;
-  width: 115px;
+  width: 126px;
 }
 `
 .blue-button { /* use this for all instances of the blue gradient button objects*/
