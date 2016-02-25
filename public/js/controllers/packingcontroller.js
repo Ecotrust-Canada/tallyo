@@ -12,7 +12,7 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('please scan a code');
     }
     else{
-      var id = raw_id.split("/")[0];
+      var id = raw_id.split("/")[0].toUpperCase();
       $scope.id = id;
 
       var func = function(response){
