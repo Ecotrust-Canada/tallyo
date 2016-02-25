@@ -33,6 +33,15 @@ html {
   height: 100%;
   box-sizing: border-box;
 }
+input[type="text"],
+select{
+    padding:5px;
+}
+
+input {
+  background-color: #DBEBEF;
+  border: 1px solid #CAE2EB;
+}
 /*
 *,
 *:before,
@@ -334,6 +343,7 @@ a:hover {
   text-align:left;
   font-size:20px;
 }
+/*
 .form-text input[type="text"]{
   padding: 0.3em 0.3em 0.4em;
   border: 1px solid #cae2eb;
@@ -353,6 +363,7 @@ a:hover {
   line-height: 1.4em;
   text-align: left;
 }
+*/
 .form-text select{
   padding: 0.3em 0.3em 0.4em;
   border: 1px solid #cae2eb;
@@ -538,7 +549,8 @@ table#admin_manage_lots {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 100%;
+  /*width: 100%;*/
+  width: 1412px;
 }
 
 table#admin_manage_lots tr.adminlots_header {
@@ -1117,7 +1129,7 @@ div#station-HS0-011 {
 
 #station-HS0-001 #form-7 .form_label {
   display: inline-block;
-  width: 160px;
+  width: 166px;
   text-align: right;
   padding-right: 15px;
 }
@@ -1131,17 +1143,47 @@ div#station-HS0-011 {
 
 #station-HS0-001 #form-7 .field {
   display: inline-block;
-  width: 300px;
+  width: 360px;
 }
 
-#station-HS0-001 #form-7 .field input[type=number] {
-  background: #DBEBEF;
-  border: 1px solid #CAE2EB;
-  display:inline-block;
+input[name^=weight] {
   width: 200px;
   height: 58px;
+  color: #03223c;
+  font-size: 48px;
+  font-family: 'Lato-Bold';
+  padding: 0 35px 0 8px;
+  display:inline-block;
+  box-sizing: border-box;
+  background: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  background-image: url(/images/weight_input_bg.svg);
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  margin-right: 0;
 }
 
+img.weight-connector {
+  margin: 0 -7px;
+  display: inline-block;
+  position: relative;
+  top: -12px;
+}
+
+input[name^=weight]:focus {
+  border: 5px solid #0076ad;
+}
+
+.scale-weight-set {
+  width: 115px;
+  height: 44px;
+  box-sizing: border-box;
+}
+/*
+input[name^=weight]::after {
+  content: url(/images/weight_control_connector.svg);
+}
+*/
 .form_buttons {
   position: relative;
   height: 58px;
@@ -1150,7 +1192,7 @@ div#station-HS0-011 {
 .pictogram_btns {
   display: inline-block;
   position:absolute;
-  left: -17px;
+  left: -10px;
   height: 25px;
   top: 26px
 }
@@ -1176,10 +1218,11 @@ div#station-HS0-011 {
 
 #station-HS0-001 #form-7 .form_buttons .btn-orange {
   display: inline-block;
-  right: 0;
+  right: 16px;
   position: absolute;
   height: 58px;
   padding: 12px 25px;
+  width: 115px;
 }
 `
 .blue-button { /* use this for all instances of the blue gradient button objects*/
@@ -1406,15 +1449,13 @@ nav #menu li a {
 }
 
 fieldset{
-    background: #FCFCFC;
-    padding: 16px;
     font-size: 10px;
     -webkit-margin-start: 2px;
     -webkit-margin-end: 2px;
-    -webkit-padding-before: 0.35em;
-    -webkit-padding-start: 0.75em;
-    -webkit-padding-end: 0.75em;
-    -webkit-padding-after: 0.625em;
+    -webkit-padding-before: 0;
+    -webkit-padding-start: 0;
+    -webkit-padding-end: 0;
+    -webkit-padding-after: 0;
     border-image-source: initial;
     border-image-slice: initial;
     border-image-width: initial;
@@ -1444,10 +1485,6 @@ fieldset{
     padding: 4px 9px;
     vertical-align: top;
     line-height: 100%;   
-}
-input[type="text"],
-select{
-    padding:5px;
 }
 
 
