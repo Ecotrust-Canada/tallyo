@@ -328,7 +328,6 @@ angular.module('scanthisApp.AdminController', [])
     var lot = filteredlots[0];
 
 
-
     var filteredharvesters = $scope.list.harvester.filter(function(el){
       return el.harvester_code === lot.harvester_code;
     });

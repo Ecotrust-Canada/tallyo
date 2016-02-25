@@ -1,6 +1,6 @@
 <table ng-class="config.cssclass">
   <tr ng-if="config.headers">
-    <td ng-repeat="title in config.headers">{{title}}</td>
+    <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
   <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring">
     <td ng-repeat="name in config.fields">

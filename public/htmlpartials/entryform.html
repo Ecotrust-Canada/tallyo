@@ -16,10 +16,10 @@
 
         <div class="form_label">
           <label>{{row.title}}:
-            <span ng-if="row.required===true"><i class="errortext">*</i></span><br>
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
           </label>
+          <span ng-if="row.fieldname.substring(0,6)==='weight'" class="field_desc">Weight</span>
         </div>
         <div class="field">
 
@@ -30,11 +30,11 @@
           <!--number-->
           <span ng-if="row.type === 'number'">
             <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'"><input 
-                  ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="number"  
+                  ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text"  
                   ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" 
                   ng-required="{{row.required || false}}" negative></span>
 
-            <span ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="number" 
+            <span ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="text" 
                   value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
           </span>
 
@@ -95,11 +95,20 @@
           </span>
 
           <!--button to set scale weight-->
+          <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 
+               class="weight-connector"/>
+          <button class="btn-blue scale-weight-set" 
+                  ng-if="row.pollarg && row.scale!='off'"
+                  ng-disabled="row.scale!='on'" 
+                  ng-click="store(row);pollFn({field: row.pollarg})"
+                  ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
+          <!--
           <span ng-if="row.pollarg" ng-show="pollScale">
             <input ng-if="row.scale==='on'" type="button" ng-click="store(row);pollFn({field: row.pollarg})" value="store">
             <input ng-if="row.scale==='lock'" type="button" ng-disabled="'true'" value="locked">
             <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
           </span>
+          -->
 
           <!--button to edit dropdown options-->
           <button ng-if="row.value ==='dboptions' && config.editinform === true" 

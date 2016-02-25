@@ -1,14 +1,14 @@
 <div ng-repeat="row in config.layout" class="display_row">
   <div ng-repeat="col in row" class="display_field"> 
     <label ng-if="col.name" for="{{col.val}}-value">{{col.name}}: </label>
-    <div class="field_val" id="{{col.val}}-value">
-      <span ng-if="col.val==='timestamp'" class="display_val">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-      <span ng-if="col.val==='end_date'" class="display_val">{{obj.end_date|stringtodate|date:'MMMM d, yyyy' }}</span>
-      <span ng-if="col.val.substring(0,6)==='weight'" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
-      <span 
-        ng-if="col.val !== 'numindex' && col.val !== 'timestamp' && col.val.substring(0,6)!=='weight' && col.val!=='end_date'" 
-        class="display_val" ng-cloak>{{obj[col.val]}}</span>
-      <span ng-if="col.val==='pieces'">pcs</span>
+    <div class="field_val" id="{{col.val}}-value" ng-switch on="col.val" ng-cloak>
+      <span ng-switch-when="timestamp" class="display_val">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+      <span ng-switch-when="end_date" class="display_val">{{obj.end_date|stringtodate|date:'MMMM d, yyyy' }}</span>
+      <span ng-switch_when="weight_1" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
+      <span ng-switch_when="weight_2" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
+      <span ng-switch_when="internal_lot_code" class="display_val">{{obj[col.val] || obj['lot_number']}}</span>
+      <span ng-switch_when="pieces" class="display_val">{{obj[col.val]}}pcs</span>
+      <span ng-switch-default class="display_val">{{obj[col.val]}}</span>
     </div>
   </div>
 </div>

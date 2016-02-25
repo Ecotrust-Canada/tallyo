@@ -33,6 +33,15 @@ html {
   height: 100%;
   box-sizing: border-box;
 }
+input[type="text"],
+select{
+    padding:5px;
+}
+
+input {
+  background-color: #DBEBEF;
+  border: 1px solid #CAE2EB;
+}
 /*
 *,
 *:before,
@@ -238,8 +247,48 @@ body{
 
 .itemsframe{
   height: 200px;
-  overflow:scroll;
+  overflow: auto;
 }
+.itemsframe table {
+  border: none; 
+  border-collapse: collapse;
+  background-color: #fbfcf7;
+}
+.itemsframe table td, table th {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  text-align: left;
+}
+.itemsframe table td:first-child, table th:first-child {
+  text-align: center;
+}
+.itemsframe table th {
+  background-color: #ebebeb;
+  color: #777777;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  text-transform: uppercase;
+}
+.itemsframe table td {
+  color: #03223c;
+  font-size: 16px;
+  font-family: 'Lato-Regular';
+}
+.itemsframe table td:first-child {
+  font-size: 18px;
+}
+/* hide text, show remove icon */
+.itemsframe.entries table td:last-child {
+  /* Hide the text. */
+  color: transparent;
+  overflow: hidden;
+  /* remove icon */
+  background-image: url(/images/remove_icon.svg);
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+
+}
+
 
 .bluefill{
   background-color: #225363;
@@ -334,6 +383,7 @@ a:hover {
   text-align:left;
   font-size:20px;
 }
+/*
 .form-text input[type="text"]{
   padding: 0.3em 0.3em 0.4em;
   border: 1px solid #cae2eb;
@@ -353,6 +403,7 @@ a:hover {
   line-height: 1.4em;
   text-align: left;
 }
+*/
 .form-text select{
   padding: 0.3em 0.3em 0.4em;
   border: 1px solid #cae2eb;
@@ -538,7 +589,8 @@ table#admin_manage_lots {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 100%;
+  /*width: 100%;*/
+  width: 1412px;
 }
 
 table#admin_manage_lots tr.adminlots_header {
@@ -1062,6 +1114,17 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
+#station-HS0-001 .panel.white {
+  margin-bottom: 24px;
+  margin-right: 10px;
+}
+
+#station-HS0-001 .panel.grey {
+  vertical-align: top;
+  padding: 0;
+  width: 590px;
+}
+
 #station-HS0-001 #current_lot {
   display: table;
   width: 100%;
@@ -1117,9 +1180,11 @@ div#station-HS0-011 {
 
 #station-HS0-001 #form-7 .form_label {
   display: inline-block;
-  width: 160px;
+  width: 166px;
   text-align: right;
   padding-right: 15px;
+  position: relative;
+  top: -4px;
 }
 
 #station-HS0-001 #form-7 .form_label label {
@@ -1127,21 +1192,61 @@ div#station-HS0-011 {
   font-size: 22px;
   color: #125974;
   line-height: 27px;
+  display: block;
+}
+
+.form_label .field_desc {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: 'Lato-Bold';
+  color: #125974;
 }
 
 #station-HS0-001 #form-7 .field {
   display: inline-block;
-  width: 300px;
+  width: 360px;
 }
 
-#station-HS0-001 #form-7 .field input[type=number] {
-  background: #DBEBEF;
-  border: 1px solid #CAE2EB;
-  display:inline-block;
+input[name^=weight] {
   width: 200px;
   height: 58px;
+  color: #03223c;
+  font-size: 48px;
+  font-family: 'Lato-Bold';
+  padding: 0 35px 0 8px;
+  display:inline-block;
+  box-sizing: border-box;
+  background: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  background-image: url(/images/weight_input_bg.svg);
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  margin-right: 0;
 }
 
+img.weight-connector {
+  margin: 0;
+  display: inline-block;
+  position: relative;
+  top: -12px;
+  left: -7px;
+}
+
+input[name^=weight]:focus {
+  border: 5px solid #0076ad;
+}
+
+.scale-weight-set {
+  width: 126px;
+  height: 44px;
+  box-sizing: border-box;
+  margin-left: -14px;
+}
+/*
+input[name^=weight]::after {
+  content: url(/images/weight_control_connector.svg);
+}
+*/
 .form_buttons {
   position: relative;
   height: 58px;
@@ -1150,7 +1255,7 @@ div#station-HS0-011 {
 .pictogram_btns {
   display: inline-block;
   position:absolute;
-  left: -17px;
+  left: -10px;
   height: 25px;
   top: 26px
 }
@@ -1176,10 +1281,11 @@ div#station-HS0-011 {
 
 #station-HS0-001 #form-7 .form_buttons .btn-orange {
   display: inline-block;
-  right: 0;
+  right: 6px;
   position: absolute;
   height: 58px;
   padding: 12px 25px;
+  width: 126px;
 }
 `
 .blue-button { /* use this for all instances of the blue gradient button objects*/
@@ -1406,15 +1512,13 @@ nav #menu li a {
 }
 
 fieldset{
-    background: #FCFCFC;
-    padding: 16px;
     font-size: 10px;
     -webkit-margin-start: 2px;
     -webkit-margin-end: 2px;
-    -webkit-padding-before: 0.35em;
-    -webkit-padding-start: 0.75em;
-    -webkit-padding-end: 0.75em;
-    -webkit-padding-after: 0.625em;
+    -webkit-padding-before: 0;
+    -webkit-padding-start: 0;
+    -webkit-padding-end: 0;
+    -webkit-padding-after: 0;
     border-image-source: initial;
     border-image-slice: initial;
     border-image-width: initial;
@@ -1444,10 +1548,6 @@ fieldset{
     padding: 4px 9px;
     vertical-align: top;
     line-height: 100%;   
-}
-input[type="text"],
-select{
-    padding:5px;
 }
 
 
