@@ -87,12 +87,23 @@
           <button class="bottomright btn-blue" 
                   ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" 
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+
+
           <button class="bottomright btn-blue" 
-                  ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress  && settings.thisfish_enabled" 
-                  ng-click="SubmitLot(lot.lot_number, lot.tf_code) ">ThisFish Submit</button>
-          <button class="bottomright btn-blue" 
-                  ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress && !settings.thisfish_enabled" 
-                  ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+                  ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress" 
+                  ng-click="SubmitLot(lot.lot_number, lot.tf_code) "
+                  ng-disabled="lot.tf_submit !== 'submit' && lot.tf_submit !== 'no_trace'">
+            <span ng-switch on="lot.tf_submit">
+              <span ng-switch-when="no_trace">Complete Lot</span>
+              <span ng-switch-when="submit">Thisfish Submit</span>
+              <span ng-switch-when="success">{{lot.tf_code}}</span>
+              <span ng-switch-when="error">Error Submitting</span>
+              <span ng-switch-default>Complete Lot</span>
+            </span>
+          </button>
+
+
+
           <button class="bottomleft btn-light" 
                   ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" 
 

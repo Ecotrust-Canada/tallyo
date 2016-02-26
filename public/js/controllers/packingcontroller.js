@@ -145,38 +145,28 @@ angular.module('scanthisApp.packingController', [])
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;
+      var tf_code = response.data[0].tf_code;
+      var ft_fa_code = response.data[0].ft_fa_code;
       
-      $scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      //$scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
-  $scope.GetHarvester = function(box_weight, lot_num, num, harvester_code, internal_lot_code){
-    var func = function(response){
-      if (response.data.length > 0){
-        $scope.current.harvester = response.data[0];
-      }
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
-    };
-    var query = '?harvester_code=eq.' + harvester_code;
-    DatabaseServices.GetEntryNoAlert('harvester', func, query);
-  };
-
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code){
     var func = function(response){
-      $scope.current[$scope.station_info.collectiontable] = response.data[0];
-      if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
-        $scope.current.box.ft_fa_code = $scope.current.harvester.ft_fa_code;
-      }
+      $scope.current.box = response.data[0];
+      $scope.current.box.internal_lot_code = internal_lot_code;
+      $scope.current.box.harvester_code = harvester_code;
+      $scope.current.box.tf_code = tf_code;
+      $scope.current.box.ft_fa_code = ft_fa_code;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code};
+    var patch = {'weight': box_weight, 'pieces': num};
     if (lot_num !== 'none'){
       patch.lot_number = lot_num;
-    }
-    if (harvester_code !== 'none'){
-      patch.harvester_code = harvester_code;
     }
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
