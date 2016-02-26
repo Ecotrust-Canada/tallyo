@@ -7,7 +7,7 @@ angular.module('scanthisApp.formController', [])
   
   //display scale buttons
   if ($scope.config.startpolling){
-    $scope.pollScale = true;
+    $scope.poll_scale = true;
   }
 
   //booleans for show/hide edit dropdown
@@ -32,7 +32,7 @@ angular.module('scanthisApp.formController', [])
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
-      if ($scope.pollscale === true){
+      if ($scope.poll_scale === true){
         $scope.pollFn({field: $scope.config.startpolling});
       }
       else{
@@ -68,7 +68,7 @@ angular.module('scanthisApp.formController', [])
     var index = arrayObjectIndexOf($scope.formarray, row.pollarg, 'fieldname');
     if (index !== -1){
       var nextrow = $scope.formarray[index];
-      nextrow.scale = 'on';
+      $scope.weigh(nextrow);
     }
   };
 
@@ -78,7 +78,8 @@ angular.module('scanthisApp.formController', [])
       return el.scale === 'on';
     });
     scales.forEach(function(el){
-      el.scale = 'lock';
+      $scope.form[el.fieldname] = $scope.scale[el.fieldname];
+      el.scale = "lock";
     });
     row.scale = 'on';
   };
@@ -86,7 +87,7 @@ angular.module('scanthisApp.formController', [])
   //turn the scale on or off
   $scope.scalefn = function(){
     clearObj($scope.scale);
-    if ($scope.pollScale === true){
+    if ($scope.poll_scale === true){
       var scales = $scope.formarray.filter(function(el){
         return (el.scale);
       });
@@ -99,7 +100,7 @@ angular.module('scanthisApp.formController', [])
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     }
     
-    $scope.pollScale = !$scope.pollScale;
+    $scope.poll_scale = !$scope.poll_scale;
   };
 
   $scope.submitted=false;

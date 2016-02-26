@@ -1222,7 +1222,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-001 #form-7 .form_row {
-  padding-bottom: 10px;
+  padding-bottom: 12px;
 }
 
 #station-HS0-001 #form-7 .form_label {
@@ -1599,19 +1599,32 @@ fieldset{
 /* onoffswitch stuff,
  * some borrowing from https://proto.io/freebies/onoff/ */
 .onoffswitch {
-    position: relative; width: 110px;
+    display: inline-block;
+    position: relative; 
+    width: 80px;
+    height: 30px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
     box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.25);
+    margin: 0 12px;
+    top: 6px;
 }
 .onoffswitch-checkbox {
     display: none;
 }
 .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: none; border-radius: 4px;
+    display: block; 
+    height: 100%;
+    overflow: hidden; cursor: pointer;
+    border: none; 
+    border-radius: 4px;
+    background-image: linear-gradient(-180deg, #CBDBDF 0%, #DBEBEF 100%);
+    box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.25);
 }
 .onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
+    display: block; 
+    width: 200%; 
+    height:30px;
+    margin-left: -100%;
     transition: margin 0.3s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
@@ -1624,22 +1637,22 @@ fieldset{
     font-family: 'Lato-Bold';
     box-sizing: border-box;
 }
+/*
 .onoffswitch-inner:before {
     content: "ON";
     padding-left: 10px;
-    /*background-color: #34A7C1; color: #FFFFFF;*/
 }
 .onoffswitch-inner:after {
     content: "OFF";
     padding-right: 10px;
-    /*background-color: #EEEEEE; color: #999999;*/
     text-align: right;
 }
+*/
 .onoffswitch-switch {
     display: block; width: 30px; margin: 0;
     background: #FFFFFF;
     position: absolute; top: 0; bottom: 0;
-    right: 82px;
+    right: 52px;
     border: none;
     transition: all 0.3s ease-in 0s; 
     background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
@@ -1652,14 +1665,16 @@ fieldset{
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
-#form-7 .onoffswitch-inner:before {
-    content: "Clean";
-    padding-left: 10px;
-    /*background-color: #34A7C1; color: #FFFFFF;*/
+span.switch_option {
+  display:inline-flex;
+  font-size: 24px; 
+  color: #125974; 
+  font-family: 'Lato-Regular';
+  opacity: 0.33;
 }
-#form-7 .onoffswitch-inner:after {
-    content: "Dirty";
-    padding-right: 10px;
-    /*background-color: #EEEEEE; color: #999999;*/
-    text-align: right;
+span.switch_option.active {
+  font-size: 24px; 
+  color: #03223c; 
+  font-family: 'Lato-Black';
+  opacity: 1;
 }

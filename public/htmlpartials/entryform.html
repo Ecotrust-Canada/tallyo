@@ -52,6 +52,8 @@
                   ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
           <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >
+            <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[0].val}"
+                value="row.value[0].val">{{row.value[0].val}}</span>
             <div  class="onoffswitch">
               <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
                      id="switch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
@@ -61,6 +63,8 @@
                 <span class="onoffswitch-switch"></span>
               </label>
             </div>
+            <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[1].val}"
+                value="row.value[1].val">{{row.value[1].val}}</span>
           </span>
 
           <!--select-->
@@ -131,9 +135,9 @@
     <div class="form_buttons">
       <div class="pictogram_btns">
         <span ng-click="Clear()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
-        <span ng-if="config.startpolling" ng-show="pollScale" 
+        <span ng-if="config.startpolling" ng-show="poll_scale" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight">Manual Input</span>
-        <span ng-if="config.startpolling" ng-hide="pollScale" 
+        <span ng-if="config.startpolling" ng-hide="poll_scale" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
 
       </div>
