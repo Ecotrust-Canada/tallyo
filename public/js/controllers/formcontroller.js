@@ -3,7 +3,7 @@
 angular.module('scanthisApp.formController', [])
 
 //controller attached to entryform directive
-.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
   
   //display scale buttons
   if ($scope.config.startpolling){
@@ -109,11 +109,13 @@ angular.module('scanthisApp.formController', [])
     var form_error = false;
     for (var i=0;i<$scope.formarray.length;i++){
       var row = $scope.formarray[i];
-      var req_error = $scope.theform[row.fieldname].$error.required;
-      var neg_error = $scope.theform[row.fieldname].$error.negative;
-      if (req_error === true || neg_error === true){
-        form_error = true;
-        
+      if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
+        var req_error = $scope.theform[row.fieldname].$error.required;
+        var neg_error = $scope.theform[row.fieldname].$error.negative;
+        if (req_error === true || neg_error === true){
+          form_error = true;
+          
+        }
       }
     }
     if (form_error === true){
@@ -137,7 +139,7 @@ angular.module('scanthisApp.formController', [])
     };
     var query = '?table_name=eq.' + table;
     DatabaseServices.GetEntryNoAlert('formoptions', func, query);
-    };
+  };
 
   $scope.Delete = function(value, field){
     var query='?table_name=eq.' + $scope.config.dboptions + '&value=eq.' + value + '&field_name=eq.' + field;
@@ -160,6 +162,18 @@ angular.module('scanthisApp.formController', [])
   if ($scope.config.dboptions){
     $scope.FormData($scope.config.dboptions);
   }
+
+  $scope.toggleRadioValue = function(frow){
+      console.log('toggle: '+frow.fieldname);
+      var fieldname = frow.fieldname;
+      //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
+      var checkInput = document.getElementById('switch-'+fieldname);
+      setTimeout(function () {
+        $scope.$apply(function () {
+          $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
+        });
+      }, 50);
+  };
 
 })
 

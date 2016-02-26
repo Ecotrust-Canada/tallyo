@@ -57,7 +57,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.stopPolling();
   });
 
-$scope.DatabaseScan = function(form){
+  $scope.DatabaseScan = function(form){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;

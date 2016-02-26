@@ -39,21 +39,29 @@
 
 
           <!--radio-->
+          <!--
           <span ng-if="row.type === 'radio'" id="radio-{{row.fieldname}}" >
             <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
                   ng-model="form[row.fieldname]" value={{option.val}} 
                   ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
-          <!--
+          -->
           <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" >
             <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
                   ng-model="form[row.fieldname]" value={{option.val}} 
                   ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
-          <span ng-if="row.type === 'radio' && row.value.length==2" class="toggle_bg_outer"  id="radio-{{row.fieldname}}"> 
-            <div class="toggle_bg" ng-class="{ active:row.value[0].val == form[row.fieldname]}"></div>
+          <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >
+            <div  class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+                     id="switch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
+              <label class="onoffswitch-label" for="switch-{{row.fieldname}}" 
+                     ng-click="toggleRadioValue(row)">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </span>
-          -->
 
           <!--select-->
           <span ng-if="row.type === 'select'">
