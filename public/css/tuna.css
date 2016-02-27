@@ -208,7 +208,7 @@ body{
   padding-top: 10px;
 }
 
-#station-HS0-001 .panel {
+#station-HS0-001 .panel, #station-HS0-002 .panel {
   width: 550px;
 }
 
@@ -297,6 +297,15 @@ body{
 }
 .itemtotals table td + td, .itemtotals table th + th { 
   border-left: 1px solid #ccccca;
+}
+.itemtotals table caption {
+  color: #125974;
+  font-size: 13px;
+  font-family: 'Lato-Bold';
+  text-align: left;
+  margin: 0;
+  padding: 4px 15px 8px 15px;
+  text-transform: uppercase;
 }
 .itemtotals table th {
   color: #005874;
@@ -1161,71 +1170,82 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
-#station-HS0-001 .panel.white {
+#station-HS0-001 .panel.white,
+#station-HS0-002 .panel.white {
   margin-bottom: 24px;
   margin-right: 10px;
 }
 
-#station-HS0-001 .panel.grey {
+#station-HS0-001 .panel.grey,
+#station-HS0-002 .panel.grey {
   vertical-align: top;
   padding: 0;
   width: 590px;
 }
 
-#station-HS0-001 #current_lot {
+#station-HS0-001 #current_lot,
+#station-HS0-002 #current_lot {
   display: table;
   width: 100%;
   border-bottom: 1px solid #cccccc;
   padding: 10px 0 13px 0;
 }
 
-#station-HS0-001 #current_lot display {
+#station-HS0-001 #current_lot display,
+#station-HS0-002 #current_lot display {
   display: table-row;
   width: 100%;
 }
 
-#station-HS0-001 #current_lot .display_row {
+#station-HS0-001 #current_lot .display_row,
+#station-HS0-002 #current_lot .display_row {
   display: table-cell;
   width: 50%;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(1) {
+#station-HS0-001 #current_lot .display_row:nth-child(1),
+#station-HS0-002 #current_lot .display_row:nth-child(1) {
 }
 
-#station-HS0-001 #current_lot  .field_val {
+#station-HS0-001 #current_lot  .field_val,
+#station-HS0-002 #current_lot  .field_val {
   color: #03223c;
   font-family: 'Lato-Regular';
 }
 
-#station-HS0-001 #current_lot #internal_lot_code-value {
+#station-HS0-001 #current_lot #internal_lot_code-value,
+#station-HS0-002 #current_lot #internal_lot_code-value {
   font-size: 22px;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(2) label {
+#station-HS0-001 #current_lot .display_row:nth-child(2) label,
+#station-HS0-002 #current_lot .display_row:nth-child(2) label {
   display: inline-block;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(2) .field_val {
+#station-HS0-001 #current_lot .display_row:nth-child(2) .field_val,
+#station-HS0-002 #current_lot .display_row:nth-child(2) .field_val {
   font-size: 16px;
   display: inline-block;
 }
 
-#station-HS0-001 #current_lot #internal_lot_code-value span::before {
+#station-HS0-001 #current_lot #internal_lot_code-value span::before,
+#station-HS0-002 #current_lot #internal_lot_code-value span::before {
   content: "#";
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(2) {
-}
-
-#station-HS0-001 #current_lot label {
+#station-HS0-001 #current_lot label,
+#station-HS0-002 #current_lot label {
   font-size: 13px;
 }
 
-#station-HS0-001 #form-7 .form_row {
+#station-HS0-001 #form-7 .form_row,
+#station-HS0-002 #form-8 .form_row {
   padding-bottom: 12px;
 }
 
-#station-HS0-001 #form-7 .form_label {
+#station-HS0-001 #form-7 .form_label,
+#station-HS0-002 #form-8 .form_label {
   display: inline-block;
   width: 166px;
   text-align: right;
@@ -1234,7 +1254,8 @@ div#station-HS0-011 {
   top: -4px;
 }
 
-#station-HS0-001 #form-7 .form_label label {
+#station-HS0-001 #form-7 .form_label label,
+#station-HS0-002 #form-8 .form_label label {
   font-family: 'Lato-Bold';
   font-size: 22px;
   color: #125974;
@@ -1249,7 +1270,8 @@ div#station-HS0-011 {
   color: #125974;
 }
 
-#station-HS0-001 #form-7 .field {
+#station-HS0-001 #form-7 .field,
+#station-HS0-002 #form-8 .field {
   display: inline-block;
   width: 360px;
 }
@@ -1326,7 +1348,7 @@ input[name^=weight]::after {
   border-left: 1px solid #ccccca;
 }
 
-#station-HS0-001 #form-7 .form_buttons .btn-orange {
+.form_buttons .btn-orange {
   display: inline-block;
   right: 6px;
   position: absolute;

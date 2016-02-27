@@ -1,4 +1,5 @@
 <table ng-class="config.cssclass">
+  <caption ng-if="config.title">{{config.title}}</caption>
   <tr ng-if="config.headers">
     <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
