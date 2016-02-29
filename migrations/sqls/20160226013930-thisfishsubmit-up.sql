@@ -10,6 +10,7 @@ CREATE OR REPLACE VIEW harvester_lot AS
     harvester.species_common,
     harvester.fair_trade,
     harvester.supplier_group,
+    harvester.supplier, 
     harvester.fleet,
     harvester.fisher,
     lot.shipping_unit_number,
