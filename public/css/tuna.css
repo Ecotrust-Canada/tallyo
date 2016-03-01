@@ -208,7 +208,7 @@ body{
   padding-top: 10px;
 }
 
-#station-HS0-001 .panel, #station-HS0-002 .panel {
+#station-HS0-001 .panel, #station-HS0-002 .panel, #station-HS0-003 .panel {
   width: 550px;
 }
 
@@ -1170,90 +1170,78 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
-#station-HS0-001 .panel.white,
-#station-HS0-002 .panel.white {
+.panel.white.weighstation_main {
   margin-bottom: 24px;
   margin-right: 10px;
 }
 
 #station-HS0-001 .panel.grey,
-#station-HS0-002 .panel.grey {
+#station-HS0-002 .panel.grey,
+#station-HS0-003 .panel.grey {
   vertical-align: top;
   padding: 0;
   width: 590px;
 }
 
-#station-HS0-001 #current_lot,
-#station-HS0-002 #current_lot {
+.weighstation_main #current_lot {
   display: table;
   width: 100%;
   border-bottom: 1px solid #cccccc;
   padding: 10px 0 13px 0;
 }
 
-#station-HS0-001 #current_lot display,
-#station-HS0-002 #current_lot display {
+.weighstation_main #current_lot display {
   display: table-row;
   width: 100%;
 }
 
-#station-HS0-001 #current_lot .display_row,
-#station-HS0-002 #current_lot .display_row {
+.weighstation_main #current_lot .display_row {
   display: table-cell;
   width: 50%;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(1),
-#station-HS0-002 #current_lot .display_row:nth-child(1) {
+.weighstation_main #current_lot .display_row:nth-child(1) {
 }
 
-#station-HS0-001 #current_lot  .field_val,
-#station-HS0-002 #current_lot  .field_val {
+.weighstation_main #current_lot  .field_val {
   color: #03223c;
   font-family: 'Lato-Regular';
 }
 
-#station-HS0-001 #current_lot #internal_lot_code-value,
-#station-HS0-002 #current_lot #internal_lot_code-value {
+.weighstation_main #current_lot #internal_lot_code-value {
   font-size: 22px;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(2) label,
-#station-HS0-002 #current_lot .display_row:nth-child(2) label {
+.weighstation_main #current_lot .display_row:nth-child(2) label {
   display: inline-block;
 }
 
-#station-HS0-001 #current_lot .display_row:nth-child(2) .field_val,
-#station-HS0-002 #current_lot .display_row:nth-child(2) .field_val {
+.weighstation_main #current_lot .display_row:nth-child(2) .field_val {
   font-size: 16px;
   display: inline-block;
 }
 
-#station-HS0-001 #current_lot #internal_lot_code-value span::before,
-#station-HS0-002 #current_lot #internal_lot_code-value span::before {
+.weighstation_main #current_lot #internal_lot_code-value span::before {
   content: "#";
 }
 
-#station-HS0-001 #current_lot label,
-#station-HS0-002 #current_lot label {
+.weighstation_main #current_lot label {
   font-size: 13px;
 }
 
-#station-HS0-001 #form-7 .form_row,
-#station-HS0-002 #form-8 .form_row {
+.weighstation_main .form_row {
   padding-bottom: 12px;
 }
 
-#station-HS0-001 #form-7 .form_label,
-#station-HS0-002 #form-8 .form_label {
+.weighstation_main .form_label {
   display: inline-block;
   width: 166px;
   text-align: right;
   padding-right: 15px;
 }
 
-#station-HS0-001 #form-7 .form_label label,
-#station-HS0-002 #form-8 .form_label label {
+.weighstation_main #form-7 .form_label label,
+.weighstation_main #form-8 .form_label label {
   font-family: 'Lato-Bold';
   font-size: 22px;
   color: #125974;
@@ -1269,8 +1257,8 @@ div#station-HS0-011 {
   color: #125974;
 }
 
-#station-HS0-001 #form-7 .field,
-#station-HS0-002 #form-8 .field {
+.weighstation_main #form-7 .field,
+.weighstation_main #form-8 .field {
   display: inline-block;
   width: 360px;
 }
@@ -1417,6 +1405,34 @@ input[name^=weight]::after {
   color: white;
   width:60px;
   border: none;
+}
+
+#select_lot_dropdowns {
+  padding-top: 10px;
+}
+#select_lot_dropdowns .select_lot_header {
+  position: relative;
+  height: 26px;
+  font-family: 'Lato-Bold';
+  color: #0076AD;
+}
+
+#select_lot_dropdowns .select_lot_header .show_choices {
+  display: inline-block;
+  width: 108px;
+  padding-right: 24px;
+  font-size: 18px;
+}
+#select_lot_dropdowns .select_lot_header #reprint_label_link {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 15px;
+  padding-right: 10px;
+  background-image: url(/images/substation_indicator.svg);
+  background-repeat: no-repeat;
+  background-position: right center;
 }
 
 .blue-button { /* use this for all instances of the blue gradient button objects*/
