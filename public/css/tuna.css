@@ -1250,8 +1250,6 @@ div#station-HS0-011 {
   width: 166px;
   text-align: right;
   padding-right: 15px;
-  position: relative;
-  top: -4px;
 }
 
 #station-HS0-001 #form-7 .form_label label,
@@ -1261,6 +1259,7 @@ div#station-HS0-011 {
   color: #125974;
   line-height: 27px;
   display: block;
+  position: relative;
 }
 
 .form_label .field_desc {
@@ -1356,7 +1355,70 @@ input[name^=weight]::after {
   padding: 12px 25px;
   width: 126px;
 }
-`
+
+#form-8 .form_label label[for=grade] {
+  top: -2px;
+}
+
+#form-8 .form_label label[for=weight_1] {
+  top: -12px;
+}
+
+#form-8 .toggle-group-container {
+  display: inline-block;
+  width: 240px;
+  height: 50px;
+  background: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50), 0px 2px 4px 0px rgba(0,0,0,0.50);
+  border-radius: 5px;
+  position: relative;
+}
+
+#form-8 .toggle-group-container.rbgroup-unset {
+  background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+  border: none;
+}
+
+#form-8 .toggle-group-container input[type=radio] {
+  display: none;
+}
+#form-8 .toggle-group-container label {
+  margin: 0;
+  display: inline-block;
+  width: 60px;
+  height: 50px;
+  box-sizing: border-box;
+}
+#form-8 .toggle-group-container label.rb-unset + label.rb-unset {
+  border-left: 1px solid #cae2eb;
+}
+#form-8 .toggle-group-container.rbgroup-unset label + label {
+  border-left: 1px solid rgba(1,31,54,0.5);
+}
+
+#form-8 .toggle-group-container label span {
+  text-align:center;
+  display: block;
+  font-family: 'Lato-Bold';
+  font-size: 30px;
+  color: #0076AD;
+  line-height: 50px;
+}
+#form-8 .toggle-group-container.rbgroup-unset label span {
+  color: white;
+}
+
+#form-8 .toggle-group-container input:checked + span {
+  background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+  border-radius: 5px;
+  color: white;
+  width:60px;
+  border: none;
+}
+
 .blue-button { /* use this for all instances of the blue gradient button objects*/
 /* Rectangle 3 Copy 19: */
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);

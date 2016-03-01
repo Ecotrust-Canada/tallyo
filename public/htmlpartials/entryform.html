@@ -14,7 +14,7 @@
     <div ng-repeat="row in formarray" class="form_row"> <!--For each object in config.fields -->
 
         <div class="form_label">
-          <label>{{row.title}}:
+          <label for="{{row.fieldname}}">{{row.title}}:
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
           </label>
@@ -40,17 +40,12 @@
 
 
           <!--radio-->
-          <!--
-          <span ng-if="row.type === 'radio'" id="radio-{{row.fieldname}}" >
-            <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
-                  ng-model="form[row.fieldname]" value={{option.val}} 
-                  ng-required="{{row.required || false}}">{{option.label}}</span>
-          </span>
-          -->
-          <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" >
-            <span ng-repeat="option in row.value"><input  name="{{row.fieldname}}" type="radio" 
-                  ng-model="form[row.fieldname]" value={{option.val}} 
-                  ng-required="{{row.required || false}}">{{option.label}}</span>
+          <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" 
+            class="toggle-group-container" ng-class="withChecked(row.fieldname)">
+            <label ng-repeat="option in row.value" for="{{'rb-' + $index}}" ng-class="isChecked(row.fieldname, option)"><input  
+                   name="{{row.fieldname}}" type="radio" 
+                   id="{{'rb-' + $index}}" value={{option.val}} ng-model="form[row.fieldname]" 
+                   ng-required="{{row.required || false}}"><span>{{option.label}}</span></label>
           </span>
           <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >
             <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[0].val}"
