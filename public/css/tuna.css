@@ -245,7 +245,7 @@ body{
 }
 
 .itemsframe{
-  max-height: 200px;
+  max-height: 400px;
   height: auto;
   overflow: auto;
   background-color: #fbfcf8;
@@ -1134,8 +1134,39 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 .display_field label,
-#station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
+#station-HS0-011 #current_lot label[for=internal_lot_code-value],
+.reprint_label .display_field label {
   font-size: 12px;
+}
+
+.reprint_label .display_field label {
+  display: inline-block;
+  width: 160px;
+  padding: 0 16px;
+  box-sizing:border-box;
+  text-align: right;
+}
+#print_labels_list table td:last-child {
+  background-image: url(/images/print_icon.svg);
+}
+#print_labels_list td {
+  white-space: nowrap;
+}
+
+.reprint_label .display_field {
+  padding-bottom: 10px;
+}
+
+.reprint_label input {
+  display: inline-block;
+  height: 30px;
+  width: 370px;
+  color: #03223c;
+  font-size: 24px;
+  font-family: 'Lato-Bold';
+  padding: 0 6px;
+  display:inline-block;
+  box-sizing: border-box;
 }
 
 #station-HS0-011 #current_lot label  {
@@ -1490,7 +1521,7 @@ input[name^=weight]::after {
 #select_lot_dropdowns {
   padding-top: 10px;
 }
-#select_lot_dropdowns .select_lot_header {
+#select_lot_dropdowns .select_lot_header, .reprint_label_header {
   position: relative;
   height: 26px;
   font-family: 'Lato-Bold';
@@ -1508,7 +1539,9 @@ input[name^=weight]::after {
   background-repeat: no-repeat;
   background-position: right center;
 }
-#select_lot_dropdowns .select_lot_header #reprint_label_link {
+
+#select_lot_dropdowns .select_lot_header #reprint_label_link,
+.reprint_label_header #retouching_link {
   display: block;
   position: absolute;
   right: 0;
@@ -1519,6 +1552,12 @@ input[name^=weight]::after {
   background-repeat: no-repeat;
   background-position: right center;
 }
+
+#print_labels_list {
+  height:400px;
+  overflow:auto;
+}
+
 
 .blue-button { /* use this for all instances of the blue gradient button objects*/
 /* Rectangle 3 Copy 19: */
