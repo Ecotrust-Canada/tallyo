@@ -81,10 +81,12 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.DisplayCollectionInfo = function(){
     var func = function(response){
-      $scope.current[$scope.station_info.collectiontable] = response.data[0];
-      $scope.current.itemchange = !$scope.current.itemchange;
-      if ($scope.station_info.collectiontable === 'harvester_lot'){
-        $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+      if (response.data.length > 0){
+        $scope.current[$scope.station_info.collectiontable] = response.data[0];
+        $scope.current.itemchange = !$scope.current.itemchange;
+        if ($scope.station_info.collectiontable === 'harvester_lot'){
+          $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+        }
       }
     };
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
@@ -120,6 +122,11 @@ angular.module('scanthisApp.createlotController', [])
         thediv.focus();
       }
     }
+  });
+
+  $scope.$on('collection-change', function(event, args) {
+
+    $scope.current.collectionid = args.id;
   });
 
   $scope.delete = function(){

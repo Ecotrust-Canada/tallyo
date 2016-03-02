@@ -23,6 +23,14 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('separatestring', function() {
+  return function(input) {
+    if (input){
+      return input + ' - ';
+    }
+  };
+})
+
 .filter('sumOfValue', function () {
     return function (data, key) {
         if (angular.isUndefined(data) && angular.isUndefined(key))

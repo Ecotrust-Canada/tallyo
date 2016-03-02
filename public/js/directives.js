@@ -15,6 +15,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
 
+.directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
+
 .directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
 
 .directive('shipmenttotals', function() { return { templateUrl: 'htmlpartials/shipmenttotals.html' }; })

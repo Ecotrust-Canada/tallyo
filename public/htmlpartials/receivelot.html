@@ -1,0 +1,14 @@
+<div ng-controller="NewLotCtrl">
+  
+  <dropdown itemlist="list.harvester"  cfg="the_config" selectedoption="selected" change-fn="GetHar(selected)"></dropdown>
+
+  <select ng-model="form.state">
+    <option value="Dirty">Dirty</option>
+    <option value="Clean">Clean</option>
+  </select>
+
+  <button ng-click="GenInternalLot(form)">Submit</button>
+
+  <dropdown itemlist="list.lot"  cfg="lot_config" selectedoption="lotselected" change-fn="SetLot(selected)"></dropdown>
+
+</div>
