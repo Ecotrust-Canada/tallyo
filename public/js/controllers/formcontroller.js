@@ -183,6 +183,17 @@ angular.module('scanthisApp.formController', [])
       }, 50);
   };
 
+  $scope.isChecked = function(fieldname, option){
+      if (!$scope.form[fieldname]) return 'rb-default';
+      if ($scope.form[fieldname] == option.val) return 'rb-checked';
+      return 'rb-unset';
+  };
+
+  $scope.withChecked = function(fieldname){
+      if (!$scope.form[fieldname]) return 'rbgroup-unset';
+      return null;
+  }
+
 })
 
 //default controller with submit form functions
