@@ -1126,7 +1126,7 @@ div#station-HS0-011 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.display_field label,
+.display_field label, #prev_station_totals label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
   color: #777777;
   text-transform: uppercase;
@@ -1183,10 +1183,13 @@ div#station-HS0-011 {
   width: 590px;
 }
 
+.scanform {
+  border-top: 1px solid #cccccc;
+}
+
 .weighstation_main #current_lot {
   display: table;
   width: 100%;
-  border-bottom: 1px solid #cccccc;
   padding: 10px 0 13px 0;
 }
 
@@ -1203,7 +1206,8 @@ div#station-HS0-011 {
 .weighstation_main #current_lot .display_row:nth-child(1) {
 }
 
-.weighstation_main #current_lot  .field_val {
+.weighstation_main #current_lot  .field_val,
+#prev_station_totals .prev_summary span {
   color: #03223c;
   font-family: 'Lato-Regular';
 }
@@ -1216,7 +1220,7 @@ div#station-HS0-011 {
   display: inline-block;
 }
 
-.weighstation_main #current_lot .display_row:nth-child(2) .field_val {
+.weighstation_main #current_lot .display_row:nth-child(2) .field_val, #prev_station_totals .prev_summary span {
   font-size: 16px;
   display: inline-block;
 }
@@ -1225,8 +1229,9 @@ div#station-HS0-011 {
   content: "#";
 }
 
-.weighstation_main #current_lot label {
+.weighstation_main #current_lot label, #prev_station_totals label {
   font-size: 13px;
+  letter-spacing: 0.064em;
 }
 
 .weighstation_main .form_row {
@@ -1263,6 +1268,80 @@ div#station-HS0-011 {
   width: 360px;
 }
 
+#prev_station_totals {
+  padding-bottom: 14px;
+}
+
+#prev_station_totals label {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: auto;
+}
+
+#prev_station_totals  .prev_summary {
+  display: inline-block;
+}
+#prev_station_totals  .prev_summary span {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+#select_lot_dropdowns .show_choices label {
+  display: block;
+  text-align: left;
+  font-family: 'Lato-Bold';
+  font-size: 18px;
+  color: #005874
+}
+.styled-dropdown {
+  margin: 4px 0 20px 0;
+  width: 540px;
+  padding: 0;
+  /*overflow: hidden;*/
+  position: relative;
+}
+.styled-dropdown select {
+  background: #dbebef;
+  font-family: Lato-Regular;
+  font-size: 14px;
+  color: #03223C;
+  -webkit-appearance: none;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+}
+.weighstation_main .show_choices .styled-dropdown {
+  height: 36px;
+  border: 1px solid #cae2eb;
+}
+
+.weighstation_main .show_choices .styled-dropdown select {
+  width: 100%;
+  display: block;
+  height: 36px;
+}
+
+.styled-dropdown .dd_arrow {
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  right: -5px;
+  top: 0px;
+  background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  pointer-events:none;
+}
+.styled-dropdown .dd_arrow span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/dropdown_arrow_icon.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 input[name^=weight] {
   width: 200px;
   height: 58px;
@@ -1331,7 +1410,8 @@ input[name^=weight]::after {
   background-image: url(/images/manual_input_icon.svg);
 }
 
-.pictogram_btns span + span { 
+.pictogram_btns span + span, 
+.prev_summary span + span { 
   border-left: 1px solid #ccccca;
 }
 
@@ -1422,6 +1502,11 @@ input[name^=weight]::after {
   width: 108px;
   padding-right: 24px;
   font-size: 18px;
+}
+#select_lot_dropdowns .select_lot_header.lot_chosen .show_choices {
+  background-image: url(/images/open_details.png);
+  background-repeat: no-repeat;
+  background-position: right center;
 }
 #select_lot_dropdowns .select_lot_header #reprint_label_link {
   display: block;
@@ -1646,6 +1731,9 @@ fieldset{
     border-image-repeat: initial;
     min-width: -webkit-min-content;
     border: none;
+}
+fieldset[disabled] {
+  opacity: 0.3;
 }
 .addfields{
     margin: 10px 0;
