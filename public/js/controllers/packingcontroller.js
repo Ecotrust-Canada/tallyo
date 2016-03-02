@@ -79,7 +79,7 @@ angular.module('scanthisApp.packingController', [])
     var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
-    $scope.printLabel(data, labels);
+    //$scope.printLabel(data, labels);
   };
 
 
@@ -273,6 +273,74 @@ angular.module('scanthisApp.packingController', [])
 
 
 
+
+})
+
+
+.controller('ThisfishAddCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+  $scope.show_element = '';
+
+  $scope.ListTFCodes = function(){
+    var query = '?lot_number=is.null';
+    var func = function(response){
+      $scope.list.tf_codes = response.data;
+    };
+    DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.ListTFCodes();
+
+  $scope.selectedoption = 'no selected';
+
+  $scope.the_config = 
+  { 
+    limit: "10",
+    order: "-timestamp", 
+    arg: "codes", 
+    fields: ["label", "codes"]
+  };
+
+  $scope.SetCodes = function(codes){
+    $scope.current.codes = JSON.parse(codes);
+    $scope.current.codes.forEach(
+      function(el){
+        $scope.PatchLot($scope.current.collectionid, el);
+      }
+    );
+  };
+
+  $scope.PatchLot = function(lot_number, tf_code){
+    var query = '?tf_code=eq.' + tf_code;
+    var patch = {'lot_number': lot_number};
+    var func = function(response){
+      $scope.ListTFCodes();
+    };
+    DatabaseServices.PatchEntry('thisfish', patch, query, func);
+  };
+
+  $scope.RemoveCodes = function(codes){
+    codes.forEach(
+      function(el){
+        $scope.PatchLot(null, el);
+      }
+    );
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
+      $scope.current.codes = null;
+      $scope.show_element = '';
+      var query = '?lot_number=eq.' + $scope.current.collectionid;
+      var func = function(response){
+        if (response.data.length>0){
+          $scope.current.codes = response.data[0].codes;
+        }
+      };
+      DatabaseServices.GetEntries('group_codes', func, query);
+    }
+  });
 
 })
 

@@ -283,4 +283,64 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
+.controller('ThisfishLabelCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+  $scope.tableconfig = 
+  { id: 2,    
+    cssclass: "fill", 
+    headers: ["Product", "Thisfish Code"], 
+    fields: ["product_code", "tf_code"], 
+  };
+
+
+
+  $scope.ListProducts = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.product = response.data;
+    };
+    DatabaseServices.GetEntries('product', func, query);
+  };
+
+  $scope.ListProducts();
+
+  $scope.selectedProducts = [];
+
+
+  $scope.GetCodes = function(){
+    var query = "?product_code=is.null";
+    var func = function(response){
+      var tf_list = response.data;
+      $scope.selectedProducts.forEach(
+        function(el, index){
+          var nextcode = tf_list[index].tf_code;
+          $scope.assignCode(el.product_code, nextcode, $scope.label);
+        }
+      );
+    };
+    DatabaseServices.GetEntries('thisfish', func, query);
+  };
+
+  $scope.assignCode = function(product_code, tf_code, label){
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+      $scope.ShowCodes(label);
+    };
+    var patch = {'product_code': product_code, 'label':label};
+    DatabaseServices.PatchEntry('thisfish',patch, query, func);
+  };
+
+  $scope.ShowCodes = function(label){
+    var query = '?label=eq.' + label;
+    var func = function(response){
+      $scope.list.codes = response.data;
+    };
+    DatabaseServices.GetEntries('thisfish', func, query);
+  };
+
+
+})
+
+
 ;

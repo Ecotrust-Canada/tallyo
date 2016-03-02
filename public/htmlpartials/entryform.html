@@ -19,7 +19,8 @@
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
           </label>
-          <span ng-if="row.fieldname.substring(0,6)==='weight'" class="field_desc">Weight</span>
+          <span ng-if="row.fieldname.substring(0,6)==='weight' && row.title != 'Weight'" 
+                class="field_desc">Weight</span>
         </div>
         <div class="field">
 
@@ -53,6 +54,8 @@
                   ng-required="{{row.required || false}}">{{option.label}}</span>
           </span>
           <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >
+            <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[0].val}"
+                value="row.value[0].val">{{row.value[0].val}}</span>
             <div  class="onoffswitch">
               <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
                      id="switch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
@@ -62,6 +65,8 @@
                 <span class="onoffswitch-switch"></span>
               </label>
             </div>
+            <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[1].val}"
+                value="row.value[1].val">{{row.value[1].val}}</span>
           </span>
 
           <!--select-->
