@@ -66,6 +66,7 @@ angular.module('scanthisApp', [
       $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
       $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
+    $scope.terminal.substation = 0;
   }
 })
 
@@ -188,7 +189,12 @@ angular.module('scanthisApp', [
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
-})
+  $scope.switchSubstation = function(index) {
+    var substation = $scope.currentstations[index].settings; 
+    $scope.terminal.substation = index;
+    $scope.$parent.current_terminal.name = substation.title;
+  };
 
+})
 ;
 
