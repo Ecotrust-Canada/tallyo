@@ -71,16 +71,6 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.current.selected = "no selected";
-
-  $scope.formatOption = function(item, fields){
-      var option = '', index=0, field_name;
-      for (index = 0; index < fields.length; ++index) {
-          field_name = fields[index];
-          option += item[fieldname];
-          option += (index < fields.length -1 ? ' | ' : '');
-      }
-      return option;
-  };
 })
 
 //packingstation.html, receiveshipment.html, receiving_lots.html, receivingstation.html, weighstation.html

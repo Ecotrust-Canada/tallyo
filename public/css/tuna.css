@@ -208,7 +208,10 @@ body{
   padding-top: 10px;
 }
 
-#station-HS0-001 .panel, #station-HS0-002 .panel, #station-HS0-003 .panel {
+#station-HS0-001 .panel, 
+#station-HS0-002 .panel, 
+#station-HS0-003 .panel,
+#station-HS0-004 .panel {
   width: 550px;
 }
 
@@ -1201,13 +1204,15 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
-.panel.white.weighstation_main {
+.panel.white.weighstation_main,
+.panel.white.packingstation {
   margin-bottom: 24px;
   margin-right: 10px;
 }
 
 #station-HS0-001 .panel.grey,
 #station-HS0-002 .panel.grey,
+#station-HS0-004 .panel.grey,
 #station-HS0-003 .panel.grey {
   vertical-align: top;
   padding: 0;
@@ -1218,18 +1223,26 @@ div#station-HS0-011 {
   border-top: 1px solid #cccccc;
 }
 
-.weighstation_main #current_lot {
+.packingstation .scanform {
+  position: relative;
+  padding-top: 20px;
+}
+
+.weighstation_main #current_lot,
+.packingstation #current_lot{
   display: table;
   width: 100%;
   padding: 10px 0 13px 0;
 }
 
-.weighstation_main #current_lot display {
+.weighstation_main #current_lot display ,
+.packingstation #current_lot display {
   display: table-row;
   width: 100%;
 }
 
-.weighstation_main #current_lot .display_row {
+.weighstation_main #current_lot .display_row ,
+.packingstation #current_lot .display_row {
   display: table-cell;
   width: 50%;
 }
@@ -1243,24 +1256,30 @@ div#station-HS0-011 {
   font-family: 'Lato-Regular';
 }
 
-.weighstation_main #current_lot #internal_lot_code-value {
+.weighstation_main #current_lot #internal_lot_code-value,
+.packingstation #current_lot #internal_lot_code-value {
   font-size: 22px;
 }
 
-.weighstation_main #current_lot .display_row:nth-child(2) label {
+.weighstation_main #current_lot .display_row:nth-child(2) label,
+.packingstation #current_lot .display_row:nth-child(2) label {
   display: inline-block;
 }
 
-.weighstation_main #current_lot .display_row:nth-child(2) .field_val, #prev_station_totals .prev_summary span {
+.weighstation_main #current_lot .display_row:nth-child(2) .field_val, 
+.packingstation #current_lot .display_row:nth-child(2) .field_val, 
+#prev_station_totals .prev_summary span {
   font-size: 16px;
   display: inline-block;
 }
 
-.weighstation_main #current_lot #internal_lot_code-value span::before {
+.weighstation_main #current_lot #internal_lot_code-value span::before,
+.packingstation #current_lot #internal_lot_code-value span::before {
   content: "#";
 }
 
-.weighstation_main #current_lot label, #prev_station_totals label {
+.weighstation_main #current_lot label, #prev_station_totals label,
+.packingstation #current_lot label, #prev_station_totals label {
   font-size: 13px;
   letter-spacing: 0.064em;
 }
@@ -1269,15 +1288,51 @@ div#station-HS0-011 {
   padding-bottom: 12px;
 }
 
-.weighstation_main .form_label {
+.packingstation .form_row {
+  padding-bottom: 18px;
+}
+
+.weighstation_main .form_label,
+.packingstation .form_label {
   display: inline-block;
   width: 166px;
   text-align: right;
   padding-right: 15px;
 }
 
+#create_box_form {
+  width: 370px;
+}
+#create_box_form #form-0 .form_label {
+  width: 144px;
+}
+#create_box_form #form-0 .form_label label {
+  text-align: right;
+}
+#create_box_form #form-0 .field {
+  display: inline-block;
+  width: 200px;
+}
+#create_box_form #form-0 .field input[type=text] {
+  display: inline-block;
+  height: 44px;
+  width: 200px;
+  color: #03223c;
+  font-size: 22px;
+  font-family: 'Lato-Bold';
+  padding: 0 8px;
+  display:inline-block;
+  box-sizing: border-box;
+}
+#create_box_form #form-0 .btn-orange {
+  height: 44px;
+  width: 200px;
+  padding: 6px 15px;
+}
+
 .weighstation_main #form-7 .form_label label,
-.weighstation_main #form-8 .form_label label {
+.weighstation_main #form-8 .form_label label,
+.packingstation .scanform .form_label label {
   font-family: 'Lato-Bold';
   font-size: 22px;
   color: #125974;
@@ -1294,7 +1349,8 @@ div#station-HS0-011 {
 }
 
 .weighstation_main #form-7 .field,
-.weighstation_main #form-8 .field {
+.weighstation_main #form-8 .field,
+.packingstation .scanform .field {
   display: inline-block;
   width: 360px;
 }
@@ -1318,7 +1374,7 @@ div#station-HS0-011 {
   padding: 0 10px;
 }
 
-#select_lot_dropdowns .show_choices label {
+#select_object .show_choices label {
   display: block;
   text-align: left;
   font-family: 'Lato-Bold';
@@ -1342,12 +1398,12 @@ div#station-HS0-011 {
   border: 0;
   border-radius: 0;
 }
-.weighstation_main .show_choices .styled-dropdown {
+..show_choices .styled-dropdown {
   height: 36px;
   border: 1px solid #cae2eb;
 }
 
-.weighstation_main .show_choices .styled-dropdown select {
+.show_choices .styled-dropdown select {
   width: 100%;
   display: block;
   height: 36px;
@@ -1398,8 +1454,19 @@ img.weight-connector {
   left: -7px;
 }
 
-input[name^=weight]:focus {
+input[name^=weight]:focus,
+.packingstation #scaninput:focus {
   border: 5px solid #0076ad;
+}
+.packingstation #scaninput {
+  width: 200px;
+  height: 44px;
+  color: #03223c;
+  font-size: 20px;
+  font-family: 'Lato-Bold';
+  padding: 0 8px;
+  display:inline-block;
+  box-sizing: border-box;
 }
 
 .scale-weight-set {
@@ -1452,7 +1519,18 @@ input[name^=weight]::after {
   position: absolute;
   height: 58px;
   padding: 12px 25px;
+}
+.weighstation_main .form_buttons .btn-orange {
   width: 126px;
+}
+
+.packingstation .scanform .btn-orange {
+  display: inline-block;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  height: 58px;
+  padding: 12px 35px;
 }
 
 #form-8 .form_label label[for=grade] {
@@ -1518,30 +1596,30 @@ input[name^=weight]::after {
   border: none;
 }
 
-#select_lot_dropdowns {
+#select_object {
   padding-top: 10px;
 }
-#select_lot_dropdowns .select_lot_header, .reprint_label_header {
+.select_header {
   position: relative;
   height: 26px;
   font-family: 'Lato-Bold';
   color: #0076AD;
 }
 
-#select_lot_dropdowns .select_lot_header .show_choices {
+#select_object .select_header .show_choices {
   display: inline-block;
   width: 108px;
   padding-right: 24px;
   font-size: 18px;
 }
-#select_lot_dropdowns .select_lot_header.lot_chosen .show_choices {
+#select_object .select_header.lot_chosen .show_choices {
   background-image: url(/images/open_details.png);
   background-repeat: no-repeat;
   background-position: right center;
 }
 
-#select_lot_dropdowns .select_lot_header #reprint_label_link,
-.reprint_label_header #retouching_link {
+#select_object .select_header #reprint_label_link,
+.select_header #retouching_link {
   display: block;
   position: absolute;
   right: 0;
@@ -1596,7 +1674,8 @@ input[name^=weight]::after {
 .btn-orange {
     /* Rectangle 3 Copy 13: */
     background-image: linear-gradient(-180deg, #FA8230 0%, #FD6A0E 30%, #B24400 100%);
-    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.45), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
+    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.35);
+    /*box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.45), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);*/
     border-radius: 5px;
     font-family: Lato-Black;
     font-size: 20px;
