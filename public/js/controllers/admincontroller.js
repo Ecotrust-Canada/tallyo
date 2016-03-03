@@ -326,6 +326,13 @@ angular.module('scanthisApp.AdminController', [])
   $scope.selected = "no selected";
   $scope.stations = $scope.sumStations;
 
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Cases"], 
+    fields: ["weight_total", "boxes"], 
+  };
+
   $scope.ListStations = function(){
     var func = function(response){
       $scope.list.box_inventory = response.data;
@@ -338,16 +345,13 @@ angular.module('scanthisApp.AdminController', [])
   $scope.SetCurrent = function(selected){
     var filtered = $scope.list.box_inventory.filter(
       function(value){
-        return isInArray(value.station_code, selected);
+        return isInArray(value.station_code, selected.station_code);
       });
     $scope.list.boxes = filtered;
 
-    var lists = $scope.stations.filter(
-      function(value){
-        return value.station_code[0] === JSON.parse(selected)[0];
-      });
-    $scope.listconfig = $scope[lists[0].list];
-    $scope.inventorytitle = lists[0].name;
+    $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));
+    $scope.listconfig.headers = selected.headers.concat($scope.listconfig.headers);
+    $scope.listconfig.fields = selected.fields.concat($scope.listconfig.fields);
   };
 })
 ;
