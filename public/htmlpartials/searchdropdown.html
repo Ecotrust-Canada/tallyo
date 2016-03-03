@@ -1,6 +1,12 @@
-<input ng-model="search.case_number">
+{{config.title}}<input ng-model="search[config.searchfield]">
 <div class="dropdown"> 
   <div ng-repeat="value in thelist | filter: search">
-    <div ng-mousedown="select($event, value)">{{value.case_number}}  {{value.internal_lot_code}}/{{value.grade}}/{{value.weight|weightstring}}</div> 
+    <div ng-mousedown="select($event, value[config.arg])">
+      <b>{{value[config.searchfield]}}</b>
+      <span ng-repeat="field in config.fields" ng-switch="field">
+        <span ng-switch-when="weight">{{value.weight|weightstring}} /</span>
+        <span ng-switch-default >{{value[field]}} /</span>
+      </span>  
+    </div> 
   </div>
 </div>

@@ -33,10 +33,6 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
-  $scope.pick = function(value) {
-        console.log('Picked', value)
-    };
-
 })
 
 

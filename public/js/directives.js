@@ -135,6 +135,7 @@ angular.module('scanthisApp.directives', [])
         restrict: 'EA',
         scope: {
             thelist: '=',
+            config: '=',
             onSelect: '&'
         },
         templateUrl: 'htmlpartials/searchdropdown.html',
