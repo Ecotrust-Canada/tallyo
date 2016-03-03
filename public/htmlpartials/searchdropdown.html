@@ -1,0 +1,6 @@
+<input ng-model="search.case_number">
+<div class="dropdown"> 
+  <div ng-repeat="value in thelist | filter: search">
+    <div ng-mousedown="select($event, value)">{{value.case_number}}  {{value.internal_lot_code}}/{{value.grade}}/{{value.weight|weightstring}}</div> 
+  </div>
+</div>

@@ -188,7 +188,7 @@ angular.module('scanthisApp.formController', [])
     var date = moment(new Date()).format();    
     if ($scope.station_info.collectiontable === 'box'){
       $scope.entry[table].station_code = $scope.station_code;
-      $scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
+      //$scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
     }
     if ($scope.station_info.collectiontable === 'shipping_unit'){
       $scope.entry[table].station_code = $scope.station_code;

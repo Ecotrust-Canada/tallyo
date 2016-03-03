@@ -2,12 +2,13 @@
 
   <div  ng-controller="CollectionTableDropDownCtrl">
     <dropdown   itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
+    <input-dropdown thelist="list.collection" on-select="changeFn(value.box_number)"></input-dropdown>
   </div>
-
   <br>
   <div ng-controller="FormSubmitCtrl">
       <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
   </div>
+
 </div>
 
 

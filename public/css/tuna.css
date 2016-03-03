@@ -539,6 +539,29 @@ select{
 
 
 
+.input-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.input-dropdown .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200%;
+    margin-top: 2px;
+    background: #EEE;
+}
+.input-dropdown .dropdown div {
+    cursor: pointer;
+    padding: 2px 5px;
+}
+.input-dropdown input:focus + .dropdown {
+    display: block;
+}
+
+
+
 
 
 

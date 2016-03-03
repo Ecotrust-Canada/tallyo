@@ -129,5 +129,23 @@ angular.module('scanthisApp.directives', [])
   };
 }])
 
+.directive('inputDropdown', function($compile) {
+    
+    return {
+        restrict: 'EA',
+        scope: {
+            thelist: '=',
+            onSelect: '&'
+        },
+        templateUrl: 'htmlpartials/searchdropdown.html',
+        link: function(scope, element, attrs) {
+            element.addClass('input-dropdown');
+            scope.select = function(e, value) {
+                scope.onSelect({$event: e, value: value});
+            };
+        }
+    };
+})
+
 
 ;
