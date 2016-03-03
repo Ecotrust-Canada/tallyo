@@ -1,4 +1,4 @@
-<div  any-other-click class="sectionframe">
+<div><!--  any-other-click class="sectionframe">-->
 
   <div  ng-controller="CollectionTableDropDownCtrl">
     <!--<dropdown   itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>-->
@@ -12,7 +12,8 @@
 </div>
 
 
-<div class="sectionframe" ng-controller="PackingCtrl">
+<div ng-controller="PackingCtrl">
+  <div class="sectionframe">
     {{packingconfig.sectiontitle}}:<br><br>
     
     <fieldset ng-disabled="formdisabled">
@@ -30,6 +31,14 @@
       <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
     
     </fieldset>
+  </div>
+
+
+  <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
+    <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+    <button ng-if="current[station_info.collectiontable]" ng-disabled="list.included.length>0" ng-click="delete()">Delete</button>
+    <button ng-if="current[station_info.collectiontable] && onLabel" ng-disabled="list.included.length===0" ng-click="Complete()">Reprint</button>
+  </div>
 
 
 </div>
@@ -40,10 +49,7 @@
 
 
 
-<div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-  <button ng-if="current[station_info.collectiontable]" ng-disabled="list.included.length>0" ng-click="delete()">Delete</button>
-</div>
+
 
 
 <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>

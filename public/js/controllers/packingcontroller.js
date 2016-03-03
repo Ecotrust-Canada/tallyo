@@ -108,13 +108,21 @@ angular.module('scanthisApp.packingController', [])
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
   
   $scope.PatchObjRemoveContainer = function(id){
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
+    var func = function(response){     
+      $scope.RemoveScan(id);
     };
     var patch = {};
     patch[$scope.station_info.collectionid] = null;
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
+  };
+
+  $scope.RemoveScan = function(itemid){
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
   };
 
 })
