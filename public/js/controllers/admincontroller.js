@@ -333,25 +333,53 @@ angular.module('scanthisApp.AdminController', [])
     fields: ["weight_total", "boxes"], 
   };
 
-  $scope.ListStations = function(){
+  $scope.loinconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Pieces"], 
+    fields: ["weight_total", "pieces"], 
+  };
+
+  $scope.ListBoxes = function(){
     var func = function(response){
       $scope.list.box_inventory = response.data;
     };
     var query = '';
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
-  $scope.ListStations();
+  $scope.ListBoxes();
+
+
+  $scope.ListLoins = function(){
+    var func = function(response){
+      $scope.list.loin_inventory = response.data;
+    };
+    var query = '';
+    DatabaseServices.GetEntries('loin_inventory', func, query);
+  };
+  $scope.ListLoins();
 
   $scope.SetCurrent = function(selected){
-    var filtered = $scope.list.box_inventory.filter(
-      function(value){
-        return isInArray(value.station_code, selected.station_code);
-      });
-    $scope.list.boxes = filtered;
-
-    $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));
+    var filtered;
+    if (selected.item === 'box'){
+      filtered = $scope.list.box_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));      
+    }else if (selected.item === 'loin'){
+      filtered = $scope.list.loin_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.loinconfig));
+    }
+    
+    $scope.list.items = filtered;
     $scope.listconfig.headers = selected.headers.concat($scope.listconfig.headers);
     $scope.listconfig.fields = selected.fields.concat($scope.listconfig.fields);
+
+    
   };
 })
 ;

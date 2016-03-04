@@ -6,7 +6,7 @@
     <md-tab label="Summary"></md-tab>
     <md-tab ng-repeat="station in stations" label="{{station.name}}" md-on-select="SetCurrent(station)">
       <md-tab-body>
-        <list itemlist="list.boxes"  config="listconfig" istotal="true"></list>
+        <list itemlist="list.items"  config="listconfig" istotal="true"></list>
       </md-tab-body>
 
 
