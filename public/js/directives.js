@@ -39,7 +39,8 @@ angular.module('scanthisApp.directives', [])
            config: '=' , 
            filterstring: '=', 
            istotal: '=', 
-           updateFn: '&'},
+           updateFn: '&',
+           secondFn: '&'},
   controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 

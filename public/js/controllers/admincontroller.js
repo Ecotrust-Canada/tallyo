@@ -380,7 +380,7 @@ angular.module('scanthisApp.AdminController', [])
     cellData.forEach(function(el){
       delete el.lot_number;
       delete el.station_code;
-      el.fleet = lot.fleet_vessel;
+      el.fleet = lot.fleet;
       el.supplier = lot.supplier;
       el.supplier_group = lot.supplier_group;
       el.ft_fa_code = harvester.ft_fa_code;

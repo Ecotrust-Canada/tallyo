@@ -46,7 +46,7 @@
 <div class="panel grey">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemoveScanCtrl">
-      <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
+      <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)" ></list>
     </div>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
