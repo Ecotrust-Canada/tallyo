@@ -66,10 +66,14 @@
           <!--select-->
           <span ng-if="row.type === 'select'">
             <!--static select options-->
-            <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" name="{{row.fieldname}}">
-              <option value="">-- select --</option>
-              <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
-            </select>
+            <div class="styled-dropdown">   
+              <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" 
+                      ng-required="{{row.required || false}}" name="{{row.fieldname}}">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
+              </select>
+              <div class="dd_arrow"><span></span></div>
+            </div> 
 
             <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" name="{{row.fieldname}}">
               <option value="">-- select --</option>

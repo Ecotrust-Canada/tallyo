@@ -135,7 +135,9 @@ angular.module('scanthisApp.packingController', [])
       var num = 0;
       var internal_lot_code = '';
       lot_num = 'none';
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      if ($scope.current.collectionid) {
+          $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      }
     }
   };
 

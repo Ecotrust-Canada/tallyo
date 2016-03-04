@@ -125,7 +125,8 @@ angular.module('scanthisApp.createlotController', [])
     var id = $scope.current[$scope.station_info.collectiontable][$scope.station_info.collectionid];
     var querystring = '?' + $scope.station_info.collectionid + '=eq.' + id;
     var func = function(response){
-      $scope.current.collectionid = 'no selected';
+      //$scope.current.collectionid = 'no selected';
+      $scope.current.collectionid = null;
       $scope.list.collection = $scope.list.collection
       .filter(function (el) {
         return el[$scope.station_info.collectionid] !== id;

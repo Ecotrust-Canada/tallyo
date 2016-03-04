@@ -257,6 +257,10 @@ body{
 .itemsframe table, .itemtotals table {
   border: none; 
   border-collapse: collapse;
+  width: 100%;
+}
+.itemsframe table tr:hover {
+  background-color: #2fba6d;
 }
 .itemsframe table td, .itemsframe table th {
   border: 1px solid #cccccc;
@@ -1233,6 +1237,7 @@ div#station-HS0-011 {
   display: table;
   width: 100%;
   padding: 10px 0 13px 0;
+  position: relative;
 }
 
 .weighstation_main #current_lot display ,
@@ -1289,7 +1294,7 @@ div#station-HS0-011 {
 }
 
 .packingstation .form_row {
-  padding-bottom: 18px;
+  padding-bottom: 15px;
 }
 
 .weighstation_main .form_label,
@@ -1316,7 +1321,7 @@ div#station-HS0-011 {
 #create_box_form #form-0 .field input[type=text] {
   display: inline-block;
   height: 44px;
-  width: 200px;
+  width: 204px;
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
@@ -1324,10 +1329,17 @@ div#station-HS0-011 {
   display:inline-block;
   box-sizing: border-box;
 }
+
 #create_box_form #form-0 .btn-orange {
   height: 44px;
-  width: 200px;
+  width: 206px;
   padding: 6px 15px;
+  right: -2px;
+}
+
+#create_box_form #form-0 .form_buttons {
+  margin-top: 16px;
+  margin-bottom: 30px;
 }
 
 .weighstation_main #form-7 .form_label label,
@@ -1398,7 +1410,7 @@ div#station-HS0-011 {
   border: 0;
   border-radius: 0;
 }
-..show_choices .styled-dropdown {
+.show_choices .styled-dropdown {
   height: 36px;
   border: 1px solid #cae2eb;
 }
@@ -1407,6 +1419,11 @@ div#station-HS0-011 {
   width: 100%;
   display: block;
   height: 36px;
+}
+
+#create_box_form .styled-dropdown {
+  width: 200px;
+  margin: 0;
 }
 
 .styled-dropdown .dd_arrow {
@@ -1492,6 +1509,10 @@ input[name^=weight]::after {
   height: 25px;
   top: 26px
 }
+.packingstation #current_lot .pictogram_btns {
+  top: 104px;
+  left: -10px;
+}
 
 .pictogram_btns > span {
   padding: 7px 10px 7px 35px;
@@ -1523,7 +1544,9 @@ input[name^=weight]::after {
 .weighstation_main .form_buttons .btn-orange {
   width: 126px;
 }
-
+.packingstation .scanform .form_buttons {
+  margin-top: 24px;
+}
 .packingstation .scanform .btn-orange {
   display: inline-block;
   right: 0;

@@ -1,4 +1,4 @@
-<div class="panel white packingstation"  any-other-click>
+<div class="panel white packingstation">
   <div id="refresh">
     <a href="#">Refresh</a>
   </div>
@@ -19,10 +19,12 @@
   </div>
   <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-    <button ng-if="current[station_info.collectiontable]" ng-disabled="list.included.length>0" ng-click="delete()">Delete</button>
+    <div ng-if="current[station_info.collectiontable]" ng-show="list.included.length==0" class="pictogram_btns">
+      <span ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+    </div>
   </div>
 
-  <div class="scanform" ng-controller="PackingCtrl">
+  <div class="scanform" ng-controller="PackingCtrl" any-other-click>
       <fieldset ng-disabled="formdisabled">
         
         <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
@@ -52,7 +54,7 @@
 
 </div>
 
-<div class="panel grey">
+<div class="panel grey" ng-show="!formdisabled && list.included.length>0">
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
