@@ -302,17 +302,23 @@ body{
 .itemtotals {
   padding: 12px 0 0 0;
 }
+.itemtotals.table_row {
+  display: table-row;
+}
 .itemtotals table td + td, .itemtotals table th + th { 
   border-left: 1px solid #ccccca;
 }
-.itemtotals table caption {
+.itemtotals table caption,
+.itemtotals .totals_caption {
   color: #125974;
   font-size: 13px;
   font-family: 'Lato-Bold';
   text-align: left;
   margin: 0;
-  padding: 4px 15px 8px 15px;
   text-transform: uppercase;
+}
+.itemtotals table caption {
+  padding: 4px 15px 8px 15px;
 }
 .itemtotals table th {
   color: #005874;
@@ -352,6 +358,28 @@ body{
   color: #195672;
 }
 
+.itemtotals .item_number {
+  display: table-cell;
+  width: 290px;
+  padding-left: 20px;
+  color: #005874;
+  font-size: 20px;
+  font-family: 'Lato-Bold';
+}
+.itemtotals .item_number span {
+  position: relative;
+  top: 2px;
+}
+.itemtotals .totals_bit {
+  display: table-cell;
+  width: 260px;
+}
+.itemtotals .totals_bit .summary {
+  color: #03223c;
+  font-size: 20px;
+  font-family: 'Lato-Black';
+  padding: 8px 0 30px 0;
+}
 .bluefill{
   background-color: #225363;
   color:#B8BFC2;
@@ -1403,7 +1431,7 @@ div#station-HS0-011 {
 .styled-dropdown select {
   background: #dbebef;
   font-family: Lato-Regular;
-  font-size: 14px;
+  font-size: 20px;
   color: #03223C;
   -webkit-appearance: none;
   line-height: 1;
@@ -1631,8 +1659,8 @@ input[name^=weight]::after {
 
 #select_object .select_header .show_choices {
   display: inline-block;
-  width: 108px;
-  padding-right: 24px;
+  width: auto;
+  padding-right: 30px;
   font-size: 18px;
 }
 #select_object .select_header.lot_chosen .show_choices {
