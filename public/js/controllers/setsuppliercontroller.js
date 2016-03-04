@@ -248,6 +248,13 @@ angular.module('scanthisApp.setsupplierController', [])
       });
     }, 50);
   };
+
+
+  $scope.changelot = function(){
+    $scope.current.lot = null;
+    $scope.current.collectionid = null;
+    $rootScope.$broadcast('change-lot');
+  };
 })
 
 //collectiontable: "harvester", collectionid: "harvester_code", displaytable: "harvester_lot", patchtable: "lot", patchid: "lot_number"

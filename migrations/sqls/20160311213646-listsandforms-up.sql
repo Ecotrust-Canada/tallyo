@@ -9,11 +9,17 @@ CREATE OR REPLACE VIEW loin_scan AS
     loin.state,
     scan.station_code,
     loin.grade,
-    loin.weight_1
+    loin.weight_1,
+    lot.internal_lot_code,
+    harvester.ft_fa_code
    FROM scan,
-    loin
+    loin,
+    harvester,
+    lot
   WHERE scan.loin_number::text = loin.loin_number::text
-  GROUP BY loin.loin_number, scan.box_number, loin.state, loin.lot_number, loin.grade, loin.weight_1, scan.station_code;
+  and loin.lot_number = lot.lot_number
+  and harvester.harvester_code = lot.harvester_code
+  GROUP BY loin.loin_number, harvester.ft_fa_code, lot.internal_lot_code, scan.box_number, loin.state, loin.lot_number, loin.grade, loin.weight_1, scan.station_code;
 
 ALTER TABLE loin_scan
   OWNER TO tuna_processor;
@@ -131,3 +137,8 @@ CREATE OR REPLACE VIEW expandedlotlocations AS
 
 ALTER TABLE expandedlotlocations
   OWNER TO tuna_processor;
+
+  alter table box add column internal_lot_code varchar;
+
+
+

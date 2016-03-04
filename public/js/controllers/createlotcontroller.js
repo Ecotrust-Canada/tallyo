@@ -115,6 +115,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.$watch('current.collectionid', function() {
     if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
       if ($scope.current.collectionid === 'no selected'){
+        $scope.current.collectionid = null;
         $scope.current[$scope.station_info.collectiontable] = null;
         $scope.current.itemchange = !$scope.current.itemchange;
       }
@@ -133,6 +134,11 @@ angular.module('scanthisApp.createlotController', [])
     $scope.current.collectionid = args.id;
   });
 
+  $scope.$on('change-lot', function(event) {
+
+    $scope.current.collectionid = null;
+  });
+
   $scope.delete = function(){
     var id = $scope.current[$scope.station_info.collectiontable][$scope.station_info.collectionid];
     var querystring = '?' + $scope.station_info.collectionid + '=eq.' + id;
@@ -145,6 +151,13 @@ angular.module('scanthisApp.createlotController', [])
       });
     };
     DatabaseServices.RemoveEntry($scope.station_info.collectiontable, querystring, func);
+  };
+
+  $scope.MakeQR = function(){
+    var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
+    var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
+    console.log(data, labels);
+    $scope.printLabel(data, labels);
   };
 
 })
