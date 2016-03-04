@@ -198,7 +198,7 @@ angular.module('scanthisApp.formController', [])
       $scope.entry[table].station_code = $scope.station_code;
       $scope.entry[table].processor_code = $scope.processor;
     }
-    if ($scope.options && $scope.options.receivelot){
+    if ($scope.options && $scope.options.receiveharvester){
       $scope.entry.harvester.processor_code = $scope.processor;
       $scope.entry.harvester.active = true;
     }

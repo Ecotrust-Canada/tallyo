@@ -43,6 +43,10 @@
 <div ng-if="station_info.itemtotals" class="sectionframe" ng-controller="TotalsCtrl">
   <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
 </div>
+<div ng-controller="CompleteLotCtrl">
+  <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" ng-disabled="current.completed===true" ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
+  {{current.completed}}
+</div>
 
 <div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
   <div ng-controller="RemoveScanCtrl">

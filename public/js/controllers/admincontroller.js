@@ -382,4 +382,29 @@ angular.module('scanthisApp.AdminController', [])
     
   };
 })
+
+
+.controller('CompleteLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
+
+  $scope.CompleteLot = function(lot_number, station_codes){
+    var patch = {'in_progress': false};
+    var func = function(response){
+      //window.location.reload();
+      $rootScope.$broadcast('collection-change', {id: 'no selected'});
+    };
+    var r = confirm("Are you sure you want to complete this lot?");
+    if (r === true) {
+      for (var i=0;i<station_codes.length;i++){
+        var station_code=station_codes[i];
+        var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;     
+          DatabaseServices.PatchEntry('lotlocations',patch, query, func);
+      }
+    }
+  };
+
+})
+
+
+
+
 ;

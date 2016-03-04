@@ -72,6 +72,11 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.current.selected = "no selected";
 
+  $scope.$on('collection-change', function(event, args) {
+    $scope.currentlots();
+    $scope.completedlots();
+  });
+
 })
 
 //packingstation.html, receiveshipment.html, receiving_lots.html, receivingstation.html, weighstation.html
@@ -225,7 +230,7 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 //updates the lotlocations table
-.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
+/*.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
 
   $scope.CompleteLot = function(lot_number){
     var patch = {'in_progress': false};
@@ -242,7 +247,7 @@ angular.module('scanthisApp.createlotController', [])
     }     
   };
 
-})
+})*/
 
 
 //reprint.html - get list of loins for station, reprint function
