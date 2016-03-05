@@ -259,14 +259,14 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.cssWarn = function(lot, stn) {
-    if ( lot[stn.code] ) { 
+    if ( lot[stn.code] && lot[stn.code].summary) { 
       return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
     }
     return false;  
   };
 
   $scope.cssOk = function(lot, stn) {
-    if ( lot[stn.code] ) { 
+    if ( lot[stn.code] && lot[stn.code].summary) { 
       return lot[stn.code].summary[$scope.station_info.trackBy]===lot[stn.code].prev; 
     }
     return false;
