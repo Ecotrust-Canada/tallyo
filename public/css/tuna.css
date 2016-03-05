@@ -211,7 +211,8 @@ body{
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
-#station-HS0-004 .panel {
+#station-HS0-004 .panel,
+#station-HS0-005 .panel {
   width: 550px;
 }
 
@@ -374,11 +375,18 @@ body{
   display: table-cell;
   width: 260px;
 }
+.itemtotals .totals_caption {
+  padding-left: 10px;
+}
 .itemtotals .totals_bit .summary {
   color: #03223c;
   font-size: 20px;
   font-family: 'Lato-Black';
   padding: 8px 0 30px 0;
+}
+.itemtotals .totals_bit .summary span {
+  display: inline-block;
+  padding: 0 10px;
 }
 .bluefill{
   background-color: #225363;
@@ -1245,7 +1253,8 @@ div#station-HS0-011 {
 #station-HS0-001 .panel.grey,
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
-#station-HS0-003 .panel.grey {
+#station-HS0-003 .panel.grey,
+#station-HS0-005 .panel.grey {
   vertical-align: top;
   padding: 0;
   width: 590px;
@@ -1284,6 +1293,7 @@ div#station-HS0-011 {
 }
 
 .weighstation_main #current_lot  .field_val,
+.packingstation #current_lot .field_val,
 #prev_station_totals .prev_summary span {
   color: #03223c;
   font-family: 'Lato-Regular';
@@ -1297,6 +1307,11 @@ div#station-HS0-011 {
 .weighstation_main #current_lot .display_row:nth-child(2) label,
 .packingstation #current_lot .display_row:nth-child(2) label {
   display: inline-block;
+}
+
+.weighstation_main #current_lot .display_row:nth-child(1) .field_val, 
+.packingstation #current_lot .display_row:nth-child(1) .field_val {
+  font-size: 22px;
 }
 
 .weighstation_main #current_lot .display_row:nth-child(2) .field_val, 
@@ -1333,23 +1348,17 @@ div#station-HS0-011 {
   padding-right: 15px;
 }
 
-#create_box_form {
+#create_box_form #form-0 {
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
   width: 144px;
 }
-#create_box_form #form-0 .form_label label {
-  text-align: right;
-}
-#create_box_form #form-0 .field {
-  display: inline-block;
-  width: 200px;
-}
-#create_box_form #form-0 .field input[type=text] {
+
+
+#create_box_form .field input[type=text] {
   display: inline-block;
   height: 44px;
-  width: 204px;
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
@@ -1358,6 +1367,13 @@ div#station-HS0-011 {
   box-sizing: border-box;
 }
 
+#create_box_form #form-0 .field input[type=text] {
+  width: 204px;
+}
+
+#create_box_form #form-4 .field input[type=text] {
+  width: 354px;
+}
 #create_box_form #form-0 .btn-orange {
   height: 44px;
   width: 206px;
@@ -1367,7 +1383,10 @@ div#station-HS0-011 {
 
 #create_box_form #form-0 .form_buttons {
   margin-top: 16px;
-  margin-bottom: 30px;
+}
+
+#select_object .dropdown-container {
+  margin-top: 24px;
 }
 
 .weighstation_main #form-7 .form_label label,
@@ -1420,6 +1439,23 @@ div#station-HS0-011 {
   font-family: 'Lato-Bold';
   font-size: 18px;
   color: #005874
+}
+
+#form-0 .form_label label,
+#form-4 .form_label label {
+  text-align: right;
+}
+
+#form-0 .field, #form-4 .field {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+#create_box_form #form-0 .field {
+  width: 200px;
+}
+#create_box_form #form-4 .field {
+  width: auto;
 }
 .styled-dropdown {
   margin: 4px 0 20px 0;
@@ -1537,9 +1573,16 @@ input[name^=weight]::after {
   height: 25px;
   top: 26px
 }
-.packingstation #current_lot .pictogram_btns {
+#station-HS0-004 .packingstation #current_lot .pictogram_btns {
   top: 104px;
   left: -10px;
+}
+#station-HS0-005 .packingstation #current_lot {
+}
+#station-HS0-005 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
 }
 
 .pictogram_btns > span {
@@ -1558,7 +1601,8 @@ input[name^=weight]::after {
 }
 
 .pictogram_btns span + span, 
-.prev_summary span + span { 
+.prev_summary span + span,
+.summary span + span { 
   border-left: 1px solid #ccccca;
 }
 
@@ -1582,6 +1626,14 @@ input[name^=weight]::after {
   position: absolute;
   height: 58px;
   padding: 12px 35px;
+}
+
+#form-4 .btn-orange {
+  left: 182px;
+  width: 200px;
+  height: 44px;
+  font-size: 18px;
+  padding: 6px 25px;
 }
 
 #form-8 .form_label label[for=grade] {
