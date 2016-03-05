@@ -189,11 +189,6 @@ body{
   padding: 20px;
 }
 
-.station .panel:first-child {
-  padding-top: 30px;
-  position: relative;
-}
-
 .panel.grey {
   background-color: #ebebeb;
 }
@@ -1178,11 +1173,17 @@ div#station-HS0-011 {
 
 #station-HS0-011 .display_field label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value],
-.reprint_label .display_field label {
+.reprint_label .display_field label,
+#edit_shipment .display_field label {
   font-size: 12px;
 }
 
-.reprint_label .display_field label {
+#edit_shipment .display_field span {
+  font-size: 16px;
+}
+
+.reprint_label .display_field label,
+#edit_shipment .display_field label {
   display: inline-block;
   width: 160px;
   padding: 0 16px;
@@ -1192,20 +1193,26 @@ div#station-HS0-011 {
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
-#print_labels_list td {
+table#shipments_list td:last-child {
+  background-image: url(/images/edit_icon.svg);
+}
+#print_labels_list td,
+#shipments_list td {
   white-space: nowrap;
 }
 
-.reprint_label .display_field {
+.reprint_label .display_field,
+#edit_shipment .display_field {
   padding-bottom: 10px;
 }
 
-.reprint_label input {
+.reprint_label input,
+#edit_shipment input[type=text] {
   display: inline-block;
-  height: 30px;
+  height: 36px;
   width: 370px;
   color: #03223c;
-  font-size: 24px;
+  font-size: 22px;
   font-family: 'Lato-Bold';
   padding: 0 6px;
   display:inline-block;
@@ -1253,11 +1260,15 @@ div#station-HS0-011 {
 #station-HS0-001 .panel.grey,
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
-#station-HS0-003 .panel.grey,
-#station-HS0-005 .panel.grey {
+#station-HS0-003 .panel.grey {
   vertical-align: top;
   padding: 0;
   width: 590px;
+}
+
+.station .panel:first-child {
+  padding-top: 30px;
+  position: relative;
 }
 
 .scanform {
@@ -1294,6 +1305,7 @@ div#station-HS0-011 {
 
 .weighstation_main #current_lot  .field_val,
 .packingstation #current_lot .field_val,
+#edit_shipment .display_field span,
 #prev_station_totals .prev_summary span {
   color: #03223c;
   font-family: 'Lato-Regular';
@@ -1636,6 +1648,14 @@ input[name^=weight]::after {
   padding: 6px 25px;
 }
 
+#edit_shipment .btn-orange {
+  height: 44px;
+  width: 370px;
+  font-size: 18px;
+  padding: 6px 25px;
+  left: 159px;
+}
+
 #form-8 .form_label label[for=grade] {
   top: -2px;
 }
@@ -1735,7 +1755,7 @@ input[name^=weight]::after {
 }
 
 #print_labels_list {
-  height:400px;
+  max-height:400px;
   overflow:auto;
 }
 
