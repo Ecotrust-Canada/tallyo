@@ -145,6 +145,7 @@ angular.module('scanthisApp', [
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
       $scope.addform = formconfigs[settings.forms.addform];
+      $scope.addform2 = formconfigs[settings.forms.addform2];
     }
 
     if (settings.dropdowns){

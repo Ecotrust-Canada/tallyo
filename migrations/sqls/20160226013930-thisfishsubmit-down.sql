@@ -1,3 +1,8 @@
+drop view box_product;
+
+alter table product drop column traceable;
+
+
 DROP VIEW harvester_lot;
 
 CREATE OR REPLACE VIEW harvester_lot AS 

@@ -143,11 +143,18 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollectionItems = function(){
+    var table;
+    if ($scope.station_info.itemtable === 'box'){
+      table = 'box_product';
+    }
+    else{
+      table = $scope.station_info.itemtable;
+    }
     var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
     var func = function(response){
       $scope.list.included = response.data;
     };
-    DatabaseServices.GetEntries($scope.station_info.itemtable, func, query);
+    DatabaseServices.GetEntries(table, func, query);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {

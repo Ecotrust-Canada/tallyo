@@ -23,6 +23,16 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+
+.filter('istraceable', function() {
+  return function(input) {
+    if (String(input) === 'true'){
+        return 'Traceable';
+    }
+    else return '';
+  };
+})
+
 .filter('sumOfValue', function () {
     return function (data, key) {
         if (angular.isUndefined(data) && angular.isUndefined(key))

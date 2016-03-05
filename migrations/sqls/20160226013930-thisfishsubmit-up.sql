@@ -108,3 +108,23 @@ ALTER TABLE totals_by_lot
 alter table box drop column internal_lot_code;
 
 
+
+alter table product add column traceable boolean;
+
+
+create view box_product as 
+select
+box.box_number,
+box.station_code,
+box.lot_number,
+box.weight,
+product.product_code,
+product.product_type,
+product.trade_unit,
+product.sap_item_code
+from box, product
+where box.product_code = product.product_code;
+
+alter view box_product owner to tuna_processor;
+
+
