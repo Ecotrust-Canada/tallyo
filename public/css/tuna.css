@@ -536,13 +536,52 @@ a:hover {
 
 
 .dropdownoptions{
-  font-size: 10px;
+  font-size: 14px;
+  color: #777777;
+  font-family: 'Lato-Bold';
+  padding-top: 3px;
+}
+.dropdownoptions span.dd_option {
+  display: inline-block;
+  padding-right: 6px;
+  vertical-align: top;
+  position: relative;
+  top: 2px;
+}
+.add-field-option {
+  display: inline-block;
+  background-image: url(/images/add_option_icon.svg);
+  width: 24px;
+  height: 24px;
 }
 
 .short{
-  max-width:115px;
+  max-width:200px;
+  margin: 10px 10px 10px 0;
 }
-
+.edit-options {
+  position: relative;
+}
+.edit-options button {
+  position: absolute;
+  top: -37px;
+  left: 281px;
+  padding-left: 32px;
+  height: 32px;
+  background-color: transparent;
+  background-repeat:no-repeat;
+  background-position: left center;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+.edit-options button.edit {
+  background-image: url(/images/edit_icon.svg);
+}
+.edit-options button.hide {
+  background-image: url(/images/hide_icon.svg);
+}
 
 .fill{
   width: 100%;
@@ -1344,7 +1383,8 @@ table#shipments_list td:last-child {
   letter-spacing: 0.064em;
 }
 
-.weighstation_main .form_row {
+.weighstation_main .form_row,
+#form-2 .form_row {
   padding-bottom: 12px;
 }
 
@@ -1353,11 +1393,16 @@ table#shipments_list td:last-child {
 }
 
 .weighstation_main .form_label,
-.packingstation .form_label {
+.packingstation .form_label,
+#form-2 .form_label {
   display: inline-block;
   width: 166px;
   text-align: right;
   padding-right: 15px;
+}
+#form-2 {
+  background-color: white;
+  padding: 5px 15px 20px 15px;
 }
 
 #create_box_form #form-0 {
@@ -1366,11 +1411,18 @@ table#shipments_list td:last-child {
 #create_box_form #form-0 .form_label {
   width: 144px;
 }
+#form-2 .form_label {
+  width: 190px;
+}
+#form-2 .form_label {
+  vertical-align: top;
+  padding-top: 10px;
+}
 
 
-#create_box_form .field input[type=text] {
+#create_box_form .field input[type=text],
+#form-2 .field input[type=text] {
   display: inline-block;
-  height: 44px;
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
@@ -1379,7 +1431,16 @@ table#shipments_list td:last-child {
   box-sizing: border-box;
 }
 
-#create_box_form #form-0 .field input[type=text] {
+#create_box_form .field input[type=text] {
+  height: 44px;
+}
+
+#form-2 .field input[type=text] {
+  height: 40px;
+}
+
+#create_box_form #form-0 .field input[type=text],
+#form-2 #form-0 .field input[type=text] {
   width: 204px;
 }
 
@@ -1445,7 +1506,8 @@ table#shipments_list td:last-child {
   padding: 0 10px;
 }
 
-#select_object .show_choices label {
+#select_object .show_choices label,
+#form-2 .form_label label {
   display: block;
   text-align: left;
   font-family: 'Lato-Bold';
@@ -1454,15 +1516,21 @@ table#shipments_list td:last-child {
 }
 
 #form-0 .form_label label,
+#form-2 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
 
-#form-0 .field, #form-4 .field {
+#form-0 .field, 
+#form-2 .field, 
+#form-4 .field {
   display: inline-block;
   box-sizing: border-box;
 }
 
+#form-3 .field {
+  width: 300px;
+}
 #create_box_form #form-0 .field {
   width: 200px;
 }
@@ -1486,14 +1554,23 @@ table#shipments_list td:last-child {
   border: 0;
   border-radius: 0;
 }
+#form-2 .styled-dropdown {
+  width: 270px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
 .show_choices .styled-dropdown {
   height: 36px;
   border: 1px solid #cae2eb;
 }
 
 .show_choices .styled-dropdown select {
-  width: 100%;
   display: block;
+}
+.show_choices .styled-dropdown select,
+#form-2 .styled-dropdown select {
+  width: 100%;
   height: 36px;
 }
 
@@ -1551,6 +1628,14 @@ input[name^=weight]:focus,
 .packingstation #scaninput:focus {
   border: 5px solid #0076ad;
 }
+
+.dropdownoptions .remove_option {
+  display: inline-block;
+  background-image: url(/images/remove_icon.svg);
+  width: 20px;
+  height: 20px;
+}
+
 .packingstation #scaninput {
   width: 200px;
   height: 44px;
