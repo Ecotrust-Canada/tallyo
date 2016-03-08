@@ -965,6 +965,26 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield .value
 .card_bit .value span:nth-child(2)::before {
   content: url(/images/delim_icon.svg);
 }
+.input-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.input-dropdown .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150%;
+    margin-top: 2px;
+    background: #EEE;
+}
+.input-dropdown .dropdown div {
+    cursor: pointer;
+    padding: 2px 5px;
+}
+.input-dropdown input:focus + .dropdown {
+    display: block;
+}
 
 table#admin_manage_lots tr .lot-station-cell .item-details table {
   border: none; border-collapse: collapse;

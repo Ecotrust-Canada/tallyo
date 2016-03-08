@@ -19,13 +19,15 @@
   </tr>
   <tr ng-if="istotal === true">
     <td>Total:</td>
-    <td ng-if="itemlist[0].grade && itemlist[0].size"></td>
-    <td ng-if="itemlist[0].species"></td>
-    <td ng-if="itemlist[0].weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</td>
-    <td ng-if="itemlist[0].weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</td>
-    <td ng-if="itemlist[0].weight">{{itemlist | sumOfValue:'weight'| weightstring}}</td>
-    <td ng-if="itemlist[0].pieces">{{itemlist | sumOfValue:'pieces'}}pcs</td>
-    <td ng-if="itemlist[0].boxes">{{itemlist | sumOfValue:'boxes'}} boxes</td>
+    <td ng-repeat="name in config.fields.slice(1, config.fields.length)" ng-switch="name">
+      <span ng-switch-when="weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</span>
+      <span ng-switch-when="weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</span>
+      <span ng-switch-when="weight_total">{{itemlist | sumOfValue:'weight_total'| weightstring}}</span>
+      <span ng-switch-when="weight">{{itemlist | sumOfValue:'weight'| weightstring}}</span>
+      <span ng-switch-when="pieces">{{itemlist | sumOfValue:'pieces'}}pcs</span>
+      <span ng-switch-when="boxes">{{itemlist | sumOfValue:'boxes'}} boxes</span>
+      <span ng-switch-default></span>
+    </td>
   </tr>
 </table>
 

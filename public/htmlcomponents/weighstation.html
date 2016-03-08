@@ -3,6 +3,7 @@
     <a href="#">Refresh</a>
   </div>
   <!-- loadcurrentcollection ng-if="options.loadcurrentcollection"></loadcurrentcollection -->
+  <receivelot ng-if="options.receivelot"></receivelot>
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
 
@@ -41,6 +42,10 @@
     <hr>
   </div>
 
+</div>
+<div ng-controller="CompleteLotCtrl">
+  <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" ng-disabled="current.completed===true" ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
+  {{current.completed}}
 </div>
 
 <div class="panel grey">

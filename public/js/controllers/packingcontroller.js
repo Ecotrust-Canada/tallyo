@@ -108,13 +108,21 @@ angular.module('scanthisApp.packingController', [])
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
   
   $scope.PatchObjRemoveContainer = function(id){
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
+    var func = function(response){     
+      $scope.RemoveScan(id);
     };
     var patch = {};
     patch[$scope.station_info.collectionid] = null;
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func);
+  };
+
+  $scope.RemoveScan = function(itemid){
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
   };
 
 })
@@ -132,6 +140,7 @@ angular.module('scanthisApp.packingController', [])
     else{
       var harvester_code = 'none';
       var box_weight = CalculateBoxWeight($scope.list.included);
+      var best_before = null;
       var num = 0;
       var internal_lot_code = '';
       lot_num = 'none';
@@ -143,37 +152,38 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.GetInfo = function(lot_num){
     var func = function(response){
-      var internal_lot_code = response.data[0].internal_lot_code;
+      var internal_lot_code = cutString(response.data[0].internal_lot_code, 4, 5).substring(0, 8);
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;
+      var best_before = moment(response.data[0].timestamp).add(2, 'years').format();
       
-      $scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      $scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
-  $scope.GetHarvester = function(box_weight, lot_num, num, harvester_code, internal_lot_code){
+  $scope.GetHarvester = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
     var func = function(response){
       if (response.data.length > 0){
         $scope.current.harvester = response.data[0];
       }
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code);
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
     };
     var query = '?harvester_code=eq.' + harvester_code;
     DatabaseServices.GetEntryNoAlert('harvester', func, query);
   };
 
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
         $scope.current.box.ft_fa_code = $scope.current.harvester.ft_fa_code;
       }
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code};
+    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code, 'best_before_date': best_before};
     if (lot_num !== 'none'){
       patch.lot_number = lot_num;
     }
@@ -282,11 +292,8 @@ angular.module('scanthisApp.packingController', [])
       if(thediv){
         thediv.focus();
       }
-
-
-
-
 })
+
 
 ;
 
