@@ -86,7 +86,7 @@
                  ng-init="editdrop[row.fieldname]=true" id="edit-options-{{row.fieldname}}" class="edit-options">            
               <!--button to edit dropdown options-->
               <button id="{{row.fieldname}}-{{config.id}}" 
-                      ng-class="{edit: editdrop[row.fieldname], hide: !editdrop[row.fieldname]}" 
+                      ng-class="{edit: editdrop[row.fieldname], close_edit: !editdrop[row.fieldname]}" 
                       ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
                 <span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span>
               </button> 
