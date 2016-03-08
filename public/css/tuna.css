@@ -48,6 +48,7 @@ input {
   box-sizing: inherit;
 }
 */
+
 body{
     font-family: "proxima-nova-1", Verdana, sans-serif;
     font-size: 20px;
@@ -387,6 +388,17 @@ body{
   display: inline-block;
   padding: 0 10px;
 }
+
+.bufferedscroll {
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.bufferedscroll table {
+  width: 100%;
+}
+
 .bluefill{
   background-color: #225363;
   color:#B8BFC2;
@@ -1597,6 +1609,9 @@ table#shipments_list td:last-child {
 #create_box_form #form-4 .field {
   width: auto;
 }
+.show_choices .dropdown_container{
+  margin-top: 15px;
+} 
 .styled-dropdown {
   margin: 4px 0 20px 0;
   width: 540px;

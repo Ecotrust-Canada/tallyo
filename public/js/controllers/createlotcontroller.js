@@ -173,6 +173,7 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
+
 })
 
 
@@ -293,6 +294,19 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.ListLots();
 })
+
+
+.controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.limit = 10;
+
+  $scope.ResetLimit = function(){
+    $scope.limit = 5;
+  };
+
+})
+
+
 
 
 ;
