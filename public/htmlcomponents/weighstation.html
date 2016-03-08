@@ -42,8 +42,9 @@
   <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
 </div>
 
-<div class="sectionframe itemsframe" ng-controller="DisplayItemsCtrl">
-  <div ng-controller="RemoveScanCtrl">
-    <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
-  </div>
+<div class="sectionframe" ng-controller="DisplayItemsCtrl">
+</div>
+
+<div ng-controller="RemoveScanCtrl">
+  <bufferedscrolllist itemlist="list.included"  limit="limit" config="itemlistconfig" update-fn="RemoveItem(str)"></bufferedscrolllist>
 </div>

@@ -1,15 +1,17 @@
 
 <div ng-controller="ReprintCtrl">
-  <div>
+
     <br>
     <b>Filter by: </b><br>
     <label>Loin Number<input ng-model="search.loin_number"></label><br>
     <label>Lot Number<input ng-model="search.lot_number"></label><br>
     <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
     <label>Supplier<input ng-model="search.supplier"></label><br><br>
-    <div style="height:400px;overflow:scroll;">
-      <list itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></list>
+
+    <div style="width:700px">
+    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></bufferedscrolllist>
     </div>
-  </div>
+
+
 </div>
 
