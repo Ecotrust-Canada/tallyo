@@ -1427,9 +1427,14 @@ table#shipments_list td:last-child {
 .packingstation .form_label,
 #form-2 .form_label {
   display: inline-block;
-  width: 150px;
   text-align: right;
   padding-right: 15px;
+}
+.weighstation_main .form_label {
+  width: 150px;
+}
+#form-4 .form_label {
+  width: 170px;
 }
 #form-2 {
   background-color: white;
@@ -1503,8 +1508,8 @@ table#shipments_list td:last-child {
   margin-top: 24px;
 }
 
-.weighstation_main #form-7 .form_label label,
-.weighstation_main #form-8 .form_label label,
+.weighstation_main .form_label label,
+.weighstation_main .form_label label,
 .packingstation .scanform .form_label label {
   font-family: 'Lato-Bold';
   font-size: 22px;
@@ -1521,8 +1526,8 @@ table#shipments_list td:last-child {
   color: #125974;
 }
 
-.weighstation_main #form-7 .field,
-.weighstation_main #form-8 .field,
+.weighstation_main .field,
+.weighstation_main .field,
 .packingstation .scanform .field {
   display: inline-block;
   width: 360px;
@@ -1557,6 +1562,7 @@ table#shipments_list td:last-child {
 }
 
 #form-0 .form_label label,
+#form-20 .form_label label,
 #form-2 .form_label label,
 #form-4 .form_label label {
   text-align: right;
@@ -1752,7 +1758,8 @@ input[name^=weight]::after {
   padding: 12px 25px;
 }
 #form-8 .form_buttons .btn-orange,
-#form-7 .form_buttons .btn-orange {
+#form-7 .form_buttons .btn-orange,
+#form-20 .form_buttons .btn-orange {
   right: 16px;
 }
 .weighstation_main .form_buttons .btn-orange {
@@ -1771,7 +1778,7 @@ input[name^=weight]::after {
 }
 
 #form-4 .btn-orange {
-  left: 182px;
+  left: 185px;
   width: 200px;
   height: 44px;
   font-size: 18px;
@@ -1794,10 +1801,8 @@ input[name^=weight]::after {
   top: -12px;
 }
 
-#form-8 .toggle-group-container,
-#form-7 .toggle-group-container {
+.toggle-group-container {
   display: inline-block;
-  width: 360px;
   height: 50px;
   background: #DBEBEF;
   border: 1px solid #CAE2EB;
@@ -1805,37 +1810,46 @@ input[name^=weight]::after {
   border-radius: 5px;
   position: relative;
 }
+#radio-grade {
+  width: 360px;
+}
 
-#form-8 .toggle-group-container.rbgroup-unset,
-#form-7 .toggle-group-container.rbgroup-unset {
+.toggle-group-container.rbgroup-unset,
+.toggle-group-container.rbgroup-unset {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
   border: none;
 }
 
-#form-8 .toggle-group-container input[type=radio],
-#form-7 .toggle-group-container input[type=radio] {
+.toggle-group-container input[type=radio],
+.toggle-group-container input[type=radio] {
   display: none;
 }
-#form-8 .toggle-group-container label,
-#form-7 .toggle-group-container label {
+
+.toggle-group-container label {
   margin: 0;
   display: inline-block;
-  width: 60px;
   height: 50px;
   box-sizing: border-box;
 }
-#form-8 .toggle-group-container label.rb-unset + label.rb-unset,
-#form-7 .toggle-group-container label.rb-unset + label.rb-unset {
+#radio-grade.toggle-group-container label {
+  width: 60px;
+}
+#radio-state.toggle-group-container label {
+  width: 80px;
+}
+
+.toggle-group-container label.rb-unset + label.rb-unset,
+.toggle-group-container label.rb-unset + label.rb-unset {
   border-left: 1px solid #cae2eb;
 }
-#form-8 .toggle-group-container.rbgroup-unset label + label,
-#form-7 .toggle-group-container.rbgroup-unset label + label {
+.toggle-group-container.rbgroup-unset label + label,
+.toggle-group-container.rbgroup-unset label + label {
   border-left: 1px solid rgba(1,31,54,0.5);
 }
 
-#form-8 .toggle-group-container label span,
-#form-7 .toggle-group-container label span {
+.toggle-group-container label span,
+.toggle-group-container label span {
   text-align:center;
   display: block;
   font-family: 'Lato-Bold';
@@ -1843,19 +1857,25 @@ input[name^=weight]::after {
   color: #0076AD;
   line-height: 50px;
 }
-#form-8 .toggle-group-container.rbgroup-unset label span,
-#form-7 .toggle-group-container.rbgroup-unset label span {
+.toggle-group-container.rbgroup-unset label span,
+.toggle-group-container.rbgroup-unset label span {
   color: white;
 }
 
-#form-8 .toggle-group-container input:checked + span,
-#form-7 .toggle-group-container input:checked + span {
+.toggle-group-container input:checked + span {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
   border-radius: 5px;
   color: white;
-  width:60px;
   border: none;
+}
+
+#radio-grade.toggle-group-container input:checked + span { 
+  width:60px;
+}
+
+#radio-state.toggle-group-container input:checked + span { 
+  width:80px;
 }
 
 #select_object {
@@ -1959,6 +1979,7 @@ input[name^=weight]::after {
     font-family: 'Lato-Bold';
     text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
 }
+
 
 .btn-light {
     display: inline-block;
