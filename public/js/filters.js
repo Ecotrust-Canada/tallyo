@@ -24,12 +24,22 @@ angular.module('scanthisApp.filters', [])
 })
 
 
+
 .filter('istraceable', function() {
   return function(input) {
     if (String(input) === 'true'){
         return 'Traceable';
     }
     else return '';
+  };
+})
+
+.filter('separatestring', function() {
+  return function(input) {
+    if (input){
+      return input + ' - ';
+    }
+
   };
 })
 

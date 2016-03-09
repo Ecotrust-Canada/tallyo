@@ -12,7 +12,8 @@
       <searchtext></searchtext>   
     </div>
 
-    <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" hide-fn="RemoveHarvester(str)" filterstring="searchText" displaycfg="adddisplay"></expandedlist>
+    <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" 
+                  hide-fn="RemoveHarvester(str)" filterstring="searchText" displaycfg="adddisplay"></expandedlist>
 
     <div ng-init="formtable='harvester'">  
       <div ng-controller="FormSubmitCtrl" ng-hide="addnew">

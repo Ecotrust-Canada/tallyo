@@ -392,6 +392,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.cssWarn = function(lot, stn) {
     if ( lot[stn.code] && lot[stn.code].summary ) { 
+
       return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
     }
     return false;  
@@ -471,28 +472,85 @@ angular.module('scanthisApp.AdminController', [])
   $scope.selected = "no selected";
   $scope.stations = $scope.sumStations;
 
-  $scope.ListStations = function(){
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Cases"], 
+    fields: ["weight_total", "boxes"], 
+  };
+
+  $scope.loinconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Pieces"], 
+    fields: ["weight_total", "pieces"], 
+  };
+
+  $scope.ListBoxes = function(){
     var func = function(response){
       $scope.list.box_inventory = response.data;
     };
     var query = '';
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
-  $scope.ListStations();
+  $scope.ListBoxes();
+
+
+  $scope.ListLoins = function(){
+    var func = function(response){
+      $scope.list.loin_inventory = response.data;
+    };
+    var query = '';
+    DatabaseServices.GetEntries('loin_inventory', func, query);
+  };
+  $scope.ListLoins();
 
   $scope.SetCurrent = function(selected){
-    var filtered = $scope.list.box_inventory.filter(
-      function(value){
-        return isInArray(value.station_code, selected);
-      });
-    $scope.list.boxes = filtered;
+    var filtered;
+    if (selected.item === 'box'){
+      filtered = $scope.list.box_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));      
+    }else if (selected.item === 'loin'){
+      filtered = $scope.list.loin_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.loinconfig));
+    }
+    
+    $scope.list.items = filtered;
+    $scope.listconfig.headers = selected.headers.concat($scope.listconfig.headers);
+    $scope.listconfig.fields = selected.fields.concat($scope.listconfig.fields);
 
-    var lists = $scope.stations.filter(
-      function(value){
-        return value.station_code[0] === JSON.parse(selected)[0];
-      });
-    $scope.listconfig = $scope[lists[0].list];
-    $scope.inventorytitle = lists[0].name;
+    
   };
 })
+
+
+.controller('CompleteLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
+
+  $scope.CompleteLot = function(lot_number, station_codes){
+    var patch = {'in_progress': false};
+    var func = function(response){
+      //window.location.reload();
+      $rootScope.$broadcast('collection-change', {id: 'no selected'});
+    };
+    var r = confirm("Are you sure you want to complete this lot?");
+    if (r === true) {
+      for (var i=0;i<station_codes.length;i++){
+        var station_code=station_codes[i];
+        var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;     
+          DatabaseServices.PatchEntry('lotlocations',patch, query, func);
+      }
+    }
+  };
+
+})
+
+
+
+
 ;

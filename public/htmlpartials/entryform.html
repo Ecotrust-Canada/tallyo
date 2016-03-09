@@ -74,28 +74,33 @@
                 <option value="">-- select --</option>
                 <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
               </select>
+              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
+                        value={{option.value}}>{{option.value}}</option>
+              </select>
               <div class="dd_arrow"><span></span></div>
             </div> 
-
-
-            <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
-              <option value="">-- select --</option>
-              <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
-                      value={{option.value}}>{{option.value}}</option>
-            </select>
 
             <!--editing dropdown options-->
             <div ng-if="row.value ==='dboptions' && config.editinform === true" 
                  ng-init="editdrop[row.fieldname]=true" id="edit-options-{{row.fieldname}}" class="edit-options">            
+              <!--button to edit dropdown options-->
+              <button id="{{row.fieldname}}-{{config.id}}" 
+                      ng-class="{edit: editdrop[row.fieldname], hide: !editdrop[row.fieldname]}" 
+                      ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
+                <span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span>
+              </button> 
               <div ng-hide="editdrop[row.fieldname]">
-                    <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
-                        {{selection.value}}
-                        <input type="button" ng-click="Delete(selection.value, row.fieldname)" value="X" />
-                    </div><br>
-                    <input  class="short" type="text" ng-model="new"><input class="add-field-option" 
-                            type="button" ng-click="New(new, row.fieldname)" value="Add" />
+                <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
+                  <span class="dd_option">{{selection.value}}</span>
+                  <span class="remove_option" ng-click="Delete(selection.value, row.fieldname)" value="X" /></span>
+                </div>
+                <input class="short" type="text" ng-model="new"><span class="add-field-option" 
+                       ng-click="New(new, row.fieldname)"></span>
               </div>
             </div>
+
 
             <!--options from another database table-->
             <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
@@ -123,13 +128,6 @@
             <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
           </span>
           -->
-
-          <!--button to edit dropdown options-->
-          <button ng-if="row.value ==='dboptions' && config.editinform === true" 
-                  id="{{row.fieldname}}-{{config.id}}" 
-                  ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
-            <span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span>
-          </button> 
 
         </div>
 
