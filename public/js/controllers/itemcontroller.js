@@ -163,7 +163,9 @@ angular.module('scanthisApp.itemController', [])
 
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+    if ($scope.options.receivelot && !$scope.current.lot || $scope.current.collectionid === undefined  || 
+        $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+
       $scope.formdisabled = true;
     }
     else{

@@ -7,7 +7,7 @@
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
 
-  <div ng-show="current.collectionid">
+  <div ng-show="options.receivelot && current.lot || !options.receivelot && current.collectionid">
     <div ng-controller="DisplayCollectionCtrl" id="current_lot">
       <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
@@ -27,9 +27,11 @@
 
   <div ng-controller="ScanCtrl" class="scanform">
 
-    <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
+    <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" 
+               poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
 
-    <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" submit-fn="Submit(form)"></entryform>
+    <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
+               submit-fn="Submit(form)"></entryform>
 
   </div>
 
@@ -46,10 +48,6 @@
   </div>
 
 </div>
-<div ng-controller="CompleteLotCtrl">
-  <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" ng-disabled="current.completed===true" ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
-  {{current.completed}}
-</div>
 
 <div class="panel grey">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
@@ -59,5 +57,11 @@
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
     <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
+  </div>
+  <div ng-controller="CompleteLotCtrl">
+    <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" 
+            ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
+            ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
+    {{current.completed}}
   </div>
 </div>

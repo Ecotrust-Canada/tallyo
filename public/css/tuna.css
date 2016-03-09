@@ -54,6 +54,7 @@ body{
     margin: 0;
     padding: 0;
     min-height: 100%;
+    height: auto;
     position:relative;
     background-image: url(/images/background.png);
     background-repeat: repeat;
@@ -349,9 +350,12 @@ body{
 .itemtotals table tr:last-child td {
   color: #0a2131;
   font-size: 19px;
-  padding-bottom: 25px;
   font-family: 'Lato-Bold';
 }
+.itemtotals table tr:last-child {
+  padding-bottom: 25px;
+}
+
 .itemtotals table tr:last-child td:first-child {
   color: #195672;
 }
@@ -581,7 +585,7 @@ a:hover {
 .edit-options button.edit {
   background-image: url(/images/edit_icon.svg);
 }
-.edit-options button.hide {
+.edit-options button.close_edit {
   background-image: url(/images/hide_icon.svg);
 }
 
@@ -1213,6 +1217,8 @@ div#station-HS0-011 {
 #station-HS0-011 #current_lot .btn-orange {
   display: block;
   width: 100%;
+  margin: 30px 0;
+  height: 50px;
 }
 
 #station-HS0-011 #current_lot h3  {
@@ -1329,6 +1335,11 @@ table#shipments_list td:last-child {
   vertical-align: top;
   padding: 0;
   width: 590px;
+  position: relative;
+}
+.panel.grey #complete-lot {
+  margin: 10px 20px 20px 20px;
+  float: right;
 }
 
 
@@ -1443,9 +1454,14 @@ table#shipments_list td:last-child {
 .packingstation .form_label,
 #form-2 .form_label {
   display: inline-block;
-  width: 166px;
   text-align: right;
   padding-right: 15px;
+}
+.weighstation_main .form_label {
+  width: 150px;
+}
+#form-4 .form_label {
+  width: 170px;
 }
 #form-2 {
   background-color: white;
@@ -1503,6 +1519,16 @@ table#shipments_list td:last-child {
   padding: 6px 15px;
   right: -2px;
 }
+.show_choices {
+  position: relative;
+}
+#select_object .btn-orange {
+  height: 44px;
+  width: 206px;
+  padding: 6px 15px;
+  right: 2px;
+  position: absolute;
+}
 
 #create_box_form #form-0 .form_buttons {
   margin-top: 16px;
@@ -1512,8 +1538,8 @@ table#shipments_list td:last-child {
   margin-top: 24px;
 }
 
-.weighstation_main #form-7 .form_label label,
-.weighstation_main #form-8 .form_label label,
+.weighstation_main .form_label label,
+.weighstation_main .form_label label,
 .packingstation .scanform .form_label label {
 
   font-family: 'Lato-Bold';
@@ -1532,9 +1558,8 @@ table#shipments_list td:last-child {
 }
 
 
-.weighstation_main #form-7 .field,
-
-.weighstation_main #form-8 .field,
+.weighstation_main .field,
+.weighstation_main .field,
 .packingstation .scanform .field {
 
   display: inline-block;
@@ -1570,6 +1595,7 @@ table#shipments_list td:last-child {
 }
 
 #form-0 .form_label label,
+#form-20 .form_label label,
 #form-2 .form_label label,
 #form-4 .form_label label {
   text-align: right;
@@ -1654,7 +1680,7 @@ table#shipments_list td:last-child {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 200px;
+  width: 204px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -1764,6 +1790,11 @@ input[name^=weight]::after {
   height: 58px;
   padding: 12px 25px;
 }
+#form-8 .form_buttons .btn-orange,
+#form-7 .form_buttons .btn-orange,
+#form-20 .form_buttons .btn-orange {
+  right: 16px;
+}
 .weighstation_main .form_buttons .btn-orange {
   width: 126px;
 }
@@ -1780,7 +1811,7 @@ input[name^=weight]::after {
 }
 
 #form-4 .btn-orange {
-  left: 182px;
+  left: 185px;
   width: 200px;
   height: 44px;
   font-size: 18px;
@@ -1803,9 +1834,8 @@ input[name^=weight]::after {
   top: -12px;
 }
 
-#form-8 .toggle-group-container {
+.toggle-group-container {
   display: inline-block;
-  width: 240px;
   height: 50px;
   background: #DBEBEF;
   border: 1px solid #CAE2EB;
@@ -1813,31 +1843,46 @@ input[name^=weight]::after {
   border-radius: 5px;
   position: relative;
 }
+#radio-grade {
+  width: 360px;
+}
 
-#form-8 .toggle-group-container.rbgroup-unset {
+.toggle-group-container.rbgroup-unset,
+.toggle-group-container.rbgroup-unset {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
   border: none;
 }
 
-#form-8 .toggle-group-container input[type=radio] {
+.toggle-group-container input[type=radio],
+.toggle-group-container input[type=radio] {
   display: none;
 }
-#form-8 .toggle-group-container label {
+
+.toggle-group-container label {
   margin: 0;
   display: inline-block;
-  width: 60px;
   height: 50px;
   box-sizing: border-box;
 }
-#form-8 .toggle-group-container label.rb-unset + label.rb-unset {
+#radio-grade.toggle-group-container label {
+  width: 60px;
+}
+#radio-state.toggle-group-container label {
+  width: 80px;
+}
+
+.toggle-group-container label.rb-unset + label.rb-unset,
+.toggle-group-container label.rb-unset + label.rb-unset {
   border-left: 1px solid #cae2eb;
 }
-#form-8 .toggle-group-container.rbgroup-unset label + label {
+.toggle-group-container.rbgroup-unset label + label,
+.toggle-group-container.rbgroup-unset label + label {
   border-left: 1px solid rgba(1,31,54,0.5);
 }
 
-#form-8 .toggle-group-container label span {
+.toggle-group-container label span,
+.toggle-group-container label span {
   text-align:center;
   display: block;
   font-family: 'Lato-Bold';
@@ -1845,17 +1890,25 @@ input[name^=weight]::after {
   color: #0076AD;
   line-height: 50px;
 }
-#form-8 .toggle-group-container.rbgroup-unset label span {
+.toggle-group-container.rbgroup-unset label span,
+.toggle-group-container.rbgroup-unset label span {
   color: white;
 }
 
-#form-8 .toggle-group-container input:checked + span {
+.toggle-group-container input:checked + span {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
   border-radius: 5px;
   color: white;
-  width:60px;
   border: none;
+}
+
+#radio-grade.toggle-group-container input:checked + span { 
+  width:60px;
+}
+
+#radio-state.toggle-group-container input:checked + span { 
+  width:80px;
 }
 
 #select_object {
@@ -1959,6 +2012,7 @@ input[name^=weight]::after {
     font-family: 'Lato-Bold';
     text-shadow: 3px -1px 2px rgba(142, 125, 102, 0.38);
 }
+
 
 .btn-light {
     display: inline-block;
