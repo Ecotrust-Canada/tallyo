@@ -57,7 +57,7 @@ angular.module('scanthisApp.itemController', [])
       $scope.stopPolling();
   });
 
-$scope.DatabaseScan = function(form){
+  $scope.DatabaseScan = function(form){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
@@ -157,7 +157,9 @@ $scope.DatabaseScan = function(form){
 
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+    if ($scope.options.receivelot && !$scope.current.lot || $scope.current.collectionid === undefined  || 
+        $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+
       $scope.formdisabled = true;
     }
     else{

@@ -15,6 +15,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
 
+.directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
+
 .directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
 
 .directive('shipmenttotals', function() { return { templateUrl: 'htmlpartials/shipmenttotals.html' }; })
@@ -136,7 +138,24 @@ angular.module('scanthisApp.directives', [])
     },
   };
 }])
-
+.directive('inputDropdown', function($compile) {
+    
+    return {
+        restrict: 'EA',
+        scope: {
+            thelist: '=',
+            config: '=',
+            onSelect: '&'
+        },
+        templateUrl: 'htmlpartials/searchdropdown.html',
+        link: function(scope, element, attrs) {
+            element.addClass('input-dropdown');
+            scope.select = function(e, value) {
+                scope.onSelect({$event: e, value: value});
+            };
+        }
+    };
+})
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
@@ -162,6 +181,4 @@ angular.module('scanthisApp.directives', [])
       });
     };
   })
-
-
 ;

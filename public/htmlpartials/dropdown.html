@@ -1,21 +1,18 @@
-
-<div ng-init="showlist=(cfg.show||false)">
-
-  <span ng-if="cfg.title">{{cfg.title}}: </span>
-  <button ng-hide="showlist" ng-click="showlist=!showlist">></button>
-
-  <select ng-show="showlist" name="singleSelect" ng-model="selectedoption" ng-change="changeFn({selected: selectedoption});showlist=!showlist">
-    <option value="no selected">--select--</option>
-    <option ng-repeat="item in itemlist | orderBy: cfg.order | limitTo: cfg.limit" value="{{item[cfg.arg]}}">
-      {{item[cfg.fields[0]]}}
-      {{cfg.fields[1] === 'timestamp' ? (item[cfg.fields[1]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[1]]}}
-      {{cfg.fields[2] === 'timestamp' ? (item[cfg.fields[2]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[2]]}}
-    </option>
-  </select>
-
-  <button ng-show="showlist" ng-click="showlist=!showlist">X</button>
-
-
-
+<div ng-init="showlist=(cfg.show||false)" class="dropdown_container">
+  <label ng-if="cfg.title" for="select-{{cfg.id}}">{{cfg.title}}: </label>
+  <!-- button ng-hide="showlist" ng-click="showlist=!showlist">></button -->
+  <div class="styled-dropdown">
+    <select name="singleSelect" ng-model="selectedoption" id="select-{{cfg.id}}" 
+            ng-change="changeFn({selected: selectedoption})">
+      <option value="no selected">--select--</option>
+      <option ng-repeat="item in itemlist | orderBy: cfg.order | limitTo: cfg.limit" value="{{item[cfg.arg]}}">
+      {{item[cfg.fields[0]] | separatestring}}
+      {{cfg.fields[1] === 'timestamp' ? (item[cfg.fields[1]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[1]]  | separatestring}}
+      {{cfg.fields[2] === 'timestamp' ? (item[cfg.fields[2]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[2]]  | separatestring}}
+      {{item[cfg.fields[3]]  | separatestring}}
+      {{item[cfg.fields[4]]}}
+      </option>
+    </select>
+    <div class="dd_arrow"><span></span></div>
+  </div> 
 </div>
-

@@ -72,6 +72,10 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.current.selected = "no selected";
 
+  $scope.$on('collection-change', function(event, args) {
+    $scope.currentlots();
+    $scope.completedlots();
+  });
 })
 
 //packingstation.html, receiveshipment.html, receiving_lots.html, receivingstation.html, weighstation.html
@@ -81,10 +85,12 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.DisplayCollectionInfo = function(){
     var func = function(response){
-      $scope.current[$scope.station_info.collectiontable] = response.data[0];
-      $scope.current.itemchange = !$scope.current.itemchange;
-      if ($scope.station_info.collectiontable === 'harvester_lot'){
-        $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+      if (response.data.length > 0){
+        $scope.current[$scope.station_info.collectiontable] = response.data[0];
+        $scope.current.itemchange = !$scope.current.itemchange;
+        if ($scope.station_info.collectiontable === 'harvester_lot'){
+          $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+        }
       }
     };
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
@@ -122,11 +128,17 @@ angular.module('scanthisApp.createlotController', [])
     }
   });
 
+  $scope.$on('collection-change', function(event, args) {
+
+    $scope.current.collectionid = args.id;
+  });
+
   $scope.delete = function(){
     var id = $scope.current[$scope.station_info.collectiontable][$scope.station_info.collectionid];
     var querystring = '?' + $scope.station_info.collectionid + '=eq.' + id;
     var func = function(response){
-      $scope.current.collectionid = 'no selected';
+      //$scope.current.collectionid = 'no selected';
+      $scope.current.collectionid = null;
       $scope.list.collection = $scope.list.collection
       .filter(function (el) {
         return el[$scope.station_info.collectionid] !== id;
@@ -219,7 +231,7 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 //updates the lotlocations table
-.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
+/*.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
 
   $scope.CompleteLot = function(lot_number){
     var patch = {'in_progress': false};
@@ -236,7 +248,7 @@ angular.module('scanthisApp.createlotController', [])
     }     
   };
 
-})
+})*/
 
 
 //reprint.html - get list of loins for station, reprint function

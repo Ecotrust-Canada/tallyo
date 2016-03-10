@@ -125,6 +125,9 @@ var ClearFormToDefault = function(form_arr, def_arr){
           form_arr[def_arr[i].fieldname] = def_arr[i].value;
         }
       }
+      else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
+        form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
+      }
       else{
         if (!def_arr[i].stay){
           form_arr[def_arr[i].fieldname] = "";
@@ -325,3 +328,43 @@ var propertyNames = function(obj){
   return props;
 };
 
+
+
+var DateGroup = function(date){
+  var day = parseInt(moment(date).format('DD'));
+  var date_group = '';
+  if (day <= 5){
+    date_group = 1;
+  }
+  else if (day >= 6 && day <=10){
+    date_group = 2;
+  }
+  else if (day >= 11 && day <=15){
+    date_group = 3;
+  }
+  else if (day >= 16 && day <=20){
+    date_group = 4;
+  }
+  else if (day >= 21 && day <=25){
+    date_group = 5;
+  }
+  else if (day >= 26){
+    date_group = 6;
+  }
+  return date_group;
+};
+
+var LoinCode = function(state){
+  var loin_code = '';
+  if (state === 'Dirty'){
+    loin_code = 8;
+  }
+  else if (state === 'Clean'){
+    loin_code = 9;
+  }
+  return loin_code;
+};
+
+var cutString = function (str, cutStart, cutEnd){
+  return str.substr(0,cutStart) + str.substr(cutEnd+1);
+};

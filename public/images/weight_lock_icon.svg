@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+    <title>weight_locked_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.14 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M5.99999873,10.000001 L14.0000016,10.000001 L14.0000016,7.00000032 C14.0000016,5.89582727 13.6093806,4.95312673 12.8281245,4.17187419 C12.046872,3.39062165 11.1041715,3.00000064 10.0000019,3.00000064 C8.89582886,3.00000064 7.95312832,3.39062165 7.17187578,4.17187419 C6.39061975,4.95312673 5.99999873,5.89582727 5.99999873,7.00000032 L5.99999873,10.000001 Z M11.0000001,16.7324355 L11.0000001,19 L9.0000001,19 L9.0000001,16.7324356 C8.40219872,16.3866262 8.00000009,15.7402823 8.00000009,15 C8.00000009,13.8954305 8.89543059,13 10.0000001,13 C11.1045696,13 12.0000001,13.8954305 12.0000001,15 C12.0000001,15.7402823 11.5978015,16.3866261 11.0000001,16.7324355 Z M19.0000003,11.4999995 L19.0000003,20.5 C19.0000003,20.9166688 18.8541693,21.270832 18.5625003,21.5625 C18.2708313,21.8541681 17.9166698,22 17.5000018,22 L2.49999997,22 C2.08333125,22 1.72916798,21.8541681 1.43750002,21.5625 C1.14583188,21.270832 1,20.9166688 1,20.5 L1,11.4999995 C1,11.0833315 1.14583188,10.7291665 1.43750002,10.437501 C1.72916798,10.145832 2.08333125,10.000001 2.49999997,10.000001 L3.00000019,10.000001 L3.00000019,7.00000032 C3.00000019,5.08332323 3.68749332,3.43750766 5.06249918,2.06249759 C6.43750575,0.687491031 8.08332482,0 10.0000019,0 C11.9166755,0 13.5624946,0.687491031 14.9375011,2.06249759 C16.3125077,3.43750766 17.0000022,5.08332323 17.0000022,7.00000032 L17.0000022,10.000001 L17.5000018,10.000001 C17.9166698,10.000001 18.2708313,10.145832 18.5625003,10.437501 C18.8541693,10.7291665 19.0000003,11.0833315 19.0000003,11.4999995 Z" id="weight_locked_icon" fill="#FFFFFF" filter="url(#filter-1)" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

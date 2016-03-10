@@ -1,0 +1,27 @@
+<div ng-controller="NewLotCtrl" id="select_object">
+  <div class="select_header" ng-class="{lot_chosen: current.lot}"
+      ng-click="current.lot = null; current.collectionid = null;">
+    <span class="show_choices">Set Current Lot</span>
+  </div>
+  <div class="show_choices" ng-hide="current.lot">
+    <dropdown itemlist="list.harvester"  cfg="adddropdown" selectedoption="selected" change-fn="GetHar(selected)"></dropdown>
+
+    <span class="switch_option" ng_class="{active: form.state=='Dirty'}"
+        value="Dirty">Dirty</span>
+    <div  class="onoffswitch">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+             id="switch-state" ng-checked="form.state=='Clean'">
+      <label class="onoffswitch-label" for="switch-state" 
+          ng-click="toggleStateValue()">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+      </label>
+    </div>
+    <span class="switch_option" ng_class="{active: form.state=='Clean'}"
+        value="Clean">Clean</span>
+
+  <button ng-disabled="!form.harvester_code || !form.state" ng-click="GenInternalLot(form)" class="btn-orange">Submit</button>
+
+  <dropdown itemlist="list.lot"  cfg="collectiondropdown" selectedoption="lotselected" change-fn="SetLot(selected)"></dropdown>
+
+</div>

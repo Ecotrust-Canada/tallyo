@@ -18,7 +18,8 @@ angular.module('scanthisApp', [
   'ngSanitize', 
   'ngCsv',
   'toastr',
-  'gridshore.c3js.chart'
+  'gridshore.c3js.chart',
+  'ngMaterial'
 ])
 
 /*
@@ -33,15 +34,26 @@ angular.module('scanthisApp', [
 })
 
 
+.controller('MainCtrl', function($scope) {
+  $scope.current_terminal = {
+    id: -1,
+    icon: null,
+    name: "Stations"
+  };
+  $scope.stations = stationlist;
+  $scope.terminals = terminals;
+})
 
-.controller('RoutingCtrl', function($scope, $routeParams, $http) {
+.controller('RoutingCtrl', function($scope, $routeParams, $rootScope) {
 
   $scope.terminal = {};
   $scope.terminal.showsection = "default";
-  $scope.stations = stationlist;
-  $scope.terminals = terminals;
+
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+
+    $scope.$parent.current_terminal = { id: current_terminal.id, icon: current_terminal.icon, name: current_terminal.name };
+
     var stations = current_terminal.stations;
     $scope.currentstations = [];
 
@@ -51,10 +63,11 @@ angular.module('scanthisApp', [
       $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
       $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
+    $scope.terminal.substation = 0;
   }
 })
 
-.controller('StationCtrl', function($scope, $http, $sce) {
+.controller('StationCtrl', function($scope, $http, $sce, DatabaseServices) {
 
   $scope.init = function(settings){
     $scope.station_code = settings.station_code;
@@ -113,7 +126,7 @@ angular.module('scanthisApp', [
           data: {data:$scope.printString(codeString, fieldarray)}
 
         });
-  };
+      };
     }
     
     if(settings.packingconfig){
@@ -154,8 +167,41 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
+    if ($scope.options.loadcurrentcollection) {
+        $scope.loadCurrent();
+    }
   };
-})
 
+  $scope.loadCurrent = function(){
+    var func = function(response){
+      var station = response.data[0];
+      var today = moment(new Date()).startOf('day').format();
+      if(station){
+        if (moment(station.in_progress_date).startOf('day').format() === today){
+          $scope.current.collectionid = station.lot_number;
+        }
+      }
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
+  $scope.switchSubstation = function(index) {
+    var substation = $scope.currentstations[index].settings; 
+    $scope.terminal.substation = index;
+    $scope.$parent.current_terminal.name = substation.title;
+  };
+
+  $scope.formatOption = function(item, fields, delim){
+      var option = '', index=0, field_name;
+      for (index = 0; index < fields.length; ++index) {
+          field_name = fields[index];
+          option += item[fieldname];
+          option += (index < fields.length -1 ? ' ' + delim + ' ' : '');
+      }
+      return option;
+  };
+
+})
 ;
 

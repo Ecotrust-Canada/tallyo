@@ -1,28 +1,37 @@
 <table ng-class="config.cssclass">
+  <caption ng-if="config.title">{{config.title}}</caption>
   <tr ng-if="config.headers">
-    <td ng-repeat="title in config.headers">{{title}}</td>
+    <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
   <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring">
-    <td ng-repeat="name in config.fields">
-      <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
-      <span ng-if="name==='timestamp'">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-      <span ng-if="name.substring(0,6)==='weight'">{{(item[name]).toFixed(2)}}kg</span>
-      <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'" >{{item[name]}}</span>
-      <span ng-if="name==='pieces'">pcs</span>
-      <span ng-if="name==='boxes'">boxes</span>
+    <td ng-repeat="name in config.fields" ng-switch on="name">
+      <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
+      <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+      <span ng-switch-when="weight1">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="weight2">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="weight_total">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="weight_1">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="weight_2">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
+      <span ng-switch-when="pieces">{{item[name]}}pieces</span>
+      <span ng-switch-when="boxes">{{item[name]}}boxes</span>
+      <span ng-switch-default>{{item[name]}}</span>
     </td>
     <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
     <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
   </tr>
   <tr ng-if="istotal === true">
     <td>Total:</td>
-    <td ng-if="itemlist[0].grade && itemlist[0].size"></td>
-    <td ng-if="itemlist[0].species"></td>
-    <td ng-if="itemlist[0].weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</td>
-    <td ng-if="itemlist[0].weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</td>
-    <td ng-if="itemlist[0].weight">{{itemlist | sumOfValue:'weight'| weightstring}}</td>
-    <td ng-if="itemlist[0].pieces">{{itemlist | sumOfValue:'pieces'}}pcs</td>
-    <td ng-if="itemlist[0].boxes">{{itemlist | sumOfValue:'boxes'}} boxes</td>
+    <td ng-repeat="name in config.fields.slice(1, config.fields.length)" ng-switch="name">
+      <span ng-switch-when="weight_1">{{itemlist | sumOfValue:'weight_1'| weightstring}}</span>
+      <span ng-switch-when="weight1">{{itemlist | sumOfValue:'weight1'| weightstring}}</span>
+      <span ng-switch-when="weight2">{{itemlist | sumOfValue:'weight2'| weightstring}}</span>
+      <span ng-switch-when="weight_total">{{itemlist | sumOfValue:'weight_total'| weightstring}}</span>
+      <span ng-switch-when="weight">{{itemlist | sumOfValue:'weight'| weightstring}}</span>
+      <span ng-switch-when="pieces">{{itemlist | sumOfValue:'pieces'}}pcs</span>
+      <span ng-switch-when="boxes">{{itemlist | sumOfValue:'boxes'}} boxes</span>
+      <span ng-switch-default></span>
+    </td>
   </tr>
 </table>
 
