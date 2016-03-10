@@ -3,8 +3,8 @@
   Select Products:
   <br>
 
-    <select size="10" multiple ng-model="available" ng-options="c.product_type for c in availableProducts" ng-change="moveItem(available[0], availableProducts, selectedProducts)" style="width: 400px"></select>
-    <select size="10" multiple ng-model="selected" ng-options="c.product_type for c in selectedProducts" ng-change="moveItem(selected[0], selectedProducts, availableProducts)" style="width: 400px"></select>
+    <select size="5" multiple ng-model="available" ng-options="c.product_type for c in availableProducts" ng-change="moveItem(available[0], availableProducts, selectedProducts)" style="width: 400px"></select>
+    <select size="5" multiple ng-model="selected" ng-options="c.product_type for c in selectedProducts" ng-change="moveItem(selected[0], selectedProducts, availableProducts)" style="width: 400px"></select>
   <br>
 
   <input id="moverightall" class="btn-blue" type="button" value="Add All Products" ng-click="moveAll(availableProducts,selectedProducts)" />   
@@ -28,13 +28,23 @@
   </form>
   </fieldset>
   <div class="form_buttons">
-    <button class="btn-orange" ng-disabled="!label || selectedProducts.length<1" ng-click="GetCodes()">Get Codes</button>
+    <button class="btn-orange" ng-disabled="!label || selectedProducts.length<1" ng-click="GetCodes(label)">Get Codes</button>
   </div>
   </div>
 
   <br>
-  <br>
+
+  <div  id="select_object"> 
+    <div class="show_choices">
+      <input-dropdown  thelist="list.label"  config="dropdownconfig" on-select="ShowCodes(value)"></input-dropdown>
+    </div>
+  </div>
+
   <list ng-if="list.codes && list.codes.length>0" itemlist="list.codes"  config="tableconfig"></list>
 
+  <br>
+  <br>
+  <br>
+  <br>
 
 </div>

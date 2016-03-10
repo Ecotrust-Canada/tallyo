@@ -310,8 +310,19 @@ angular.module('scanthisApp.createlotController', [])
   $scope.tableconfig = 
   { id: 2,    
     cssclass: "fill", 
-    headers: ["Product", "Thisfish Code"], 
-    fields: ["product_code", "tf_code"], 
+    headers: ["Product Type", "Thisfish Code"], 
+    fields: ["product,product_type", "tf_code"], 
+  };
+
+  $scope.dropdownconfig = 
+  { id: 0, 
+    title: "Search Labels", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "label", 
+    searchfield: "label", 
+    delimeter: '/',
+    fields: ["label", "codes"]
   };
 
 
@@ -327,36 +338,58 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.ListProducts();
 
+
+  $scope.ListLabels = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.label = response.data;
+    };
+    DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.ListLabels();
+
   $scope.selectedProducts = [];
 
 
-  $scope.GetCodes = function(){
-    var query = "?product_code=is.null";
+  $scope.GetCodes = function(label){
+    var query = "?product_code=is.null&order=tf_code";
     var func = function(response){
       var tf_list = response.data;
+      var last = false;
       $scope.selectedProducts.forEach(
         function(el, index){
+          if (index === $scope.selectedProducts.length-1){
+            last = true;
+          }
           var nextcode = tf_list[index].tf_code;
-          $scope.assignCode(el.product_code, nextcode, $scope.label);
+          $scope.assignCode(el.product_code, nextcode, label, last);
         }
       );
     };
     DatabaseServices.GetEntries('thisfish', func, query);
   };
 
-  $scope.assignCode = function(product_code, tf_code, label){
+  $scope.assignCode = function(product_code, tf_code, label, last){
+    var today = moment(new Date()).format();
     var query = '?tf_code=eq.' + tf_code;
     var func = function(response){
-      $scope.ShowCodes(label);
+      if (last === true){
+        $scope.ShowCodes(label);
+      }      
     };
-    var patch = {'product_code': product_code, 'label':label};
+    var patch = {'product_code': product_code, 'label':label, 'timestamp': today};
     DatabaseServices.PatchEntry('thisfish',patch, query, func);
   };
 
   $scope.ShowCodes = function(label){
-    var query = '?label=eq.' + label;
+    console.log('function called');
+    var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
     var func = function(response){
       $scope.list.codes = response.data;
+      $scope.ListLabels();
+      $scope.moveAll($scope.selectedProducts,$scope.availableProducts);
+      $scope.label = null;
     };
     DatabaseServices.GetEntries('thisfish', func, query);
   };
