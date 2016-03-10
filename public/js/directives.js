@@ -31,6 +31,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('setthisfish', function() { return { templateUrl: 'htmlpartials/setthisfish.html' }; })
 
+.directive('tfcodes', function() { return { templateUrl: 'htmlpartials/tfcodes.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '='},

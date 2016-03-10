@@ -348,6 +348,7 @@ angular.module('scanthisApp.packingController', [])
       var func = function(response){
         if (response.data.length>0){
           $scope.current.codes = response.data[0].codes;
+          $scope.current.products = response.data[0].products;
         }
       };
       DatabaseServices.GetEntries('group_codes', func, query);

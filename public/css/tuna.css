@@ -1761,6 +1761,16 @@ input[name^=weight]::after {
   display: block;
   position:relative;
 }
+#station-AM2-002 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
+#station-AM2-001 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
 
 .pictogram_btns > span {
   padding: 7px 10px 7px 35px;

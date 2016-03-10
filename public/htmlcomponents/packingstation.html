@@ -19,22 +19,31 @@
   </div>
   <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-    <div ng-if="current[station_info.collectiontable]" ng-show="list.included.length==0" class="pictogram_btns">
+
+
+
+
+    <div ng-if="current[station_info.collectiontable]" ng-show="list.included.length==0 && !current.codes" class="pictogram_btns">
       <span ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
     </div>
-
+    <br>
 
     <span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
       <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
       <persistdropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></persistdropdown>
       <span ng-show="current.codes">
-        Thisfish Codes: {{current.codes}}
-        <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
+        Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
+        <span ng-repeat="code in current.products">
+        <br>{{code}}
+        </span>
+        
       </span>
     </span>
+
+
   </div>
 
-  <div class="scanform" ng-controller="PackingCtrl" any-other-click>
+  <div ng-if="!options.qrform" class="scanform" ng-controller="PackingCtrl" any-other-click>
       <fieldset ng-disabled="formdisabled">
         
         <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
@@ -60,6 +69,48 @@
         </div> 
       </fieldset>
   </div>
+
+  <div ng-if="options.qrform" class="scanform" ng-controller="QRScanCtrl" any-other-click>
+    <!--<fieldset ng-disabled="formdisabled">
+      <div>
+          <form ng-submit="readQR()">
+            Scan Field: <input  id="scaninput" type="text" ng-model="raw.string" autocomplete="off">
+          </form>
+        </div>
+      <br>
+      <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
+    </fieldset>-->
+
+    <fieldset ng-disabled="formdisabled">
+        
+        <form id="scanform" ng-submit="readQR();raw.string=null;" >
+          <div class="form_row">
+            <div class="form_label">
+              <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
+                <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
+              </label>
+            </div>
+            <div class="field">
+              <input id="scaninput" type="text" ng-model="raw.string" 
+                     autocomplete="off" placeholder="Start scanning...">
+            </div>
+          </div>
+        </form>
+        
+        <div class="form_buttons">
+          <div class="pictogram_btns">
+            <span class="manual_weight">Manual Input</span>
+          </div>
+          <input type="button" ng-click="Complete()"
+                 value="{{packingconfig.completetitle}}" class="btn-orange">
+        </div> 
+      </fieldset>
+
+
+
+  </div>
+
+
 </div>
 
 <div class="panel grey" ng-show="!formdisabled && list.included.length>0">

@@ -317,9 +317,10 @@ angular.module('scanthisApp.createlotController', [])
 
 
   $scope.ListProducts = function(){
-    var query = '';
+    var query = '?traceable=eq.true';
     var func = function(response){
       $scope.list.product = response.data;
+      $scope.availableProducts = response.data;
     };
     DatabaseServices.GetEntries('product', func, query);
   };
@@ -359,6 +360,23 @@ angular.module('scanthisApp.createlotController', [])
     };
     DatabaseServices.GetEntries('thisfish', func, query);
   };
+
+  $scope.moveItem = function(item, from, to) {
+
+      var idx=from.indexOf(item);
+      if (idx != -1) {
+          from.splice(idx, 1);
+          to.push(item);      
+      }
+  };
+  $scope.moveAll = function(from, to) {
+
+      angular.forEach(from, function(item) {
+          to.push(item);
+      });
+      from.length = 0;
+  };            
+
 
 
 })
