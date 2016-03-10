@@ -12,15 +12,18 @@
         <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
       </div>
       <div  ng-controller="CollectionTableDropDownCtrl">
-        <dropdown  itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" 
-                   change-fn="changeFn(selected)"></dropdown>
+        <!--dropdown  itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" 
+                   change-fn="changeFn(selected)"></dropdown-->
+        <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
       </div>
     </div>
   </div>
   <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-    <div ng-if="current[station_info.collectiontable]" ng-show="list.included.length==0" class="pictogram_btns">
-      <span ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+    <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
+      <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+      <span ng-if="onLabel && list.included.length>0" ng-click="Complete()" 
+            id="reprint-{{config.id}}" class="reprint">Reprint</span>
     </div>
   </div>
 
