@@ -209,6 +209,7 @@ body{
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
 #station-HS0-004 .panel,
+#station-AM1-001 .panel,
 #station-HS0-005 .panel {
   width: 550px;
 }
@@ -265,7 +266,7 @@ body{
   padding: 8px 15px;
   text-align: left;
 }
-.itemsframe table td:first-child, table th:first-child {
+.itemsframe table td:first-child, .itemsframe table th:first-child {
   text-align: center;
 }
 .itemsframe table th {
@@ -785,23 +786,23 @@ table#admin_manage_lots tr.adminlots_header div.icon{
   background-position: center center;
 }
 
-table#admin_manage_lots tr.adminlots_header .station-column-HS0-001 div.icon {
+table#admin_manage_lots tr.adminlots_header div.icon.receiving {
   background-image: url(/images/receiving_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header .station-column-HS0-002 div.icon {
+table#admin_manage_lots tr.adminlots_header div.icon.trimming {
   background-image: url(/images/trimming_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header .station-column-HS0-003 div.icon {
+table#admin_manage_lots tr.adminlots_header div.icon.retouching {
   background-image: url(/images/retouching_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header .station-column-HS0-004 div.icon {
+table#admin_manage_lots tr.adminlots_header div.icon.boxing {
   background-image: url(/images/boxing_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header .station-column-HS0-005 div.icon {
+table#admin_manage_lots tr.adminlots_header div.icon.shipping {
   background-image: url(/images/shipping_blue_icon.svg);
 }
 
@@ -1074,7 +1075,7 @@ div#station-HS0-011 {
   background-color: #cecece;
 }
 
-#harvester_list .header span.section_head {
+.header span.section_head {
   padding-right: 22px;
   width: 90px;
   color: #215666;
@@ -1254,15 +1255,25 @@ div#station-HS0-011 {
 }
 
 .display_field label, #prev_station_totals label,
+#receiveshipment #form-14 .form_label label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
   color: #777777;
   text-transform: uppercase;
   font-family: 'Lato-Bold';
 }
+#receiveshipment #form-14 .form_row {
+  padding-bottom: 15px;
+}
+#receiveshipment #form-14 .form_label,
+#receiveshipment #form-14 .field {
+  display: inline-block;
+}
 
 #station-HS0-011 .display_field label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value],
 .reprint_label .display_field label,
+#receiveshipment #form-14 .form_label label,
+#receiveshipment .display_row .display_field label,
 #edit_shipment .display_field label {
   font-size: 12px;
 }
@@ -1272,6 +1283,8 @@ div#station-HS0-011 {
 }
 
 .reprint_label .display_field label,
+#receiveshipment .display_row label,
+#receiveshipment #form-14 .form_label label,
 #edit_shipment .display_field label {
   display: inline-block;
   width: 160px;
@@ -1279,6 +1292,11 @@ div#station-HS0-011 {
   box-sizing:border-box;
   text-align: right;
 }
+#receiveshipment .display_row .field_val {
+  display: inline-block;
+  box-sizing:border-box;
+}
+
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
@@ -1314,11 +1332,18 @@ table#shipments_list td:last-child {
   font-weight: 500;
   font-size: 12px;
 }
+#receiveshipment .btn-blue {
+  float: right;
+}
+#receiveshipment .display_row .field_val,
 #station-HS0-011 #current_lot .field_val  {
   color: #213141;
   font-family: 'Lato-Regular', Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 22px;
+}
+#receiveshipment .form-14 .form_label {
+  display: inline-block;
 }
 
 #station-HS0-011 #current_lot #internal_lot_code-value {
@@ -1439,8 +1464,13 @@ table#shipments_list td:last-child {
   letter-spacing: 0.064em;
 }
 
+.editform {
+  background-color: white;
+  padding: 0 15px 20px 15px;
+}
+
 .weighstation_main .form_row,
-#form-2 .form_row {
+.editform .form_row {
   padding-bottom: 12px;
 }
 
@@ -1450,7 +1480,7 @@ table#shipments_list td:last-child {
 
 .weighstation_main .form_label,
 .packingstation .form_label,
-#form-2 .form_label {
+.editform .form_label {
   display: inline-block;
   text-align: right;
   padding-right: 15px;
@@ -1461,7 +1491,7 @@ table#shipments_list td:last-child {
 #form-4 .form_label {
   width: 170px;
 }
-#form-2 {
+.editinform {
   background-color: white;
   padding: 5px 15px 20px 15px;
 }
@@ -1472,17 +1502,19 @@ table#shipments_list td:last-child {
 #create_box_form #form-0 .form_label {
   width: 144px;
 }
-#form-2 .form_label {
-  width: 190px;
-}
-#form-2 .form_label {
+
+.editform .form_label {
+  width: 170px;
   vertical-align: top;
   padding-top: 10px;
 }
 
+#form-2 .form_label {
+  width: 190px;
+}
 
 #create_box_form .field input[type=text],
-#form-2 .field input[type=text] {
+.editform .field input[type=text] {
   display: inline-block;
   color: #03223c;
   font-size: 22px;
@@ -1496,7 +1528,7 @@ table#shipments_list td:last-child {
   height: 44px;
 }
 
-#form-2 .field input[type=text] {
+.editform .field input[type=text] {
   height: 40px;
 }
 
@@ -1514,10 +1546,14 @@ table#shipments_list td:last-child {
   padding: 6px 15px;
   right: -2px;
 }
+#receiveshipment #form-14 .btn-orange {
+  left: 162px;
+  width: 240px;
+}
 .show_choices {
   position: relative;
 }
-#select_object .btn-orange {
+.select_object .btn-orange {
   height: 44px;
   width: 206px;
   padding: 6px 15px;
@@ -1529,8 +1565,9 @@ table#shipments_list td:last-child {
   margin-top: 16px;
 }
 
-#select_object .dropdown-container {
+.select_object .dropdown-container {
   margin-top: 24px;
+  width: 540px;
 }
 
 .weighstation_main .form_label label,
@@ -1577,8 +1614,8 @@ table#shipments_list td:last-child {
   padding: 0 10px;
 }
 
-#select_object .show_choices label,
-#form-2 .form_label label {
+.select_object .show_choices label,
+.editform .form_label label {
   display: block;
   text-align: left;
   font-family: 'Lato-Bold';
@@ -1588,13 +1625,13 @@ table#shipments_list td:last-child {
 
 #form-0 .form_label label,
 #form-20 .form_label label,
-#form-2 .form_label label,
+.editform .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
 
 #form-0 .field, 
-#form-2 .field, 
+.editform .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1630,8 +1667,9 @@ table#shipments_list td:last-child {
   line-height: 1;
   border: 0;
   border-radius: 0;
+  width: 100%;
 }
-#form-2 .styled-dropdown {
+.editform .styled-dropdown {
   width: 270px;
   display: inline-block;
   box-sizing: border-box;
@@ -1641,12 +1679,15 @@ table#shipments_list td:last-child {
   height: 36px;
   border: 1px solid #cae2eb;
 }
+.styled-dropdown select {
+  height: 36px;
+}
 
 .show_choices .styled-dropdown select {
   display: block;
 }
 .show_choices .styled-dropdown select,
-#form-2 .styled-dropdown select {
+.editform .styled-dropdown select {
   width: 100%;
   height: 36px;
 }
@@ -1796,8 +1837,11 @@ input[name^=weight]::after {
   display: inline-block;
   right: 6px;
   position: absolute;
-  height: 58px;
+  height: 50px;
   padding: 12px 25px;
+}
+.editform .btn-orange {
+  left: 188px;
 }
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
@@ -1920,7 +1964,7 @@ input[name^=weight]::after {
   width:80px;
 }
 
-#select_object {
+.select_object {
   padding-top: 10px;
 }
 .select_header {
@@ -1930,19 +1974,19 @@ input[name^=weight]::after {
   color: #0076AD;
 }
 
-#select_object .select_header .show_choices {
+.select_object .select_header .show_choices {
   display: inline-block;
   width: auto;
   padding-right: 30px;
   font-size: 18px;
 }
-#select_object .select_header.lot_chosen .show_choices {
+.select_object .select_header.lot_chosen  .show_choices{
   background-image: url(/images/open_details.png);
   background-repeat: no-repeat;
   background-position: right center;
 }
 
-#select_object .select_header #reprint_label_link,
+.select_object .select_header #reprint_label_link,
 .select_header #retouching_link {
   display: block;
   position: absolute;
