@@ -15,6 +15,7 @@
       <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
       <span ng-switch-when="pieces">{{item[name]}}pieces</span>
       <span ng-switch-when="boxes">{{item[name]}}boxes</span>
+      <span ng-switch-when="grade_state">{{item.grade}} <label>({{item.state}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
     <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
