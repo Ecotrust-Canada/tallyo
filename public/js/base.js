@@ -170,7 +170,7 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
-    if ($scope.options.loadcurrentcollection) {
+    if ($scope.options && $scope.options.loadcurrentcollection) {
         $scope.loadCurrent();
     }
   };
