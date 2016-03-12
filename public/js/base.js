@@ -91,6 +91,9 @@ angular.module('scanthisApp', [
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
     }
+    if (settings.substationlink) {
+        $scope.substationlink = settings.substationlink;
+    }
     if(settings.formedit){
       $scope.formedit = settings.formedit;
     }

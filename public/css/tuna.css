@@ -211,6 +211,8 @@ body{
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
+#station-AM1-003 .panel,
+#station-AM1-005 .panel,
 #station-HS0-005 .panel {
   width: 550px;
 }
@@ -253,6 +255,7 @@ body{
   overflow: auto;
   background-color: #fbfcf8;
   padding-bottom: 20px;
+  white-space: nowrap;
 }
 .itemsframe table, .itemtotals table {
   border: none; 
@@ -264,7 +267,7 @@ body{
 }
 .itemsframe table td, .itemsframe table th {
   border: 1px solid #cccccc;
-  padding: 8px 15px;
+  padding: 8px 10px;
   text-align: left;
 }
 .itemsframe table td:first-child, .itemsframe table th:first-child {
@@ -1690,6 +1693,9 @@ table#shipments_list td:last-child {
   height: 36px;
   border: 1px solid #cae2eb;
 }
+#form-19 .styled-dropdown {
+  width: 232px;
+}
 .styled-dropdown select {
   height: 36px;
 }
@@ -1907,10 +1913,28 @@ input[name^=weight]::after {
   border-radius: 5px;
   position: relative;
 }
-#radio-grade {
+#radio-7-grade, 
+#radio-20-grade, 
+#radio-8-grade {
   width: 360px;
 }
+#radio-19-grade,
+#radio-17-grade {
+  width: 237px;
+}
+#radio-19-grade.toggle-group-container label,
+#radio-17-grade.toggle-group-container label {
+  width: 79px;
+}
 
+#radio-20-grade.toggle-group-container label,
+#radio-8-grade.toggle-group-container label,
+#radio-7-grade.toggle-group-container label {
+  width: 60px;
+}
+#radio-20-state.toggle-group-container label {
+  width: 80px;
+}
 .toggle-group-container.rbgroup-unset,
 .toggle-group-container.rbgroup-unset {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
@@ -1928,12 +1952,6 @@ input[name^=weight]::after {
   display: inline-block;
   height: 50px;
   box-sizing: border-box;
-}
-#radio-grade.toggle-group-container label {
-  width: 60px;
-}
-#radio-state.toggle-group-container label {
-  width: 80px;
 }
 
 .toggle-group-container label.rb-unset + label.rb-unset,
@@ -1967,12 +1985,19 @@ input[name^=weight]::after {
   border: none;
 }
 
-#radio-grade.toggle-group-container input:checked + span { 
+#radio-20-grade.toggle-group-container input:checked + span,
+#radio-8-grade.toggle-group-container input:checked + span,
+#radio-7-grade.toggle-group-container input:checked + span { 
   width:60px;
 }
 
-#radio-state.toggle-group-container input:checked + span { 
+#radio-20-state.toggle-group-container input:checked + span { 
   width:80px;
+}
+
+#radio-19-grade.toggle-group-container input:checked + span,
+#radio-17-grade.toggle-group-container input:checked + span { 
+  width:79px;
 }
 
 .select_object {

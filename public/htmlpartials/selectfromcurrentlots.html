@@ -1,8 +1,8 @@
 <div ng-controller="SelectLotDropDownCtrl" class="select_object">
-  <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
-       ng-click="current.collectionid = null">
-    <span class="show_choices">Select Lot</span>
-    <div id="reprint_label_link" ng-click="switchSubstation(1)">Reprint Label</div>  
+  <div class="select_header" ng-class="{lot_chosen: current.collectionid}">
+    <span class="show_choices" ng-click="current.collectionid = null">Select Lot</span>
+    <div id="reprint_label_link" ng-if="substationlink" 
+         ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
   </div> 
   <div class="show_choices" ng-hide="current.collectionid">
     <dropdown itemlist="list.harvester_lot"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>

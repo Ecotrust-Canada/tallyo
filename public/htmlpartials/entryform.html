@@ -38,7 +38,7 @@
 
 
           <!--radio-->
-          <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" 
+<span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{config.id}}-{{row.fieldname}}" 
             class="toggle-group-container" ng-class="withChecked(row.fieldname)">
             <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-class="isChecked(row.fieldname, option)"><input  
                    name="{{row.fieldname}}" type="radio" 
