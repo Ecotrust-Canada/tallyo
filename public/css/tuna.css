@@ -348,6 +348,9 @@ body{
 .itemtotals table td:first-child  span::after {
   content: ":";
 }
+.itemtotals table td:first-child  label {
+  font-size: 14px;
+}
 .itemtotals table tr:last-child td {
   color: #0a2131;
   font-size: 19px;
@@ -675,12 +678,19 @@ div[ng-view] {
   vertical-align: top;
   margin: 0 4px;
   overflow: visible;
+  display: inline-block;
 }
+
+.not{
+  display: block;
+}
+
 
 .stationframewide{
   overflow-x: auto;
   overflow-y: visible;
   padding-bottom: 10px;
+  display: inline-block;
 }
 .station_title {
   background-color: #002540;
@@ -1201,7 +1211,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #harvester_list #list-20 .panel.item-line {
-  width: 100%;
+  width: 90%;
   padding: 12px 0;
   color: #0a2131;
   font-size: 16px;

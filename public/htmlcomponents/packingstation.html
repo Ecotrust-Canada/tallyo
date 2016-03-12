@@ -22,7 +22,7 @@
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
       <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
-      <span ng-if="onLabel && list.included.length>0" ng-click="Complete()" 
+      <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
             id="reprint-{{config.id}}" class="reprint">Reprint</span>
     </div>
   </div>
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<div class="panel grey" ng-show="!formdisabled && list.included.length>0">
+<div class="panel grey" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
@@ -64,12 +64,11 @@
       <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
     </div>
   </div>
-  <div class="itemtotals table_row">
+  <div class="itemtotals table_row" >
     <div class="item_number">
-      <span ng-hide="current.collectionid">INTERNAL LOT</span><span 
-          ng-show="current.collectionid">{{packingconfig.summarytitle}} #{{current[station_info.collectiontable][packingconfig.item_field]}}</span> 
+      <span >{{packingconfig.summarytitle}} #{{current[station_info.collectiontable][packingconfig.item_field]}}</span> 
     </div>
-    <div class="totals_bit">
+    <div class="totals_bit" >
       <div class="totals_caption">Total Weight &amp; Pieces</div>
       <div class="summary"><span 
         ng-if="list.included[0].weight_1">{{list.included | sumOfValue:'weight_1'| weightstring}}</span><span 

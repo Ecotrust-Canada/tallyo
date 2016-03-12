@@ -89,7 +89,7 @@ angular.module('scanthisApp.packingController', [])
       $scope.MakeQR();
     }
     $scope.current.selected = 'no selected';
-    $scope.current.collectionid = 'no selected';
+    $scope.current.collectionid = null;
   };
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {

@@ -8,7 +8,7 @@ angular.module('scanthisApp.setsupplierController', [])
   /*
    *sets the supplier
    */
-  $scope.current.collectionid = null; 
+  //$scope.current.collectionid = null; 
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
@@ -214,14 +214,14 @@ angular.module('scanthisApp.setsupplierController', [])
       var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
       $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
       AddtoEntryFormData(form, 'lot', $scope);
-      $scope.CreateLot(queryString, date);
+      $scope.CreateLot(queryString, date, form.internal_lot_code);
     }
     
   };
 
 
   $scope.GetHar = function(harvester_code){
-    $scope.form['harvester_code'] = harvester_code;
+    $scope.form.harvester_code = harvester_code;
   };
 
   $scope.GenInternalLot = function(form){
@@ -238,7 +238,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
-    console.log('toggleStateValue');
     //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
     var checkInput = document.getElementById('switch-state');
     setTimeout(function () {
@@ -246,6 +245,13 @@ angular.module('scanthisApp.setsupplierController', [])
         $scope.form['state'] = checkInput.checked ? 'Clean' : 'Dirty';
       });
     }, 50);
+  };
+
+
+  $scope.changelot = function(){
+    $scope.current.lot = null;
+    $scope.current.collectionid = null;
+    $rootScope.$broadcast('change-lot');
   };
 })
 

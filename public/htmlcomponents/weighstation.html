@@ -7,7 +7,7 @@
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
 
-  <div ng-show="options.receivelot && current.lot || !options.receivelot && current.collectionid">
+  <div ng-show="current.collectionid">
     <div ng-controller="DisplayCollectionCtrl" id="current_lot">
       <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
@@ -46,11 +46,10 @@
 
 </div>
 
-<div class="panel grey">
+<div class="panel grey not" ng-show="current.collectionid">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemoveScanCtrl">
-      <!--list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list-->
-      <bufferedscrolllist itemlist="list.included"  limit="limit" config="itemlistconfig" update-fn="RemoveItem(str)"></bufferedscrolllist>
+      <bufferedscrolllist itemlist="list.included"  limit="limit" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
     </div>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">

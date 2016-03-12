@@ -52,6 +52,8 @@ angular.module('scanthisApp', [
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
 
+    $scope.terminal.both = current_terminal.both;
+
     $scope.$parent.current_terminal = { id: current_terminal.id, icon: current_terminal.icon, name: current_terminal.name };
 
     var stations = current_terminal.stations;
@@ -64,6 +66,7 @@ angular.module('scanthisApp', [
       $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
     $scope.terminal.substation = 0;
+
   }
 })
 
@@ -167,7 +170,7 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
-    if ($scope.options.loadcurrentcollection) {
+    if ($scope.options && $scope.options.loadcurrentcollection) {
         $scope.loadCurrent();
     }
   };
