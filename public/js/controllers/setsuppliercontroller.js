@@ -57,8 +57,6 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
-
-
   //for recent lots drop down
 
   $scope.lotselected = 'no selected';
