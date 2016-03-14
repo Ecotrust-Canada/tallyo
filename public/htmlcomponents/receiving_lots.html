@@ -16,7 +16,7 @@
 
     <div ng-init="formtable='harvester'">  
       <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
-        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitCheckDuplicate(form)"></entryform>
       </div>
     </div>
 </div>

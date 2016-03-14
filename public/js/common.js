@@ -151,6 +151,9 @@ var QRCombine = function (stringarray){
 var ArrayFromJson = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
+    if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1'){
+      json[stringarray[i]] = json[stringarray[i]].toFixed(2);
+    }
     newarray.push(json[stringarray[i]]);
   }
   return newarray;

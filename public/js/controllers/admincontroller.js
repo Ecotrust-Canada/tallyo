@@ -188,7 +188,8 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.scan = response.data;
       $scope.list.scan.forEach(function(el){
-        delete el.weight;
+        delete el.weight_1;
+        delete el.weight_2;
         delete el.pieces;
         delete el.serial_id;
       });
@@ -252,6 +253,13 @@ angular.module('scanthisApp.AdminController', [])
       el.supplier = lot.supplier;
       el.supplier_group = lot.supplier_group;
       el.ft_fa_code = harvester.ft_fa_code;
+      if (el.weight){
+        el.weight = el.weight.toFixed(2);
+      }
+      if (el.weight_1){
+        el.weight = parseFloat(el.weight_1).toFixed(2);
+        delete el.weight_1;
+      }
     });
 
     cleanJsonArray(cellData);    
