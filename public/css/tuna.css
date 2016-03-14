@@ -262,9 +262,11 @@ body{
   border-collapse: collapse;
   width: 100%;
 }
+/*
 .itemsframe table tr:hover {
   background-color: #2fba6d;
 }
+*/
 .itemsframe table td, .itemsframe table th {
   border: 1px solid #cccccc;
   padding: 8px 10px;
@@ -297,6 +299,9 @@ body{
   background-image: url(/images/remove_icon.svg);
   background-repeat: no-repeat;
   background-position: left 10px center;
+}
+.itemsframe.entries table td:last-child:hover {
+  background-image: url(/images/remove_icon_red.svg);
 }
 
 .itemsframe table tr:last-child td {
