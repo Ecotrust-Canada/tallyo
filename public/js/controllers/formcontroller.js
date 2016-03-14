@@ -255,6 +255,21 @@ angular.module('scanthisApp.formController', [])
     }
   };
 
+  $scope.SubmitCheckDuplicate = function(form){
+    if (form){
+      var query = '?fleet=eq.' + form.fleet + '&supplier_group=eq.' + form.supplier_group + '&supplier=eq.' + form.supplier + '&landing_location=eq.' + form.landing_location + '&ft_fa_code=eq.' + form.ft_fa_code + '&active=eq.true';
+      var func = function(response){
+        if (response.data.length > 0){
+          toastr.error('error: duplicate');
+        }
+        else{
+          $scope.Submit(form, AddtoList);
+        }
+      };
+      DatabaseServices.GetEntries('harvester', func, query);
+    }
+  };
+
 })
 
 //controller attached to list and expandedlist - ?mostly for csv?
