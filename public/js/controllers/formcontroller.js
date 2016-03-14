@@ -165,7 +165,6 @@ angular.module('scanthisApp.formController', [])
   }
 
   $scope.toggleRadioValue = function(frow){
-      console.log('toggle: '+frow.fieldname);
       var fieldname = frow.fieldname;
       //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
       var checkInput = document.getElementById('switch-'+fieldname);
