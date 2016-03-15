@@ -6,7 +6,7 @@
   <span ng-hide="hideform">Hide Form</span>
 </button>
 
-<div ng-hide="hideform" id="form-{{config.id}}">
+<div ng-hide="hideform" id="form-{{config.id}}" ng-class="{editform: config.editinform}">
 <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
 <form class="form-text" name="theform"  novalidate>
   <fieldset ng-disabled="formdisabled">
@@ -38,7 +38,7 @@
 
 
           <!--radio-->
-          <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{row.fieldname}}" 
+<span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{config.id}}-{{row.fieldname}}" 
             class="toggle-group-container" ng-class="withChecked(row.fieldname)">
             <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-class="isChecked(row.fieldname, option)"><input  
                    name="{{row.fieldname}}" type="radio" 

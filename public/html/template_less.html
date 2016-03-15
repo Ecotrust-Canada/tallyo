@@ -1,5 +1,5 @@
-
-<div ng-controller="StationCtrl" ng-init="init(station.settings)" ng-class="station.settings.css.station">
+<!-- div ng-controller="StationCtrl" ng-init="init(station.settings)" ng-class="station.settings.css.station" -->
+<div ng-controller="StationCtrl" ng-init="init(station.settings)">
   <div>
     <div ng-repeat="component in includes" ng-include="component" id="station-{{station_code}}" 
          class="station"></div>

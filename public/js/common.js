@@ -19,7 +19,6 @@ var dateManipulation = function(date, period){
       'start_date': moment.parseZone(date).startOf(momentper).format(),
       'end_date': moment.parseZone(date).endOf(momentper).format()
     };
-    console.log(dates.start_date, dates.end_date);
     return dates;
 };
 
@@ -358,5 +357,6 @@ var LoinCode = function(state){
 };
 
 var cutString = function (str, cutStart, cutEnd){
+  if (!str) return;  
   return str.substr(0,cutStart) + str.substr(cutEnd+1);
 };

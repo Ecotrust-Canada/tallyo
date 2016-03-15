@@ -4,7 +4,7 @@
 angular.module('scanthisApp.packingController', [])
 
 
-.controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -60,7 +60,18 @@ angular.module('scanthisApp.packingController', [])
   $scope.PatchObjWithContainer = function(){
 
     var func = function(response){
-      toastr.success('added'); // show success toast.
+      //toastr.success('added'); // show success toast.
+
+      // attempt to highlight new row in itemstable
+      setTimeout(function () {
+        var tr = angular.element(document.querySelector('#item-'+response.data[0][$scope.station_info.itemid]));  
+        if (tr){
+          var c = 'new_item';
+          tr.addClass(c);
+          $timeout(function(){ tr.removeClass(c); }, 2000); 
+        }
+      }, 100);
+      
       $scope.MakeScan($scope.id);
 
     };
@@ -152,7 +163,8 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.GetInfo = function(lot_num){
     var func = function(response){
-      var internal_lot_code = cutString(response.data[0].internal_lot_code, 4, 5).substring(0, 8);
+      var internal_lot_code = response.data[0].internal_lot_code ? 
+                              cutString(response.data[0].internal_lot_code, 4, 5).substring(0, 8) : null;
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;

@@ -57,8 +57,6 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
-
-
   //for recent lots drop down
 
   $scope.lotselected = 'no selected';
@@ -217,12 +215,10 @@ angular.module('scanthisApp.setsupplierController', [])
         var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
         $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
         AddtoEntryFormData(form, 'lot', $scope);
-        $scope.CreateLot(queryString, date);
+        $scope.CreateLot(queryString, date, form.internal_lot_code);
       }, function errorCallback(response) {
-
       });
-    }
-    
+    }    
   };
 
 
