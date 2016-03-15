@@ -19,7 +19,8 @@ angular.module('scanthisApp', [
   'ngCsv',
   'toastr',
   'gridshore.c3js.chart',
-  'ngMaterial'
+  'ngMaterial',
+  'ngAnimate'
 ])
 
 /*

@@ -369,5 +369,6 @@ var LoinCode = function(state){
 };
 
 var cutString = function (str, cutStart, cutEnd){
+  if (!str) return;  
   return str.substr(0,cutStart) + str.substr(cutEnd+1);
 };
