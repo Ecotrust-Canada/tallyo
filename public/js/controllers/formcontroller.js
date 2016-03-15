@@ -220,26 +220,32 @@ angular.module('scanthisApp.formController', [])
   };
 
   //fills out entry from form
-  $scope.Submit = function(form, responsefunction){
-    var date = moment(new Date()).format();    
-    if ($scope.station_info.collectiontable === 'box'){
-      $scope.entry[table].station_code = $scope.station_code;
-      //$scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
-    }
-    if ($scope.station_info.collectiontable === 'shipping_unit'){
-      $scope.entry[table].station_code = $scope.station_code;
-    }
-    if ($scope.station_info.collectiontable === 'lot'){
-      CreateLotEntryPeriod(date, 'day', $scope);
-      $scope.entry[table].station_code = $scope.station_code;
-      $scope.entry[table].processor_code = $scope.processor;
-    }
-    if ($scope.options && $scope.options.receiveharvester){
-      $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.entry.harvester.active = true;
-    }
-    MakeEntry(form, table, $scope);
-    $scope.ToDatabase(responsefunction);
+  $scope.Submit = function(form, responsefunction){ 
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+
+      if ($scope.station_info.collectiontable === 'box'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'shipping_unit'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'lot'){      
+          CreateLotEntryPeriod(date, 'day', $scope);
+          $scope.entry[table].station_code = $scope.station_code;
+          $scope.entry[table].processor_code = $scope.processor;
+      }
+      if ($scope.options && $scope.options.receiveharvester){
+        $scope.entry.harvester.processor_code = $scope.processor;
+        $scope.entry.harvester.active = true;
+      }
+      MakeEntry(form, table, $scope);
+      $scope.ToDatabase(responsefunction);
+
+    }, function errorCallback(response) {
+    });
+    
   };
 
   //The different submit buttons

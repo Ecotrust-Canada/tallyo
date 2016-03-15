@@ -151,9 +151,6 @@ angular.module('scanthisApp.AdminController', [])
         lot[$scope.sumStations[0].code].in_progress = false;
         if (!lot[$scope.sumStations[0].code].summary){
           lot[$scope.sumStations[0].code].summary = true;          
-          if (isToday($scope.list.recent[index].timestamp)){
-            lot[$scope.sumStations[0].code].in_progress = true;
-          }
         }
         
       }

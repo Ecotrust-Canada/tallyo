@@ -220,49 +220,6 @@ angular.module('scanthisApp.createlotController', [])
 
 
 
-//loadcurrentcollection.html (weighstation.html)
-//gets the current lot_number from lotlocations table
-.controller('GetCurrentCtrl', function($scope, $http, DatabaseServices) {
-  $scope.GetCurrent = function(){
-    var func = function(response){
-      var station = response.data[0];
-      var today = moment(new Date()).startOf('day').format();
-      if(station){
-        if (moment(station.in_progress_date).startOf('day').format() === today){
-          $scope.current.collectionid = station.lot_number;
-        }
-      }
-    };
-    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
-    DatabaseServices.GetEntries('lotlocations', func, query);
-  };
-
-  $scope.GetCurrent();
-
-  
-
-})
-
-//updates the lotlocations table
-/*.controller('CompleteLotCtrl', function($scope, $injector, DatabaseServices) {
-
-  $scope.CompleteLot = function(lot_number){
-    var patch = {'in_progress': false};
-    var func = function(response){
-      //todo: toast - lot completed
-      $scope.current.collectionid = null;
-      $scope.current[$scope.station_info.collectiontable] = null;
-      $scope.current.lotlistchange = !$scope.current.lotlistchange;
-    };
-    var query = '?station_code=eq.' + $scope.station_code + '&collectionid=eq.' + lot_number;
-    var r = confirm("Are you sure you want to complete this lot?");
-    if (r === true) {
-      DatabaseServices.PatchEntry('lotlocations',patch, query, func);
-    }     
-  };
-
-})*/
-
 
 //reprint.html - get list of loins for station, reprint function
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
@@ -284,27 +241,27 @@ angular.module('scanthisApp.createlotController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('reprint_table', func, query);
-      
+      DatabaseServices.GetEntries('reprint_table', func, query);      
     }
   };
-
   $scope.ListAllItems($scope.station_code);
-
 })
 
 //selectsamedaylot.html - dropdown menu with lots from current day
 .controller('LotSelectCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.ListLots = function(){
-    var date = moment(new Date()).format();
-    var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
-    var func = function(response){
-      $scope.list.lot = response.data;
-    };
-    DatabaseServices.GetEntries('lot', func, query);
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.lot = response.data;
+      };
+      DatabaseServices.GetEntries('lot', func, query);      
+    }, function errorCallback(response) {
+    });
   };
-
   $scope.ListLots();
 })
 

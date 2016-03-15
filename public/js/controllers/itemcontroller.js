@@ -83,7 +83,6 @@ angular.module('scanthisApp.itemController', [])
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
-    var date = moment(new Date()).format();
     AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, 'scan', $scope);
 
@@ -118,7 +117,6 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.MakeItemScanEntry = function(form){
     var table = $scope.station_info.itemtable.split('_')[0];
-    var date = moment(new Date()).format();
     AddtoEntryNonFormData($scope, table);
     AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, table, $scope);

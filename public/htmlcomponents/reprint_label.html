@@ -8,18 +8,11 @@
       <label for="filter_loin_number">Loin Number:</label><input ng-model="search.loin_number" id="filter_loin_number">
     </div>
     <div class="display_field">
-      <label for="filter_lot_number">Lot Number:</label><input ng-model="search.lot_number" id="filter_lot_number">
-    </div>
-    <div class="display_field">
       <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
              ng-model="search.internal_lot_code" id="filter_internal_lot_code">
     </div>
-    <div class="display_field">
-      <label for="filter_supplier">Supplier:</label><input ng-model="search.supplier" id="filter_supplier">
-    </div>
   </div>
   <div id="print_labels_list" class="itemsframe entries">
-    <!--list itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></list-->
     <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></bufferedscrolllist>
   </div>
 </div>

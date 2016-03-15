@@ -9,8 +9,6 @@ angular.module('scanthisApp.directives', [])
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
 
-.directive('loadcurrentcollection', function() { return { templateUrl: 'htmlpartials/loadcurrentcollection.html' }; })
-
 .directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
 
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
