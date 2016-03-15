@@ -201,6 +201,10 @@ angular.module('scanthisApp', [
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
+  $scope.RefreshPage = function(){
+    location.reload();
+  };
+
   $scope.switchSubstation = function(index) {
     var substation = $scope.currentstations[index].settings; 
     $scope.terminal.substation = index;

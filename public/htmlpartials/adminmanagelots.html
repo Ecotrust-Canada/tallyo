@@ -56,7 +56,7 @@
                <label>pcs</label>
                <span class="value">{{lot[stn.code].summary.pieces}}</span>
              </span>  
-             <span ng-if="lot[stn.code].prev_yield || start_yield" class="card_bit yield">
+             <span ng-if="lot[stn.code].prev_yield || lot[stn.code].start_yield" class="card_bit yield">
                <label>yield.%</label>
                <span class="value">
                  <span ng-if="lot[stn.code].prev_yield">{{ lot[stn.code].prev_yield.toFixed(0) }}</span>

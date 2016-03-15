@@ -3,9 +3,8 @@
   <div class="dd_arrow"><span></span></div>
   <input ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown"> 
-    <div ng-repeat="value in thelist | filter: search">
+    <div ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: config.limit">
       <div ng-mousedown="select($event, value[config.arg])">
-      <!--div ng-mousedown="changeFn(value[config.arg])"-->
         <b>{{value[config.searchfield]}}</b>
         <span ng-repeat="field in config.fields" ng-switch="field">
           <span ng-switch-when="weight">{{value.weight|weightstring}}</span>

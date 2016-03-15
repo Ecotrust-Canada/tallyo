@@ -239,9 +239,7 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 
-.controller('ReceiveLotCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-})
 
 
 ;

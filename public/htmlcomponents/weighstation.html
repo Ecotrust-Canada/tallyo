@@ -1,8 +1,8 @@
 <div class="panel white weighstation_main">
   <div id="refresh">
-    <a href="#">Refresh</a>
+    <a ng-click="RefreshPage()">Refresh</a>
   </div>
-  <!-- loadcurrentcollection ng-if="options.loadcurrentcollection"></loadcurrentcollection -->
+
   <receivelot ng-if="options.receivelot"></receivelot>
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
@@ -12,12 +12,9 @@
       <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
 
-    <!-- div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="prevStationCtrl" id="prev_station_totals" -->
     <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsCtrl" id="prev_station_totals">
       <label>Previous  Station:</label><list ng-if="item2listconfig" itemlist="totals"  
-          config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span 
-          ng-if="totals[0].weight1">{{totals | sumOfValue:'weight1'| weightstring}}</span><span 
-          ng-if="totals[0].weight2">{{totals | sumOfValue:'weight2'| weightstring}}</span><span 
+          config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span  
           ng-if="totals[0].weight">{{totals | sumOfValue:'weight'| weightstring}}</span><span 
           ng-if="totals[0].weight_1">{{totals | sumOfValue:'weight_1'| weightstring}}</span><span 
           ng-if="totals[0].pieces">{{totals | sumOfValue:'pieces'}}pcs</span><span 
@@ -27,18 +24,15 @@
   </div>   
 
   <div ng-controller="ScanCtrl" class="scanform">
-
     <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" 
                poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
 
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
                submit-fn="Submit(form)"></entryform>
-
   </div>
 
   <div ng-if="formedit">
     <hr>
-
     <div ng-controller="AddtoTableCtrl">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>

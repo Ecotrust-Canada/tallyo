@@ -152,7 +152,9 @@ angular.module('scanthisApp.setsupplierController', [])
     if ($scope.current.lot !== undefined){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
-        $scope.StationLot($scope.current.lot.lot_number, station);
+        if ($scope.current.lot){
+          $scope.StationLot($scope.current.lot.lot_number, station);
+        }        
       }
       for (var j=0;j<$scope.setstation.add.length;j++){
         var station1 = $scope.setstation.add[j];
