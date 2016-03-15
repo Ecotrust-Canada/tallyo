@@ -178,12 +178,20 @@ angular.module('scanthisApp', [
   $scope.loadCurrent = function(){
     var func = function(response){
       var station = response.data[0];
-      var today = moment(new Date()).startOf('day').format();
-      if(station){
-        if (moment(station.in_progress_date).startOf('day').format() === today){
-          $scope.current.collectionid = station.lot_number;
+      $http.get('/server_time').then(function successCallback(response) {
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        var today = moment.parseZone(date).startOf('day').format();
+        if(station){
+          var lot_date = moment(station.in_progess_date).utcOffset(response.data.timezone).format();
+          var lot_day = moment.parseZone(lot_date).startOf('day').format();
+          if ( lot_day === today){
+            $scope.current.collectionid = station.lot_number;
+          }
         }
-      }
+      }, function errorCallback(response) {
+
+      });
     };
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
     DatabaseServices.GetEntries('lotlocations', func, query);

@@ -17,7 +17,6 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.MakeItemScanEntry = function(form){
-    var date = moment(new Date()).format();
     $scope.entry.scan = {};
     $scope.entry[$scope.station_info.itemtable] = {};
 
@@ -206,7 +205,6 @@ angular.module('scanthisApp.receivingController', [])
           $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
           $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
-          var date = moment(new Date()).format();
           for (var j=0;j<choices.length;j++){
             var formrow = choices[j];
             $scope.entry.box.grade = formrow.grade; 
@@ -215,7 +213,7 @@ angular.module('scanthisApp.receivingController', [])
 
             for (var i=1;i<=formrow.num_boxes;i++){
               var entry = JSON.parse(JSON.stringify($scope.entry.box));
-              $scope.MakeBox(entry, date);
+              $scope.MakeBox(entry);
             }
           }    
         }else{
@@ -227,7 +225,7 @@ angular.module('scanthisApp.receivingController', [])
     }    
   };
   
-  $scope.MakeBox = function(entry, date){
+  $scope.MakeBox = function(entry){
     var func = function(response){
       var values = response.data[0];
       values.origin = $scope.current.harvester.supplier;
