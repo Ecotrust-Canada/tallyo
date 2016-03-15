@@ -4,7 +4,7 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr) {
+.controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr, $timeout) {
   var scalePromise;
 
   $scope.entry.scan = {};
@@ -61,7 +61,18 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      toastr.success("submit successful");
+      //toastr.success("submit successful");
+
+      // attempt to highlight new row in itemstable
+      setTimeout(function () {
+        var tr = angular.element(document.querySelector('#item-'+response.data[$scope.station_info.itemid]));  
+        if (tr){
+          var c = 'new_item';
+          tr.addClass(c);
+          $timeout(function(){ tr.removeClass(c); }, 2000); 
+        }
+      }, 100);
+      
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);

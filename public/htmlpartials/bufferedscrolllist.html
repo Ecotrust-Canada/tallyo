@@ -4,7 +4,8 @@
       <tr ng-if="config.headers">
         <th ng-repeat="title in config.headers">{{title}}</th>
       </tr>  
-      <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: limit | filter: filterstring">
+      <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: limit | filter: filterstring"
+          id="item-{{item[config.arg]}}" class="animation">
         <td ng-repeat="name in config.fields" ng-switch on="name">
           <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
           <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
