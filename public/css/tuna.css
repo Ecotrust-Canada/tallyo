@@ -294,14 +294,16 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
+#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
 .itemsframe.entries table td:last-child {
   /* Hide the text. */
   color: transparent;
   overflow: hidden;
-  /* remove icon */
-  background-image: url(/images/remove_icon.svg);
   background-repeat: no-repeat;
   background-position: left 10px center;
+}
+.itemsframe.entries table td:last-child {
+  background-image: url(/images/remove_icon.svg);
 }
 .itemsframe.entries table td:last-child:hover {
   background-image: url(/images/remove_icon_red.svg);
@@ -1319,12 +1321,18 @@ div#station-HS0-011 {
   box-sizing:border-box;
 }
 
+#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
 table#shipments_list td:last-child {
   background-image: url(/images/edit_icon.svg);
 }
+/*
+#station-HS0-003 .itemsframe.entries table th:nth-last-child(2) {
+  color: transparent;
+}
+*/
 #print_labels_list td,
 #shipments_list td {
   white-space: nowrap;
