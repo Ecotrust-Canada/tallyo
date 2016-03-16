@@ -54,6 +54,9 @@ ALTER TABLE group_codes
   
 
 
+drop view if exists box_product;
+
+
 CREATE OR REPLACE VIEW box_product AS 
  SELECT box.box_number,
     box.station_code,

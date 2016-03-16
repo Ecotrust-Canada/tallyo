@@ -1,24 +1,22 @@
 <div class="panel white weighstation_main">
   <div id="refresh">
-    <a href="#">Refresh</a>
+    <a ng-click="RefreshPage()">Refresh</a>
   </div>
-  <!-- loadcurrentcollection ng-if="options.loadcurrentcollection"></loadcurrentcollection -->
+
   <receivelot ng-if="options.receivelot"></receivelot>
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
   <selectsamedaylot ng-if="options.selectsamedaylot"></selectsamedaylot>
 
-  <div ng-show="options.receivelot && current.lot || !options.receivelot && current.collectionid">
+  <div ng-show="current.collectionid">
     <div ng-controller="DisplayCollectionCtrl" id="current_lot">
       <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
 
-    <!-- div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="prevStationCtrl" id="prev_station_totals" -->
     <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsCtrl" id="prev_station_totals">
       <label>Previous  Station:</label><list ng-if="item2listconfig" itemlist="totals"  
-          config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span 
-          ng-if="totals[0].weight1">{{totals | sumOfValue:'weight1'| weightstring}}</span><span 
-          ng-if="totals[0].weight2">{{totals | sumOfValue:'weight2'| weightstring}}</span><span 
+          config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span  
           ng-if="totals[0].weight">{{totals | sumOfValue:'weight'| weightstring}}</span><span 
+          ng-if="totals[0].weight_1">{{totals | sumOfValue:'weight_1'| weightstring}}</span><span 
           ng-if="totals[0].pieces">{{totals | sumOfValue:'pieces'}}pcs</span><span 
           ng-if="totals[0].boxes">{{totals | sumOfValue:'boxes'}} boxes</span>
         </div>
@@ -26,33 +24,32 @@
   </div>   
 
   <div ng-controller="ScanCtrl" class="scanform">
-
     <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" 
                poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
 
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
                submit-fn="Submit(form)"></entryform>
-
   </div>
 
   <div ng-if="formedit">
     <hr>
-
     <div ng-controller="AddtoTableCtrl">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
-    <div ng-controller="AddtoTableCtrl">
+    <!--<div ng-controller="AddtoTableCtrl">
       <entryform config="addform2" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
-    </div>
+    </div>-->
     <hr>
   </div>
 
 </div>
 
-<div class="panel grey">
+<div class="panel grey not" ng-show="current.collectionid">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemoveScanCtrl">
-      <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)" ></list>
+
+      <bufferedscrolllist itemlist="list.included"  limit="limit" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
+
     </div>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">

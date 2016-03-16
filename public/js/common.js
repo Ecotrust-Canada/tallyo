@@ -15,9 +15,9 @@ var dateManipulation = function(date, period){
       momentper = 'day';
     }
     dates = {
-      'postgres_date': moment(date).format(),
-      'start_date': moment(date).startOf(momentper),
-      'end_date': moment(date).endOf(momentper)
+      'postgres_date': moment.parseZone(date).format(),
+      'start_date': moment.parseZone(date).startOf(momentper).format(),
+      'end_date': moment.parseZone(date).endOf(momentper).format()
     };
     return dates;
 };
@@ -36,13 +36,7 @@ var DateRangeCurrent = function(date, start_date, end_date){
     return false;
 };
 
-var isToday = function(date){
-  var today = moment(new Date()).startOf('day').format();
-  if (moment(date).startOf('day').format() === today){
-    return true;
-  }
-  return false;
-};
+
 
 /*checks that a json object has no "" values*/
 var NoMissingValues = function(jsonobj, except){
@@ -68,12 +62,6 @@ var NotEmpty = function(jsonobj){
     return false;
 };
 
-/*assigns results from date manipulation to scope*/
-var CreateEntryPeriod = function(today, period, $scope){
-    var dates = dateManipulation(today, period);
-    $scope.lot_entry.start_date = dates.start_date;
-    $scope.lot_entry.end_date = dates.end_date;
-  };
 
 var CreateLotEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
@@ -151,6 +139,9 @@ var QRCombine = function (stringarray){
 var ArrayFromJson = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
+    if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1'){
+      json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(2);
+    }
     newarray.push(json[stringarray[i]]);
   }
   return newarray;
@@ -333,8 +324,8 @@ var propertyNames = function(obj){
 
 
 
-var DateGroup = function(date){
-  var day = parseInt(moment(date).format('DD'));
+var DateGroup = function(today){
+  var day = parseInt(today);
   var date_group = '';
   if (day <= 5){
     date_group = 1;
@@ -369,5 +360,6 @@ var LoinCode = function(state){
 };
 
 var cutString = function (str, cutStart, cutEnd){
+  if (!str) return;  
   return str.substr(0,cutStart) + str.substr(cutEnd+1);
 };

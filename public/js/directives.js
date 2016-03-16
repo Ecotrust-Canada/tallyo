@@ -9,8 +9,6 @@ angular.module('scanthisApp.directives', [])
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
 
-.directive('loadcurrentcollection', function() { return { templateUrl: 'htmlpartials/loadcurrentcollection.html' }; })
-
 .directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
 
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
@@ -47,6 +45,17 @@ angular.module('scanthisApp.directives', [])
            secondFn: '&'},
   controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
+
+
+.directive('bufferedscrolllist', function() { return { 
+  scope: { itemlist: '=',  
+           config: '=' , 
+           filterstring: '=', 
+           istotal: '=', 
+           updateFn: '&',
+           secondFn: '&'}, 
+  controller: 'BufferScrollCtrl',
+  templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
 .directive('expandedlist', function() { return { 
   scope: { itemlist: '=', 
@@ -140,7 +149,6 @@ angular.module('scanthisApp.directives', [])
     },
   };
 }])
-
 .directive('inputDropdown', function($compile) {
     
     return {
@@ -159,6 +167,29 @@ angular.module('scanthisApp.directives', [])
         }
     };
 })
+.directive('bufferedScroll', function ($parse) {
+    return function ($scope, element, attrs) {
+      var handler = function () {
+        if ($scope.limit < $scope.itemlist.length) {
+          $scope.limit += 5;
+        }
+      };
+      element.on('scroll',function (evt) {
+        var scrollTop    = element[0].scrollTop,
+            scrollHeight = element[0].scrollHeight,
+            offsetHeight = element[0].offsetHeight;
 
-
+        if (scrollTop === (scrollHeight - offsetHeight)) {
+          $scope.$apply(function () {
+            handler($scope);
+          });
+        }
+        if (scrollTop === 0) {
+          $scope.$apply(function () {
+            $scope.limit = 10;
+          });
+        }
+      });
+    };
+  })
 ;

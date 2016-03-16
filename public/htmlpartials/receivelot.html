@@ -1,9 +1,9 @@
-<div ng-controller="NewLotCtrl" id="select_object">
-  <div class="select_header" ng-class="{lot_chosen: current.lot}"
-      ng-click="current.lot = null; current.collectionid = null;">
+<div ng-controller="NewLotCtrl" class="select_object" ng-cloak>
+  <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
+      ng-click="changelot()">
     <span class="show_choices">Set Current Lot</span>
   </div>
-  <div class="show_choices" ng-hide="current.lot">
+  <div class="show_choices" ng-hide="current.collectionid">
     <dropdown itemlist="list.harvester"  cfg="adddropdown" selectedoption="selected" change-fn="GetHar(selected)"></dropdown>
 
     <span class="switch_option" ng_class="{active: form.state=='Dirty'}"

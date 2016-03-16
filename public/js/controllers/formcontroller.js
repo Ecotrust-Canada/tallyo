@@ -172,7 +172,6 @@ angular.module('scanthisApp.formController', [])
   }
 
   $scope.toggleRadioValue = function(frow){
-      console.log('toggle: '+frow.fieldname);
       var fieldname = frow.fieldname;
       //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
       var checkInput = document.getElementById('switch-'+fieldname);
@@ -228,26 +227,32 @@ angular.module('scanthisApp.formController', [])
   };
 
   //fills out entry from form
-  $scope.Submit = function(form, responsefunction){
-    var date = moment(new Date()).format();    
-    if ($scope.station_info.collectiontable === 'box'){
-      $scope.entry[table].station_code = $scope.station_code;
-      //$scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
-    }
-    if ($scope.station_info.collectiontable === 'shipping_unit'){
-      $scope.entry[table].station_code = $scope.station_code;
-    }
-    if ($scope.station_info.collectiontable === 'lot'){
-      CreateLotEntryPeriod(date, 'day', $scope);
-      $scope.entry[table].station_code = $scope.station_code;
-      $scope.entry[table].processor_code = $scope.processor;
-    }
-    if ($scope.options && $scope.options.receiveharvester){
-      $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.entry.harvester.active = true;
-    }
-    MakeEntry(form, table, $scope);
-    $scope.ToDatabase(responsefunction);
+  $scope.Submit = function(form, responsefunction){ 
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+
+      if ($scope.station_info.collectiontable === 'box'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'shipping_unit'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'lot'){      
+          CreateLotEntryPeriod(date, 'day', $scope);
+          $scope.entry[table].station_code = $scope.station_code;
+          $scope.entry[table].processor_code = $scope.processor;
+      }
+      if ($scope.options && $scope.options.receiveharvester){
+        $scope.entry.harvester.processor_code = $scope.processor;
+        $scope.entry.harvester.active = true;
+      }
+      MakeEntry(form, table, $scope);
+      $scope.ToDatabase(responsefunction);
+
+    }, function errorCallback(response) {
+    });
+    
   };
 
   //The different submit buttons
@@ -260,6 +265,21 @@ angular.module('scanthisApp.formController', [])
   $scope.SubmitAddSetCurrent = function(form){
     if(form){
       $scope.Submit(form, AddSetCurrent);
+    }
+  };
+
+  $scope.SubmitCheckDuplicate = function(form){
+    if (form){
+      var query = '?fleet=eq.' + form.fleet + '&supplier_group=eq.' + form.supplier_group + '&supplier=eq.' + form.supplier + '&landing_location=eq.' + form.landing_location + '&ft_fa_code=eq.' + form.ft_fa_code + '&active=eq.true';
+      var func = function(response){
+        if (response.data.length > 0){
+          toastr.error('error: duplicate');
+        }
+        else{
+          $scope.Submit(form, AddtoList);
+        }
+      };
+      DatabaseServices.GetEntries('harvester', func, query);
     }
   };
 

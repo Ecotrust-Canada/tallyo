@@ -19,7 +19,8 @@ angular.module('scanthisApp', [
   'ngCsv',
   'toastr',
   'gridshore.c3js.chart',
-  'ngMaterial'
+  'ngMaterial',
+  'ngAnimate'
 ])
 
 /*
@@ -56,6 +57,8 @@ angular.module('scanthisApp', [
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
 
+    $scope.terminal.both = current_terminal.both;
+
     $scope.$parent.current_terminal = { id: current_terminal.id, icon: current_terminal.icon, name: current_terminal.name };
 
     var stations = current_terminal.stations;
@@ -68,6 +71,7 @@ angular.module('scanthisApp', [
       $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
     $scope.terminal.substation = 0;
+
   }
 })
 
@@ -91,6 +95,9 @@ angular.module('scanthisApp', [
     }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
+    }
+    if (settings.substationlink) {
+        $scope.substationlink = settings.substationlink;
     }
     if(settings.formedit){
       $scope.formedit = settings.formedit;
@@ -172,7 +179,7 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
-    if ($scope.options.loadcurrentcollection) {
+    if ($scope.options && $scope.options.loadcurrentcollection) {
         $scope.loadCurrent();
     }
   };
@@ -180,15 +187,27 @@ angular.module('scanthisApp', [
   $scope.loadCurrent = function(){
     var func = function(response){
       var station = response.data[0];
-      var today = moment(new Date()).startOf('day').format();
-      if(station){
-        if (moment(station.in_progress_date).startOf('day').format() === today){
-          $scope.current.collectionid = station.lot_number;
+      $http.get('/server_time').then(function successCallback(response) {
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        var today = moment.parseZone(date).startOf('day').format();
+        if(station){
+          var lot_date = moment(station.in_progess_date).utcOffset(response.data.timezone).format();
+          var lot_day = moment.parseZone(lot_date).startOf('day').format();
+          if ( lot_day === today){
+            $scope.current.collectionid = station.lot_number;
+          }
         }
-      }
+      }, function errorCallback(response) {
+
+      });
     };
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
     DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
+  $scope.RefreshPage = function(){
+    location.reload();
   };
 
   $scope.switchSubstation = function(index) {

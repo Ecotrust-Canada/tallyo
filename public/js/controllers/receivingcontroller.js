@@ -13,8 +13,8 @@ angular.module('scanthisApp.receivingController', [])
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
     $scope.MakeItemFromQR(jsonvalues);
-    
   };
+
 
   $scope.DatabaseScan = function(box_number){ 
     var data = {'box_number': box_number, 'station_code':$scope.station_code};   
@@ -61,11 +61,9 @@ angular.module('scanthisApp.receivingController', [])
   $scope.createLot = function(jsonvalues){
     var data = {'lot_number': jsonvalues.lot, 'harvester_code': jsonvalues.harvester_code, 'received_from': $scope.current.shipping_unit.received_from, 'tf_code': jsonvalues.tf_code, 'station_code': $scope.station_code, 'harvest_date': jsonvalues.harvest_date};
     var func = function(response){
-      //console.log(response.data);
       $scope.createBox(jsonvalues, response.data[0].receive_code);
     };
     DatabaseServices.DatabaseEntryCreateCode('receive_lot', data, $scope.processor, func);
-    //DatabaseServices.DatabaseEntryReturn('receive_lot', data, func);
   };
 
   $scope.createBox = function(jsonvalues, receive_code){
@@ -212,7 +210,6 @@ angular.module('scanthisApp.receivingController', [])
           $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
           $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
-          var date = moment(new Date()).format();
           for (var j=0;j<choices.length;j++){
             var formrow = choices[j];
             $scope.entry.box.grade = formrow.grade; 
@@ -221,7 +218,7 @@ angular.module('scanthisApp.receivingController', [])
 
             for (var i=1;i<=formrow.num_boxes;i++){
               var entry = JSON.parse(JSON.stringify($scope.entry.box));
-              $scope.MakeBox(entry, date);
+              $scope.MakeBox(entry);
             }
           }    
         }else{
@@ -233,7 +230,7 @@ angular.module('scanthisApp.receivingController', [])
     }    
   };
   
-  $scope.MakeBox = function(entry, date){
+  $scope.MakeBox = function(entry){
     var func = function(response){
       var values = response.data[0];
       values.origin = $scope.current.harvester.supplier;
@@ -245,6 +242,5 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
 })
-
 
 ;

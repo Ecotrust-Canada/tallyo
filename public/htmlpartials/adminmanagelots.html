@@ -2,7 +2,7 @@
     <tr class="adminlots_header">
       <th class="lot_column"><span>Lot</span></th>
       <th ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
-        <div class="icon"></div><span>{{stn.name}}<span>
+        <div class="icon {{stn.icon}}"></div><span>{{stn.name}}<span>
       </th>
     </tr>
 
@@ -60,11 +60,11 @@
                <label>pcs</label>
                <span class="value">{{lot[stn.code].summary.pieces}}</span>
              </span>  
-             <span ng-if="lot[stn.code].prev_yield || start_yield" class="card_bit yield">
+             <span ng-if="lot[stn.code].prev_yield || lot[stn.code].start_yield" class="card_bit yield">
                <label>yield.%</label>
                <span class="value">
-                 <span ng-if="lot[stn.code].prev_yield">{{ lot[stn.code].prev_yield.toFixed(1) }}</span>
-                 <span ng-if="lot[stn.code].start_yield">{{ lot[stn.code].start_yield.toFixed(1) }}</span>
+                 <span ng-if="lot[stn.code].prev_yield">{{ lot[stn.code].prev_yield.toFixed(0) }}</span>
+                 <span ng-if="lot[stn.code].start_yield">{{ lot[stn.code].start_yield.toFixed(0) }}</span>
                </span>
              </span>  
            </span> 
@@ -74,13 +74,14 @@
             <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
               <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
               <td ng-if="total.product_code">{{total.product_code}} </td>
-              <td ng-if="total.state">{{total.state}} </td>
-              <td ng-if="total.size">{{total.size}} </td>
               <td ng-if="total.grade">{{total.grade}} </td>
+              <td ng-if="total.state">{{total.state}} </td>
+              <td ng-if="total.size">{{total.size}} </td>              
               <td ng-if="total.species">{{total.species}} </td>
               <td ng-if="total.boxes">{{total.boxes}} boxes </td>
               <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
-              <td ng-if="total.weight1">{{(total.weight1).toFixed(2)}}kg<span ng-if="total.weight2"> / {{total.weight2.toFixed(2)}}kg</span></td>
+              <td ng-if="total.weight">{{(total.weight).toFixed(2)}}kg</td>
+              <td ng-if="total.weight_1">{{(total.weight_1).toFixed(2)}}kg<span ng-if="total.weight_2"> / {{total.weight_2.toFixed(2)}}kg</span></td>
             </tr>
           </table>
 
