@@ -968,32 +968,34 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit label {
   font-family: 'Lato-Bold';
   display: block;
 }
-
+/*
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield label {
   top: 5px;
   position: relative;
 }
-
+*/
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
   border-left: 1px solid #ccccca;
 }
 
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
   color: #03223C;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Lato-Black';
   display: block;
   padding-top: 5px;
   white-space: nowrap;
   flex-wrap: wrap;
 }
+/*
 table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield .value {
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 16px;
 }
-
+*/
 #station-HS0-ADM table#admin_manage_lots tr .lot-station-cell .card_header.warn .card_bit.pieces label {
   color: #f24133;
 }
