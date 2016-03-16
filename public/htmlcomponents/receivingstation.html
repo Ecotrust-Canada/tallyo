@@ -1,38 +1,38 @@
-<div class='panel grey'>
-  <div any-other-click class="sectionframe">
+
+<div any-other-click class="panel white">
+
 
     <div ng-controller="CollectionTableDropDownCtrl">
       <dropdown itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
     </div>
 
-    <br>
-    <div ng-controller="FormSubmitCtrl">
-        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
-    </div>
+
+  <div ng-controller="FormSubmitCtrl">
+      <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
   </div>
 
-
-  <div class="sectionframe" ng-controller="QRScanCtrl">
+  <div ng-controller="QRScanCtrl">
+    {{packingconfig.sectiontitle}}:<br>
     <fieldset ng-disabled="formdisabled">
       <div>
-          <form ng-submit="readQR()">
-            Scan Field: <input  id="scaninput" type="text" ng-model="raw.string" autocomplete="off">
-          </form>
-        </div>
-      <br>
+        <form ng-submit="readQR()">
+          Scan Field: <input  id="scaninput" type="text" ng-model="raw.string" autocomplete="off">
+        </form>
+      </div>
+
       <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
     </fieldset>
   </div>
 
-  <div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
+  <div ng-controller="DisplayCollectionCtrl">
     <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
   </div>
+</div>
 
+<div class="panel grey itemsframe"  ng-controller="DisplayItemsCtrl">
+  <div ng-controller="RemoveItemCtrl">
+    <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
 
-  <div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-    <div ng-controller="RemoveItemCtrl">
-      <list itemlist="list.included"  config="itemlistconfig" update-fn="RemoveItem(str)" ></list>
-    </div>
   </div>
 
 </div>

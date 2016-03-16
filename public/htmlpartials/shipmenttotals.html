@@ -1,4 +1,4 @@
-<div ng-controller="ViewShipmentCtrl">
+<div ng-controller="ViewShipmentCtrl"  class="panel white">
   <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
   {{current.shipping_unit.received_from}}  {{current.shipping_unit.timestamp|stringtodate|date:format:"MMM dd"}}
   <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
@@ -13,5 +13,3 @@
     </div>
   </div>
 </div>
-<br>
-<hr>
