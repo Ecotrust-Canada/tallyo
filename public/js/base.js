@@ -187,7 +187,8 @@ angular.module('scanthisApp', [
         var date = moment(the_date).utcOffset(response.data.timezone).format();
         var today = moment.parseZone(date).startOf('day').format();
         if(station){
-          var lot_date = moment(station.in_progess_date).utcOffset(response.data.timezone).format();
+          var lot_date_start = station.in_progress_date.substring(0,19);
+          var lot_date = moment(lot_date_start).utcOffset(response.data.timezone).format();
           var lot_day = moment.parseZone(lot_date).startOf('day').format();
           if ( lot_day === today){
             $scope.current.collectionid = station.lot_number;
