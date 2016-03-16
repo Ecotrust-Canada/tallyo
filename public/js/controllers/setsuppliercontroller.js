@@ -8,7 +8,7 @@ angular.module('scanthisApp.setsupplierController', [])
   /*
    *sets the supplier
    */
-
+  //$scope.current.collectionid = null; 
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
@@ -57,15 +57,57 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
+  //for recent lots drop down
 
-  //$scope.form = {};
+  $scope.lotselected = 'no selected';
+
+  $scope.ListLots = function(){
+    var func = function(response){
+      $scope.list.lot = response.data;
+    };
+    var query = '?lot_number=neq.' + $scope.current.collectionid;
+    DatabaseServices.GetEntries('harvester_lot', func, query);
+  };
+  $scope.ListLots();
+
+  $scope.$on('collection-change', function(event, args) {
+    $scope.ListLots();
+  });
+
+  $scope.SetLot = function(lot_number){
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      if (response.data.length > 0){
+        $scope.current.lot = response.data[0];
+        $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+      }//end if
+      else{
+      }
+    };
+    DatabaseServices.GetEntries('lot', func, query);
+  };
+
+
+
+  //for harvester drop down
+  $scope.form = {};
+
+  $scope.selected = 'no selected';
+
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
 
   //lotlocations functions
   $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
-    var today = moment(new Date()).format();
-    var entry = {'lot_number': lot_number, 'in_progress_date': today, 'station_code': station_code, 'in_progress': bool};
+    var entry = {'lot_number': lot_number, 'station_code': station_code, 'in_progress': bool};
     DatabaseServices.DatabaseEntry('lotlocations', entry, func);
   };
   $scope.RemoveOld = function(lot_number, station_code, bool){
@@ -110,13 +152,15 @@ angular.module('scanthisApp.setsupplierController', [])
     if ($scope.current.lot !== undefined){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
-        $scope.StationLot($scope.current.lot.lot_number, station);
+        if ($scope.current.lot){
+          $scope.StationLot($scope.current.lot.lot_number, station);
+        }        
       }
       for (var j=0;j<$scope.setstation.add.length;j++){
         var station1 = $scope.setstation.add[j];
         $scope.AddStationLot($scope.current.lot.lot_number, station1);
       }
-      //$rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+      $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
       $scope.current.collectionid = $scope.current.lot.lot_number;
     }
   });
@@ -126,24 +170,26 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.DatabaseLot = function(){
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
+      $scope.form = {};
     };
     DatabaseServices.DatabaseEntryCreateCode('lot', $scope.entry.lot, $scope.processor, func);
   };
 
   /*fill in fields in json obj*/
-  $scope.MakeLotEntry = function(date){      
+  $scope.MakeLotEntry = function(date, internal_lot_code){    
     CreateLotEntryPeriod(date, 'day', $scope);
     $scope.entry.lot.station_code = $scope.station_code;
+    $scope.entry.lot.internal_lot_code = internal_lot_code;
   };
 
   /*Gets current lot given selected supplier, if does not exist creates a new lot*/
-  $scope.CreateLot = function(queryString, date){
+  $scope.CreateLot = function(queryString, date, internal_lot_code){
     var func = function(response){
       if (response.data.length > 0){
         $scope.current.lot = response.data[0];
       }//end if
       else{
-        $scope.MakeLotEntry(date);
+        $scope.MakeLotEntry(date, internal_lot_code);
         $scope.DatabaseLot();  
       }
     };
@@ -152,31 +198,73 @@ angular.module('scanthisApp.setsupplierController', [])
 
   
   /*gets selected supplier, creates querystring for lot*/
-  $scope.SetCurrentHarvester = function(harvester_code){
+  $scope.SetCurrentHarvester = function(harvester_code, internal_lot_code, now){
     $scope.current.harvester_code = harvester_code;
-    var date = moment(new Date()).format();
-    var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date;
+    var date = now;
+    var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date + "&internal_lot_code=eq." + internal_lot_code;
     $scope.entry.lot = {"harvester_code": harvester_code, "station_code": $scope.station_code, "processor_code": $scope.processor};
-    $scope.CreateLot(queryString, date);
+    $scope.CreateLot(queryString, date, internal_lot_code);
   };
 
 
   $scope.SubmitNewLot = function(form){
     if (form){
-      var harvester_code = $scope.current.harvester.harvester_code;
-      var ship_code = $scope.current.shipping_unit.shipping_unit_number;
-      var date = moment(new Date()).format();
-      var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
-      $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
-      AddtoEntryFormData(form, 'lot', $scope);
-      $scope.CreateLot(queryString, date);
-    }
-    
+      $http.get('/server_time').then(function successCallback(response) {
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        var harvester_code = $scope.current.harvester.harvester_code;
+        var ship_code = $scope.current.shipping_unit.shipping_unit_number;
+        var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
+        $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
+        AddtoEntryFormData(form, 'lot', $scope);
+        $scope.CreateLot(queryString, date, form.internal_lot_code);
+      }, function errorCallback(response) {
+      });
+    }    
   };
 
 
+  $scope.GetHar = function(harvester_code){
+    $scope.form.harvester_code = harvester_code;
+  };
+
+  $scope.GenInternalLot = function(form){
+
+    $http.get('/server_time').then(function successCallback(response) {
+      var date = response.data.timestamp;
+      var now = moment(date).utcOffset(response.data.timezone).format();
+      var day = moment(date).utcOffset(response.data.timezone).format('DD');
+      var date_group = DateGroup(day);
+      var hars = $scope.list.harvester.filter(function(el){
+        return el.harvester_code === form.harvester_code;
+      });
+      var sup_code = hars[0].supplier_group;
+      var loin_code = LoinCode(form.state);
+      var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
+      var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
+      $scope.SetCurrentHarvester(form.harvester_code, internal_lot_code, now);
+    }, function errorCallback(response) {
+
+    });
+
+  };
+
+  $scope.toggleStateValue = function(){
+    //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
+    var checkInput = document.getElementById('switch-state');
+    setTimeout(function () {
+      $scope.$apply(function () {
+        $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';
+      });
+    }, 50);
+  };
 
 
+  $scope.changelot = function(){
+    $scope.current.lot = null;
+    $scope.current.collectionid = null;
+    $rootScope.$broadcast('change-lot');
+  };
 })
 
 //collectiontable: "harvester", collectionid: "harvester_code", displaytable: "harvester_lot", patchtable: "lot", patchid: "lot_number"

@@ -4,7 +4,7 @@
 angular.module('scanthisApp.itemController', [])
 
 
-.controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr) {
+.controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr, $timeout) {
   var scalePromise;
 
   $scope.entry.scan = {};
@@ -57,11 +57,22 @@ angular.module('scanthisApp.itemController', [])
       $scope.stopPolling();
   });
 
-$scope.DatabaseScan = function(form){
+  $scope.DatabaseScan = function(form){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      toastr.success("submit successful");
+      //toastr.success("submit successful");
+
+      // attempt to highlight new row in itemstable
+      setTimeout(function () {
+        var tr = angular.element(document.querySelector('#item-'+response.data[$scope.station_info.itemid]));  
+        if (tr){
+          var c = 'new_item';
+          tr.addClass(c);
+          $timeout(function(){ tr.removeClass(c); }, 2000); 
+        }
+      }, 100);
+      
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -72,7 +83,6 @@ $scope.DatabaseScan = function(form){
 
   /*fills in fields in json to submit to database*/
   $scope.MakeScanEntry = function(form){
-    var date = moment(new Date()).format();
     AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, 'scan', $scope);
 
@@ -107,7 +117,6 @@ $scope.DatabaseScan = function(form){
 
   $scope.MakeItemScanEntry = function(form){
     var table = $scope.station_info.itemtable.split('_')[0];
-    var date = moment(new Date()).format();
     AddtoEntryNonFormData($scope, table);
     AddtoEntryNonFormData($scope, 'scan');
     AddtoEntryFormData(form, table, $scope);
@@ -157,7 +166,9 @@ $scope.DatabaseScan = function(form){
 
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+    if ($scope.current.collectionid === undefined  || 
+        $scope.current.collectionid === null  || $scope.current.collectionid === 'no selected'){
+
       $scope.formdisabled = true;
     }
     else{
@@ -203,6 +214,21 @@ $scope.DatabaseScan = function(form){
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.RemoveEntry(table, query, func);
+  };
+
+
+  $scope.Reprint = function(loin_number){
+    if($scope.onLabel){
+      var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
+      var func = function(response){
+        var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
+        var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
+        console.log(data, labels);
+        $scope.printLabel(data, labels);
+      };
+      DatabaseServices.GetEntries('reprint_table', func, query);
+      
+    }
   };
 })
 

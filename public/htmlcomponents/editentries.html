@@ -1,78 +1,62 @@
-<div ng-controller="ShipListCtrl">
-    <div class="columnframewide block">
-      <div class="sectionframe">
-        <!-- begin choose collection -->
-        <table class="fill small">
-          <tr>
-            <td>Ship Date</td>
-            <td>Po Number</td>
-            <td>Customer</td>
-            <td>Container Number</td>
-            <td>Bill of Lading</td>
-            <td>Vessel Name</td>
-            <td>Seal Number</td>
-            <td></td>
-          </tr>
-          <tr ng-repeat="ship in list.shipments | orderBy: '-timestamp'">
-            <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
-            <td>{{ship.po_number}}</td>
-            <td>{{ship.customer}}</td>
-            <td>{{ship.container_number}}</td>
-            <td>{{ship.bill_of_lading}}</td>
-            <td>{{ship.vessel_name}}</td>
-            <td>{{ship.seal_number}}</td>
-            <td><input type="button" ng-click="Edit(ship.shipping_unit_number)" value="Edit"></td>
-          </tr>
-        </table>
-        <!-- end choose collection -->
-      </div>
-
-    </div>
+<div ng-controller="ShipListCtrl" class="panel white editshipentries">
     
-    <div class="columnframenarrow block">
-      <br>
-      <br>
-      <br>
-      <br>
-      <div class="sectionframe">
-        <!--begin collection info -->
-        <table ng-hide="current.shipment === undefined || current.shipment === null">
-          <tr>
-            <td>Ship Date:</td>
-            <td><b>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</b></td>
-          </tr>
-          <tr>
-            <td>PO Number:</td>
-            <td><b>{{current.shipment.po_number}}</b></td>
-          </tr>
-          <tr>
-            <td>Customer:</td>
-            <td><input type="text" ng-model="current.shipment.customer" ></td>
-          </tr>
-          <tr>
-            <td>Container Number:</td>
-            <td><input type="text" ng-model="current.shipment.container_number"></td>
-          </tr>
-          <tr>
-            <td>Bill of Lading:</td>
-            <td><input type="text" ng-model="current.shipment.bill_of_lading"></td>
-          </tr>
-          <tr>
-            <td>Vessel Name:</td>
-            <td><input type="text" ng-model="current.shipment.vessel_name"></td>
-          </tr>
-          <tr>
-            <td>Seal Number:</td>
-            <td><input type="text" ng-model="current.shipment.seal_number"></td>
-          </tr>
-          <tr>
-            <td><input type="button" ng-click="ShipInfo()" value="Save"></td>
-            <td></td>
-          </tr>
-        </table>
-
-        <!--end collection info -->
+    <!--begin collection info -->
+    <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
+      <div class="display_field">
+        <label>Ship Date:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
       </div>
+      <div class="display_field">
+        <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
+      </div>
+      <div class="display_field">
+        <label for="inp_customer">Customer:</label><input type="text" ng-model="current.shipment.customer" id="inp_customer">
+      </div>
+      <div class="display_field">
+        <label for="inp_container_number">Container Number:</label><input type="text" 
+               ng-model="current.shipment.container_number" id="inp_container_number">
+      </div>
+      <div class="display_field">
+        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" 
+               ng-model="current.shipment.bill_of_lading" id="inp_bill_of_lading">
+      </div>
+      <div class="display_field">
+        <label for="inp_vessel_name">Vessel Name:</label><input type="text" 
+               ng-model="current.shipment.vessel_name" id="inp_vessel_name">
+      </div>
+      <div class="display_field">
+        <label for="inp_seal_number">Seal Number:</label><input type="text" 
+               ng-model="current.shipment.seal_number" id="inp_seal_number">
+      </div>
+      <div class="form_buttons">
+        <input type="button" ng-click="ShipInfo()" value="Save" class="btn-orange">
+      </div>
+    </div>
 
-    </div>    
+    <!--end collection info -->
+    <!-- begin choose collection -->
+    <div  class="itemsframe entries">
+      <table id="shipments_list">
+        <tr>
+          <th>Ship Date</th>
+          <th>Po Number</th>
+          <th>Customer</th>
+          <th>Container Number</th>
+          <th>Bill of Lading</th>
+          <th>Vessel Name</th>
+          <th>Seal Number</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="ship in list.shipments | orderBy: '-timestamp'">
+          <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
+          <td>{{ship.po_number}}</td>
+          <td>{{ship.customer}}</td>
+          <td>{{ship.container_number}}</td>
+          <td>{{ship.bill_of_lading}}</td>
+          <td>{{ship.vessel_name}}</td>
+          <td>{{ship.seal_number}}</td>
+          <td ng-click="Edit(ship.shipping_unit_number)">Edit</td>
+        </tr>
+      </table>
+    </div>
+    <!-- end choose collection -->
   </div>

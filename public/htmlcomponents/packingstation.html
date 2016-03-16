@@ -1,55 +1,79 @@
-<div  any-other-click class="sectionframe">
-
-  <div  ng-controller="CollectionTableDropDownCtrl">
-    <dropdown   itemlist="list.collection"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
+<div class="panel white packingstation">
+  <div id="refresh">
+    <a ng-click="RefreshPage()">Refresh</a>
+  </div>
+  <div  class="select_object">
+    <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
+         ng-click="current.collectionid = null">
+       <span class="show_choices">{{packingconfig.sectiontitle}}</span>
+    </div> 
+    <div class="show_choices" ng-hide="current.collectionid">
+      <div ng-controller="FormSubmitCtrl" id="create_box_form">
+        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
+      </div>
+      <div  ng-controller="CollectionTableDropDownCtrl">
+        <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
+      </div>
+    </div>
+  </div>
+  <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
+    <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+    <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
+      <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+      <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
+            id="reprint-{{config.id}}" class="reprint">Reprint</span>
+    </div>
   </div>
 
-  <br>
-  <div ng-controller="FormSubmitCtrl">
-      <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
+  <div class="scanform" ng-controller="PackingCtrl" any-other-click>
+      <fieldset ng-disabled="formdisabled">
+        
+        <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+          <div class="form_row">
+            <div class="form_label">
+              <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
+                <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
+              </label>
+            </div>
+            <div class="field">
+              <input id="scaninput" type="text" ng-model="obj_id" 
+                     autocomplete="off" placeholder="Start scanning...">
+            </div>
+          </div>
+        </form>
+        
+        <div class="form_buttons">
+          <div class="pictogram_btns">
+            <span class="manual_weight">Manual Input</span>
+          </div>
+          <input type="button" ng-click="Complete()"
+                 value="{{packingconfig.completetitle}}" class="btn-orange">
+        </div> 
+      </fieldset>
   </div>
 </div>
 
+<div class="panel grey" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
+  <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
+  <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
-<div class="sectionframe" ng-controller="PackingCtrl">
-    {{packingconfig.sectiontitle}}:<br><br>
-    
-    <fieldset ng-disabled="formdisabled">
-      
-      <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
-        <span ng-if="formdisabled===true">
-          <i class="errortext">Choose collection</i>
-        </span>
-        <br>
-        {{packingconfig.scantitle}}: 
-        <input id="scaninput" type="text" ng-model="obj_id" autocomplete="off">
-      </form>
-      
-      <br>
-      <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}">
-    
-    </fieldset>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="sectionframe"  ng-controller="DisplayCollectionCtrl">
-  <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-  <button ng-if="current[station_info.collectiontable]" ng-disabled="list.included.length>0" ng-click="delete()">Delete</button>
-</div>
-
-
-<div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
-<div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
-
-<div class="sectionframe itemsframe"  ng-controller="DisplayItemsCtrl">
-  <div ng-controller="RemovePatchCtrl">
-    <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
+  <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
+    <div ng-controller="RemovePatchCtrl">
+      <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
+    </div>
   </div>
+  <div class="itemtotals table_row" >
+    <div class="item_number">
+      <span >{{packingconfig.summarytitle}} #{{current[station_info.collectiontable][packingconfig.item_field]}}</span> 
+    </div>
+    <div class="totals_bit" >
+      <div class="totals_caption">Total Weight &amp; Pieces</div>
+      <div class="summary"><span 
+        ng-if="list.included[0].weight_1">{{list.included | sumOfValue:'weight_1'| weightstring}}</span><span 
+        ng-if="list.included[0].weight">{{list.included | sumOfValue:'weight'| weightstring}}</span><span
+        ng-if="current[station_info.collectiontable].pieces > 0">{{current[station_info.collectiontable].pieces}}pcs</span><span
+        ng-if="!current[station_info.collectiontable].pieces">{{list.included.length}}pcs</span>    
+      </div>
+
+    </div>
 </div>

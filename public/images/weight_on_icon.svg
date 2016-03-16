@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="22px" viewBox="0 0 28 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+    <title>weight_store_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.14 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M24.8769698,2.21451104 L22.9463704,0.283911672 C22.7570972,0.0946348013 22.5394346,0 22.2933754,0 C22.0473162,0 21.8296536,0.0946348013 21.6403804,0.283911672 L10.0283912,11.8958972 L4.49211356,6.33122847 C4.30283815,6.16088146 4.08517483,6.07570978 3.83911672,6.07570978 C3.5930586,6.07570978 3.37539529,6.16088146 3.18611987,6.33122847 L1.2555205,8.26182784 C1.08517267,8.45110471 1,8.66876729 1,8.9148265 C1,9.1608857 1.08517267,9.37854829 1.2555205,9.56782516 L9.37539614,17.7160883 C9.54574314,17.9053637 9.75867417,18 10.0141965,18 C10.2697188,18 10.4826498,17.9053637 10.6529968,17.7160883 L24.8769698,3.52050473 C25.0473204,3.33122786 25.1324921,3.10883372 25.1324921,2.85331139 C25.1324921,2.59778907 25.0473204,2.38485804 24.8769698,2.21451104 L24.8769698,2.21451104 Z" id="weight_store_icon" fill="#FFFFFF" filter="url(#filter-1)" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

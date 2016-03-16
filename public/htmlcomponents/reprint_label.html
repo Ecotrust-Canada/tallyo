@@ -1,17 +1,18 @@
-
-<div ng-controller="ReprintCtrl">
-
-    <br>
-    <b>Filter by: </b><br>
-    <label>Loin Number<input ng-model="search.loin_number"></label><br>
-    <label>Lot Number<input ng-model="search.lot_number"></label><br>
-    <label>Internal Lot Code<input ng-model="search.internal_lot_code"></label><br>
-    <label>Supplier<input ng-model="search.supplier"></label><br><br>
-
-    <div style="width:700px">
-    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></bufferedscrolllist>
+<div ng-controller="ReprintCtrl" class="panel white reprint_label">
+  <div class="select_header">
+    <span class="show_choices">Filter By:</span>
+    <div id="retouching_link" ng-click="switchSubstation(0)">Retouching</div>  
+  </div> 
+  <div class="show_choices">
+    <div class="display_field">
+      <label for="filter_loin_number">Loin Number:</label><input ng-model="search.loin_number" id="filter_loin_number">
     </div>
-
-
+    <div class="display_field">
+      <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
+             ng-model="search.internal_lot_code" id="filter_internal_lot_code">
+    </div>
+  </div>
+  <div id="print_labels_list" class="itemsframe entries">
+    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></bufferedscrolllist>
+  </div>
 </div>
-

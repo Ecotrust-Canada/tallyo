@@ -18,7 +18,9 @@ angular.module('scanthisApp', [
   'ngSanitize', 
   'ngCsv',
   'toastr',
-  'gridshore.c3js.chart'
+  'gridshore.c3js.chart',
+  'ngMaterial',
+  'ngAnimate'
 ])
 
 /*
@@ -33,15 +35,28 @@ angular.module('scanthisApp', [
 })
 
 
+.controller('MainCtrl', function($scope) {
+  $scope.current_terminal = {
+    id: -1,
+    icon: null,
+    name: "Stations"
+  };
+  $scope.stations = stationlist;
+  $scope.terminals = terminals;
+})
 
-.controller('RoutingCtrl', function($scope, $routeParams, $http) {
+.controller('RoutingCtrl', function($scope, $routeParams, $rootScope) {
 
   $scope.terminal = {};
   $scope.terminal.showsection = "default";
-  $scope.stations = stationlist;
-  $scope.terminals = terminals;
+
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+
+    $scope.terminal.both = current_terminal.both;
+
+    $scope.$parent.current_terminal = { id: current_terminal.id, icon: current_terminal.icon, name: current_terminal.name };
+
     var stations = current_terminal.stations;
     $scope.currentstations = [];
 
@@ -51,10 +66,12 @@ angular.module('scanthisApp', [
       $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
       $scope.currentstations[i].settings = $scope.stations[index].settings;
     }
+    $scope.terminal.substation = 0;
+
   }
 })
 
-.controller('StationCtrl', function($scope, $http, $sce) {
+.controller('StationCtrl', function($scope, $http, $sce, DatabaseServices) {
 
   $scope.init = function(settings){
     $scope.station_code = settings.station_code;
@@ -74,6 +91,9 @@ angular.module('scanthisApp', [
     }
     if(settings.prevStation){
       $scope.prevStation = settings.prevStation;
+    }
+    if (settings.substationlink) {
+        $scope.substationlink = settings.substationlink;
     }
     if(settings.formedit){
       $scope.formedit = settings.formedit;
@@ -113,7 +133,7 @@ angular.module('scanthisApp', [
           data: {data:$scope.printString(codeString, fieldarray)}
 
         });
-  };
+      };
     }
     
     if(settings.packingconfig){
@@ -154,8 +174,53 @@ angular.module('scanthisApp', [
     }
 
     //$scope.showsection = "before";
+    if ($scope.options && $scope.options.loadcurrentcollection) {
+        $scope.loadCurrent();
+    }
   };
-})
 
+  $scope.loadCurrent = function(){
+    var func = function(response){
+      var station = response.data[0];
+      $http.get('/server_time').then(function successCallback(response) {
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        var today = moment.parseZone(date).startOf('day').format();
+        if(station){
+          var lot_date = moment(station.in_progess_date).utcOffset(response.data.timezone).format();
+          var lot_day = moment.parseZone(lot_date).startOf('day').format();
+          if ( lot_day === today){
+            $scope.current.collectionid = station.lot_number;
+          }
+        }
+      }, function errorCallback(response) {
+
+      });
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+    DatabaseServices.GetEntries('lotlocations', func, query);
+  };
+
+  $scope.RefreshPage = function(){
+    location.reload();
+  };
+
+  $scope.switchSubstation = function(index) {
+    var substation = $scope.currentstations[index].settings; 
+    $scope.terminal.substation = index;
+    $scope.$parent.current_terminal.name = substation.title;
+  };
+
+  $scope.formatOption = function(item, fields, delim){
+      var option = '', index=0, field_name;
+      for (index = 0; index < fields.length; ++index) {
+          field_name = fields[index];
+          option += item[fieldname];
+          option += (index < fields.length -1 ? ' ' + delim + ' ' : '');
+      }
+      return option;
+  };
+
+})
 ;
 

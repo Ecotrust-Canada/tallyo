@@ -3,11 +3,11 @@
 angular.module('scanthisApp.formController', [])
 
 //controller attached to entryform directive
-.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
   
   //display scale buttons
   if ($scope.config.startpolling){
-    $scope.pollScale = true;
+    $scope.poll_scale = true;
   }
 
   //booleans for show/hide edit dropdown
@@ -32,7 +32,17 @@ angular.module('scanthisApp.formController', [])
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
-      $scope.pollFn({field: $scope.config.startpolling});
+      if ($scope.poll_scale === true){
+        $scope.pollFn({field: $scope.config.startpolling});
+      }
+      else{
+        var scales = $scope.formarray.filter(function(el){
+          return (el.scale);
+        });
+        scales.forEach(function(el){
+          el.scale = 'off';
+        });
+      }     
     }
   };
 
@@ -58,7 +68,7 @@ angular.module('scanthisApp.formController', [])
     var index = arrayObjectIndexOf($scope.formarray, row.pollarg, 'fieldname');
     if (index !== -1){
       var nextrow = $scope.formarray[index];
-      nextrow.scale = 'on';
+      $scope.weigh(nextrow);
     }
   };
 
@@ -68,7 +78,8 @@ angular.module('scanthisApp.formController', [])
       return el.scale === 'on';
     });
     scales.forEach(function(el){
-      el.scale = 'lock';
+      $scope.form[el.fieldname] = $scope.scale[el.fieldname];
+      el.scale = "lock";
     });
     row.scale = 'on';
   };
@@ -76,7 +87,7 @@ angular.module('scanthisApp.formController', [])
   //turn the scale on or off
   $scope.scalefn = function(){
     clearObj($scope.scale);
-    if ($scope.pollScale === true){
+    if ($scope.poll_scale === true){
       var scales = $scope.formarray.filter(function(el){
         return (el.scale);
       });
@@ -89,7 +100,7 @@ angular.module('scanthisApp.formController', [])
       $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     }
     
-    $scope.pollScale = !$scope.pollScale;
+    $scope.poll_scale = !$scope.poll_scale;
   };
 
   $scope.submitted=false;
@@ -99,11 +110,13 @@ angular.module('scanthisApp.formController', [])
     var form_error = false;
     for (var i=0;i<$scope.formarray.length;i++){
       var row = $scope.formarray[i];
-      var req_error = $scope.theform[row.fieldname].$error.required;
-      var neg_error = $scope.theform[row.fieldname].$error.negative;
-      if (req_error === true || neg_error === true){
-        form_error = true;
-        
+      if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
+        var req_error = $scope.theform[row.fieldname].$error.required;
+        var neg_error = $scope.theform[row.fieldname].$error.negative;
+        if (req_error === true || neg_error === true){
+          form_error = true;
+          
+        }
       }
     }
     if (form_error === true){
@@ -116,6 +129,7 @@ angular.module('scanthisApp.formController', [])
       }
     }
     return form;
+
   };
 
 
@@ -126,7 +140,7 @@ angular.module('scanthisApp.formController', [])
     };
     var query = '?table_name=eq.' + table;
     DatabaseServices.GetEntryNoAlert('formoptions', func, query);
-    };
+  };
 
   $scope.Delete = function(value, field){
     var query='?table_name=eq.' + $scope.config.dboptions + '&value=eq.' + value + '&field_name=eq.' + field;
@@ -148,6 +162,28 @@ angular.module('scanthisApp.formController', [])
 
   if ($scope.config.dboptions){
     $scope.FormData($scope.config.dboptions);
+  }
+
+  $scope.toggleRadioValue = function(frow){
+      var fieldname = frow.fieldname;
+      //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
+      var checkInput = document.getElementById('switch-'+fieldname);
+      setTimeout(function () {
+        $scope.$apply(function () {
+          $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
+        });
+      }, 50);
+  };
+
+  $scope.isChecked = function(fieldname, option){
+      if (!$scope.form[fieldname]) return 'rb-default';
+      if ($scope.form[fieldname] == option.val) return 'rb-checked';
+      return 'rb-unset';
+  };
+
+  $scope.withChecked = function(fieldname){
+      if (!$scope.form[fieldname]) return 'rbgroup-unset';
+      return null;
   }
 
 })
@@ -184,26 +220,32 @@ angular.module('scanthisApp.formController', [])
   };
 
   //fills out entry from form
-  $scope.Submit = function(form, responsefunction){
-    var date = moment(new Date()).format();    
-    if ($scope.station_info.collectiontable === 'box'){
-      $scope.entry[table].station_code = $scope.station_code;
-      $scope.entry[table].best_before_date = moment(new Date()).add(2, 'years').format();
-    }
-    if ($scope.station_info.collectiontable === 'shipping_unit'){
-      $scope.entry[table].station_code = $scope.station_code;
-    }
-    if ($scope.station_info.collectiontable === 'lot'){
-      CreateLotEntryPeriod(date, 'day', $scope);
-      $scope.entry[table].station_code = $scope.station_code;
-      $scope.entry[table].processor_code = $scope.processor;
-    }
-    if ($scope.options && $scope.options.receivelot){
-      $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.entry.harvester.active = true;
-    }
-    MakeEntry(form, table, $scope);
-    $scope.ToDatabase(responsefunction);
+  $scope.Submit = function(form, responsefunction){ 
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+
+      if ($scope.station_info.collectiontable === 'box'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'shipping_unit'){
+        $scope.entry[table].station_code = $scope.station_code;
+      }
+      if ($scope.station_info.collectiontable === 'lot'){      
+          CreateLotEntryPeriod(date, 'day', $scope);
+          $scope.entry[table].station_code = $scope.station_code;
+          $scope.entry[table].processor_code = $scope.processor;
+      }
+      if ($scope.options && $scope.options.receiveharvester){
+        $scope.entry.harvester.processor_code = $scope.processor;
+        $scope.entry.harvester.active = true;
+      }
+      MakeEntry(form, table, $scope);
+      $scope.ToDatabase(responsefunction);
+
+    }, function errorCallback(response) {
+    });
+    
   };
 
   //The different submit buttons
@@ -216,6 +258,21 @@ angular.module('scanthisApp.formController', [])
   $scope.SubmitAddSetCurrent = function(form){
     if(form){
       $scope.Submit(form, AddSetCurrent);
+    }
+  };
+
+  $scope.SubmitCheckDuplicate = function(form){
+    if (form){
+      var query = '?fleet=eq.' + form.fleet + '&supplier_group=eq.' + form.supplier_group + '&supplier=eq.' + form.supplier + '&landing_location=eq.' + form.landing_location + '&ft_fa_code=eq.' + form.ft_fa_code + '&active=eq.true';
+      var func = function(response){
+        if (response.data.length > 0){
+          toastr.error('error: duplicate');
+        }
+        else{
+          $scope.Submit(form, AddtoList);
+        }
+      };
+      DatabaseServices.GetEntries('harvester', func, query);
     }
   };
 

@@ -1,10 +1,11 @@
-<div class="sectionframe">
-  <div ng-controller="SelectLotDropDownCtrl">
-
+<div ng-controller="SelectLotDropDownCtrl" class="select_object">
+  <div class="select_header" ng-class="{lot_chosen: current.collectionid}">
+    <span class="show_choices" ng-click="current.collectionid = null">Select Lot</span>
+    <div id="reprint_label_link" ng-if="substationlink" 
+         ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+  </div> 
+  <div class="show_choices" ng-hide="current.collectionid">
     <dropdown itemlist="list.harvester_lot"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
-    <br>
     <dropdown itemlist="list.old_harvester_lot"  cfg="adddropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
-    <br>
-    
-  </div>   
-</div>
+  </div> 
+</div>   

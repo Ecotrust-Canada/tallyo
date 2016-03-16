@@ -9,11 +9,11 @@ angular.module('scanthisApp.directives', [])
 
 .directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
 
-.directive('loadcurrentcollection', function() { return { templateUrl: 'htmlpartials/loadcurrentcollection.html' }; })
-
 .directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
 
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
+
+.directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
 
 .directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
 
@@ -37,7 +37,8 @@ angular.module('scanthisApp.directives', [])
            config: '=' , 
            filterstring: '=', 
            istotal: '=', 
-           updateFn: '&'},
+           updateFn: '&',
+           secondFn: '&'},
   controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 
@@ -47,7 +48,8 @@ angular.module('scanthisApp.directives', [])
            config: '=' , 
            filterstring: '=', 
            istotal: '=', 
-           updateFn: '&'}, 
+           updateFn: '&',
+           secondFn: '&'}, 
   controller: 'BufferScrollCtrl',
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
@@ -136,7 +138,24 @@ angular.module('scanthisApp.directives', [])
     },
   };
 }])
-
+.directive('inputDropdown', function($compile) {
+    
+    return {
+        restrict: 'EA',
+        scope: {
+            thelist: '=',
+            config: '=',
+            onSelect: '&'
+        },
+        templateUrl: 'htmlpartials/searchdropdown.html',
+        link: function(scope, element, attrs) {
+            element.addClass('input-dropdown');
+            scope.select = function(e, value) {
+                scope.onSelect({$event: e, value: value});
+            };
+        }
+    };
+})
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
@@ -162,6 +181,4 @@ angular.module('scanthisApp.directives', [])
       });
     };
   })
-
-
 ;

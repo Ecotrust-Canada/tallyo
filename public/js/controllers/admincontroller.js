@@ -132,13 +132,13 @@ angular.module('scanthisApp.AdminController', [])
             lot[stn.code].prev = JSON.parse(JSON.stringify(lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy]));
           }
           if (lot[$scope.sumStations[j-1].code].summary){
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev && !lot[stn.code].in_progress){ 
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev){ 
               var thesummary = lot[$scope.sumStations[j-1].code].summary;
               var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
               var prevWeight = JSON.parse(JSON.stringify(prev));
               lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
             }
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start && !lot[stn.code].in_progress){ 
+            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
               lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
             } 
           }                
@@ -151,9 +151,6 @@ angular.module('scanthisApp.AdminController', [])
         lot[$scope.sumStations[0].code].in_progress = false;
         if (!lot[$scope.sumStations[0].code].summary){
           lot[$scope.sumStations[0].code].summary = true;          
-          if (isToday($scope.list.recent[index].timestamp)){
-            lot[$scope.sumStations[0].code].in_progress = true;
-          }
         }
         
       }
@@ -188,7 +185,8 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.scan = response.data;
       $scope.list.scan.forEach(function(el){
-        delete el.weight;
+        delete el.weight_1;
+        delete el.weight_2;
         delete el.pieces;
         delete el.serial_id;
       });
@@ -248,16 +246,36 @@ angular.module('scanthisApp.AdminController', [])
     cellData.forEach(function(el){
       delete el.lot_number;
       delete el.station_code;
-      el.fleet = lot.fleet_vessel;
+      el.fleet = lot.fleet;
       el.supplier = lot.supplier;
       el.supplier_group = lot.supplier_group;
       el.ft_fa_code = harvester.ft_fa_code;
+      if (el.weight){
+        el.weight = el.weight.toFixed(2);
+      }
+      if (el.weight_1){
+        el.weight = parseFloat(el.weight_1).toFixed(2);
+        delete el.weight_1;
+      }
     });
 
     cleanJsonArray(cellData);    
     return cellData;
   };
 
+  $scope.cssWarn = function(lot, stn) {
+    if ( lot[stn.code] && lot[stn.code].summary) { 
+      return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
+    }
+    return false;  
+  };
+
+  $scope.cssOk = function(lot, stn) {
+    if ( lot[stn.code] && lot[stn.code].summary) { 
+      return lot[stn.code].summary[$scope.station_info.trackBy]===lot[stn.code].prev; 
+    }
+    return false;
+  };  
 })
 
 //shipmenttotals.html - view summary of unloaded boxes for incoming shipments
@@ -326,28 +344,85 @@ angular.module('scanthisApp.AdminController', [])
   $scope.selected = "no selected";
   $scope.stations = $scope.sumStations;
 
-  $scope.ListStations = function(){
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Cases"], 
+    fields: ["weight_total", "boxes"], 
+  };
+
+  $scope.loinconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Total Weight", "Pieces"], 
+    fields: ["weight_total", "pieces"], 
+  };
+
+  $scope.ListBoxes = function(){
     var func = function(response){
       $scope.list.box_inventory = response.data;
     };
     var query = '';
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
-  $scope.ListStations();
+  $scope.ListBoxes();
+
+
+  $scope.ListLoins = function(){
+    var func = function(response){
+      $scope.list.loin_inventory = response.data;
+    };
+    var query = '';
+    DatabaseServices.GetEntries('loin_inventory', func, query);
+  };
+  $scope.ListLoins();
 
   $scope.SetCurrent = function(selected){
-    var filtered = $scope.list.box_inventory.filter(
-      function(value){
-        return isInArray(value.station_code, selected);
-      });
-    $scope.list.boxes = filtered;
+    var filtered;
+    if (selected.item === 'box'){
+      filtered = $scope.list.box_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));      
+    }else if (selected.item === 'loin'){
+      filtered = $scope.list.loin_inventory.filter(
+        function(value){
+          return isInArray(value.station_code, selected.station_code);
+        });
+      $scope.listconfig = JSON.parse(JSON.stringify($scope.loinconfig));
+    }
+    
+    $scope.list.items = filtered;
+    $scope.listconfig.headers = selected.headers.concat($scope.listconfig.headers);
+    $scope.listconfig.fields = selected.fields.concat($scope.listconfig.fields);
 
-    var lists = $scope.stations.filter(
-      function(value){
-        return value.station_code[0] === JSON.parse(selected)[0];
-      });
-    $scope.listconfig = $scope[lists[0].list];
-    $scope.inventorytitle = lists[0].name;
+    
   };
 })
+
+
+.controller('CompleteLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
+
+  $scope.CompleteLot = function(lot_number, station_codes){
+    var patch = {'in_progress': false};
+    var func = function(response){
+      //window.location.reload();
+      $rootScope.$broadcast('collection-change', {id: 'no selected'});
+    };
+    var r = confirm("Are you sure you want to complete this lot?");
+    if (r === true) {
+      for (var i=0;i<station_codes.length;i++){
+        var station_code=station_codes[i];
+        var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;     
+          DatabaseServices.PatchEntry('lotlocations',patch, query, func);
+      }
+    }
+  };
+
+})
+
+
+
+
 ;

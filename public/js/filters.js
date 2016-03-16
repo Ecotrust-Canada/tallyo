@@ -23,6 +23,14 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('separatestring', function() {
+  return function(input) {
+    if (input){
+      return input + ' - ';
+    }
+  };
+})
+
 .filter('sumOfValue', function () {
     return function (data, key) {
         if (angular.isUndefined(data) && angular.isUndefined(key))
@@ -38,6 +46,9 @@ angular.module('scanthisApp.filters', [])
 
 .filter('weightstring', function() {
   return function(input) {
-    return String(input.toFixed(2)) + 'kg';
+    if (input){
+      return String(input.toFixed(2)) + 'kg';
+    }
+    
   };
 });
