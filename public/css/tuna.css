@@ -213,6 +213,8 @@ body{
 #station-AM1-002 .panel,
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
+#station-AM1-004 .panel,
+#station-AM2-001 .panel,
 #station-HS0-005 .panel {
   width: 550px;
 }
@@ -1374,6 +1376,7 @@ table#shipments_list td:last-child {
 }
 
 /* receivng station for HarSam */
+#station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
 .panel.white.packingstation {
   margin-bottom: 24px;
@@ -1384,6 +1387,7 @@ table#shipments_list td:last-child {
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
 #station-HS0-005 .panel.grey,
+#station-AM2-001 .panel.grey,
 #station-HS0-003 .panel.grey {
   vertical-align: top;
   padding: 0;
@@ -1498,6 +1502,7 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label {
   width: 150px;
 }
+#form-5 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
@@ -1547,6 +1552,7 @@ table#shipments_list td:last-child {
   width: 204px;
 }
 
+#create_box_form #form-5 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
   width: 354px;
 }
@@ -1636,12 +1642,14 @@ table#shipments_list td:last-child {
 #form-0 .form_label label,
 #form-20 .form_label label,
 .editform .form_label label,
+#form-5 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
 
 #form-0 .field, 
 .editform .field, 
+#form-5 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
