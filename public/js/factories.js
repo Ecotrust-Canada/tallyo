@@ -4,6 +4,7 @@
  * Defines what to when the database API call returns an error.
  */
 var handleDbError = function(response) {
+  console.log(response);
   alert(response.statusText);
 }
 /**
@@ -106,7 +107,7 @@ angular.module('scanthisApp.factories', [])
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
     var url = databaseurl + table;
-    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
+    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester', 'receive_lot'])){
       $http.post(url, entry, patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
     }
     else{

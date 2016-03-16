@@ -103,7 +103,11 @@ angular.module('scanthisApp.setsupplierController', [])
   };
   $scope.ListHarvesters();
 
-  //lotlocations functions
+
+  /*
+   * lotlocations functions
+   */
+
   $scope.AddNew = function(lot_number, station_code, bool){
     var func = function(response){
     };
@@ -148,7 +152,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-  $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
     if ($scope.current.lot !== undefined){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
@@ -158,19 +162,53 @@ angular.module('scanthisApp.setsupplierController', [])
       }
       for (var j=0;j<$scope.setstation.add.length;j++){
         var station1 = $scope.setstation.add[j];
-        $scope.AddStationLot($scope.current.lot.lot_number, station1);
+        $scope.AddStationLot($scope.current.collectionid, station1);
       }
+
       $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
       $scope.current.collectionid = $scope.current.lot.lot_number;
+
     }
   });
+  /*
+   * end lotlocations
+   */
+
+   
+
+  $scope.thisfishCode = function(lotnum){
+    var query = '';
+    var func = function(response){
+      var nextcode = response.data[0].tf_code;
+      $scope.assignCode(lotnum, nextcode);
+    };
+    DatabaseServices.GetEntries('nextcode', func, query);
+  };
+
+  $scope.assignCode = function(lotnum, tf_code){
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+      $scope.current.collectionid = lotnum;
+    };
+    var patch = {lot_number: lotnum};
+    DatabaseServices.PatchEntry('thisfish',patch, query, func);
+  };
 
 
   /*make a new lot in the database*/
   $scope.DatabaseLot = function(){
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
+
+      if ($scope.current.harvester.traceable){
+        $scope.thisfishCode($scope.current.lot.lot_number);
+      }
+      else{
+        $scope.current.collectionid = $scope.current.lot.lot_number;
+      }
+
       $scope.form = {};
+
     };
     DatabaseServices.DatabaseEntryCreateCode('lot', $scope.entry.lot, $scope.processor, func);
   };
@@ -179,7 +217,12 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.MakeLotEntry = function(date, internal_lot_code){    
     CreateLotEntryPeriod(date, 'day', $scope);
     $scope.entry.lot.station_code = $scope.station_code;
+
+    $scope.entry.lot.receive_station = $scope.settings.receive_station;
+    $scope.entry.lot.process_station = $scope.settings.process_station;
+
     $scope.entry.lot.internal_lot_code = internal_lot_code;
+
   };
 
   /*Gets current lot given selected supplier, if does not exist creates a new lot*/
@@ -187,6 +230,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       if (response.data.length > 0){
         $scope.current.lot = response.data[0];
+        $scope.current.collectionid = $scope.current.lot.lot_number;
       }//end if
       else{
         $scope.MakeLotEntry(date, internal_lot_code);
@@ -198,12 +242,15 @@ angular.module('scanthisApp.setsupplierController', [])
 
   
   /*gets selected supplier, creates querystring for lot*/
+
   $scope.SetCurrentHarvester = function(harvester_code, internal_lot_code, now){
+
     $scope.current.harvester_code = harvester_code;
     var date = now;
     var queryString = "?harvester_code=eq." + harvester_code + "&start_date=lt." + date + "&end_date=gt." + date + "&internal_lot_code=eq." + internal_lot_code;
     $scope.entry.lot = {"harvester_code": harvester_code, "station_code": $scope.station_code, "processor_code": $scope.processor};
     $scope.CreateLot(queryString, date, internal_lot_code);
+
   };
 
 
@@ -267,7 +314,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 })
 
-//collectiontable: "harvester", collectionid: "harvester_code", displaytable: "harvester_lot", patchtable: "lot", patchid: "lot_number"
 
 .controller('EditFieldCtrl', function($scope, $http, DatabaseServices) {
 

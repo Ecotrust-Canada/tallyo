@@ -207,6 +207,9 @@ var tableInfo = function(table){
   else if (table === 'harvester'){
     return {letter:'H', field:'harvester_code'};
   }
+  else if (table === 'receive_lot'){
+    return {letter:'R', field:'receive_code'};
+  }
 };
 
 var isInArray = function(value, array) {
@@ -216,9 +219,9 @@ var isInArray = function(value, array) {
 var AddtoEntryNonFormData = function($scope, table){
   $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
-  if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
+  /*if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
     $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
-  }
+  }*/
 };
 
 var AddtoEntryFormData = function(form, scopevar, $scope){

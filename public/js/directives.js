@@ -27,6 +27,10 @@ angular.module('scanthisApp.directives', [])
 
 .directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
 
+.directive('setthisfish', function() { return { templateUrl: 'htmlpartials/setthisfish.html' }; })
+
+.directive('tfcodes', function() { return { templateUrl: 'htmlpartials/tfcodes.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '='},
@@ -69,6 +73,13 @@ angular.module('scanthisApp.directives', [])
            selectedoption: '=', 
            changeFn: '&' },
   templateUrl: 'htmlpartials/dropdown.html' }; })
+
+.directive('persistdropdown', function() { return { 
+  scope: { itemlist: '=',  
+           cfg: '=', 
+           selectedoption: '=', 
+           changeFn: '&' },
+  templateUrl: 'htmlpartials/persistdropdown.html' }; })
 
 .directive('entryform', function() { return { 
   scope: {table: '=',  

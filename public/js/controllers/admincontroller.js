@@ -180,6 +180,137 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
+
+
+  $scope.postHarResponse = function(tf_code, status, data){
+    var patch = {'har_response_status': status, 'har_response_data': data};
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+
+    };
+    DatabaseServices.PatchEntry('thisfish', patch, query, func);
+  };
+
+  $scope.postProResponse = function(tf_code, status, data){
+    var patch = {'pro_response_status': status, 'pro_response_data': data};
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+
+    };
+    DatabaseServices.PatchEntry('thisfish', patch, query, func);
+  };
+
+
+  $scope.ThisfishHar = function(lot_number){
+    var posturl = '';
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      //console.log(response.data[0]);
+      var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
+      delete harvester_entry.lot_number;
+      harvester_entry.entry_unit = $scope.settings.entry_unit;
+      harvester_entry.shipped_to_user = $scope.settings.tf_user_id;
+      harvester_entry.landing_slip_number = '000000';
+      harvester_entry.privacy_display_date = '20';
+      harvester_entry.amount = Math.round(harvester_entry.amount);
+      //console.log(harvester_entry);
+
+      for (var key in harvester_entry) {
+        if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
+          var name = harvester_entry[key];
+          var filtered = tf_har_options[key].filter(function(el){
+            return el.name === name;
+          });
+          //console.log(key, name, filtered);
+          if(!filtered[0]){
+            //console.log(key, name);
+          }
+          else{
+            var id = filtered[0].id;
+            harvester_entry[key] = id;
+            if (key === 'user'){
+              if (filtered[0].group === 'fleet'){
+                posturl = posturl_fleet;
+              }
+              else if (filtered[0].group === 'fish_harvester'){
+                posturl = posturl_harvester;
+              }
+            }
+          }
+          
+          
+
+          //console.log(id);
+        }
+      }
+      console.log(harvester_entry);
+      //console.log(posturl);
+      $http.post(posturl, harvester_entry, tfconfig).then
+      (function(response){
+        console.log(response);
+        $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
+        $scope.ThisfishPro(lot_number);
+      }, 
+        function(response){
+          console.log(response);
+          $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
+        });
+
+      
+    };
+    DatabaseServices.GetEntries('tf_harvester_entry', func, query);
+  };
+
+
+  $scope.ThisfishPro = function(lot_number){
+    var query = '?lotnum=eq.' + lot_number;
+    var func = function(response){
+      //console.log(response.data[0]);
+      var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
+      delete processor_entry.lotnum;
+      processor_entry.user = $scope.settings.tf_user;
+      processor_entry.entry_unit = $scope.settings.entry_unit;
+      processor_entry.location = $scope.settings.process_location;
+      processor_entry.privacy_display_date = '20';
+      processor_entry.amount = Math.round(processor_entry.amount);
+
+      for (var key in processor_entry) {
+        if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
+          var name = processor_entry[key];
+          var filtered = tf_pro_options[key].filter(function(el){
+            return el.name === name;
+          });
+          //console.log(key, name, filtered);
+          var id = filtered[0].id;
+          processor_entry[key] = id;
+
+          //console.log(id);
+        }
+      }
+      console.log(processor_entry);
+      $http.post(posturl_processor, processor_entry, tfconfig)
+      .then(function(response){
+        console.log(response);
+        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
+      }, 
+      function(response){
+        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
+      });
+    };
+    DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
+  };
+
+
+  $scope.SubmitLot = function(lot_number, tf_code){
+    if (tf_code){
+      $scope.ThisfishHar(lot_number);
+      //$scope.ThisfishPro(lot_number);
+    }
+  };
+
+
+
+
   $scope.GetScan = function(){
     var query = '';
     var func = function(response){
@@ -242,6 +373,7 @@ angular.module('scanthisApp.AdminController', [])
     });
     var harvester = filteredharvesters[0];
 
+
     var cellData = table.filter(cellFilter);
     cellData.forEach(function(el){
       delete el.lot_number;
@@ -264,7 +396,8 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.cssWarn = function(lot, stn) {
-    if ( lot[stn.code] && lot[stn.code].summary) { 
+    if ( lot[stn.code] && lot[stn.code].summary ) { 
+
       return lot[stn.code].summary[$scope.station_info.trackBy]>lot[stn.code].prev;
     }
     return false;  

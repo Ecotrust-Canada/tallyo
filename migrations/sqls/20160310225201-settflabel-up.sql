@@ -53,7 +53,9 @@ ALTER TABLE group_codes
   OWNER TO tuna_processor;
   
 
+
 drop view if exists box_product;
+
 
 CREATE OR REPLACE VIEW box_product AS 
  SELECT box.box_number,

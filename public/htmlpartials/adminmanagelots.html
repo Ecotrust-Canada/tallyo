@@ -32,6 +32,10 @@
               <label>Fleet:</Label>
               <div class="field_val">{{lot.fleet}}</div>
             </div>
+            <div class="display_field" ng-if="lot.tf_code">
+              <label>Thisfish Code:</Label>
+              <div class="field_val">{{lot.tf_code}}</div>
+            </div>
           </div>
         </td>
         <td ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
@@ -83,8 +87,17 @@
               </tr>
             </table>
             <button class="bottomright btn-blue" 
-                    ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" 
-                    ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+                    ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress" 
+                    ng-click="SubmitLot(lot.lot_number, lot.tf_code) "
+                    ng-disabled="lot.tf_submit !== 'submit' && lot.tf_submit !== 'no_trace'">
+              <span ng-switch on="lot.tf_submit">
+                <span ng-switch-when="no_trace">Complete Lot</span>
+                <span ng-switch-when="submit">Thisfish Submit</span>
+                <span ng-switch-when="success">{{lot.tf_code}}</span>
+                <span ng-switch-when="error">Error Submitting</span>
+                <span ng-switch-default>Complete Lot</span>
+              </span>
+            </button>
             <button class="bottomleft btn-light" 
                     ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" 
                     filename="{{lot.internal_lot_code || lot.lot_number}}_{{stn.name}}.csv" csv-label="true">CSV</button>
