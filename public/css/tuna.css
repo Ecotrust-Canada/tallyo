@@ -205,14 +205,18 @@ body{
   padding-top: 10px;
 }
 
+
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
+
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
+#station-AM1-004 .panel,
+#station-AM2-001 .panel,
 #station-HS0-005 .panel {
   width: 550px;
 }
@@ -294,7 +298,7 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
-#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
+.itemsframe.entries #list-2 table td:nth-last-child(2),
 .itemsframe.entries table td:last-child {
   /* Hide the text. */
   color: transparent;
@@ -748,7 +752,7 @@ div[ng-view] {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 1412px;
+  width: 1460px;
   margin-left: -240px;
 }
 
@@ -1300,7 +1304,7 @@ div#station-HS0-011 {
   box-sizing:border-box;
 }
 
-#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
+.itemsframe.entries #list-2 table td:nth-last-child(2),
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
@@ -1374,8 +1378,10 @@ table#shipments_list td:last-child {
 }
 
 /* receivng station for HarSam */
+#station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
 .panel.white.packingstation {
+
   margin-bottom: 24px;
   margin-right: 10px;
 }
@@ -1384,25 +1390,31 @@ table#shipments_list td:last-child {
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
 #station-HS0-005 .panel.grey,
+#station-AM2-001 .panel.grey,
 #station-HS0-003 .panel.grey {
+
   vertical-align: top;
   padding: 0;
   width: 590px;
   position: relative;
+  margin-bottom: 20px;
 }
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;
   float: right;
 }
 
+
 .station .panel:first-child {
   padding-top: 30px;
   position: relative;
 }
 
+
 .scanform {
   border-top: 1px solid #cccccc;
 }
+
 
 .packingstation .scanform {
   position: relative;
@@ -1412,37 +1424,47 @@ table#shipments_list td:last-child {
 
 .weighstation_main #current_lot,
 .packingstation #current_lot{
+
   display: table;
   width: 100%;
   padding: 10px 0 13px 0;
   position: relative;
 }
 
+
 .weighstation_main #current_lot display ,
 .packingstation #current_lot display {
+
   display: table-row;
   width: 100%;
 }
 
+
 .weighstation_main #current_lot .display_row ,
 .packingstation #current_lot .display_row {
+
   display: table-cell;
   width: 50%;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(1) {
 }
+
 
 .weighstation_main #current_lot  .field_val,
 .packingstation #current_lot .field_val,
 #edit_shipment .display_field span,
 #prev_station_totals .prev_summary span {
+
   color: #03223c;
   font-family: 'Lato-Regular';
 }
 
+
 .weighstation_main #current_lot #internal_lot_code-value,
 .packingstation #current_lot #internal_lot_code-value {
+
   font-size: 22px;
 }
 
@@ -1451,20 +1473,25 @@ table#shipments_list td:last-child {
   display: inline-block;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(1) .field_val, 
 .packingstation #current_lot .display_row:nth-child(1) .field_val {
   font-size: 22px;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(2) .field_val, 
 .packingstation #current_lot .display_row:nth-child(2) .field_val, 
 #prev_station_totals .prev_summary span {
+
   font-size: 16px;
   display: inline-block;
 }
 
+
 .weighstation_main #current_lot #internal_lot_code-value span::before,
 .packingstation #current_lot #internal_lot_code-value span::before {
+
   content: "#";
 }
 
@@ -1484,11 +1511,14 @@ table#shipments_list td:last-child {
   padding-bottom: 12px;
 }
 
+
 .packingstation .form_row {
   padding-bottom: 15px;
 }
 
 .weighstation_main .form_label,
+
+
 .packingstation .form_label,
 .editform .form_label {
   display: inline-block;
@@ -1498,6 +1528,7 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label {
   width: 150px;
 }
+#form-5 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
@@ -1506,7 +1537,10 @@ table#shipments_list td:last-child {
   padding: 5px 15px 20px 15px;
 }
 
+
+
 #create_box_form #form-0 {
+
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
@@ -1547,6 +1581,7 @@ table#shipments_list td:last-child {
   width: 204px;
 }
 
+#create_box_form #form-5 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
   width: 354px;
 }
@@ -1583,6 +1618,7 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label label,
 .weighstation_main .form_label label,
 .packingstation .scanform .form_label label {
+
   font-family: 'Lato-Bold';
   font-size: 22px;
   color: #125974;
@@ -1598,9 +1634,11 @@ table#shipments_list td:last-child {
   color: #125974;
 }
 
+
 .weighstation_main .field,
 .weighstation_main .field,
 .packingstation .scanform .field {
+
   display: inline-block;
   width: 360px;
 }
@@ -1635,13 +1673,16 @@ table#shipments_list td:last-child {
 
 #form-0 .form_label label,
 #form-20 .form_label label,
+#form-23 .form_label label,
 .editform .form_label label,
+#form-5 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
 
 #form-0 .field, 
 .editform .field, 
+#form-5 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1820,6 +1861,16 @@ input[name^=weight]::after {
   display: block;
   position:relative;
 }
+#station-AM2-002 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
+#station-AM2-001 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
 
 .pictogram_btns > span {
   padding: 7px 10px 7px 35px;
@@ -1858,6 +1909,7 @@ input[name^=weight]::after {
 }
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
+#form-23 .form_buttons .btn-orange,
 #form-20 .form_buttons .btn-orange {
   right: 16px;
 }
@@ -1910,24 +1962,29 @@ input[name^=weight]::after {
   position: relative;
 }
 #radio-7-grade, 
+#radio-23-grade, 
 #radio-20-grade, 
 #radio-8-grade {
   width: 360px;
 }
 #radio-19-grade,
+#radio-18-grade,
 #radio-17-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
+#radio-18-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 
 #radio-20-grade.toggle-group-container label,
+#radio-23-grade.toggle-group-container label,
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
+#radio-23-state.toggle-group-container label,
 #radio-20-state.toggle-group-container label {
   width: 80px;
 }
@@ -1981,17 +2038,20 @@ input[name^=weight]::after {
   border: none;
 }
 
+#radio-23-grade.toggle-group-container input:checked + span,
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
   width:60px;
 }
 
+#radio-23-state.toggle-group-container input:checked + span,
 #radio-20-state.toggle-group-container input:checked + span { 
   width:80px;
 }
 
 #radio-19-grade.toggle-group-container input:checked + span,
+#radio-18-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
