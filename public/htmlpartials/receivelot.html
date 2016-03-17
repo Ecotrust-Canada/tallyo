@@ -10,11 +10,10 @@
 
     <span class="switch_option" ng_class="{active: form.state=='Dirty'}"
         value="Dirty">Dirty</span>
-    <div  class="onoffswitch">
+    <div ng-click="toggleStateValue()" class="onoffswitch">
       <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
-             id="switch-state" ng-checked="form.state=='Clean'">
-      <label class="onoffswitch-label" for="switch-state" 
-          ng-click="toggleStateValue()">
+             id="toggle-state" ng-checked="form.state=='Clean'">
+      <label class="onoffswitch-label" for="toggle-state">
         <span class="onoffswitch-inner"></span>
         <span class="onoffswitch-switch"></span>
       </label>

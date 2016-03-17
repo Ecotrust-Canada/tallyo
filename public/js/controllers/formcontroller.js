@@ -164,10 +164,14 @@ angular.module('scanthisApp.formController', [])
     $scope.FormData($scope.config.dboptions);
   }
 
+  $scope.DoSomething = function(something){
+    console.log('something');
+  };
+
   $scope.toggleRadioValue = function(frow){
       var fieldname = frow.fieldname;
       //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
-      var checkInput = document.getElementById('switch-'+fieldname);
+      var checkInput = document.getElementById('formswitch-'+fieldname);
       setTimeout(function () {
         $scope.$apply(function () {
           $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;

@@ -250,8 +250,9 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
+    console.log('function called');
     //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
-    var checkInput = document.getElementById('switch-state');
+    var checkInput = document.getElementById('toggle-state');
     setTimeout(function () {
       $scope.$apply(function () {
         $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';

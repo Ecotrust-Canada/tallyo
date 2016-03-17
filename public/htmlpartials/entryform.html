@@ -48,11 +48,10 @@
           <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >
             <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[0].val}"
                 value="row.value[0].val">{{row.value[0].val}}</span>
-            <div  class="onoffswitch">
+            <div ng-click="toggleRadioValue(row)" class="onoffswitch">
               <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
-                     id="switch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
-              <label class="onoffswitch-label" for="switch-{{row.fieldname}}" 
-                     ng-click="toggleRadioValue(row)">
+                     id="formswitch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
+              <label class="onoffswitch-label" for="formswitch-{{row.fieldname}}">
                 <span class="onoffswitch-inner"></span>
                 <span class="onoffswitch-switch"></span>
               </label>

@@ -114,7 +114,9 @@ var ClearFormToDefault = function(form_arr, def_arr){
         }
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
-        form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
+        if (!def_arr[i].stay){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
+        }
       }
       else{
         if (!def_arr[i].stay){
