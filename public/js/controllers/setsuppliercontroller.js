@@ -149,7 +149,7 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
   $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {
-    if ($scope.current.lot !== undefined){
+    if ($scope.current.lot !== undefined && $scope.current.lot !== null){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
         if ($scope.current.lot){

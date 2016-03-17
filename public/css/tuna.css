@@ -200,7 +200,7 @@ body{
 }
 .panel.item-details {
   background-color: #f6f6f4;
-  width: 100%;
+  width: 90%;
   box-sizing:border-box;
   padding-top: 10px;
 }
@@ -674,7 +674,7 @@ div[ng-view] {
   margin: 0 4px;
   /*overflow: visible;*/
   display: inline-block;
-  width: 100%;
+  /*width: 100%;*/
   overflow: hidden;
 }
 
@@ -1491,8 +1491,6 @@ table#shipments_list td:last-child {
 
 .weighstation_main #current_lot #internal_lot_code-value span::before,
 .packingstation #current_lot #internal_lot_code-value span::before {
-
-  content: "#";
 }
 
 .weighstation_main #current_lot label, #prev_station_totals label,
