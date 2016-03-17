@@ -118,7 +118,7 @@ angular.module('scanthisApp', [
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
       $scope.printString = settings.printString;
-      $scope.generatePrintLabel = function(stringFunc) {
+      var generatePrintLabel = function(stringFunc) {
         return function(codeString, fieldarray) {
           $http({
             method: 'POST',
@@ -137,11 +137,11 @@ angular.module('scanthisApp', [
         };
       };
       // Non Fair Trader label function
-      $scope.printLabel = $scope.generatePrintLabel($scope.printString);
+      $scope.printLabel = generatePrintLabel($scope.printString);
       // Fair Trade Label function
       if (settings.printStringFairTrade) {
         $scope.printStringFairTrade = settings.printStringFairTrade;
-        $scope.printLabelFairTrade = $scope.generatePrintLabel($scope.printStringFairTrade);
+        $scope.printLabelFairTrade = generatePrintLabel($scope.printStringFairTrade);
       };
     }
     
@@ -196,7 +196,8 @@ angular.module('scanthisApp', [
         var date = moment(the_date).utcOffset(response.data.timezone).format();
         var today = moment.parseZone(date).startOf('day').format();
         if(station){
-          var lot_date = moment(station.in_progess_date).utcOffset(response.data.timezone).format();
+          var lot_date_start = station.in_progress_date.substring(0,19);
+          var lot_date = moment(lot_date_start).utcOffset(response.data.timezone).format();
           var lot_day = moment.parseZone(lot_date).startOf('day').format();
           if ( lot_day === today){
             $scope.current.collectionid = station.lot_number;

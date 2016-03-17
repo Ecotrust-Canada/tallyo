@@ -205,14 +205,18 @@ body{
   padding-top: 10px;
 }
 
+
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
+
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
+#station-AM1-004 .panel,
+#station-AM2-001 .panel,
 #station-HS0-005 .panel {
   width: 550px;
 }
@@ -294,7 +298,7 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
-#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
+.itemsframe.entries #list-2 table td:nth-last-child(2),
 .itemsframe.entries table td:last-child {
   /* Hide the text. */
   color: transparent;
@@ -621,28 +625,6 @@ a:hover {
   width: 100%;
 }
 
-/*
-.fill tr:nth-child(even) {
-  background-color: #EBEDED;
-}
-.fill tr:nth-child(odd) {
-  background-color: #C2C4C4;
-}
-.fill tr.fill2 {
-  background-color: #597F80;
-}
-
-.fill tr.fill2 td {
-  background-color: #597F80;
-  font-size: 12px;
-  padding-left: 2px;
-  padding-right: 2px;
-  padding-top:0px;
-}
-
-*/
-
-
 .step{
   display:inline-block;
   background-color: white;
@@ -690,8 +672,10 @@ div[ng-view] {
 .block{
   vertical-align: top;
   margin: 0 4px;
-  overflow: visible;
+  /*overflow: visible;*/
   display: inline-block;
+  width: 100%;
+  overflow: hidden;
 }
 
 .not{
@@ -758,15 +742,21 @@ div[ng-view] {
   background-position: 7px center;
 }
 
-table#admin_manage_lots {
+#admin_manage_lots {
+  position: relative;
+  width: 1000px;
+  max-height: 600px;
+  overflow: auto;
+}
+#admin_manage_lots .inner_scrollable > table {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  /*width: 100%;*/
-  width: 1412px;
+  width: 1460px;
+  margin-left: -240px;
 }
 
-table#admin_manage_lots tr.adminlots_header {
+#admin_manage_lots tr.adminlots_header {
   height: 46px;
   padding-bottom: 19px;
   color: #125974;
@@ -774,32 +764,38 @@ table#admin_manage_lots tr.adminlots_header {
   font-family: 'Lato-Bold';
   padding: 0 0 20px 0;
 }
-
-table#admin_manage_lots tr .lot_column {
+#admin_manage_lots .inner_scrollable {
+  margin-left: 170px;
+  overflow: auto;
+  /*overflow-x:scroll;*/
+}
+#admin_manage_lots table tr .lot_column {
+  position: absolute;
+  left: 0;
   width: 160px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
 }
 
-table#admin_manage_lots tr .lot-station-cell {
+#admin_manage_lots table tr .lot-station-cell {
   min-width: 296px;
   width: auto;
   padding: 0 8px 8px;
   position:relative;
 }
 
-table#admin_manage_lots tr.adminlots_header .lot-station-cell span{
+#admin_manage_lots table tr.adminlots_header .lot-station-cell span{
   display: inline-block;
   position: relative;
   left: 48px;
   top: 3px;
 }
-table#admin_manage_lots tr.adminlots_header .lot-station-cell {
+#admin_manage_lots table tr.adminlots_header .lot-station-cell {
   position: relative;
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon{
+#admin_manage_lots table tr.adminlots_header div.icon{
   position: absolute;
   left: 0;
   top: 0;
@@ -810,43 +806,43 @@ table#admin_manage_lots tr.adminlots_header div.icon{
   background-position: center center;
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon.receiving {
+#admin_manage_lots table tr.adminlots_header div.icon.receiving {
   background-image: url(/images/receiving_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon.trimming {
+#admin_manage_lots table tr.adminlots_header div.icon.trimming {
   background-image: url(/images/trimming_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon.retouching {
+#admin_manage_lots table tr.adminlots_header div.icon.retouching {
   background-image: url(/images/retouching_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon.boxing {
+#admin_manage_lots table tr.adminlots_header div.icon.boxing {
   background-image: url(/images/boxing_blue_icon.svg);
 }
 
-table#admin_manage_lots tr.adminlots_header div.icon.shipping {
+#admin_manage_lots table tr.adminlots_header div.icon.shipping {
   background-image: url(/images/shipping_blue_icon.svg);
 }
 
-table#admin_manage_lots tr .lot_column .lot_label {
+#admin_manage_lots table tr .lot_column .lot_label {
   position: relative;
   display: block;
   padding-top: 10px;
 }
 
-table#admin_manage_lots tr .lot_column label {
+#admin_manage_lots table tr .lot_column label {
   font-size: 12px;
 }
 
-table#admin_manage_lots .field_val.lot_code {
+#admin_manage_lots table .field_val.lot_code {
   color: #03223C;
   font-size: 18px;
   font-family: 'Lato-Regular';
 }
 
-table#admin_manage_lots tr .lot_column .lot_label span.expand-control {
+#admin_manage_lots table tr .lot_column .lot_label span.expand-control {
   display: block;
   position: absolute;
   width: 18px;
@@ -857,34 +853,34 @@ table#admin_manage_lots tr .lot_column .lot_label span.expand-control {
   background-position: center center;
 }
 
-table#admin_manage_lots tr .lot_column .lot_label span.expand-control.opened {
+#admin_manage_lots table tr .lot_column .lot_label span.expand-control.opened {
   background-image: url(/images/close_details.svg);
 }
 
-table#admin_manage_lots tr .lot_column .lot_label span.expand-control.closed {
+#admin_manage_lots table tr .lot_column .lot_label span.expand-control.closed {
   background-image: url(/images/open_details.svg);
 }
 
-table#admin_manage_lots .lot_column .expanded {
+#admin_manage_lots table .lot_column .expanded {
   margin-top: 20px;
 }
-table#admin_manage_lots .lot_column .expanded .display_field {
+#admin_manage_lots table .lot_column .expanded .display_field {
   margin: 0 0 4px 0;
   line-height: 15px;
 }
 
-table#admin_manage_lots .lot_column .expanded .display_field label {
+#admin_manage_lots table .lot_column .expanded .display_field label {
   display: inline-flex;
 }
 
-table#admin_manage_lots .lot_column .expanded .display_field .field_val {
+#admin_manage_lots table .lot_column .expanded .display_field .field_val {
   display: inline-flex;
   color: #03223C;
   font-size: 16px;
   font-family: 'Lato-Regular';
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header {
+#admin_manage_lots table tr .lot-station-cell .card_header {
   display: inline-block;
   box-sizing:border-box;
   width: 100%;
@@ -896,7 +892,7 @@ table#admin_manage_lots tr .lot-station-cell .card_header {
   z-index: 2;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details {
+#admin_manage_lots table tr .lot-station-cell .item-details {
   display: inline-block;
   width: 100%;
   height: 192px;
@@ -914,17 +910,17 @@ table#admin_manage_lots tr .lot-station-cell .item-details {
   background-position: left top;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header span.data {
+#admin_manage_lots table tr .lot-station-cell .card_header span.data {
   display: block;
   width: auto;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header.warn span.data,
-table#admin_manage_lots tr .lot-station-cell .card_header.ok span.data {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn span.data,
+#admin_manage_lots table tr .lot-station-cell .card_header.ok span.data {
   padding-left:28px;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header span.state {
+#admin_manage_lots table tr .lot-station-cell .card_header span.state {
   display: inline-block;
   width: 34px;
   height: 90px;
@@ -933,25 +929,25 @@ table#admin_manage_lots tr .lot-station-cell .card_header span.state {
   left: 0;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header.warn span.state {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn span.state {
   background-color: #F04A30;
   background-image: url(/images/admin_card_warn_bg.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header.ok span.state {
+#admin_manage_lots table tr .lot-station-cell .card_header.ok span.state {
   background-color: #0076AD;
   background-image: url(/images/admin_card_ok_bg.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit {
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit {
  display: inline-block;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header .data > .card_bit:nth-child(n+2) {
+#admin_manage_lots table tr .lot-station-cell .card_header .data > .card_bit:nth-child(n+2) {
   padding-left: 10px;
 }
 
@@ -959,7 +955,7 @@ table#admin_manage_lots tr .lot-station-cell .card_header .data > .card_bit:nth-
   vertical-align: text-bottom;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit label {
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit label {
   text-align: left;
   color: #005874;
   margin: 0;
@@ -968,17 +964,11 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit label {
   font-family: 'Lato-Bold';
   display: block;
 }
-/*
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield label {
-  top: 5px;
-  position: relative;
-}
-*/
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
   border-left: 1px solid #ccccca;
 }
 
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit .value {
   color: #03223C;
   font-size: 14px;
   font-family: 'Lato-Black';
@@ -987,20 +977,11 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit .value {
   white-space: nowrap;
   flex-wrap: wrap;
 }
-/*
-table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield .value {
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 16px;
-}
-*/
-#station-HS0-ADM table#admin_manage_lots tr .lot-station-cell .card_header.warn .card_bit.pieces label {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces label {
   color: #f24133;
 }
 
-#station-HS0-ADM table#admin_manage_lots tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
+##admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
   color: #f04a30;
 }
 
@@ -1041,7 +1022,7 @@ table#admin_manage_lots tr .lot-station-cell .card_header .card_bit.yield .value
     display: block;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details table {
+#admin_manage_lots table tr .lot-station-cell .item-details table {
   border: none; border-collapse: collapse;
   color: #03223C;
   font-size: 14px;
@@ -1049,27 +1030,27 @@ table#admin_manage_lots tr .lot-station-cell .item-details table {
   table-layout: fixed;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details table td + td { 
+#admin_manage_lots table tr .lot-station-cell .item-details table td + td { 
   border-left: 1px solid #ccccca;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details td {
+#admin_manage_lots table tr .lot-station-cell .item-details td {
   padding: 12px 12px 0 12px;
   white-space: nowrap;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details tr:last-child td {
+#admin_manage_lots table tr .lot-station-cell .item-details tr:last-child td {
   padding-bottom: 12px;
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details tr td:first-child {
+#admin_manage_lots table tr .lot-station-cell .item-details tr td:first-child {
   padding-left: 0;
   color: #125974;
   font-size: 14px;
   font-family: 'Lato-Bold';
 }
 
-table#admin_manage_lots tr .lot-station-cell .item-details tr td:last-child {
+#admin_manage_lots table tr .lot-station-cell .item-details tr td:last-child {
   padding-right: 0;
 }
 
@@ -1323,7 +1304,7 @@ div#station-HS0-011 {
   box-sizing:border-box;
 }
 
-#station-HS0-003 .itemsframe.entries table td:nth-last-child(2),
+.itemsframe.entries #list-2 table td:nth-last-child(2),
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
@@ -1397,8 +1378,10 @@ table#shipments_list td:last-child {
 }
 
 /* receivng station for HarSam */
+#station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
 .panel.white.packingstation {
+
   margin-bottom: 24px;
   margin-right: 10px;
 }
@@ -1407,25 +1390,31 @@ table#shipments_list td:last-child {
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
 #station-HS0-005 .panel.grey,
+#station-AM2-001 .panel.grey,
 #station-HS0-003 .panel.grey {
+
   vertical-align: top;
   padding: 0;
   width: 590px;
   position: relative;
+  margin-bottom: 20px;
 }
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;
   float: right;
 }
 
+
 .station .panel:first-child {
   padding-top: 30px;
   position: relative;
 }
 
+
 .scanform {
   border-top: 1px solid #cccccc;
 }
+
 
 .packingstation .scanform {
   position: relative;
@@ -1435,37 +1424,47 @@ table#shipments_list td:last-child {
 
 .weighstation_main #current_lot,
 .packingstation #current_lot{
+
   display: table;
   width: 100%;
   padding: 10px 0 13px 0;
   position: relative;
 }
 
+
 .weighstation_main #current_lot display ,
 .packingstation #current_lot display {
+
   display: table-row;
   width: 100%;
 }
 
+
 .weighstation_main #current_lot .display_row ,
 .packingstation #current_lot .display_row {
+
   display: table-cell;
   width: 50%;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(1) {
 }
+
 
 .weighstation_main #current_lot  .field_val,
 .packingstation #current_lot .field_val,
 #edit_shipment .display_field span,
 #prev_station_totals .prev_summary span {
+
   color: #03223c;
   font-family: 'Lato-Regular';
 }
 
+
 .weighstation_main #current_lot #internal_lot_code-value,
 .packingstation #current_lot #internal_lot_code-value {
+
   font-size: 22px;
 }
 
@@ -1474,20 +1473,25 @@ table#shipments_list td:last-child {
   display: inline-block;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(1) .field_val, 
 .packingstation #current_lot .display_row:nth-child(1) .field_val {
   font-size: 22px;
 }
 
+
 .weighstation_main #current_lot .display_row:nth-child(2) .field_val, 
 .packingstation #current_lot .display_row:nth-child(2) .field_val, 
 #prev_station_totals .prev_summary span {
+
   font-size: 16px;
   display: inline-block;
 }
 
+
 .weighstation_main #current_lot #internal_lot_code-value span::before,
 .packingstation #current_lot #internal_lot_code-value span::before {
+
   content: "#";
 }
 
@@ -1507,11 +1511,14 @@ table#shipments_list td:last-child {
   padding-bottom: 12px;
 }
 
+
 .packingstation .form_row {
   padding-bottom: 15px;
 }
 
 .weighstation_main .form_label,
+
+
 .packingstation .form_label,
 .editform .form_label {
   display: inline-block;
@@ -1521,6 +1528,7 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label {
   width: 150px;
 }
+#form-5 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
@@ -1529,7 +1537,10 @@ table#shipments_list td:last-child {
   padding: 5px 15px 20px 15px;
 }
 
+
+
 #create_box_form #form-0 {
+
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
@@ -1570,6 +1581,7 @@ table#shipments_list td:last-child {
   width: 204px;
 }
 
+#create_box_form #form-5 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
   width: 354px;
 }
@@ -1606,6 +1618,7 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label label,
 .weighstation_main .form_label label,
 .packingstation .scanform .form_label label {
+
   font-family: 'Lato-Bold';
   font-size: 22px;
   color: #125974;
@@ -1621,9 +1634,11 @@ table#shipments_list td:last-child {
   color: #125974;
 }
 
+
 .weighstation_main .field,
 .weighstation_main .field,
 .packingstation .scanform .field {
+
   display: inline-block;
   width: 360px;
 }
@@ -1658,13 +1673,16 @@ table#shipments_list td:last-child {
 
 #form-0 .form_label label,
 #form-20 .form_label label,
+#form-23 .form_label label,
 .editform .form_label label,
+#form-5 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
 
 #form-0 .field, 
 .editform .field, 
+#form-5 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1843,6 +1861,16 @@ input[name^=weight]::after {
   display: block;
   position:relative;
 }
+#station-AM2-002 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
+#station-AM2-001 .packingstation #current_lot .pictogram_btns {
+  top: 0px;
+  display: block;
+  position:relative;
+}
 
 .pictogram_btns > span {
   padding: 7px 10px 7px 35px;
@@ -1881,6 +1909,7 @@ input[name^=weight]::after {
 }
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
+#form-23 .form_buttons .btn-orange,
 #form-20 .form_buttons .btn-orange {
   right: 16px;
 }
@@ -1933,24 +1962,29 @@ input[name^=weight]::after {
   position: relative;
 }
 #radio-7-grade, 
+#radio-23-grade, 
 #radio-20-grade, 
 #radio-8-grade {
   width: 360px;
 }
 #radio-19-grade,
+#radio-18-grade,
 #radio-17-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
+#radio-18-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 
 #radio-20-grade.toggle-group-container label,
+#radio-23-grade.toggle-group-container label,
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
+#radio-23-state.toggle-group-container label,
 #radio-20-state.toggle-group-container label {
   width: 80px;
 }
@@ -2004,17 +2038,20 @@ input[name^=weight]::after {
   border: none;
 }
 
+#radio-23-grade.toggle-group-container input:checked + span,
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
   width:60px;
 }
 
+#radio-23-state.toggle-group-container input:checked + span,
 #radio-20-state.toggle-group-container input:checked + span { 
   width:80px;
 }
 
 #radio-19-grade.toggle-group-container input:checked + span,
+#radio-18-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
@@ -2199,7 +2236,7 @@ nav span.icon.shipping {
 nav div#menu {
   display: none;
   position:absolute;
-  width: 240px;
+  width: 270px;
   background-color: #03223c;
   padding: 15px 25px 10px 0;
 }
