@@ -47,7 +47,7 @@ angular.module('scanthisApp.filters', [])
 .filter('weightstring', function() {
   return function(input) {
     if (input){
-      return String(input.toFixed(2)) + 'kg';
+      return String(input.toFixed(2)) + ' kg';
     }
     
   };

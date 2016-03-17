@@ -149,7 +149,7 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
   $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {
-    if ($scope.current.lot !== undefined){
+    if ($scope.current.lot !== undefined && $scope.current.lot !== null){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
         if ($scope.current.lot){
@@ -250,8 +250,9 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
+    console.log('function called');
     //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
-    var checkInput = document.getElementById('switch-state');
+    var checkInput = document.getElementById('toggle-state');
     setTimeout(function () {
       $scope.$apply(function () {
         $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';

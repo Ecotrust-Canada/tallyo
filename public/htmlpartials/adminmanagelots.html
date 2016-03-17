@@ -17,7 +17,7 @@
               <span ng-if="lot.expanded" ng-click="lot.expanded = false" class="expand-control opened"></span>  
               <span ng-if="!lot.expanded" ng-click="lot.expanded = true" class="expand-control closed"></span>
             </div>
-            <div class="field_val lot_code">#{{lot.internal_lot_code || lot.lot_number}}</div>
+            <div class="field_val lot_code">{{lot.internal_lot_code || lot.lot_number}}</div>
           </div>        
           <div ng-if="lot.expanded" class="expanded"> 
             <div class="display_field">
@@ -34,7 +34,7 @@
             </div>
           </div>
         </td>
-        <td ng-repeat="stn in sumStations" class="station-column-{{stn.code}} lot-station-cell">
+        <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
           <div ng-class="{in_progress: lot[stn.code].in_progress, warn: cssWarn(lot, stn), ok: cssOk(lot, stn)}" 
                class="panel white card_header">
              <span ng-if="cssWarn(lot,stn) || cssOk(lot,stn)" class="state"></span>
