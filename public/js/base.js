@@ -138,13 +138,15 @@ angular.module('scanthisApp', [
           });
         };
       };
-      // Non Fair Trader label function
-      $scope.printLabel = generatePrintLabel($scope.printString);
-      // Fair Trade Label function
+      // fall back to non fair trade label if fair trade not defined
       if (settings.printStringFairTrade) {
         $scope.printStringFairTrade = settings.printStringFairTrade;
-        $scope.printLabelFairTrade = generatePrintLabel($scope.printStringFairTrade);
+      } else {
+        $scope.printStringFairTrade = settings.printString;
       };
+
+      $scope.printLabel = generatePrintLabel($scope.printString);
+      $scope.printLabelFairTrade = generatePrintLabel($scope.printStringFairTrade);
     }
     
     if(settings.packingconfig){
