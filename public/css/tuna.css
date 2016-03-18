@@ -753,9 +753,9 @@ div[ng-view] {
 }
 
 #admin_manage_lots {
-  width: 1160px;
+  width: 100%;
   padding: 10px;
-  height: 450px;
+  max-height: 750px;
   overflow-y: auto;
   position: relative;
 }
@@ -1130,7 +1130,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 .expanded-list {
-  max-height: 336px;
+  max-height: 536px;
   overflow: auto;
 } 
 
