@@ -1,6 +1,8 @@
 <div ng-controller="ViewShipmentCtrl"  class="panel white select_object">
   <div class="select_header" ng-class="{lot_chosen: current.shipping_unit}">
     <span class="show_choices" ng-click="current.shipping_unit = null">Choose Incoming Shipment</span>
+    <div id="reprint_label_link" ng-if="substationlink" 
+         ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
   </div> 
   <div class="show_choices" ng-hide="current.shipping_unit">
     <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>

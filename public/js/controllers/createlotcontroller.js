@@ -30,6 +30,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
       $scope.current.selected = $scope.current.collectionid;
+      $scope.ListCollections();
     }
   });
 
@@ -82,7 +83,7 @@ angular.module('scanthisApp.createlotController', [])
 //packingstation.html, receiveshipment.html, receiving_lots.html, receivingstation.html, weighstation.html
 //queries whichever table is listed in config as 'collection', updates as necessary
 //also has a delete function
-.controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices) {
+.controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.DisplayCollectionInfo = function(){
     var func = function(response){
@@ -125,10 +126,11 @@ angular.module('scanthisApp.createlotController', [])
       else{
         $scope.DisplayCollectionInfo();
       }
-      var thediv = document.getElementById('scaninput');
+      /*var thediv = document.getElementById('scaninput');
       if(thediv){
         thediv.focus();
-      }
+      }*/
+      $timeout(function(){eventFire(document.getElementById('scaninput'), 'click');}, 100);
     }
   });
 

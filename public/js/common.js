@@ -365,3 +365,13 @@ var cutString = function (str, cutStart, cutEnd){
   if (!str) return;  
   return str.substr(0,cutStart) + str.substr(cutEnd+1);
 };
+
+var eventFire = function(el, etype){
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+};
