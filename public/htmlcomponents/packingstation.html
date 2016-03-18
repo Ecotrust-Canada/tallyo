@@ -2,7 +2,7 @@
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
   </div>
-  <div  class="select_object">
+  <div  class="select_object" any-other-click>
     <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
          ng-click="current.collectionid = null">
        <span class="show_choices">{{packingconfig.sectiontitle}}</span>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="scanform" ng-controller="PackingCtrl" any-other-click>
+  <div class="scanform" ng-controller="PackingCtrl" >
       <fieldset ng-disabled="formdisabled">
         
         <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >

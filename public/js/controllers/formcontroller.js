@@ -193,7 +193,7 @@ angular.module('scanthisApp.formController', [])
 })
 
 //default controller with submit form functions
-.controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
   //$scope.form = {};
   var table;
   if($scope.formtable){
@@ -212,6 +212,11 @@ angular.module('scanthisApp.formController', [])
   var AddSetCurrent = function(thedata){
     $scope.list.collection.push(thedata);
     $scope.current.collectionid = thedata[$scope.station_info.collectionid];
+    /*var thediv = document.getElementById('scaninput');
+    if(thediv){
+      thediv.focus();
+    }*/
+    $timeout(function(){eventFire(document.getElementById('scaninput'), 'click');}, 100);
   };
 
   //database entry
