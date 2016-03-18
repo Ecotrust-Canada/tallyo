@@ -200,7 +200,7 @@ body{
 }
 .panel.item-details {
   background-color: #f6f6f4;
-  width: 100%;
+  width: 90%;
   box-sizing:border-box;
   padding-top: 10px;
 }
@@ -216,8 +216,7 @@ body{
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
-#station-AM2-001 .panel,
-#station-HS0-005 .panel {
+#station-AM2-001 .panel {
   width: 550px;
 }
 
@@ -298,18 +297,18 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
-.itemsframe.entries #list-2 table td:nth-last-child(2),
-.itemsframe.entries table td:last-child {
+.itemsframe.entries #list-2 table td.btn_action:nth-last-child(2),
+.itemsframe.entries table td.btn_action:last-child {
   /* Hide the text. */
   color: transparent;
   overflow: hidden;
   background-repeat: no-repeat;
   background-position: left 10px center;
 }
-.itemsframe.entries table td:last-child {
+.itemsframe.entries table td.btn_action:last-child {
   background-image: url(/images/remove_icon.svg);
 }
-.itemsframe.entries table td:last-child:hover {
+.itemsframe.entries table td.btn_action:last-child:hover {
   background-image: url(/images/remove_icon_red.svg);
 }
 
@@ -742,10 +741,11 @@ div[ng-view] {
 }
 
 #admin_manage_lots {
+  width: 1160px;
+  padding: 10px;
+  height: 450px;
+  overflow-y: auto;
   position: relative;
-  width: 1000px;
-  max-height: 500px;
-  overflow: auto;
 }
 #admin_manage_lots .inner_scrollable > table {
   border: none;
@@ -764,12 +764,12 @@ div[ng-view] {
   padding: 0 0 20px 0;
 }
 #admin_manage_lots .inner_scrollable {
-  margin-left: 170px;
   overflow: auto;
+  margin-left: 170px;
 }
 #admin_manage_lots table tr .lot_column {
   position: absolute;
-  left: 0;
+  left: 10px;
   width: 160px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
@@ -1494,8 +1494,6 @@ table#shipments_list td:last-child {
 
 .weighstation_main #current_lot #internal_lot_code-value span::before,
 .packingstation #current_lot #internal_lot_code-value span::before {
-
-  content: "#";
 }
 
 .weighstation_main #current_lot label, #prev_station_totals label,
@@ -1771,7 +1769,7 @@ table#shipments_list td:last-child {
 .dropdown-container .dd_arrow {
   right: 0;
   top: 49px;
-  z-index: 2;
+  z-index: 1;
 }
 .dropdown-container .dd_arrow span,
 .styled-dropdown .dd_arrow span {
@@ -2496,4 +2494,14 @@ span.switch_option.active {
 
 .animation.ng-leave.ng-leave-active {
   opacity: 0;
+}
+
+#shipment_totals2 .btn-blue,
+#shipment_totals1 .btn-blue {
+  float: right;
+  margin-top: 10px;
+}
+
+#shipment_totals2 .btn-orange {
+  padding: 5px 15px;
 }

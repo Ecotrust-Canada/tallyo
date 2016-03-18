@@ -8,19 +8,21 @@
     <td ng-repeat="name in config.fields" ng-switch on="name">
       <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
       <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-      <span ng-switch-when="weight">{{(item[name]).toFixed(2)}}kg</span>
-      <span ng-switch-when="weight_total">{{(item[name]).toFixed(2)}}kg</span>
-      <span ng-switch-when="weight_1">{{(item[name]).toFixed(2)}}kg</span>
-      <span ng-switch-when="weight_2">{{(item[name]).toFixed(2)}}kg</span>
+      <span ng-switch-when="weight">{{(item[name]).toFixed(2)}} kg</span>
+      <span ng-switch-when="weight_total">{{(item[name]).toFixed(2)}} kg</span>
+      <span ng-switch-when="weight_1">{{(item[name]).toFixed(2)}} kg</span>
+      <span ng-switch-when="weight_2">{{(item[name]).toFixed(2)}} kg</span>
       <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
-      <span ng-switch-when="pieces">{{item[name]}}pieces</span>
-      <span ng-switch-when="boxes">{{item[name]}}boxes</span>
+      <span ng-switch-when="pieces">{{item[name]}} pcs</span>
+      <span ng-switch-when="boxes">{{item[name]}} boxes</span>
       <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
-    <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})">{{config.button2}}</td>
-    <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
-    <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
+    <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
+    <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})" 
+        class="btn_action">>{{config.button}}</td>
+    <td ng-if="config.button && config.arg2" 
+        ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})" class="btn_action">>{{config.button}}</td>
 
   </tr>
   <tr ng-if="istotal === true">
@@ -30,7 +32,7 @@
       <span ng-switch-when="weight_1">{{itemlist | sumOfValue:'weight_1'| weightstring}}</span>
       <span ng-switch-when="weight_total">{{itemlist | sumOfValue:'weight_total'| weightstring}}</span>
       <span ng-switch-when="weight">{{itemlist | sumOfValue:'weight'| weightstring}}</span>
-      <span ng-switch-when="pieces">{{itemlist | sumOfValue:'pieces'}}pcs</span>
+      <span ng-switch-when="pieces">{{itemlist | sumOfValue:'pieces'}} pcs</span>
       <span ng-switch-when="boxes">{{itemlist | sumOfValue:'boxes'}} boxes</span>
       <span ng-switch-default></span>
     </td>
@@ -38,5 +40,6 @@
   </tr>
 </table>
 
-<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>
+<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" 
+        filename="export.csv" class="btn-blue">Export</button>
 

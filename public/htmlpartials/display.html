@@ -5,10 +5,10 @@
       <span ng-switch-when="timestamp" class="display_val">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
       <span ng-switch-when="end_date" class="display_val">{{obj.end_date|stringtodate|date:'MMMM d, yyyy' }}</span>
       <span ng-switch-when="start_date" class="display_val">{{obj.start_date|stringtodate|date:'MMMM d, yyyy' }}</span>
-      <span ng-switch_when="weight_1" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
-      <span ng-switch_when="weight_2" class="display_val">{{(obj[col.val]).toFixed(2)}}kg</span>
+      <span ng-switch_when="weight_1" class="display_val">{{(obj[col.val]).toFixed(2)}} kg</span>
+      <span ng-switch_when="weight_2" class="display_val">{{(obj[col.val]).toFixed(2)}} kg</span>
       <span ng-switch_when="internal_lot_code" class="display_val">{{obj[col.val] || obj['lot_number']}}</span>
-      <span ng-switch_when="pieces" class="display_val">{{obj[col.val]}}pcs</span>
+      <span ng-switch_when="pieces" class="display_val">{{obj[col.val]}} pcs</span>
       <span ng-switch-default class="display_val">{{obj[col.val]}}</span>
     </div>
   </div>

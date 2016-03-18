@@ -5,7 +5,7 @@
   <div class="dropdown"> 
     <div ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: config.limit">
       <div ng-mousedown="select($event, value[config.arg])">
-        <b>{{value[config.searchfield]}}</b>
+        <b>{{value[config.searchfield]}}</b><span> - </span>
         <span ng-repeat="field in config.fields" ng-switch="field">
           <span ng-switch-when="weight">{{value.weight|weightstring}}</span>
           <span ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
