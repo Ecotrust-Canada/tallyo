@@ -216,8 +216,7 @@ body{
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
-#station-AM2-001 .panel,
-#station-HS0-005 .panel {
+#station-AM2-001 .panel {
   width: 550px;
 }
 
@@ -1770,7 +1769,7 @@ table#shipments_list td:last-child {
 .dropdown-container .dd_arrow {
   right: 0;
   top: 49px;
-  z-index: 2;
+  z-index: 1;
 }
 .dropdown-container .dd_arrow span,
 .styled-dropdown .dd_arrow span {
