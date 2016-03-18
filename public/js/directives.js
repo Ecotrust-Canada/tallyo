@@ -162,7 +162,11 @@ angular.module('scanthisApp.directives', [])
         link: function(scope, element, attrs) {
             element.addClass('input-dropdown');
             scope.select = function(e, value) {
-                scope.onSelect({$event: e, value: value});
+                scope.the_val = value;
+                scope.onSelect({$event: e, value: value[scope.config.arg]});
+            };
+            scope.setnull = function(){
+              scope.the_val = null;
             };
         }
     };
@@ -181,6 +185,33 @@ angular.module('scanthisApp.directives', [])
 
         if (scrollTop === (scrollHeight - offsetHeight)) {
           $scope.$apply(function () {
+            handler($scope);
+          });
+        }
+        if (scrollTop === 0) {
+          $scope.$apply(function () {
+            $scope.limit = 10;
+          });
+        }
+      });
+    };
+  })
+
+.directive('bufferedScrollLots', function ($parse) {
+    return function ($scope, element, attrs) {
+      var handler = function () {
+        if ($scope.limit < $scope.list.harvester_lot.length) {
+          $scope.limit += 5;
+        }
+      };
+      element.on('scroll',function (evt) {
+        var scrollTop    = element[0].scrollTop,
+            scrollHeight = element[0].scrollHeight,
+            offsetHeight = element[0].offsetHeight;
+
+        if (scrollTop === (scrollHeight - offsetHeight)) {
+          $scope.$apply(function () {
+
             handler($scope);
           });
         }

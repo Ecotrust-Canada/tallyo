@@ -41,6 +41,17 @@ input {
   background-color: #DBEBEF;
   border: 1px solid #CAE2EB;
 }
+.input-text {
+  background-color: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  margin-top:3px;
+  height:30px;
+  padding-top: 5px;
+  font-family: Lato-Regular;
+  font-size: 20px;
+  color: #03223C;
+  padding-left: 5px;
+}
 /*
 *,
 *:before,
@@ -206,10 +217,10 @@ body{
 }
 
 
+#station-AM2-ADM > .panel, 
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
-
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
@@ -741,9 +752,9 @@ div[ng-view] {
 }
 
 #admin_manage_lots {
-  width: 1160px;
+  width: 100%;
   padding: 10px;
-  height: 450px;
+  max-height: 750px;
   overflow-y: auto;
   position: relative;
 }
@@ -1118,7 +1129,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 .expanded-list {
-  max-height: 336px;
+  max-height: 536px;
   overflow: auto;
 } 
 
@@ -1408,7 +1419,7 @@ table#shipments_list td:last-child {
 }
 
 
-.station .panel:first-child {
+.station > .panel:first-child {
   padding-top: 30px;
   position: relative;
 }
@@ -1450,11 +1461,7 @@ table#shipments_list td:last-child {
   width: 50%;
 }
 
-
-.weighstation_main #current_lot .display_row:nth-child(1) {
-}
-
-
+#station-AM2-ADM .field_val,
 .weighstation_main #current_lot  .field_val,
 .packingstation #current_lot .field_val,
 #edit_shipment .display_field span,
@@ -1464,7 +1471,7 @@ table#shipments_list td:last-child {
   font-family: 'Lato-Regular';
 }
 
-
+#station-AM2-ADM .field_val,
 .weighstation_main #current_lot #internal_lot_code-value,
 .packingstation #current_lot #internal_lot_code-value {
 
@@ -1734,6 +1741,9 @@ table#shipments_list td:last-child {
 #form-19 .styled-dropdown {
   width: 232px;
 }
+#station-AM2-ADM  .styled-dropdown {
+  width: 504px;
+}
 .styled-dropdown select {
   height: 36px;
 }
@@ -1914,6 +1924,7 @@ input[name^=weight]::after {
 #form-20 .form_buttons .btn-orange {
   right: 16px;
 }
+
 .weighstation_main .form_buttons .btn-orange {
   width: 126px;
 }
@@ -2155,11 +2166,11 @@ input[name^=weight]::after {
     background-image: linear-gradient(-180deg, #FA8230 0%, #FD6A0E 30%, #B24400 100%);
     box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.35);
     /*box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.45), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);*/
-    border-radius: 5px;
+    border-radius: 8px;
     font-family: Lato-Black;
     font-size: 20px;
     color: #FFFFFF;
-    line-height: 24px;
+    /*line-height: 24px;*/
     text-shadow: 1px 2px 2px rgba(0,0,0,0.20);
 }
 
@@ -2496,6 +2507,19 @@ span.switch_option.active {
   opacity: 0;
 }
 
+#station-AM2-ADM .select_object {
+  width: 510px;
+  position: relative;
+} 
+
+#station-AM2-ADM #shipment_totals1 {
+  margin-top: 10px;
+}
+
+#station-AM2-ADM #shipment_totals2 {
+  margin-top: -26px;
+}
+
 #shipment_totals2 .btn-blue,
 #shipment_totals1 .btn-blue {
   float: right;
@@ -2504,4 +2528,9 @@ span.switch_option.active {
 
 #shipment_totals2 .btn-orange {
   padding: 5px 15px;
+  width: auto;
+  position: relative;
+  left: 0;
+  top: -35px;
+  font-size: 14px;
 }

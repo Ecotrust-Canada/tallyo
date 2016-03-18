@@ -124,22 +124,33 @@ angular.module('scanthisApp', [
     if(settings.printString && settings.printurl){
       $scope.printurl = settings.printurl;
       $scope.printString = settings.printString;
-      $scope.printLabel = function(codeString, fieldarray) {
-        $http({
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          url: $scope.printurl + 'print',
-          transformRequest: function(obj) {
-            var str = [];
-            for(var p in obj) {
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            }
-            return str.join("&");
-          },
-          data: {data:$scope.printString(codeString, fieldarray)}
+      var generatePrintLabel = function(stringFunc) {
+        return function(codeString, fieldarray) {
+          $http({
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            url: $scope.printurl + 'print',
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              }
+              return str.join("&");
+            },
+            data: {data:stringFunc(codeString, fieldarray)}
 
-        });
+          });
+        };
       };
+      // fall back to non fair trade label if fair trade not defined
+      if (settings.printStringFairTrade) {
+        $scope.printStringFairTrade = settings.printStringFairTrade;
+      } else {
+        $scope.printStringFairTrade = settings.printString;
+      };
+
+      $scope.printLabel = generatePrintLabel($scope.printString);
+      $scope.printLabelFairTrade = generatePrintLabel($scope.printStringFairTrade);
     }
     
     if(settings.packingconfig){

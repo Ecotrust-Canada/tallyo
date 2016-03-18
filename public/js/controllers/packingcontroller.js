@@ -87,10 +87,15 @@ angular.module('scanthisApp.packingController', [])
 
 
   $scope.MakeQR = function(){
+    console.log($scope.current[$scope.station_info.collectiontable].ft_fa_code);
     var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
-    //$scope.printLabel(data, labels);
+    if ($scope.current[$scope.station_info.collectiontable].ft_fa_code) {
+      $scope.printLabelFairTrade(data, labels);
+    } else {
+      $scope.printLabel(data, labels);
+    };
   };
 
 
@@ -293,10 +298,6 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
-  var thediv = document.getElementById('inv_input');
-      if(thediv){
-        thediv.focus();
-      }
 })
 
 

@@ -1,26 +1,11 @@
-
-<br>
-<div ng-controller="InventoryCtrl">
+<div ng-controller="InventoryCtrl" class="itemsframe entries">
   <!--<dropdown itemlist="stations"  cfg="collectiondropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>-->
   <md-tabs>
     <md-tab label="Summary"></md-tab>
     <md-tab ng-repeat="station in stations" label="{{station.name}}" md-on-select="SetCurrent(station)">
       <md-tab-body>
         <list itemlist="list.items"  config="listconfig" istotal="true"></list>
-
-
-
-
       </md-tab-body>
     </md-tab>
   </md-tabs>
-
-
-
-  
-
-
-
-
-
 </div>

@@ -1,16 +1,25 @@
-<div ng-controller="ViewShipmentCtrl"  class="panel white">
-  <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
-  {{current.shipping_unit.received_from}}  {{current.shipping_unit.timestamp|stringtodate|date:format:"MMM dd"}}
-  <div class="itemsframe entries" id="shipment_totals1">
-    <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
+<div ng-controller="ViewShipmentCtrl"  class="panel white select_object">
+  <div class="select_header" ng-class="{lot_chosen: current.shipping_unit}">
+    <span class="show_choices" ng-click="current.shipping_unit = null">Choose Incoming Shipment</span>
+  </div> 
+  <div class="show_choices" ng-hide="current.shipping_unit">
+    <dropdown itemlist="list.shipping_unit"  cfg="adddropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
   </div>
-  <div ng-init="showexpanded=false" id="shipment_totals2">
-    <button ng-hide="showexpanded" ng-click="showexpanded=!showexpanded" class="btn-orange">View totals by Origin</button>
-    <button ng-show="showexpanded" ng-click="showexpanded=!showexpanded" class="btn-orange">Hide</button>
+  <div ng-show="current.shipping_unit">
+    <div class="field_val">
+      {{current.shipping_unit.received_from}}  {{current.shipping_unit.timestamp|stringtodate|date:format:"MMM dd"}}
+    </div>
+    <div class="itemsframe entries" id="shipment_totals1">
+      <list itemlist="list.included"  config="totallistconfig" istotal="istotal"></list>
+    </div>
+    <div ng-init="showexpanded=false" id="shipment_totals2">
+      <button ng-hide="showexpanded" ng-click="showexpanded=!showexpanded" class="btn-orange">View totals by Origin</button>
+      <button ng-show="showexpanded" ng-click="showexpanded=!showexpanded" class="btn-orange">Hide</button>
 
-    <div ng-show="showexpanded" ng-repeat="harvester in list.origin" class="itemsframe entries" id="shipment_totals2">
-      {{list[harvester].harvester.supplier}}      
-      <list itemlist="list[harvester].summary"  config="totallistconfig" istotal="istotal"></list>
+      <div ng-show="showexpanded" ng-repeat="harvester in list.origin" class="itemsframe entries" id="shipment_totals2">
+        {{list[harvester].harvester.supplier}}      
+        <list itemlist="list[harvester].summary"  config="totallistconfig" istotal="istotal"></list>
+      </div>
     </div>
   </div>
 </div>

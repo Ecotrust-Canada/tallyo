@@ -41,6 +41,8 @@ angular.module('scanthisApp.AdminController', [])
 //Lot summary page - loads all the data, has functions for exporting to csv and completing lot
 .controller('LotCtrl', function($scope, $http, DatabaseServices) {
 
+  $scope.limit = 10;
+
   $scope.GetHarvesters = function(){
     var query = '';
     var func = function(response){
