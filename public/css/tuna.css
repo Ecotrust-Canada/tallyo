@@ -123,8 +123,8 @@ body{
 }
 #tally_o_logo {
   display: inline-block;
-  width: 189px;
-  height: 33px;
+  width: 252px;
+  height: 44px;
   margin-top: 10px;
   margin-left: 20px;
   background-image: url(/images/tally_o.svg);
@@ -136,7 +136,7 @@ body{
   padding-right: 10px;
 }
 #thisfish_logo {
-  display: table-cell;
+  display: inline-block;
   width: 105px;
   height: 54px;
   margin: 0 10px;
