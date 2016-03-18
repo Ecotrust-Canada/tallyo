@@ -68,6 +68,7 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.changeFn = function(selected){
     $scope.current.collectionid = selected;
+
   };
 
   $scope.current.selected = "no selected";

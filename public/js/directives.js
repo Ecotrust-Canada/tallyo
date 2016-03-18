@@ -151,7 +151,11 @@ angular.module('scanthisApp.directives', [])
         link: function(scope, element, attrs) {
             element.addClass('input-dropdown');
             scope.select = function(e, value) {
-                scope.onSelect({$event: e, value: value});
+                scope.the_val = value;
+                scope.onSelect({$event: e, value: value[scope.config.arg]});
+            };
+            scope.setnull = function(){
+              scope.the_val = null;
             };
         }
     };
