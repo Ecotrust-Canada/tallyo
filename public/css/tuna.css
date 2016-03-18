@@ -742,10 +742,11 @@ div[ng-view] {
 }
 
 #admin_manage_lots {
+  width: 1160px;
+  padding: 10px;
+  height: 450px;
+  overflow-y: auto;
   position: relative;
-  width: 1000px;
-  max-height: 500px;
-  overflow: auto;
 }
 #admin_manage_lots .inner_scrollable > table {
   border: none;
@@ -764,12 +765,12 @@ div[ng-view] {
   padding: 0 0 20px 0;
 }
 #admin_manage_lots .inner_scrollable {
-  margin-left: 170px;
   overflow: auto;
+  margin-left: 170px;
 }
 #admin_manage_lots table tr .lot_column {
   position: absolute;
-  left: 0;
+  left: 10px;
   width: 160px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
