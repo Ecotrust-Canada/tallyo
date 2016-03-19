@@ -5,11 +5,7 @@
          ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
   </div> 
   <div class="show_choices" ng-hide="current.collectionid">
-    <!--<dropdown itemlist="list.harvester_lot"  cfg="collectiondropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>
-    <dropdown itemlist="list.old_harvester_lot"  cfg="adddropdown" selectedoption="current.selected" change-fn="changeFn(selected)"></dropdown>-->
-
     <input-dropdown  thelist="list.harvester_lot"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
-
     <input-dropdown  thelist="list.old_harvester_lot"  config="adddropdown" on-select="changeFn(value)"></input-dropdown>
   </div> 
 </div>   

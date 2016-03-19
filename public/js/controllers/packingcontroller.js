@@ -92,10 +92,10 @@ angular.module('scanthisApp.packingController', [])
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
     if ($scope.current[$scope.station_info.collectiontable].ft_fa_code) {
-      //$scope.printLabelFairTrade(data, labels);
+      $scope.printLabelFairTrade(data, labels);
     } else {
-      //$scope.printLabel(data, labels);
-    };
+      $scope.printLabel(data, labels);
+    }
   };
 
 

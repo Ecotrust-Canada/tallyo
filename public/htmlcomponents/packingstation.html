@@ -25,7 +25,6 @@
       <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
             id="reprint-{{config.id}}" class="reprint">Reprint</span>
     </div>
-    <br>
 
     <!--<span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
       <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
@@ -42,11 +41,10 @@
 
   </div>
 
-  <div ng-if="options.qrform" class="scanform" ng-controller="QRScanCtrl" any-other-click>
-
+  <div class="scanform" ng-controller="PackingCtrl" >
     <fieldset ng-disabled="formdisabled">
         
-        <form id="scanform" ng-submit="readQR();raw.string=null;" >
+      <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
           <div class="form_row">
             <div class="form_label">
               <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
@@ -54,7 +52,7 @@
               </label>
             </div>
             <div class="field">
-              <input id="scaninput" type="text" ng-model="raw.string" 
+              <input id="scaninput" type="text" ng-model="obj_id" 
                      autocomplete="off" placeholder="Start scanning...">
             </div>
           </div>

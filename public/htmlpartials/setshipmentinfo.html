@@ -3,6 +3,8 @@
   <div  class="select_object">
     <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.shipping_unit=null;addinfo=!addinfo">
        <span class="show_choices">Set Shipment Info</span>
+      <div id="reprint_label_link" ng-if="substationlink" 
+           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
     </div> 
     <div class="show_choices" ng-show="addinfo">
       <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>

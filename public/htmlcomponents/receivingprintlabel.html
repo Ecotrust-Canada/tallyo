@@ -1,10 +1,8 @@
-<div class="panel grey">
-    <br>
-    <setshipmentinfo></setshipmentinfo><br>
+<div class="panel white" id="receivingprintlabel">
+    <setshipmentinfo></setshipmentinfo>
     <setharvesterinfo></setharvesterinfo>
-    <br>
 
-    <div ng-controller="NewBoxCtrl">
+    <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
        <fieldsetrepeat submit-fn="SubmitForm(choices)" config="scanform"></fieldsetrepeat>
     </div>
 </div>

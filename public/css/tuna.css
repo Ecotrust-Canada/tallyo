@@ -123,8 +123,8 @@ body{
 }
 #tally_o_logo {
   display: inline-block;
-  width: 189px;
-  height: 33px;
+  width: 252px;
+  height: 44px;
   margin-top: 10px;
   margin-left: 20px;
   background-image: url(/images/tally_o.svg);
@@ -136,7 +136,7 @@ body{
   padding-right: 10px;
 }
 #thisfish_logo {
-  display: table-cell;
+  display: inline-block;
   width: 105px;
   height: 54px;
   margin: 0 10px;
@@ -218,6 +218,7 @@ body{
 
 
 #station-AM2-ADM > .panel, 
+#station-AM2-011 .panel, 
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
@@ -1295,6 +1296,7 @@ div#station-HS0-011 {
 .reprint_label .display_field label,
 #receiveshipment #form-14 .form_label label,
 #receiveshipment .display_row .display_field label,
+#receivingprintlabel .display_row .display_field label,
 #edit_shipment .display_field label {
   font-size: 12px;
 }
@@ -1305,6 +1307,7 @@ div#station-HS0-011 {
 
 .reprint_label .display_field label,
 #receiveshipment .display_row label,
+#receivingprintlabel .display_row label,
 #receiveshipment #form-14 .form_label label,
 #edit_shipment .display_field label {
   display: inline-block;
@@ -1313,6 +1316,7 @@ div#station-HS0-011 {
   box-sizing:border-box;
   text-align: right;
 }
+#receivingprintlabel .display_row .field_val,
 #receiveshipment .display_row .field_val {
   display: inline-block;
   box-sizing:border-box;
@@ -2533,4 +2537,7 @@ span.switch_option.active {
   left: 0;
   top: -35px;
   font-size: 14px;
+}
+#receivingprintlabel .fieldsetrepeat {
+  margin-top: 15px;
 }
