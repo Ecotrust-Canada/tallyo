@@ -200,6 +200,7 @@ angular.module('scanthisApp.packingController', [])
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
         $scope.current.box.ft_fa_code = $scope.current.harvester.ft_fa_code;
+        $scope.current.box.fleet = $scope.current.harvester.fleet;
       }
     };
     var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code, 'best_before_date': best_before};
