@@ -4,7 +4,7 @@
 
   <input ng-hide="the_val" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown"> 
-    <div ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: config.limit">
+    <div ng-repeat="value in thelist | orderBy: config.order | filter: search">
       <div ng-mousedown="select($event, value)">
         <b>{{value[config.searchfield]}}</b><span> - </span>
         <span ng-repeat="field in config.fields" ng-switch="field">
