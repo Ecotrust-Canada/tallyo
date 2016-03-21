@@ -190,11 +190,14 @@ angular.module('scanthisApp.packingController', [])
     /*adds final info to box*/
   $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before){
     var func = function(response){
-      $scope.current.box = response.data[0];
-      $scope.current.box.internal_lot_code = internal_lot_code;
-      $scope.current.box.harvester_code = harvester_code;
-      $scope.current.box.tf_code = tf_code;
-      $scope.current.box.ft_fa_code = ft_fa_code;
+      $scope.current[$scope.station_info.collectiontable] = response.data[0];
+      if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
+        $scope.current.box.internal_lot_code = internal_lot_code;
+        $scope.current.box.harvester_code = harvester_code;
+        $scope.current.box.tf_code = tf_code;
+        $scope.current.box.ft_fa_code = ft_fa_code;
+        $scope.current.box.fleet = $scope.current.harvester.fleet;
+      }
     };
     var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before};
 

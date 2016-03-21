@@ -8,11 +8,7 @@
             ng-change="changeFn({selected: selectedoption})">
       <option value="no selected">--select--</option>
       <option ng-repeat="item in itemlist | orderBy: cfg.order | limitTo: cfg.limit" value="{{item[cfg.arg]}}">
-      {{item[cfg.fields[0]] | separatestring}}
-      {{cfg.fields[1] === 'timestamp' ? (item[cfg.fields[1]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[1]]  | separatestring}}
-      {{cfg.fields[2] === 'timestamp' ? (item[cfg.fields[2]] |stringtodate|date:format:"MMM dd") : item[cfg.fields[2]]  | separatestring}}
-      {{item[cfg.fields[3]]  | separatestring}}
-      {{item[cfg.fields[4]]}}
+      {{ formatOption(cfg, item) }} 
       </option>
     </select>
     <div class="dd_arrow"><span></span></div>

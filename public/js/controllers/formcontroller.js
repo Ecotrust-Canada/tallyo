@@ -317,6 +317,30 @@ angular.module('scanthisApp.formController', [])
 
 })
 
+.controller('OptionCtrl', function($scope){
+    $scope.formatOption = function(cfg, item){
+      var option = '';
+      for (var i=0; i < cfg.fields.length; i++){
+        var field = cfg.fields[i];
+        var val = item[field];
+        if ( field === 'timestamp'){
+          if (val) {
+            option += moment(new Date(val.substring(0,19))).format('MMM D');
+          } else {
+            option += '';
+          }
+        } else {
+          option += val;
+        } 
+        if (i < cfg.fields.length - 1) {
+          option += ' '+(cfg.separator? cfg.separator : '-')+' ';
+        }
+      }  
+
+      return option;
+    }  
+})
+
 
 //when forms contain a dropdown with options from a given table
 .controller('AddtoTableCtrl', function($scope, $http, DatabaseServices, toastr) {

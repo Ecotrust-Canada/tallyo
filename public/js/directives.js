@@ -72,6 +72,7 @@ angular.module('scanthisApp.directives', [])
            cfg: '=', 
            selectedoption: '=', 
            changeFn: '&' },
+  controller: 'OptionCtrl',
   templateUrl: 'htmlpartials/dropdown.html' }; })
 
 .directive('persistdropdown', function() { return { 
