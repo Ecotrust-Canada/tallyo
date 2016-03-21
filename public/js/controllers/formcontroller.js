@@ -74,6 +74,10 @@ angular.module('scanthisApp.formController', [])
 
   //called when scale field on focus
   $scope.weigh = function(row){
+
+
+
+
     var scales = $scope.formarray.filter(function(el){
       return el.scale === 'on';
     });
@@ -81,6 +85,8 @@ angular.module('scanthisApp.formController', [])
       $scope.form[el.fieldname] = $scope.scale[el.fieldname];
       el.scale = "lock";
     });
+
+    $scope.form[row.fieldname] = null;
     row.scale = 'on';
   };
 
@@ -115,12 +121,18 @@ angular.module('scanthisApp.formController', [])
         var neg_error = $scope.theform[row.fieldname].$error.negative;
         if (req_error === true || neg_error === true){
           form_error = true;
-          
+          toastr.error('errors in form');
+        }
+      }
+      if (row.scale){
+        if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
+          toastr.error('set weight');
+          form_error = true;
         }
       }
     }
     if (form_error === true){
-      toastr.error('errors in form');
+      
       form = null;
     }
     if (form){

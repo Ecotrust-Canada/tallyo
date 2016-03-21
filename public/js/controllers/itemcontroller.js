@@ -20,6 +20,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.startPolling = function(fieldName) {
     //stop polling scale
+
     $scope.stopPolling();
     // if toggle_state command is sent flip scale state and start polling
     if (fieldName === 'toggle_state') {
@@ -104,7 +105,7 @@ angular.module('scanthisApp.itemController', [])
         var data = dataCombine(thedata, $scope.onLabel.qr);
         var labels = ArrayFromJson(thedata, $scope.onLabel.print);
         console.log(data, labels);
-        $scope.printLabel(data, labels);
+        //$scope.printLabel(data, labels);
       }
       $scope.entry.scan[itemid] = (response.data[0][itemid] || response.data[itemid]);
       $scope.DatabaseScan();     

@@ -42,23 +42,51 @@ angular.module('scanthisApp.createlotController', [])
 //fills in dropdown menu with lots current as per lotlocations table
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
 
-  $scope.currentlots = function(){
+  /*$scope.currentlots = function(){
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
     var func = function(response){
       $scope.list.harvester_lot = response.data;
 
     };
     DatabaseServices.GetEntries('expandedlotlocations', func, query);
+  };*/
+
+
+  $scope.currentlots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+      };
+      DatabaseServices.GetEntries('expandedlotlocations', func, query);      
+    }, function errorCallback(response) {
+    });
   };
 
 
   $scope.completedlots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
+      var func = function(response){
+        $scope.list.old_harvester_lot = response.data;
+      };
+      DatabaseServices.GetEntries('expandedlotlocations', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
+
+
+  /*$scope.completedlots = function(){
     var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
     var func = function(response){
       $scope.list.old_harvester_lot = response.data;
     };
     DatabaseServices.GetEntries('expandedlotlocations', func, query);
-  };
+  };*/
 
   $scope.$watch('current.lotlistchange', function() {
     if ($scope.station_info !== undefined && $scope.current.lotlistchange !== undefined){
