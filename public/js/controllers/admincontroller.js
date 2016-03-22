@@ -183,16 +183,26 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getTheData = function(lot_number, stn, lot_code){
-    var table;
+
+
     if (stn.csv === 'scan'){
-      table = 'scan_detail';
+      $scope.getCSV(lot_number, stn, lot_code, 'scan_detail');
+
     }
     else if (stn.csv === 'box_scan'){
-      table = 'box_detail';
+      $scope.getCSV(lot_number, stn, lot_code, 'box_detail', 'detail');
+      $scope.getCSV(lot_number, stn, lot_code, 'box_sum', 'summary');
     }
     else if (stn.csv === 'loin_scan'){
-      table = 'loin_detail';
+      $scope.getCSV(lot_number, stn, lot_code, 'loin_detail');
     }
+
+  };
+
+
+  $scope.getCSV = function(lot_number, stn, lot_code, table, label){
+    console.log(label);
+    
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
       $scope.list.detail = response.data;
@@ -212,7 +222,12 @@ angular.module('scanthisApp.AdminController', [])
         var new_array = JSON.parse(JSON.stringify(the_array));
         full_array.push(new_array);
       }
-      var name = lot_code + '_' + stn.name + '.csv';
+      var name = lot_code + '_' + stn.name;
+      if (label){
+        name += '_' + label;
+      }
+      name += '.csv';
+      console.log(name);
       alasql("SELECT * INTO CSV( '"+name+"', {separator:','}) FROM ?",[full_array]);
     };
     DatabaseServices.GetEntries(table, func, query);

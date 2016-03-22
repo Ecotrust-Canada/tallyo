@@ -142,7 +142,7 @@ var ArrayFromJson = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
     if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1'){
-      json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(2);
+      json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
     }
     newarray.push(json[stringarray[i]]);
   }
@@ -165,7 +165,7 @@ var arrayObjectIndexOf = function(myArray, searchTerm, property) {
 
 // + character disapears from url, this fixes that
 var cleanQueryString = function(querystring){
-  var queryStringNew = querystring.replace("+", "&#x2B;");
+  var queryStringNew = querystring.replace("+", "%2B");
   return queryStringNew;
 };
 
