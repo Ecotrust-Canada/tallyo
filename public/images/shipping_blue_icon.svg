@@ -1,20 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="46px" height="36px" viewBox="0 0 46 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>shipping_blue_icon</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="shipping_blue_icon" sketch:type="MSLayerGroup" transform="translate(0.000000, 3.000000)">
-            <g id="Group-9" transform="translate(15.928571, 14.000000) scale(-1, 1) translate(-15.928571, -14.000000) translate(0.428571, 0.000000)" sketch:type="MSShapeGroup">
-                <g id="Group-8" stroke="#74A2B0" stroke-width="2" fill="#EAEBEB">
-                    <path d="M30.787172,6.1574344 L30.787172,18.91212 L15.393586,17.152853 L1.13686838e-13,18.91212 L1.13686838e-13,6.1574344 L15.393586,5.31264606e-14 C15.3935858,2.17782191e-06 30.787172,6.1574344 30.787172,6.1574344 Z" id="Rectangle-198"></path>
-                    <path d="M15.393586,27.9008746 L1.13686838e-13,21.3036235 L1.13686838e-13,6.34985423 L15.393586,12.9471054 L30.787172,6.34985423 L30.787172,21.3036235 L15.393586,27.9008746 Z" id="Rectangle-198"></path>
-                </g>
-                <path d="M15.4897959,14.4314869 L15.4897959,25.9766764" id="Path-36" stroke="#74A2B0" stroke-width="2.5"></path>
-                <path d="M7.40623719,5.07098584 L20.8756249,10.8435806 L24.0524781,9.62099125 L10.5830904,3.8483965 L7.40623719,5.07098584 Z" id="Path-37" fill="#74A2B0"></path>
-            </g>
-            <path d="M35.4693878,10.0675039 L29.6326531,10.0675039 L29.6326531,19.5651491 L35.4693878,19.5651491 L35.4693878,26.2135008 L43.5510204,14.8163265 L35.4693878,3.41915228 L35.4693878,10.0675039 Z" id="Rectangle-100-Copy" stroke="#EAEBEB" stroke-width="2" fill="#74A2B0" sketch:type="MSShapeGroup"></path>
-        </g>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="32px"
+   viewBox="0 0 48 32"
+   version="1.1"
+   id="svg4261"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Icon_shipping_blue.svg">
+  <metadata
+     id="metadata4275">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Icon_shipping</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1435"
+     inkscape:window-height="480"
+     id="namedview4273"
+     showgrid="false"
+     inkscape:zoom="6.1875"
+     inkscape:cx="4.7676768"
+     inkscape:cy="16"
+     inkscape:window-x="147"
+     inkscape:window-y="173"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4261" />
+  <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4263">Icon_shipping</title>
+  <desc
+     id="desc4265">Created with Sketch.</desc>
+  <defs
+     id="defs4267" />
+  <g
+     id="Receiving"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="Sony-X-Z3-Tab-Comp-Vertical-(2x)-Copy-3"
+       transform="translate(-65,-490)"
+       style="fill:#74a2b0">
+      <g
+         id="Station-/-nav">
+        <path
+           d="m 103.7855,501.2039 -6.5,0 0,10.578 6.5,0 0,7.403 9,-12.692 -9,-12.692 0,7.403 z m -21.6423,-11.2041 -17.143,6.857 0,0.214 0,1.324 0,15.33 17.143,7.347 17.01,-7.29 -1.867,0 -2,0 0,-0.737 -12.001,5.143 0,-11.866 12.001,-5.142 0,-1.976 2,0 1.999,0 0,-1.175 0,-0.958 0,-0.214 -17.142,-6.857 z m -14.542,8.186 14.542,-5.816 5.083,2.033 -14.226,6.097 -5.399,-2.314 z m 8.756,3.753 14.342,-6.147 5.985,2.394 -14.541,6.233 -5.786,-2.48 z m -9.158,10.335 0,-11.866 13.587,5.823 0,11.865 -13.587,-5.822 z"
+           id="Icon_shipping"
+           inkscape:connector-curvature="0" />
+      </g>
     </g>
+  </g>
 </svg>
