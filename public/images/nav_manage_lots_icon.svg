@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="33px" height="22px" viewBox="0 0 33 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>nav_manage_lots_icon</title>
+<svg width="33px" height="22px" viewBox="0 0 33 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon_manageLots</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="nav_manage_lots_icon" sketch:type="MSLayerGroup" fill="#FD6A0E">
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="0" y="0" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="0" y="6" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="0" y="12" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="0" y="18" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="7" y="18" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="14" y="18" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="21" y="18" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="28" y="18" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="7" y="12" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="14" y="12" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="21" y="12" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="28" y="12" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="7" y="6" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="14" y="6" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="21" y="6" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="28" y="6" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="7" y="0" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="14" y="0" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="21" y="0" width="5" height="4"></rect>
-            <rect id="Rectangle-39" sketch:type="MSShapeGroup" x="28" y="0" width="5" height="4"></rect>
+    <g id="Receiving" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sony-X-Z3-Tab-Comp-Vertical-(2x)-Copy-3" transform="translate(-70.000000, -165.000000)" fill="#FD6A0E">
+            <g id="Station-/-nav">
+                <path d="M70,165 L75,165 L75,169 L70,169 L70,165 Z M70,171 L75,171 L75,175 L70,175 L70,171 Z M70,177 L75,177 L75,181 L70,181 L70,177 Z M70,183 L75,183 L75,187 L70,187 L70,183 Z M77,183 L82,183 L82,187 L77,187 L77,183 Z M84,183 L89,183 L89,187 L84,187 L84,183 Z M91,183 L96,183 L96,187 L91,187 L91,183 Z M98,183 L103,183 L103,187 L98,187 L98,183 Z M77,177 L82,177 L82,181 L77,181 L77,177 Z M84,177 L89,177 L89,181 L84,181 L84,177 Z M91,177 L96,177 L96,181 L91,181 L91,177 Z M98,177 L103,177 L103,181 L98,181 L98,177 Z M77,171 L82,171 L82,175 L77,175 L77,171 Z M84,171 L89,171 L89,175 L84,175 L84,171 Z M91,171 L96,171 L96,175 L91,175 L91,171 Z M98,171 L103,171 L103,175 L98,175 L98,171 Z M77,165 L82,165 L82,169 L77,169 L77,165 Z M84,165 L89,165 L89,169 L84,169 L84,165 Z M91,165 L96,165 L96,169 L91,169 L91,165 Z M98,165 L103,165 L103,169 L98,169 L98,165 Z" id="Icon_manageLots"></path>
+            </g>
         </g>
     </g>
 </svg>

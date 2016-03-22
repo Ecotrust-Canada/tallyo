@@ -600,8 +600,10 @@ a:hover {
 .add-field-option {
   display: inline-block;
   background-image: url(/images/add_option_icon.svg);
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
+  background-repeat:no-repeat;
+  background-position: center center;
 }
 
 .short{
@@ -727,8 +729,7 @@ div[ng-view] {
   background-repeat: no-repeat;
   background-position: 8px center;
 }
-
-#station-title-HS0-002 {
+centerstation-title-HS0-002 {
   background-image: url(/images/trimming_icon.png);
   background-repeat: no-repeat;
   background-position: 10px center;
@@ -2240,6 +2241,10 @@ nav span.icon {
   background-position: center center;
   background-repeat: no-repeat;
   vertical-align: middle;
+}
+
+nav span.icon.inventory {
+  background-image: url(/images/nav_inventory_icon.svg);
 }
 
 nav span.icon.manage_sources {

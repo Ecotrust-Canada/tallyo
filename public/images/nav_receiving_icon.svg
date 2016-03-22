@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="43px" height="31px" viewBox="0 0 43 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>nav_receiving_icon</title>
+<svg width="43px" height="31px" viewBox="0 0 43 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon_receiving</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="nav_receiving_icon" sketch:type="MSLayerGroup" transform="translate(0.000000, 1.000000)">
-            <rect id="Rectangle-100-Copy" fill="#FD6A0E" sketch:type="MSShapeGroup" x="0" y="10" width="9" height="10"></rect>
-            <path d="M6.5,3 L15.5,15 L6.5,27 L6.5,3 L6.5,3 Z" id="Rectangle-100-Copy" fill="#FD6A0E" sketch:type="MSShapeGroup"></path>
-            <g id="Group" transform="translate(18.000000, 0.000000)" sketch:type="MSShapeGroup">
-                <rect id="Rectangle-99" fill="#FD6A0E" x="10" y="15" width="4" height="7"></rect>
-                <g id="Rectangle-102-+-Rectangle-100-+-Rectangle-102" transform="translate(0.000000, 25.000000)" fill="#FD6A0E">
-                    <rect id="Rectangle-102" x="2" y="1" width="3" height="4"></rect>
-                    <rect id="Rectangle-100" x="0" y="0" width="24" height="2.5"></rect>
-                    <rect id="Rectangle-102" x="19" y="1" width="3" height="4"></rect>
-                </g>
-                <path d="M5.89115466,14.8640537 L18.0719565,14.8640537 L22.9516905,4.81735523 C22.9516905,4.81735523 19.5637138,0 12.1750309,0 C4.78634799,0 1,4.77147334 1,4.77147334 L5.89115466,14.8640537 Z" id="Path-1" stroke="#FD6A0E" stroke-width="2"></path>
-                <path d="M10.6516113,12.0000001 L14.5416124,12 L16.309082,3.79150391 L15.4663086,3.47192383 L10.6516113,12.0000001 Z" id="Path-2" fill="#FD6A0E"></path>
+    <g id="Receiving" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sony-X-Z3-Tab-Comp-Vertical-(2x)-Copy-3" transform="translate(-65.000000, -10.000000)" fill="#FD6A0E">
+            <g id="Station-/-nav">
+                <path d="M71.5,21 L65,21 L65,31 L71.5,31 L71.5,38 L80.5,26 L71.5,14 L71.5,21 Z M105,38.5 L107,38.5 L107,36 L83,36 L83,38.5 L85,38.5 L85,41 L88,41 L88,38.5 L102,38.5 L102,41 L105,41 L105,38.5 Z M97,26.8640537 L97,33 L93,33 L93,26.8640537 L88.8911547,26.8640537 L88.2645386,26.8640537 L87.9912629,26.3001671 L83.1001083,16.2075867 L82.8260599,15.6421056 L83.2166683,15.1498694 C83.754455,14.4721624 84.7742583,13.5024208 86.278999,12.5426389 C88.7703529,10.953557 91.7419284,10 95.1750309,10 C98.6166322,10 101.523469,10.9676777 103.896537,12.581826 C105.333282,13.5590923 106.281392,14.5478269 106.769658,15.2420906 L107.108679,15.7241434 L106.851202,16.2542526 L101.971468,26.300951 L101.697966,26.8640537 L101.071956,26.8640537 L97,26.8640537 Z M85.1997168,15.9417847 C85.1997168,15.9417847 85.3250147,15.8182545 85.3961612,15.7506006 C85.9393414,15.2340848 86.5927472,14.7147224 87.3545197,14.2288344 C89.5385967,12.8357455 92.1430358,12 95.1750309,12 C98.1985271,12 100.718316,12.8388305 102.771697,14.2355293 C103.486226,14.7215481 104.090294,15.2407684 104.585092,15.7567668 C104.873395,16.0574233 104.754809,15.9927028 104.754809,15.9927028 L100.448608,24.8640537 L89.5539551,24.8640537 L85.1997168,15.9417847 Z M93.6516113,23.0000001 L97.5416124,23 L99.309082,14.7915039 L98.4663086,14.4719238 L93.6516113,23.0000001 Z" id="Icon_receiving"></path>
             </g>
         </g>
     </g>

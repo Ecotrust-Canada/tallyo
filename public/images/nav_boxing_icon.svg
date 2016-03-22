@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="49px" height="32px" viewBox="0 0 49 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>nav_boxing_icon</title>
+<svg width="49px" height="32px" viewBox="0 0 49 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon_boxing</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="nav_boxing_icon" sketch:type="MSLayerGroup">
-            <g id="Group-8" transform="translate(25.000000, 16.000000) scale(-1, 1) translate(-25.000000, -16.000000) translate(1.000000, 0.000000)" stroke="#FD6A0E" stroke-width="2.2" fill="#03223C" sketch:type="MSShapeGroup">
-                <path d="M47.9743652,14.5124512 L30.6989746,7.19618443 L24.326416,0.396728516 L41.1276855,6.86683873 L47.9743652,14.5124512 Z" id="Rectangle-198-Copy"></path>
-                <path d="M41.2857143,6.85714286 L41.2857143,21.0612245 L24.1428571,19.1020408 L7,21.0612245 L7,6.85714286 L24.1428571,5.91635584e-14 C24.1428569,2.42530168e-06 41.2857143,6.85714286 41.2857143,6.85714286 Z" id="Rectangle-198"></path>
-                <path d="M24.1428571,31.0714286 L7,23.7244898 L7,7.07142857 L24.1428571,14.4183673 L41.2857143,7.07142857 L41.2857143,23.7244898 L24.1428571,31.0714286 Z" id="Rectangle-198"></path>
-                <path d="M18.7729492,24.3764648 L0.02734375,16.2744141 L6.86572266,6.99916295 L25.6113281,15.1012137 L18.7729492,24.3764648 Z" id="Rectangle-198"></path>
+    <g id="Receiving" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sony-X-Z3-Tab-Comp-Vertical-(2x)-Copy-3" transform="translate(-63.000000, -381.000000)" fill="#FD6A0E">
+            <g id="Station-/-nav">
+                <path d="M87.318,380.9994 L70.175,387.8564 L63,395.0794 L63.417,395.5444 L70.175,393.1624 L70.175,404.7244 L87.318,412.0714 L104.46,404.7244 L104.46,400.2874 L111.434,397.2744 L104.46,387.8564 L87.318,380.9994 Z M86.161,395.0724 L86.161,383.4884 L87.234,382.9994 L88.311,383.4884 L88.311,394.9994 L87.221,395.5764 L86.161,395.0724 Z M88.952,396.9384 L103.928,390.4654 L108.33,396.4364 L93.353,402.9094 L88.952,396.9384 Z M72.175,403.4044 L72.175,391.1034 L86.111,397.0774 L86.111,409.3784 L72.175,403.4044 Z M88.31,399.4384 L92.687,405.3754 L102.461,401.1524 L102.461,403.4044 L88.31,409.4704 L88.31,399.4384 Z" id="Icon_boxing"></path>
             </g>
-            <path d="M7.87280273,6.9753418 L0.539550781,14.0795898 L0.956054688,14.5449219 L8.57641602,11.8596191 L7.87280273,6.9753418 Z" id="Path-183" fill="#FD6A0E" sketch:type="MSShapeGroup"></path>
-            <path d="M9.18237305,8.1027832 L24.8120117,1.27636719 L40.7424316,8.05200195 L24.828125,15.7416992 L9.18237305,8.1027832 Z" id="Path-181" fill="#FD6A0E" sketch:type="MSShapeGroup"></path>
-            <path d="M23.6999969,14.0733643 L23.7149186,2.68920898 L24.7739366,2 L25.899997,2.60986328 L25.8499779,14 L24.7600658,14.5773926 L23.6999969,14.0733643 Z" id="Rectangle-119" fill="#03223C" sketch:type="MSShapeGroup"></path>
-            <path d="M24.75,16.0714286 L24.75,28.9285714" id="Path-36" stroke="#FD6A0E" stroke-width="2.5" sketch:type="MSShapeGroup" transform="translate(24.750000, 22.500000) scale(-1, 1) translate(-24.750000, -22.500000) "></path>
         </g>
     </g>
 </svg>
