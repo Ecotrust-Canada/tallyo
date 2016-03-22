@@ -116,17 +116,21 @@ angular.module('scanthisApp.formController', [])
     var form_error = false;
     for (var i=0;i<$scope.formarray.length;i++){
       var row = $scope.formarray[i];
+      if (row.required && !$scope.form[row.fieldname]){
+        form_error = true;
+        toastr.error('select ' + row.title);
+      }
       if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
         var req_error = $scope.theform[row.fieldname].$error.required;
         var neg_error = $scope.theform[row.fieldname].$error.negative;
-        if (req_error === true || neg_error === true){
+        if (neg_error === true){
           form_error = true;
           toastr.error('errors in form');
         }
       }
       if (row.scale){
         if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
-          toastr.error('set weight');
+          //toastr.error('set weight');
           form_error = true;
         }
       }

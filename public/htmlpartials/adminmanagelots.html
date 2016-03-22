@@ -108,8 +108,7 @@
               </span>
             </button>
             <button class="bottomleft btn-light" 
-                    ng-if="lot[stn.code].summary" ng-csv="getData(lot.lot_number, stn.code)" 
-                    filename="{{lot.internal_lot_code || lot.lot_number}}_{{stn.name}}.csv" csv-label="true">CSV</button>
+                    ng-if="lot[stn.code].summary" ng-click="getTheData(lot.lot_number, stn, lot.internal_lot_code)" >CSV</button>
           </div>
         </td>
       </tr>
