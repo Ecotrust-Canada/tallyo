@@ -39,7 +39,7 @@ angular.module('scanthisApp.AdminController', [])
 
 
 //Lot summary page - loads all the data, has functions for exporting to csv and completing lot
-.controller('LotCtrl', function($scope, $http, DatabaseServices) {
+.controller('LotCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.limit = 10;
 
@@ -182,88 +182,43 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-  $scope.GetScan = function(){
-    var query = '';
+  $scope.getTheData = function(lot_number, stn, lot_code){
+    var table;
+    if (stn.csv === 'scan'){
+      table = 'scan_detail';
+    }
+    else if (stn.csv === 'box_scan'){
+      table = 'box_detail';
+    }
+    else if (stn.csv === 'loin_scan'){
+      table = 'loin_detail';
+    }
+    var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
-      $scope.list.scan = response.data;
-      $scope.list.scan.forEach(function(el){
-        delete el.weight_1;
-        delete el.weight_2;
-        delete el.pieces;
-        delete el.serial_id;
-      });
-    };
-    DatabaseServices.GetEntries('scan', func, query);
-  };
-  $scope.GetScan();
-
-  $scope.GetBoxScan = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.box_scan = response.data;
-      $scope.list.box_scan.forEach(function(el){
-        delete el.shipping_unit_number;
-        delete el.harvester_code;
-        delete el.product_code;
-        delete el.box_number;
-      });
-    };
-    DatabaseServices.GetEntries('box_scan', func, query);
-  };
-  $scope.GetBoxScan();
-
-  $scope.GetLoinScan = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.loin_scan = response.data;
-    };
-    DatabaseServices.GetEntries('loin_scan', func, query);
-  };
-  $scope.GetLoinScan();
-
-  $scope.getData = function(lot_number, station){
-    var csvarray = [];
-    var stations = stationlist;
-    var isStation = function(value){
-      return value.code === station;
-    };
-    var filtered = $scope.sumStations.filter(isStation);
-    var table = $scope.list[filtered[0].csv];
-    var cellFilter = function(value){
-      return value.lot_number === lot_number && value.station_code === station;
-    };
-
-    var filteredlots = $scope.list.harvester_lot.filter(function(el){
-      return el.lot_number === lot_number;
-    });
-    var lot = filteredlots[0];
-
-
-    var filteredharvesters = $scope.list.harvester.filter(function(el){
-      return el.harvester_code === lot.harvester_code;
-    });
-    var harvester = filteredharvesters[0];
-
-    var cellData = table.filter(cellFilter);
-    cellData.forEach(function(el){
-      delete el.lot_number;
-      delete el.station_code;
-      el.fleet = lot.fleet;
-      el.supplier = lot.supplier;
-      el.supplier_group = lot.supplier_group;
-      el.ft_fa_code = harvester.ft_fa_code;
-      if (el.weight){
-        el.weight = el.weight.toFixed(2);
+      $scope.list.detail = response.data;
+      var full_array = [];
+      var title_array = propertyNames($scope.list.detail[0]);
+      title_array.shift();
+      title_array.shift();
+      full_array.push(title_array);
+      for (var i=0;i<$scope.list.detail.length;i++){
+        var the_array = [];
+        var an_array = fjs.toArray($scope.list.detail[i]);
+        an_array.forEach(function(el){
+          the_array.push(el[1]);
+        });
+        the_array.shift();
+        the_array.shift();
+        var new_array = JSON.parse(JSON.stringify(the_array));
+        full_array.push(new_array);
       }
-      if (el.weight_1){
-        el.weight = parseFloat(el.weight_1).toFixed(2);
-        delete el.weight_1;
-      }
-    });
-
-    cleanJsonArray(cellData);    
-    return cellData;
+      var name = lot_code + '_' + stn.name + '.csv';
+      alasql("SELECT * INTO CSV( '"+name+"', {separator:','}) FROM ?",[full_array]);
+    };
+    DatabaseServices.GetEntries(table, func, query);
   };
+
+  
 
   $scope.cssWarn = function(lot, stn) {
     if ( lot[stn.code] && lot[stn.code].summary) { 
