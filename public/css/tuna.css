@@ -1279,7 +1279,7 @@ div#station-HS0-011 {
 }
 
 .display_field label, #prev_station_totals label,
-#receiveshipment #form-14 .form_label label,
+.fieldsetrepeat label, #receiveshipment #form-14 .form_label label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
   color: #777777;
   text-transform: uppercase;
@@ -1347,6 +1347,7 @@ table#shipments_list td:last-child {
 }
 
 .reprint_label input,
+.fieldsetrepeat input[type=text],
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
@@ -1431,7 +1432,7 @@ table#shipments_list td:last-child {
 }
 
 
-.scanform {
+.scanform, .fieldsetrepeat {
   border-top: 1px solid #cccccc;
 }
 
@@ -2542,4 +2543,38 @@ span.switch_option.active {
 }
 #receivingprintlabel .fieldsetrepeat {
   margin-top: 15px;
+  padding: 15px 6px 0 6px;
+}
+#receivingprintlabel .fieldsetrepeat .repeatrow {
+  margin: 0;
+  padding: 0 0 10px 0;
+}
+.fieldsetrepeat .btn-orange {
+  padding: 6px 20px;
+  right: 0;
+}
+.fieldsetrepeat .btn-light {
+  left: 0;
+}
+.fieldsetrepeat label {
+  font-size: 12px;
+  display: inline-block;
+  padding-right: 4px;
+}
+.fieldsetrepeat .styled-dropdown {
+  display: inline-block;
+  margin: 0 6px 0 0;
+  box-sizing: border-box;
+}
+.fieldsetrepeat .styled-dropdown.dd-grade {
+  width: 80px;
+}
+.fieldsetrepeat .styled-dropdown.dd-weight {
+  width: 70px;
+}
+.fieldsetrepeat .styled-dropdown.dd-size {
+  width: 100px;
+}
+.fieldsetrepeat input[type=text] {
+  width: 50px;
 }
