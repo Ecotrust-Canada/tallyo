@@ -130,7 +130,7 @@
     
     <div class="form_buttons">
       <div class="pictogram_btns">
-        <span ng-click="Clear()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
+        <span ng-click="Reset()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
         <span ng-if="config.startpolling" ng-show="poll_scale" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight">Manual Input</span>
         <span ng-if="config.startpolling" ng-hide="poll_scale" 
