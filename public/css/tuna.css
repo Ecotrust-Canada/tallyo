@@ -1678,6 +1678,9 @@ table#shipments_list td:last-child {
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
+  width: 370px;
+}
+#form-13 .field {
   width: 320px;
 }
 #station-AM2-004 .weighstation_main .field {
@@ -1750,6 +1753,10 @@ table#shipments_list td:last-child {
   /*overflow: hidden;*/
   position: relative;
 }
+#station-HS0-001 .select_object .form_buttons {
+  margin-top: 10px;
+}
+
 .dropdown-container .dropdown,
 .dropdown-container input,
 .styled-dropdown select {
@@ -2016,6 +2023,7 @@ input[name^=weight]::after {
   top: -12px;
 }
 
+.scale-weight-set.lock,
 .toggle-group-container {
   display: inline-block;
   height: 50px;
@@ -2232,6 +2240,7 @@ input[name^=weight]::after {
     text-shadow: 1px 2px 2px rgba(0,0,0,0.20);
 }
 
+.scale-weight-set.on, 
 .btn-blue {
     display: inline-block;
     background: #0d82ad; 
