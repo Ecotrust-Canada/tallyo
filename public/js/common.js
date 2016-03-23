@@ -165,7 +165,7 @@ var arrayObjectIndexOf = function(myArray, searchTerm, property) {
 
 // + character disapears from url, this fixes that
 var cleanQueryString = function(querystring){
-  var queryStringNew = querystring.replace("+", "%2B");
+  var queryStringNew = querystring.replace(/\+/g, "%2B");
   return queryStringNew;
 };
 
