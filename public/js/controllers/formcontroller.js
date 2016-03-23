@@ -167,6 +167,13 @@ angular.module('scanthisApp.formController', [])
         $scope.hideform = true;
       }
     }
+    if ($scope.config.hidden){
+      $scope.config.hidden.forEach(function(entry){
+        form[entry.fieldname] = entry.val;
+      });
+    }
+    
+
     return form;
 
   };
@@ -353,7 +360,7 @@ angular.module('scanthisApp.formController', [])
           option += val;
         } 
         if (i < cfg.fields.length - 1) {
-          option += ' '+(cfg.separator? cfg.separator : '-')+' ';
+          option += ' '+(cfg.delimeter? cfg.delimeter : '-')+' ';
         }
       }  
 

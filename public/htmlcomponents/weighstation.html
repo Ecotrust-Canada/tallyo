@@ -28,16 +28,17 @@
                poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
 
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
-               submit-fn="Submit(form)"></entryform>
+                formdisabled="formdisabled" submit-fn="Submit(form)"></entryform>
 
   </div>
 
-  <div ng-if="formedit">
-    <hr>
+  <div ng-if="formedit" class="addform">
     <div ng-controller="AddtoTableCtrl">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
-    <hr>
+    <!--<div ng-controller="AddtoTableCtrl">
+      <entryform config="addform2" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
+    </div>-->
   </div>
 
 </div>
@@ -45,7 +46,9 @@
 <div class="panel grey not" ng-show="current.collectionid">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemoveScanCtrl">
+
       <bufferedscrolllist itemlist="list.included"  limit="limit" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
+
     </div>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">

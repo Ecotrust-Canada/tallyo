@@ -18,9 +18,11 @@
       <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
-    <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})">{{config.button2}}</td>
-    <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})">{{config.button}}</td>
-    <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
+    <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
+    <td ng-if="config.button  && !config.arg2" ng-click="updateFn({str: item[config.arg]})" 
+        class="btn_action">>{{config.button}}</td>
+    <td ng-if="config.button && config.arg2" 
+        ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})" class="btn_action">>{{config.button}}</td>
 
   </tr>
   <tr ng-if="istotal === true">
@@ -38,5 +40,6 @@
   </tr>
 </table>
 
-<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" filename="export.csv">Export</button>
+<button ng-if="config.csv" type="button" ng-csv="getArray()" csv-header="getHeader()" 
+        filename="export.csv" class="btn-blue">Export</button>
 

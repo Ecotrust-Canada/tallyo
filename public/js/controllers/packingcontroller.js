@@ -96,7 +96,6 @@ angular.module('scanthisApp.packingController', [])
     } else {
       $scope.printLabel(data, labels);
     }
-
   };
 
 
@@ -175,27 +174,21 @@ angular.module('scanthisApp.packingController', [])
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;
+
+      var tf_code = response.data[0].tf_code;
+      var ft_fa_code = response.data[0].ft_fa_code;
       var best_before = moment(response.data[0].timestamp).add(2, 'years').format();
-      
-      $scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
+
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before);
+
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
-  $scope.GetHarvester = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
-    var func = function(response){
-      if (response.data.length > 0){
-        $scope.current.harvester = response.data[0];
-      }
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
-    };
-    var query = '?harvester_code=eq.' + harvester_code;
-    DatabaseServices.GetEntryNoAlert('harvester', func, query);
-  };
 
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before){
     var func = function(response){
       $scope.current[$scope.station_info.collectiontable] = response.data[0];
       if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
@@ -206,12 +199,10 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.fleet = $scope.current.harvester.fleet;
       }
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code, 'best_before_date': best_before};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before};
+
     if (lot_num !== 'none'){
       patch.lot_number = lot_num;
-    }
-    if (harvester_code !== 'none'){
-      patch.harvester_code = harvester_code;
     }
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
@@ -310,6 +301,76 @@ angular.module('scanthisApp.packingController', [])
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
+
+})
+
+
+
+.controller('ThisfishAddCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+  $scope.show_element = '';
+
+  $scope.ListTFCodes = function(){
+    var query = '?lot_number=is.null';
+    var func = function(response){
+      $scope.list.tf_codes = response.data;
+    };
+    DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.ListTFCodes();
+
+  $scope.selectedoption = 'no selected';
+
+  $scope.the_config = 
+  { 
+    limit: "10",
+    order: "-timestamp", 
+    arg: "codes", 
+    fields: ["label", "codes"]
+  };
+
+  $scope.SetCodes = function(codes){
+    $scope.current.codes = JSON.parse(codes);
+    $scope.current.codes.forEach(
+      function(el){
+        $scope.PatchLot($scope.current.collectionid, el);
+      }
+    );
+  };
+
+  $scope.PatchLot = function(lot_number, tf_code){
+    var query = '?tf_code=eq.' + tf_code;
+    var patch = {'lot_number': lot_number};
+    var func = function(response){
+      $scope.ListTFCodes();
+    };
+    DatabaseServices.PatchEntry('thisfish', patch, query, func);
+  };
+
+  $scope.RemoveCodes = function(codes){
+    codes.forEach(
+      function(el){
+        $scope.PatchLot(null, el);
+      }
+    );
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
+      $scope.current.codes = null;
+      $scope.show_element = '';
+      var query = '?lot_number=eq.' + $scope.current.collectionid;
+      var func = function(response){
+        if (response.data.length>0){
+          $scope.current.codes = response.data[0].codes;
+          $scope.current.products = response.data[0].products;
+        }
+      };
+      DatabaseServices.GetEntries('group_codes', func, query);
+    }
+  });
 
 })
 

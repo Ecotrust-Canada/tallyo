@@ -115,12 +115,14 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.DisplayCollectionInfo = function(){
     var func = function(response){
+
       if (response.data.length > 0){
         $scope.current[$scope.station_info.collectiontable] = response.data[0];
         $scope.current.itemchange = !$scope.current.itemchange;
         if ($scope.station_info.collectiontable === 'harvester_lot'){
           $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
         }
+
       }
     };
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
@@ -204,11 +206,18 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollectionItems = function(){
+    var table;
+    if ($scope.station_info.itemtable === 'box'){
+      table = 'box_product';
+    }
+    else{
+      table = $scope.station_info.itemtable;
+    }
     var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
     var func = function(response){
       $scope.list.included = response.data;
     };
-    DatabaseServices.GetEntries($scope.station_info.itemtable, func, query);
+    DatabaseServices.GetEntries(table, func, query);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -302,6 +311,117 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
+
+.controller('ThisfishLabelCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+  $scope.tableconfig = 
+  { id: 2,    
+    cssclass: "fill", 
+    headers: ["Product Type", "Thisfish Code"], 
+    fields: ["product,product_type", "tf_code"], 
+  };
+
+  $scope.dropdownconfig = 
+  { id: 0, 
+    title: "Search Labels", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "label", 
+    searchfield: "label", 
+    delimeter: '/',
+    fields: ["label", "codes"]
+  };
+
+
+
+  $scope.ListProducts = function(){
+    var query = '?traceable=eq.true';
+    var func = function(response){
+      $scope.list.product = response.data;
+      $scope.availableProducts = response.data;
+    };
+    DatabaseServices.GetEntries('product', func, query);
+  };
+
+  $scope.ListProducts();
+
+
+  $scope.ListLabels = function(){
+    var query = '';
+    var func = function(response){
+      $scope.list.label = response.data;
+    };
+    DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.ListLabels();
+
+  $scope.selectedProducts = [];
+
+
+  $scope.GetCodes = function(label){
+    var query = "?product_code=is.null&order=tf_code";
+    var func = function(response){
+      var tf_list = response.data;
+      var last = false;
+      $scope.selectedProducts.forEach(
+        function(el, index){
+          if (index === $scope.selectedProducts.length-1){
+            last = true;
+          }
+          var nextcode = tf_list[index].tf_code;
+          $scope.assignCode(el.product_code, nextcode, label, last);
+        }
+      );
+    };
+    DatabaseServices.GetEntries('thisfish', func, query);
+  };
+
+  $scope.assignCode = function(product_code, tf_code, label, last){
+    var today = moment(new Date()).format();
+    var query = '?tf_code=eq.' + tf_code;
+    var func = function(response){
+      if (last === true){
+        $scope.ShowCodes(label);
+      }      
+    };
+    var patch = {'product_code': product_code, 'label':label, 'timestamp': today};
+    DatabaseServices.PatchEntry('thisfish',patch, query, func);
+  };
+
+  $scope.ShowCodes = function(label){
+    console.log('function called');
+    var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
+    var func = function(response){
+      $scope.list.codes = response.data;
+      $scope.ListLabels();
+      $scope.moveAll($scope.selectedProducts,$scope.availableProducts);
+      $scope.label = null;
+    };
+    DatabaseServices.GetEntries('thisfish', func, query);
+  };
+
+  $scope.moveItem = function(item, from, to) {
+
+      var idx=from.indexOf(item);
+      if (idx != -1) {
+          from.splice(idx, 1);
+          to.push(item);      
+      }
+  };
+  $scope.moveAll = function(from, to) {
+
+      angular.forEach(from, function(item) {
+          to.push(item);
+      });
+      from.length = 0;
+  };            
+
+
+
+})
+
 .controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.limit = 10;
@@ -311,6 +431,7 @@ angular.module('scanthisApp.createlotController', [])
   };
 
 })
+
 
 
 

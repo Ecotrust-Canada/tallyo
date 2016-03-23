@@ -27,11 +27,18 @@
   font-family: 'Lato-Regular';
   src: url('/fonts/Lato-Regular.ttf');
 }
+html {
+  display:table;
+  width:100%;
+  height: 100%;
+}
 
+/*
 html {
   height: 100%;
   box-sizing: border-box;
 }
+*/
 input[type="text"],
 select{
     padding:5px;
@@ -66,6 +73,7 @@ body{
     margin: 0;
     padding: 0;
     min-height: 100%;
+    width: auto;
     height: auto;
     position:relative;
     background-image: url(/images/background.png);
@@ -217,16 +225,19 @@ body{
 }
 
 
+#station-AM2-ADM > .panel, 
+#station-AM2-011 .panel, 
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel, 
 #station-HS0-003 .panel,
-
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
+#station-AM2-004 .panel,
+#station-AM2-006 .panel,
 #station-AM2-001 .panel {
   width: 550px;
 }
@@ -308,18 +319,18 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
-.itemsframe.entries #list-2 table td:nth-last-child(2),
-.itemsframe.entries table td:last-child {
+.itemsframe.entries #list-2 table td.btn_action:nth-last-child(2),
+.itemsframe.entries table td.btn_action:last-child {
   /* Hide the text. */
   color: transparent;
   overflow: hidden;
   background-repeat: no-repeat;
   background-position: left 10px center;
 }
-.itemsframe.entries table td:last-child {
+.itemsframe.entries table td.btn_action:last-child {
   background-image: url(/images/remove_icon.svg);
 }
-.itemsframe.entries table td:last-child:hover {
+.itemsframe.entries table td.btn_action:last-child:hover {
   background-image: url(/images/remove_icon_red.svg);
 }
 
@@ -515,7 +526,6 @@ a:hover {
   color: #006b98;
   font-size: 13px;
   line-height: 1.2em;
-  padding-top:10px;
 }
 .form-text td{
   text-align:right;
@@ -686,7 +696,6 @@ div[ng-view] {
   margin: 0 4px;
   /*overflow: visible;*/
   display: inline-block;
-  /*width: 100%;*/
   overflow: hidden;
 }
 
@@ -1280,7 +1289,7 @@ div#station-HS0-011 {
 }
 
 .display_field label, #prev_station_totals label,
-#receiveshipment #form-14 .form_label label,
+.fieldsetrepeat label, #receiveshipment #form-14 .form_label label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
   color: #777777;
   text-transform: uppercase;
@@ -1299,6 +1308,7 @@ div#station-HS0-011 {
 .reprint_label .display_field label,
 #receiveshipment #form-14 .form_label label,
 #receiveshipment .display_row .display_field label,
+#receivingprintlabel .display_row .display_field label,
 #edit_shipment .display_field label {
   font-size: 12px;
 }
@@ -1309,6 +1319,7 @@ div#station-HS0-011 {
 
 .reprint_label .display_field label,
 #receiveshipment .display_row label,
+#receivingprintlabel .display_row label,
 #receiveshipment #form-14 .form_label label,
 #edit_shipment .display_field label {
   display: inline-block;
@@ -1317,6 +1328,7 @@ div#station-HS0-011 {
   box-sizing:border-box;
   text-align: right;
 }
+#receivingprintlabel .display_row .field_val,
 #receiveshipment .display_row .field_val {
   display: inline-block;
   box-sizing:border-box;
@@ -1345,6 +1357,7 @@ table#shipments_list td:last-child {
 }
 
 .reprint_label input,
+.fieldsetrepeat input[type=text],
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
@@ -1352,7 +1365,7 @@ table#shipments_list td:last-child {
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
-  padding: 0 6px;
+  padding: 0 2px;
   display:inline-block;
   box-sizing: border-box;
 }
@@ -1425,20 +1438,21 @@ table#shipments_list td:last-child {
 }
 
 
-.station .panel:first-child {
+.station > .panel:first-child {
   padding-top: 30px;
   position: relative;
 }
 
 
-.scanform {
+.scanform, .fieldsetrepeat, .addform {
   border-top: 1px solid #cccccc;
+  margin-top: 15px;
+  padding-top: 10px;
 }
 
 
-.packingstation .scanform {
+.scanform {
   position: relative;
-  padding-top: 20px;
   margin-top: 15px;
 }
 
@@ -1447,7 +1461,7 @@ table#shipments_list td:last-child {
 
   display: table;
   width: 100%;
-  padding: 10px 0 13px 0;
+  padding: 10px 0 20px 0;
   position: relative;
 }
 
@@ -1467,11 +1481,7 @@ table#shipments_list td:last-child {
   width: 50%;
 }
 
-
-.weighstation_main #current_lot .display_row:nth-child(1) {
-}
-
-
+#station-AM2-ADM .field_val,
 .weighstation_main #current_lot  .field_val,
 .packingstation #current_lot .field_val,
 #edit_shipment .display_field span,
@@ -1481,7 +1491,7 @@ table#shipments_list td:last-child {
   font-family: 'Lato-Regular';
 }
 
-
+#station-AM2-ADM .field_val,
 .weighstation_main #current_lot #internal_lot_code-value,
 .packingstation #current_lot #internal_lot_code-value {
 
@@ -1535,9 +1545,9 @@ table#shipments_list td:last-child {
 }
 
 .weighstation_main .form_label,
-
-
 .packingstation .form_label,
+#form-13 .form_label,
+#scaninventory .form_label,
 .editform .form_label {
   display: inline-block;
   text-align: right;
@@ -1546,9 +1556,17 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label {
   width: 150px;
 }
+#station-AM2-004 .weighstation_main .form_label {
+  width: 280px;
+}
 #form-5 .form_label,
+#form-10 .form_label,
+#form-13 .form_label,
 #form-4 .form_label {
   width: 170px;
+}
+#form-13 .form_label label {
+  text-align: right;
 }
 .editinform {
   background-color: white;
@@ -1558,7 +1576,6 @@ table#shipments_list td:last-child {
 
 
 #create_box_form #form-0 {
-
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
@@ -1600,6 +1617,7 @@ table#shipments_list td:last-child {
 }
 
 #create_box_form #form-5 .field input[type=text],
+#form-10 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
   width: 354px;
 }
@@ -1612,6 +1630,9 @@ table#shipments_list td:last-child {
 #receiveshipment #form-14 .btn-orange {
   left: 162px;
   width: 240px;
+}
+#form-10 .btn-orange {
+  right: 16px;
 }
 .show_choices {
   position: relative;
@@ -1635,7 +1656,7 @@ table#shipments_list td:last-child {
 
 .weighstation_main .form_label label,
 .weighstation_main .form_label label,
-.packingstation .scanform .form_label label {
+.scanform .form_label label {
 
   font-family: 'Lato-Bold';
   font-size: 22px;
@@ -1653,12 +1674,14 @@ table#shipments_list td:last-child {
 }
 
 
+#form-13 .field,
 .weighstation_main .field,
-.weighstation_main .field,
-.packingstation .scanform .field {
-
+.scanform .field {
   display: inline-block;
-  width: 360px;
+  width: 320px;
+}
+#station-AM2-004 .weighstation_main .field {
+  width: 220px;
 }
 
 #prev_station_totals {
@@ -1694,6 +1717,7 @@ table#shipments_list td:last-child {
 #form-23 .form_label label,
 .editform .form_label label,
 #form-5 .form_label label,
+#form-10 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
@@ -1701,6 +1725,7 @@ table#shipments_list td:last-child {
 #form-0 .field, 
 .editform .field, 
 #form-5 .field, 
+#form-10 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1751,6 +1776,16 @@ table#shipments_list td:last-child {
 #form-19 .styled-dropdown {
   width: 232px;
 }
+#form-11 .styled-dropdown {
+  width: 238px;
+}
+#form-21 .styled-dropdown {
+  width: 234px;
+  margin-bottom: 0;
+}
+#station-AM2-ADM  .styled-dropdown {
+  width: 504px;
+}
 .styled-dropdown select {
   height: 36px;
 }
@@ -1783,11 +1818,18 @@ table#shipments_list td:last-child {
   right: -5px;
   top: 0px;
 }
+.dropdown-container {
+  position: relative;
+}
 .dropdown-container .dd_arrow {
   right: 0;
-  top: 49px;
+  top: 25px;
   z-index: 1;
 }
+#selectsamedaylot .dropdown-container .dd_arrow {
+  top: 4px;
+}
+
 .dropdown-container .dd_arrow span,
 .styled-dropdown .dd_arrow span {
   display: block;
@@ -1823,7 +1865,7 @@ img.weight-connector {
 }
 
 input[name^=weight]:focus,
-.packingstation #scaninput:focus {
+.scanform #scaninput:focus {
   border: 5px solid #0076ad;
 }
 
@@ -1834,7 +1876,7 @@ input[name^=weight]:focus,
   height: 20px;
 }
 
-.packingstation #scaninput {
+.scanform #scaninput {
   width: 200px;
   height: 44px;
   color: #03223c;
@@ -1871,6 +1913,9 @@ input[name^=weight]::after {
 #station-HS0-004 .packingstation #current_lot .pictogram_btns {
   top: 104px;
   left: -10px;
+}
+#station-AM2-006  #current_lot .pictogram_btns {
+  top: 60px;
 }
 #station-HS0-005 .packingstation #current_lot {
 }
@@ -1988,11 +2033,13 @@ input[name^=weight]::after {
 }
 #radio-19-grade,
 #radio-18-grade,
+#radio-9-grade,
 #radio-17-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
+#radio-9-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
@@ -2092,6 +2139,7 @@ input[name^=weight]::after {
 
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
+#radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
@@ -2176,11 +2224,11 @@ input[name^=weight]::after {
     background-image: linear-gradient(-180deg, #FA8230 0%, #FD6A0E 30%, #B24400 100%);
     box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.35);
     /*box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.45), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);*/
-    border-radius: 5px;
+    border-radius: 8px;
     font-family: Lato-Black;
     font-size: 20px;
     color: #FFFFFF;
-    line-height: 24px;
+    /*line-height: 24px;*/
     text-shadow: 1px 2px 2px rgba(0,0,0,0.20);
 }
 
@@ -2519,4 +2567,70 @@ span.switch_option.active {
 
 .animation.ng-leave.ng-leave-active {
   opacity: 0;
+}
+
+#station-AM2-ADM .select_object {
+  width: 510px;
+  position: relative;
+} 
+
+#station-AM2-ADM #shipment_totals1 {
+  margin-top: 10px;
+}
+
+#station-AM2-ADM #shipment_totals2 {
+  margin-top: -26px;
+}
+
+#shipment_totals2 .btn-blue,
+#shipment_totals1 .btn-blue {
+  float: right;
+  margin-top: 10px;
+}
+
+#shipment_totals2 .btn-orange {
+  padding: 5px 15px;
+  width: auto;
+  position: relative;
+  left: 0;
+  top: -35px;
+  font-size: 14px;
+}
+#receivingprintlabel .fieldsetrepeat {
+  margin-top: 15px;
+  padding: 15px 6px 0 6px;
+}
+#receivingprintlabel .fieldsetrepeat .repeatrow {
+  margin: 0;
+  padding: 0 0 10px 0;
+}
+.fieldsetrepeat .btn-orange {
+  padding: 6px 20px;
+  right: 0;
+}
+.fieldsetrepeat .btn-light {
+  left: 0;
+}
+.fieldsetrepeat label {
+  font-size: 12px;
+  display: inline-block;
+  padding-right: 4px;
+}
+.fieldsetrepeat .styled-dropdown {
+  display: inline-block;
+  margin: 0 6px 0 0;
+  box-sizing: border-box;
+}
+.fieldsetrepeat .styled-dropdown.dd-grade {
+  width: 80px;
+}
+.fieldsetrepeat .styled-dropdown.dd-weight {
+  width: 70px;
+  margin-right: 2px;
+}
+.fieldsetrepeat .styled-dropdown.dd-size {
+  width: 100px;
+}
+.fieldsetrepeat input[type=text] {
+  width: 50px;
 }

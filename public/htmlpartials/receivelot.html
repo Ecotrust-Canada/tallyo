@@ -22,11 +22,9 @@
     <span class="switch_option" ng_class="{active: form.state=='Clean'}"
         value="Clean">Clean</span>
 
-<br>
   <button ng-disabled="!form.harvester_code || !form.state" ng-click="GenInternalLot(form)" class="btn-orange">Submit</button>
 
   <!--<dropdown itemlist="list.lot"  cfg="collectiondropdown" selectedoption="lotselected" change-fn="SetLot(selected)"></dropdown>-->
-<br>
   <input-dropdown  thelist="list.lot"  config="collectiondropdown" on-select="SetLot(value)"></input-dropdown>
 
 </div>

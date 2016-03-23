@@ -1,0 +1,8 @@
+<span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
+  <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
+  <persistdropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></persistdropdown>
+  <span ng-show="current.codes">
+    Thisfish Codes: {{current.codes}}
+    <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
+  </span>
+</span>

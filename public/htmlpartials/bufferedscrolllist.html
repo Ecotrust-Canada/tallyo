@@ -17,9 +17,11 @@
           <span ng-switch-when="boxes">{{item[name]}}boxes</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
-        <td ng-if="config.button2" ng-click="ResetLimit();secondFn({str: item[config.arg]})">{{config.button2}}</td>
-        <td ng-if="config.button  && !config.arg2" ng-click="ResetLimit();updateFn({str: item[config.arg]})">{{config.button}}</td>
-        <td ng-if="config.button && config.arg2" ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})">{{config.button}}</td>
+        <td ng-if="config.button2" ng-click="ResetLimit();secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
+        <td ng-if="config.button  && !config.arg2" ng-click="ResetLimit();updateFn({str: item[config.arg]})" 
+            class="btn_action">{{config.button}}</td>
+        <td ng-if="config.button && config.arg2" 
+            ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})" class="btn_action">{{config.button}}</td>
       </tr>
     </tbody>
   </table>

@@ -5,7 +5,9 @@
   <div  class="select_object" any-other-click>
     <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
          ng-click="current.collectionid = null">
-       <span class="show_choices">{{packingconfig.sectiontitle}}</span>
+      <span class="show_choices">{{packingconfig.sectiontitle}}</span>
+      <div id="reprint_label_link" ng-if="substationlink" 
+           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
     </div> 
     <div class="show_choices" ng-hide="current.collectionid">
       <div ng-controller="FormSubmitCtrl" id="create_box_form">
@@ -23,12 +25,25 @@
       <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
             id="reprint-{{config.id}}" class="reprint">Reprint</span>
     </div>
+
+    <!--<span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
+      <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
+      <persistdropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></persistdropdown>
+      <span ng-show="current.codes">
+        Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
+        <span ng-repeat="code in current.products">
+        <br>{{code}}
+        </span>
+        
+      </span>
+    </span>-->
+
+
   </div>
 
   <div class="scanform" ng-controller="PackingCtrl" >
-      <fieldset ng-disabled="formdisabled">
-        
-        <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+    <fieldset ng-disabled="formdisabled">
+      <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
           <div class="form_row">
             <div class="form_label">
               <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
@@ -51,6 +66,7 @@
         </div> 
       </fieldset>
   </div>
+
 </div>
 
 <div class="panel grey" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
