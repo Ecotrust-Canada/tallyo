@@ -1438,7 +1438,7 @@ table#shipments_list td:last-child {
 }
 
 
-.packingstation .scanform {
+.scanform {
   position: relative;
   padding-top: 20px;
   margin-top: 15px;
@@ -1536,6 +1536,7 @@ table#shipments_list td:last-child {
 
 
 .packingstation .form_label,
+#scaninventory .form_label,
 .editform .form_label {
   display: inline-block;
   text-align: right;
@@ -1545,6 +1546,7 @@ table#shipments_list td:last-child {
   width: 150px;
 }
 #form-5 .form_label,
+#form-10 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
@@ -1598,6 +1600,7 @@ table#shipments_list td:last-child {
 }
 
 #create_box_form #form-5 .field input[type=text],
+#form-10 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
   width: 354px;
 }
@@ -1610,6 +1613,9 @@ table#shipments_list td:last-child {
 #receiveshipment #form-14 .btn-orange {
   left: 162px;
   width: 240px;
+}
+#form-10 .btn-orange {
+  right: 16px;
 }
 .show_choices {
   position: relative;
@@ -1633,7 +1639,7 @@ table#shipments_list td:last-child {
 
 .weighstation_main .form_label label,
 .weighstation_main .form_label label,
-.packingstation .scanform .form_label label {
+.scanform .form_label label {
 
   font-family: 'Lato-Bold';
   font-size: 22px;
@@ -1653,8 +1659,7 @@ table#shipments_list td:last-child {
 
 .weighstation_main .field,
 .weighstation_main .field,
-.packingstation .scanform .field {
-
+.scanform .field {
   display: inline-block;
   width: 360px;
 }
@@ -1692,6 +1697,7 @@ table#shipments_list td:last-child {
 #form-23 .form_label label,
 .editform .form_label label,
 #form-5 .form_label label,
+#form-10 .form_label label,
 #form-4 .form_label label {
   text-align: right;
 }
@@ -1699,6 +1705,7 @@ table#shipments_list td:last-child {
 #form-0 .field, 
 .editform .field, 
 #form-5 .field, 
+#form-10 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1784,11 +1791,18 @@ table#shipments_list td:last-child {
   right: -5px;
   top: 0px;
 }
+.dropdown-container {
+  position: relative;
+}
 .dropdown-container .dd_arrow {
   right: 0;
-  top: 49px;
+  top: 25px;
   z-index: 1;
 }
+#selectsamedaylot .dropdown-container .dd_arrow {
+  top: 4px;
+}
+
 .dropdown-container .dd_arrow span,
 .styled-dropdown .dd_arrow span {
   display: block;
@@ -1824,7 +1838,7 @@ img.weight-connector {
 }
 
 input[name^=weight]:focus,
-.packingstation #scaninput:focus {
+.scanform #scaninput:focus {
   border: 5px solid #0076ad;
 }
 
@@ -1835,7 +1849,7 @@ input[name^=weight]:focus,
   height: 20px;
 }
 
-.packingstation #scaninput {
+.scanform #scaninput {
   width: 200px;
   height: 44px;
   color: #03223c;
@@ -1989,11 +2003,13 @@ input[name^=weight]::after {
 }
 #radio-19-grade,
 #radio-18-grade,
+#radio-9-grade,
 #radio-17-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
+#radio-9-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
@@ -2090,6 +2106,7 @@ input[name^=weight]::after {
 
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
+#radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }

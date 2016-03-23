@@ -337,7 +337,7 @@ angular.module('scanthisApp.formController', [])
           option += val;
         } 
         if (i < cfg.fields.length - 1) {
-          option += ' '+(cfg.separator? cfg.separator : '-')+' ';
+          option += ' '+(cfg.delimeter? cfg.delimeter : '-')+' ';
         }
       }  
 

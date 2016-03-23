@@ -1,9 +1,22 @@
-<div class="panel grey">
-    <br>
-    <div ng-controller="AddInventoryCtrl">
-      <form ng-submit="ScanIn()">
-        Scan Field: <input any-other-click="inv_input" id="inv_input" type="text" ng-model="raw.string" autocomplete="off">
-      </form>
-    </div>
-    <br>
+<div class="panel white" id="scaninventory" any-other-click="scaninput">
+  <div  class="select_object">
+    <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.shipping_unit=null;addinfo=!addinfo">
+      <div id="reprint_label_link" ng-if="substationlink" 
+           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+    </div> 
+  </div>
+  <div class="scanform" ng-controller="AddInventoryCtrl">
+    <form ng-submit="ScanIn()">
+      <div class="form_row">
+        <div class="form_label">
+          <label for="{{row.fieldname}}">Scan Field:
+            <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
+          </label>
+        </div>
+        <div class="field">
+           <input id="scaninput" type="text" ng-model="raw.string" autocomplete="off" placeholder="Start scanning...">
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
