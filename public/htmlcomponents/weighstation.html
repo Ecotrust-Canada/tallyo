@@ -32,15 +32,13 @@
 
   </div>
 
-  <div ng-if="formedit">
-    <hr>
+  <div ng-if="formedit" class="addform">
     <div ng-controller="AddtoTableCtrl">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
     <!--<div ng-controller="AddtoTableCtrl">
       <entryform config="addform2" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>-->
-    <hr>
   </div>
 
 </div>

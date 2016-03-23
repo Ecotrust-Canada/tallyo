@@ -43,8 +43,7 @@
 
   <div class="scanform" ng-controller="PackingCtrl" >
     <fieldset ng-disabled="formdisabled">
-        
-      <form id="scanform" ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+      <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
           <div class="form_row">
             <div class="form_label">
               <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:

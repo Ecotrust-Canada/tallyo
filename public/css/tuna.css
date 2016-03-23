@@ -516,7 +516,6 @@ a:hover {
   color: #006b98;
   font-size: 13px;
   line-height: 1.2em;
-  padding-top:10px;
 }
 .form-text td{
   text-align:right;
@@ -1435,14 +1434,15 @@ table#shipments_list td:last-child {
 }
 
 
-.scanform, .fieldsetrepeat {
+.scanform, .fieldsetrepeat, .addform {
   border-top: 1px solid #cccccc;
+  margin-top: 15px;
+  padding-top: 10px;
 }
 
 
 .scanform {
   position: relative;
-  padding-top: 20px;
   margin-top: 15px;
 }
 
@@ -1535,9 +1535,8 @@ table#shipments_list td:last-child {
 }
 
 .weighstation_main .form_label,
-
-
 .packingstation .form_label,
+#form-13 .form_label,
 #scaninventory .form_label,
 .editform .form_label {
   display: inline-block;
@@ -1547,10 +1546,17 @@ table#shipments_list td:last-child {
 .weighstation_main .form_label {
   width: 150px;
 }
+#station-AM2-004 .weighstation_main .form_label {
+  width: 280px;
+}
 #form-5 .form_label,
 #form-10 .form_label,
+#form-13 .form_label,
 #form-4 .form_label {
   width: 170px;
+}
+#form-13 .form_label label {
+  text-align: right;
 }
 .editinform {
   background-color: white;
@@ -1560,7 +1566,6 @@ table#shipments_list td:last-child {
 
 
 #create_box_form #form-0 {
-
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
@@ -1659,10 +1664,13 @@ table#shipments_list td:last-child {
 }
 
 
-.weighstation_main .field,
+#form-13 .field,
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
+  width: 360px;
+}
+#station-AM2-004 .weighstation_main .field {
   width: 360px;
 }
 
@@ -1757,6 +1765,10 @@ table#shipments_list td:last-child {
 }
 #form-19 .styled-dropdown {
   width: 232px;
+}
+#form-21 .styled-dropdown {
+  width: 234px;
+  margin-bottom: 0;
 }
 #station-AM2-ADM  .styled-dropdown {
   width: 504px;
