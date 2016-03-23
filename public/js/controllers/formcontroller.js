@@ -46,6 +46,29 @@ angular.module('scanthisApp.formController', [])
     }
   };
 
+
+  $scope.Reset = function(){
+    $scope.submitted=false;
+    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ResetForm($scope.form, $scope.formarray);
+    if ($scope.config.startpolling) {
+      clearObj($scope.scale);
+      if ($scope.poll_scale === true){
+        $scope.pollFn({field: $scope.config.startpolling});
+      }
+      else{
+        var scales = $scope.formarray.filter(function(el){
+          return (el.scale);
+        });
+        scales.forEach(function(el){
+          el.scale = 'off';
+        });
+      }     
+    }
+  };
+
+
+
   //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){

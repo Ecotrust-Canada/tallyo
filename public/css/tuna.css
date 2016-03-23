@@ -1407,7 +1407,9 @@ table#shipments_list td:last-child {
   margin-bottom: 24px;
   margin-right: 10px;
 }
-
+#station-AM1-003 .panel.grey,
+#station-AM1-004 .panel.grey,
+#station-AM1-005 .panel.grey,
 #station-HS0-001 .panel.grey,
 #station-HS0-002 .panel.grey,
 #station-HS0-004 .panel.grey,
@@ -2012,6 +2014,9 @@ input[name^=weight]::after {
 #radio-9-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
+}
+#radio-18-pieces.toggle-group-container label {
+  width: 46px;
 }
 
 #radio-20-grade.toggle-group-container label,

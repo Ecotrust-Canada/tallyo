@@ -11,11 +11,11 @@
       <span ng-switch-when="weight">{{(item[name]).toFixed(2)}} kg</span>
       <span ng-switch-when="weight_total">{{(item[name]).toFixed(2)}} kg</span>
       <span ng-switch-when="weight_1">{{(item[name]).toFixed(2)}} kg</span>
-      <span ng-switch-when="weight_2">{{(item[name]).toFixed(2)}} kg</span>
       <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
       <span ng-switch-when="pieces">{{item[name]}} pcs</span>
       <span ng-switch-when="boxes">{{item[name]}} boxes</span>
       <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
+      <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
     <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
