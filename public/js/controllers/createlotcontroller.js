@@ -195,7 +195,7 @@ angular.module('scanthisApp.createlotController', [])
       $scope.printLabelFairTrade(data, labels);
     } else {
       $scope.printLabel(data, labels);
-    };
+    }
 
   };
 })
@@ -207,7 +207,7 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.ListCollectionItems = function(){
     var table;
-    if ($scope.station_info.itemtable === 'box'){
+    if ($scope.station_info.itemtable === 'box' && !$scope.options.box){
       table = 'box_product';
     }
     else{

@@ -2035,6 +2035,9 @@ input[name^=weight]::after {
   border-radius: 5px;
   position: relative;
 }
+.scale-weight-set.lock{
+  height: 40px;
+}
 #radio-7-grade, 
 #radio-23-grade, 
 #radio-20-grade, 
