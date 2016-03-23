@@ -1833,9 +1833,11 @@ table#shipments_list td:last-child {
   top: 25px;
   z-index: 1;
 }
+/*
 #selectsamedaylot .dropdown-container .dd_arrow {
   top: 4px;
 }
+*/
 
 .dropdown-container .dd_arrow span,
 .styled-dropdown .dd_arrow span {
