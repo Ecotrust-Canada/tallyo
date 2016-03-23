@@ -133,7 +133,7 @@ angular.module('scanthisApp.itemController', [])
         $scope.entry.box.weight = product.weight / 2.2;
       }
       else if (product.entry_unit === 'kg'){
-        $scope.entry.box.weight = product_weight;
+        $scope.entry.box.weight = product.weight;
       }
       $scope.entry.box.product_code = product.product_code;
 

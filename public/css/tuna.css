@@ -27,11 +27,18 @@
   font-family: 'Lato-Regular';
   src: url('/fonts/Lato-Regular.ttf');
 }
+html {
+  display:table;
+  width:100%;
+  height: 100%;
+}
 
+/*
 html {
   height: 100%;
   box-sizing: border-box;
 }
+*/
 input[type="text"],
 select{
     padding:5px;
@@ -66,6 +73,7 @@ body{
     margin: 0;
     padding: 0;
     min-height: 100%;
+    width: auto;
     height: auto;
     position:relative;
     background-image: url(/images/background.png);
@@ -228,6 +236,8 @@ body{
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
+#station-AM2-004 .panel,
+#station-AM2-006 .panel,
 #station-AM2-001 .panel {
   width: 550px;
 }
@@ -1355,7 +1365,7 @@ table#shipments_list td:last-child {
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
-  padding: 0 6px;
+  padding: 0 2px;
   display:inline-block;
   box-sizing: border-box;
 }
@@ -1451,7 +1461,7 @@ table#shipments_list td:last-child {
 
   display: table;
   width: 100%;
-  padding: 10px 0 13px 0;
+  padding: 10px 0 20px 0;
   position: relative;
 }
 
@@ -1668,10 +1678,10 @@ table#shipments_list td:last-child {
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
-  width: 360px;
+  width: 320px;
 }
 #station-AM2-004 .weighstation_main .field {
-  width: 360px;
+  width: 220px;
 }
 
 #prev_station_totals {
@@ -1765,6 +1775,9 @@ table#shipments_list td:last-child {
 }
 #form-19 .styled-dropdown {
   width: 232px;
+}
+#form-11 .styled-dropdown {
+  width: 238px;
 }
 #form-21 .styled-dropdown {
   width: 234px;
@@ -1900,6 +1913,9 @@ input[name^=weight]::after {
 #station-HS0-004 .packingstation #current_lot .pictogram_btns {
   top: 104px;
   left: -10px;
+}
+#station-AM2-006  #current_lot .pictogram_btns {
+  top: 60px;
 }
 #station-HS0-005 .packingstation #current_lot {
 }
@@ -2610,6 +2626,7 @@ span.switch_option.active {
 }
 .fieldsetrepeat .styled-dropdown.dd-weight {
   width: 70px;
+  margin-right: 2px;
 }
 .fieldsetrepeat .styled-dropdown.dd-size {
   width: 100px;
