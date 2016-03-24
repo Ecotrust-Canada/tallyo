@@ -1,8 +1,8 @@
 <div ng-controller="ShipListCtrl" class="panel white editshipentries">
     
-    <!--begin collection info -->
+
     <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-      <div class="display_field">
+      <!--<div class="display_field">
         <label>Ship Date:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
       </div>
       <div class="display_field">
@@ -30,33 +30,37 @@
       <div class="form_buttons">
         <input type="button" ng-click="ShipInfo()" value="Save" class="btn-orange">
       </div>
+    </div>-->
+      <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
     </div>
 
-    <!--end collection info -->
-    <!-- begin choose collection -->
+
     <div  class="itemsframe entries">
-      <table id="shipments_list">
-        <tr>
-          <th>Ship Date</th>
-          <th>Po Number</th>
-          <th>Customer</th>
-          <th>Container Number</th>
-          <th>Bill of Lading</th>
-          <th>Vessel Name</th>
-          <th>Seal Number</th>
-          <th></th>
-        </tr>
-        <tr ng-repeat="ship in list.shipments | orderBy: '-timestamp'">
-          <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
-          <td>{{ship.po_number}}</td>
-          <td>{{ship.customer}}</td>
-          <td>{{ship.container_number}}</td>
-          <td>{{ship.bill_of_lading}}</td>
-          <td>{{ship.vessel_name}}</td>
-          <td>{{ship.seal_number}}</td>
-          <td ng-click="Edit(ship.shipping_unit_number)" class="btn_action">Edit</td>
-        </tr>
-      </table>
+      <bufferedscrolllist itemlist="list.shipments"  limit="limit" config="item2listconfig" update-fn="Edit(str)"></bufferedscrolllist>
     </div>
-    <!-- end choose collection -->
+
+
+
+</div>
+<br>
+<div class="panel grey" ng-show="current.collectionid">
+
+  <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
+    <div ng-controller="RemovePatchCtrl">
+      <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
+    </div>
   </div>
+  <div class="itemtotals table_row">
+    <div class="item_number">
+      <span >P.O. Number {{current.shipment.po_number}}</span> 
+    </div>
+    <div class="totals_bit" >
+      <div class="totals_caption">Total Weight &amp; Boxes</div>
+      <div class="summary">
+        <span>{{list.included | sumOfValue:'weight'| weightstring}}</span>
+        <span>{{list.included.length}} boxes</span>    
+      </div>
+
+    </div>
+  </div>
+</div>

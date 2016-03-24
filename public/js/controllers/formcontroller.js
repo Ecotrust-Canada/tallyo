@@ -234,7 +234,11 @@ angular.module('scanthisApp.formController', [])
   $scope.withChecked = function(fieldname){
       if (!$scope.form[fieldname]) return 'rbgroup-unset';
       return null;
-  }
+  };
+
+})
+
+.controller('editformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
 
 })
 

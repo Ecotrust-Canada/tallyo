@@ -242,6 +242,7 @@ body{
   width: 550px;
 }
 
+
 .columnframenarrow{
   width:326px;
   height:700px;
@@ -1338,7 +1339,7 @@ div#station-HS0-011 {
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
-table#shipments_list td:last-child {
+.itemsframe.entries #list-21 td:last-child {
   background-image: url(/images/edit_icon.svg);
 }
 /*
@@ -1409,6 +1410,7 @@ table#shipments_list td:last-child {
 }
 
 /* receivng station for HarSam */
+#station-HS0-ADM .panel.white,
 #station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
 .panel.white.packingstation {
@@ -1416,6 +1418,7 @@ table#shipments_list td:last-child {
   margin-bottom: 24px;
   margin-right: 10px;
 }
+
 #station-AM1-003 .panel.grey,
 #station-AM1-004 .panel.grey,
 #station-AM1-005 .panel.grey,

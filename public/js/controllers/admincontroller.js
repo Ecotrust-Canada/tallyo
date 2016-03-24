@@ -7,6 +7,10 @@ angular.module('scanthisApp.AdminController', [])
 //editentries.html - controller for listing and editing shipment entries
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
+  $scope.current.itemchange = true;
+
+  $scope.limit = 10;
+
   $scope.ListShipments = function(){
     var func = function(response){
       $scope.list.shipments = response.data;
@@ -18,10 +22,12 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.Edit = function(ship_id){
     var index = arrayObjectIndexOf($scope.list.shipments, ship_id, 'shipping_unit_number');
+    $scope.current.collectionid = $scope.list.shipments[index].shipping_unit_number;
     $scope.current.shipment = {};
     for (var name in $scope.list.shipments[index]){
       $scope.current.shipment[name] = $scope.list.shipments[index][name];
     }
+    $scope.current.itemchange = !$scope.current.itemchange;
   };
 
   $scope.form={};
@@ -325,13 +331,12 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getCSV = function(lot_number, stn, lot_code, table, label){
-    console.log(label);
-    
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
       $scope.list.detail = response.data;
       var full_array = [];
       var title_array = propertyNames($scope.list.detail[0]);
+      title_array.shift();
       title_array.shift();
       title_array.shift();
       full_array.push(title_array);
@@ -341,6 +346,7 @@ angular.module('scanthisApp.AdminController', [])
         an_array.forEach(function(el){
           the_array.push(el[1]);
         });
+        the_array.shift();
         the_array.shift();
         the_array.shift();
         var new_array = JSON.parse(JSON.stringify(the_array));

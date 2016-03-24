@@ -207,7 +207,7 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.ListCollectionItems = function(){
     var table;
-    if ($scope.station_info.itemtable === 'box' && !$scope.options.box){
+    if ($scope.station_info.itemtable === 'box'){
       table = 'box_product';
     }
     else{

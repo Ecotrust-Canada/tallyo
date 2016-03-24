@@ -95,6 +95,15 @@ angular.module('scanthisApp.directives', [])
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 
+.directive('editform', function() { return { 
+  scope: {obj: '=',  
+          config: '=',   
+          formchange: '=',
+          formdisabled: '=', 
+          submitFn: '&'},
+  controller: 'editformCtrl', 
+  templateUrl: 'htmlpartials/editform.html' }; })
+
 .directive('fieldsetrepeat', function() { return { 
   scope: { config: '=' , 
            submitFn: '&'},
