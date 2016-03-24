@@ -1,49 +1,18 @@
-<div ng-controller="ShipListCtrl" class="panel white editshipentries">
-    
-
-    <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-      <!--<div class="display_field">
-        <label>Ship Date:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
-      </div>
-      <div class="display_field">
-        <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
-      </div>
-      <div class="display_field">
-        <label for="inp_customer">Customer:</label><input type="text" ng-model="current.shipment.customer" id="inp_customer">
-      </div>
-      <div class="display_field">
-        <label for="inp_container_number">Container Number:</label><input type="text" 
-               ng-model="current.shipment.container_number" id="inp_container_number">
-      </div>
-      <div class="display_field">
-        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" 
-               ng-model="current.shipment.bill_of_lading" id="inp_bill_of_lading">
-      </div>
-      <div class="display_field">
-        <label for="inp_vessel_name">Vessel Name:</label><input type="text" 
-               ng-model="current.shipment.vessel_name" id="inp_vessel_name">
-      </div>
-      <div class="display_field">
-        <label for="inp_seal_number">Seal Number:</label><input type="text" 
-               ng-model="current.shipment.seal_number" id="inp_seal_number">
-      </div>
-      <div class="form_buttons">
-        <input type="button" ng-click="ShipInfo()" value="Save" class="btn-orange">
-      </div>
-    </div>-->
-      <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
-    </div>
-
-
-    <div  class="itemsframe entries">
-      <bufferedscrolllist itemlist="list.shipments"  limit="limit" config="item2listconfig" update-fn="Edit(str)"></bufferedscrolllist>
-    </div>
-
-
-
+<div ng-controller="ShipListCtrl">
+<div class="panel white editshipentries">
+  <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
+    <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
+  </div>
+  <div  class="itemsframe entries">
+    <bufferedscrolllist itemlist="list.shipments"  limit="limit" config="item2listconfig" update-fn="Edit(str)"></bufferedscrolllist>
+  </div>
 </div>
-<br>
-<div class="panel grey" ng-show="current.collectionid">
+
+<div class="panel grey" ng-hide="current.shipment === undefined || current.shipment === null">
+  <div class="marg">
+    <span class="totals_caption">CSV Download: </span>
+    <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
+  </div>
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemovePatchCtrl">
@@ -60,7 +29,7 @@
         <span>{{list.included | sumOfValue:'weight'| weightstring}}</span>
         <span>{{list.included.length}} boxes</span>    
       </div>
-
     </div>
   </div>
+</div>
 </div>

@@ -288,6 +288,10 @@ body{
   border-collapse: collapse;
   width: 100%;
 }
+.marg{
+  margin-bottom:10px;
+  margin-left:10px;
+}
 /*
 .itemsframe table tr:hover {
   background-color: #2fba6d;
@@ -348,7 +352,8 @@ body{
   border-left: 1px solid #ccccca;
 }
 .itemtotals table caption,
-.itemtotals .totals_caption {
+.itemtotals .totals_caption,
+.totals_caption {
   color: #125974;
   font-size: 13px;
   font-family: 'Lato-Bold';

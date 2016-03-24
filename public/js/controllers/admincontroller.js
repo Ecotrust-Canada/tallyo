@@ -20,12 +20,11 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.ListShipments();
 
-  $scope.Edit = function(ship_id){
-    var index = arrayObjectIndexOf($scope.list.shipments, ship_id, 'shipping_unit_number');
-    $scope.current.collectionid = $scope.list.shipments[index].shipping_unit_number;
+  $scope.Edit = function(ship_obj){
+    $scope.current.collectionid = ship_obj.shipping_unit_number;
     $scope.current.shipment = {};
-    for (var name in $scope.list.shipments[index]){
-      $scope.current.shipment[name] = $scope.list.shipments[index][name];
+    for (var name in ship_obj){
+      $scope.current.shipment[name] = ship_obj[name];
     }
     $scope.current.itemchange = !$scope.current.itemchange;
   };
@@ -40,6 +39,46 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + $scope.current.shipment.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.shipment, query, func);
   }; 
+
+  $scope.getTheData = function(ship_obj){
+
+    $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_detail', 'detail');
+    $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_sum', 'summary');
+
+  };
+
+  $scope.getCSV = function(ship_number, po_number, table, label){
+    var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var full_array = [];
+      var title_array = propertyNames($scope.list.detail[0]);
+      title_array.shift();
+      title_array.shift();
+      title_array.shift();
+      full_array.push(title_array);
+      for (var i=0;i<$scope.list.detail.length;i++){
+        var the_array = [];
+        var an_array = fjs.toArray($scope.list.detail[i]);
+        an_array.forEach(function(el){
+          the_array.push(el[1]);
+        });
+        the_array.shift();
+        the_array.shift();
+        the_array.shift();
+        var new_array = JSON.parse(JSON.stringify(the_array));
+        full_array.push(new_array);
+      }
+      var name = po_number;
+      if (label){
+        name += '_' + label;
+      }
+      name += '.csv';
+      console.log(name);
+      alasql("SELECT * INTO CSV( '"+name+"', {separator:','}) FROM ?",[full_array]);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
 
 })
 
