@@ -424,7 +424,7 @@ angular.module('scanthisApp.createlotController', [])
 
 .controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-  $scope.limit = 10;
+  $scope.limit = 5;
 
   $scope.ResetLimit = function(){
     $scope.limit = 5;

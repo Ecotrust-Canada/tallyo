@@ -16,7 +16,7 @@
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
     <div ng-controller="RemovePatchCtrl">
-      <list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>
+      <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)"></bufferedscrolllist>
     </div>
   </div>
   <div class="itemtotals table_row">
