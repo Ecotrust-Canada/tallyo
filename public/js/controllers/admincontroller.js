@@ -420,6 +420,8 @@ angular.module('scanthisApp.AdminController', [])
   };  
   
   $scope.searchText = '';
+  $scope.startDate = moment().subtract('days', 7).toDate();
+  $scope.endDate = new Date();
   $scope.filter_lot = function(item){
       if ($scope.searchText === '') return true;
       return (item.internal_lot_code && item.internal_lot_code.indexOf($scope.searchText) > -1) || 

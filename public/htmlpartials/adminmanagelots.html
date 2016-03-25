@@ -1,6 +1,8 @@
 <div  ng-controller="LotCtrl" class="adminmanagelots">
 <div class="header">
   <input ng-model="searchText" class="search" placeholder="Search"></input>
+  <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+  <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
 </div>
 <div buffered-scroll-lots id="admin_manage_lots" >
   <div class="inner_scrollable">
@@ -12,8 +14,8 @@
         </th>
       </tr>
 
-      <!-- tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | limitTo: limit | filter: filter_lot" -->
-      <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot">
+      <!-- tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit" -->
+      <tr ng-repeat="lot in list.harvester_lot | dateRange: 'end_date' : startDate : endDate | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit">
 
         <td class="lot_column" valign="top">
           <div class="display_field">
