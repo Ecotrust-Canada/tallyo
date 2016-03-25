@@ -423,7 +423,12 @@ angular.module('scanthisApp.AdminController', [])
   $scope.filter_lot = function(item){
       if ($scope.searchText === '') return true;
       return (item.internal_lot_code && item.internal_lot_code.indexOf($scope.searchText) > -1) || 
-             item.lot_number.indexOf($scope.searchText) > -1; 
+             item.lot_number.indexOf($scope.searchText) > -1 ||
+             (item.supplier && item.supplier.indexOf($scope.searchText) > -1) ||
+             (item.fleet && item.fleet.indexOf($scope.searchText) > -1) ||
+             (item.tf_code && item.tf_code.indexOf($scope.searchText) > -1) ||
+             (item.landing_location && item.landing_location.indexOf($scope.searchText) > -1) ||
+             (item.ft_fa_code && item.ft_fa_code.indexOf($scope.searchText) > -1); 
   }
 })
 
