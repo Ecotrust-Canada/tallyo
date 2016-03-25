@@ -173,7 +173,13 @@ angular.module('scanthisApp.directives', [])
             element.addClass('input-dropdown');
             scope.select = function(e, value) {
                 scope.the_val = value;
-                scope.onSelect({$event: e, value: value[scope.config.arg]});
+                if (scope.config.arg){
+                  scope.onSelect({$event: e, value: value[scope.config.arg]});
+                }
+                else{
+                  scope.onSelect({$event: e, value: value});
+                }
+                
             };
             scope.setnull = function(){
               scope.the_val = null;

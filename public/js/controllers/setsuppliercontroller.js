@@ -61,18 +61,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.lotselected = 'no selected';
 
-  /*$scope.ListLots = function(){
-    var func = function(response){
-      $scope.list.lot = response.data;
-    };
-    var query = '?lot_number=neq.' + $scope.current.collectionid;
-    DatabaseServices.GetEntries('harvester_lot', func, query);
-  };
-  $scope.ListLots();*/
-
-  
-
-
   $scope.ListLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
@@ -91,18 +79,6 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.$on('collection-change', function(event, args) {
     $scope.ListLots();
   });
-
-
-
-
-
-
-
-
-
-
-
-
 
   $scope.SetLot = function(lot_number){
     var query = '?lot_number=eq.' + lot_number;
@@ -301,8 +277,9 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
 
-  $scope.GetHar = function(harvester_code){
-    $scope.form.harvester_code = harvester_code;
+  $scope.GetHar = function(harvester){
+    $scope.form.harvester_code = harvester.harvester_code;
+    $scope.current.harvester = harvester;
   };
 
   $scope.GenInternalLot = function(form){

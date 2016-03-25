@@ -1423,6 +1423,9 @@ div#station-HS0-011 {
   margin-bottom: 24px;
   margin-right: 10px;
 }
+#station-HS0-ADM .panel.white{
+  padding-top: 40px;
+}
 
 #station-AM1-003 .panel.grey,
 #station-AM1-004 .panel.grey,
@@ -2655,4 +2658,27 @@ span.switch_option.active {
 }
 .fieldsetrepeat input[type=text] {
   width: 50px;
+}
+
+
+#overlay {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: -200px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#overlay div {
+     width:800px;
+     height: 200px;
+     margin: 100px auto;
+     background-color: #fff;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
 }

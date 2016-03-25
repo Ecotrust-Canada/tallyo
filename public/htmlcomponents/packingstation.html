@@ -65,7 +65,19 @@
                  value="{{packingconfig.completetitle}}" class="btn-orange">
         </div> 
       </fieldset>
-  </div>
+  
+
+  <div id="overlay">
+     <div>
+          <p>Overwrite from previous?</p>
+          <button class="btn-blue" ng-click="enablekeypress();overlay()">Cancel</button>
+          <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay()">Yes</button>
+     </div>
+
+    </div>
+    </div>
+
+</div>
 
 </div>
 
@@ -94,3 +106,7 @@
     </div>
   </div>
 </div>
+
+
+
+
