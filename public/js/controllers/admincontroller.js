@@ -422,7 +422,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.searchText = '';
   $scope.filter_lot = function(item){
       if ($scope.searchText === '') return true;
-      return item.internal_lot_code.indexOf($scope.searchText) > -1 || 
+      return (item.internal_lot_code && item.internal_lot_code.indexOf($scope.searchText) > -1) || 
              item.lot_number.indexOf($scope.searchText) > -1; 
   }
 })
