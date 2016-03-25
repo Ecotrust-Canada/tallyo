@@ -20,7 +20,13 @@ angular.module('scanthisApp.packingController', [])
         var itemcollection = response.data[0][$scope.station_info.collectionid];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
-          confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
+          //confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
+          var disabled = function(event) {
+            event.preventDefault();
+  
+          };
+          document.onkeydown = disabled;
+          $scope.overlay();
         }
         //if it is already in current collection
         else if (itemcollection === $scope.current.collectionid){
@@ -117,6 +123,18 @@ angular.module('scanthisApp.packingController', [])
 
     }
   });
+
+  $scope.enablekeypress = function(){
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
+  };
+
+  $scope.overlay = function() {
+    var el = document.getElementById("overlay");
+    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+  };
 
 
 
