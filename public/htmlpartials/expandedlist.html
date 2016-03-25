@@ -7,7 +7,7 @@
     <span ng-repeat="title in config.headers">{{title}}</span>
   </div>
 
-  <div ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring" 
+  <div ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: searchText" 
        ng-class="{selected: item[config.arg] == current[config.arg]}" class="row">
 
     <div class="panel white item-line">   

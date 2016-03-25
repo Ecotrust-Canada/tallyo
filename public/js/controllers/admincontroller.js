@@ -418,6 +418,13 @@ angular.module('scanthisApp.AdminController', [])
     }
     return false;
   };  
+  
+  $scope.searchText = '';
+  $scope.filter_lot = function(item){
+      if ($scope.searchText === '') return true;
+      return item.internal_lot_code.indexOf($scope.searchText) > -1 || 
+             item.lot_number.indexOf($scope.searchText) > -1; 
+  }
 })
 
 //shipmenttotals.html - view summary of unloaded boxes for incoming shipments

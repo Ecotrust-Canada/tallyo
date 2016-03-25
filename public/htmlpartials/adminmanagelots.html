@@ -1,4 +1,7 @@
-<div  ng-controller="LotCtrl" >
+<div  ng-controller="LotCtrl" class="adminmanagelots">
+<div class="header">
+  <input ng-model="searchText.lot_number" class="search" placeholder="Search"></input>
+</div>
 <div buffered-scroll-lots id="admin_manage_lots" >
   <div class="inner_scrollable">
     <table>
@@ -9,7 +12,7 @@
         </th>
       </tr>
 
-      <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | limitTo: limit" >
+      <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | limitTo: limit | filter: filter_lot">
 
         <td class="lot_column" valign="top">
           <div class="display_field">

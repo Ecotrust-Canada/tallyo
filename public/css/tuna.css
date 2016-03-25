@@ -1124,7 +1124,7 @@ div#station-HS0-011 {
   padding-left: 16px;
 }
 
-#harvester_list .header input.search {
+/*#harvester_list */.header input.search {
   display: table-cell;
   vertical-align: middle;
   padding-right: 30px;
@@ -1132,12 +1132,19 @@ div#station-HS0-011 {
   color: #235161;
   width: 210px;
   height: 35px;
-  float: right;
   border: 1px solid #afafaf;
   background-color: white;
   background-image: url(/images/search.png);
   background-repeat: no-repeat;
   background-position: right 10px center;
+}
+
+#harvester_list .header input.search {
+  float: right;
+}
+
+.adminmanagelots .header input.search {
+  margin-left: 10px;
 }
 
 #list-20 .list-header {
