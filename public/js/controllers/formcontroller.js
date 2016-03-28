@@ -262,11 +262,10 @@ angular.module('scanthisApp.formController', [])
   var AddSetCurrent = function(thedata){
     $scope.list.collection.push(thedata);
     $scope.current.collectionid = thedata[$scope.station_info.collectionid];
-    /*var thediv = document.getElementById('scaninput');
+    var thediv = document.getElementById('scaninput');
     if(thediv){
-      thediv.focus();
-    }*/
-    $timeout(function(){eventFire(document.getElementById('scaninput'), 'click');}, 100);
+     $timeout(function(){thediv.focus();}, 0);
+    }
   };
 
   //database entry

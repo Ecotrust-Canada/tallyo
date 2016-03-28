@@ -37,45 +37,42 @@
         
       </span>
     </span>-->
-
-
   </div>
 
   <div class="scanform" ng-controller="PackingCtrl" >
     <fieldset ng-disabled="formdisabled">
       <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
-          <div class="form_row">
-            <div class="form_label">
-              <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
-                <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
-              </label>
-            </div>
-            <div class="field">
-              <input id="scaninput" type="text" ng-model="obj_id" 
-                     autocomplete="off" placeholder="Start scanning...">
-            </div>
+        <div class="form_row">
+          <div class="form_label">
+            <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
+              <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
+            </label>
           </div>
-        </form>
+          <div class="field">
+            <input id="scaninput" type="text" ng-model="obj_id" 
+                   autocomplete="off" placeholder="Start scanning...">
+          </div>
+        </div>
+      </form>
         
-        <div class="form_buttons">
-          <div class="pictogram_btns">
-            <span class="manual_weight">Manual Input</span>
-          </div>
-          <input type="button" ng-click="Complete()"
-                 value="{{packingconfig.completetitle}}" class="btn-orange">
-        </div> 
-      </fieldset>
+      <div class="form_buttons">
+        <div class="pictogram_btns">
+          <span class="manual_weight">Manual Input</span>
+        </div>
+        <input type="button" ng-click="Complete()"
+               value="{{packingconfig.completetitle}}" class="btn-orange">
+      </div> 
+    </fieldset>
   
 
-  <div id="overlay">
-     <div>
-          <p>Overwrite from previous?</p>
-          <button class="btn-blue" ng-click="enablekeypress();overlay()">Cancel</button>
-          <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay()">Yes</button>
-     </div>
-
+    <div id="overlay">
+      <div>
+        <p>Overwrite from previous?</p>
+        <button class="btn-blue" ng-click="enablekeypress();overlay()">Cancel</button>
+        <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay()">Yes</button>
+      </div>
     </div>
-    </div>
+  </div>
 
 </div>
 
