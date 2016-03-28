@@ -424,13 +424,14 @@ angular.module('scanthisApp.AdminController', [])
   $scope.endDate = new Date();
   $scope.filter_lot = function(item){
       if ($scope.searchText === '') return true;
-      return (item.internal_lot_code && item.internal_lot_code.indexOf($scope.searchText) > -1) || 
-             item.lot_number.indexOf($scope.searchText) > -1 ||
-             (item.supplier && item.supplier.indexOf($scope.searchText) > -1) ||
-             (item.fleet && item.fleet.indexOf($scope.searchText) > -1) ||
-             (item.tf_code && item.tf_code.indexOf($scope.searchText) > -1) ||
-             (item.landing_location && item.landing_location.indexOf($scope.searchText) > -1) ||
-             (item.ft_fa_code && item.ft_fa_code.indexOf($scope.searchText) > -1); 
+      var searchkey = $scope.searchText.toLowerCase();
+      return (item.internal_lot_code && item.internal_lot_code.toLowerCase().indexOf(searchkey) > -1) || 
+             item.lot_number.toLowerCase().indexOf(searchkey) > -1 ||
+             (item.supplier && item.supplier.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.fleet && item.fleet.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.tf_code && item.tf_code.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.landing_location && item.landing_location.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.ft_fa_code && item.ft_fa_code.toLowerCase().indexOf(searchkey) > -1); 
   }
 })
 
