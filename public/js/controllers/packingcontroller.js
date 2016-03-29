@@ -141,8 +141,18 @@ angular.module('scanthisApp.packingController', [])
 })
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
+
+
+  //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(id){
+    var alert = confirm('Remove?');
+    if (alert === true){
+      $scope.PatchNull(id);
+    }
+  };
+
+  $scope.PatchNull = function(id){
     var func = function(response){     
       $scope.RemoveScan(id);
     };

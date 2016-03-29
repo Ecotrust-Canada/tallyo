@@ -1,4 +1,4 @@
-<div class="panel white packingstation">
+<div class="panel white packingstation" ng-controller="PackingCtrl">
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
   </div>
@@ -39,7 +39,7 @@
     </span>-->
   </div>
 
-  <div class="scanform" ng-controller="PackingCtrl" >
+  <div class="scanform"  >
     <fieldset ng-disabled="formdisabled">
       <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
         <div class="form_row">
@@ -65,18 +65,19 @@
     </fieldset>
   
 
-    <div id="overlay">
+    
+  </div>
+
+  <div id="overlay">
       <div>
-        <p>Overwrite from previous?</p>
+        <p>This code has been scanned to a different box. Do you want to change this data entry?</p>
         <button class="btn-blue" ng-click="enablekeypress();overlay()">Cancel</button>
         <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay()">Yes</button>
       </div>
     </div>
-  </div>
 
 </div>
 
-</div>
 
 <div class="panel grey" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
@@ -102,7 +103,11 @@
 
     </div>
   </div>
+
+
+
 </div>
+
 
 
 

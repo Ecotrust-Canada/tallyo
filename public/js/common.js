@@ -299,7 +299,7 @@ var confirmTrue = function(message, func, elsefunc){
     func();
   }
   else{
-    elsefunc(); //this is the ng-model for the input form
+    elsefunc();
   }
 };
 
