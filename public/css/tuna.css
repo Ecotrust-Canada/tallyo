@@ -2184,6 +2184,14 @@ input[name^=weight]::after {
   width:79px;
 }
 
+#radio-shipment.toggle-group-container input:checked + span { 
+  background-color: #03223c;
+}
+#radio-shipment.toggle-group-container input + span { 
+  width:200px;
+  font-size: 15px;
+}
+
 .select_object {
   padding-top: 10px;
 }
