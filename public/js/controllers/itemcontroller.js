@@ -188,19 +188,25 @@ angular.module('scanthisApp.itemController', [])
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
 
   $scope.RemoveItem = function(id){
+    $scope.to_delete = id;
+    $scope.overlay('delete');
+  };
+
+  $scope.DeleteItem = function(){
+    var id = $scope.to_delete;
     if($scope.station_info.itemtable === 'scan'){
       $scope.RemoveScanOnly(id);
     }
     else{
       $scope.RemoveItemScan(id);
-    }    
+    }   
   };
 
   $scope.RemoveScanOnly = function(scan_id){
     var query = '?serial_id=eq.' + scan_id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
-      toastr.success('item removed');
+      $scope.to_delete = null;
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -219,6 +225,7 @@ angular.module('scanthisApp.itemController', [])
     var query = '?' + itemid + '=eq.' + id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete = null;
     };
     DatabaseServices.RemoveEntry(table, query, func);
   };
