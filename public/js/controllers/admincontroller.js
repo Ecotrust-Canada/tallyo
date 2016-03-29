@@ -11,14 +11,25 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.limit = 10;
 
-  $scope.ListShipments = function(){
+  $scope.stn = {};
+
+  $scope.stn.index= 0;
+
+  $scope.ListShipments = function(station_code){
     var func = function(response){
       $scope.list.shipments = response.data;
     };
-    var query = '?station_code=eq.' + $scope.station_code;
+    var query = '?station_code=eq.' + station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
-  $scope.ListShipments();
+  
+
+  $scope.$watch('stn.index', function() {
+    if ($scope.stn.index !== undefined && $scope.stn.index !== null){
+      $scope.current.shipment = null;
+      $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
+    }
+  });
 
   $scope.Edit = function(ship_obj){
     $scope.current.collectionid = ship_obj.shipping_unit_number;
@@ -34,7 +45,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.ShipInfo = function(){
     var func = function(response){
       $scope.current.shipment = null;
-      $scope.ListShipments();
+      $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.shipment.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.shipment, query, func);

@@ -3,6 +3,24 @@
   <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
     <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
   </div>
+
+
+
+  <span ng-if="options.ship_stations" id="radio-shipment" 
+    class="toggle-group-container" ng-class="withChecked('station_code')">
+    <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
+           type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
+           ><span>{{station.label}}</span></label>
+  </span>
+  <br>
+  <br>
+  {{station.index}}
+
+
+
+
+
+
   <div class="header">
     <input ng-model="searchText" class="search" placeholder="Search"></input>
     <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
@@ -14,9 +32,9 @@
     <div class="bufferedscroll" buffered-scroll id="list-21">
       <table>
         <tr>
-            <th>Ship Date</th>
+            <th>{{sumStations[stn.index].ship}}</th>
             <th>Po Number</th>
-            <th>Customer</th>
+            <th>{{sumStations[stn.index].send}}</th>
             <th>Container Number</th>
             <th>Bill of Lading</th>
             <th>Vessel Name</th>
@@ -27,7 +45,7 @@
             id="item-{{ship.shipping_unit_number}}" class="animation">
             <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
             <td>{{ship.po_number}}</td>
-            <td>{{ship.customer}}</td>
+            <td>{{ship[sumStations[stn.index].send_field]}}</td>
             <td>{{ship.container_number}}</td>
             <td>{{ship.bill_of_lading}}</td>
             <td>{{ship.vessel_name}}</td>
