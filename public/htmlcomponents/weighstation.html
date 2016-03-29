@@ -43,13 +43,9 @@
 
 </div>
 
-<div class="panel grey not" ng-show="current.collectionid">
+<div class="panel grey not" ng-show="current.collectionid" ng-controller="RemoveScanCtrl">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
-    <div ng-controller="RemoveScanCtrl">
-
-      <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
-
-    </div>
+    <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
     <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
@@ -59,4 +55,13 @@
             ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
             ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
   </div>
+
+  <div id="delete">
+    <div>
+      <p>Do you want to delete this entry?</p>
+      <button class="btn-blue" ng-click="enablekeypress();overlay('delete')">Cancel</button>
+      <button class="btn-blue" ng-click="DeleteItem();enablekeypress();overlay('delete')">Yes</button>
+    </div>
+  </div>
+  
 </div>

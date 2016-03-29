@@ -2677,25 +2677,50 @@ span.switch_option.active {
 }
 
 
-#overlay {
+#overwrite {
      visibility: hidden;
-     position: absolute;
+     position: fixed;
      left: 0px;
-     top: 0px;
-     margin-top: -100px;
-     width:100%;
+     top: 30px;
+     width:590px;
      height:100%;
      text-align:center;
      z-index: 1000;
 }
 
 
-#overlay div {
+#overwrite div {
      width:100%;
      height: 60vh;
-     margin: 100px auto;
+     margin: auto;
+     margin-right: 100px;
      background-color: #C77D73;
      border:5px solid red;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
+#delete {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     margin-top: 100px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#delete div {
+     width:100%;
+     height: 300px;
+     margin: 100px auto;
+     margin-right: 100px;
+     background-color: white;
+     border: 5px solid #0076ad;
      padding:15px;
      padding-top: 100px;
      text-align:center;

@@ -240,6 +240,11 @@ angular.module('scanthisApp', [
       return option;
   };
 
+  $scope.overlay = function(id) {
+    var el = document.getElementById(id);
+    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+  };
+
 })
 ;
 

@@ -68,26 +68,23 @@
     
   </div>
 
-  <div id="overlay">
-      <div>
-        <p>This code has been scanned to a different box. Do you want to change this data entry?</p>
-        <button class="btn-blue" ng-click="enablekeypress();overlay()">Cancel</button>
-        <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay()">Yes</button>
-      </div>
+  <div id="overwrite">
+    <div>
+      <p>This code has been scanned to a different {{packingconfig.collection}}. Do you want to change this data entry?</p>
+      <button class="btn-blue" ng-click="enablekeypress();overlay('overwrite')">Cancel</button>
+      <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay('overwrite')">Yes</button>
     </div>
+  </div>
 
 </div>
 
 
-<div class="panel grey" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
+<div class="panel grey" ng-controller="RemovePatchCtrl" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
-    <div ng-controller="RemovePatchCtrl">
-      <!--<list itemlist="list.included"  config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" ></list>-->
       <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)"></bufferedscrolllist>
-    </div>
   </div>
   <div class="itemtotals table_row" >
     <div class="item_number">
@@ -101,6 +98,14 @@
         >{{list.included.length}} {{packingconfig.item_name}}</span>    
       </div>
 
+    </div>
+  </div>
+
+  <div id="delete">
+    <div>
+      <p>Do you want to delete this entry?</p>
+      <button class="btn-blue" ng-click="enablekeypress();overlay('delete')">Cancel</button>
+      <button class="btn-blue" ng-click="PatchNull();enablekeypress();overlay('delete')">Yes</button>
     </div>
   </div>
 

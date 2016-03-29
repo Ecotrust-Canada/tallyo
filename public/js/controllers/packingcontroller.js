@@ -26,7 +26,7 @@ angular.module('scanthisApp.packingController', [])
   
           };
           document.onkeydown = disabled;
-          $scope.overlay();
+          $scope.overlay('overwrite');
         }
         //if it is already in current collection
         else if (itemcollection === $scope.current.collectionid){
@@ -131,11 +131,6 @@ angular.module('scanthisApp.packingController', [])
     document.onkeydown = enabled;
   };
 
-  $scope.overlay = function() {
-    var el = document.getElementById("overlay");
-    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
-  };
-
 
 
 })
@@ -146,13 +141,12 @@ angular.module('scanthisApp.packingController', [])
   //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(id){
-    var alert = confirm('Remove?');
-    if (alert === true){
-      $scope.PatchNull(id);
-    }
+    $scope.to_delete = id;
+    $scope.overlay('delete');
   };
 
-  $scope.PatchNull = function(id){
+  $scope.PatchNull = function(){
+    var id = $scope.to_delete;
     var func = function(response){     
       $scope.RemoveScan(id);
     };
@@ -166,6 +160,7 @@ angular.module('scanthisApp.packingController', [])
     var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete=null;
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
