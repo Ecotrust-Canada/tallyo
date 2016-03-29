@@ -3,8 +3,38 @@
   <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
     <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
   </div>
+  <div class="header">
+    <input ng-model="searchText" class="search" placeholder="Search"></input>
+    <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+    <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+  </div>
   <div  class="itemsframe entries">
-    <bufferedscrolllist itemlist="list.shipments"  limit="limit" config="item2listconfig" update-fn="Edit(str)"></bufferedscrolllist>
+    <!-- bufferedscrolllist itemlist="list.shipments" limit="limit" filterstring="filter_shipping"
+     config="item2listconfig" update-fn="Edit(str)" daterange="daterange"></bufferedscrolllist -->
+    <div class="bufferedscroll" buffered-scroll id="list-21">
+      <table>
+        <tr>
+            <th>Ship Date</th>
+            <th>Po Number</th>
+            <th>Customer</th>
+            <th>Container Number</th>
+            <th>Bill of Lading</th>
+            <th>Vessel Name</th>
+            <th>Seal Number</th>
+            <th></th>
+          </tr>
+        <tr ng-repeat="ship in list.shipments | dateRange: 'timestamp' : startDate : endDate | filter: filter_shipping | orderBy: '-timestamp'"
+            id="item-{{ship.shipping_unit_number}}" class="animation">
+            <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
+            <td>{{ship.po_number}}</td>
+            <td>{{ship.customer}}</td>
+            <td>{{ship.container_number}}</td>
+            <td>{{ship.bill_of_lading}}</td>
+            <td>{{ship.vessel_name}}</td>
+            <td>{{ship.seal_number}}</td>
+            <td class="btn_action" ng-click="Edit(ship)">Edit</td>
+      </table>
+    </div>
   </div>
 </div>
 

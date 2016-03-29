@@ -190,7 +190,7 @@ angular.module('scanthisApp.directives', [])
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
-        if ($scope.limit < $scope.itemlist.length) {
+        if ($scope.itemlist && $scope.limit < $scope.itemlist.length) {
           $scope.limit += 5;
         }
       };

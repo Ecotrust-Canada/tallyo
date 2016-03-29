@@ -1424,6 +1424,7 @@ div#station-HS0-011 {
 
 /* receivng station for HarSam */
 #station-HS0-ADM .panel.white,
+#station-AM2-006 .panel.white,
 #station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
 .panel.white.packingstation {
@@ -1431,8 +1432,15 @@ div#station-HS0-011 {
   margin-bottom: 24px;
   margin-right: 10px;
 }
+#station-AM2-006 .panel.white,
 #station-HS0-ADM .panel.white{
   padding-top: 40px;
+  width: 1000px;
+}
+
+#station-AM2-006 .header,
+#station-HS0-ADM .header {
+  margin-bottom: 10px;
 }
 
 #station-AM1-003 .panel.grey,

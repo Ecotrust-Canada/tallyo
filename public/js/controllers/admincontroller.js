@@ -80,6 +80,21 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries(table, func, query);
   };
 
+  $scope.searchText = '';
+  $scope.startDate = moment().subtract(14, 'days').toDate();
+  $scope.endDate = new Date();
+
+  $scope.filter_shipping = function(item){
+      if ($scope.searchText === '') return true;
+      var searchkey = $scope.searchText.toLowerCase();
+      return (item.po_number && item.po_number.toLowerCase().indexOf(searchkey) > -1) || 
+             (item.customer && item.customer.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.container_number && item.container_number.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.bill_of_lading && item.bill_of_lading.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.vessel_name && item.vessel_name.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.seal_number && item.seal_number.toLowerCase().indexOf(searchkey) > -1); 
+  }
+
 })
 
 
