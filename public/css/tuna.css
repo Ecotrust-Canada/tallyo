@@ -2014,7 +2014,7 @@ input[name^=weight]::after {
 }
 
 .weighstation_main .form_buttons .btn-orange {
-  width: 126px;
+  width: auto;
 }
 .packingstation .scanform .form_buttons {
   margin-top: 24px;
