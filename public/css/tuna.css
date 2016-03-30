@@ -227,8 +227,6 @@ body{
 
 #station-AM2-ADM > .panel, 
 #station-AM2-011 .panel, 
-#station-HS0-001 .panel, 
-#station-HS0-002 .panel, 
 #station-HS0-003 .panel,
 #station-HS0-004 .panel,
 #station-AM1-001 .panel,
@@ -239,8 +237,13 @@ body{
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
 #station-AM2-001 .panel {
-  width: 550px;
+  min-width: 550px;
+  box-sizing: border-box;
 }
+#station-HS0-001 .panel, 
+#station-HS0-002 .panel {
+  width: 550px;
+} 
 
 
 .columnframenarrow{
@@ -1086,7 +1089,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #harvester_list {
-  width: 840px;
+  min-width: 780px;
   margin-right: 14px;
   padding: 30px 20px 10px 20px;
   vertical-align: top;
@@ -1435,7 +1438,6 @@ div#station-HS0-011 {
 #station-AM2-006 .panel.white,
 #station-HS0-ADM .panel.white{
   padding-top: 40px;
-  width: 950px;
 }
 
 #station-AM2-006 .header,
@@ -1451,16 +1453,19 @@ div#station-HS0-011 {
 #station-HS0-004 .panel.grey,
 #station-HS0-005 .panel.grey,
 #station-AM2-001 .panel.grey,
+#station-AM2-006 .panel.grey,
+#station-AM1-002 .panel.grey,
 #station-HS0-003 .panel.grey {
 
   vertical-align: top;
   padding: 0;
-  width: 590px;
+  width: 550px;
   position: relative;
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 #station-HS0-ADM .panel.grey {
-  width:950px;
+  min-width:950px;
 }
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;
@@ -1708,7 +1713,7 @@ div#station-HS0-011 {
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
-  width: 370px;
+  min-width: 370px;
 }
 #form-13 .field {
   width: 320px;
