@@ -257,6 +257,10 @@ var onlyUnique = function(value, index, self) {
     return self.indexOf(value) === index;
 };
 
+var notNull = function(value){
+  return value;
+};
+
 var copyArrayPart = function(array, fields){
   var newarray = [];
   for (var i=0;i<array.length;i++){

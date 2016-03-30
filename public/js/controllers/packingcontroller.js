@@ -311,9 +311,19 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
+      //$scope.current.itemchange = !$scope.current.itemchange;
       toastr.success('added');
+      if ($scope.options.secondstation){
+        $scope.SecondScan();
+      }
       $scope.raw.string = null;
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+  $scope.SecondScan = function(){
+    $scope.entry.scan.station_code = $scope.options.secondstation;    
+    var func = function(response){
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };

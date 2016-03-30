@@ -3,7 +3,7 @@
   <tr ng-if="config.headers">
     <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
-  <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: config.limit | filter: filterstring"
+  <tr ng-repeat="item in items=(itemlist | filter: filterstring) | orderBy: config.order | limitTo: config.limit "
       id="item-{{item[config.arg]}}" class="animation">
     <td ng-repeat="name in config.fields" ng-switch on="name">
       <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
@@ -16,6 +16,7 @@
       <span ng-switch-when="boxes">{{item[name]}} boxes</span>
       <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
       <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
+      <span ng-switch-when="size_grade">{{item.size}} <label ng-if="item.grade">({{item.grade}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
     <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
@@ -29,11 +30,11 @@
     <td>Total:</td>
 
     <td ng-repeat="name in config.fields.slice(1, config.fields.length)" ng-switch="name">
-      <span ng-switch-when="weight_1">{{itemlist | sumOfValue:'weight_1'| weightstring}}</span>
-      <span ng-switch-when="weight_total">{{itemlist | sumOfValue:'weight_total'| weightstring}}</span>
-      <span ng-switch-when="weight">{{itemlist | sumOfValue:'weight'| weightstring}}</span>
-      <span ng-switch-when="pieces">{{itemlist | sumOfValue:'pieces'}} pcs</span>
-      <span ng-switch-when="boxes">{{itemlist | sumOfValue:'boxes'}} boxes</span>
+      <span ng-switch-when="weight_1">{{items | sumOfValue:'weight_1'| weightstring}}</span>
+      <span ng-switch-when="weight_total">{{items | sumOfValue:'weight_total'| weightstring}}</span>
+      <span ng-switch-when="weight">{{items | sumOfValue:'weight'| weightstring}}</span>
+      <span ng-switch-when="pieces">{{items | sumOfValue:'pieces'}} pcs</span>
+      <span ng-switch-when="boxes">{{items | sumOfValue:'boxes'}} boxes</span>
       <span ng-switch-default></span>
     </td>
 

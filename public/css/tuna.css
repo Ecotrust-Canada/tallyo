@@ -1435,7 +1435,7 @@ div#station-HS0-011 {
 #station-AM2-006 .panel.white,
 #station-HS0-ADM .panel.white{
   padding-top: 40px;
-  width: 1000px;
+  width: 950px;
 }
 
 #station-AM2-006 .header,
@@ -1458,6 +1458,9 @@ div#station-HS0-011 {
   width: 590px;
   position: relative;
   margin-bottom: 20px;
+}
+#station-HS0-ADM .panel.grey {
+  width:950px;
 }
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;

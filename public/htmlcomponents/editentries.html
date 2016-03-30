@@ -1,83 +1,78 @@
-<div ng-controller="ShipListCtrl">
-<div class="panel white editshipentries">
-  <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-    <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
-  </div>
+<div ng-controller="ShipListCtrl" class="editshipentries">
+  <div class="panel white ">
+    <span ng-if="options.ship_stations" id="radio-shipment" 
+      class="toggle-group-container" ng-class="withChecked('station_code')">
+      <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
+             type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
+             ><span>{{station.label}}</span></label>
+    </span>
+    <br>
+    <br>
 
+    <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
+      <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
+    </div>
 
+    <div class="header">
+      <input ng-model="searchText" class="search" placeholder="Search"></input>
+      <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+      <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+    </div>
 
-  <span ng-if="options.ship_stations" id="radio-shipment" 
-    class="toggle-group-container" ng-class="withChecked('station_code')">
-    <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
-           type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
-           ><span>{{station.label}}</span></label>
-  </span>
-  <br>
-  <br>
-  {{station.index}}
-
-
-
-
-
-
-  <div class="header">
-    <input ng-model="searchText" class="search" placeholder="Search"></input>
-    <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
-    <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
-  </div>
-  <div  class="itemsframe entries">
-    <!-- bufferedscrolllist itemlist="list.shipments" limit="limit" filterstring="filter_shipping"
-     config="item2listconfig" update-fn="Edit(str)" daterange="daterange"></bufferedscrolllist -->
-    <div class="bufferedscroll" buffered-scroll id="list-21">
-      <table>
-        <tr>
-            <th>{{sumStations[stn.index].ship}}</th>
-            <th>Po Number</th>
-            <th>{{sumStations[stn.index].send}}</th>
-            <th>Container Number</th>
-            <th>Bill of Lading</th>
-            <th>Vessel Name</th>
-            <th>Seal Number</th>
-            <th></th>
+    <div  class="itemsframe entries">
+      <div class="bufferedscroll" buffered-scroll id="list-21">
+        <table>
+          <tr>
+              <th>{{sumStations[stn.index].ship}}</th>
+              <th>Po Number</th>
+              <th>{{sumStations[stn.index].send}}</th>
+              <th>Container Number</th>
+              <th>Bill of Lading</th>
+              <th>Vessel Name</th>
+              <th>Seal Number</th>
+              <th></th>
+            </tr>
+          <tr ng-repeat="ship in list.shipments | dateRange: 'timestamp' : startDate : endDate | filter: filter_shipping | orderBy: '-timestamp'"
+              id="item-{{ship.shipping_unit_number}}" class="animation">
+              <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
+              <td>{{ship.po_number}}</td>
+              <td>{{ship[sumStations[stn.index].send_field]}}</td>
+              <td>{{ship.container_number}}</td>
+              <td>{{ship.bill_of_lading}}</td>
+              <td>{{ship.vessel_name}}</td>
+              <td>{{ship.seal_number}}</td>
+              <td class="btn_action" ng-click="Edit(ship)">Edit</td>
           </tr>
-        <tr ng-repeat="ship in list.shipments | dateRange: 'timestamp' : startDate : endDate | filter: filter_shipping | orderBy: '-timestamp'"
-            id="item-{{ship.shipping_unit_number}}" class="animation">
-            <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
-            <td>{{ship.po_number}}</td>
-            <td>{{ship[sumStations[stn.index].send_field]}}</td>
-            <td>{{ship.container_number}}</td>
-            <td>{{ship.bill_of_lading}}</td>
-            <td>{{ship.vessel_name}}</td>
-            <td>{{ship.seal_number}}</td>
-            <td class="btn_action" ng-click="Edit(ship)">Edit</td>
-      </table>
-    </div>
-  </div>
-</div>
-
-<div class="panel grey" ng-hide="current.shipment === undefined || current.shipment === null">
-  <div class="marg">
-    <span class="totals_caption">CSV Download: </span>
-    <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
-  </div>
-
-  <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
-    <div ng-controller="RemovePatchCtrl">
-      <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)"></bufferedscrolllist>
-    </div>
-  </div>
-  <div class="itemtotals table_row">
-    <div class="item_number">
-      <span >P.O. Number {{current.shipment.po_number}}</span> 
-    </div>
-    <div class="totals_bit" >
-      <div class="totals_caption">Total Weight &amp; Boxes</div>
-      <div class="summary">
-        <span>{{list.included | sumOfValue:'weight'| weightstring}}</span>
-        <span>{{list.included.length}} boxes</span>    
+        </table>
       </div>
     </div>
   </div>
+
+  <div class="panel grey not" ng-hide="current.shipment === undefined || current.shipment === null">
+    <div class="marg">
+      <span class="totals_caption">CSV Download: </span>
+      <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
+    </div>
+    <div class="itemsframe entries">
+      <bufferedscrolllist itemlist="list.included" config="itemlistconfig"></bufferedscrolllist>
+    </div>
+    <div class="itemtotals">
+      Shipment totals
+      <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
+    </div>
+
+    <div ng-show="show_sorted" ng-repeat= "origin in list.origin" class="itemtotals">
+      <span ng-repeat="field in sumStations[stn.index].har_info">{{origin[field]}}   </span>
+      <list itemlist="totals_sorted"  config="totallistconfig" istotal="istotal" filterstring="origin.harvester_code"></list>
+    </div>
+
+
+    <button ng-hide="show_sorted" ng-click="showSorted()" class="btn-blue">Sort by Origin</button>
+    <button ng-show="show_sorted" ng-click="hideSorted()" class="btn-blue">Hide</button>
+  </div>
+
+
 </div>
-</div>
+
+
+

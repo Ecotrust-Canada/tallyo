@@ -9,10 +9,9 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.current.itemchange = true;
 
-  $scope.limit = 10;
+  //$scope.limit = 10;
 
   $scope.stn = {};
-
   $scope.stn.index= 0;
 
   $scope.ListShipments = function(station_code){
@@ -22,8 +21,16 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?station_code=eq.' + station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
-  
 
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor;
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
+  
   $scope.$watch('stn.index', function() {
     if ($scope.stn.index !== undefined && $scope.stn.index !== null){
       $scope.current.shipment = null;
@@ -52,10 +59,8 @@ angular.module('scanthisApp.AdminController', [])
   }; 
 
   $scope.getTheData = function(ship_obj){
-
     $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_detail', 'detail');
     $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_sum', 'summary');
-
   };
 
   $scope.getCSV = function(ship_number, po_number, table, label){
@@ -104,7 +109,67 @@ angular.module('scanthisApp.AdminController', [])
              (item.bill_of_lading && item.bill_of_lading.toLowerCase().indexOf(searchkey) > -1) ||
              (item.vessel_name && item.vessel_name.toLowerCase().indexOf(searchkey) > -1) ||
              (item.seal_number && item.seal_number.toLowerCase().indexOf(searchkey) > -1); 
-  }
+  };
+
+
+  $scope.ListBoxes = function(){
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&shipping_unit_number=eq.' + $scope.current.collectionid;    
+    var func = function(response){
+      $scope.list.included = response.data;
+    };
+    DatabaseServices.GetEntries('box_product', func, query);
+  };
+
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      if ($scope.current.collectionid === 'no selected'){
+        $scope.list.included = null;
+      }
+      else{
+        $scope.ListBoxes();
+      }
+    }
+  });
+
+  $scope.ShipTotals = function(){
+    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    var func = function(response){
+      $scope.totals = response.data;
+      $scope.loadSorted();
+    };
+    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
+  };
+
+  $scope.$watch('current.itemchange', function() {
+    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
+      $scope.ShipTotals();
+    }
+  });
+
+  $scope.istotal = true;
+
+  $scope.loadSorted = function(){
+    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    var func = function(response){
+      $scope.totals_sorted = response.data;
+      var origins = fjs.pluck('harvester_code', $scope.totals_sorted);
+      var originlist = origins.filter(onlyUnique);
+      var filtered_origin = originlist.filter(notNull);
+      $scope.list.origin = $scope.list.harvester.filter(function(el){
+        return (filtered_origin.indexOf(el.harvester_code) != -1);
+      });
+      console.log($scope.list.origin);
+    };
+    DatabaseServices.GetEntries('shipment_summary_more', func, query);
+  };
+
+  $scope.showSorted = function(){
+    $scope.show_sorted = true;   
+  };
+
+  $scope.hideSorted = function(){
+    $scope.show_sorted = false;
+  };
 
 })
 
