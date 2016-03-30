@@ -20,7 +20,13 @@ angular.module('scanthisApp.packingController', [])
         var itemcollection = response.data[0][$scope.station_info.collectionid];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
-          confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
+          //confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
+          var disabled = function(event) {
+            event.preventDefault();
+  
+          };
+          document.onkeydown = disabled;
+          $scope.overlay('overwrite');
         }
         //if it is already in current collection
         else if (itemcollection === $scope.current.collectionid){
@@ -96,7 +102,6 @@ angular.module('scanthisApp.packingController', [])
     } else {
       $scope.printLabel(data, labels);
     }
-
   };
 
 
@@ -119,13 +124,29 @@ angular.module('scanthisApp.packingController', [])
     }
   });
 
+  $scope.enablekeypress = function(){
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
+  };
+
 
 
 })
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
+
+
+  //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(id){
+    $scope.to_delete = id;
+    $scope.overlay('delete');
+  };
+
+  $scope.PatchNull = function(){
+    var id = $scope.to_delete;
     var func = function(response){     
       $scope.RemoveScan(id);
     };
@@ -139,6 +160,7 @@ angular.module('scanthisApp.packingController', [])
     var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete=null;
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -156,12 +178,12 @@ angular.module('scanthisApp.packingController', [])
       $scope.GetInfo(lot_num);
     }
     else{
-      var harvester_code = 'none';
+      var harvester_code = null;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var best_before = null;
       var num = 0;
       var internal_lot_code = '';
-      lot_num = 'none';
+      lot_num = null;
       if ($scope.current.collectionid) {
           $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
       }
@@ -175,44 +197,29 @@ angular.module('scanthisApp.packingController', [])
       var harvester_code = response.data[0].harvester_code;
       var box_weight = CalculateBoxWeight($scope.list.included);
       var num = $scope.list.included.length;
+
+      var tf_code = response.data[0].tf_code;
+      var ft_fa_code = response.data[0].ft_fa_code;
       var best_before = moment(response.data[0].timestamp).add(2, 'years').format();
-      
-      $scope.GetHarvester(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
+      var fleet = response.data[0].fleet;
+
+      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before, fleet);
+
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
-  $scope.GetHarvester = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
-    var func = function(response){
-      if (response.data.length > 0){
-        $scope.current.harvester = response.data[0];
-      }
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
-    };
-    var query = '?harvester_code=eq.' + harvester_code;
-    DatabaseServices.GetEntryNoAlert('harvester', func, query);
-  };
 
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
+  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before, fleet){
     var func = function(response){
-      $scope.current[$scope.station_info.collectiontable] = response.data[0];
-      if ($scope.station_info.collectiontable === 'box'  && $scope.current.harvester){
-        $scope.current.box.internal_lot_code = internal_lot_code;
-        $scope.current.box.harvester_code = harvester_code;
+      $scope.current.box = response.data[0];
         $scope.current.box.tf_code = tf_code;
         $scope.current.box.ft_fa_code = ft_fa_code;
-        $scope.current.box.fleet = $scope.current.harvester.fleet;
-      }
+        $scope.current.box.fleet = fleet;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'internal_lot_code': internal_lot_code, 'best_before_date': best_before};
-    if (lot_num !== 'none'){
-      patch.lot_number = lot_num;
-    }
-    if (harvester_code !== 'none'){
-      patch.harvester_code = harvester_code;
-    }
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
@@ -304,12 +311,92 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
+      //$scope.current.itemchange = !$scope.current.itemchange;
       toastr.success('added');
+      if ($scope.options.secondstation){
+        $scope.SecondScan();
+      }
       $scope.raw.string = null;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
+
+  $scope.SecondScan = function(){
+    $scope.entry.scan.station_code = $scope.options.secondstation;    
+    var func = function(response){
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+})
+
+
+
+.controller('ThisfishAddCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+  $scope.show_element = '';
+
+  $scope.ListTFCodes = function(){
+    var query = '?lot_number=is.null';
+    var func = function(response){
+      $scope.list.tf_codes = response.data;
+    };
+    DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.ListTFCodes();
+
+  $scope.selectedoption = 'no selected';
+
+  $scope.the_config = 
+  { 
+    limit: "10",
+    order: "-timestamp", 
+    arg: "codes", 
+    fields: ["label", "codes"]
+  };
+
+  $scope.SetCodes = function(codes){
+    $scope.current.codes = JSON.parse(codes);
+    $scope.current.codes.forEach(
+      function(el){
+        $scope.PatchLot($scope.current.collectionid, el);
+      }
+    );
+  };
+
+  $scope.PatchLot = function(lot_number, tf_code){
+    var query = '?tf_code=eq.' + tf_code;
+    var patch = {'lot_number': lot_number};
+    var func = function(response){
+      $scope.ListTFCodes();
+    };
+    DatabaseServices.PatchEntry('thisfish', patch, query, func);
+  };
+
+  $scope.RemoveCodes = function(codes){
+    codes.forEach(
+      function(el){
+        $scope.PatchLot(null, el);
+      }
+    );
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
+      $scope.current.codes = null;
+      $scope.show_element = '';
+      var query = '?lot_number=eq.' + $scope.current.collectionid;
+      var func = function(response){
+        if (response.data.length>0){
+          $scope.current.codes = response.data[0].codes;
+          $scope.current.products = response.data[0].products;
+        }
+      };
+      DatabaseServices.GetEntries('group_codes', func, query);
+    }
+  });
 
 })
 

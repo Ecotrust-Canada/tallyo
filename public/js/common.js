@@ -112,11 +112,17 @@ var ClearFormToDefault = function(form_arr, def_arr){
         if (!def_arr[i].stay){
           form_arr[def_arr[i].fieldname] = def_arr[i].value;
         }
+        else if (!form_arr[def_arr[i].fieldname]){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value;
+        } 
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
         if (!def_arr[i].stay){
           form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
         }
+        else if (!form_arr[def_arr[i].fieldname]){
+          form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
+        } 
       }
       else{
         if (!def_arr[i].stay){
@@ -125,6 +131,21 @@ var ClearFormToDefault = function(form_arr, def_arr){
         else if (!form_arr[def_arr[i].fieldname]){
           form_arr[def_arr[i].fieldname] = "";
         }        
+      }
+    }
+    return form_arr;
+  };
+
+  var ResetForm = function(form_arr, def_arr){
+    for (var i=0;i<def_arr.length;i++){
+      if (def_arr[i].type === 'text'){
+        form_arr[def_arr[i].fieldname] = def_arr[i].value;
+      }
+      else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
+        form_arr[def_arr[i].fieldname] = def_arr[i].value[0].val;
+      }
+      else{
+        form_arr[def_arr[i].fieldname] = "";      
       }
     }
     return form_arr;
@@ -165,7 +186,7 @@ var arrayObjectIndexOf = function(myArray, searchTerm, property) {
 
 // + character disapears from url, this fixes that
 var cleanQueryString = function(querystring){
-  var queryStringNew = querystring.replace("+", "%2B");
+  var queryStringNew = querystring.replace(/\+/g, "%2B");
   return queryStringNew;
 };
 
@@ -209,6 +230,9 @@ var tableInfo = function(table){
   else if (table === 'harvester'){
     return {letter:'H', field:'harvester_code'};
   }
+  else if (table === 'receive_lot'){
+    return {letter:'R', field:'receive_code'};
+  }
 };
 
 var isInArray = function(value, array) {
@@ -218,9 +242,9 @@ var isInArray = function(value, array) {
 var AddtoEntryNonFormData = function($scope, table){
   $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
-  if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
+  /*if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
     $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
-  }
+  }*/
 };
 
 var AddtoEntryFormData = function(form, scopevar, $scope){
@@ -231,6 +255,10 @@ var AddtoEntryFormData = function(form, scopevar, $scope){
 
 var onlyUnique = function(value, index, self) { 
     return self.indexOf(value) === index;
+};
+
+var notNull = function(value){
+  return value;
 };
 
 var copyArrayPart = function(array, fields){
@@ -275,7 +303,7 @@ var confirmTrue = function(message, func, elsefunc){
     func();
   }
   else{
-    elsefunc(); //this is the ng-model for the input form
+    elsefunc();
   }
 };
 

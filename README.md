@@ -1,4 +1,4 @@
-# ScanThis
+# Tally-O
 
 Open source Fish Plant data collection software, geared towards generating traceable data.
 
@@ -9,7 +9,7 @@ git clone https://github.com/Ecotrust-Canada/scanthis
 
 ### Installation
 
-Install the latest stable version of node v4 (ie, v4.0.0) . We recommend using [nvm](https://github.com/creationix/nvm) for this.
+Install the latest stable version of node v4 (ie, v4.4.0) . We recommend using [nvm](https://github.com/creationix/nvm) for this.
 
 Install environmental dependencies using npm
 ```

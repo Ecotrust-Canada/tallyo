@@ -13,6 +13,7 @@
     
     <div ng-repeat="row in formarray" class="form_row"> <!--For each object in config.fields -->
 
+
         <div class="form_label">
           <label for="{{row.fieldname}}">{{row.title}}:
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
@@ -62,20 +63,31 @@
           <!--select-->
           <span ng-if="row.type === 'select'">
             <!--static select options-->
+
             <div class="styled-dropdown">   
               <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" 
-                      ng-required="{{row.required || false}}" name="{{row.fieldname}}">
+                      ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
                 <option value="">-- select --</option>
                 <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
               </select>
-              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" name="{{row.fieldname}}">
+              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
                 <option value="">-- select --</option>
                 <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
                         value={{option.value}}>{{option.value}}</option>
               </select>
+
+              <!--options from another database table-->
+              <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in list1" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
+              </select>
+              <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in list2" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
+              </select>
+
               <div class="dd_arrow"><span></span></div>
             </div> 
-
 
             <!--editing dropdown options-->
             <div ng-if="row.value ==='dboptions' && config.editinform === true" 
@@ -96,22 +108,12 @@
               </div>
             </div>
 
-
-            <!--options from another database table-->
-            <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
-              <option value="">-- select --</option>
-              <option ng-repeat="option in list1" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
-            </select>
-            <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
-              <option value="">-- select --</option>
-              <option ng-repeat="option in list2" value={{option[row.value.val]}}>{{option[row.value.name]}}</option>
-            </select>
           </span>
 
           <!--button to set scale weight-->
           <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 
                class="weight-connector"/>
-          <button class="btn-blue scale-weight-set" 
+          <button class="scale-weight-set" 
                   ng-if="row.pollarg && row.scale!='off'"
                   ng-disabled="row.scale!='on'" 
                   ng-click="store(row);pollFn({field: row.pollarg})"
@@ -130,7 +132,7 @@
     
     <div class="form_buttons">
       <div class="pictogram_btns">
-        <span ng-click="Clear()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
+        <span ng-click="Reset()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
         <span ng-if="config.startpolling" ng-show="poll_scale" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight">Manual Input</span>
         <span ng-if="config.startpolling" ng-hide="poll_scale" 

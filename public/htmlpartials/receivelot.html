@@ -8,25 +8,26 @@
 
     <input-dropdown  thelist="list.harvester"  config="adddropdown" on-select="GetHar(value)"></input-dropdown>
 
+    <div class="form_buttons">
 
-    <span class="switch_option" ng_class="{active: form.state=='Dirty'}"
-        value="Dirty">Dirty</span>
-    <div ng-click="toggleStateValue()" class="onoffswitch">
-      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
-             id="toggle-state" ng-checked="form.state=='Clean'">
-      <label class="onoffswitch-label" for="toggle-state">
-        <span class="onoffswitch-inner"></span>
-        <span class="onoffswitch-switch"></span>
-      </label>
+      <span class="switch_option" ng_class="{active: form.state=='Dirty'}"
+          value="Dirty">Dirty</span>
+      <div ng-click="toggleStateValue()" class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+               id="toggle-state" ng-checked="form.state=='Clean'">
+        <label class="onoffswitch-label" for="toggle-state">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+      <span class="switch_option" ng_class="{active: form.state=='Clean'}"
+          value="Clean">Clean</span>
+
+      <button ng-disabled="!form.harvester_code || !form.state" ng-click="GenInternalLot(form)" class="btn-orange">Submit</button>
+
     </div>
-    <span class="switch_option" ng_class="{active: form.state=='Clean'}"
-        value="Clean">Clean</span>
-
-<br>
-  <button ng-disabled="!form.harvester_code || !form.state" ng-click="GenInternalLot(form)" class="btn-orange">Submit</button>
 
   <!--<dropdown itemlist="list.lot"  cfg="collectiondropdown" selectedoption="lotselected" change-fn="SetLot(selected)"></dropdown>-->
-<br>
   <input-dropdown  thelist="list.lot"  config="collectiondropdown" on-select="SetLot(value)"></input-dropdown>
 
 </div>

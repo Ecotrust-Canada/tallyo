@@ -27,6 +27,10 @@ angular.module('scanthisApp.directives', [])
 
 .directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
 
+.directive('setthisfish', function() { return { templateUrl: 'htmlpartials/setthisfish.html' }; })
+
+.directive('tfcodes', function() { return { templateUrl: 'htmlpartials/tfcodes.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '='},
@@ -71,6 +75,13 @@ angular.module('scanthisApp.directives', [])
   controller: 'OptionCtrl',
   templateUrl: 'htmlpartials/dropdown.html' }; })
 
+.directive('persistdropdown', function() { return { 
+  scope: { itemlist: '=',  
+           cfg: '=', 
+           selectedoption: '=', 
+           changeFn: '&' },
+  templateUrl: 'htmlpartials/persistdropdown.html' }; })
+
 .directive('entryform', function() { return { 
   scope: {table: '=',  
           config: '=', 
@@ -83,6 +94,15 @@ angular.module('scanthisApp.directives', [])
           pollFn: '&'},
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
+
+.directive('editform', function() { return { 
+  scope: {obj: '=',  
+          config: '=',   
+          formchange: '=',
+          formdisabled: '=', 
+          submitFn: '&'},
+  controller: 'editformCtrl', 
+  templateUrl: 'htmlpartials/editform.html' }; })
 
 .directive('fieldsetrepeat', function() { return { 
   scope: { config: '=' , 
@@ -153,7 +173,13 @@ angular.module('scanthisApp.directives', [])
             element.addClass('input-dropdown');
             scope.select = function(e, value) {
                 scope.the_val = value;
-                scope.onSelect({$event: e, value: value[scope.config.arg]});
+                if (scope.config.arg){
+                  scope.onSelect({$event: e, value: value[scope.config.arg]});
+                }
+                else{
+                  scope.onSelect({$event: e, value: value});
+                }
+                
             };
             scope.setnull = function(){
               scope.the_val = null;
@@ -164,7 +190,7 @@ angular.module('scanthisApp.directives', [])
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
-        if ($scope.limit < $scope.itemlist.length) {
+        if ($scope.itemlist && $scope.limit < $scope.itemlist.length) {
           $scope.limit += 5;
         }
       };

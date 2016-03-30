@@ -46,6 +46,29 @@ angular.module('scanthisApp.formController', [])
     }
   };
 
+
+  $scope.Reset = function(){
+    $scope.submitted=false;
+    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ResetForm($scope.form, $scope.formarray);
+    if ($scope.config.startpolling) {
+      clearObj($scope.scale);
+      if ($scope.poll_scale === true){
+        $scope.pollFn({field: $scope.config.startpolling});
+      }
+      else{
+        var scales = $scope.formarray.filter(function(el){
+          return (el.scale);
+        });
+        scales.forEach(function(el){
+          el.scale = 'off';
+        });
+      }     
+    }
+  };
+
+
+
   //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
@@ -144,6 +167,13 @@ angular.module('scanthisApp.formController', [])
         $scope.hideform = true;
       }
     }
+    if ($scope.config.hidden){
+      $scope.config.hidden.forEach(function(entry){
+        form[entry.fieldname] = entry.val;
+      });
+    }
+    
+
     return form;
 
   };
@@ -204,7 +234,11 @@ angular.module('scanthisApp.formController', [])
   $scope.withChecked = function(fieldname){
       if (!$scope.form[fieldname]) return 'rbgroup-unset';
       return null;
-  }
+  };
+
+})
+
+.controller('editformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
 
 })
 
@@ -228,11 +262,10 @@ angular.module('scanthisApp.formController', [])
   var AddSetCurrent = function(thedata){
     $scope.list.collection.push(thedata);
     $scope.current.collectionid = thedata[$scope.station_info.collectionid];
-    /*var thediv = document.getElementById('scaninput');
+    var thediv = document.getElementById('scaninput');
     if(thediv){
-      thediv.focus();
-    }*/
-    $timeout(function(){eventFire(document.getElementById('scaninput'), 'click');}, 100);
+     $timeout(function(){thediv.focus();}, 0);
+    }
   };
 
   //database entry
@@ -330,7 +363,7 @@ angular.module('scanthisApp.formController', [])
           option += val;
         } 
         if (i < cfg.fields.length - 1) {
-          option += ' '+(cfg.separator? cfg.separator : '-')+' ';
+          option += ' '+(cfg.delimeter? cfg.delimeter : '-')+' ';
         }
       }  
 

@@ -23,11 +23,23 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+
+
+.filter('istraceable', function() {
+  return function(input) {
+    if (String(input) === 'true'){
+        return 'Traceable';
+    }
+    else return '';
+  };
+})
+
 .filter('separatestring', function() {
   return function(input) {
     if (input){
       return input + ' - ';
     }
+
   };
 })
 
@@ -50,5 +62,20 @@ angular.module('scanthisApp.filters', [])
       return String(input.toFixed(2)) + ' kg';
     }
     
+  };
+})
+
+.filter('dateRange', function(){
+  return function(input, property, startDate, endDate) {
+    var retArray = [];
+    angular.forEach(input, function(obj){
+      if (obj[property]){
+        var day_val = new Date(obj[property].substring(0,19));
+        if(day_val.getTime() >= startDate.getTime() && day_val.getTime() <= endDate.getTime())   {
+          retArray.push(obj);
+        }
+      }
+    });
+    return retArray;
   };
 });

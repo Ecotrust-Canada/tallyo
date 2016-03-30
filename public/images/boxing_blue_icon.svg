@@ -1,21 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="44px" height="28px" viewBox="0 0 44 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
-    <title>boxing_blue_icon</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="boxing_blue_icon" sketch:type="MSLayerGroup">
-            <g id="Group-8" transform="translate(22.000000, 14.000000) scale(-1, 1) translate(-22.000000, -14.000000) " stroke-width="2.2" sketch:type="MSShapeGroup">
-                <path d="M43.0790218,13.0315888 L27.5664262,6.4618799 L21.8441287,0.356246014 L36.9309829,6.1661409 L43.0790218,13.0315888 Z" id="Rectangle-198-Copy" stroke="#FD6A0E" fill="#03223C"></path>
-                <path d="M37.0728863,6.1574344 L37.0728863,18.91212 L21.6793003,17.152853 L6.28571429,18.91212 L6.28571429,6.1574344 L21.6793003,5.31264606e-14 C21.6793001,2.17782191e-06 37.0728863,6.1574344 37.0728863,6.1574344 Z" id="Rectangle-198" stroke="#74A2B0" fill="#EAEBEB"></path>
-                <path d="M21.6793003,27.9008746 L6.28571429,21.3036235 L6.28571429,6.34985423 L21.6793003,12.9471054 L37.0728863,6.34985423 L37.0728863,21.3036235 L21.6793003,27.9008746 Z" id="Rectangle-198" stroke="#74A2B0" fill="#EAEBEB"></path>
-                <path d="M16.8573422,21.8890705 L0.0245535714,14.6137596 L6.16513871,6.28496265 L22.9979273,13.5602736 L16.8573422,21.8890705 Z" id="Rectangle-198" stroke="#74A2B0" fill="#EAEBEB"></path>
-            </g>
-            <path d="M7.06945552,6.26357223 L0.484494579,12.642897 L0.858498087,13.0607462 L7.70127152,10.6494539 L7.06945552,6.26357223 Z" id="Path-183" fill="#74A2B0" sketch:type="MSShapeGroup"></path>
-            <path d="M8.24539621,7.27596859 L22.2801738,1.14612564 L36.5850407,7.2303691 L22.2946429,14.1354034 L8.24539621,7.27596859 Z" id="Path-181" fill="#74A2B0" sketch:type="MSShapeGroup"></path>
-            <path d="M21.2816299,12.6373067 L21.295029,2.4147999 L22.2459839,1.79591837 L23.2571402,2.3435507 L23.212225,12.5714286 L22.2335284,13.0899035 L21.2816299,12.6373067 Z" id="Rectangle-119" fill="#EAEBEB" sketch:type="MSShapeGroup"></path>
-            <path d="M22.2244898,14.4314869 L22.2244898,25.9766764" id="Path-36" stroke="#74A2B0" stroke-width="2.5" sketch:type="MSShapeGroup" transform="translate(22.224490, 20.204082) scale(-1, 1) translate(-22.224490, -20.204082) "></path>
-        </g>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="49px"
+   height="32px"
+   viewBox="0 0 49 32"
+   version="1.1"
+   id="svg4181"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Icon_boxing_blue.svg">
+  <metadata
+     id="metadata4195">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Icon_boxing</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     id="namedview4193"
+     showgrid="false"
+     inkscape:zoom="20.55102"
+     inkscape:cx="24.5"
+     inkscape:cy="16"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4181" />
+  <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4183">Icon_boxing</title>
+  <desc
+     id="desc4185">Created with Sketch.</desc>
+  <defs
+     id="defs4187" />
+  <g
+     id="Receiving"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="Sony-X-Z3-Tab-Comp-Vertical-(2x)-Copy-3"
+       transform="translate(-63,-381)"
+       style="fill:#74a2b0">
+      <g
+         id="Station-/-nav">
+        <path
+           d="m 87.318,380.9994 -17.143,6.857 -7.175,7.223 0.417,0.465 6.758,-2.382 0,11.562 17.143,7.347 17.142,-7.347 0,-4.437 6.974,-3.013 -6.974,-9.418 -17.142,-6.857 z m -1.157,14.073 0,-11.584 1.073,-0.489 1.077,0.489 0,11.511 -1.09,0.577 -1.06,-0.504 z m 2.791,1.866 14.976,-6.473 4.402,5.971 -14.977,6.473 -4.401,-5.971 z m -16.777,6.466 0,-12.301 13.936,5.974 0,12.301 -13.936,-5.974 z m 16.135,-3.966 4.377,5.937 9.774,-4.223 0,2.252 -14.151,6.066 0,-10.032 z"
+           id="Icon_boxing"
+           inkscape:connector-curvature="0" />
+      </g>
     </g>
+  </g>
 </svg>

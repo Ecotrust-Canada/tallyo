@@ -124,14 +124,20 @@ angular.module('scanthisApp.itemController', [])
 
     //assign trade_unit and weight(kg) from weight and units 
     if ($scope.options && $scope.options.trade_unit){
-      $scope.entry.box.trade_unit = $scope.form.trade_unit_w + ' ' + $scope.form.trade_unit;
-      if ($scope.form.trade_unit === 'lb'){
-        $scope.entry.box.weight = $scope.form.trade_unit_w / 2.2;
+      //console.log(form.product_object);
+      var product = JSON.parse(form.product_object);
+      
+      delete $scope.entry.box.product_object;
+      //console.log(product);
+      if (product.entry_unit === 'lb'){
+        $scope.entry.box.weight = product.weight / 2.2;
       }
-      else if ($scope.form.trade_unit === 'kg'){
-        $scope.entry.box.weight = $scope.form.trade_unit_w;
+      else if (product.entry_unit === 'kg'){
+        $scope.entry.box.weight = product.weight;
       }
-      delete $scope.entry.box.trade_unit_w;
+      $scope.entry.box.product_code = product.product_code;
+
+      //console.log($scope.entry.box);
     }
     //attach harvester, shipment
     if ($scope.options && $scope.options.lot_info){
@@ -182,19 +188,25 @@ angular.module('scanthisApp.itemController', [])
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
 
   $scope.RemoveItem = function(id){
+    $scope.to_delete = id;
+    $scope.overlay('delete');
+  };
+
+  $scope.DeleteItem = function(){
+    var id = $scope.to_delete;
     if($scope.station_info.itemtable === 'scan'){
       $scope.RemoveScanOnly(id);
     }
     else{
       $scope.RemoveItemScan(id);
-    }    
+    }   
   };
 
   $scope.RemoveScanOnly = function(scan_id){
     var query = '?serial_id=eq.' + scan_id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
-      toastr.success('item removed');
+      $scope.to_delete = null;
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -213,6 +225,7 @@ angular.module('scanthisApp.itemController', [])
     var query = '?' + itemid + '=eq.' + id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete = null;
     };
     DatabaseServices.RemoveEntry(table, query, func);
   };

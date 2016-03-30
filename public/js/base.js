@@ -51,6 +51,10 @@ angular.module('scanthisApp', [
   $scope.terminal = {};
   $scope.terminal.showsection = "default";
 
+  //$scope.stations = stationlist;
+  //$scope.terminals = terminals;
+  $scope.settings = plant_settings;
+
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
 
@@ -162,6 +166,7 @@ angular.module('scanthisApp', [
       $scope.scanform = formconfigs[settings.forms.scanform];
       $scope.collectionform = formconfigs[settings.forms.collectionform];
       $scope.addform = formconfigs[settings.forms.addform];
+      $scope.addform2 = formconfigs[settings.forms.addform2];
     }
 
     if (settings.dropdowns){
@@ -233,6 +238,11 @@ angular.module('scanthisApp', [
           option += (index < fields.length -1 ? ' ' + delim + ' ' : '');
       }
       return option;
+  };
+
+  $scope.overlay = function(id) {
+    var el = document.getElementById(id);
+    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
   };
 
 })
