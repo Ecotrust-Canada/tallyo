@@ -26,30 +26,13 @@
             </div>
             <div class="field_val lot_code">{{lot.internal_lot_code || lot.lot_number}}</div>
           </div>        
-          <div ng-if="lot.expanded" class="expanded"> 
-            <div class="display_field">
-              <label>Date:</Label>
-              <div class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
-            </div>
-            <div class="display_field">
-              <label>Supplier:</Label>
-              <div class="field_val">{{lot.supplier}}</div>
-            </div>
-            <div class="display_field">
-              <label>Fleet:</Label>
-              <div class="field_val">{{lot.fleet}}</div>
-            </div>
-            <div class="display_field" ng-if="lot.tf_code">
-              <label>Thisfish Code:</Label>
-              <div class="field_val">{{lot.tf_code}}</div>
-            </div>
-            <div class="display_field">
-              <label>Landing Site:</Label>
-              <div class="field_val">{{lot.landing_location}}</div>
-            </div>
-            <div class="display_field">
-              <label>FT FA Code:</Label>
-              <div class="field_val">{{lot.ft_fa_code}}</div>
+          <div ng-if="lot.expanded" class="expanded">
+
+
+            <div ng-repeat="row in collectiondisplay.layout" class="display_field" ng-switch on="row.val">
+              <label>{{row.name}}:</Label>
+              <div ng-switch-when="end_date" class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
+              <div ng-switch-default class="field_val">{{lot[row.val]}}</div>
             </div>
           </div>
         </td>

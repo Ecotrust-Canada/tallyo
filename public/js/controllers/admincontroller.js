@@ -1,16 +1,11 @@
 'use strict';
-
-
 angular.module('scanthisApp.AdminController', [])
-
 
 //editentries.html - controller for listing and editing shipment entries
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.current.itemchange = true;
-
   //$scope.limit = 10;
-
   $scope.stn = {};
   $scope.stn.index= 0;
 
@@ -20,6 +15,15 @@ angular.module('scanthisApp.AdminController', [])
     };
     var query = '?station_code=eq.' + station_code;
     DatabaseServices.GetEntries('shipping_unit', func, query);
+  };
+
+  $scope.totallistconfig = 
+  { id: 11,    
+    cssclass: "fill small", 
+    fields: ["size_grade", "weight", "boxes"], 
+    limit: "10000",
+    order: "-timestamp",
+    /*csv: true*/
   };
 
   $scope.ListHarvesters = function(){
@@ -111,7 +115,6 @@ angular.module('scanthisApp.AdminController', [])
              (item.seal_number && item.seal_number.toLowerCase().indexOf(searchkey) > -1); 
   };
 
-
   $scope.ListBoxes = function(){
     var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&shipping_unit_number=eq.' + $scope.current.collectionid;    
     var func = function(response){
@@ -126,6 +129,8 @@ angular.module('scanthisApp.AdminController', [])
         $scope.list.included = null;
       }
       else{
+        $scope.show_sorted = false;
+        $scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
         $scope.ListBoxes();
       }
     }
@@ -137,7 +142,7 @@ angular.module('scanthisApp.AdminController', [])
       $scope.totals = response.data;
       $scope.loadSorted();
     };
-    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
+    DatabaseServices.GetEntries('shipment_summary', func, query);
   };
 
   $scope.$watch('current.itemchange', function() {
@@ -158,7 +163,6 @@ angular.module('scanthisApp.AdminController', [])
       $scope.list.origin = $scope.list.harvester.filter(function(el){
         return (filtered_origin.indexOf(el.harvester_code) != -1);
       });
-      console.log($scope.list.origin);
     };
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
   };
@@ -171,6 +175,39 @@ angular.module('scanthisApp.AdminController', [])
     $scope.show_sorted = false;
   };
 
+})
+
+
+//inventory.html - shows current totals of boxes at given stations
+.controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.stn = {};
+  $scope.istotal = true;
+  $scope.stn.index= 0;
+  
+
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    fields: ["weight_total", "boxes"], 
+  };
+
+  $scope.ListBoxes = function(){
+    var func = function(response){
+      $scope.list.items = response.data;
+      var stn = $scope.sumStations[$scope.stn.index];
+      var fields = stn.fields;
+      $scope.totallistconfig = JSON.parse(JSON.stringify($scope.boxconfig)); 
+      $scope.totallistconfig.fields = fields.concat($scope.totallistconfig.fields);
+    };
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    DatabaseServices.GetEntries('box_inventory', func, query);
+  };
+
+  $scope.$watch('stn.index', function() {
+    if ($scope.stn.index !== undefined && $scope.stn.index !== null){    
+    $scope.ListBoxes();
+    }
+  });
 })
 
 
@@ -296,13 +333,6 @@ angular.module('scanthisApp.AdminController', [])
 
   };
 
-
-
-
-
-
-
-
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
     var func = function(response){
@@ -318,12 +348,10 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-
   $scope.postHarResponse = function(tf_code, status, data){
     var patch = {'har_response_status': status, 'har_response_data': data};
     var query = '?tf_code=eq.' + tf_code;
     var func = function(response){
-
     };
     DatabaseServices.PatchEntry('thisfish', patch, query, func);
   };
@@ -332,17 +360,14 @@ angular.module('scanthisApp.AdminController', [])
     var patch = {'pro_response_status': status, 'pro_response_data': data};
     var query = '?tf_code=eq.' + tf_code;
     var func = function(response){
-
     };
     DatabaseServices.PatchEntry('thisfish', patch, query, func);
   };
-
 
   $scope.ThisfishHar = function(lot_number){
     var posturl = '';
     var query = '?lot_number=eq.' + lot_number;
     var func = function(response){
-      //console.log(response.data[0]);
       var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
       delete harvester_entry.lot_number;
       harvester_entry.entry_unit = $scope.settings.entry_unit;
@@ -350,7 +375,6 @@ angular.module('scanthisApp.AdminController', [])
       harvester_entry.landing_slip_number = '000000';
       harvester_entry.privacy_display_date = '20';
       harvester_entry.amount = Math.round(harvester_entry.amount);
-      //console.log(harvester_entry);
 
       for (var key in harvester_entry) {
         if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
@@ -358,9 +382,7 @@ angular.module('scanthisApp.AdminController', [])
           var filtered = tf_har_options[key].filter(function(el){
             return el.name === name;
           });
-          //console.log(key, name, filtered);
           if(!filtered[0]){
-            //console.log(key, name);
           }
           else{
             var id = filtered[0].id;
@@ -374,14 +396,9 @@ angular.module('scanthisApp.AdminController', [])
               }
             }
           }
-          
-          
-
-          //console.log(id);
         }
       }
       console.log(harvester_entry);
-      //console.log(posturl);
       $http.post(posturl, harvester_entry, tfconfig).then
       (function(response){
         console.log(response);
@@ -391,9 +408,7 @@ angular.module('scanthisApp.AdminController', [])
         function(response){
           console.log(response);
           $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        });
-
-      
+        });      
     };
     DatabaseServices.GetEntries('tf_harvester_entry', func, query);
   };
@@ -402,7 +417,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.ThisfishPro = function(lot_number){
     var query = '?lotnum=eq.' + lot_number;
     var func = function(response){
-      //console.log(response.data[0]);
       var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
       delete processor_entry.lotnum;
       processor_entry.user = $scope.settings.tf_user;
@@ -417,11 +431,8 @@ angular.module('scanthisApp.AdminController', [])
           var filtered = tf_pro_options[key].filter(function(el){
             return el.name === name;
           });
-          //console.log(key, name, filtered);
           var id = filtered[0].id;
           processor_entry[key] = id;
-
-          //console.log(id);
         }
       }
       console.log(processor_entry);
@@ -493,8 +504,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries(table, func, query);
   };
 
-  
-
   $scope.cssWarn = function(lot, stn) {
     if ( lot[stn.code] && lot[stn.code].summary ) { 
 
@@ -523,132 +532,8 @@ angular.module('scanthisApp.AdminController', [])
              (item.tf_code && item.tf_code.toLowerCase().indexOf(searchkey) > -1) ||
              (item.landing_location && item.landing_location.toLowerCase().indexOf(searchkey) > -1) ||
              (item.ft_fa_code && item.ft_fa_code.toLowerCase().indexOf(searchkey) > -1); 
-  }
-})
-
-//shipmenttotals.html - view summary of unloaded boxes for incoming shipments
-.controller('ViewShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.istotal = true;
-  $scope.selected = "no selected";
-  $scope.ListShipments = function(){
-    var func = function(response){
-      $scope.list.shipping_unit = response.data;
-    };
-    var query = '?received_from=neq.null';
-    DatabaseServices.GetEntries('shipping_unit', func, query);
-  };
-  $scope.ListShipments();
-
-  $scope.SetCurrent = function(selected){
-     var filtered = $scope.list.shipping_unit.filter(
-      function(value){
-        return value.shipping_unit_number === selected;
-      });
-     $scope.current.shipping_unit = filtered[0];
-     $scope.ShipSummary(selected);
-     $scope.OriginSummary(selected);
-  };
-
-
-  $scope.ShipSummary = function(ship_num){
-    var func = function(response){
-      $scope.list.included = response.data;
-    };
-    var query = '?shipping_unit_number=eq.' + ship_num;
-    DatabaseServices.GetEntries('shipment_summary', func, query);
-  };
-
-  $scope.OriginSummary = function(ship_num){
-    var func = function(response){
-      $scope.list.containersummary = response.data;
-      var origins = fjs.pluck('harvester_code', $scope.list.containersummary);
-      $scope.list.origin = origins.filter(onlyUnique);
-      for (var i=0;i<$scope.list.origin.length;i++){
-        $scope.list[$scope.list.origin[i]] = {};
-        $scope.list[$scope.list.origin[i]].summary = $scope.list.containersummary.filter(
-          function(value){
-            return value.harvester_code === $scope.list.origin[i];
-          }
-          );
-        $scope.GetOrigin($scope.list.origin[i]);
-      }
-    };
-    var query = '?shipping_unit_number=eq.' + ship_num;
-    DatabaseServices.GetEntries('shipment_summary_more', func, query);
-  };
-
-  $scope.GetOrigin = function(origin){
-    var func = function(response){
-      $scope.list[origin].harvester = response.data[0];
-    };
-    var query = '?harvester_code=eq.' + origin;
-    DatabaseServices.GetEntries('harvester', func, query);
-  };
-
-})
-
-//inventory.html - shows current totals of boxes at given stations
-.controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.selected = "no selected";
-  $scope.stations = $scope.sumStations;
-
-  $scope.boxconfig = 
-  {
-    cssclass: "fill small", 
-    headers: ["Total Weight", "Cases"], 
-    fields: ["weight_total", "boxes"], 
-  };
-
-  $scope.loinconfig = 
-  {
-    cssclass: "fill small", 
-    headers: ["Total Weight", "Pieces"], 
-    fields: ["weight_total", "pieces"], 
-  };
-
-  $scope.ListBoxes = function(){
-    var func = function(response){
-      $scope.list.box_inventory = response.data;
-    };
-    var query = '';
-    DatabaseServices.GetEntries('box_inventory', func, query);
-  };
-  $scope.ListBoxes();
-
-
-  $scope.ListLoins = function(){
-    var func = function(response){
-      $scope.list.loin_inventory = response.data;
-    };
-    var query = '';
-    DatabaseServices.GetEntries('loin_inventory', func, query);
-  };
-  $scope.ListLoins();
-
-  $scope.SetCurrent = function(selected){
-    var filtered;
-    if (selected.item === 'box'){
-      filtered = $scope.list.box_inventory.filter(
-        function(value){
-          return isInArray(value.station_code, selected.station_code);
-        });
-      $scope.listconfig = JSON.parse(JSON.stringify($scope.boxconfig));      
-    }else if (selected.item === 'loin'){
-      filtered = $scope.list.loin_inventory.filter(
-        function(value){
-          return isInArray(value.station_code, selected.station_code);
-        });
-      $scope.listconfig = JSON.parse(JSON.stringify($scope.loinconfig));
-    }
-    
-    $scope.list.items = filtered;
-    $scope.listconfig.headers = selected.headers.concat($scope.listconfig.headers);
-    $scope.listconfig.fields = selected.fields.concat($scope.listconfig.fields);
-
-    
   };
 })
-
 
 .controller('CompleteLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 

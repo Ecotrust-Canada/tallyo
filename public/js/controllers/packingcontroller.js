@@ -237,15 +237,18 @@ angular.module('scanthisApp.packingController', [])
   $scope.collectionid = '';
 
   $scope.CheckHarvester = function(harvester){
+    console.log($scope.harvesterArray);
     if(harvester){
       if ($scope.harvesterArray.length === 0){
         $scope.harvesterArray.push(harvester);
+        $scope.PatchLotwithHar(harvester);
       }
       else if ($scope.harvesterArray.indexOf(harvester) !== -1){
       }
       else{
         $scope.harvesterArray.push(harvester);
         toastr.error('Warning: Mixing Harvesters in Lot');
+        $scope.PatchLotwithHar(null);
       }
     }      
   };
@@ -266,6 +269,14 @@ angular.module('scanthisApp.packingController', [])
       }
     }    
   });
+
+  $scope.PatchLotwithHar = function(harvester_code){
+    var func = function(response){
+    };
+    var patch = {'harvester_code': harvester_code};
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
+    DatabaseServices.PatchEntry('lot', patch, query, func);
+  };
 })
 
 
