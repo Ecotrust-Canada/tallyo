@@ -1089,7 +1089,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #harvester_list {
-  min-width: 780px;
+  min-width: 915px;
   margin-right: 14px;
   padding: 30px 20px 10px 20px;
   vertical-align: top;
@@ -1464,7 +1464,7 @@ div#station-HS0-011 {
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-#station-HS0-ADM .panel.grey {
+#station-HS0-ADM .panel.grey{
   min-width:950px;
 }
 .panel.grey #complete-lot {
@@ -2380,6 +2380,10 @@ nav span.icon.boxing {
 
 nav span.icon.shipping {
   background-image: url(/images/nav_shipping_icon.svg);
+}
+
+nav span.icon.container {
+  background-image: url(/images/nav_container_icon.svg);
 }
 
 nav div#menu {

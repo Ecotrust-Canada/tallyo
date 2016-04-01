@@ -5,8 +5,8 @@
        <span class="show_choices">Set Fishing Info</span>
     </div> 
     <div class="show_choices" ng-show="addinfo">
-      <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
-      <dropdown itemlist="list.harvester"  cfg="collectiondropdown" selectedoption="selected" change-fn="SetCurrent(selected)"></dropdown>
+      <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform><br>
+      <input-dropdown thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown>
     </div>  
   </div>
  
@@ -14,3 +14,6 @@
 
   <!-- button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo" class="btn-blue">Edit</button -->
 </div>
+<br>
+<hr>
+<br>

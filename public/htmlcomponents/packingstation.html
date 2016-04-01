@@ -39,7 +39,7 @@
     </span>-->
   </div>
 
-  <div class="scanform"  >
+  <div class="scanform" ng-if="!options.qrform" >
     <fieldset ng-disabled="formdisabled">
       <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
         <div class="form_row">
@@ -62,11 +62,30 @@
         <input type="button" ng-click="Complete()"
                value="{{packingconfig.completetitle}}" class="btn-orange">
       </div> 
-    </fieldset>
-  
-
-    
+    </fieldset>    
   </div>
+
+  <div class="scanform" ng-if="options.qrform" ng-controller="ReadBoxCtrl">
+    <fieldset ng-disabled="formdisabled">
+      <form ng-submit="readQR()">
+        <div class="form_row">
+          <div class="form_label">
+            <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
+              <span ng-if="formdisabled===true"><i class="errortext">Choose collection</i></span>
+            </label>
+          </div>
+          <div class="field">
+            <input id="scaninput" type="text" ng-model="raw.string" 
+                   autocomplete="off" placeholder="Start scanning...">
+          </div>
+        </div>
+        <div class="form_buttons">
+          <input type="button" ng-click="Complete()"   value="{{packingconfig.completetitle}}" class="btn-orange">
+        </div>
+      </form>
+    </fieldset>
+  </div>
+
 
   <div id="overwrite">
     <div>
