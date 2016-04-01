@@ -67,15 +67,19 @@ angular.module('scanthisApp.filters', [])
 
 .filter('dateRange', function(){
   return function(input, property, startDate, endDate) {
-    var retArray = [];
-    angular.forEach(input, function(obj){
-      if (obj[property]){
-        var day_val = new Date(obj[property].substring(0,19));
-        if(day_val.getTime() >= startDate.getTime() && day_val.getTime() <= endDate.getTime())   {
-          retArray.push(obj);
+    if (input){
+      var end_date = moment(endDate).endOf('day').format().substring(0,19);
+      var start_date = moment(startDate).startOf('day').format().substring(0,19);
+      var retArray = [];
+      angular.forEach(input, function(obj){
+        if (obj[property]){
+          var day_val = moment(obj[property]).format().substring(0,19);
+          if(day_val >= start_date && day_val <= end_date)   {
+            retArray.push(obj);
+          }
         }
-      }
-    });
-    return retArray;
+      });
+      return retArray;
+    }
   };
 });

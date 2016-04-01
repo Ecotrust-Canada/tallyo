@@ -263,7 +263,8 @@ angular.module('scanthisApp.receivingController', [])
     if (form){
       MakeEntry(form, 'harvester', $scope);
       $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.MakeHarvesterEntry();
+      //$scope.MakeHarvesterEntry();
+      $scope.CheckHarvester();
       $scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
     }
@@ -288,6 +289,23 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();
+
+
+  $scope.CheckHarvester = function(){
+    var func = function(response){
+      if (response.data.length < 1){
+        $scope.MakeHarvesterEntry();
+      }
+      else{
+        toastr.warning('cannot create duplicate');
+      }
+    };
+    var query = '?processor_code=eq.' + $scope.processor;
+    $scope.addform.fields.forEach(function(row){
+        query += '&' + row.fieldname + '=eq.' + $scope.entry.harvester[row.fieldname];
+    });
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
 
   $scope.SetCurrent = function(selected){
      var filtered = $scope.list.harvester.filter(
@@ -336,10 +354,12 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       var values = response.data[0];
       values.origin = $scope.current.harvester.supplier;
-      var data = dataCombine(values, $scope.onLabel.qr);
-      var labels = ArrayFromJson(values, $scope.onLabel.print);
-      console.log(data, labels);
-      $scope.printLabel(data, labels);
+      if($scope.onLabel){
+        var data = dataCombine(values, $scope.onLabel.qr);
+        var labels = ArrayFromJson(values, $scope.onLabel.print);
+        console.log(data, labels);
+        $scope.printLabel(data, labels);
+      }
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };

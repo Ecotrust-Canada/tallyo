@@ -100,6 +100,7 @@ angular.module('scanthisApp.itemController', [])
     var itemid = $scope.station_info.itemid;
     if (table === 'box'){
       $scope.entry.box.harvester_code = $scope.current[$scope.station_info.collectiontable].harvester_code;
+      $scope.entry.box.internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
     }  
     var func = function(response){      
       //print a label if onLabel specified in config

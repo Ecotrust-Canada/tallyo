@@ -262,52 +262,83 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
-.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr) { 
+.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) { 
   $scope.harvesterArray = [];
-  $scope.collectionid = '';
+  //$scope.collectionid = '';
+  $scope.current.mixed = false;
 
-  $scope.CheckHarvester = function(harvester){
-    console.log($scope.harvesterArray);
+  /*$scope.CheckHarvester = function(harvester, ship_num){
     if(harvester){
       if ($scope.harvesterArray.length === 0){
         $scope.harvesterArray.push(harvester);
-        $scope.PatchLotwithHar(harvester);
+        $scope.PatchLotwithHar(harvester, ship_num);
       }
       else if ($scope.harvesterArray.indexOf(harvester) !== -1){
       }
       else{
         $scope.harvesterArray.push(harvester);
         toastr.error('Warning: Mixing Harvesters in Lot');
-        $scope.PatchLotwithHar(null);
+        $scope.PatchLotwithHar(null, null);
       }
     }      
-  };
+  };*/
 
   $scope.$watch('list.included', function() {
-    if($scope.current.collectionid !== $scope.collectionid){
-      $scope.collectionid = $scope.current.collectionid;
       var all = fjs.pluck('harvester_code', $scope.list.included);
       var unique = fjs.nub(function (arg1, arg2) {
         return arg1 === arg2;
       });
       $scope.harvesterArray = unique(all);
-    }else{
-      if ($scope.current.patchitem){
-        if ($scope.current.patchitem.harvester_code){
-          $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
+      if($scope.current.collectionid !== null && $scope.current.collectionid !== undefined){
+        if ($scope.harvesterArray.length === 0){
+          $scope.current.mixed = false;
+          $scope.PatchLotwithHar(null, null);
         }
-      }
-    }    
+        else if ($scope.harvesterArray.length === 1){
+          if ($scope.current.patchitem){
+            $scope.current.mixed = false;
+            $scope.PatchLotwithHar($scope.current.patchitem.harvester_code, $scope.current.patchitem.shipping_unit_number);        
+          }
+        }
+        else if ($scope.harvesterArray.length > 1){
+          if ($scope.current.mixed === false){
+            toastr.error('Warning: Mixing Harvesters in Lot');      
+          }
+          $scope.PatchLotwithHar(null, null);
+          $scope.current.mixed = true;
+        }  
+      }  
   });
 
-  $scope.PatchLotwithHar = function(harvester_code){
+  $scope.PatchLotwithHar = function(harvester_code, ship_num){
     var func = function(response){
+      $scope.DisplayCollectionInfo();
     };
-    var patch = {'harvester_code': harvester_code};
+    var patch = {'harvester_code': harvester_code, 'shipping_unit_number': ship_num};
     var query = '?lot_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
+
+  $scope.DisplayCollectionInfo = function(){
+    var func = function(response){
+
+      if (response.data.length > 0){
+        $scope.current[$scope.station_info.collectiontable] = response.data[0];
+        var thediv = document.getElementById('scaninput');
+        if(thediv){
+         $timeout(function(){thediv.focus();}, 0);
+        }
+      }
+    };
+    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
+    DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
+  };
+
+
+
 })
+
+
 
 
 .controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
