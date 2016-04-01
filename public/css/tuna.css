@@ -237,7 +237,7 @@ body{
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
 #station-AM2-001 .panel {
-  min-width: 550px;
+  width: 550px;  /* min-width */
   box-sizing: border-box;
 }
 #station-HS0-001 .panel, 
