@@ -1442,8 +1442,16 @@ div#station-HS0-011 {
   min-width: 550px;
 }
 #station-AM2-006 .panel.white,
-#station-HS0-ADM .panel.white{
+#station-HS0-ADM > .panel.white{
   padding-top: 40px;
+  min-width: 550px;
+  margin-bottom: 24px;
+}
+
+.editshipentries .panel.white {
+  padding-top: 40px;
+  min-width: 550px;
+  margin-bottom: 24px;
 }
 
 #station-AM2-006 .header,
@@ -1474,9 +1482,7 @@ div#station-HS0-011 {
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-#station-HS0-ADM .panel.grey{
-  min-width:950px;
-}
+
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;
   float: right;
