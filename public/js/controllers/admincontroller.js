@@ -30,7 +30,7 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.harvester = response.data;
     };
-    var query = '?processor_code=eq.' + $scope.processor;
+    var query = '';
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();
@@ -63,12 +63,14 @@ angular.module('scanthisApp.AdminController', [])
   }; 
 
   $scope.getTheData = function(ship_obj){
-    $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_detail', 'detail');
+    if(!$scope.sumStations[$scope.stn.index].no_detail){
+      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_detail', 'detail');
+    }    
     $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_sum', 'summary');
   };
 
   $scope.getCSV = function(ship_number, po_number, table, label){
-    var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' + $scope.station_code;
+    var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.list.detail = response.data;
       var full_array = [];
