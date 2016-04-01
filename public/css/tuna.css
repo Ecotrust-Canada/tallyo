@@ -1431,7 +1431,7 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
-#station-HS0-ADM .panel.white,
+#station-HS0-ADM > .panel.white,
 #station-AM2-006 .panel.white,
 #station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
@@ -2423,7 +2423,7 @@ nav span.icon.container {
 nav div#menu {
   display: none;
   position:absolute;
-  width: 270px;
+  width: 305px;
   background-color: #03223c;
   padding: 15px 25px 10px 0;
 }
