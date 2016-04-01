@@ -39,7 +39,7 @@ angular.module('scanthisApp', [
 .controller('MainCtrl', function($scope) {
   $scope.current_terminal = {
     id: -1,
-    icon: null,
+    icon: 'menu',
     name: "Stations"
   };
   $scope.stations = stationlist;

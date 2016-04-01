@@ -234,6 +234,7 @@ body{
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
+#station-HS0-005 .panel,
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
 #station-AM2-001 .panel {
@@ -244,6 +245,9 @@ body{
 #station-HS0-002 .panel {
   width: 550px;
 } 
+#station-HS0-003 .panel {
+  width: 800px;
+}
 
 
 .columnframenarrow{
@@ -634,7 +638,7 @@ a:hover {
 .edit-options button {
   position: absolute;
   top: -37px;
-  left: 281px;
+  left: 250px;
   padding-left: 32px;
   height: 32px;
   background-color: transparent;
@@ -747,7 +751,7 @@ div[ng-view] {
   background-repeat: no-repeat;
   background-position: 8px center;
 }
-centerstation-title-HS0-002 {
+#station-title-HS0-002 {
   background-image: url(/images/trimming_icon.png);
   background-repeat: no-repeat;
   background-position: 10px center;
@@ -1445,6 +1449,10 @@ div#station-HS0-011 {
   margin-bottom: 10px;
 }
 
+#station-HS0-ADM > .panel.white {
+  min-width: 550px;
+}
+
 #station-AM1-003 .panel.grey,
 #station-AM1-004 .panel.grey,
 #station-AM1-005 .panel.grey,
@@ -1592,14 +1600,16 @@ div#station-HS0-011 {
   width: 150px;
 }
 #station-AM2-004 .weighstation_main .form_label {
-  width: 280px;
+  width: 150px;
 }
 #form-5 .form_label,
 #form-10 .form_label,
 #form-13 .form_label,
+#form-25 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
+#form-25 .form_label label,
 #form-13 .form_label label {
   text-align: right;
 }
@@ -1618,7 +1628,7 @@ div#station-HS0-011 {
 }
 
 .editform .form_label {
-  width: 170px;
+  width: 160px;
   vertical-align: top;
   padding-top: 10px;
 }
@@ -1644,6 +1654,7 @@ div#station-HS0-011 {
 
 .editform .field input[type=text] {
   height: 40px;
+  width: 240px;
 }
 
 #create_box_form #form-0 .field input[type=text],
@@ -1652,9 +1663,12 @@ div#station-HS0-011 {
 }
 
 #create_box_form #form-5 .field input[type=text],
-#form-10 .field input[type=text],
+#form-25 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
-  width: 354px;
+  width: 310px;
+}
+#form-10 .field input[type=text] {
+  width: 320px;
 }
 #create_box_form #form-0 .btn-orange {
   height: 44px;
@@ -1686,7 +1700,11 @@ div#station-HS0-011 {
 
 .select_object .dropdown-container {
   margin-top: 24px;
-  width: 540px;
+  width: 510px;
+}
+
+#station-HS0-003 .select_object .dropdown-container {
+  width: 740px;
 }
 
 .weighstation_main .form_label label,
@@ -1713,7 +1731,7 @@ div#station-HS0-011 {
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
-  min-width: 370px;
+  min-width: 330px;
 }
 #form-13 .field {
   width: 320px;
@@ -1764,6 +1782,7 @@ div#station-HS0-011 {
 .editform .field, 
 #form-5 .field, 
 #form-10 .field, 
+#form-25 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
@@ -1806,7 +1825,7 @@ div#station-HS0-011 {
   width: 100%;
 }
 .editform .styled-dropdown {
-  width: 270px;
+  width: 238px;
   display: inline-block;
   box-sizing: border-box;
   margin-bottom: 5px;
@@ -1819,7 +1838,7 @@ div#station-HS0-011 {
   width: 232px;
 }
 #form-11 .styled-dropdown {
-  width: 238px;
+  width: 328px;
 }
 #form-21 .styled-dropdown {
   width: 234px;
@@ -1884,7 +1903,7 @@ div#station-HS0-011 {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 204px;
+  width: 174px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -2012,7 +2031,8 @@ input[name^=weight]::after {
   padding: 12px 25px;
 }
 .editform .btn-orange {
-  left: 188px;
+  left: 178px;
+  min-width: 242px;
 }
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
@@ -2350,6 +2370,10 @@ nav span.icon {
   vertical-align: middle;
 }
 
+nav span.icon.menu {
+  background-image: url(/images/nav_menu_icon.svg);
+}
+
 nav span.icon.inventory {
   background-image: url(/images/nav_inventory_icon.svg);
 }
@@ -2380,6 +2404,10 @@ nav span.icon.boxing {
 
 nav span.icon.shipping {
   background-image: url(/images/nav_shipping_icon.svg);
+}
+
+nav span.icon.shipping_info {
+  background-image: url(/images/nav_shippinginfo_icon.svg);
 }
 
 nav span.icon.container {
