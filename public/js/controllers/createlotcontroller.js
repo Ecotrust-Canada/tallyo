@@ -120,6 +120,13 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.DisplayCollectionInfo = function(){
+    var table;
+    if ($scope.station_info.collectiontable === 'lot'){
+      table = 'harvester_lot';
+    }
+    else{
+      table = $scope.station_info.collectiontable;
+    }
     var func = function(response){
 
       if (response.data.length > 0){
