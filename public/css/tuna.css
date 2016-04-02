@@ -58,6 +58,7 @@ input {
   font-size: 20px;
   color: #03223C;
   padding-left: 5px;
+  overflow: hidden;
 }
 /*
 *,
