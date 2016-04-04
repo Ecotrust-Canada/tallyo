@@ -274,7 +274,15 @@ angular.module('scanthisApp.formController', [])
       $scope.formchange = !$scope.formchange;
       responsefunction((response.data[0] ? response.data[0] : response.data));
     };
-    DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func); 
+
+    var processor;
+    if ($scope.options.diff_processor){
+      processor = $scope.options.diff_processor;
+    }
+    else{
+      processor = $scope.processor;
+    }
+    DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], processor, func); 
   };
 
   //fills out entry from form

@@ -74,22 +74,25 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.detail = response.data;
       var full_array = [];
-      var title_array = propertyNames($scope.list.detail[0]);
-      title_array.shift();
-      title_array.shift();
-      title_array.shift();
-      full_array.push(title_array);
-      for (var i=0;i<$scope.list.detail.length;i++){
-        var the_array = [];
-        var an_array = fjs.toArray($scope.list.detail[i]);
-        an_array.forEach(function(el){
-          the_array.push(el[1]);
-        });
-        the_array.shift();
-        the_array.shift();
-        the_array.shift();
-        var new_array = JSON.parse(JSON.stringify(the_array));
-        full_array.push(new_array);
+      if ($scope.list.detail.length > 0){
+        var title_array = propertyNames($scope.list.detail[0]);
+        title_array.shift();
+        title_array.shift();
+        title_array.shift();
+        full_array.push(title_array);
+
+        for (var i=0;i<$scope.list.detail.length;i++){
+          var the_array = [];
+          var an_array = fjs.toArray($scope.list.detail[i]);
+          an_array.forEach(function(el){
+            the_array.push(el[1]);
+          });
+          the_array.shift();
+          the_array.shift();
+          the_array.shift();
+          var new_array = JSON.parse(JSON.stringify(the_array));
+          full_array.push(new_array);
+        }
       }
       var name = po_number;
       if (label){

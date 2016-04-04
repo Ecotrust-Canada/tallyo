@@ -6,6 +6,7 @@
              type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
              ><span>{{station.label}}</span></label>
     </span>
+    <span ng-if="!options.ship_stations">Outgoing Shipments</span>
     <br>
     <br>
 
@@ -13,8 +14,6 @@
       <!--<editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> -->
 
       
-
-
       <div class="display_field">
         <label>{{sumStations[stn.index].ship}}:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
       </div>
