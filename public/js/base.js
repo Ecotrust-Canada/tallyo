@@ -73,6 +73,13 @@ angular.module('scanthisApp', [
     }
     $scope.terminal.substation = 0;
 
+    var menu =  document.getElementById('menu');
+    menu.style.display = 'none';
+   /* 
+    setTimeout(function () {
+      menu.style.removeProperty('display');
+    }, 50);
+    */
   }
 })
 
