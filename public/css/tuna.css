@@ -805,6 +805,14 @@ div[ng-view] {
   overflow: auto;
   margin-left: 170px;
 }
+/* attempt to put screen dependent widths */
+/*
+@media (min-width: 500px) and (max-width: 600px) {
+  #admin_manage_lots .inner_scrollable {
+    width: 340px;
+  }
+}
+*/
 #admin_manage_lots table tr .lot_column {
   position: absolute;
   left: 10px;
