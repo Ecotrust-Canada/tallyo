@@ -6,6 +6,8 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
 
+  $scope.input = {};
+
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
     if (!raw_id) {
@@ -38,6 +40,7 @@ angular.module('scanthisApp.packingController', [])
         }      
       };
       var onErr = function() {
+        $scope.clearField();
         toastr.error('invalid object'); // show failure toast.
       };
 
@@ -49,7 +52,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.clearField = function(){
-    $scope.obj_id = null;
+    $scope.input.code = null;
   };
 
   $scope.MakeScan = function(id){
@@ -57,6 +60,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
+      $scope.input.code=null;
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -159,10 +163,25 @@ angular.module('scanthisApp.packingController', [])
   $scope.RemoveScan = function(itemid){
     var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
+      if ($scope.options.qrform){
+        $scope.removeObj(itemid);
+      }
+      else{
+        $scope.current.itemchange = !$scope.current.itemchange;
+        $scope.to_delete=null;
+      }
+      
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+  $scope.removeObj = function(itemid){
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid;
+    var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.to_delete=null;
     };
-    DatabaseServices.RemoveEntry('scan', query, func);
+    DatabaseServices.RemoveEntry($scope.station_info.patchtable, query, func);
   };
 
 })
@@ -173,9 +192,10 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
+    var case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
     var lot_num = GetBoxLotNumber($scope.list.included);
     if (lot_num !== undefined){
-      $scope.GetInfo(lot_num);
+      $scope.GetInfo(lot_num, case_num);
     }
     else{
       var harvester_code = null;
@@ -185,41 +205,56 @@ angular.module('scanthisApp.packingController', [])
       var internal_lot_code = '';
       lot_num = null;
       if ($scope.current.collectionid) {
-          $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
+          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
       }
     }
   };
 
   $scope.GetInfo = function(lot_num){
     var func = function(response){
-      var internal_lot_code = response.data[0].internal_lot_code ? 
-                              cutString(response.data[0].internal_lot_code, 4, 5).substring(0, 8) : null;
-      var harvester_code = response.data[0].harvester_code;
-      var box_weight = CalculateBoxWeight($scope.list.included);
-      var num = $scope.list.included.length;
-
-      var tf_code = response.data[0].tf_code;
-      var ft_fa_code = response.data[0].ft_fa_code;
-      var best_before = moment(response.data[0].timestamp).add(2, 'years').format();
-      var fleet = response.data[0].fleet;
-
-      $scope.PatchBoxWithWeightLot(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before, fleet);
-
+      var box_har = response.data[0];
+      $scope.PatchBoxWithWeightLot(box_har, lot_num);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
 
-    /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_weight, lot_num, num, harvester_code, internal_lot_code, tf_code, ft_fa_code, best_before, fleet){
+  $scope.PatchBoxNull = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num){
+
     var func = function(response){
       $scope.current.box = response.data[0];
-        $scope.current.box.tf_code = tf_code;
-        $scope.current.box.ft_fa_code = ft_fa_code;
-        $scope.current.box.fleet = fleet;
+        $scope.current.box.tf_code = null;
+        $scope.current.box.ft_fa_code = null;
+        $scope.current.box.fleet = null;
+        $scope.current.box.receive_date = null;
+        $scope.current.box.supplier_group = null;
+        $scope.current.box.wpp = null;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num, 'case_number':case_num};
+    var query = '?box_number=eq.' + $scope.current.collectionid;
+    DatabaseServices.PatchEntry('box', patch, query, func);
+    
+  };
+
+    /*adds final info to box*/
+  $scope.PatchBoxWithWeightLot = function(box_har, lot_num, case_num){
+    var internal_lot_code = box_har.internal_lot_code ? 
+                              cutString(box_har.internal_lot_code, 4, 5).substring(0, 8) : null;
+    var box_weight = CalculateBoxWeight($scope.list.included);
+    var num = $scope.list.included.length;
+    var best_before = moment(box_har.timestamp).add(2, 'years').format();
+
+    var func = function(response){
+      $scope.current.box = response.data[0];
+        $scope.current.box.tf_code = box_har.tf_code;
+        $scope.current.box.ft_fa_code = box_har.ft_fa_code;
+        $scope.current.box.fleet = box_har.fleet;
+        $scope.current.box.harvest_date = moment(box_har.timestamp).format();
+        $scope.current.box.supplier_group = box_har.supplier_group;
+        $scope.current.box.wpp = box_har.fishing_area;
+    };
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num, 'case_number':case_num};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
@@ -232,46 +267,83 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
-.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr) { 
+.controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) { 
   $scope.harvesterArray = [];
-  $scope.collectionid = '';
-
-  $scope.CheckHarvester = function(harvester){
-    if(harvester){
-      if ($scope.harvesterArray.length === 0){
-        $scope.harvesterArray.push(harvester);
-      }
-      else if ($scope.harvesterArray.indexOf(harvester) !== -1){
-      }
-      else{
-        $scope.harvesterArray.push(harvester);
-        toastr.error('Warning: Mixing Harvesters in Lot');
-      }
-    }      
-  };
+  //$scope.collectionid = '';
+  $scope.current.mixed = false;
 
   $scope.$watch('list.included', function() {
-    if($scope.current.collectionid !== $scope.collectionid){
-      $scope.collectionid = $scope.current.collectionid;
       var all = fjs.pluck('harvester_code', $scope.list.included);
       var unique = fjs.nub(function (arg1, arg2) {
         return arg1 === arg2;
       });
       $scope.harvesterArray = unique(all);
-    }else{
-      if ($scope.current.patchitem){
-        if ($scope.current.patchitem.harvester_code){
-          $scope.CheckHarvester($scope.current.patchitem.harvester_code);        
+      if($scope.current.collectionid !== null && $scope.current.collectionid !== undefined){
+        if ($scope.harvesterArray.length === 0){
+          $scope.current.mixed = false;
+          $scope.PatchLotwithHar(null, null);
+        }
+        else if ($scope.harvesterArray.length === 1){
+          $scope.current.mixed = false;
+          var ship = fjs.pluck('shipping_unit_number', $scope.list.included);
+          var ship_num = ship[0];
+          $scope.PatchLotwithHar($scope.harvesterArray[0], ship_num);        
+        }
+        else if ($scope.harvesterArray.length > 1){
+          if ($scope.current.mixed === false){
+            toastr.warning('Warning: Mixing Harvesters in Lot');      
+          }
+          $scope.PatchLotwithHar(null, null);
+          $scope.current.mixed = true;
+        }  
+      }  
+  });
+
+  $scope.PatchLotwithHar = function(harvester_code, ship_num){
+    var func = function(response){
+      $scope.DisplayCollectionInfo();
+    };
+    var patch = {'harvester_code': harvester_code, 'shipping_unit_number': ship_num};
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
+    DatabaseServices.PatchEntry('lot', patch, query, func);
+  };
+
+  $scope.DisplayCollectionInfo = function(){
+    var func = function(response){
+
+      if (response.data.length > 0){
+        $scope.current.lot = response.data[0];
+        var thediv = document.getElementById('scaninput');
+        if(thediv){
+         $timeout(function(){thediv.focus();}, 0);
         }
       }
-    }    
-  });
+    };
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
+    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
+  };
+
+
+
 })
 
 
-.controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+.controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
   $scope.entry.scan = {};
+
+  var focusScan = function(){
+    var thediv = document.getElementById('scaninput');
+    if(thediv){
+     $timeout(function(){thediv.focus();}, 0);
+    }
+  };
+
+  focusScan();
+
+
 
   $scope.ScanIn = function(){
     if (!$scope.raw.string) {

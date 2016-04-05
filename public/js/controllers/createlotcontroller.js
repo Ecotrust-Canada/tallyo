@@ -8,7 +8,13 @@ angular.module('scanthisApp.createlotController', [])
 .controller('CollectionTableDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(){
-    var query = '?station_code=eq.' + $scope.station_code;
+    var query;
+    if ($scope.station_info.collectiontable === 'harvester_lot'){
+      query = '?processor_code=eq.' + $scope.processor;
+    }
+    else{
+      query = '?station_code=eq.' + $scope.station_code;
+    }
     var func = function(response){
       $scope.list.collection = response.data;
     };
@@ -114,6 +120,13 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.DisplayCollectionInfo = function(){
+    var table;
+    if ($scope.station_info.collectiontable === 'lot'){
+      table = 'harvester_lot';
+    }
+    else{
+      table = $scope.station_info.collectiontable;
+    }
     var func = function(response){
 
       if (response.data.length > 0){

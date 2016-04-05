@@ -1,8 +1,9 @@
-<div class="panel white" id="scaninventory" any-other-click="scaninput">
+<div class="panel white" id="scaninventory">
   <div  class="select_object">
     <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.shipping_unit=null;addinfo=!addinfo">
       <div id="reprint_label_link" ng-if="substationlink" 
-           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div> 
+      <div any-other-click="scaninput"> </div> 
     </div> 
   </div>
   <div class="scanform" ng-controller="AddInventoryCtrl">

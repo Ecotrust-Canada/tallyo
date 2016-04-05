@@ -3,7 +3,7 @@
   <tr ng-if="config.headers">
     <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
-  <tr ng-repeat="item in items=(itemlist | filter: filterstring) | orderBy: config.order | limitTo: config.limit "
+  <tr ng-repeat="item in items=(itemlist | filter: filterstring)"
       id="item-{{item[config.arg]}}" class="animation">
     <td ng-repeat="name in config.fields" ng-switch on="name">
       <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>

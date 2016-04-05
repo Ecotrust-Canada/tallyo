@@ -39,7 +39,7 @@ angular.module('scanthisApp', [
 .controller('MainCtrl', function($scope) {
   $scope.current_terminal = {
     id: -1,
-    icon: null,
+    icon: 'menu',
     name: "Stations"
   };
   $scope.stations = stationlist;
@@ -73,6 +73,13 @@ angular.module('scanthisApp', [
     }
     $scope.terminal.substation = 0;
 
+    var menu =  document.getElementById('menu');
+    menu.style.display = 'none';
+   /* 
+    setTimeout(function () {
+      menu.style.removeProperty('display');
+    }, 50);
+    */
   }
 })
 

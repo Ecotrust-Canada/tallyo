@@ -74,6 +74,9 @@ angular.module('scanthisApp.itemController', [])
         }
       }, 100);
       
+      if ($scope.options.secondstation){
+        $scope.SecondScan();
+      }
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -94,12 +97,17 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.DatabaseItem = function(){ 
     var table = $scope.station_info.itemtable.split('_')[0];
-    var itemid = $scope.station_info.itemid;  
+    var itemid = $scope.station_info.itemid;
+    if (table === 'box'){
+      $scope.entry.box.harvester_code = $scope.current[$scope.station_info.collectiontable].harvester_code;
+      $scope.entry.box.internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+    }  
     var func = function(response){      
       //print a label if onLabel specified in config
       var thedata = ((response.data[0] || response.data));
-      if ($scope.current.harvester && $scope.current.harvester.ft_fa_code){
-        thedata.ft_fa_code = $scope.current.harvester.ft_fa_code;
+      if ($scope.current[$scope.station_info.collectiontable].ft_fa_code){
+        thedata.internal_lot_code = ($scope.current[$scope.station_info.collectiontable].internal_lot_code || $scope.current.collectionid);
+        thedata.ft_fa_code = $scope.current[$scope.station_info.collectiontable].ft_fa_code;
       }
       if($scope.onLabel){
         var data = dataCombine(thedata, $scope.onLabel.qr);
@@ -114,6 +122,13 @@ angular.module('scanthisApp.itemController', [])
       DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
+  };
+
+  $scope.SecondScan = function(){
+    $scope.entry.scan.station_code = $scope.options.secondstation;    
+    var func = function(response){
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
   $scope.MakeItemScanEntry = function(form){

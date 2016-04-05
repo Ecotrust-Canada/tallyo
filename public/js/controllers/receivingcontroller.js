@@ -91,6 +91,108 @@ angular.module('scanthisApp.receivingController', [])
 
 })
 
+
+.controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.readQR = function(){
+    var rawArray = $scope.raw.string.split("/");
+    var jsonvalues = {};
+    for (var i=0;i<$scope.valuesarray.length;i++){
+      jsonvalues[$scope.valuesarray[i]] = rawArray[i];
+    }
+    $scope.MakeItemFromQR(jsonvalues);
+  };
+
+  $scope.DatabaseScan = function(box_number){ 
+    var data = {'box_number': box_number, 'station_code':$scope.station_code, 'shipping_unit_number': $scope.current.shipping_unit.shipping_unit_number};   
+    var func = function(response){
+      $scope.raw.string = null;
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', data, func);
+  };
+
+  $scope.MakeItemFromQR = function(jsonvalues){
+    if ($scope.current.collectionid){
+      var func = function(response){
+        if (response.data.length >0){
+          $scope.raw.string = null;
+          toastr.warning("already exists");
+        }
+        else{
+          $scope.CheckHarvester(jsonvalues);
+        }
+      };
+      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+      DatabaseServices.GetEntries('box', func, query);
+    }
+  };
+
+  $scope.CheckHarvester = function(jsonvalues){
+    var query = '?harvester_code=eq.' + jsonvalues.harvester_code;
+    var func = function(response){
+      if (response.data.length<1){
+        $scope.createHarvester(jsonvalues);
+      }
+      else{
+        $scope.createBox(jsonvalues);
+      }
+    };
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+
+  $scope.createHarvester = function(jsonvalues){
+    var data = 
+     {'harvester_code': jsonvalues.harvester_code,
+      'fleet': jsonvalues.fleet,
+      'supplier_group': jsonvalues.supplier_group,
+      'fishing_area': jsonvalues.fishing_area};
+
+    var func = function(response){
+      $scope.createBox(jsonvalues);
+    };
+    DatabaseServices.DatabaseEntryReturn('harvester', data, func);
+  };
+
+  $scope.createBox = function(jsonvalues){
+    var data = 
+     {'box_number': jsonvalues.box_number, 
+      'harvester_code': jsonvalues.harvester_code, 
+      'size': jsonvalues.size, 
+      'grade':jsonvalues.grade, 
+      'pieces':jsonvalues.pieces, 
+      'weight':jsonvalues.weight,
+      'case_number':jsonvalues.case_number, /*can mod from box_number*/
+      'timestamp': jsonvalues.timestamp,
+      'internal_lot_code': jsonvalues.internal_lot_code,  
+      'station_code': $scope.station_code,
+      'harvest_date': jsonvalues.harvest_date,
+      'best_before_date': moment(jsonvalues.harvest_date).add(2, 'years').format(),
+      'shipping_unit_number':$scope.current.shipping_unit.shipping_unit_number};
+    //TF Code*****
+    var func = function(response){
+      var box_number = response.data.box_number;
+      $scope.DatabaseScan(box_number);
+    };
+    DatabaseServices.DatabaseEntryReturn('box', data, func);
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
+      $scope.formdisabled = true;
+    }
+    else{
+      $scope.formdisabled = false;
+    }
+  });
+
+  $scope.Complete = function(){ 
+    $scope.current.selected = 'no selected';
+    $scope.current.collectionid = 'no selected';
+  };
+
+})
+
 .controller('RemoveItemCtrl', function($scope, $http, DatabaseServices) {
   $scope.RemoveItem = function(id){
     var query = '?' + $scope.station_info.itemid + '=eq.' + id;
@@ -161,7 +263,8 @@ angular.module('scanthisApp.receivingController', [])
     if (form){
       MakeEntry(form, 'harvester', $scope);
       $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.MakeHarvesterEntry();
+      //$scope.MakeHarvesterEntry();
+      $scope.CheckHarvester();
       $scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
     }
@@ -186,6 +289,23 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();
+
+
+  $scope.CheckHarvester = function(){
+    var func = function(response){
+      if (response.data.length < 1){
+        $scope.MakeHarvesterEntry();
+      }
+      else{
+        toastr.warning('cannot create duplicate');
+      }
+    };
+    var query = '?processor_code=eq.' + $scope.processor;
+    $scope.addform.fields.forEach(function(row){
+        query += '&' + row.fieldname + '=eq.' + $scope.entry.harvester[row.fieldname];
+    });
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
 
   $scope.SetCurrent = function(selected){
      var filtered = $scope.list.harvester.filter(
@@ -234,10 +354,12 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       var values = response.data[0];
       values.origin = $scope.current.harvester.supplier;
-      var data = dataCombine(values, $scope.onLabel.qr);
-      var labels = ArrayFromJson(values, $scope.onLabel.print);
-      console.log(data, labels);
-      $scope.printLabel(data, labels);
+      if($scope.onLabel){
+        var data = dataCombine(values, $scope.onLabel.qr);
+        var labels = ArrayFromJson(values, $scope.onLabel.print);
+        console.log(data, labels);
+        $scope.printLabel(data, labels);
+      }
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };

@@ -6,12 +6,47 @@
              type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
              ><span>{{station.label}}</span></label>
     </span>
+    <span ng-if="!options.ship_stations">Outgoing Shipments</span>
     <br>
     <br>
 
     <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-      <editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> 
+      <!--<editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> -->
+
+      
+      <div class="display_field">
+        <label>{{sumStations[stn.index].ship}}:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
+      </div>
+      <div class="display_field">
+        <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
+      </div>
+      <div class="display_field">
+        <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
+      </div>
+      <div class="display_field">
+        <label for="inp_container_number">Container Number:</label><input type="text" 
+               ng-model="current.shipment.container_number" id="inp_container_number">
+      </div>
+      <div class="display_field">
+        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" 
+               ng-model="current.shipment.bill_of_lading" id="inp_bill_of_lading">
+      </div>
+      <div class="display_field">
+        <label for="inp_vessel_name">Vessel Name:</label><input type="text" 
+               ng-model="current.shipment.vessel_name" id="inp_vessel_name">
+      </div>
+      <div class="display_field">
+        <label for="inp_seal_number">Seal Number:</label><input type="text" 
+               ng-model="current.shipment.seal_number" id="inp_seal_number">
+      </div>
+      <div class="form_buttons">
+        <input type="button" ng-click="ShipInfo()" value="Save" class="btn-orange">
+      </div>
+
     </div>
+
+
+
 
     <div class="header">
       <input ng-model="searchText" class="search" placeholder="Search"></input>
@@ -53,9 +88,9 @@
       <span class="totals_caption">CSV Download: </span>
       <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
     </div>
-    <div class="itemsframe entries">
+    <!--<div class="itemsframe entries">
       <bufferedscrolllist itemlist="list.included" config="itemlistconfig"></bufferedscrolllist>
-    </div>
+    </div>-->
     <div class="itemtotals">
       Shipment totals
       <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>

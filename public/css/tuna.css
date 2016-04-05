@@ -58,6 +58,7 @@ input {
   font-size: 20px;
   color: #03223C;
   padding-left: 5px;
+  overflow: hidden;
 }
 /*
 *,
@@ -234,17 +235,23 @@ body{
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
+#station-HS0-005 .panel,
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
+#station-AM2-003 .panel,
 #station-AM2-001 .panel {
-  min-width: 550px;
+  width: 550px;  /* min-width */
   box-sizing: border-box;
 }
 #station-HS0-001 .panel, 
 #station-HS0-002 .panel {
   width: 550px;
 } 
-
+/*
+#station-HS0-003 .panel {
+  width: 800px;
+}
+*/
 
 .columnframenarrow{
   width:326px;
@@ -634,7 +641,7 @@ a:hover {
 .edit-options button {
   position: absolute;
   top: -37px;
-  left: 281px;
+  left: 250px;
   padding-left: 32px;
   height: 32px;
   background-color: transparent;
@@ -747,7 +754,7 @@ div[ng-view] {
   background-repeat: no-repeat;
   background-position: 8px center;
 }
-centerstation-title-HS0-002 {
+#station-title-HS0-002 {
   background-image: url(/images/trimming_icon.png);
   background-repeat: no-repeat;
   background-position: 10px center;
@@ -798,6 +805,14 @@ centerstation-title-HS0-002 {
   overflow: auto;
   margin-left: 170px;
 }
+/* attempt to put screen dependent widths */
+/*
+@media (min-width: 500px) and (max-width: 600px) {
+  #admin_manage_lots .inner_scrollable {
+    width: 340px;
+  }
+}
+*/
 #admin_manage_lots table tr .lot_column {
   position: absolute;
   left: 10px;
@@ -1089,7 +1104,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-011 #harvester_list {
-  min-width: 780px;
+  min-width: 915px;
   margin-right: 14px;
   padding: 30px 20px 10px 20px;
   vertical-align: top;
@@ -1378,7 +1393,7 @@ div#station-HS0-011 {
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
-  width: 370px;
+  width: 348px;
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
@@ -1426,7 +1441,7 @@ div#station-HS0-011 {
 }
 
 /* receivng station for HarSam */
-#station-HS0-ADM .panel.white,
+#station-HS0-ADM > .panel.white,
 #station-AM2-006 .panel.white,
 #station-AM2-001 .panel.white,
 .panel.white.weighstation_main,
@@ -1434,15 +1449,28 @@ div#station-HS0-011 {
 
   margin-bottom: 24px;
   margin-right: 10px;
+  min-width: 550px;
 }
 #station-AM2-006 .panel.white,
-#station-HS0-ADM .panel.white{
+#station-HS0-ADM > .panel.white{
   padding-top: 40px;
+  min-width: 550px;
+  margin-bottom: 24px;
+}
+
+.editshipentries .panel.white {
+  padding-top: 40px;
+  min-width: 550px;
+  margin-bottom: 24px;
 }
 
 #station-AM2-006 .header,
 #station-HS0-ADM .header {
   margin-bottom: 10px;
+}
+
+#station-HS0-ADM > .panel.white {
+  min-width: 550px;
 }
 
 #station-AM1-003 .panel.grey,
@@ -1464,9 +1492,7 @@ div#station-HS0-011 {
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-#station-HS0-ADM .panel.grey {
-  min-width:950px;
-}
+
 .panel.grey #complete-lot {
   margin: 10px 20px 20px 20px;
   float: right;
@@ -1479,7 +1505,7 @@ div#station-HS0-011 {
 }
 
 
-.scanform, .fieldsetrepeat, .addform {
+.scanform, .addform {
   border-top: 1px solid #cccccc;
   margin-top: 15px;
   padding-top: 10px;
@@ -1592,14 +1618,20 @@ div#station-HS0-011 {
   width: 150px;
 }
 #station-AM2-004 .weighstation_main .form_label {
-  width: 280px;
+  width: 220px;
 }
+#station-HS0-003 #form-23 .form_label {
+  width: 120px;
+}
+
 #form-5 .form_label,
 #form-10 .form_label,
 #form-13 .form_label,
+#form-25 .form_label,
 #form-4 .form_label {
   width: 170px;
 }
+#form-25 .form_label label,
 #form-13 .form_label label {
   text-align: right;
 }
@@ -1611,14 +1643,14 @@ div#station-HS0-011 {
 
 
 #create_box_form #form-0 {
-  width: 370px;
+  width: 506px;
 }
 #create_box_form #form-0 .form_label {
-  width: 144px;
+  width: 170px;
 }
 
 .editform .form_label {
-  width: 170px;
+  width: 160px;
   vertical-align: top;
   padding-top: 10px;
 }
@@ -1640,10 +1672,12 @@ div#station-HS0-011 {
 
 #create_box_form .field input[type=text] {
   height: 44px;
+  width: 310px;
 }
 
 .editform .field input[type=text] {
   height: 40px;
+  width: 240px;
 }
 
 #create_box_form #form-0 .field input[type=text],
@@ -1652,9 +1686,12 @@ div#station-HS0-011 {
 }
 
 #create_box_form #form-5 .field input[type=text],
-#form-10 .field input[type=text],
+#form-25 .field input[type=text],
 #create_box_form #form-4 .field input[type=text] {
-  width: 354px;
+  width: 310px;
+}
+#form-10 .field input[type=text] {
+  width: 320px;
 }
 #create_box_form #form-0 .btn-orange {
   height: 44px;
@@ -1667,7 +1704,7 @@ div#station-HS0-011 {
   width: 240px;
 }
 #form-10 .btn-orange {
-  right: 16px;
+  right: 2px;
 }
 .show_choices {
   position: relative;
@@ -1686,7 +1723,11 @@ div#station-HS0-011 {
 
 .select_object .dropdown-container {
   margin-top: 24px;
-  width: 540px;
+  width: 510px;
+}
+
+#station-HS0-003 .select_object .dropdown-container {
+  width: 510px;
 }
 
 .weighstation_main .form_label label,
@@ -1713,10 +1754,10 @@ div#station-HS0-011 {
 .weighstation_main .field,
 .scanform .field {
   display: inline-block;
-  min-width: 370px;
+  min-width: 260px;
 }
 #form-13 .field {
-  width: 320px;
+  width: 260px;
 }
 #station-AM2-004 .weighstation_main .field {
   width: 220px;
@@ -1741,7 +1782,7 @@ div#station-HS0-011 {
   padding: 0 10px;
 }
 
-.select_object .show_choices label,
+.select_object .show_choices .form_label > label,
 .editform .form_label label {
   display: block;
   text-align: left;
@@ -1764,13 +1805,14 @@ div#station-HS0-011 {
 .editform .field, 
 #form-5 .field, 
 #form-10 .field, 
+#form-25 .field, 
 #form-4 .field {
   display: inline-block;
   box-sizing: border-box;
 }
 
 #form-3 .field {
-  width: 300px;
+  width: 260px;
 }
 #create_box_form #form-0 .field {
   width: 200px;
@@ -1806,7 +1848,7 @@ div#station-HS0-011 {
   width: 100%;
 }
 .editform .styled-dropdown {
-  width: 270px;
+  width: 238px;
   display: inline-block;
   box-sizing: border-box;
   margin-bottom: 5px;
@@ -1818,11 +1860,14 @@ div#station-HS0-011 {
 #form-19 .styled-dropdown {
   width: 232px;
 }
+#form-21 input[type="text"]{
+  width: 250px;
+}
 #form-11 .styled-dropdown {
-  width: 238px;
+  width: 258px;
 }
 #form-21 .styled-dropdown {
-  width: 234px;
+  width: 258px;
   margin-bottom: 0;
 }
 #station-AM2-ADM  .styled-dropdown {
@@ -1884,7 +1929,7 @@ div#station-HS0-011 {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 204px;
+  width: 174px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -1955,7 +2000,7 @@ input[name^=weight]::after {
   top: 26px
 }
 #station-HS0-004 .packingstation #current_lot .pictogram_btns {
-  top: 104px;
+  top: 160px;
   left: -10px;
 }
 #station-AM2-006  #current_lot .pictogram_btns {
@@ -2012,7 +2057,8 @@ input[name^=weight]::after {
   padding: 12px 25px;
 }
 .editform .btn-orange {
-  left: 188px;
+  left: 178px;
+  min-width: 242px;
 }
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
@@ -2079,6 +2125,12 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
+#radio-0-grade {
+  width: 316px;
+}
+#radio-0-size {
+  width: 315px;
+}
 #radio-19-grade,
 #radio-18-grade,
 #radio-9-grade,
@@ -2088,11 +2140,15 @@ input[name^=weight]::after {
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
+#radio-0-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
+}
+#radio-0-size.toggle-group-container label {
+  width: 105px;
 }
 
 #radio-20-grade.toggle-group-container label,
@@ -2113,7 +2169,6 @@ input[name^=weight]::after {
 }
 
 .toggle-group-container input[type=radio] {
-  /*display: none;*/
   -webkit-appearance: none;
   display: inline-block;
   position: absolute;
@@ -2187,9 +2242,13 @@ input[name^=weight]::after {
 
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
+#radio-0-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
+}
+#radio-0-size.toggle-group-container input:checked + span { 
+  width:105px;
 }
 
 #radio-shipment.toggle-group-container input:checked + span { 
@@ -2350,6 +2409,10 @@ nav span.icon {
   vertical-align: middle;
 }
 
+nav span.icon.menu {
+  background-image: url(/images/nav_menu_icon.svg);
+}
+
 nav span.icon.inventory {
   background-image: url(/images/nav_inventory_icon.svg);
 }
@@ -2382,10 +2445,18 @@ nav span.icon.shipping {
   background-image: url(/images/nav_shipping_icon.svg);
 }
 
+nav span.icon.shipping_info {
+  background-image: url(/images/nav_shippinginfo_icon.svg);
+}
+
+nav span.icon.container {
+  background-image: url(/images/nav_container_icon.svg);
+}
+
 nav div#menu {
   display: none;
   position:absolute;
-  width: 270px;
+  width: 305px;
   background-color: #03223c;
   padding: 15px 25px 10px 0;
 }
@@ -2653,10 +2724,12 @@ span.switch_option.active {
   top: -35px;
   font-size: 14px;
 }
+/*
 #receivingprintlabel .fieldsetrepeat {
   margin-top: 15px;
   padding: 15px 6px 0 6px;
 }
+*/
 #receivingprintlabel .fieldsetrepeat .repeatrow {
   margin: 0;
   padding: 0 0 10px 0;
@@ -2671,7 +2744,7 @@ span.switch_option.active {
 .fieldsetrepeat label {
   font-size: 12px;
   display: inline-block;
-  padding-right: 4px;
+  padding-right: 2px;
 }
 .fieldsetrepeat .styled-dropdown {
   display: inline-block;
@@ -2682,14 +2755,14 @@ span.switch_option.active {
   width: 80px;
 }
 .fieldsetrepeat .styled-dropdown.dd-weight {
-  width: 70px;
-  margin-right: 2px;
+  width: 64px;
+  margin-right: 0;
 }
 .fieldsetrepeat .styled-dropdown.dd-size {
   width: 100px;
 }
 .fieldsetrepeat input[type=text] {
-  width: 50px;
+  width: 40px;
 }
 
 

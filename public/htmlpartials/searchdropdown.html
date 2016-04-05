@@ -11,6 +11,7 @@
           <span ng-switch-when="timestamp">{{value.timestamp|stringtodate|date:'dd/MM/yy' }}</span>
           <span ng-switch-when="weight">{{value.weight|weightstring}}</span>
           <span ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
+          <span ng-switch-when="to_from">{{value.customer || value.received_from}}</span>
           <span ng-switch-default >{{value[field]}}</span>
           <span ng-if="!$last">{{ config.delimeter || '|' }}</span>
         </span>  
@@ -21,9 +22,10 @@
   <div ng-if="the_val" ng-click="setnull()" class="input-text">
     <b ng-if="the_val">{{the_val[config.searchfield]}}</b><span ng-if="the_val"> - </span>
     <span ng-if="the_val" ng-repeat="field in config.fields" ng-switch="field">
-      <span ng-switch-when="timestamp">{{the_val.timestamp|stringtodate|date:'MMM dd' }}</span>
+      <span ng-switch-when="timestamp">{{the_val.timestamp|stringtodate|date:'dd/MM/yy' }}</span>
       <span ng-switch-when="weight">{{the_val.weight|weightstring}}</span>
       <span ng-switch-when="internal_lot_code">{{the_val[field] || the_val['lot_number']}}</span>
+      <span ng-switch-when="to_from">{{the_val.customer || the_val.received_from}}</span>
       <span ng-switch-default >{{the_val[field]}}</span>
       <span ng-if="!$last">{{ config.delimeter || '|' }}</span>
     </span> 
