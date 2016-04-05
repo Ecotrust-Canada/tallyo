@@ -247,10 +247,11 @@ body{
 #station-HS0-002 .panel {
   width: 550px;
 } 
+/*
 #station-HS0-003 .panel {
   width: 800px;
 }
-
+*/
 
 .columnframenarrow{
   width:326px;
@@ -1611,6 +1612,10 @@ div#station-HS0-011 {
 #station-AM2-004 .weighstation_main .form_label {
   width: 220px;
 }
+#station-HS0-003 #form-23 .form_label {
+  width: 120px;
+}
+
 #form-5 .form_label,
 #form-10 .form_label,
 #form-13 .form_label,
@@ -1714,7 +1719,7 @@ div#station-HS0-011 {
 }
 
 #station-HS0-003 .select_object .dropdown-container {
-  width: 740px;
+  width: 510px;
 }
 
 .weighstation_main .form_label label,
