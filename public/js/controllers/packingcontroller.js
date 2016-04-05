@@ -40,6 +40,7 @@ angular.module('scanthisApp.packingController', [])
         }      
       };
       var onErr = function() {
+        $scope.clearField();
         toastr.error('invalid object'); // show failure toast.
       };
 
@@ -271,22 +272,6 @@ angular.module('scanthisApp.packingController', [])
   //$scope.collectionid = '';
   $scope.current.mixed = false;
 
-  /*$scope.CheckHarvester = function(harvester, ship_num){
-    if(harvester){
-      if ($scope.harvesterArray.length === 0){
-        $scope.harvesterArray.push(harvester);
-        $scope.PatchLotwithHar(harvester, ship_num);
-      }
-      else if ($scope.harvesterArray.indexOf(harvester) !== -1){
-      }
-      else{
-        $scope.harvesterArray.push(harvester);
-        toastr.error('Warning: Mixing Harvesters in Lot');
-        $scope.PatchLotwithHar(null, null);
-      }
-    }      
-  };*/
-
   $scope.$watch('list.included', function() {
       var all = fjs.pluck('harvester_code', $scope.list.included);
       var unique = fjs.nub(function (arg1, arg2) {
@@ -299,10 +284,10 @@ angular.module('scanthisApp.packingController', [])
           $scope.PatchLotwithHar(null, null);
         }
         else if ($scope.harvesterArray.length === 1){
-          if ($scope.current.patchitem){
-            $scope.current.mixed = false;
-            $scope.PatchLotwithHar($scope.current.patchitem.harvester_code, $scope.current.patchitem.shipping_unit_number);        
-          }
+          $scope.current.mixed = false;
+          var ship = fjs.pluck('shipping_unit_number', $scope.list.included);
+          var ship_num = ship[0];
+          $scope.PatchLotwithHar($scope.harvesterArray[0], ship_num);        
         }
         else if ($scope.harvesterArray.length > 1){
           if ($scope.current.mixed === false){
@@ -327,15 +312,15 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
 
       if (response.data.length > 0){
-        $scope.current[$scope.station_info.collectiontable] = response.data[0];
+        $scope.current.lot = response.data[0];
         var thediv = document.getElementById('scaninput');
         if(thediv){
          $timeout(function(){thediv.focus();}, 0);
         }
       }
     };
-    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
-    DatabaseServices.GetEntryNoAlert($scope.station_info.collectiontable, func, query);
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
+    DatabaseServices.GetEntryNoAlert('harvester_lot', func, query);
   };
 
 
