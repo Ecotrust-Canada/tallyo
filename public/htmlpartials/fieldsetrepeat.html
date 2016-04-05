@@ -23,5 +23,5 @@
 <button class="addfields btn-blue" ng-click="addNewChoice()">Add fields</button>
 <div class="form_buttons">
   <button ng-click="reset()" class="bottomleft btn-light">Reset Form</button>
-  <input type="button" ng-click="isValid(choices);submitFn({choices: choices})" value="{{config.title}}" class="bottomright btn-orange">
+  <input type="button" ng-click="isValid(choices);submitFn({choices: choices});reset()" value="{{config.title}}" class="bottomright btn-orange">
 </div>

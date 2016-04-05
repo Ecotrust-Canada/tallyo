@@ -162,7 +162,7 @@ angular.module('scanthisApp.receivingController', [])
       'grade':jsonvalues.grade, 
       'pieces':jsonvalues.pieces, 
       'weight':jsonvalues.weight,
-      'case_number':jsonvalues.case_number,
+      'case_number':jsonvalues.case_number, /*can mod from box_number*/
       'timestamp': jsonvalues.timestamp,
       'internal_lot_code': jsonvalues.internal_lot_code,  
       'station_code': $scope.station_code,
