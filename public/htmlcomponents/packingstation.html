@@ -42,7 +42,7 @@
 
   <div class="scanform" ng-if="!options.qrform" >
     <fieldset ng-disabled="formdisabled">
-      <form ng-submit="PutObjInContainer(obj_id);obj_id=null;" >
+      <form ng-submit="PutObjInContainer(input.code);" >
         <div class="form_row">
           <div class="form_label">
             <label for="{{row.fieldname}}">{{packingconfig.scantitle}}:
@@ -50,7 +50,7 @@
             </label>
           </div>
           <div class="field">
-            <input id="scaninput" type="text" ng-model="obj_id" 
+            <input id="scaninput" type="text" ng-model="input.code" 
                    autocomplete="off" placeholder="Start scanning...">
           </div>
         </div>
@@ -91,7 +91,7 @@
   <div id="overwrite">
     <div>
       <p>This code has been scanned to a different {{packingconfig.collection}}. Do you want to change this data entry?</p>
-      <button class="btn-blue" ng-click="enablekeypress();overlay('overwrite')">Cancel</button>
+      <button class="btn-blue" ng-click="clearField();enablekeypress();overlay('overwrite')">Cancel</button>
       <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay('overwrite')">Yes</button>
     </div>
   </div>

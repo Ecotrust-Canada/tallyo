@@ -62,45 +62,30 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.shipment, query, func);
   }; 
 
+
   $scope.getTheData = function(ship_obj){
-    if(!$scope.sumStations[$scope.stn.index].no_detail){
-      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_detail', 'detail');
-    }    
-    $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, 'box_sum', 'summary');
+    var stn = $scope.sumStations[$scope.stn.index];
+    if (stn.csv_1 && !stn.csv_2){
+      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
+
+    }
+    else if (stn.csv_1 && stn.csv_2){
+      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields, 'summary');
+      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_2.table, stn.csv_2.fields, 'detail');
+    }
   };
 
-  $scope.getCSV = function(ship_number, po_number, table, label){
+  $scope.getCSV = function(ship_number, po_number, table, fields, label){
     var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.list.detail = response.data;
-      var full_array = [];
-      if ($scope.list.detail.length > 0){
-        var title_array = propertyNames($scope.list.detail[0]);
-        title_array.shift();
-        title_array.shift();
-        title_array.shift();
-        full_array.push(title_array);
-
-        for (var i=0;i<$scope.list.detail.length;i++){
-          var the_array = [];
-          var an_array = fjs.toArray($scope.list.detail[i]);
-          an_array.forEach(function(el){
-            the_array.push(el[1]);
-          });
-          the_array.shift();
-          the_array.shift();
-          the_array.shift();
-          var new_array = JSON.parse(JSON.stringify(the_array));
-          full_array.push(new_array);
-        }
-      }
       var name = po_number;
       if (label){
         name += '_' + label;
       }
       name += '.csv';
       console.log(name);
-      alasql("SELECT * INTO CSV( '"+name+"', {separator:','}) FROM ?",[full_array]);
+      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
     };
     DatabaseServices.GetEntries(table, func, query);
   };
@@ -462,49 +447,28 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getTheData = function(lot_number, stn, lot_code){
-    if (stn.csv === 'scan'){
-      $scope.getCSV(lot_number, stn, lot_code, 'scan_detail');
+    if (stn.csv_1 && !stn.csv_2){
+      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
 
     }
-    else if (stn.csv === 'box_scan'){
-      $scope.getCSV(lot_number, stn, lot_code, 'box_detail', 'detail');
-      $scope.getCSV(lot_number, stn, lot_code, 'box_sum', 'summary');
-    }
-    else if (stn.csv === 'loin_scan'){
-      $scope.getCSV(lot_number, stn, lot_code, 'loin_detail');
+    else if (stn.csv_1 && stn.csv_2){
+      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields, 'summary');
+      $scope.getCSV(lot_number, stn, lot_code, stn.csv_2.table, stn.csv_2.fields, 'detail');
     }
 
   };
 
-  $scope.getCSV = function(lot_number, stn, lot_code, table, label){
+  $scope.getCSV = function(lot_number, stn, lot_code, table, fields, label){
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
       $scope.list.detail = response.data;
-      var full_array = [];
-      var title_array = propertyNames($scope.list.detail[0]);
-      title_array.shift();
-      title_array.shift();
-      title_array.shift();
-      full_array.push(title_array);
-      for (var i=0;i<$scope.list.detail.length;i++){
-        var the_array = [];
-        var an_array = fjs.toArray($scope.list.detail[i]);
-        an_array.forEach(function(el){
-          the_array.push(el[1]);
-        });
-        the_array.shift();
-        the_array.shift();
-        the_array.shift();
-        var new_array = JSON.parse(JSON.stringify(the_array));
-        full_array.push(new_array);
-      }
       var name = lot_code + '_' + stn.name;
       if (label){
         name += '_' + label;
       }
       name += '.csv';
       console.log(name);
-      alasql("SELECT * INTO CSV( '"+name+"', {separator:','}) FROM ?",[full_array]);
+      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
     };
     DatabaseServices.GetEntries(table, func, query);
   };

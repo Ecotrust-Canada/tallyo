@@ -6,6 +6,8 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
 
+  $scope.input = {};
+
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
     if (!raw_id) {
@@ -49,7 +51,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.clearField = function(){
-    $scope.obj_id = null;
+    $scope.input.code = null;
   };
 
   $scope.MakeScan = function(id){
@@ -57,6 +59,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
+      $scope.input.code=null;
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -188,9 +191,10 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
+    var case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
     var lot_num = GetBoxLotNumber($scope.list.included);
     if (lot_num !== undefined){
-      $scope.GetInfo(lot_num);
+      $scope.GetInfo(lot_num, case_num);
     }
     else{
       var harvester_code = null;
@@ -200,7 +204,7 @@ angular.module('scanthisApp.packingController', [])
       var internal_lot_code = '';
       lot_num = null;
       if ($scope.current.collectionid) {
-          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before);
+          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
       }
     }
   };
@@ -215,7 +219,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
 
-  $scope.PatchBoxNull = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before){
+  $scope.PatchBoxNull = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num){
 
     var func = function(response){
       $scope.current.box = response.data[0];
@@ -226,14 +230,14 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.supplier_group = null;
         $scope.current.box.wpp = null;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num, 'case_number':case_num};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
     
   };
 
     /*adds final info to box*/
-  $scope.PatchBoxWithWeightLot = function(box_har, lot_num){
+  $scope.PatchBoxWithWeightLot = function(box_har, lot_num, case_num){
     var internal_lot_code = box_har.internal_lot_code ? 
                               cutString(box_har.internal_lot_code, 4, 5).substring(0, 8) : null;
     var box_weight = CalculateBoxWeight($scope.list.included);
@@ -249,7 +253,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.supplier_group = box_har.supplier_group;
         $scope.current.box.wpp = box_har.fishing_area;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num, 'case_number':case_num};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
@@ -302,7 +306,7 @@ angular.module('scanthisApp.packingController', [])
         }
         else if ($scope.harvesterArray.length > 1){
           if ($scope.current.mixed === false){
-            toastr.error('Warning: Mixing Harvesters in Lot');      
+            toastr.warning('Warning: Mixing Harvesters in Lot');      
           }
           $scope.PatchLotwithHar(null, null);
           $scope.current.mixed = true;
