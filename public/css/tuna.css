@@ -1646,7 +1646,7 @@ div#station-HS0-011 {
   width: 370px;
 }
 #create_box_form #form-0 .form_label {
-  width: 144px;
+  width: 90px;
 }
 
 .editform .form_label {
@@ -1782,7 +1782,7 @@ div#station-HS0-011 {
   padding: 0 10px;
 }
 
-.select_object .show_choices label,
+.select_object .show_choices .form_label > label,
 .editform .form_label label {
   display: block;
   text-align: left;
@@ -2000,7 +2000,7 @@ input[name^=weight]::after {
   top: 26px
 }
 #station-HS0-004 .packingstation #current_lot .pictogram_btns {
-  top: 104px;
+  top: 160px;
   left: -10px;
 }
 #station-AM2-006  #current_lot .pictogram_btns {
@@ -2125,6 +2125,12 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
+#radio-0-grade {
+  width: 316px;
+}
+#radio-0-size {
+  width: 315px;
+}
 #radio-19-grade,
 #radio-18-grade,
 #radio-9-grade,
@@ -2134,11 +2140,15 @@ input[name^=weight]::after {
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
+#radio-0-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
+}
+#radio-0-size.toggle-group-container label {
+  width: 105px;
 }
 
 #radio-20-grade.toggle-group-container label,
@@ -2159,7 +2169,6 @@ input[name^=weight]::after {
 }
 
 .toggle-group-container input[type=radio] {
-  /*display: none;*/
   -webkit-appearance: none;
   display: inline-block;
   position: absolute;
@@ -2233,9 +2242,13 @@ input[name^=weight]::after {
 
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
+#radio-0-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
+}
+#radio-0-size.toggle-group-container input:checked + span { 
+  width:105px;
 }
 
 #radio-shipment.toggle-group-container input:checked + span { 
