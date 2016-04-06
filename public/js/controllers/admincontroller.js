@@ -217,14 +217,46 @@ angular.module('scanthisApp.AdminController', [])
   $scope.GetHarvesters();
 
   $scope.GetHarvesterLot = function(){
-    var query = '?processor_code=eq.' + $scope.processor;
+    /*var query = '?processor_code=eq.' + $scope.processor;
     var func = function(response){
       $scope.list.harvester_lot = response.data;
       $scope.GetLotSummary();
     };
-    DatabaseServices.GetEntries('harvester_lot', func, query);
+    DatabaseServices.GetEntries('harvester_lot', func, query);*/
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+        $scope.GetLotSummary();
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
   };
   $scope.GetHarvesterLot();
+
+
+  $scope.FilterDate = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+
+      var s_offset = parseInt(moment($scope.startDate).format("Z").substring(0,3));
+      var e_offset = parseInt(moment($scope.endDate).format("Z").substring(0,3));
+      var the_offset = response.data.timezone/60;
+
+      var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
+      var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
+
+      var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+        $scope.GetLotSummary();
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
 
   $scope.GetLotSummary = function(){
     var query = '';
