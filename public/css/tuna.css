@@ -238,6 +238,7 @@ body{
 #station-HS0-005 .panel,
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
+#station-AM2-002 .panel,
 #station-AM2-003 .panel,
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
@@ -789,7 +790,7 @@ div[ng-view] {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 1460px;
+  width: 1510px;
   margin-left: -240px;
 }
 
@@ -1691,7 +1692,7 @@ div#station-HS0-011 {
   width: 310px;
 }
 #form-10 .field input[type=text] {
-  width: 320px;
+  width: 314px;
 }
 #create_box_form #form-0 .btn-orange {
   height: 44px;
@@ -2624,7 +2625,7 @@ fieldset[disabled] {
     width: 200%; 
     height:30px;
     margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+    transition: margin 0.0s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
     display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
@@ -2651,9 +2652,9 @@ fieldset[disabled] {
     display: block; width: 30px; margin: 0;
     background: #FFFFFF;
     position: absolute; top: 0; bottom: 0;
-    right: 52px;
+    transform: translate(0,0);
     border: none;
-    transition: all 0.3s ease-in 0s; 
+    transition: all 0.0s ease-in 0s; 
     background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
     border-radius: 5px;
@@ -2662,7 +2663,7 @@ fieldset[disabled] {
     margin-left: 0;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+    transform: translate(52px,0);
 }
 span.switch_option {
   display:inline-flex;
