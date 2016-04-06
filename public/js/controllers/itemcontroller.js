@@ -255,7 +255,7 @@ angular.module('scanthisApp.itemController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('reprint_table', func, query);
+      DatabaseServices.GetEntries('loin_with_info', func, query);
       
     }
   };

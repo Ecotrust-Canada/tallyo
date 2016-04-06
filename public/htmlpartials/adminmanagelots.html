@@ -72,16 +72,11 @@
           <div ng-if="lot.expanded" class="panel item-details">
             <table>
               <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
-                <td ng-if="total.trade_unit"> {{total.trade_unit}} </td>
-                <td ng-if="total.product_code">{{total.product_code}} </td>
                 <td ng-if="total.grade">{{total.grade}} </td>
-                <td ng-if="total.state">{{total.state}} </td>
-                <td ng-if="total.size">{{total.size}} </td>              
-                <td ng-if="total.species">{{total.species}} </td>
                 <td ng-if="total.boxes">{{total.boxes}} boxes </td>
                 <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
                 <td ng-if="total.weight">{{(total.weight).toFixed(2)}}kg</td>
-                <td ng-if="total.weight_1">{{(total.weight_1).toFixed(2)}}kg<span ng-if="total.weight_2"> / {{total.weight_2.toFixed(2)}}kg</span></td>
+                <td ng-if="total.weight_1">{{(total.weight_1).toFixed(2)}}kg</td>
               </tr>
             </table>
             <button class="bottomright btn-blue" 

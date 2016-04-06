@@ -3,7 +3,7 @@
   <tr ng-if="config.headers">
     <th ng-repeat="title in config.headers">{{title}}</th>
   </tr>
-  <tr ng-repeat="item in items=(itemlist | filter: filterstring)"
+  <tr ng-repeat="item in items=(itemlist | filter: filterstring) | orderBy: config.order"
       id="item-{{item[config.arg]}}" class="animation">
     <td ng-repeat="name in config.fields" ng-switch on="name">
       <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
@@ -16,7 +16,7 @@
       <span ng-switch-when="boxes">{{item[name]}} boxes</span>
       <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
       <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
-      <span ng-switch-when="size_grade">{{item.size}} <label ng-if="item.grade">({{item.grade}})</label></span>
+      <span ng-switch-when="size_grade">{{item.grade}} <label ng-if="item.size">({{item.size}})</label></span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
     <td ng-if="config.button2" ng-click="secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>

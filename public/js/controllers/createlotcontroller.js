@@ -220,7 +220,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListCollectionItems = function(){
     var table;
     if ($scope.station_info.itemtable === 'box'){
-      table = 'box_product';
+      table = 'box_with_info';
     }
     else{
       table = $scope.station_info.itemtable;
@@ -286,7 +286,7 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.items = response.data;
     };
-    DatabaseServices.GetEntries('loin_lot', func, query);
+    DatabaseServices.GetEntries('loin_with_info', func, query);
   };
 
   $scope.Reprint = function(loin_number, lot_number){
@@ -298,7 +298,7 @@ angular.module('scanthisApp.createlotController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('reprint_table', func, query);      
+      DatabaseServices.GetEntries('loin_with_info', func, query);      
     }
   };
   $scope.ListAllItems($scope.station_code);

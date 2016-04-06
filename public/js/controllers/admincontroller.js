@@ -22,7 +22,7 @@ angular.module('scanthisApp.AdminController', [])
     cssclass: "fill small", 
     fields: ["size_grade", "weight", "boxes"], 
     limit: "10000",
-    order: "-timestamp",
+    order: "grade",
     /*csv: true*/
   };
 
@@ -110,7 +110,7 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.included = response.data;
     };
-    DatabaseServices.GetEntries('box_product', func, query);
+    DatabaseServices.GetEntries('box_with_info', func, query);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -120,7 +120,7 @@ angular.module('scanthisApp.AdminController', [])
       }
       else{
         $scope.show_sorted = false;
-        $scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
+        //$scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
         $scope.ListBoxes();
       }
     }
@@ -179,6 +179,7 @@ angular.module('scanthisApp.AdminController', [])
   {
     cssclass: "fill small", 
     fields: ["weight_total", "boxes"], 
+    order: 'grade'
   };
 
   $scope.ListBoxes = function(){

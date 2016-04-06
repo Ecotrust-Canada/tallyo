@@ -192,7 +192,11 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
-    var case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
+    var case_num;
+    if(!$scope.current.box.case_number){
+      case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
+    }
+    else case_num = $scope.current.box.case_number;
     var lot_num = GetBoxLotNumber($scope.list.included);
     if (lot_num !== undefined){
       $scope.GetInfo(lot_num, case_num);
@@ -210,10 +214,10 @@ angular.module('scanthisApp.packingController', [])
     }
   };
 
-  $scope.GetInfo = function(lot_num){
+  $scope.GetInfo = function(lot_num, case_num){
     var func = function(response){
       var box_har = response.data[0];
-      $scope.PatchBoxWithWeightLot(box_har, lot_num);
+      $scope.PatchBoxWithWeightLot(box_har, lot_num, case_num);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
