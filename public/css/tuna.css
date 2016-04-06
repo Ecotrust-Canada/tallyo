@@ -238,6 +238,7 @@ body{
 #station-HS0-005 .panel,
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
+#station-AM2-002 .panel,
 #station-AM2-003 .panel,
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
@@ -789,7 +790,7 @@ div[ng-view] {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 1460px;
+  width: 1510px;
   margin-left: -240px;
 }
 
@@ -1691,7 +1692,7 @@ div#station-HS0-011 {
   width: 310px;
 }
 #form-10 .field input[type=text] {
-  width: 320px;
+  width: 314px;
 }
 #create_box_form #form-0 .btn-orange {
   height: 44px;
