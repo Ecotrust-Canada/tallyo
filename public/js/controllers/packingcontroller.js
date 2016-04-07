@@ -402,7 +402,7 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('please scan a code');
     }
     else{
-      var rawArray = $scope.raw.string.split("/");
+      var rawArray = $scope.raw.string.split("/").toUpperCase();
       var id = rawArray[0];
 
       var func = function(response){
