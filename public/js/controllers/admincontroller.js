@@ -10,11 +10,37 @@ angular.module('scanthisApp.AdminController', [])
   $scope.stn.index= 0;
 
   $scope.ListShipments = function(station_code){
-    var func = function(response){
-      $scope.list.shipments = response.data;
-    };
-    var query = '?station_code=eq.' + station_code;
-    DatabaseServices.GetEntries('shipping_unit', func, query);
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + station_code;
+      var func = function(response){
+        $scope.list.shipments = response.data;
+      };
+      DatabaseServices.GetEntries('shipping_unit', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
+  };
+
+
+  $scope.FilterShipDate = function(){
+    var station_code = $scope.current.station_code;
+    $http.get('/server_time').then(function successCallback(response) {
+
+      var s_offset = parseInt(moment($scope.startDate).format("Z").substring(0,3));
+      var e_offset = parseInt(moment($scope.endDate).format("Z").substring(0,3));
+      var the_offset = response.data.timezone/60;
+
+      var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
+      var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
+
+      var query = '?timestamp=gte.'+ start_date + '&timestamp=lte.' + end_date + '&station_code=eq.' + station_code;
+      var func = function(response){
+        $scope.list.shipments = response.data;
+      };
+      DatabaseServices.GetEntries('shipping_unit', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
   };
 
   $scope.totallistconfig = 
@@ -38,6 +64,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.$watch('stn.index', function() {
     if ($scope.stn.index !== undefined && $scope.stn.index !== null){
       $scope.current.shipment = null;
+      $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
       $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
     }
   });
@@ -217,12 +244,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.GetHarvesters();
 
   $scope.GetHarvesterLot = function(){
-    /*var query = '?processor_code=eq.' + $scope.processor;
-    var func = function(response){
-      $scope.list.harvester_lot = response.data;
-      $scope.GetLotSummary();
-    };
-    DatabaseServices.GetEntries('harvester_lot', func, query);*/
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
@@ -231,7 +252,7 @@ angular.module('scanthisApp.AdminController', [])
         $scope.list.harvester_lot = response.data;
         $scope.GetLotSummary();
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query);      
+      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
     }, function errorCallback(response) {
     });
   };
@@ -253,7 +274,7 @@ angular.module('scanthisApp.AdminController', [])
         $scope.list.harvester_lot = response.data;
         $scope.GetLotSummary();
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query);      
+      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
     }, function errorCallback(response) {
     });
   };
