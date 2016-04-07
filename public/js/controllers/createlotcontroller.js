@@ -202,7 +202,7 @@ angular.module('scanthisApp.createlotController', [])
     else{
       table = $scope.station_info.itemtable;
     }
-    var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
+    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid;
     var func = function(response){
       $scope.list.included = response.data;
     };
@@ -230,7 +230,7 @@ angular.module('scanthisApp.createlotController', [])
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(){
-    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.totals = response.data;
     };

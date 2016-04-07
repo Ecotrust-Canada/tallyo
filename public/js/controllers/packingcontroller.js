@@ -19,7 +19,7 @@ angular.module('scanthisApp.packingController', [])
 
       var func = function(response){
         $scope.current.patchitem = response.data[0];//so can check most recent scan against rest to determine if mixing harvesters
-        var itemcollection = response.data[0][$scope.station_info.collectionid];
+        var itemcollection = response.data[0][($scope.station_info.patchid || $scope.station_info.collectionid)];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
           //confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
@@ -90,7 +90,8 @@ angular.module('scanthisApp.packingController', [])
     };
 
     var patch = {};
-    patch[$scope.station_info.collectionid] = $scope.current.collectionid;
+    patch[($scope.station_info.patchid || $scope.station_info.collectionid)] = $scope.current.collectionid;
+    console.log(patch);
     var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };  

@@ -67,7 +67,8 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.createBox = function(jsonvalues, receive_code){
-    var data = {'lot': jsonvalues.lot, 'box_number': jsonvalues.box_number, 'harvester_code': jsonvalues.harvester_code, 'size': jsonvalues.size, 'grade':jsonvalues.grade, 'pieces':jsonvalues.pieces, 'weight':jsonvalues.weight, 'receive_code': receive_code, 'station_code': $scope.station_code, 'shipping_unit_number':$scope.current.shipping_unit.shipping_unit_number};
+    console.log('called');
+    var data = {'lot': jsonvalues.lot, 'box_number': jsonvalues.box_number, 'harvester_code': jsonvalues.harvester_code, 'size': jsonvalues.size, 'grade':jsonvalues.grade, 'pieces':jsonvalues.pieces, 'weight':jsonvalues.weight, 'receive_code': receive_code, 'station_code': $scope.station_code, 'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number};
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
@@ -168,7 +169,7 @@ angular.module('scanthisApp.receivingController', [])
       'station_code': $scope.station_code,
       'harvest_date': jsonvalues.harvest_date,
       'best_before_date': moment(jsonvalues.harvest_date).add(2, 'years').format(),
-      'shipping_unit_number':$scope.current.shipping_unit.shipping_unit_number};
+      'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number};
     //TF Code*****
     var func = function(response){
       var box_number = response.data.box_number;
@@ -327,8 +328,8 @@ angular.module('scanthisApp.receivingController', [])
         $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
 
         if ($scope.current.shipping_unit !== undefined && $scope.current.shipping_unit !== null){
-          $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-          $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+          $scope.entry.box.shipping_unit_in = $scope.current.shipping_unit.shipping_unit_number;
+          //$scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
           for (var j=0;j<choices.length;j++){
             var formrow = choices[j];
