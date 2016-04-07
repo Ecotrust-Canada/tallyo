@@ -139,6 +139,53 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
+.controller('PackingTotalCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.current.totals = {};
+
+  $scope.loadTotals = function(){
+    if ($scope.station_info.collectiontable === 'lot'){
+      var func = function(response){
+        if (response.data.length > 0){
+          var data = response.data[0];
+          $scope.current.totals.weight = data.weight_1;
+          $scope.current.totals.pieces = data.boxes;
+        }        
+      };
+      var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+      DatabaseServices.GetEntries('lot_summary', func, query);
+    }
+    else if ($scope.station_info.collectiontable === 'box'){
+      $scope.current.totals.weight = $scope.current.box.weight;
+      $scope.current.totals.pieces = $scope.current.box.pieces;      
+    }
+    else if ($scope.station_info.collectiontable === 'shipping_unit'){
+      var func1 = function(response){
+        if (response.data.length > 0){
+          var data = response.data[0];
+          $scope.current.totals.weight = data.total_weight;
+          $scope.current.totals.pieces = data.boxes;
+        }
+      };
+      var query1 = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+      DatabaseServices.GetEntries('ship_with_info', func1, query1);
+    }
+  };
+
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      if ($scope.current.collectionid === 'no selected'){
+      }
+      else{
+        $scope.loadTotals();         
+      }
+    }
+  });
+
+})
+
+
+
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
 
 

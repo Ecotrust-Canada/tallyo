@@ -110,12 +110,11 @@
     <div class="item_number">
       <span >{{packingconfig.summarytitle}} {{current[station_info.collectiontable][packingconfig.item_field]}}</span> 
     </div>
-    <div class="totals_bit" >
+    <div class="totals_bit" ng-controller="PackingTotalCtrl">
       <div class="totals_caption">{{packingconfig.total_title}}</div>
-      <div class="summary"><span 
-        ng-if="list.included[0].weight_1">{{list.included | sumOfValue:'weight_1'| weightstring}}</span><span 
-        ng-if="list.included[0].weight">{{list.included | sumOfValue:'weight'| weightstring}}</span><span
-        >{{list.included.length}} {{packingconfig.item_name}}</span>    
+      <div class="summary">
+        <span>{{current.totals.weight| weightstring}}</span>
+        <span>{{current.totals.pieces}} {{packingconfig.item_name}}</span>    
       </div>
 
     </div>
