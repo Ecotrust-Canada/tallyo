@@ -42,8 +42,6 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-
-
 //selectfromcurrentlots.html (weightstation.html)
 //fills in dropdown menu with lots current as per lotlocations table
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
@@ -208,7 +206,7 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.list.included = response.data;
     };
-    DatabaseServices.GetEntries(table, func, query);
+    DatabaseServices.GetEntries(table, func, query, 'hundred');
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
