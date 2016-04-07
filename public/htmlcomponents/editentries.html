@@ -21,22 +21,22 @@
         <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
       </div>
       <div class="display_field">
-        <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
+        <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" autocomplete="off" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
       </div>
       <div class="display_field">
-        <label for="inp_container_number">Container Number:</label><input type="text" 
+        <label for="inp_container_number">Container Number:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.container_number" id="inp_container_number">
       </div>
       <div class="display_field">
-        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" 
+        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.bill_of_lading" id="inp_bill_of_lading">
       </div>
       <div class="display_field">
-        <label for="inp_vessel_name">Vessel Name:</label><input type="text" 
+        <label for="inp_vessel_name">Vessel Name:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.vessel_name" id="inp_vessel_name">
       </div>
       <div class="display_field">
-        <label for="inp_seal_number">Seal Number:</label><input type="text" 
+        <label for="inp_seal_number">Seal Number:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.seal_number" id="inp_seal_number">
       </div>
       <div class="form_buttons">

@@ -8,7 +8,7 @@
 
 <div ng-repeat="field in config.fields" class="display_field">
   <label for="inp_{{field.fieldname}}">{{field.title}}:</label>
-  <input type="text" 
+  <input type="text" autocomplete="off"
          ng-model="obj[field.fieldname]" id="inp_{{field.fieldname}}">
 </div>
 

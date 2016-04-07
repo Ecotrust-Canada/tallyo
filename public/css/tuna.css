@@ -1391,6 +1391,7 @@ div#station-HS0-011 {
 
 .reprint_label input,
 .fieldsetrepeat input[type=text],
+.fieldsetrepeat input[type=number],
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
@@ -2762,7 +2763,8 @@ span.switch_option.active {
 .fieldsetrepeat .styled-dropdown.dd-size {
   width: 100px;
 }
-.fieldsetrepeat input[type=text] {
+.fieldsetrepeat input[type=text],
+.fieldsetrepeat input[type=number] {
   width: 40px;
 }
 
