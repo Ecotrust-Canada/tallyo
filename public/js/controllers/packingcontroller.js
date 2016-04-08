@@ -91,7 +91,7 @@ angular.module('scanthisApp.packingController', [])
 
     var patch = {};
     patch[($scope.station_info.patchid || $scope.station_info.collectionid)] = $scope.current.collectionid;
-    console.log(patch);
+    //console.log(patch);
     var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };  
@@ -336,7 +336,7 @@ angular.module('scanthisApp.packingController', [])
         }
         else if ($scope.harvesterArray.length === 1){
           $scope.current.mixed = false;
-          var ship = fjs.pluck('shipping_unit_number', $scope.list.included);
+          var ship = fjs.pluck('shipping_unit_in', $scope.list.included);
           var ship_num = ship[0];
           $scope.PatchLotwithHar($scope.harvesterArray[0], ship_num);        
         }
