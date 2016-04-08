@@ -4,32 +4,20 @@
 angular.module('scanthisApp.directives', [])
 
 
-
-.directive('currentlot', function() { return { templateUrl: 'htmlpartials/currentlot.html' }; })
-
-.directive('formoptionedit', function() { return { templateUrl: 'htmlpartials/formoptionedit.html' }; })
-
+//2 lot dropdowns, current and recently completed
 .directive('selectfromcurrentlots', function() { return { templateUrl: 'htmlpartials/selectfromcurrentlots.html' }; })
 
+//lot dropdown with lots only from current day
 .directive('selectsamedaylot', function() { return { templateUrl: 'htmlpartials/selectsamedaylot.html' }; })
 
+//create lot from harvester, or select recently completed lot
 .directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
-
-.directive('adminmanagelots', function() { return { templateUrl: 'htmlpartials/adminmanagelots.html' }; })
-
-.directive('shipmenttotals', function() { return { templateUrl: 'htmlpartials/shipmenttotals.html' }; })
-
-.directive('inventory', function() { return { templateUrl: 'htmlpartials/inventory.html' }; })
 
 .directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
 
 .directive('setharvesterinfo', function() { return { templateUrl: 'htmlpartials/setharvesterinfo.html' }; })
 
 .directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
-
-.directive('setthisfish', function() { return { templateUrl: 'htmlpartials/setthisfish.html' }; })
-
-.directive('tfcodes', function() { return { templateUrl: 'htmlpartials/tfcodes.html' }; })
 
 .directive('display', function() { return { 
   scope: {config: '=',
@@ -74,13 +62,6 @@ angular.module('scanthisApp.directives', [])
            changeFn: '&' },
   controller: 'OptionCtrl',
   templateUrl: 'htmlpartials/dropdown.html' }; })
-
-.directive('persistdropdown', function() { return { 
-  scope: { itemlist: '=',  
-           cfg: '=', 
-           selectedoption: '=', 
-           changeFn: '&' },
-  templateUrl: 'htmlpartials/persistdropdown.html' }; })
 
 .directive('entryform', function() { return { 
   scope: {table: '=',  
