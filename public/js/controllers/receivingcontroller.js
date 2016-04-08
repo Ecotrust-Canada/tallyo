@@ -7,11 +7,13 @@ angular.module('scanthisApp.receivingController', [])
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.readQR = function(){
-    var rawArray = $scope.raw.string.split("/").toUpperCase();
+    var rawArray = $scope.raw.string.split("/");
     var jsonvalues = {};
     for (var i=0;i<$scope.valuesarray.length;i++){
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
+    jsonvalues.box_number = jsonvalues.box_number.toUpperCase();
+    jsonvalues.harvester_code = jsonvalues.harvester_code.toUpperCase();
     $scope.checkBox(jsonvalues);
 
   };
@@ -19,7 +21,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.checkBox = function(jsonvalues){
     var func = function(response){
       if (response.data.length === 0){
-        $scope.MakeItemFromQR(jsonvalues);
+        $scope.CheckHarvester(jsonvalues);
       }
       else{
         var box = response.data[0];
@@ -34,7 +36,7 @@ angular.module('scanthisApp.receivingController', [])
     };
 
     var query = '?box_number=eq.' + jsonvalues.box_number;
-    DatabaseServices.GetEntry('box', func, query);
+    DatabaseServices.GetEntries('box', func, query);
 
   };
 
@@ -58,7 +60,7 @@ angular.module('scanthisApp.receivingController', [])
           $scope.CheckHarvester(jsonvalues);
         }
       };
-      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number;
       DatabaseServices.GetEntries('box', func, query);
     }
   };
@@ -90,6 +92,8 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.createBox = function(jsonvalues){
+    //console.log(jsonvalues.timestamp);
+    var harvestDate = moment(parseInt(jsonvalues.harvest_date, 36)).format();
     var data = 
      {'box_number': jsonvalues.box_number, 
       'harvester_code': jsonvalues.harvester_code, 
@@ -98,11 +102,11 @@ angular.module('scanthisApp.receivingController', [])
       'pieces':jsonvalues.pieces, 
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
-      'timestamp': jsonvalues.timestamp,
+      'timestamp': moment(parseInt(jsonvalues.timestamp, 36)).format(),
       'internal_lot_code': jsonvalues.internal_lot_code,  
       'station_code': $scope.station_code,
-      'harvest_date': jsonvalues.harvest_date,
-      'best_before_date': moment(jsonvalues.harvest_date).add(2, 'years').format(),
+      'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
+      'best_before_date': moment(harvestDate).add(2, 'years').format(),
       'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number};
     //TF Code*****
     var func = function(response){

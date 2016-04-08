@@ -181,6 +181,10 @@ var ArrayFromJson = function(json, stringarray){
     if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1'){
       json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
     }
+    else if (stringarray[i] === 'timestamp' || stringarray[i] === 'harvest_date'){
+      //json[stringarray[i]] = String((json[stringarray[i]]).valueOf(), 36);
+      json[stringarray[i]] = new Date(json[stringarray[i]]).getTime().toString(36);
+    }
     newarray.push(json[stringarray[i]]);
   }
   return newarray;
