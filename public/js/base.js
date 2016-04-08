@@ -57,8 +57,8 @@ angular.module('scanthisApp', [
 
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
-    if ($scope.$parent.current_terminal.subterminal_id && 
-        (!$routeParams.subterminal_id || $routeParams.terminal_id != $scope.$parent.current_terminal.id)
+    if ($scope.$parent.current_terminal.id > -1 && $routeParams.terminal_id != $scope.$parent.current_terminal.id && 
+        typeof($scope.$parent.current_terminal.subterminal_id) !== 'undefined' 
        ) {
 
         document.getElementById('submenu-'+$scope.$parent.current_terminal.id).style.display = 'none';
@@ -67,7 +67,6 @@ angular.module('scanthisApp', [
 
     if (!current_terminal.subterminals){
         $scope.terminal.both = current_terminal.both;
-
 
         var stations = current_terminal.stations;
         $scope.currentstations = [];
@@ -106,6 +105,7 @@ angular.module('scanthisApp', [
             //document.getElementById('submenu-'+$routeParams.terminal_id).style.display = 'none';
         } else {
           document.getElementById('submenu-'+$routeParams.terminal_id).style.display = 'inline-block';
+          $scope.$parent.current_terminal.subterminal_id = 0;
         }
     }
   }
