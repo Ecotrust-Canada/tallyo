@@ -2455,6 +2455,14 @@ nav span.icon.container {
   background-image: url(/images/nav_container_icon.svg);
 }
 
+nav span.icon.scan {
+  background-image: url(/images/nav_scan_icon.svg);
+}
+
+nav span.icon.print_label {
+  background-image: url(/images/nav_printlabel_icon.svg);
+}
+
 nav div#menu {
   display: none;
   position:absolute;
