@@ -98,14 +98,13 @@ angular.module('scanthisApp.packingController', [])
 
 
   $scope.MakeQR = function(){
-    console.log($scope.current[$scope.station_info.collectiontable].ft_fa_code);
     var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
     if ($scope.current[$scope.station_info.collectiontable].ft_fa_code) {
-      $scope.printLabelFairTrade(data, labels);
+      //$scope.printLabelFairTrade(data, labels);
     } else {
-      $scope.printLabel(data, labels);
+      //$scope.printLabel(data, labels);
     }
   };
 
@@ -402,8 +401,8 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('please scan a code');
     }
     else{
-      var rawArray = $scope.raw.string.split("/").toUpperCase();
-      var id = rawArray[0];
+      var rawArray = $scope.raw.string.split("/");
+      var id = rawArray[0].toUpperCase();
 
       var func = function(response){
         $scope.CheckScan(id);
