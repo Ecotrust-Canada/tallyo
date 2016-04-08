@@ -2493,7 +2493,7 @@ nav #menu h4 {
   -webkit-margin-end: 0px;
 }
 
-nav #menu ul {
+nav #menu > ul {
   list-style: none;
   display: inline-block;
   margin: 0;
@@ -2504,12 +2504,17 @@ nav #menu ul {
   -webkit-padding-start: 0px;
 }
 
+nav #menu ul li ul {
+  display: none;
+  list-style: none;
+}
 nav #menu li {
   display: block; padding: 2px 0;
   margin: 0;
 }
 
-nav #menu li.active {
+nav #menu li.active > span > a,
+nav #menu li.active > span {
   opacity: 0.5;
 }
 

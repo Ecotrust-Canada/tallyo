@@ -57,29 +57,57 @@ angular.module('scanthisApp', [
 
   if ($routeParams.terminal_id){
     var current_terminal = terminals.filter(function(s){return s.id == $routeParams.terminal_id})[0];
+    if ($scope.$parent.current_terminal.subterminal_id && 
+        (!$routeParams.subterminal_id || $routeParams.terminal_id != $scope.$parent.current_terminal.id)
+       ) {
 
-    $scope.terminal.both = current_terminal.both;
-
+        document.getElementById('submenu-'+$scope.$parent.current_terminal.id).style.display = 'none';
+    }
     $scope.$parent.current_terminal = { id: current_terminal.id, icon: current_terminal.icon, name: current_terminal.name };
 
-    var stations = current_terminal.stations;
-    $scope.currentstations = [];
+    if (!current_terminal.subterminals){
+        $scope.terminal.both = current_terminal.both;
 
-    for (var i = 0;i<stations.length;i++){
-      var index = stations[i];
-      $scope.currentstations[i] = {};
-      $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
-      $scope.currentstations[i].settings = $scope.stations[index].settings;
+
+        var stations = current_terminal.stations;
+        $scope.currentstations = [];
+
+        for (var i = 0;i<stations.length;i++){
+          var index = stations[i];
+          $scope.currentstations[i] = {};
+          $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
+          $scope.currentstations[i].settings = $scope.stations[index].settings;
+        }
+        $scope.terminal.substation = 0;
+        document.getElementById('menu').style.display = 'none';
+    } else  {
+        if($routeParams.subterminal_id){
+            var subterminal = current_terminal.subterminals.filter(function(s){return s.id == $routeParams.subterminal_id})[0];
+            
+            $scope.$parent.current_terminal = { 
+                id: current_terminal.id,
+                subterminal_id: subterminal.id,
+                icon: subterminal.icon, 
+                name: subterminal.name 
+            };
+
+            var stations = subterminal.stations;
+            $scope.currentstations = [];
+
+            for (var i = 0;i<stations.length;i++){
+              var index = stations[i];
+              $scope.currentstations[i] = {};
+              $scope.currentstations[i].include = '/html/' + $scope.stations[index].type + '.html';//$routeParams.controller + '.' + $routeParams.action + '.html';
+              $scope.currentstations[i].settings = $scope.stations[index].settings;
+            }
+
+            $scope.terminal.substation = 0;
+            document.getElementById('menu').style.display = 'none';
+            //document.getElementById('submenu-'+$routeParams.terminal_id).style.display = 'none';
+        } else {
+          document.getElementById('submenu-'+$routeParams.terminal_id).style.display = 'inline-block';
+        }
     }
-    $scope.terminal.substation = 0;
-
-    var menu =  document.getElementById('menu');
-    menu.style.display = 'none';
-   /* 
-    setTimeout(function () {
-      menu.style.removeProperty('display');
-    }, 50);
-    */
   }
 })
 
