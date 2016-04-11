@@ -2447,6 +2447,14 @@ nav span.icon.shipping {
   background-image: url(/images/nav_shipping_icon.svg);
 }
 
+nav span.icon.shipping2 {
+  background-image: url(/images/nav_shipping2_icon.svg);
+}
+
+nav span.icon.shippingin {
+  background-image: url(/images/nav_shippingin_icon.svg);
+}
+
 nav span.icon.shipping_info {
   background-image: url(/images/nav_shippinginfo_icon.svg);
 }
