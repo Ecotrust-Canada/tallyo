@@ -1043,7 +1043,7 @@ div[ng-view] {
   box-sizing:border-box;
   margin: 4px 0 0 0;
   width: 540px;
-  height: 36px;
+  height: 37px;
   padding: 0 5px;
   /*overflow: hidden;*/
   position: relative;
@@ -1912,7 +1912,7 @@ div#station-HS0-011 {
 }
 .dropdown-container .dd_arrow {
   right: 0;
-  top: 27px;
+  bottom: 0;
   z-index: 1;
 }
 /*
