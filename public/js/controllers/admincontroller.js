@@ -377,7 +377,7 @@ angular.module('scanthisApp.AdminController', [])
 
   };
 
-  console.log(tfconfig);
+
 
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
@@ -511,13 +511,13 @@ angular.module('scanthisApp.AdminController', [])
 
 
   $scope.GetTFEvents = function(lot_number){
-    var posturl = '';
     var query = '?lot_number=eq.' + lot_number;
     var func = function(response){
-
-      $http.get(posturl_processor, tfconfig).then
+      //console.log(response.data);
+      var posturl = posturl_processor + '?start_tag=' + response.data[0].tf_code;
+      $http.get(posturl, tfconfig).then
       (function(response){
-        console.log(response);
+        console.log(response.data.results[0]);
       }, 
         function(response){
           console.log(response);

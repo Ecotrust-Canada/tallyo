@@ -100,7 +100,7 @@
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
 
               <button class="bottomright btn-blue" 
-                  ng-if="stn.tf_query && lot[stn.code].summary && lot[stn.code].in_progress" 
+                  ng-if="stn.tf_query && lot[stn.code].summary" 
                   ng-click="GetTFEvents(lot.lot_number)">TF Query</button>
                   
               <button class="bottomleft btn-light" 
