@@ -40,7 +40,9 @@
         <input-dropdown  thelist="list.label"  config="dropdownconfig" on-select="ShowCodes(value)"></input-dropdown>
       </div>
     </div>
-
+    
+    <br>
+    <div ng-if="list.codes && list.codes.length>0">{{current.tf_group.lot_number || 'no lot'}}</div>
     <list ng-if="list.codes && list.codes.length>0" itemlist="list.codes"  config="tableconfig"></list>
 
     <br>

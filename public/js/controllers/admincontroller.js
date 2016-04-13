@@ -377,6 +377,8 @@ angular.module('scanthisApp.AdminController', [])
 
   };
 
+  console.log(tfconfig);
+
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
     var func = function(response){
@@ -452,7 +454,7 @@ angular.module('scanthisApp.AdminController', [])
         function(response){
           console.log(response);
           $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        });      
+        });     
     };
     DatabaseServices.GetEntries('tf_harvester_entry', func, query);
   };
@@ -468,6 +470,9 @@ angular.module('scanthisApp.AdminController', [])
       processor_entry.location = $scope.settings.process_location;
       processor_entry.privacy_display_date = '20';
       processor_entry.amount = Math.round(processor_entry.amount);
+      for (var field in $scope.settings.product_info){
+        processor_entry[field] = $scope.settings.product_info[field];
+      }
 
       for (var key in processor_entry) {
         if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
@@ -489,7 +494,36 @@ angular.module('scanthisApp.AdminController', [])
         $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
       });
     };
-    DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
+    DatabaseServices.GetEntries('tf_processor_one_product', func, query);
+  };
+
+  //AM thisfish:
+  //get entry from database with receive info - if does not have mixed harvester, and has thisfish codes
+  //will have a date range, thisfish code
+  //query harvester entry, processor entry with thisfish code
+  //create new harvester entry with date range - can create code with api???
+  //return with code
+  //create processor entry with date range
+  //return, should have same code
+  //get another entry from database? - multiple for different products
+  //fill in am processor entry or entries with original code as created above
+  //submit
+
+
+  $scope.GetTFEvents = function(lot_number){
+    var posturl = '';
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+
+      $http.get(posturl_processor, tfconfig).then
+      (function(response){
+        console.log(response);
+      }, 
+        function(response){
+          console.log(response);
+        });     
+    };
+    DatabaseServices.GetEntries('incoming_codes', func, query);
   };
 
 
@@ -577,8 +611,5 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
-
-
-
 
 ;

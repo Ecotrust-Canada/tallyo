@@ -2,42 +2,48 @@
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
   </div>
-  <div  class="select_object" any-other-click>
-    <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
-         ng-click="current.collectionid = null">
-      <span class="show_choices">{{packingconfig.sectiontitle}}</span>
-      <div id="reprint_label_link" ng-if="substationlink" 
-           ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
-    </div> 
-    <div class="show_choices" ng-hide="current.collectionid">
-      <div ng-controller="FormSubmitCtrl" id="create_box_form">
-        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
-      </div>
-      <div  ng-controller="CollectionTableDropDownCtrl">
-        <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
+  <div any-other-click>
+    <div  class="select_object" >
+      <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
+           ng-click="current.collectionid = null">
+        <span class="show_choices">{{packingconfig.sectiontitle}}</span>
+        <div id="reprint_label_link" ng-if="substationlink" 
+             ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+      </div> 
+      <div class="show_choices" ng-hide="current.collectionid">
+        <div ng-controller="FormSubmitCtrl" id="create_box_form">
+          <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
+        </div>
+        <div  ng-controller="CollectionTableDropDownCtrl">
+          <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
+        </div>
       </div>
     </div>
-  </div>
-  <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
-    <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-    <i class="errortext" ng-if="current.mixed">Mixed Harvesters in Lot</i>
-    <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
-      <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
-      <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
-            id="reprint-{{config.id}}" class="reprint">Reprint</span>
-    </div>
+    <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
+      <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+      <i class="errortext" ng-if="current.mixed">Mixed Harvesters in Lot</i>
+      <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
+        <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+        <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
+              id="reprint-{{config.id}}" class="reprint">Reprint</span>
+      </div>
 
-    <!--<span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
-      <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
-      <persistdropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></persistdropdown>
-      <span ng-show="current.codes">
-        Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
-        <span ng-repeat="code in current.products">
-        <br>{{code}}
+      <span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
+        <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
+        <!--<dropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></dropdown>-->
+
+        <input-dropdown ng-show="!current.codes && show_element==='dropdown'" thelist="list.tf_codes"  config="the_config" on-select="SetCodes(value)"></input-dropdown>
+
+
+        <span ng-show="current.codes">
+          Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
+          <span ng-repeat="code in current.products">
+          <br>{{code}}
+          </span>
+          
         </span>
-        
       </span>
-    </span>-->
+    </div>
   </div>
 
   <div class="scanform" ng-if="!options.qrform" >

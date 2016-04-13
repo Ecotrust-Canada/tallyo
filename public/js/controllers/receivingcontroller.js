@@ -92,7 +92,7 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.createBox = function(jsonvalues){
-    //console.log(jsonvalues.timestamp);
+    //console.log(jsonvalues);
     var harvestDate = moment(parseInt(jsonvalues.harvest_date, 36)).format();
     var data = 
      {'box_number': jsonvalues.box_number, 
@@ -107,8 +107,8 @@ angular.module('scanthisApp.receivingController', [])
       'station_code': $scope.station_code,
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
       'best_before_date': moment(harvestDate).add(2, 'years').format(),
-      'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number};
-    //TF Code*****
+      'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number,
+      'tf_code': jsonvalues.tf_code};
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);

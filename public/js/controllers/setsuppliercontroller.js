@@ -5,10 +5,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('SetSupplierCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 
-  /*
-   *sets the supplier
-   */
-  //$scope.current.collectionid = null; 
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
@@ -158,12 +154,12 @@ angular.module('scanthisApp.setsupplierController', [])
     var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number; 
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-  $scope.$watch('current.lot.lot_number', function(newValue, oldValue) {
-    if ($scope.current.lot !== undefined && $scope.current.lot !== null){
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
       for (var i=0;i<$scope.setstation.set.length;i++){
         var station = $scope.setstation.set[i];
         if ($scope.current.lot){
-          $scope.StationLot($scope.current.lot.lot_number, station);
+          $scope.StationLot($scope.current.collectionid, station);
         }        
       }
       for (var j=0;j<$scope.setstation.add.length;j++){
@@ -171,8 +167,7 @@ angular.module('scanthisApp.setsupplierController', [])
         $scope.AddStationLot($scope.current.collectionid, station1);
       }
 
-      $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
-      $scope.current.collectionid = $scope.current.lot.lot_number;
+      $rootScope.$broadcast('collection-change', {id: $scope.current.collectionid});
 
     }
   });

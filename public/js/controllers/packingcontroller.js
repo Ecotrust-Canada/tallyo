@@ -473,16 +473,28 @@ angular.module('scanthisApp.packingController', [])
   $scope.selectedoption = 'no selected';
 
   $scope.the_config = 
-  { 
+  /*{ 
     limit: "10",
     order: "-timestamp", 
     arg: "codes", 
     fields: ["label", "codes"]
   };
 
+  $scope.dropdownconfig = */
+  { id: 0, 
+    title: "Search Labels", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "codes", 
+    searchfield: "label", 
+    delimeter: '-',
+    fields: ["codes"]
+  };
+
   $scope.SetCodes = function(codes){
-    $scope.current.codes = JSON.parse(codes);
-    $scope.current.codes.forEach(
+    console.log(codes);
+    $scope.current.codes = codes;
+    codes.forEach(
       function(el){
         $scope.PatchLot($scope.current.collectionid, el);
       }
@@ -494,6 +506,7 @@ angular.module('scanthisApp.packingController', [])
     var patch = {'lot_number': lot_number};
     var func = function(response){
       $scope.ListTFCodes();
+      $scope.ShowCodes();
     };
     DatabaseServices.PatchEntry('thisfish', patch, query, func);
   };
@@ -506,11 +519,8 @@ angular.module('scanthisApp.packingController', [])
     );
   };
 
-  $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
-      $scope.current.codes = null;
-      $scope.show_element = '';
-      var query = '?lot_number=eq.' + $scope.current.collectionid;
+  $scope.ShowCodes = function(){
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
       var func = function(response){
         if (response.data.length>0){
           $scope.current.codes = response.data[0].codes;
@@ -518,6 +528,13 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
+      $scope.current.codes = null;
+      $scope.show_element = '';
+      $scope.ShowCodes();
     }
   });
 
