@@ -232,28 +232,23 @@ angular.module('scanthisApp', [
     }
   };
 
-  $scope.loadCurrent = function(){
-    var func = function(response){
-      var station = response.data[0];
-      $http.get('/server_time').then(function successCallback(response) {
-        var the_date = response.data.timestamp;
-        var date = moment(the_date).utcOffset(response.data.timezone).format();
-        var today = moment.parseZone(date).startOf('day').format();
-        if(station){
-          var lot_date_start = station.in_progress_date.substring(0,19);
-          var lot_date = moment(lot_date_start).utcOffset(response.data.timezone).format();
-          var lot_day = moment.parseZone(lot_date).startOf('day').format();
-          if ( lot_day === today){
-            $scope.current.collectionid = station.lot_number;
-          }
-        }
-      }, function errorCallback(response) {
 
-      });
-    };
-    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
-    DatabaseServices.GetEntries('lotlocations', func, query);
+  $scope.loadCurrent = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      var query = '?in_progress_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+      var func = function(response){
+        if (response.data.length > 0){
+          $scope.current.collectionid = response.data[0].lot_number;
+        }
+      };
+      DatabaseServices.GetEntries('lotlocations', func, query);      
+    }, function errorCallback(response) {
+    });
   };
+
+
 
   $scope.RefreshPage = function(){
     location.reload();
