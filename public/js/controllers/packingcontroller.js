@@ -39,7 +39,7 @@ angular.module('scanthisApp.packingController', [])
           if ($scope.options.check_grade){
             $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade);
           }else{
-            $scope.PatchObjWithContainer(id);
+            $scope.PatchObjWithContainer();
           }
           
         }      
@@ -66,6 +66,8 @@ angular.module('scanthisApp.packingController', [])
     loin_grade = conv[loin_grade];
     if (loin_grade !== box_grade){
       $scope.overlay('mixgrade');
+    }else{
+      $scope.PatchObjWithContainer();
     }
   }
 
