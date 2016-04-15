@@ -39,7 +39,7 @@ angular.module('scanthisApp.itemController', [])
         url: $scope.scaleURL + 'weight',
       }).then(
         function successCallback(response) {
-          $scope.scale[fieldName] = response.data.value;
+          $scope.scale[fieldName] = response.data.value.toFixed(3);
         },
         function errorCallback(response) {
           $scope.scale[fieldName] = 1.11;
