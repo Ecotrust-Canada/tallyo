@@ -2133,7 +2133,8 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
-#radio-0-grade {
+#radio-0-grade,
+#radio-9-grade {
   width: 316px;
 }
 #radio-0-size {
@@ -2141,7 +2142,6 @@ input[name^=weight]::after {
 }
 #radio-19-grade,
 #radio-18-grade,
-#radio-9-grade,
 #radio-17-grade {
   width: 237px;
 }
