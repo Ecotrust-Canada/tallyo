@@ -41,7 +41,7 @@ angular.module('scanthisApp.packingController', [])
       };
       var onErr = function() {
         $scope.clearField();
-        toastr.error('invalid object'); // show failure toast.
+        toastr.error('invalid QR code'); // show failure toast.
       };
 
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
@@ -86,7 +86,7 @@ angular.module('scanthisApp.packingController', [])
 
     };
     var onErr = function(){
-      toastr.error('invalid object'); // show failure toast.
+      toastr.error('invalid QR code'); // show failure toast.
     };
 
     var patch = {};
@@ -410,7 +410,7 @@ angular.module('scanthisApp.packingController', [])
       };
       var onErr = function() {
         $scope.raw.string = null;
-        toastr.error('invalid object'); // show failure toast.
+        toastr.error('invalid QR code'); // show failure toast.
       };
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
       DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
