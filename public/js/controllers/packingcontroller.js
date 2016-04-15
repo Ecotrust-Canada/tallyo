@@ -36,7 +36,12 @@ angular.module('scanthisApp.packingController', [])
           $scope.clearField();
         }
         else{
-          $scope.PatchObjWithContainer(id);
+          if ($scope.options.check_grade){
+            $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade);
+          }else{
+            $scope.PatchObjWithContainer(id);
+          }
+          
         }      
       };
       var onErr = function() {
@@ -50,6 +55,19 @@ angular.module('scanthisApp.packingController', [])
 
     
   };
+
+  $scope.CheckGrade = function(box_grade, loin_grade){
+    var conv = {
+      'A': 'AAA',
+      'B': 'AA',
+      'C': 'A',
+      'D': 'D'
+    }
+    loin_grade = conv[loin_grade];
+    if (loin_grade !== box_grade){
+      $scope.overlay('mixgrade');
+    }
+  }
 
   $scope.clearField = function(){
     $scope.input.code = null;

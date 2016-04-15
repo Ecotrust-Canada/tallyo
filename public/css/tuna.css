@@ -2845,6 +2845,31 @@ span.switch_option.active {
      text-align:center;
 }
 
+#mixgrade {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     margin-top: 100px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#mixgrade div {
+     width:100%;
+     height: 300px;
+     margin: 100px auto;
+     margin-right: 100px;
+     background-color: white;
+     border: 5px solid #0076ad;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
 md-datepicker {
   margin-left: 20px;
   margin-right: 20px;
