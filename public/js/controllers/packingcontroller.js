@@ -51,9 +51,7 @@ angular.module('scanthisApp.packingController', [])
 
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
       DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
-    }
-
-    
+    }    
   };
 
   $scope.CheckGrade = function(box_grade, loin_grade){
@@ -206,14 +204,20 @@ angular.module('scanthisApp.packingController', [])
 
 
 
-.controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
+.controller('RemovePatchCtrl', function($scope, $http, DatabaseServices, toastr) {
 
 
   //confirmTrue = function(message, func, elsefunc)
   
-  $scope.PatchObjRemoveContainer = function(id){
+  $scope.PatchObjRemoveContainer = function(obj){
+    var id = obj[$scope.station_info.itemid];
     $scope.to_delete = id;
-    $scope.overlay('delete');
+    if ($scope.options.qrform && obj.lot_number !== null){
+      toastr.error('cannot delete - box in processing')
+    }else{
+      $scope.overlay('delete');
+    }
+    
   };
 
   $scope.PatchNull = function(){
