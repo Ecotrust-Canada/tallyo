@@ -394,145 +394,7 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-  $scope.postHarResponse = function(tf_code, status, data){
-    var patch = {'har_response_status': status, 'har_response_data': data};
-    var query = '?tf_code=eq.' + tf_code;
-    var func = function(response){
-    };
-    DatabaseServices.PatchEntry('thisfish', patch, query, func);
-  };
 
-  $scope.postProResponse = function(tf_code, status, data){
-    var patch = {'pro_response_status': status, 'pro_response_data': data};
-    var query = '?tf_code=eq.' + tf_code;
-    var func = function(response){
-    };
-    DatabaseServices.PatchEntry('thisfish', patch, query, func);
-  };
-
-  $scope.ThisfishHar = function(lot_number){
-    var posturl = '';
-    var query = '?lot_number=eq.' + lot_number;
-    var func = function(response){
-      var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
-      delete harvester_entry.lot_number;
-      harvester_entry.entry_unit = $scope.settings.entry_unit;
-      harvester_entry.shipped_to_user = $scope.settings.tf_user_id;
-      harvester_entry.landing_slip_number = '000000';
-      harvester_entry.privacy_display_date = '20';
-      harvester_entry.amount = Math.round(harvester_entry.amount);
-
-      for (var key in harvester_entry) {
-        if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
-          var name = harvester_entry[key];
-          var filtered = tf_har_options[key].filter(function(el){
-            return el.name === name;
-          });
-          if(!filtered[0]){
-          }
-          else{
-            var id = filtered[0].id;
-            harvester_entry[key] = id;
-            if (key === 'user'){
-              if (filtered[0].group === 'fleet'){
-                posturl = posturl_fleet;
-              }
-              else if (filtered[0].group === 'fish_harvester'){
-                posturl = posturl_harvester;
-              }
-            }
-          }
-        }
-      }
-      console.log(harvester_entry);
-      $http.post(posturl, harvester_entry, tfconfig).then
-      (function(response){
-        console.log(response);
-        $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        $scope.ThisfishPro(lot_number);
-      }, 
-        function(response){
-          console.log(response);
-          $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        });     
-    };
-    DatabaseServices.GetEntries('tf_harvester_entry', func, query);
-  };
-
-
-  $scope.ThisfishPro = function(lot_number){
-    var query = '?lotnum=eq.' + lot_number;
-    var func = function(response){
-      var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
-      delete processor_entry.lotnum;
-      processor_entry.user = $scope.settings.tf_user;
-      processor_entry.entry_unit = $scope.settings.entry_unit;
-      processor_entry.location = $scope.settings.process_location;
-      processor_entry.privacy_display_date = '20';
-      processor_entry.amount = Math.round(processor_entry.amount);
-      for (var field in $scope.settings.product_info){
-        processor_entry[field] = $scope.settings.product_info[field];
-      }
-
-      for (var key in processor_entry) {
-        if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
-          var name = processor_entry[key];
-          var filtered = tf_pro_options[key].filter(function(el){
-            return el.name === name;
-          });
-          var id = filtered[0].id;
-          processor_entry[key] = id;
-        }
-      }
-      console.log(processor_entry);
-      $http.post(posturl_processor, processor_entry, tfconfig)
-      .then(function(response){
-        console.log(response);
-        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
-      }, 
-      function(response){
-        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
-      });
-    };
-    DatabaseServices.GetEntries('tf_processor_one_product', func, query);
-  };
-
-  //AM thisfish:
-  //get entry from database with receive info - if does not have mixed harvester, and has thisfish codes
-  //will have a date range, thisfish code
-  //query harvester entry, processor entry with thisfish code
-  //create new harvester entry with date range - can create code with api???
-  //return with code
-  //create processor entry with date range
-  //return, should have same code
-  //get another entry from database? - multiple for different products
-  //fill in am processor entry or entries with original code as created above
-  //submit
-
-
-  $scope.GetTFEvents = function(lot_number){
-    var query = '?lot_number=eq.' + lot_number;
-    var func = function(response){
-      //console.log(response.data);
-      var posturl = posturl_processor + '?start_tag=' + response.data[0].tf_code;
-      $http.get(posturl, tfconfig).then
-      (function(response){
-        console.log(response.data.results[0]);
-      }, 
-        function(response){
-          console.log(response);
-        });     
-    };
-    DatabaseServices.GetEntries('incoming_codes', func, query);
-  };
-
-
-  $scope.SubmitLot = function(lot_number, tf_code){
-    if (tf_code){
-      $scope.ThisfishHar(lot_number);
-      //$scope.ThisfishPro(lot_number);
-    }
-  };
 
   $scope.getTheData = function(lot_number, stn, lot_code){
     if (stn.csv_1 && !stn.csv_2){
@@ -611,5 +473,9 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
+
+
+
+
 
 ;

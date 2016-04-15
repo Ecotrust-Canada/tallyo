@@ -15,6 +15,7 @@ angular.module('scanthisApp', [
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',
+  'scanthisApp.ThisfishController',
   'ngSanitize', 
   'ngCsv',
   'toastr',

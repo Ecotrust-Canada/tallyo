@@ -108,7 +108,8 @@ angular.module('scanthisApp.receivingController', [])
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
       'best_before_date': moment(harvestDate).add(2, 'years').format(),
       'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number,
-      'tf_code': jsonvalues.tf_code};
+      'tf_code': jsonvalues.tf_code,
+      'yield': jsonvalues.yield};
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);

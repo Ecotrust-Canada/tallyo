@@ -81,27 +81,33 @@
                   <td ng-if="total.weight_1">{{(total.weight_1).toFixed(2)}}kg</td>
                 </tr>
               </table>
-              <button class="bottomright btn-blue" 
-                      ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress" 
-                      ng-click="SubmitLot(lot.lot_number, lot.tf_code) "
-                      ng-disabled="lot.tf_submit !== 'submit' && lot.tf_submit !== 'no_trace' && lot.tf_submit !== 'error'">
-                <span ng-switch on="lot.tf_submit">
-                  <span ng-switch-when="no_trace">Complete Lot</span>
-                  <span ng-switch-when="submit">Thisfish Submit</span>
-                  <span ng-switch-when="success">{{lot.tf_code}}</span>
-                  <span ng-switch-when="error">Error Submitting</span>
-                  <span ng-switch-default>Complete Lot</span>
-                </span>
-              </button>
 
+
+              <!--<div ng-controller="ThisfishSubmitCtrl">
+                <button class="bottomright btn-blue" 
+                        ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress" 
+                        ng-click="SubmitLot(lot.lot_number, lot.tf_code) "
+                        ng-disabled="lot.tf_submit !== 'submit' && lot.tf_submit !== 'no_trace' && lot.tf_submit !== 'error'">
+                  <span ng-switch on="lot.tf_submit">
+                    <span ng-switch-when="no_trace">Complete Lot</span>
+                    <span ng-switch-when="submit">Thisfish Submit</span>
+                    <span ng-switch-when="success">{{lot.tf_code}}</span>
+                    <span ng-switch-when="error">Error Submitting</span>
+                    <span ng-switch-default>Complete Lot</span>
+                  </span>
+                </button>
+
+
+                
+
+                <button class="bottomright btn-blue" 
+                    ng-if="stn.tf_query && lot[stn.code].summary" 
+                    ng-click="GetTFEvents(lot.lot_number)">TF Query</button>
+              </div>-->
 
               <button class="bottomright btn-blue" 
                   ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" 
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
-
-              <button class="bottomright btn-blue" 
-                  ng-if="stn.tf_query && lot[stn.code].summary" 
-                  ng-click="GetTFEvents(lot.lot_number)">TF Query</button>
                   
               <button class="bottomleft btn-light" 
                       ng-if="lot[stn.code].summary" ng-click="getTheData(lot.lot_number, stn, lot.internal_lot_code)" >CSV</button>

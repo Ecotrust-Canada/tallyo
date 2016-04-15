@@ -178,7 +178,7 @@ var QRCombine = function (stringarray){
 var ArrayFromJson = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
-    if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1'){
+    if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1' || stringarray[i] === 'yield'){
       json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
     }
     else if (stringarray[i] === 'timestamp' || stringarray[i] === 'harvest_date'){
