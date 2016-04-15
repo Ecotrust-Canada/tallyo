@@ -93,6 +93,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   //for harvester drop down
   $scope.form = {};
+  $scope.form.state = 'Dirty';
 
   $scope.selected = 'no selected';
 
