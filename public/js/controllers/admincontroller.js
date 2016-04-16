@@ -57,7 +57,7 @@ angular.module('scanthisApp.AdminController', [])
       $scope.list.harvester = response.data;
     };
     var query = '';
-    DatabaseServices.GetEntries('harvester', func, query);
+    DatabaseServices.GetEntries('harvester', func, query, 'hundred');
   };
   $scope.ListHarvesters();
   
@@ -65,6 +65,15 @@ angular.module('scanthisApp.AdminController', [])
     if ($scope.stn.index !== undefined && $scope.stn.index !== null){
       $scope.current.shipment = null;
       $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
+      var station = $scope.sumStations[$scope.stn.index];
+      if (station.send_field === 'customer'){
+        $scope.sort_by = 'lot';
+        $scope.sort_id = 'internal_lot_code';
+      }
+      else if (station.send_field === 'received_from'){
+        $scope.sort_by = 'harvester';
+        $scope.sort_id = 'internal_lot_code';
+      }
       $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
     }
   });
@@ -171,6 +180,15 @@ angular.module('scanthisApp.AdminController', [])
   $scope.istotal = true;
 
   $scope.loadSorted = function(){
+    if ($scope.sort_by === 'lot'){
+      $scope.loadSortedLot();
+    }
+    else if ($scope.sort_by === 'harvester'){
+      $scope.loadSortedHar();
+    }
+  }
+
+  $scope.loadSortedHar = function(){
     var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.totals_sorted = response.data;
@@ -182,6 +200,23 @@ angular.module('scanthisApp.AdminController', [])
       });
     };
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
+  };
+
+
+  $scope.loadSortedLot = function(){
+    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    var func = function(response){
+      $scope.totals_sorted = response.data;
+      var origins = fjs.pluck('internal_lot_code', $scope.totals_sorted);
+      var originlist = origins.filter(onlyUnique);
+      var filtered_origin = originlist.filter(notNull);
+      $scope.list.origin = [];
+      filtered_origin.forEach(function(el){
+        $scope.list.origin.push({'harvester_code' : el, 'internal_lot_code': el});
+      })
+
+    };
+    DatabaseServices.GetEntries('shipping_summary_lot', func, query);
   };
 
   $scope.showSorted = function(){
