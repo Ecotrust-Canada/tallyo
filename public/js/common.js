@@ -183,6 +183,21 @@ var ArrayFromJson = function(json, stringarray){
     if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1' || stringarray[i] === 'yield'){
       json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
     }
+    else if (stringarray[i] === 'tf_code' && !json[stringarray[i]]){
+      //json[stringarray[i]] = String((json[stringarray[i]]).valueOf(), 36);
+      json[stringarray[i]] = 'No Code';
+    }
+    newarray.push(json[stringarray[i]]);
+  }
+  return newarray;
+};
+
+var ArrayFromJsonQR = function(json, stringarray){
+  var newarray = [];
+  for (var i=0;i<stringarray.length;i++){
+    if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1' || stringarray[i] === 'yield'){
+      json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
+    }
     else if (stringarray[i] === 'timestamp' || stringarray[i] === 'harvest_date'){
       //json[stringarray[i]] = String((json[stringarray[i]]).valueOf(), 36);
       json[stringarray[i]] = new Date(json[stringarray[i]]).getTime().toString(36);
@@ -193,7 +208,7 @@ var ArrayFromJson = function(json, stringarray){
 };
 
 var dataCombine = function (json, stringarray){
-  var newarray = ArrayFromJson(json, stringarray);
+  var newarray = ArrayFromJsonQR(json, stringarray);
   return QRCombine(newarray);
 };
 
