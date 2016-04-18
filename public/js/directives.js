@@ -21,7 +21,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('display', function() { return { 
   scope: {config: '=',
-          obj: '='},
+          obj: '=',
+          settings: '='},
   templateUrl: 'htmlpartials/display.html' }; })
 
 .directive('list', function() { return { 

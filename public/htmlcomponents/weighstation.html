@@ -10,7 +10,7 @@
 
   <div ng-show="current.collectionid">
     <div ng-controller="DisplayCollectionCtrl" id="current_lot">
-      <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+      <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
 
     <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsCtrl" id="prev_station_totals">
@@ -37,7 +37,7 @@
     <div ng-controller="AddtoTableCtrl">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
-    <div ng-controller="AddtoTableCtrl">
+    <div ng-if="settings.thisfish_enabled" ng-controller="AddtoTableCtrl">
       <entryform config="addform2" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
   </div>

@@ -31,7 +31,7 @@
             <div ng-if="lot.expanded" class="expanded">
 
 
-              <div ng-repeat="row in collectiondisplay.layout" class="display_field" ng-switch on="row.val">
+              <div ng-repeat="row in collectiondisplay.layout | tf_filter : 'val' : settings.thisfish_enabled" class="display_field" ng-switch on="row.val">
                 <label>{{row.name}}:</Label>
                 <div ng-switch-when="end_date" class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
                 <div ng-switch-default class="field_val">{{lot[row.val]}}</div>
@@ -82,8 +82,8 @@
                 </tr>
               </table>
 
-
-              <!--<div ng-controller="ThisfishSubmitCtrl">
+              <!--thisfish buttons-->
+              <div ng-if="settings.thisfish_enabled" ng-controller="ThisfishSubmitCtrl">
                 <button class="bottomright btn-blue" 
                         ng-if="stn.submitlot && lot[stn.code].summary && lot[stn.code].in_progress" 
                         ng-click="SubmitLot(lot.lot_number, lot.tf_code) "
@@ -96,17 +96,18 @@
                     <span ng-switch-default>Complete Lot</span>
                   </span>
                 </button>
-
-
-                
-
                 <button class="bottomright btn-blue" 
                     ng-if="stn.tf_query && lot[stn.code].summary" 
                     ng-click="GetTFEvents(lot.lot_number)">TF Query</button>
-              </div>-->
+              </div>
 
+              <!-- complete lot buttons -->
               <button class="bottomright btn-blue" 
                   ng-if="stn.completelot && lot[stn.code].summary && lot[stn.code].in_progress" 
+                  ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
+
+              <button class="bottomright btn-blue" 
+                  ng-if="stn.submitlot && !settings.thisfish_enabled && lot[stn.code].summary && lot[stn.code].in_progress" 
                   ng-click="CompleteLot(lot.lot_number, stn.completelot) ">Complete Lot</button>
                   
               <button class="bottomleft btn-light" 

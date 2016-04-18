@@ -20,7 +20,7 @@
       </div>
     </div>
     <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
-      <display obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
+      <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
       <i class="errortext" ng-if="current.mixed">Mixed Harvesters in Lot</i>
       <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
         <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
@@ -28,7 +28,7 @@
               id="reprint-{{config.id}}" class="reprint">Reprint</span>
       </div>
 
-      <span ng-if="options.thisfishlist" ng-controller="ThisfishAddCtrl">
+      <span ng-if="settings.thisfish_enabled && options.thisfishlist" ng-controller="ThisfishAddCtrl">
         <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
         <!--<dropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></dropdown>-->
 

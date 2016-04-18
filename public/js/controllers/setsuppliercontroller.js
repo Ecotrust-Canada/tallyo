@@ -5,12 +5,18 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('SetSupplierCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 
+
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
       $scope.list.harvester = response.data;
     };
-    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
+    var query;
+    if ($scope.settings.thisfish_enabled && $scope.settings.thisfish_enabled === true){
+      query = '?processor_code=eq.' + $scope.processor + '&active=eq.true&order=traceable.desc,serial_id.desc';
+    }else{
+      query = '?processor_code=eq.' + $scope.processor + '&active=eq.true&traceable=eq.false&order=serial_id.desc';
+    }
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();

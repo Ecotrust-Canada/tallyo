@@ -82,4 +82,22 @@ angular.module('scanthisApp.filters', [])
       return retArray;
     }
   };
-});
+})
+
+.filter('tf_filter', function(){
+  return function(input, propname, enabled) {
+    if (input){
+      var retArray = [];
+      angular.forEach(input, function(obj){
+        if (obj[propname]){
+          if(obj[propname] !== 'tf_code' || enabled)   {
+            retArray.push(obj);
+          }
+        }
+      });
+      return retArray;
+    }
+  };
+})
+
+;

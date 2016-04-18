@@ -1,7 +1,7 @@
 <div ng-init="showforms=false" class="panel white" id="receiveshipment">
 
   <div ng-controller="DisplayCollectionCtrl" ng-hide="showforms"  id="current_lot">
-    <display ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
+    <display settings="settings" ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
     <button ng-click="$parent.showforms=!$parent.showforms" class="btn-blue">Start New Lot</button>
   </div>
 

@@ -202,7 +202,7 @@ angular.module('scanthisApp.createlotController', [])
     else{
       table = $scope.station_info.itemtable;
     }
-    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid;
+    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
     var func = function(response){
       //console.log(response.headers()['content-range'].split('/')[1]);
       $scope.list.included = response.data;
@@ -221,8 +221,6 @@ angular.module('scanthisApp.createlotController', [])
       }
     }
   });
-
-
 })
 
 

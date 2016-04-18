@@ -1,5 +1,5 @@
 <div ng-repeat="row in config.layout" class="display_row">
-  <div ng-repeat="col in row" class="display_field"> 
+  <div ng-repeat="col in row | tf_filter: 'val' : settings.thisfish_enabled" class="display_field"> 
     <label ng-if="col.name" for="{{col.val}}-value">{{col.name}}: </label>
     <div class="field_val" id="{{col.val}}-value" ng-switch on="col.val" ng-cloak>
       <span ng-switch-when="timestamp" class="display_val">{{obj.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
