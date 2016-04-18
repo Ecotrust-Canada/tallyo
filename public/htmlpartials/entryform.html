@@ -144,8 +144,8 @@
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
 
       </div>
-      <input type="button" ng-click="submitFn({form: isValid(form)})"  class="btn-orange"
-             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
+      <input type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
+             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}" ng-disabled="form_enabled===false">
     </div>     
 
   </fieldset>

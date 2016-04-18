@@ -25,6 +25,8 @@ angular.module('scanthisApp.formController', [])
   //all the fields in the form
   $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
 
+  $scope.form_enabled = false;
+
   //clear fields to default
   $scope.Clear = function(){
     $scope.submitted=false;
@@ -44,6 +46,7 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
+    $scope.form_enabled = true;
   };
 
 
@@ -65,6 +68,7 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
+    $scope.form_enabled = true;
   };
 
 
@@ -173,7 +177,7 @@ angular.module('scanthisApp.formController', [])
       });
     }
     
-
+    $scope.form_enabled = true;
     return form;
 
   };
