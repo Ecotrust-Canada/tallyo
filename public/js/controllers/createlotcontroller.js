@@ -204,7 +204,9 @@ angular.module('scanthisApp.createlotController', [])
     }
     var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid;
     var func = function(response){
+      //console.log(response.headers()['content-range'].split('/')[1]);
       $scope.list.included = response.data;
+      $scope.list.length = response.headers()['content-range'].split('/')[1];
     };
     DatabaseServices.GetEntries(table, func, query, 'hundred');
   };

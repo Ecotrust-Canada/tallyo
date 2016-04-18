@@ -46,7 +46,7 @@
 
 <div class="panel grey not" ng-show="current.collectionid" ng-controller="RemoveScanCtrl">
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
-    <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
+    <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)"></bufferedscrolllist>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
     <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>

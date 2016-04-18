@@ -7,7 +7,7 @@
       <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: limit | filter: filterstring"
           id="item-{{item[config.arg]}}" class="animation">
         <td ng-repeat="name in config.fields" ng-switch on="name">
-          <span ng-switch-when="numindex">{{itemlist.length - $parent.$parent.$index}}</span>
+          <span ng-switch-when="numindex">{{listlength - $parent.$parent.$index}}</span>
           <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="weight_2">{{(item[name]) | weightstring }}</span>

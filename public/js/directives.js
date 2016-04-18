@@ -37,7 +37,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('bufferedscrolllist', function() { return { 
   scope: { itemlist: '=',  
-           config: '=' , 
+           config: '=' ,
+           listlength: '=', 
            filterstring: '=', 
            istotal: '=', 
            updateFn: '&',
