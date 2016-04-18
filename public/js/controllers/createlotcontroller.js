@@ -260,8 +260,8 @@ angular.module('scanthisApp.createlotController', [])
 //reprint.html - get list of loins for station, reprint function
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
-  $scope.ListAllItems = function(station_code){
-    var query = '?station_code=eq.' + station_code + '&order=timestamp.desc';
+  $scope.ListAllItems = function(){
+    var query = '?station_code=eq.' + $scope.station_code + '&order=timestamp.desc';
     var func = function(response){
       $scope.items = response.data;
     };
@@ -280,10 +280,18 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_with_info', func, query);      
     }
   };
-  $scope.ListAllItems($scope.station_code);
+  $scope.ListAllItems();
 
-  $scope.ListFilteredItems = function(station_code){
-    var query = '?station_code=eq.' + station_code;
+  $scope.ListFilteredItems = function(loin_number, int_lot_code){
+    var query = '?station_code=eq.' + $scope.station_code;
+    if (loin_number !== undefined && loin_number !== null && loin_number !== ''){
+      query += '&loin_number=like.*' + loin_number.toUpperCase() + '*';
+    }
+    if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
+      query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    query += '&order=timestamp.desc';
+    //console.log(query);
     var func = function(response){
       $scope.items = response.data;
     };

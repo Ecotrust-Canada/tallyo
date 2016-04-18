@@ -213,7 +213,7 @@ angular.module('scanthisApp.packingController', [])
     var id = obj[$scope.station_info.itemid];
     $scope.to_delete = id;
     if ($scope.options.qrform && obj.lot_number !== null){
-      toastr.error('cannot delete - box in processing')
+      toastr.error('cannot delete - box in processing');
     }else{
       $scope.overlay('delete');
     }
