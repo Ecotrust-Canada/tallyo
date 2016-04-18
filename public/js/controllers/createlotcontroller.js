@@ -239,8 +239,8 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
   };
 
-  $scope.$watch('current.itemchange', function() {
-    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
       $scope.ItemTotals();
     }
   });
@@ -261,11 +261,11 @@ angular.module('scanthisApp.createlotController', [])
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
   $scope.ListAllItems = function(station_code){
-    var query = '?station_code=eq.' + station_code;
+    var query = '?station_code=eq.' + station_code + '&order=timestamp.desc';
     var func = function(response){
       $scope.items = response.data;
     };
-    DatabaseServices.GetEntries('loin_with_info', func, query);
+    DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
 
   $scope.Reprint = function(loin_number, lot_number){
@@ -281,6 +281,15 @@ angular.module('scanthisApp.createlotController', [])
     }
   };
   $scope.ListAllItems($scope.station_code);
+
+  $scope.ListFilteredItems = function(station_code){
+    var query = '?station_code=eq.' + station_code;
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
+  };
+
 })
 
 //selectsamedaylot.html - dropdown menu with lots from current day

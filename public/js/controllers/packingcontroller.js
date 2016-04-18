@@ -173,10 +173,10 @@ angular.module('scanthisApp.packingController', [])
       var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
       DatabaseServices.GetEntries('lot_summary', func, query);
     }
-    else if ($scope.station_info.collectiontable === 'box'){
+    /*else if ($scope.station_info.collectiontable === 'box'){
       $scope.current.totals.weight = $scope.current.box.weight;
       $scope.current.totals.pieces = $scope.current.box.pieces;      
-    }
+    }*/
     else if ($scope.station_info.collectiontable === 'shipping_unit'){
       var func1 = function(response){
         if (response.data.length > 0){
@@ -329,6 +329,8 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.harvest_date = moment(box_har.timestamp).format();
         $scope.current.box.supplier_group = box_har.supplier_group;
         $scope.current.box.wpp = box_har.fishing_area;
+        $scope.current.totals.weight = $scope.current.box.weight;
+        $scope.current.totals.pieces = $scope.current.box.pieces;
     };
     var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num, 'case_number':case_num, 'yield':box_har.yield_by_pieces};
     var query = '?box_number=eq.' + $scope.current.collectionid;

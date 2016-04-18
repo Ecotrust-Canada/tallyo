@@ -46,7 +46,9 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
+    //console.log($scope.form.grade);
     $scope.form_enabled = true;
+    
   };
 
 
@@ -68,7 +70,9 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
+    //console.log($scope.form.grade);
     $scope.form_enabled = true;
+    
   };
 
 
@@ -163,7 +167,8 @@ angular.module('scanthisApp.formController', [])
       }
     }
     if (form_error === true){
-      
+      $scope.form_enabled = true;
+      //console.log('true');
       form = null;
     }
     if (form){
@@ -177,7 +182,6 @@ angular.module('scanthisApp.formController', [])
       });
     }
     
-    $scope.form_enabled = true;
     return form;
 
   };
