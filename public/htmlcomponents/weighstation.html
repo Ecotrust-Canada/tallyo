@@ -1,8 +1,16 @@
 
 <div class="panel white weighstation_main">
+  <div ng-if="terminal.both && the_width === 600 && options.first"  id="doublestn">
+    <a ng-click="ZoomRight(1200)">Side-by-side</a>
+  </div>
+  <div ng-if="terminal.both && the_width === 1200 && options.first"  id="doublestn">
+    <a ng-click="ZoomRight(600)">One column</a>
+  </div>
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
   </div>
+
+
 
   <receivelot ng-if="options.receivelot"></receivelot>
   <selectfromcurrentlots ng-if="options.selectfromcurrentlots"></selectfromcurrentlots>
@@ -18,7 +26,7 @@
           config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span  
           ng-if="totals[0].weight">{{totals | sumOfValue:'weight'| weightstring}}</span><span 
           ng-if="totals[0].weight_1">{{totals | sumOfValue:'weight_1'| weightstring}}</span><span 
-          ng-if="totals[0].pieces">{{totals | sumOfValue:'pieces'}}pcs</span><span 
+          ng-if="totals[0].pieces">{{totals | sumOfValue:'pieces'}} pcs</span><span 
           ng-if="totals[0].boxes">{{totals | sumOfValue:'boxes'}} boxes</span>
         </div>
     </div>

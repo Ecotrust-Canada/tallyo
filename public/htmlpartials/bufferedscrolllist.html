@@ -10,11 +10,10 @@
           <span ng-switch-when="numindex">{{listlength - $parent.$parent.$index}}</span>
           <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
-          <span ng-switch-when="weight_2">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="weight">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
-          <span ng-switch-when="pieces">{{item[name]}}pcs</span>
-          <span ng-switch-when="boxes">{{item[name]}}boxes</span>
+          <span ng-switch-when="pieces">{{item[name]}} pcs</span>
+          <span ng-switch-when="boxes">{{item[name]}} boxes</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
         <td ng-if="config.button2  && config.arg" ng-click="ResetLimit();secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>

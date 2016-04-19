@@ -227,10 +227,23 @@ angular.module('scanthisApp', [
       $scope.includes[i] = 'htmlcomponents/' + settings.includes[i]+ '.html';
     }
 
+
     //$scope.showsection = "before";
     if ($scope.options && $scope.options.loadcurrentcollection) {
         $scope.loadCurrent();
     }
+
+    var stn = settings.includes[0];
+    document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=0,maximum-scale=10,initial-scale=1');
+    document.body.style.zoom = "100%";
+    if(stn === 'weighstation' || stn === 'packingstation' || stn === 'receiveshipment' || stn === 'receivingprintlabel' || stn === 'scaninventorystation' || stn === "viewinventory" || stn === 'receivingprintlabel' || stn === 'reprint_label'){
+      //console.log('called');
+      $scope.ZoomRight(600);
+    }
+    if(stn === 'kanban' || stn === 'receiving_lots' || stn === 'shipment_data'){
+      document.webkitExitFullscreen();
+    }
+    
   };
 
 
@@ -274,6 +287,65 @@ angular.module('scanthisApp', [
   $scope.overlay = function(id) {
     var el = document.getElementById(id);
     el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+  };
+
+
+  $scope.ZoomRight = function(width){
+
+
+  document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=1,maximum-scale=1,initial-scale=1');
+
+  function getViewportWidth() {
+      if (window.innerWidth) {
+          return window.innerWidth;
+      }
+      else if (document.body && document.body.offsetWidth) {
+          return document.body.offsetWidth;
+      }
+      else {
+          return 0;
+      }
+  }
+
+  function getViewportHeight() {
+      if (window.innerHeight) {
+          return window.innerHeight;
+      }
+      else if (document.body && document.body.offsetHeight) {
+          return document.body.offsetHeight;
+      }
+      else {
+          return 0;
+      }
+  }
+
+  //console.log($scope.includes[0]);
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+
+      var actual_width = getViewportWidth();
+      //console.log(actual_width);
+      var min_width = width;
+      var ratio = actual_width / min_width;
+      if (ratio < 1) {
+          //document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + actual_width);
+      //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
+      var percent = (ratio*100).toFixed(2);
+      document.body.style.zoom = percent + "%";
+      }
+
+      var el = document.documentElement
+    ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
+    rfs.call(el);
+
+
+    $scope.the_width = width;
+
+    //document.body.style.zoom = "65%"
+
+    
+  }
+
+  
   };
 
 })

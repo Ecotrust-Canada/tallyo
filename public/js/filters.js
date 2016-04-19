@@ -64,6 +64,14 @@ angular.module('scanthisApp.filters', [])
     
   };
 })
+.filter('weightnum', function() {
+  return function(input) {
+    if (input){
+      return String(input.toFixed(2));
+    }
+    
+  };
+})
 
 .filter('dateRange', function(){
   return function(input, property, startDate, endDate) {

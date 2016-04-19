@@ -16,13 +16,11 @@
       <span ng-if="!expanded" ng-click="$parent.expanded = true"  class="expand-control closed"></span>
 
        
-      <span ng-repeat="name in config.fields">
-        <span ng-if="name==='numindex'">{{itemlist.length - $parent.$parent.$index}}</span>
-        <span ng-if="name==='timestamp'" class="list_item_val">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
-        <span ng-if="name.substring(0,6)==='weight'" class="list_item_val">{{(item[name]).toFixed(2)}}kg</span>
-        <span ng-if="name !== 'numindex' && name !== 'timestamp' && name.substring(0,6)!=='weight'"  class="list_item_val">{{item[name]}}</span>
-        <span ng-if="name==='pieces'">pcs</span>
-        <span ng-if="name==='boxes'">boxes</span>
+      <span ng-repeat="name in config.fields" ng-switch on="name">
+        <span ng-switch-when="timestamp" class="list_item_val">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>        
+        <span ng-switch_when="pieces" class="list_item_val">{{item[name]}} pcs</span>
+        <span ng-switch_when="boxes" class="list_item_val">{{item[name]}} boxes</span>
+        <span ng-switch-default class="list_item_val">{{item[name]}}</span>
       </span>
 
       <button ng-if="config.button" class="btn-blue" 

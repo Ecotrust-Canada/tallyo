@@ -51,11 +51,8 @@
                    <label>weight</label>
                    <span class="value">
                      <span>
-                       {{lot[stn.code].summary.weight_1.toFixed(2)}}<sub>kg</sub>
+                       {{lot[stn.code].summary.weight_1 | weightnum }}<sub>{{settings.entry_unit}}</sub>
                      </span>  
-                     <span ng-if="lot[stn.code].summary.weight_2">
-                       {{lot[stn.code].summary.weight_2.toFixed(2)}}<sub>kg</sub>
-                     </span>
                    </span>
                  </span>  
                  <span ng-if="lot[stn.code].summary.pieces" class="card_bit pieces">
@@ -76,9 +73,9 @@
                 <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
                   <td ng-if="total.grade">{{total.grade}} </td>
                   <td ng-if="total.boxes">{{total.boxes}} boxes </td>
-                  <td ng-if="total.pieces">{{total.pieces}}pcs </td> 
-                  <td ng-if="total.weight">{{(total.weight).toFixed(2)}}kg</td>
-                  <td ng-if="total.weight_1">{{(total.weight_1).toFixed(2)}}kg</td>
+                  <td ng-if="total.pieces">{{total.pieces}} pcs </td> 
+                  <td ng-if="total.weight">{{total.weight | weightstring}}</td>
+                  <td ng-if="total.weight_1">{{total.weight_1 | weightstring}}</td>
                 </tr>
               </table>
 
