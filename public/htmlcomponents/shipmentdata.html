@@ -1,5 +1,6 @@
-<div ng-controller="ShipListCtrl" class="editshipentries">
-  <div class="panel white ">
+<div class="panel grey" ng-controller="ShipListCtrl">
+  <div  class="editshipentries">
+
     <span ng-if="options.ship_stations" id="radio-shipment" 
       class="toggle-group-container" ng-class="withChecked('station_code')">
       <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
@@ -11,7 +12,6 @@
     <br>
 
     <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-      <!--<editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> -->
 
       
       <div class="display_field">
@@ -84,14 +84,11 @@
     </div>
   </div>
 
-  <div class="panel grey not" ng-hide="current.shipment === undefined || current.shipment === null">
+  <div ng-hide="current.shipment === undefined || current.shipment === null">
     <div class="marg">
       <span class="totals_caption">CSV Download: </span>
       <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
     </div>
-    <!--<div class="itemsframe entries">
-      <bufferedscrolllist itemlist="list.included" config="itemlistconfig"></bufferedscrolllist>
-    </div>-->
     <div class="itemtotals">
       Shipment totals
       <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
@@ -108,7 +105,18 @@
   </div>
 
 
+
+  <!--<div buffered-scroll-lots id="admin_manage_lots" >
+    <div class="inner_scrollable">
+      <table>
+      </table>
+    </div>
+  </div>-->
+
 </div>
+
+<div id="keepzoom"></div>
+
 
 
 

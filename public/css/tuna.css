@@ -1104,6 +1104,12 @@ div[ng-view] {
 /*div#station-HS0-011 {
 }*/
 
+#keepzoom {
+  min-width: 915px;
+
+  padding-right: 30px;
+}
+
 #harvester_list {
   min-width: 915px;
   margin-right: 14px;

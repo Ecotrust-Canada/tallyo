@@ -234,14 +234,17 @@ angular.module('scanthisApp', [
     }
 
     var stn = settings.includes[0];
-    document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=0,maximum-scale=10,initial-scale=1');
+    //document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=0,maximum-scale=10,initial-scale=1,user-scalable=yes');
     document.body.style.zoom = "100%";
     if(stn === 'weighstation' || stn === 'packingstation' || stn === 'receiveshipment' || stn === 'receivingprintlabel' || stn === 'scaninventorystation' || stn === "viewinventory" || stn === 'receivingprintlabel' || stn === 'reprint_label'){
       //console.log('called');
       $scope.ZoomRight(600);
     }
-    if(stn === 'kanban' || stn === 'receiving_lots' || stn === 'shipment_data'){
+    if(stn === 'kanban' || stn === 'receiving_lots' || stn === 'shipmentdata'){
+      $scope.ZoomRight(600);
+      document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=0,maximum-scale=10,user-scalable=yes');
       document.webkitExitFullscreen();
+      console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
     }
     
   };
@@ -292,8 +295,7 @@ angular.module('scanthisApp', [
 
   $scope.ZoomRight = function(width){
 
-
-  document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=1,maximum-scale=1,initial-scale=1');
+  document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=yes');
 
   function getViewportWidth() {
       if (window.innerWidth) {
@@ -326,12 +328,12 @@ angular.module('scanthisApp', [
       //console.log(actual_width);
       var min_width = width;
       var ratio = actual_width / min_width;
-      if (ratio < 1) {
+      //if (ratio < 1) {
           //document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + actual_width);
       //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
       var percent = (ratio*100).toFixed(2);
       document.body.style.zoom = percent + "%";
-      }
+      //}
 
       var el = document.documentElement
     ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
