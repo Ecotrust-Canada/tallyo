@@ -14,11 +14,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public' )));
 
 app.get('/config', function(req, res, next){
-  fs.readFile(configpath + '.js', function(err, data){
+  fs.readFile(configpath + '_local.js', function(err, localdata){
     if (err){
       throw err;
     }
-    fs.readFile(configpath + '_local.js', function(err, localdata){
+    fs.readFile(configpath + '.js', function(err, data){
       if (err){
         throw err;
       }
