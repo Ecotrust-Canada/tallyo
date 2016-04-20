@@ -304,6 +304,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.ft_fa_code = null;
         $scope.current.box.fleet = null;
         $scope.current.box.receive_date = null;
+        $scope.current.box.prod_date = null;
         $scope.current.box.supplier_group = null;
         $scope.current.box.wpp = null;
     };
@@ -327,6 +328,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.ft_fa_code = box_har.ft_fa_code;
         $scope.current.box.fleet = box_har.fleet;
         $scope.current.box.harvest_date = moment(box_har.timestamp).format();
+        $scope.current.box.prod_date = moment(box_har.timestamp).format('YYYY-MM-DD');
         $scope.current.box.supplier_group = box_har.supplier_group;
         $scope.current.box.wpp = box_har.fishing_area;
         $scope.current.totals.weight = $scope.current.box.weight;

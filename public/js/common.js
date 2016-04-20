@@ -184,7 +184,6 @@ var ArrayFromJson = function(json, stringarray){
       json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
     }
     else if (stringarray[i] === 'tf_code' && !json[stringarray[i]]){
-      //json[stringarray[i]] = String((json[stringarray[i]]).valueOf(), 36);
       json[stringarray[i]] = 'No Code';
     }
     newarray.push(json[stringarray[i]]);
@@ -195,14 +194,17 @@ var ArrayFromJson = function(json, stringarray){
 var ArrayFromJsonQR = function(json, stringarray){
   var newarray = [];
   for (var i=0;i<stringarray.length;i++){
+    var obj;
     if (stringarray[i] === 'weight' || stringarray[i] === 'weight_1' || stringarray[i] === 'yield'){
-      json[stringarray[i]] = parseFloat(json[stringarray[i]]).toFixed(3);
+      obj = parseFloat(json[stringarray[i]]).toFixed(3);
     }
     else if (stringarray[i] === 'timestamp' || stringarray[i] === 'harvest_date'){
-      //json[stringarray[i]] = String((json[stringarray[i]]).valueOf(), 36);
-      json[stringarray[i]] = new Date(json[stringarray[i]]).getTime().toString(36);
+      obj = new Date(json[stringarray[i]]).getTime().toString(36);
     }
-    newarray.push(json[stringarray[i]]);
+    else{
+      obj = json[stringarray[i]];
+    }
+    newarray.push(obj);
   }
   return newarray;
 };
