@@ -91,7 +91,7 @@ angular.module('scanthisApp.createlotController', [])
   });
 })
 
-//packingstation.html, receiveshipment.html, receiving_lots.html, receivingstation.html, weighstation.html
+//packingstation.html, receiveshipment.html, receivingstation.html, weighstation.html
 //queries whichever table is listed in config as 'collection', updates as necessary
 //also has a delete function
 .controller('DisplayCollectionCtrl', function($scope, $http, DatabaseServices, $timeout) {
