@@ -1,11 +1,13 @@
 FROM alpine:3.3
 
-RUN apk update && apk upgrade
+RUN apk update && apk upgrade 
 
 RUN apk add nodejs git
 
 RUN npm install -g bower nodemon forever db-migrate db-migrate-pg
 
-RUN mkdir /opt && mkdir /opt/tallyo && cd /opt/tallyo && git clone https://github.com/Ecotrust-Canada/scanthis.git
+RUN mkdir /opt && mkdir /opt/tallyo && cd /opt/tallyo && git clone -b docker_test https://github.com/Ecotrust-Canada/scanthis.git
+RUN echo "flush cache"
 RUN cd /opt/tallyo/scanthis && npm install --production && bower install --allow-root
+
 CMD /bin/ash
