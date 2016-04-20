@@ -39,7 +39,7 @@ angular.module('scanthisApp.itemController', [])
         url: $scope.scaleURL + 'weight',
       }).then(
         function successCallback(response) {
-          $scope.scale[fieldName] = response.data.value;
+          $scope.scale[fieldName] = response.data.value.toFixed(3);
         },
         function errorCallback(response) {
           $scope.scale[fieldName] = 1.11;
@@ -105,8 +105,8 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){      
       //print a label if onLabel specified in config
       var thedata = ((response.data[0] || response.data));
-      if ($scope.current[$scope.station_info.collectiontable].ft_fa_code){
-        thedata.internal_lot_code = ($scope.current[$scope.station_info.collectiontable].internal_lot_code || $scope.current.collectionid);
+      thedata.internal_lot_code = ($scope.current[$scope.station_info.collectiontable].internal_lot_code || $scope.current.collectionid);
+      if ($scope.current[$scope.station_info.collectiontable].ft_fa_code){        
         thedata.ft_fa_code = $scope.current[$scope.station_info.collectiontable].ft_fa_code;
       }
       if($scope.onLabel){
@@ -157,8 +157,8 @@ angular.module('scanthisApp.itemController', [])
     //attach harvester, shipment
     if ($scope.options && $scope.options.lot_info){
       $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
-      $scope.entry.box.shipping_unit_number = $scope.current.harvester_lot.shipping_unit_number;
-      $scope.entry.box.lot = $scope.current.harvester_lot.lot_number;
+      $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
+      //$scope.entry.box.lot = $scope.current.harvester_lot.lot_number;
     }
 
   };
@@ -255,7 +255,7 @@ angular.module('scanthisApp.itemController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('reprint_table', func, query);
+      DatabaseServices.GetEntries('loin_with_info', func, query);
       
     }
   };

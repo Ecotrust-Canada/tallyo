@@ -228,25 +228,26 @@ body{
 
 #station-AM2-ADM > .panel, 
 #station-AM2-011 .panel, 
-#station-HS0-003 .panel,
-#station-HS0-004 .panel,
+/*#station-HS0-003 .panel,*/
+/*#station-HS0-004 .panel,*/
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
 #station-AM1-003 .panel,
 #station-AM1-005 .panel,
 #station-AM1-004 .panel,
-#station-HS0-005 .panel,
+/*#station-HS0-005 .panel,*/
 #station-AM2-004 .panel,
 #station-AM2-006 .panel,
+#station-AM2-002 .panel,
 #station-AM2-003 .panel,
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
   box-sizing: border-box;
 }
-#station-HS0-001 .panel, 
+/*#station-HS0-001 .panel, 
 #station-HS0-002 .panel {
   width: 550px;
-} 
+} */
 /*
 #station-HS0-003 .panel {
   width: 800px;
@@ -789,7 +790,7 @@ div[ng-view] {
   border: none;
   text-align: left;
   table-layout: fixed; 
-  width: 1460px;
+  width: 1510px;
   margin-left: -240px;
 }
 
@@ -939,7 +940,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot-station-cell .item-details {
   display: inline-block;
   width: 100%;
-  height: 192px;
+  height: 215px;
   margin: 0;
   position: relative;
   overflow: auto;
@@ -1025,7 +1026,7 @@ div[ng-view] {
   color: #f24133;
 }
 
-##admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
   color: #f04a30;
 }
 
@@ -1042,7 +1043,7 @@ div[ng-view] {
   box-sizing:border-box;
   margin: 4px 0 0 0;
   width: 540px;
-  height: 36px;
+  height: 37px;
   padding: 0 5px;
   /*overflow: hidden;*/
   position: relative;
@@ -1100,17 +1101,23 @@ div[ng-view] {
   padding-right: 0;
 }
 
-div#station-HS0-011 {
+/*div#station-HS0-011 {
+}*/
+
+#keepzoom {
+  min-width: 915px;
+
+  padding-right: 30px;
 }
 
-#station-HS0-011 #harvester_list {
+#harvester_list {
   min-width: 915px;
   margin-right: 14px;
   padding: 30px 20px 10px 20px;
   vertical-align: top;
 }
 
-#station-HS0-011 #harvester_list .header {
+#harvester_list .header {
   display: table;
   height: 30px;
   width: 100%;
@@ -1118,7 +1125,7 @@ div#station-HS0-011 {
   margin-bottom: 5px;
 }
 
-#station-HS0-011 #harvester_list .header span {
+#harvester_list .header span {
   display: table-cell;
   vertical-align: middle;
 }
@@ -1173,12 +1180,13 @@ div#station-HS0-011 {
   width: 100%;
 }
 
-#station-HS0-011 .expanded-list {
+#list-20 {
   max-height: 536px;
   overflow: auto;
+  margin-bottom:20px;
 } 
 
-#station-HS0-011 #harvester_list #list-20 .list-header span {
+#harvester_list #list-20 .list-header span {
   color: #777777;
   margin: 0;
   text-transform: uppercase;
@@ -1244,12 +1252,18 @@ div#station-HS0-011 {
   padding-right: 5px;
 }
 
-#station-HS0-011 #harvester_list #list-20 .item-line button {
+#list-20 .list-header span:nth-child(7), 
+#list-20 .item-line span:nth-child(7){
+  width: 100px;
+  padding-right: 5px;
+}
+
+#harvester_list #list-20 .item-line button {
   display: inline-block;
   margin-right: 12px;
 }
 
-#station-HS0-011 #harvester_list #list-20 .item-line a:last-child {
+#harvester_list #list-20 .item-line a:last-child {
   color: #276685;
   padding-left: 14px;
   border-left: 1px solid #ccccca;
@@ -1261,11 +1275,11 @@ div#station-HS0-011 {
   font-family: 'Lato-Bold';
 }
 
-#station-HS0-011 #harvester_list #list-20 .row {
+#harvester_list #list-20 .row {
   margin: 6px auto 14px;
 }
 
-#station-HS0-011 #harvester_list #list-20 .panel.item-line {
+#harvester_list #list-20 .panel.item-line {
   width: 90%;
   padding: 12px 0;
   color: #0a2131;
@@ -1273,31 +1287,31 @@ div#station-HS0-011 {
   font-family: 'Lato-Regular';
 }
 
-#station-HS0-011 #harvester_list #list-20 .display_field {
+#harvester_list #list-20 .display_field {
   display: inline-block;
   width: 50%;
   padding: 0 22px;
   box-sizing:border-box;
 }
 
-#station-HS0-011 #harvester_list #list-20 .display_field label {
+#harvester_list #list-20 .display_field label {
   display: inline-block;
   margin: 0;
   font-size: 12px
 }
 
-#station-HS0-011 #harvester_list #list-20 .display_row {
+#harvester_list #list-20 .display_row {
   margin: 0;
 }
 
-#station-HS0-011 #harvester_list #list-20 .display_field .field_val {
+#harvester_list #list-20 .display_field .field_val {
   color: #111f28;
   font-family: 'Lato-Regular', Arial, Helvetica, sans-serif;
   font-size: 16px;
   display: inline-flex;
 }
 
-#station-HS0-011 #current_lot {
+/*#station-HS0-011 #current_lot {
   width: 240px;
   vertical-align: top;
   padding: 30px 20px 20px 20px;
@@ -1318,11 +1332,11 @@ div#station-HS0-011 {
   font-size: 20px;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
-}
+}*/
 
 .display_field label, #prev_station_totals label,
-.fieldsetrepeat label, #receiveshipment #form-14 .form_label label,
-#station-HS0-011 #current_lot label[for=internal_lot_code-value]  {
+.fieldsetrepeat label, #receiveshipment #form-14 .form_label label/*,
+#station-HS0-011 #current_lot label[for=internal_lot_code-value]*/  {
   color: #777777;
   text-transform: uppercase;
   font-family: 'Lato-Bold';
@@ -1335,8 +1349,8 @@ div#station-HS0-011 {
   display: inline-block;
 }
 
-#station-HS0-011 .display_field label,
-#station-HS0-011 #current_lot label[for=internal_lot_code-value],
+/*#station-HS0-011 .display_field label,
+#station-HS0-011 #current_lot label[for=internal_lot_code-value],*/
 .reprint_label .display_field label,
 #receiveshipment #form-14 .form_label label,
 #receiveshipment .display_row .display_field label,
@@ -1390,6 +1404,7 @@ div#station-HS0-011 {
 
 .reprint_label input,
 .fieldsetrepeat input[type=text],
+.fieldsetrepeat input[type=number],
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
@@ -1402,17 +1417,17 @@ div#station-HS0-011 {
   box-sizing: border-box;
 }
 
-#station-HS0-011 #current_lot label  {
+/*#station-HS0-011 #current_lot label  {
   display: block;
   margin: 16px 0 0 0;
   font-weight: 500;
   font-size: 12px;
-}
+}*/
 #receiveshipment .btn-blue {
   float: right;
 }
-#receiveshipment .display_row .field_val,
-#station-HS0-011 #current_lot .field_val  {
+#receiveshipment .display_row .field_val/*,
+#station-HS0-011 #current_lot .field_val */ {
   color: #213141;
   font-family: 'Lato-Regular', Arial, Helvetica, sans-serif;
   font-size: 18px;
@@ -1422,7 +1437,7 @@ div#station-HS0-011 {
   display: inline-block;
 }
 
-#station-HS0-011 #current_lot #internal_lot_code-value {
+/*#station-HS0-011 #current_lot #internal_lot_code-value {
  margin-top: 5px;
 }
 #station-HS0-011 #current_lot #internal_lot_code-value span#current_internal_lotnum {
@@ -1438,7 +1453,7 @@ div#station-HS0-011 {
   font-size: 20px;
   padding: 8px 10px;
   box-sizing:border-box;
-}
+}*/
 
 /* receivng station for HarSam */
 #station-HS0-ADM > .panel.white,
@@ -1449,8 +1464,10 @@ div#station-HS0-011 {
 
   margin-bottom: 24px;
   margin-right: 10px;
-  min-width: 550px;
+  width: 550px;
+  box-sizing:border-box;
 }
+
 #station-AM2-006 .panel.white,
 #station-HS0-ADM > .panel.white{
   padding-top: 40px;
@@ -1620,7 +1637,9 @@ div#station-HS0-011 {
 #station-AM2-004 .weighstation_main .form_label {
   width: 220px;
 }
-#station-HS0-003 #form-23 .form_label {
+#form-23 .form_label,
+#form-7 .form_label,
+#form-8 .form_label {
   width: 120px;
 }
 
@@ -1691,7 +1710,7 @@ div#station-HS0-011 {
   width: 310px;
 }
 #form-10 .field input[type=text] {
-  width: 320px;
+  width: 314px;
 }
 #create_box_form #form-0 .btn-orange {
   height: 44px;
@@ -1893,7 +1912,7 @@ div#station-HS0-011 {
 .dropdown-container .dd_arrow,
 .styled-dropdown .dd_arrow {
   width: 36px;
-  height: 36px;
+  height: 37px;
   position: absolute;
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
   box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
@@ -1910,7 +1929,7 @@ div#station-HS0-011 {
 }
 .dropdown-container .dd_arrow {
   right: 0;
-  top: 25px;
+  bottom: 0px;
   z-index: 1;
 }
 /*
@@ -2125,7 +2144,8 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
-#radio-0-grade {
+#radio-0-grade,
+#radio-9-grade {
   width: 316px;
 }
 #radio-0-size {
@@ -2133,7 +2153,6 @@ input[name^=weight]::after {
 }
 #radio-19-grade,
 #radio-18-grade,
-#radio-9-grade,
 #radio-17-grade {
   width: 237px;
 }
@@ -2334,6 +2353,32 @@ input[name^=weight]::after {
   text-decoration: none;
 }
 
+#doublestn {
+  position: absolute;
+  top: 11px;
+  right: 109px;
+  width: 128px;
+  height: 18px;
+  padding-left: 15px;
+  text-align: right;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+#doublestn a {
+  display: inline-flex;
+  position: relative;
+  top: -4px;
+}
+
+#doublestn a, .pictogram_btns > span {
+  font-family: 'Lato-Bold';
+  font-size: 15px;
+  color: #0076AD;
+  line-height: 15px;
+  text-decoration: none;
+}
+
 .btn-orange {
     /* Rectangle 3 Copy 13: */
     background-image: linear-gradient(-180deg, #FA8230 0%, #FD6A0E 30%, #B24400 100%);
@@ -2445,6 +2490,14 @@ nav span.icon.shipping {
   background-image: url(/images/nav_shipping_icon.svg);
 }
 
+nav span.icon.shipping2 {
+  background-image: url(/images/nav_shipping2_icon.svg);
+}
+
+nav span.icon.shippingin {
+  background-image: url(/images/nav_shippingin_icon.svg);
+}
+
 nav span.icon.shipping_info {
   background-image: url(/images/nav_shippinginfo_icon.svg);
 }
@@ -2453,10 +2506,18 @@ nav span.icon.container {
   background-image: url(/images/nav_container_icon.svg);
 }
 
+nav span.icon.scan {
+  background-image: url(/images/nav_scan_icon.svg);
+}
+
+nav span.icon.print_label {
+  background-image: url(/images/nav_printlabel_icon.svg);
+}
+
 nav div#menu {
   display: none;
   position:absolute;
-  width: 305px;
+  width: 320px;
   background-color: #03223c;
   padding: 15px 25px 10px 0;
 }
@@ -2491,7 +2552,7 @@ nav #menu h4 {
   -webkit-margin-end: 0px;
 }
 
-nav #menu ul {
+nav #menu > ul {
   list-style: none;
   display: inline-block;
   margin: 0;
@@ -2502,12 +2563,17 @@ nav #menu ul {
   -webkit-padding-start: 0px;
 }
 
+nav #menu ul li ul {
+  display: none;
+  list-style: none;
+}
 nav #menu li {
   display: block; padding: 2px 0;
   margin: 0;
 }
 
-nav #menu li.active {
+nav #menu li.active > span > a,
+nav #menu li.active > span {
   opacity: 0.5;
 }
 
@@ -2624,7 +2690,7 @@ fieldset[disabled] {
     width: 200%; 
     height:30px;
     margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+    transition: margin 0.0s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
     display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
@@ -2651,9 +2717,9 @@ fieldset[disabled] {
     display: block; width: 30px; margin: 0;
     background: #FFFFFF;
     position: absolute; top: 0; bottom: 0;
-    right: 52px;
+    transform: translate(0,0);
     border: none;
-    transition: all 0.3s ease-in 0s; 
+    transition: all 0.0s ease-in 0s; 
     background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.30), 2px 3px 6px 0px rgba(0,0,0,0.15), 3px 4px 16px 0px rgba(0,0,0,0.35);
     border-radius: 5px;
@@ -2662,7 +2728,7 @@ fieldset[disabled] {
     margin-left: 0;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+    transform: translate(52px,0);
 }
 span.switch_option {
   display:inline-flex;
@@ -2761,7 +2827,8 @@ span.switch_option.active {
 .fieldsetrepeat .styled-dropdown.dd-size {
   width: 100px;
 }
-.fieldsetrepeat input[type=text] {
+.fieldsetrepeat input[type=text],
+.fieldsetrepeat input[type=number] {
   width: 40px;
 }
 
@@ -2804,6 +2871,31 @@ span.switch_option.active {
 
 
 #delete div {
+     width:100%;
+     height: 300px;
+     margin: 100px auto;
+     margin-right: 100px;
+     background-color: white;
+     border: 5px solid #0076ad;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
+#mixgrade {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     margin-top: 100px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#mixgrade div {
      width:100%;
      height: 300px;
      margin: 100px auto;

@@ -48,6 +48,7 @@
       <script src="js/controllers/setsuppliercontroller.js"></script>
       <script src="js/controllers/admincontroller.js"></script>
       <script src="js/controllers/receivingcontroller.js"></script>
+      <script src="js/controllers/thisfishcontroller.js"></script>
 
       <script src="js/base.js"></script>
 
@@ -67,6 +68,14 @@
             <li ng-repeat="terminal in terminals" ng-class="{active: terminal.id == current_terminal.id}">
               <span class="icon" ng-class="terminal.icon"></span><a href="/#/terminal/{{ terminal.id }}" 
                   class="terminal_name">{{ terminal.name }}</a>
+              <ul ng-if="terminal.subterminals" id="submenu-{{terminal.id}}">
+                <li ng-repeat="t2 in terminal.subterminals" 
+                    ng-class="{active: t2.id == current_terminal.subterminal_id}">
+                  <span class="icon" ng-class="t2.icon"></span><a 
+                   href="/#/terminal/{{ terminal.id }}/subterminal/{{ t2.id }}" 
+                   class="terminal_name">{{ t2.name }}</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>

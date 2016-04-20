@@ -21,6 +21,10 @@ var handleDbError = function(response) {
 }
 , patchHeaders = {headers: {'Prefer': 'return=representation'}};
 
+var limitHeaders = {};
+limitHeaders.fifty = {headers: {'Range-Unit': 'items', 'range': '0-49'}};
+limitHeaders.hundred = {headers: {'Range-Unit': 'items', 'range': '0-99'}};
+
 angular.module('scanthisApp.factories', [])
 
 .factory('DatabaseServices', function($http) {
@@ -64,23 +68,32 @@ angular.module('scanthisApp.factories', [])
    * Fetch a DB record
    * @param onErr - called if nothing matching query
    */
-  db_service.GetEntry = function(table, func, querystring, onErr){
+  db_service.GetEntry = function(table, func, querystring, onErr, range){
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.get(url).then(nonzeroLengthCheck(func, onErr), handleDbError);
+    if (range){
+      $http.get(url, limitHeaders[range]).then(nonzeroLengthCheck(func, onErr), handleDbError);
+    }else{
+      $http.get(url).then(nonzeroLengthCheck(func, onErr), handleDbError);
+    }    
   };
   
   /**
    * Get a record from the DB, quietly.
    */
-  db_service.GetEntryNoAlert = function(table, func, querystring){
+  db_service.GetEntryNoAlert = function(table, func, querystring, range){
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.get(url).then(func, handleDbError);
+    
+    if (range){
+      $http.get(url, limitHeaders[range]).then(func, handleDbError);
+    }else{
+      $http.get(url).then(func, handleDbError);
+    }  
   };
 
   /**
    * Fetch multiple records from the DB.
    */
-  db_service.GetEntries = function(table, func, querystring){
+  db_service.GetEntries = function(table, func, querystring, range){
     var url;
     if (querystring){
       url = databaseurl + table + cleanQueryString(querystring);
@@ -88,7 +101,11 @@ angular.module('scanthisApp.factories', [])
     else {
       url = databaseurl + table;
     }
-    $http.get(url).then(func, handleDbError);
+    if (range){
+      $http.get(url, limitHeaders[range]).then(func, handleDbError);
+    }else{
+      $http.get(url).then(func, handleDbError);
+    }  
   };
 
   var CreateCode = function(table, processor_code, func, onErr){
@@ -107,7 +124,7 @@ angular.module('scanthisApp.factories', [])
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
     var url = databaseurl + table;
-    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester', 'receive_lot'])){
+    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
       $http.post(url, entry, patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
     }
     else{

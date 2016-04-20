@@ -10,11 +10,37 @@ angular.module('scanthisApp.AdminController', [])
   $scope.stn.index= 0;
 
   $scope.ListShipments = function(station_code){
-    var func = function(response){
-      $scope.list.shipments = response.data;
-    };
-    var query = '?station_code=eq.' + station_code;
-    DatabaseServices.GetEntries('shipping_unit', func, query);
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + station_code;
+      var func = function(response){
+        $scope.list.shipments = response.data;
+      };
+      DatabaseServices.GetEntries('shipping_unit', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
+  };
+
+
+  $scope.FilterShipDate = function(){
+    var station_code = $scope.current.station_code;
+    $http.get('/server_time').then(function successCallback(response) {
+
+      var s_offset = parseInt(moment($scope.startDate).format("Z").substring(0,3));
+      var e_offset = parseInt(moment($scope.endDate).format("Z").substring(0,3));
+      var the_offset = response.data.timezone/60;
+
+      var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
+      var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
+
+      var query = '?timestamp=gte.'+ start_date + '&timestamp=lte.' + end_date + '&station_code=eq.' + station_code;
+      var func = function(response){
+        $scope.list.shipments = response.data;
+      };
+      DatabaseServices.GetEntries('shipping_unit', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
   };
 
   $scope.totallistconfig = 
@@ -22,7 +48,7 @@ angular.module('scanthisApp.AdminController', [])
     cssclass: "fill small", 
     fields: ["size_grade", "weight", "boxes"], 
     limit: "10000",
-    order: "-timestamp",
+    order: "grade",
     /*csv: true*/
   };
 
@@ -31,13 +57,23 @@ angular.module('scanthisApp.AdminController', [])
       $scope.list.harvester = response.data;
     };
     var query = '';
-    DatabaseServices.GetEntries('harvester', func, query);
+    DatabaseServices.GetEntries('harvester', func, query, 'hundred');
   };
   $scope.ListHarvesters();
   
   $scope.$watch('stn.index', function() {
     if ($scope.stn.index !== undefined && $scope.stn.index !== null){
       $scope.current.shipment = null;
+      $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
+      var station = $scope.sumStations[$scope.stn.index];
+      if (station.send_field === 'customer'){
+        $scope.sort_by = 'lot';
+        $scope.sort_id = 'internal_lot_code';
+      }
+      else if (station.send_field === 'received_from'){
+        $scope.sort_by = 'harvester';
+        $scope.sort_id = 'internal_lot_code';
+      }
       $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
     }
   });
@@ -110,7 +146,7 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.included = response.data;
     };
-    DatabaseServices.GetEntries('box_product', func, query);
+    DatabaseServices.GetEntries('box_with_info', func, query);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -120,7 +156,7 @@ angular.module('scanthisApp.AdminController', [])
       }
       else{
         $scope.show_sorted = false;
-        $scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
+        //$scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
         $scope.ListBoxes();
       }
     }
@@ -144,6 +180,15 @@ angular.module('scanthisApp.AdminController', [])
   $scope.istotal = true;
 
   $scope.loadSorted = function(){
+    if ($scope.sort_by === 'lot'){
+      $scope.loadSortedLot();
+    }
+    else if ($scope.sort_by === 'harvester'){
+      $scope.loadSortedHar();
+    }
+  }
+
+  $scope.loadSortedHar = function(){
     var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.totals_sorted = response.data;
@@ -155,6 +200,23 @@ angular.module('scanthisApp.AdminController', [])
       });
     };
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
+  };
+
+
+  $scope.loadSortedLot = function(){
+    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    var func = function(response){
+      $scope.totals_sorted = response.data;
+      var origins = fjs.pluck('internal_lot_code', $scope.totals_sorted);
+      var originlist = origins.filter(onlyUnique);
+      var filtered_origin = originlist.filter(notNull);
+      $scope.list.origin = [];
+      filtered_origin.forEach(function(el){
+        $scope.list.origin.push({'harvester_code' : el, 'internal_lot_code': el});
+      })
+
+    };
+    DatabaseServices.GetEntries('shipping_summary_lot', func, query);
   };
 
   $scope.showSorted = function(){
@@ -179,6 +241,7 @@ angular.module('scanthisApp.AdminController', [])
   {
     cssclass: "fill small", 
     fields: ["weight_total", "boxes"], 
+    order: 'grade'
   };
 
   $scope.ListBoxes = function(){
@@ -216,14 +279,40 @@ angular.module('scanthisApp.AdminController', [])
   $scope.GetHarvesters();
 
   $scope.GetHarvesterLot = function(){
-    var query = '?processor_code=eq.' + $scope.processor;
-    var func = function(response){
-      $scope.list.harvester_lot = response.data;
-      $scope.GetLotSummary();
-    };
-    DatabaseServices.GetEntries('harvester_lot', func, query);
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+        $scope.GetLotSummary();
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
   };
   $scope.GetHarvesterLot();
+
+
+  $scope.FilterDate = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+
+      var s_offset = parseInt(moment($scope.startDate).format("Z").substring(0,3));
+      var e_offset = parseInt(moment($scope.endDate).format("Z").substring(0,3));
+      var the_offset = response.data.timezone/60;
+
+      var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
+      var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
+
+      var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+        $scope.GetLotSummary();
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
+    }, function errorCallback(response) {
+    });
+  };
 
   $scope.GetLotSummary = function(){
     var query = '';
@@ -323,6 +412,8 @@ angular.module('scanthisApp.AdminController', [])
 
   };
 
+
+
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
     var func = function(response){
@@ -338,113 +429,7 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-  $scope.postHarResponse = function(tf_code, status, data){
-    var patch = {'har_response_status': status, 'har_response_data': data};
-    var query = '?tf_code=eq.' + tf_code;
-    var func = function(response){
-    };
-    DatabaseServices.PatchEntry('thisfish', patch, query, func);
-  };
 
-  $scope.postProResponse = function(tf_code, status, data){
-    var patch = {'pro_response_status': status, 'pro_response_data': data};
-    var query = '?tf_code=eq.' + tf_code;
-    var func = function(response){
-    };
-    DatabaseServices.PatchEntry('thisfish', patch, query, func);
-  };
-
-  $scope.ThisfishHar = function(lot_number){
-    var posturl = '';
-    var query = '?lot_number=eq.' + lot_number;
-    var func = function(response){
-      var harvester_entry = JSON.parse(JSON.stringify(response.data[0]));
-      delete harvester_entry.lot_number;
-      harvester_entry.entry_unit = $scope.settings.entry_unit;
-      harvester_entry.shipped_to_user = $scope.settings.tf_user_id;
-      harvester_entry.landing_slip_number = '000000';
-      harvester_entry.privacy_display_date = '20';
-      harvester_entry.amount = Math.round(harvester_entry.amount);
-
-      for (var key in harvester_entry) {
-        if (harvester_entry.hasOwnProperty(key) && tf_har_options[key]) {
-          var name = harvester_entry[key];
-          var filtered = tf_har_options[key].filter(function(el){
-            return el.name === name;
-          });
-          if(!filtered[0]){
-          }
-          else{
-            var id = filtered[0].id;
-            harvester_entry[key] = id;
-            if (key === 'user'){
-              if (filtered[0].group === 'fleet'){
-                posturl = posturl_fleet;
-              }
-              else if (filtered[0].group === 'fish_harvester'){
-                posturl = posturl_harvester;
-              }
-            }
-          }
-        }
-      }
-      console.log(harvester_entry);
-      $http.post(posturl, harvester_entry, tfconfig).then
-      (function(response){
-        console.log(response);
-        $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        $scope.ThisfishPro(lot_number);
-      }, 
-        function(response){
-          console.log(response);
-          $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
-        });      
-    };
-    DatabaseServices.GetEntries('tf_harvester_entry', func, query);
-  };
-
-
-  $scope.ThisfishPro = function(lot_number){
-    var query = '?lotnum=eq.' + lot_number;
-    var func = function(response){
-      var processor_entry = JSON.parse(JSON.stringify(response.data[0]));
-      delete processor_entry.lotnum;
-      processor_entry.user = $scope.settings.tf_user;
-      processor_entry.entry_unit = $scope.settings.entry_unit;
-      processor_entry.location = $scope.settings.process_location;
-      processor_entry.privacy_display_date = '20';
-      processor_entry.amount = Math.round(processor_entry.amount);
-
-      for (var key in processor_entry) {
-        if (processor_entry.hasOwnProperty(key) && tf_pro_options[key]) {
-          var name = processor_entry[key];
-          var filtered = tf_pro_options[key].filter(function(el){
-            return el.name === name;
-          });
-          var id = filtered[0].id;
-          processor_entry[key] = id;
-        }
-      }
-      console.log(processor_entry);
-      $http.post(posturl_processor, processor_entry, tfconfig)
-      .then(function(response){
-        console.log(response);
-        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
-      }, 
-      function(response){
-        $scope.postProResponse(processor_entry.end_tag, response.status, response.data);
-      });
-    };
-    DatabaseServices.GetEntries('tf_processor_entry_simple', func, query);
-  };
-
-
-  $scope.SubmitLot = function(lot_number, tf_code){
-    if (tf_code){
-      $scope.ThisfishHar(lot_number);
-      //$scope.ThisfishPro(lot_number);
-    }
-  };
 
   $scope.getTheData = function(lot_number, stn, lot_code){
     if (stn.csv_1 && !stn.csv_2){
@@ -523,6 +508,7 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
+
 
 
 

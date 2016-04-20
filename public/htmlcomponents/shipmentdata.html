@@ -1,5 +1,6 @@
-<div ng-controller="ShipListCtrl" class="editshipentries">
-  <div class="panel white ">
+<div class="panel grey" ng-controller="ShipListCtrl">
+  <div  class="editshipentries">
+
     <span ng-if="options.ship_stations" id="radio-shipment" 
       class="toggle-group-container" ng-class="withChecked('station_code')">
       <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
@@ -11,7 +12,6 @@
     <br>
 
     <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
-      <!--<editform obj="current.shipment" config="collectionform" submit-fn="ShipInfo()"></editform> -->
 
       
       <div class="display_field">
@@ -21,22 +21,22 @@
         <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
       </div>
       <div class="display_field">
-        <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
+        <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" autocomplete="off" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
       </div>
       <div class="display_field">
-        <label for="inp_container_number">Container Number:</label><input type="text" 
+        <label for="inp_container_number">Container Number:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.container_number" id="inp_container_number">
       </div>
       <div class="display_field">
-        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" 
+        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.bill_of_lading" id="inp_bill_of_lading">
       </div>
       <div class="display_field">
-        <label for="inp_vessel_name">Vessel Name:</label><input type="text" 
+        <label for="inp_vessel_name">Vessel Name:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.vessel_name" id="inp_vessel_name">
       </div>
       <div class="display_field">
-        <label for="inp_seal_number">Seal Number:</label><input type="text" 
+        <label for="inp_seal_number">Seal Number:</label><input type="text" autocomplete="off"
                ng-model="current.shipment.seal_number" id="inp_seal_number">
       </div>
       <div class="form_buttons">
@@ -52,6 +52,7 @@
       <input ng-model="searchText" class="search" placeholder="Search"></input>
       <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
       <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
+      <button ng-click="FilterShipDate()">Go</button>
     </div>
 
     <div  class="itemsframe entries">
@@ -67,7 +68,7 @@
               <th>Seal Number</th>
               <th></th>
             </tr>
-          <tr ng-repeat="ship in list.shipments | dateRange: 'timestamp' : startDate : endDate | filter: filter_shipping | orderBy: '-timestamp'"
+          <tr ng-repeat="ship in list.shipments | filter: filter_shipping | orderBy: '-timestamp'"
               id="item-{{ship.shipping_unit_number}}" class="animation">
               <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
               <td>{{ship.po_number}}</td>
@@ -83,14 +84,11 @@
     </div>
   </div>
 
-  <div class="panel grey not" ng-hide="current.shipment === undefined || current.shipment === null">
+  <div ng-hide="current.shipment === undefined || current.shipment === null">
     <div class="marg">
       <span class="totals_caption">CSV Download: </span>
       <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
     </div>
-    <!--<div class="itemsframe entries">
-      <bufferedscrolllist itemlist="list.included" config="itemlistconfig"></bufferedscrolllist>
-    </div>-->
     <div class="itemtotals">
       Shipment totals
       <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
@@ -107,7 +105,18 @@
   </div>
 
 
+
+  <!--<div buffered-scroll-lots id="admin_manage_lots" >
+    <div class="inner_scrollable">
+      <table>
+      </table>
+    </div>
+  </div>-->
+
 </div>
+
+<div id="keepzoom"></div>
+
 
 
 

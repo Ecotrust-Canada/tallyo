@@ -12,8 +12,12 @@
       <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
              ng-model="search.internal_lot_code" id="filter_internal_lot_code">
     </div>
+    <div>
+      <input type="button" ng-click="ListFilteredItems(search.loin_number, search.internal_lot_code)"  class="btn-blue"
+             value="Search" id="reprint-search">
+    </div>
   </div>
   <div id="print_labels_list" class="itemsframe entries">
-    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str, str2)" filterstring="search"></bufferedscrolllist>
+    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str)"></bufferedscrolllist>
   </div>
 </div>

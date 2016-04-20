@@ -42,21 +42,9 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-
-
 //selectfromcurrentlots.html (weightstation.html)
 //fills in dropdown menu with lots current as per lotlocations table
 .controller('SelectLotDropDownCtrl', function($scope, $http, DatabaseServices) {
-
-  /*$scope.currentlots = function(){
-    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
-    var func = function(response){
-      $scope.list.harvester_lot = response.data;
-
-    };
-    DatabaseServices.GetEntries('expandedlotlocations', func, query);
-  };*/
-
 
   $scope.currentlots = function(){
     $http.get('/server_time').then(function successCallback(response) {
@@ -71,7 +59,6 @@ angular.module('scanthisApp.createlotController', [])
     });
   };
 
-
   $scope.completedlots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
@@ -85,15 +72,6 @@ angular.module('scanthisApp.createlotController', [])
     });
   };
 
-
-  /*$scope.completedlots = function(){
-    var query = '?station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
-    var func = function(response){
-      $scope.list.old_harvester_lot = response.data;
-    };
-    DatabaseServices.GetEntries('expandedlotlocations', func, query);
-  };*/
-
   $scope.$watch('current.lotlistchange', function() {
     if ($scope.station_info !== undefined && $scope.current.lotlistchange !== undefined){
       $scope.currentlots();
@@ -103,10 +81,9 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.changeFn = function(selected){
     $scope.current.collectionid = selected;
-
   };
 
-  $scope.current.selected = "no selected";
+  //$scope.current.selected = "no selected";
 
   $scope.$on('collection-change', function(event, args) {
     $scope.currentlots();
@@ -220,16 +197,18 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListCollectionItems = function(){
     var table;
     if ($scope.station_info.itemtable === 'box'){
-      table = 'box_product';
+      table = 'box_with_info';
     }
     else{
       table = $scope.station_info.itemtable;
     }
-    var query = '?station_code=eq.' + $scope.station_code + '&' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
+    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
     var func = function(response){
+      //console.log(response.headers()['content-range'].split('/')[1]);
       $scope.list.included = response.data;
+      $scope.list.length = response.headers()['content-range'].split('/')[1];
     };
-    DatabaseServices.GetEntries(table, func, query);
+    DatabaseServices.GetEntries(table, func, query, 'hundred');
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -242,8 +221,6 @@ angular.module('scanthisApp.createlotController', [])
       }
     }
   });
-
-
 })
 
 
@@ -253,15 +230,15 @@ angular.module('scanthisApp.createlotController', [])
 .controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(){
-    var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       $scope.totals = response.data;
     };
     DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
   };
 
-  $scope.$watch('current.itemchange', function() {
-    if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
       $scope.ItemTotals();
     }
   });
@@ -281,12 +258,12 @@ angular.module('scanthisApp.createlotController', [])
 //reprint.html - get list of loins for station, reprint function
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
-  $scope.ListAllItems = function(station_code){
-    var query = '?station_code=eq.' + station_code;
+  $scope.ListAllItems = function(){
+    var query = '?station_code=eq.' + $scope.station_code + '&order=timestamp.desc';
     var func = function(response){
       $scope.items = response.data;
     };
-    DatabaseServices.GetEntries('loin_lot', func, query);
+    DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
 
   $scope.Reprint = function(loin_number, lot_number){
@@ -298,10 +275,27 @@ angular.module('scanthisApp.createlotController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       };
-      DatabaseServices.GetEntries('reprint_table', func, query);      
+      DatabaseServices.GetEntries('loin_with_info', func, query);      
     }
   };
-  $scope.ListAllItems($scope.station_code);
+  $scope.ListAllItems();
+
+  $scope.ListFilteredItems = function(loin_number, int_lot_code){
+    var query = '?station_code=eq.' + $scope.station_code;
+    if (loin_number !== undefined && loin_number !== null && loin_number !== ''){
+      query += '&loin_number=like.*' + loin_number.toUpperCase() + '*';
+    }
+    if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
+      query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    query += '&order=timestamp.desc';
+    //console.log(query);
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
+  };
+
 })
 
 //selectsamedaylot.html - dropdown menu with lots from current day
@@ -320,6 +314,22 @@ angular.module('scanthisApp.createlotController', [])
     });
   };
   $scope.ListLots();
+
+
+  $scope.ListRecentLots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.recent_lot = response.data;
+      };
+      DatabaseServices.GetEntries('lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
+  $scope.ListRecentLots();
+
 })
 
 
@@ -341,8 +351,8 @@ angular.module('scanthisApp.createlotController', [])
     order: "-timestamp", 
     arg: "label", 
     searchfield: "label", 
-    delimeter: '/',
-    fields: ["label", "codes"]
+    delimeter: '-',
+    fields: ["codes"]
   };
 
 
@@ -403,16 +413,17 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.ShowCodes = function(label){
-    console.log('function called');
+    //console.log('function called');
     var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
     var func = function(response){
       $scope.list.codes = response.data;
+      $scope.current.tf_group = response.data[0];
       $scope.ListLabels();
       $scope.moveAll($scope.selectedProducts,$scope.availableProducts);
       $scope.label = null;
     };
     DatabaseServices.GetEntries('thisfish', func, query);
-  };
+      };
 
   $scope.moveItem = function(item, from, to) {
 

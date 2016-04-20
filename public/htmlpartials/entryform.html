@@ -25,16 +25,21 @@
         <div class="field">
 
           <!--text-->
-          <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" value={{row.value}} 
+          <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" autocomplete="off" value={{row.value}} 
                 ng-model="form[row.fieldname]" ng-required="{{row.required || false}}"></span>
 
           <!--number-->
-          <span ng-if="row.type === 'number'"><span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'"><input 
-                ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text"  
+          <span ng-if="row.type === 'number'">
+            <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'">
+              <input 
+                ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text" autocomplete="off"
                 ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" 
-                ng-required="{{row.required || false}}" negative></span><span 
-                ng-if="!row.scale || row.scale==='off'"><input name="{{row.fieldname}}" type="text" 
-                value={{row.value}} ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative></span>
+                ng-required="{{row.required || false}}" negative>
+            </span>
+            <span ng-if="!row.scale || row.scale==='off'">
+              <input name="{{row.fieldname}}" type="number" autocomplete="off"
+                ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative>
+            </span>
           </span>
 
           <!--radio-->
@@ -103,7 +108,7 @@
                   <span class="dd_option">{{selection.value}}</span>
                   <span class="remove_option" ng-click="Delete(selection.value, row.fieldname)" value="X" /></span>
                 </div>
-                <input class="short" type="text" ng-model="new"><span class="add-field-option" 
+                <input class="short" type="text" autocomplete="off" ng-model="new"><span class="add-field-option" 
                        ng-click="New(new, row.fieldname)"></span>
               </div>
             </div>
@@ -115,7 +120,7 @@
                class="weight-connector"/>
           <button class="scale-weight-set" 
                   ng-if="row.pollarg && row.scale!='off'"
-                  ng-disabled="row.scale!='on'" 
+                  ng-disabled="row.scale!='on' || !scale[row.fieldname]" 
                   ng-click="store(row);pollFn({field: row.pollarg})"
                   ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
           <!--
@@ -139,8 +144,8 @@
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
 
       </div>
-      <input type="button" ng-click="submitFn({form: isValid(form)})"  class="btn-orange"
-             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}">
+      <input type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
+             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}" ng-disabled="form_enabled===false">
     </div>     
 
   </fieldset>

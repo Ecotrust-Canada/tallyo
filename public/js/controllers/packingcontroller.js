@@ -19,7 +19,7 @@ angular.module('scanthisApp.packingController', [])
 
       var func = function(response){
         $scope.current.patchitem = response.data[0];//so can check most recent scan against rest to determine if mixing harvesters
-        var itemcollection = response.data[0][$scope.station_info.collectionid];
+        var itemcollection = response.data[0][($scope.station_info.patchid || $scope.station_info.collectionid)];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
           //confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
@@ -36,20 +36,38 @@ angular.module('scanthisApp.packingController', [])
           $scope.clearField();
         }
         else{
-          $scope.PatchObjWithContainer(id);
+          if ($scope.options.check_grade){
+            $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade);
+          }else{
+            $scope.PatchObjWithContainer();
+          }
+          
         }      
       };
       var onErr = function() {
         $scope.clearField();
-        toastr.error('invalid object'); // show failure toast.
+        toastr.error('invalid QR code'); // show failure toast.
       };
 
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
       DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
-    }
-
-    
+    }    
   };
+
+  $scope.CheckGrade = function(box_grade, loin_grade){
+    var conv = {
+      'A': 'AAA',
+      'B': 'AA',
+      'C': 'A',
+      'D': 'D'
+    }
+    loin_grade = conv[loin_grade];
+    if (loin_grade !== box_grade){
+      $scope.overlay('mixgrade');
+    }else{
+      $scope.PatchObjWithContainer();
+    }
+  }
 
   $scope.clearField = function(){
     $scope.input.code = null;
@@ -86,18 +104,18 @@ angular.module('scanthisApp.packingController', [])
 
     };
     var onErr = function(){
-      toastr.error('invalid object'); // show failure toast.
+      toastr.error('invalid QR code'); // show failure toast.
     };
 
     var patch = {};
-    patch[$scope.station_info.collectionid] = $scope.current.collectionid;
+    patch[($scope.station_info.patchid || $scope.station_info.collectionid)] = $scope.current.collectionid;
+    //console.log(patch);
     var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };  
 
 
   $scope.MakeQR = function(){
-    console.log($scope.current[$scope.station_info.collectiontable].ft_fa_code);
     var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
@@ -139,14 +157,67 @@ angular.module('scanthisApp.packingController', [])
 
 })
 
-.controller('RemovePatchCtrl', function($scope, $http, DatabaseServices) {
+.controller('PackingTotalCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.current.totals = {};
+
+  $scope.loadTotals = function(){
+    if ($scope.station_info.collectiontable === 'lot'){
+      var func = function(response){
+        if (response.data.length > 0){
+          var data = response.data[0];
+          $scope.current.totals.weight = data.weight_1;
+          $scope.current.totals.pieces = data.boxes;
+        }        
+      };
+      var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+      DatabaseServices.GetEntries('lot_summary', func, query);
+    }
+    /*else if ($scope.station_info.collectiontable === 'box'){
+      $scope.current.totals.weight = $scope.current.box.weight;
+      $scope.current.totals.pieces = $scope.current.box.pieces;      
+    }*/
+    else if ($scope.station_info.collectiontable === 'shipping_unit'){
+      var func1 = function(response){
+        if (response.data.length > 0){
+          var data = response.data[0];
+          $scope.current.totals.weight = data.total_weight;
+          $scope.current.totals.pieces = data.boxes;
+        }
+      };
+      var query1 = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+      DatabaseServices.GetEntries('ship_with_info', func1, query1);
+    }
+  };
+
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      if ($scope.current.collectionid === 'no selected'){
+      }
+      else{
+        $scope.loadTotals();         
+      }
+    }
+  });
+
+})
+
+
+
+.controller('RemovePatchCtrl', function($scope, $http, DatabaseServices, toastr) {
 
 
   //confirmTrue = function(message, func, elsefunc)
   
-  $scope.PatchObjRemoveContainer = function(id){
+  $scope.PatchObjRemoveContainer = function(obj){
+    var id = obj[$scope.station_info.itemid];
     $scope.to_delete = id;
-    $scope.overlay('delete');
+    if ($scope.options.qrform && obj.lot_number !== null){
+      toastr.error('cannot delete - box in processing');
+    }else{
+      $scope.overlay('delete');
+    }
+    
   };
 
   $scope.PatchNull = function(){
@@ -192,7 +263,11 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
-    var case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
+    var case_num;
+    if(!$scope.current.box.case_number){
+      case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
+    }
+    else case_num = $scope.current.box.case_number;
     var lot_num = GetBoxLotNumber($scope.list.included);
     if (lot_num !== undefined){
       $scope.GetInfo(lot_num, case_num);
@@ -204,23 +279,24 @@ angular.module('scanthisApp.packingController', [])
       var num = 0;
       var internal_lot_code = '';
       lot_num = null;
+      var the_yield = null;
       if ($scope.current.collectionid) {
-          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
+          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num, the_yield);
       }
     }
   };
 
-  $scope.GetInfo = function(lot_num){
+  $scope.GetInfo = function(lot_num, case_num){
     var func = function(response){
       var box_har = response.data[0];
-      $scope.PatchBoxWithWeightLot(box_har, lot_num);
+      $scope.PatchBoxWithWeightLot(box_har, lot_num, case_num);
     };
     var query = '?lot_number=eq.' + lot_num;
     DatabaseServices.GetEntry('harvester_lot', func, query);
   };
 
 
-  $scope.PatchBoxNull = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num){
+  $scope.PatchBoxNull = function(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num, the_yield){
 
     var func = function(response){
       $scope.current.box = response.data[0];
@@ -228,10 +304,11 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.ft_fa_code = null;
         $scope.current.box.fleet = null;
         $scope.current.box.receive_date = null;
+        $scope.current.box.prod_date = null;
         $scope.current.box.supplier_group = null;
         $scope.current.box.wpp = null;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num, 'case_number':case_num};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': harvester_code, 'lot_number': lot_num, 'case_number':case_num, 'yield':the_yield};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
     
@@ -251,10 +328,13 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.ft_fa_code = box_har.ft_fa_code;
         $scope.current.box.fleet = box_har.fleet;
         $scope.current.box.harvest_date = moment(box_har.timestamp).format();
+        $scope.current.box.prod_date = moment(box_har.timestamp).format('YYYY-MM-DD');
         $scope.current.box.supplier_group = box_har.supplier_group;
         $scope.current.box.wpp = box_har.fishing_area;
+        $scope.current.totals.weight = $scope.current.box.weight;
+        $scope.current.totals.pieces = $scope.current.box.pieces;
     };
-    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num, 'case_number':case_num};
+    var patch = {'weight': box_weight, 'pieces': num, 'best_before_date': best_before, 'internal_lot_code': internal_lot_code, 'harvester_code': box_har.harvester_code, 'lot_number': lot_num, 'case_number':case_num, 'yield':box_har.yield_by_pieces};
     var query = '?box_number=eq.' + $scope.current.collectionid;
     DatabaseServices.PatchEntry('box', patch, query, func);
   }; 
@@ -285,7 +365,7 @@ angular.module('scanthisApp.packingController', [])
         }
         else if ($scope.harvesterArray.length === 1){
           $scope.current.mixed = false;
-          var ship = fjs.pluck('shipping_unit_number', $scope.list.included);
+          var ship = fjs.pluck('shipping_unit_in', $scope.list.included);
           var ship_num = ship[0];
           $scope.PatchLotwithHar($scope.harvesterArray[0], ship_num);        
         }
@@ -351,14 +431,14 @@ angular.module('scanthisApp.packingController', [])
     }
     else{
       var rawArray = $scope.raw.string.split("/");
-      var id = rawArray[0];
+      var id = rawArray[0].toUpperCase();
 
       var func = function(response){
         $scope.CheckScan(id);
       };
       var onErr = function() {
         $scope.raw.string = null;
-        toastr.error('invalid object'); // show failure toast.
+        toastr.error('invalid QR code'); // show failure toast.
       };
       var query = '?' + $scope.station_info.itemid + '=eq.' + id;
       DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
@@ -422,16 +502,28 @@ angular.module('scanthisApp.packingController', [])
   $scope.selectedoption = 'no selected';
 
   $scope.the_config = 
-  { 
+  /*{ 
     limit: "10",
     order: "-timestamp", 
     arg: "codes", 
     fields: ["label", "codes"]
   };
 
+  $scope.dropdownconfig = */
+  { id: 0, 
+    title: "Search Labels", 
+    limit: "5",
+    order: "-timestamp", 
+    arg: "codes", 
+    searchfield: "label", 
+    delimeter: '-',
+    fields: ["codes"]
+  };
+
   $scope.SetCodes = function(codes){
-    $scope.current.codes = JSON.parse(codes);
-    $scope.current.codes.forEach(
+    console.log(codes);
+    $scope.current.codes = codes;
+    codes.forEach(
       function(el){
         $scope.PatchLot($scope.current.collectionid, el);
       }
@@ -443,6 +535,7 @@ angular.module('scanthisApp.packingController', [])
     var patch = {'lot_number': lot_number};
     var func = function(response){
       $scope.ListTFCodes();
+      $scope.ShowCodes();
     };
     DatabaseServices.PatchEntry('thisfish', patch, query, func);
   };
@@ -455,11 +548,8 @@ angular.module('scanthisApp.packingController', [])
     );
   };
 
-  $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
-      $scope.current.codes = null;
-      $scope.show_element = '';
-      var query = '?lot_number=eq.' + $scope.current.collectionid;
+  $scope.ShowCodes = function(){
+    var query = '?lot_number=eq.' + $scope.current.collectionid;
       var func = function(response){
         if (response.data.length>0){
           $scope.current.codes = response.data[0].codes;
@@ -467,6 +557,13 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       DatabaseServices.GetEntries('group_codes', func, query);
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined  && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
+      $scope.current.codes = null;
+      $scope.show_element = '';
+      $scope.ShowCodes();
     }
   });
 

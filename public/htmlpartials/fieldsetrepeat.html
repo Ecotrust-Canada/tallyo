@@ -10,10 +10,10 @@
         </select>
         <div class="dd_arrow"><span></span></div>
       </div>
-      <input ng-if="field.type==='number'" type="text" ng-model="choice[field.fieldname]" 
+      <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
              placeholder="{{field.placeholder}}" title="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" 
              ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-      <input ng-if="field.type==='text'" type="text" ng-model="choice[field.fieldname]" 
+      <input ng-if="field.type==='text'" type="text" autocomplete="off" ng-model="choice[field.fieldname]" 
              placeholder="field.placeholder"  title="{{field.placeholder}}" ng-required="true" 
              name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
     </span>    

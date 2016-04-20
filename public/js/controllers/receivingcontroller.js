@@ -4,94 +4,6 @@
 angular.module('scanthisApp.receivingController', [])
 
 
-.controller('QRScanCtrl', function($scope, $http, DatabaseServices, toastr) {
-
-  $scope.readQR = function(){
-    var rawArray = $scope.raw.string.split("/");
-    var jsonvalues = {};
-    for (var i=0;i<$scope.valuesarray.length;i++){
-      jsonvalues[$scope.valuesarray[i]] = rawArray[i];
-    }
-    $scope.MakeItemFromQR(jsonvalues);
-  };
-
-
-  $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':$scope.station_code};   
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
-    };
-    DatabaseServices.DatabaseEntryReturn('scan', data, func);
-  };
-
-
-  $scope.MakeItemFromQR = function(jsonvalues){
-    if ($scope.current.collectionid){
-      var func = function(response){
-        if (response.data.length >0){
-          $scope.raw.string = null;
-          toastr.warning("already exists");
-        }
-        else{
-          $scope.CheckLot(jsonvalues);
-        }
-      };
-      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code;
-      DatabaseServices.GetEntries('box', func, query);
-    }
-    else{
-      $scope.raw.string = null; 
-      toastr.error("select Collection");
-    }
-  };
-
-  $scope.CheckLot = function(jsonvalues){
-    var query = '?lot_number=eq.' + jsonvalues.lot + '&tf_code=eq.' + jsonvalues.tf_code;
-    var func = function(response){
-      if (response.data.length<1){
-        $scope.createLot(jsonvalues);
-      }
-      else{
-        $scope.createBox(jsonvalues);
-      }
-    };
-    DatabaseServices.GetEntries('receive_lot', func, query);
-  };
-
-  $scope.createLot = function(jsonvalues){
-    var data = {'lot_number': jsonvalues.lot, 'harvester_code': jsonvalues.harvester_code, 'received_from': $scope.current.shipping_unit.received_from, 'tf_code': jsonvalues.tf_code, 'station_code': $scope.station_code, 'harvest_date': jsonvalues.harvest_date};
-    var func = function(response){
-      $scope.createBox(jsonvalues, response.data[0].receive_code);
-    };
-    DatabaseServices.DatabaseEntryCreateCode('receive_lot', data, $scope.processor, func);
-  };
-
-  $scope.createBox = function(jsonvalues, receive_code){
-    var data = {'lot': jsonvalues.lot, 'box_number': jsonvalues.box_number, 'harvester_code': jsonvalues.harvester_code, 'size': jsonvalues.size, 'grade':jsonvalues.grade, 'pieces':jsonvalues.pieces, 'weight':jsonvalues.weight, 'receive_code': receive_code, 'station_code': $scope.station_code, 'shipping_unit_number':$scope.current.shipping_unit.shipping_unit_number};
-    var func = function(response){
-      var box_number = response.data.box_number;
-      $scope.DatabaseScan(box_number);
-    };
-    DatabaseServices.DatabaseEntryReturn('box', data, func);
-  };
-
-  $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
-      $scope.formdisabled = true;
-    }
-    else{
-      $scope.formdisabled = false;
-    }
-  });
-
-  $scope.Complete = function(){ 
-    $scope.current.selected = 'no selected';
-    $scope.current.collectionid = 'no selected';
-  };
-
-})
-
-
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.readQR = function(){
@@ -100,7 +12,32 @@ angular.module('scanthisApp.receivingController', [])
     for (var i=0;i<$scope.valuesarray.length;i++){
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
-    $scope.MakeItemFromQR(jsonvalues);
+    jsonvalues.box_number = jsonvalues.box_number.toUpperCase();
+    jsonvalues.harvester_code = jsonvalues.harvester_code.toUpperCase();
+    $scope.checkBox(jsonvalues);
+
+  };
+
+  $scope.checkBox = function(jsonvalues){
+    var func = function(response){
+      if (response.data.length === 0){
+        $scope.CheckHarvester(jsonvalues);
+      }
+      else{
+        var box = response.data[0];
+        if(box.shipping_unit_in === $scope.current.shipping_unit.shipping_unit_number){
+          toastr.warning('Already scanned');
+          $scope.raw.string = null;
+        }else{
+          toastr.error('Box with this code already exists');
+          $scope.raw.string = null;
+        }        
+      }
+    };
+
+    var query = '?box_number=eq.' + jsonvalues.box_number;
+    DatabaseServices.GetEntries('box', func, query);
+
   };
 
   $scope.DatabaseScan = function(box_number){ 
@@ -123,7 +60,7 @@ angular.module('scanthisApp.receivingController', [])
           $scope.CheckHarvester(jsonvalues);
         }
       };
-      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number;
       DatabaseServices.GetEntries('box', func, query);
     }
   };
@@ -155,6 +92,8 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.createBox = function(jsonvalues){
+    //console.log(jsonvalues);
+    var harvestDate = moment(parseInt(jsonvalues.harvest_date, 36)).format();
     var data = 
      {'box_number': jsonvalues.box_number, 
       'harvester_code': jsonvalues.harvester_code, 
@@ -163,13 +102,14 @@ angular.module('scanthisApp.receivingController', [])
       'pieces':jsonvalues.pieces, 
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
-      'timestamp': jsonvalues.timestamp,
+      'timestamp': moment(parseInt(jsonvalues.timestamp, 36)).format(),
       'internal_lot_code': jsonvalues.internal_lot_code,  
       'station_code': $scope.station_code,
-      'harvest_date': jsonvalues.harvest_date,
-      'best_before_date': moment(jsonvalues.harvest_date).add(2, 'years').format(),
-      'shipping_unit_number':$scope.current.shipping_unit.shipping_unit_number};
-    //TF Code*****
+      'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
+      'best_before_date': moment(harvestDate).add(2, 'years').format(),
+      'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number,
+      'tf_code': jsonvalues.tf_code,
+      'yield': jsonvalues.yield};
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
@@ -327,8 +267,8 @@ angular.module('scanthisApp.receivingController', [])
         $scope.entry.box.harvester_code = $scope.current.harvester.harvester_code;
 
         if ($scope.current.shipping_unit !== undefined && $scope.current.shipping_unit !== null){
-          $scope.entry.box.shipping_unit_number = $scope.current.shipping_unit.shipping_unit_number;
-          $scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
+          $scope.entry.box.shipping_unit_in = $scope.current.shipping_unit.shipping_unit_number;
+          //$scope.entry.box.received_from = $scope.current.shipping_unit.received_from;
 
           for (var j=0;j<choices.length;j++){
             var formrow = choices[j];

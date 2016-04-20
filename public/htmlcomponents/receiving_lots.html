@@ -1,5 +1,4 @@
 
-<!-- loadcurrentcollection></loadcurrentcollection -->
 <div ng-controller="SetSupplierCtrl" class="panel grey" id="harvester_list">
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
@@ -8,7 +7,7 @@
     <span class="section_head">Suppliers</span>
     <!-- span class="divider"></span -->
     <!--<span class="add_new">+ Add new Supplier</span>-->
-    <searchtext></searchtext>   
+    <searchtext></searchtext>
   </div>
 
   <expandedlist itemlist="list.harvester"  config="itemlistconfig" update-fn="SetCurrentHarvester(str)" 
@@ -20,7 +19,7 @@
     </div>
   </div>
 
-  <div ng-init="formtable='harvester'">  
+  <div ng-if="settings.thisfish_enabled" ng-init="formtable='harvester'">  
     <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
