@@ -234,20 +234,13 @@ angular.module('scanthisApp', [
     }
 
     var stn = settings.includes[0];
-    //document.querySelector('meta[name=viewport]').setAttribute('content', 'width=600,minimum-scale=0,maximum-scale=10,initial-scale=1,user-scalable=yes');
     
     if(stn === 'weighstation' || stn === 'packingstation' || stn === 'receiveshipment' || stn === 'receivingprintlabel' || stn === 'scaninventorystation' || stn === "viewinventory" || stn === 'receivingprintlabel' || stn === 'reprint_label'){
-      //console.log('called');
       $scope.ZoomRight(600, true);
     }
     if(stn === 'kanban' || stn === 'receiving_lots' || stn === 'shipmentdata'){
-
       document.webkitExitFullscreen();
-      //
       $scope.ZoomRight(600, false);
-      //document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=0,maximum-scale=10,user-scalable=yes');
-      //document.webkitExitFullscreen();
-      //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
     }
     
   };
@@ -298,71 +291,52 @@ angular.module('scanthisApp', [
 
   $scope.ZoomRight = function(width, fullscreen){
 
-  document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
+    document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
 
-  function getViewportWidth() {
-      if (window.innerWidth) {
-          return window.innerWidth;
-      }
-      else if (document.body && document.body.offsetWidth) {
-          return document.body.offsetWidth;
-      }
-      else {
-          return 0;
-      }
-  }
+    function getViewportWidth() {
+        if (window.innerWidth) {
+            return window.innerWidth;
+        }
+        else if (document.body && document.body.offsetWidth) {
+            return document.body.offsetWidth;
+        }
+        else {
+            return 0;
+        }
+    }
 
-  function getViewportHeight() {
-      if (window.innerHeight) {
-          return window.innerHeight;
-      }
-      else if (document.body && document.body.offsetHeight) {
-          return document.body.offsetHeight;
-      }
-      else {
-          return 0;
-      }
-  }
+    function getViewportHeight() {
+        if (window.innerHeight) {
+            return window.innerHeight;
+        }
+        else if (document.body && document.body.offsetHeight) {
+            return document.body.offsetHeight;
+        }
+        else {
+            return 0;
+        }
+    }
 
-  //console.log($scope.includes[0]);
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-
-      var actual_width = getViewportWidth();
-      //console.log(actual_width);
-      var min_width = width;
-      var ratio = actual_width / min_width;
-      if (ratio < 1) {
-          //document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + actual_width);
-      //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        var actual_width = getViewportWidth();
+        var min_width = width;
+        var ratio = actual_width / min_width;
+        if (ratio < 1) {
           var percent = (ratio*100).toFixed(2);
-
-
           if (fullscreen === true){
             document.body.style.zoom = percent + "%";
               var el = document.documentElement
               ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
               rfs.call(el);
           }
-          //document.body.style.zoom = percent + "%";
-          //}
-
-          /*var el = document.documentElement
-        ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
-        rfs.call(el);*/
-
-        //document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + actual_width);
-        if (fullscreen === false){
-          document.body.style.zoom = "100%";
-          document.body.style.zoom = percent + "%";
-          document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
-          //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
-        }
-    }
-
-    $scope.the_width = width;
-  }
-
-  
+          if (fullscreen === false){
+            document.body.style.zoom = "100%";
+            document.body.style.zoom = percent + "%";
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
+          }
+      }
+      $scope.the_width = width;
+    }  
   };
 
 })
