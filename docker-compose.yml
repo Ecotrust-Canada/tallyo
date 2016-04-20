@@ -7,6 +7,10 @@ services:
       - pgdatabase:/var/lib/postgresql/data
     networks:
       - back-tier
+    environment:
+      POSTGRES_USER: tuna_processor
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
   postgrest:
     build:
       dockerfile: deploy/Dockerfile-postgrest

@@ -7,7 +7,7 @@ ENV POSTGREST_VERSION 0.3.0.3
 ENV POSTGREST_DBHOST db
 ENV POSTGREST_DBPORT 5432
 ENV POSTGREST_DBNAME postgres
-ENV POSTGREST_DBUSER postgres
+ENV POSTGREST_DBUSER tuna_processor
 ENV POSTGREST_DBPASS postgres
 
 RUN wget http://github.com/begriffs/postgrest/releases/download/v${POSTGREST_VERSION}/postgrest-${POSTGREST_VERSION}-ubuntu.tar.xz
