@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - pgdatabase:/var/lib/postgresql/data
+    networks:
+      - back-tier
+  postgrest:
+    build:
+      dockerfile: deploy/Dockerfile-postgrest
+      context: .
+    networks:
+      - back-tier
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  tallyo:
+    build:
+      dockerfile: deploy/Dockerfile-tallyo
+      context: .
+    command: nodemon app.js
+    volumes:
+      - configs:/opt/tallyo/scanthis/public/js/configs
+    ports:
+      - "8000:8000"
+    networks:
+      - back-tier
+    restart: always
+    depends_on:
+      - postgrest
+volumes:
+  pgdatabase:
+    driver: local
+  configs:
+    driver: local
+
+networks:
+  back-tier:
+    driver: bridge
