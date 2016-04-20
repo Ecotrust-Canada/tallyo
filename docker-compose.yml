@@ -2,7 +2,7 @@ version: '2'
 
 services:
   db:
-    image: postgres
+    image: "postgres:9.5.2"
     volumes:
       - pgdatabase:/var/lib/postgresql/data
     networks:
@@ -21,7 +21,7 @@ services:
     build:
       dockerfile: deploy/Dockerfile-tallyo
       context: .
-    command: nodemon app.js
+    command: tail -f /dev/null
     volumes:
       - configs:/opt/tallyo/scanthis/public/js/configs
     ports:

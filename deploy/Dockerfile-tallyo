@@ -7,7 +7,7 @@ RUN apk add nodejs git
 RUN npm install -g bower nodemon forever db-migrate db-migrate-pg
 
 RUN mkdir /opt && mkdir /opt/tallyo && cd /opt/tallyo
-RUN echo "flush cache"
+RUN echo "flush cache1"
 ADD . /opt/tallyo/scanthis
 RUN cd /opt/tallyo/scanthis && npm install --production && bower install --allow-root
 
