@@ -352,9 +352,10 @@ angular.module('scanthisApp', [
 
         //document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + actual_width);
         if (fullscreen === false){
-          //document.body.style.zoom = "100%";
-          document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=' + ratio + ',minimum-scale=0,maximum-scale=10,user-scalable=yes, width=' + actual_width);
-          console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
+          document.body.style.zoom = "100%";
+          document.body.style.zoom = percent + "%";
+          document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
+          //console.log(document.querySelector('meta[name="viewport"]').getAttribute('content'));
         }
     }
 
