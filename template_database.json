@@ -2,9 +2,9 @@
 "env":{
 "driver":"pg",
 "user":"tuna_processor",
-"password":"salmon",
-"host":"localhost",
-"database":"dbname",
+"password":"postgres",
+"host":"db",
+"database":"postgres",
 "schema":"public"
 },
 "sql-file" :true
