@@ -149,6 +149,7 @@ angular.module('scanthisApp.directives', [])
         scope: {
             thelist: '=',
             config: '=',
+            limit: '=',
             onSelect: '&'
         },
         templateUrl: 'htmlpartials/searchdropdown.html',

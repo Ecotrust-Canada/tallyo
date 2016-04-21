@@ -7,13 +7,14 @@ angular.module('scanthisApp.receivingController', [])
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.readQR = function(){
-    var rawArray = $scope.raw.string.split("/");
+    var rawArray = $scope.raw.string.toUpperCase().split("/");
     var jsonvalues = {};
     for (var i=0;i<$scope.valuesarray.length;i++){
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
-    jsonvalues.box_number = jsonvalues.box_number.toUpperCase();
-    jsonvalues.harvester_code = jsonvalues.harvester_code.toUpperCase();
+    //jsonvalues.box_number = jsonvalues.box_number.toUpperCase();
+    //jsonvalues.harvester_code = jsonvalues.harvester_code.toUpperCase();
+    console.log(jsonvalues);
     $scope.checkBox(jsonvalues);
 
   };
@@ -92,7 +93,6 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.createBox = function(jsonvalues){
-    //console.log(jsonvalues);
     var harvestDate = moment(parseInt(jsonvalues.harvest_date, 36)).format();
     var data = 
      {'box_number': jsonvalues.box_number, 
