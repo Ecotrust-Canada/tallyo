@@ -24,6 +24,7 @@ var handleDbError = function(response) {
 var limitHeaders = {};
 limitHeaders.fifty = {headers: {'Range-Unit': 'items', 'range': '0-49'}};
 limitHeaders.hundred = {headers: {'Range-Unit': 'items', 'range': '0-99'}};
+limitHeaders.twenty = {headers: {'Range-Unit': 'items', 'range': '0-19'}};
 
 angular.module('scanthisApp.factories', [])
 

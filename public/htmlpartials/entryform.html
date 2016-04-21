@@ -123,13 +123,6 @@
                   ng-disabled="row.scale!='on' || !scale[row.fieldname]" 
                   ng-click="store(row);pollFn({field: row.pollarg})"
                   ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
-          <!--
-          <span ng-if="row.pollarg" ng-show="pollScale">
-            <input ng-if="row.scale==='on'" type="button" ng-click="store(row);pollFn({field: row.pollarg})" value="store">
-            <input ng-if="row.scale==='lock'" type="button" ng-disabled="'true'" value="locked">
-            <input ng-if="row.scale==='wait'" type="button" ng-disabled="'true'" value="store">
-          </span>
-          -->
 
         </div>
 
