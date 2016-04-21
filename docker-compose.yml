@@ -15,6 +15,7 @@ services:
     build:
       dockerfile: deploy/Dockerfile-postgrest
       context: .
+    restart: always
     networks:
       - back-tier
     ports:
@@ -25,9 +26,9 @@ services:
     build:
       dockerfile: deploy/Dockerfile-tallyo
       context: .
-    command: tail -f /dev/null
+    command: node app app_config_hs
     volumes:
-      - configs:/opt/tallyo/scanthis/public/js/configs
+      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
     ports:
       - "8000:8000"
     networks:
