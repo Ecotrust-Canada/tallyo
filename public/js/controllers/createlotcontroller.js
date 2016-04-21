@@ -18,7 +18,7 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
       $scope.list.collection = response.data;
     };
-    DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query);
+    DatabaseServices.GetEntries($scope.station_info.collectiontable, func, query, 'hundred');
   };
 
   $scope.changeFn = function(selected){

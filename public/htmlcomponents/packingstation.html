@@ -15,7 +15,7 @@
           <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)"></entryform>
         </div>
         <div  ng-controller="CollectionTableDropDownCtrl">
-          <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
+          <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)" limit="10"></input-dropdown>
         </div>
       </div>
     </div>
