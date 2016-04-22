@@ -240,9 +240,10 @@ angular.module('scanthisApp', [
       $scope.ZoomRight(600, true);
     }
     if(stn === 'kanban' || stn === 'supplier_setup' || stn === 'shipmentdata'){
-      document.webkitExitFullscreen();
+      window.document.webkitExitFullscreen();
       $scope.ZoomRight(600, false);
     }
+
     
   };
 
@@ -292,7 +293,7 @@ angular.module('scanthisApp', [
 
   $scope.ZoomRight = function(width, fullscreen){
 
-    document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
+    
 
     function getViewportWidth() {
         if (window.innerWidth) {
@@ -319,14 +320,15 @@ angular.module('scanthisApp', [
     }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
         var actual_width = getViewportWidth();
         var min_width = width;
         var ratio = actual_width / min_width;
-        if (ratio < 1) {
+        //if (ratio < 1) {
           var percent = (ratio*100).toFixed(2);
           if (fullscreen === true){
             document.body.style.zoom = percent + "%";
-              var el = document.documentElement
+              var el = window.document.documentElement
               ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
               rfs.call(el);
           }
@@ -335,7 +337,7 @@ angular.module('scanthisApp', [
             document.body.style.zoom = percent + "%";
             document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
           }
-      }
+      //}
       $scope.the_width = width;
     }  
   };

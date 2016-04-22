@@ -1,10 +1,10 @@
 
 <div class="panel white weighstation_main">
   <div ng-if="terminal.both && the_width === 600 && options.first"  id="doublestn">
-    <a ng-click="ZoomRight(1200)">Side-by-side</a>
+    <a ng-click="ZoomRight(1200, true)">Side-by-side</a>
   </div>
   <div ng-if="terminal.both && the_width === 1200 && options.first"  id="doublestn">
-    <a ng-click="ZoomRight(600)">One column</a>
+    <a ng-click="ZoomRight(600, true)">One column</a>
   </div>
   <div id="refresh">
     <a ng-click="RefreshPage()">Refresh</a>
