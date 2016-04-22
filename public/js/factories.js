@@ -21,6 +21,15 @@ var handleDbError = function(response) {
 }
 , patchHeaders = {headers: {'Prefer': 'return=representation'}};
 
+var ForceUpper = function(entry){
+  for (var key in entry){
+    if (key === 'case_number' || key === 'internal_lot_code' || key === 'ft_fa_code'){
+      entry[key] = entry[key].toUpperCase();
+    }    
+  }
+  return entry;
+};
+
 var limitHeaders = {};
 limitHeaders.fifty = {headers: {'Range-Unit': 'items', 'range': '0-49'}};
 limitHeaders.hundred = {headers: {'Range-Unit': 'items', 'range': '0-99'}};
@@ -38,7 +47,7 @@ angular.module('scanthisApp.factories', [])
    */
   db_service.DatabaseEntry = function(table, entry, func){
     var url = databaseurl + table;
-    $http.post(url, entry).then(func, handleDbError);
+    $http.post(url, ForceUpper(entry)).then(func, handleDbError);
   };
 
   /**
@@ -46,7 +55,7 @@ angular.module('scanthisApp.factories', [])
    */
   db_service.DatabaseEntryReturn = function(table, entry, func){
     var url = databaseurl + table;
-    $http.post(url, entry, patchHeaders).then(func, handleDbError);
+    $http.post(url, ForceUpper(entry), patchHeaders).then(func, handleDbError);
   };
 
   /**
@@ -54,7 +63,7 @@ angular.module('scanthisApp.factories', [])
    */
   db_service.PatchEntry = function(table, patch, querystring, func, onErr){
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func, onErr), handleDbError);
+    $http.patch(url, ForceUpper(patch), patchHeaders).then(nonzeroLengthCheck(func, onErr), handleDbError);
   };
 
   /**
@@ -126,12 +135,14 @@ angular.module('scanthisApp.factories', [])
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
     var url = databaseurl + table;
     if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
-      $http.post(url, entry, patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
+      $http.post(url, ForceUpper(entry), patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
     }
     else{
-      $http.post(url, entry, patchHeaders).then(func, handleDbError);
+      $http.post(url, ForceUpper(entry), patchHeaders).then(func, handleDbError);
     }
   };
+
+  
 
 
   return db_service;
