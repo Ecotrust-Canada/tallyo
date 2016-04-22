@@ -43,7 +43,8 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=', 
            istotal: '=', 
            updateFn: '&',
-           secondFn: '&'}, 
+           secondFn: '&',
+           testFn: '&'}, 
   controller: 'BufferScrollCtrl',
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
@@ -223,4 +224,20 @@ angular.module('scanthisApp.directives', [])
       });
     };
   })
+
+
+
+.directive( 'elemReady', function( $parse ) {
+   return {
+       restrict: 'A',
+       link: function( $scope, elem, attrs ) {    
+          elem.ready(function(){
+            $scope.$apply(function(){
+                var func = $parse(attrs.elemReady);
+                func($scope);
+            });
+          });
+       }
+    };
+})
 ;

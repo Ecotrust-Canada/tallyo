@@ -118,7 +118,7 @@
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
-      <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)"></bufferedscrolllist>
+      <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
   </div>
   <div class="itemtotals table_row" >
     <div class="item_number">

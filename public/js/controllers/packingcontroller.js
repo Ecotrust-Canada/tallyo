@@ -7,6 +7,7 @@ angular.module('scanthisApp.packingController', [])
 .controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
 
   $scope.input = {};
+  $scope.current.addnew = false;
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -91,14 +92,15 @@ angular.module('scanthisApp.packingController', [])
       //toastr.success('added'); // show success toast.
 
       // attempt to highlight new row in itemstable
-      setTimeout(function () {
+      /*setTimeout(function () {
         var tr = angular.element(document.querySelector('#item-'+response.data[0][$scope.station_info.itemid]));  
         if (tr){
           var c = 'new_item';
           tr.addClass(c);
           $timeout(function(){ tr.removeClass(c); }, 2000); 
         }
-      }, 100);
+      }, 100);*/
+      $scope.current.addnew = true;
       
       $scope.MakeScan($scope.id);
 
@@ -415,6 +417,8 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
+  $scope.current.addnew = false;
+
   $scope.entry.scan = {};
 
   var focusScan = function(){
@@ -467,7 +471,8 @@ angular.module('scanthisApp.packingController', [])
   $scope.DatabaseScan = function(){    
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
-      toastr.success('added');
+      $scope.current.addnew = true;
+      //toastr.success('added');
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
@@ -482,6 +487,8 @@ angular.module('scanthisApp.packingController', [])
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
+
+  
 
 })
 
@@ -562,6 +569,20 @@ angular.module('scanthisApp.packingController', [])
       $scope.overlay('delete');
     }
     
+  };
+
+  $scope.HighlightGreen = function(str){
+    if(str===0  && $scope.current.addnew === true){
+      setTimeout(function () {
+          var tr = angular.element(document.querySelector('#item-'+ str));  
+          if (tr){
+            var c = 'new_item';
+            tr.addClass(c);
+            $timeout(function(){ tr.removeClass(c); }, 700); 
+          }
+        }, 0);
+    }
+    $scope.current.addnew = false;
   };
 
 })
