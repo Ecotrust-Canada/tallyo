@@ -6,6 +6,8 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+  $scope.current.addnew = false;
+
   $scope.readQR = function(){
     var rawArray = $scope.raw.string.toUpperCase().split("/");
     var jsonvalues = {};
@@ -46,6 +48,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.raw.string = null;
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.addnew = true;
     };
     DatabaseServices.DatabaseEntryReturn('scan', data, func);
   };

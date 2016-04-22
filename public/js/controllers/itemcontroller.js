@@ -16,6 +16,10 @@ angular.module('scanthisApp.itemController', [])
     $scope.scaleon = true;
     $scope.scale= {};
   }
+  $scope.current.addnew = false;
+
+
+  
 
 
   $scope.startPolling = function(fieldName) {
@@ -74,14 +78,16 @@ angular.module('scanthisApp.itemController', [])
       //toastr.success("submit successful");
 
       // attempt to highlight new row in itemstable
-      setTimeout(function () {
+      /*setTimeout(function () {
         var tr = angular.element(document.querySelector('#item-'+response.data[$scope.station_info.itemid]));  
         if (tr){
           var c = 'new_item';
           tr.addClass(c);
-          $timeout(function(){ tr.removeClass(c); }, 2000); 
+          $timeout(function(){ tr.removeClass(c); }, 700); 
         }
-      }, 100);
+      }, 400);*/
+
+      $scope.current.addnew = true;
       
       if ($scope.options.secondstation){
         $scope.SecondScan();
@@ -209,7 +215,7 @@ angular.module('scanthisApp.itemController', [])
 
 })
 
-.controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices) {
+.controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices, $timeout) {
 
   $scope.RemoveItem = function(id){
     $scope.to_delete = id;
@@ -268,6 +274,10 @@ angular.module('scanthisApp.itemController', [])
       
     }
   };
+
+
+
+
 })
 
 ;

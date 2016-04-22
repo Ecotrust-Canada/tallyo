@@ -30,9 +30,10 @@ angular.module('scanthisApp', [
  */
 .config(function(toastrConfig) {
     angular.extend(toastrConfig, {
-        maxOpened: 3,
+        maxOpened: 4,
         positionClass: 'toast-top-full-width',
-        preventOpenDuplicates: true
+        preventOpenDuplicates: false,
+        timeOut: 700
     });
 })
 
