@@ -11,6 +11,8 @@ services:
       POSTGRES_USER: tuna_processor
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
   postgrest:
     build:
       dockerfile: deploy/Dockerfile-postgrest
