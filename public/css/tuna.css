@@ -228,7 +228,7 @@ body{
 
 #station-AM2-ADM > .panel, 
 #station-AM2-011 .panel, 
-/*#station-HS0-003 .panel,*/
+#station-HS0-003 .panel,
 /*#station-HS0-004 .panel,*/
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
@@ -243,11 +243,14 @@ body{
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
-/*#station-HS0-001 .panel, 
+#station-HS0-001 .panel, 
 #station-HS0-002 .panel {
   width: 550px;
-} */
+  box-sizing: border-box;
+  margin-bottom:20px;
+}
 /*
 #station-HS0-003 .panel {
   width: 800px;
