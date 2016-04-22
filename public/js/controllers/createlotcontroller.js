@@ -226,7 +226,8 @@ angular.module('scanthisApp.createlotController', [])
   $scope.HighlightGreen = function(str){
     if(str===0  && $scope.current.addnew === true){
       setTimeout(function () {
-          var tr = angular.element(document.querySelector('#item-'+ str));  
+        console.log('#item-'+ str + ($scope.itemlistconfig.station_id || ''));
+          var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
           if (tr){
             var c = 'new_item';
             tr.addClass(c);
