@@ -5,16 +5,16 @@
   <input ng-hide="the_val" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown"> 
     <div ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||50)">
-      <div ng-mousedown="select($event, value)">
-        <b>{{value[config.searchfield]}}</b><span> - </span>
-        <span ng-repeat="field in config.fields" ng-switch="field">
+      <div >
+        <span ng-mousedown="select($event, value)"><b>{{value[config.searchfield]}}</b><span> - </span>
+        <span ng-repeat="field in config.fields" ng-switch="field" >
           <span ng-switch-when="timestamp">{{value.timestamp|stringtodate|date:'dd/MM/yy' }}</span>
           <span ng-switch-when="weight">{{value.weight|weightstring}}</span>
           <span ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
           <span ng-switch-when="to_from">{{value.customer || value.received_from}}</span>
           <span ng-switch-default >{{value[field]}}</span>
           <span ng-if="!$last">{{ config.delimeter || '|' }}</span>
-        </span>  
+        </span> </span> 
       </div> 
     </div>
   </div>
