@@ -238,7 +238,7 @@ angular.module('scanthisApp', [
     if(stn === 'weighstation' || stn === 'packingstation' || stn === 'receiveshipment' || stn === 'receivingprintlabel' || stn === 'scaninventorystation' || stn === "viewinventory" || stn === 'receivingprintlabel' || stn === 'reprint_label'){
       $scope.ZoomRight(600, true);
     }
-    if(stn === 'kanban' || stn === 'receiving_lots' || stn === 'shipmentdata'){
+    if(stn === 'kanban' || stn === 'supplier_setup' || stn === 'shipmentdata'){
       document.webkitExitFullscreen();
       $scope.ZoomRight(600, false);
     }

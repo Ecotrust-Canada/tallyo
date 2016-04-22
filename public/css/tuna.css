@@ -228,7 +228,7 @@ body{
 
 #station-AM2-ADM > .panel, 
 #station-AM2-011 .panel, 
-/*#station-HS0-003 .panel,*/
+#station-HS0-003 .panel,
 /*#station-HS0-004 .panel,*/
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
@@ -243,11 +243,14 @@ body{
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
-/*#station-HS0-001 .panel, 
+#station-HS0-001 .panel, 
 #station-HS0-002 .panel {
   width: 550px;
-} */
+  box-sizing: border-box;
+  margin-bottom:20px;
+}
 /*
 #station-HS0-003 .panel {
   width: 800px;
@@ -1459,6 +1462,7 @@ div[ng-view] {
 #station-HS0-ADM > .panel.white,
 #station-AM2-006 .panel.white,
 #station-AM2-001 .panel.white,
+#station-INV .panel.white
 .panel.white.weighstation_main,
 .panel.white.packingstation {
 
@@ -1479,6 +1483,7 @@ div[ng-view] {
   padding-top: 40px;
   min-width: 550px;
   margin-bottom: 24px;
+  box-sizing:border-box;
 }
 
 #station-AM2-006 .header,
@@ -1489,7 +1494,7 @@ div[ng-view] {
 #station-HS0-ADM > .panel.white {
   min-width: 550px;
 }
-
+#station-INV .panel.grey,
 #station-AM1-003 .panel.grey,
 #station-AM1-004 .panel.grey,
 #station-AM1-005 .panel.grey,
@@ -2846,6 +2851,30 @@ span.switch_option.active {
 
 
 #overwrite div {
+     width:100%;
+     height: 60vh;
+     margin: auto;
+     margin-right: 100px;
+     background-color: #C77D73;
+     border:5px solid red;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
+#del_box {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 30px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#del_box div {
      width:100%;
      height: 60vh;
      margin: auto;

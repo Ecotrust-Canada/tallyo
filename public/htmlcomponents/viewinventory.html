@@ -17,6 +17,45 @@
       <list itemlist="list.items"  config="totallistconfig" istotal="istotal"></list>
     </div>
   </div>
+
+
+  <div class="panel grey">
+    <div class="reprint_label">
+      <div class="select_header">
+        <span class="show_choices">Search For Boxes:</span>
+      </div> 
+      <div class="show_choices">
+        <div class="display_field">
+          <label for="filter_box_number">Case Number:</label><input ng-model="search.case_number" id="filter_case_number">
+        </div>
+        <div class="display_field">
+          <label for="filter_box_number">Box Number:</label><input ng-model="search.box_number" id="filter_box_number">
+        </div>
+        <div class="display_field">
+          <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
+                 ng-model="search.internal_lot_code" id="filter_internal_lot_code">
+        </div>
+        <div>
+          <input type="button" ng-click="ListFilteredItems(search.box_number, search.internal_lot_code, search.case_number)"  class="btn-blue"
+                 value="Search" id="reprint-search">
+        </div>
+      </div>
+      <div class="itemsframe entries">
+        <bufferedscrolllist itemlist="items"  config="invconfig" update-fn="DeleteInv(str)"></bufferedscrolllist>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="del_box">
+    <div>
+      <p>Permanently Remove Box?</p>
+      <button class="btn-blue" ng-click="enablekeypress();overlay('del_box')">Cancel</button>
+      <button class="btn-blue" ng-click="DelBox();enablekeypress();overlay('del_box')">Yes</button>
+    </div>
+  </div>
+
+
 </div>
 
 

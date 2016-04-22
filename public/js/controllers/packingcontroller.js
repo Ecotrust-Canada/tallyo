@@ -74,7 +74,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.MakeScan = function(id){
-    $scope.entry.scan = {"station_code": $scope.station_code,};
+    $scope.entry.scan = {"station_code": $scope.station_code};
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
@@ -214,6 +214,9 @@ angular.module('scanthisApp.packingController', [])
     $scope.to_delete = id;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
+    }
+    if ($scope.options.qrform && obj.shipping_unit_number !== null){
+      toastr.error('cannot delete - box shipped');
     }else{
       $scope.overlay('delete');
     }
@@ -430,7 +433,7 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('please scan a code');
     }
     else{
-      var rawArray = $scope.raw.string.split("/");
+      var rawArray = $scope.raw.string.toUpperCase().split("/");
       var id = rawArray[0].toUpperCase();
 
       var func = function(response){
@@ -463,7 +466,7 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-      //$scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.itemchange = !$scope.current.itemchange;
       toastr.success('added');
       if ($scope.options.secondstation){
         $scope.SecondScan();
@@ -478,6 +481,87 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+})
+
+
+.controller('AddInventoryTotalCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
+  $scope.LoadTotals = function(){
+    var table;
+    var fields;
+    if ($scope.options.total_by === 'lot'){
+      table = 'today_total_lot';
+      fields = ["internal_lot_code"];
+    }
+    else if($scope.options.total_by === 'ship'){
+      table = 'today_total_ship';
+      fields = ["ship_har"];
+    }
+
+    var func = function(response){
+      $scope.list.items = response.data;
+      $scope.totallistconfig = JSON.parse(JSON.stringify($scope.boxconfig)); 
+      $scope.totallistconfig.fields = fields.concat($scope.totallistconfig.fields);
+      $scope.LoadRecent();
+    };
+    var query = '?station_code=eq.' + $scope.station_code;
+    DatabaseServices.GetEntries(table, func, query);
+  };
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    fields: [ "boxes"], 
+    order: 'grade'
+  };
+
+  $scope.$watch('current.itemchange', function() {   
+    $scope.LoadTotals();
+  });
+
+  $scope.LoadRecent = function(){
+    var func = function(response){
+      $scope.list.included = response.data;
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&order=timestamp.desc';
+    DatabaseServices.GetEntries('box_with_info', func, query, 'twenty');
+  };
+
+
+  $scope.PatchNull = function(){
+    var itemid = $scope.to_delete;
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      if ($scope.options.secondstation){
+        console.log('secondstation');
+        $scope.RemoveSecondScan(itemid, $scope.options.secondstation);
+      }else{
+        $scope.current.itemchange = !$scope.current.itemchange;
+        $scope.to_delete = null;
+      }     
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+  $scope.RemoveSecondScan = function(itemid, stn){
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + stn;
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete = null;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+
+  $scope.PatchObjRemoveContainer = function(obj){
+    var id = obj.box_number;
+    $scope.to_delete = id;
+    if (($scope.options.total_by === 'ship' && obj.lot_number !== null) || ($scope.options.total_by === 'lot' && obj.shipping_unit_number !== null)){
+      toastr.error('cannot delete - box in further processing');
+    }else{
+      $scope.overlay('delete');
+    }
+    
   };
 
 })
