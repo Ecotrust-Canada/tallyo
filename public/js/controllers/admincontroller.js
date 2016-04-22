@@ -259,6 +259,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.$watch('stn.index', function() {
     if ($scope.stn.index !== undefined && $scope.stn.index !== null){    
     $scope.ListBoxes();
+    $scope.ListAllItems();
     }
   });
 
