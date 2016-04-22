@@ -261,6 +261,61 @@ angular.module('scanthisApp.AdminController', [])
     $scope.ListBoxes();
     }
   });
+
+
+  $scope.invconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Case #", "Box #", "Lot", ""], 
+    fields: ["case_number", "box_number", "internal_lot_code"], 
+    order: '-timestamp',
+    button: 'remove'
+  };
+
+
+  $scope.ListAllItems = function(){
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0&order=timestamp.desc';
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
+  };
+  $scope.ListAllItems();
+
+  $scope.DeleteInv = function(str){
+    $scope.to_delete = str.box_number;
+    $scope.overlay('del_box');
+  };
+
+  $scope.DelBox = function(){
+    var scan = {"station_code": 'deleted', 'box_number': $scope.to_delete};
+    var func = function(response){
+      $scope.to_delete=null;
+      $scope.search = {};
+      $scope.ListAllItems();
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', scan, func);
+
+  };
+
+  $scope.ListFilteredItems = function(box_number, int_lot_code, case_number){
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station ;
+    if (box_number !== undefined && box_number !== null && box_number !== ''){
+      query += '&box_number=like.*' + box_number.toUpperCase() + '*';
+    }
+    if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
+      query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    if (case_number !== undefined && case_number !== null && case_number !== ''){
+      query += '&case_number=like.*' + case_number.toUpperCase() + '*';
+    }
+    query += '&order=timestamp.desc';
+    //console.log(query);
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
+  };
 })
 
 

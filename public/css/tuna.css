@@ -2857,6 +2857,30 @@ span.switch_option.active {
      text-align:center;
 }
 
+#del_box {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 30px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#del_box div {
+     width:100%;
+     height: 60vh;
+     margin: auto;
+     margin-right: 100px;
+     background-color: #C77D73;
+     border:5px solid red;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
 #delete {
      visibility: hidden;
      position: fixed;
