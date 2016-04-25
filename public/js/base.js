@@ -46,6 +46,17 @@ angular.module('scanthisApp', [
   };
   $scope.stations = stationlist;
   $scope.terminals = terminals;
+
+  $scope.unFocus = function(){
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      document.activeElement.blur();
+      var el = document.getElementById('to_focus');
+      if (el){
+        //alert('hmm');
+        el.focus();
+      }
+    }
+  };
 })
 
 .controller('RoutingCtrl', function($scope, $routeParams, $rootScope) {
