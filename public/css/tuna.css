@@ -894,12 +894,12 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column .lot_label span.expand-control {
   display: block;
   position: absolute;
-  width: 18px;
-  height: 10px;
+  width: 48px;
+  height: 40px;
   right: 0;
   top: 18px;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
 }
 
 #admin_manage_lots table tr .lot_column .lot_label span.expand-control.opened {
