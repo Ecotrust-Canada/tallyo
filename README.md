@@ -65,7 +65,7 @@ sudo service docker start
 sudo groupadd docker
 sudo usermod -aG docker [linux user]
 ```
-From the main Tally-O project folder, navigate to the deploy subfolder, then build the docker image using the command:
+Navigate to scanthis/deploy, then build the docker image using the command:
 ```
 ./postgrest_build.sh
 ```
