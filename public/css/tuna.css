@@ -356,6 +356,7 @@ body{
 .itemsframe table tr:last-child td {
   border-bottom: none;
 }
+/
 .itemtotals {
   padding: 12px 0 0 0;
 }
@@ -1486,6 +1487,17 @@ div[ng-view] {
   box-sizing:border-box;
 }
 
+#station-INV .grey .reprint_label .select_header {
+  margin: 10px 10px;
+}
+#station-INV .grey .reprint_label .show_choices .btn-blue {
+  margin: 0 0 10px 160px;
+  color: #e9ffff;
+  font-size: 18px;
+  font-family: 'Lato-Bold';
+  width: 350px;
+}
+
 #station-AM2-006 .header,
 #station-HS0-ADM .header {
   margin-bottom: 10px;
@@ -2046,6 +2058,11 @@ input[name^=weight]::after {
   top: 0px;
   display: block;
   position:relative;
+}
+
+#station-AM2-001 .grey span.title {
+  padding: 10px 10px 5px 10px;
+  display: inline-block;
 }
 
 .pictogram_btns > span {

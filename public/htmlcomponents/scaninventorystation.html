@@ -26,13 +26,14 @@
 <div class="panel grey not" ng-controller="AddInventoryTotalCtrl">
   
   <div class="itemtotals">
-  Today's Totals:
+    <span class="title">Today's Totals:</span>
     <list itemlist="list.items"  config="totallistconfig" istotal="true"></list>
   </div>
 
-  Recent Scans:
+  <span class="title">Recent Scans:</span>
   <div class="itemsframe entries">
-    <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
+    <bufferedscrolllist itemlist="list.included" config="itemlistconfig" 
+     update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
   </div>
 
 
