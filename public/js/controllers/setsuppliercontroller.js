@@ -321,6 +321,10 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.current.collectionid = null;
     $rootScope.$broadcast('change-lot');
   };
+
+
+
+  $scope.formchange=true;
 })
 
 
