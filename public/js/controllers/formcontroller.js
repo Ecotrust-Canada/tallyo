@@ -3,7 +3,7 @@
 angular.module('scanthisApp.formController', [])
 
 //controller attached to entryform directive
-.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
+.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout) {
   
   //display scale buttons
   if ($scope.config.startpolling){
@@ -35,7 +35,8 @@ angular.module('scanthisApp.formController', [])
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
-        $scope.pollFn({field: $scope.config.startpolling});
+        //$scope.pollFn({field: $scope.config.startpolling});
+        $timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
       }
       else{
         var scales = $scope.formarray.filter(function(el){

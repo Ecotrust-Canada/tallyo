@@ -46,15 +46,14 @@ angular.module('scanthisApp.itemController', [])
           $scope.scale[fieldName] = response.data.value.toFixed(3);
         },
         function errorCallback(response) {
-          //$scope.scale[fieldName] = 1.11;
-          toastr.error('cannot connect to scale');
-          //$scope.stopPolling();
-
-
+          //alert('once');
+                   
+          $scope.stopPolling();
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if(thediv){
-           $timeout(function(){thediv.click();}, 0);
+           $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
           }
+
           
         }
       );
