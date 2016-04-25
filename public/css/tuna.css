@@ -1629,6 +1629,8 @@ div[ng-view] {
   padding: 0 15px 20px 15px;
 }
 
+
+
 .weighstation_main .form_row,
 .editform .form_row {
   padding-bottom: 12px;
@@ -2956,4 +2958,27 @@ span.switch_option.active {
 md-datepicker {
   margin-left: 20px;
   margin-right: 20px;
+}
+
+
+.inset_form{
+  margin-left: 5px;
+  border-left: solid #005874 2px;
+}
+
+.inset_form .button{
+  margin-left: 15px;
+}
+
+.marg_left{
+  margin-left: 15px;
+}
+
+.marg_left .dropdown-container{
+  width: 450px;
+}
+
+.hr_marg{
+  margin-top:21px;
+  margin-bottom:10px;
 }

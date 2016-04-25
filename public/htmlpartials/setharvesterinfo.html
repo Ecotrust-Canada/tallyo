@@ -1,17 +1,20 @@
-<div ng-controller="SetOriginCtrl">
+<div ng-controller="SetOriginCtrl" class="set_harvester">
 
   <div  class="select_object">
     <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.harvester=null;addinfo=!addinfo">
        <span class="show_choices">Set Fishing Info</span>
     </div> 
-    <div class="show_choices" ng-show="addinfo">
-      <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform><br>
-      <input-dropdown thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown>
-    </div>  
+    <div class="inset_form"> 
+      <div class="show_choices" ng-show="addinfo">
+        <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+        <div class="marg_left"><input-dropdown thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+      </div>
+      <display ng-if="current.harvester" settings="settings" ng-hide="addinfo" obj="current.harvester" config="collection2display"></display>  
+    </div>
   </div>
  
-  <display settings="settings" ng-hide="addinfo" obj="current.harvester" config="collection2display"></display>
+  
 
   <!-- button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo" class="btn-blue">Edit</button -->
 </div>
-<hr>
+<div class="hr_marg"><hr></div>
