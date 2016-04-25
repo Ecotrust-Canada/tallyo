@@ -1345,6 +1345,11 @@ div[ng-view] {
   text-transform: uppercase;
   font-family: 'Lato-Bold';
 }
+.fieldsetrepeat .select_header {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
 #receiveshipment #form-14 .form_row {
   padding-bottom: 15px;
 }
