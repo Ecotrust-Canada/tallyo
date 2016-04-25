@@ -65,11 +65,9 @@ sudo service docker start
 sudo groupadd docker
 sudo usermod -aG docker [linux user]
 ```
-clone docker image files and navigate to correct folder
-
-To build the docker image:
+From the main Tally-O project folder, navigate to the deploy subfolder, then build the docker image using the command:
 ```
-./run.sh
+./postgrest_build.sh
 ```
 Then run a docker image with options.
 fill in docker image name, port to run database on, ip address of server, database name and password for the postgres user:
