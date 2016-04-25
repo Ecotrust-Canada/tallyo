@@ -2601,8 +2601,7 @@ nav #menu li {
   margin: 0;
 }
 
-nav #menu li.active > span > a,
-nav #menu li.active > span {
+nav #menu li.active > a {
   opacity: 0.5;
 }
 
