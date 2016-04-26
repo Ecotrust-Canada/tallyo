@@ -24,7 +24,6 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.startPolling = function(fieldName) {
     //stop polling scale
-
     $scope.stopPolling();
     // if toggle_state command is sent flip scale state and start polling
     if (fieldName === 'toggle_state') {
@@ -41,13 +40,15 @@ angular.module('scanthisApp.itemController', [])
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
+        timeout: 400
       }).then(
         function successCallback(response) {
           $scope.scale[fieldName] = response.data.value.toFixed(3);
         },
         function errorCallback(response) {
           //alert('once');
-                   
+
+    
           $scope.stopPolling();
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if(thediv){
