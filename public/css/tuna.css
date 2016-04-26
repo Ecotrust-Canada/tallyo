@@ -2987,3 +2987,12 @@ md-datepicker {
   margin-top:21px;
   margin-bottom:10px;
 }
+
+.scroll_right{
+  margin-right:40px;
+}
+
+.scroll_right:hover{
+  background-color: #C8CBCC;
+}
+
