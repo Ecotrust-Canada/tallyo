@@ -1495,6 +1495,7 @@ div[ng-view] {
 #station-INV .grey .reprint_label .select_header {
   margin: 10px 10px;
 }
+.reprint_label .show_choices .btn-blue,
 #station-INV .grey .reprint_label .show_choices .btn-blue {
   margin: 0 0 10px 160px;
   color: #e9ffff;
