@@ -8,6 +8,7 @@ angular.module('scanthisApp.AdminController', [])
   //$scope.limit = 10;
   $scope.stn = {};
   $scope.stn.index= 0;
+  
 
   $scope.ListShipments = function(station_code){
     $http.get('/server_time').then(function successCallback(response) {
@@ -61,22 +62,28 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.ListHarvesters();
   
-  $scope.$watch('stn.index', function() {
-    if ($scope.stn.index !== undefined && $scope.stn.index !== null){
-      $scope.current.shipment = null;
-      $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
-      var station = $scope.sumStations[$scope.stn.index];
-      if (station.send_field === 'customer'){
-        $scope.sort_by = 'lot';
-        $scope.sort_id = 'internal_lot_code';
-      }
-      else if (station.send_field === 'received_from'){
-        $scope.sort_by = 'harvester';
-        $scope.sort_id = 'internal_lot_code';
-      }
-      $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
+  $scope.changeStn = function(index) {
+    var el = document.getElementById('ship' + index);
+    if (el){
+      //console.log(el);
     }
-  });
+    //console.log('ship'+ index);
+    $scope.stn.index = index;
+    $scope.current.shipment = null;
+    $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
+    var station = $scope.sumStations[$scope.stn.index];
+    if (station.send_field === 'customer'){
+      $scope.sort_by = 'lot';
+      $scope.sort_id = 'internal_lot_code';
+    }
+    else if (station.send_field === 'received_from'){
+      $scope.sort_by = 'harvester';
+      $scope.sort_id = 'internal_lot_code';
+    }
+    $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
+
+  };
+  $scope.changeStn($scope.stn.index);
 
   $scope.Edit = function(ship_obj){
     $scope.current.collectionid = ship_obj.shipping_unit_number;
@@ -256,12 +263,7 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
 
-  $scope.$watch('stn.index', function() {
-    if ($scope.stn.index !== undefined && $scope.stn.index !== null){    
-    $scope.ListBoxes();
-    $scope.ListAllItems();
-    }
-  });
+
 
 
   $scope.invconfig = 
@@ -317,6 +319,14 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
   };
+
+
+  $scope.changeStn = function(index) {
+    $scope.stn.index = index; 
+    $scope.ListBoxes();
+    $scope.ListAllItems();
+  };
+  $scope.changeStn($scope.stn.index);
 })
 
 

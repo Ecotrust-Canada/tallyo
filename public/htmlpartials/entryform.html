@@ -46,10 +46,10 @@
 
           <!--radio-->
           <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{config.id}}-{{row.fieldname}}" 
-            class="toggle-group-container" ng-class="withChecked(row.fieldname)">
-            <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-class="isChecked(row.fieldname, option)"><input  
+            class="toggle-group-container" ng-class="{'rbgroup-unset': !form[row.fieldname]}">
+            <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-click="DoSomething(row.fieldname + $index + config.station_id, row, $index)"><input  
                    name="{{row.fieldname}}" type="radio" 
-                   id="{{row.fieldname + $index + config.station_id}}" value={{option.val}} ng-model="form[row.fieldname]" 
+                   id="{{row.fieldname + $index + config.station_id}}" value={{option.val}} ng-model="form[row.fieldname]"
                    ng-required="{{row.required || false}}"><span>{{option.label}}</span></label>
           </span>
           <span ng-if="row.type === 'radio' && row.value.length==2" id="radio-{{row.fieldname}}" >

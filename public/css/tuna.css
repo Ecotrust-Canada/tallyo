@@ -2221,7 +2221,7 @@ input[name^=weight]::after {
   -webkit-appearance: none;
   display: inline-block;
   position: absolute;
-  width: 100%;
+  /*width: 100%;*/
   height: 100%;
   background: transparent;
   z-index: 2;

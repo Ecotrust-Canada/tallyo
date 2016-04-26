@@ -219,11 +219,14 @@ angular.module('scanthisApp.formController', [])
     $scope.FormData($scope.config.dboptions);
   }
 
-  $scope.DoSomething = function(something){
-    console.log('something');
+  $scope.DoSomething = function(something, row, index){
+    //alert(something);
+    document.getElementById(something).checked = true;
+    $scope.form[row.fieldname] = row.value[index].val;
   };
 
   $scope.toggleRadioValue = function(frow){
+      console.log('called');
       var fieldname = frow.fieldname;
       //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
       var checkInput = document.getElementById('formswitch-'+fieldname);
@@ -234,7 +237,7 @@ angular.module('scanthisApp.formController', [])
       }, 50);
   };
 
-  $scope.isChecked = function(fieldname, option){
+  /*$scope.isChecked = function(fieldname, option){
       if (!$scope.form[fieldname]) return 'rb-default';
       if ($scope.form[fieldname] == option.val) return 'rb-checked';
       return 'rb-unset';
@@ -243,7 +246,7 @@ angular.module('scanthisApp.formController', [])
   $scope.withChecked = function(fieldname){
       if (!$scope.form[fieldname]) return 'rbgroup-unset';
       return null;
-  };
+  };*/
 
 })
 
