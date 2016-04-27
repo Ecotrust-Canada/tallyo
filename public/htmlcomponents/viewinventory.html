@@ -16,6 +16,10 @@
     <div class="itemtotals">
       <list itemlist="list.items"  config="totallistconfig" istotal="istotal"></list>
     </div>
+    <div class="marg">
+      <span class="totals_caption">CSV Download: </span>
+      <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>
+    </div>
   </div>
 
 
@@ -40,6 +44,11 @@
                  value="Search" id="reprint-search">
         </div>
       </div>
+
+
+      
+
+
       <div class="itemsframe entries">
         <bufferedscrolllist itemlist="items"  config="invconfig" update-fn="DeleteInv(str)"></bufferedscrolllist>
       </div>
