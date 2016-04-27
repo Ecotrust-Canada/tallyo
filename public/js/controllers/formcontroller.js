@@ -266,7 +266,6 @@ angular.module('scanthisApp.formController', [])
   
   $scope.entry[table] = {};
   $scope.formchange = true;
-  $scope.current.edit_box = false;
 
   //response functions
   var AddtoList = function(thedata){
