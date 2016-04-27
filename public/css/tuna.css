@@ -1686,10 +1686,12 @@ div[ng-view] {
 
 
 
-#create_box_form #form-0 {
+#create_box_form #form-0,
+#create_box_form #form-24{
   width: 506px;
 }
-#create_box_form #form-0 .form_label {
+#create_box_form #form-0 .form_label,
+#create_box_form #form-24 .form_label{
   width: 170px;
 }
 
@@ -1724,6 +1726,7 @@ div[ng-view] {
   width: 240px;
 }
 
+#create_box_form #form-24 .field input[type=text],
 #create_box_form #form-0 .field input[type=text],
 #form-2 #form-0 .field input[type=text] {
   width: 204px;
@@ -1737,7 +1740,8 @@ div[ng-view] {
 #form-10 .field input[type=text] {
   width: 314px;
 }
-#create_box_form #form-0 .btn-orange {
+#create_box_form #form-0 .btn-orange,
+#create_box_form #form-24 .btn-orange {
   height: 44px;
   width: 206px;
   padding: 6px 15px;
@@ -1761,7 +1765,8 @@ div[ng-view] {
   position: absolute;
 }
 
-#create_box_form #form-0 .form_buttons {
+#create_box_form #form-0 .form_buttons,
+#create_box_form #form-24 .form_buttons {
   margin-top: 16px;
 }
 
@@ -1836,6 +1841,7 @@ div[ng-view] {
 }
 
 #form-0 .form_label label,
+#form-24 .form_label label,
 #form-20 .form_label label,
 #form-23 .form_label label,
 .editform .form_label label,
@@ -1845,7 +1851,8 @@ div[ng-view] {
   text-align: right;
 }
 
-#form-0 .field, 
+#form-0 .field,
+#form-24 .field, 
 .editform .field, 
 #form-5 .field, 
 #form-10 .field, 
@@ -1858,7 +1865,8 @@ div[ng-view] {
 #form-3 .field {
   width: 260px;
 }
-#create_box_form #form-0 .field {
+#create_box_form #form-0 .field,
+#create_box_form #form-24 .field {
   width: 200px;
 }
 #create_box_form #form-4 .field {
@@ -2083,6 +2091,9 @@ input[name^=weight]::after {
 .pictogram_btns > span.clear {
   background-image: url(/images/remove_icon.svg);
 }
+.pictogram_btns > span.edit {
+  background-image: url(/images/edit_icon.svg);
+}
 .pictogram_btns > span.reprint {
   background-image: url(/images/print_icon.svg);
   padding-left: 40px;
@@ -2175,10 +2186,12 @@ input[name^=weight]::after {
   width: 360px;
 }
 #radio-0-grade,
+#radio-24-grade,
 #radio-9-grade {
   width: 316px;
 }
-#radio-0-size {
+#radio-0-size,
+#radio-24-size {
   width: 315px;
 }
 #radio-19-grade,
@@ -2190,13 +2203,15 @@ input[name^=weight]::after {
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
+#radio-24-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
 }
-#radio-0-size.toggle-group-container label {
+#radio-0-size.toggle-group-container label,
+#radio-24-size.toggle-group-container label {
   width: 105px;
 }
 
@@ -2292,11 +2307,13 @@ input[name^=weight]::after {
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
 #radio-0-grade.toggle-group-container input:checked + span,
+#radio-24-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
-#radio-0-size.toggle-group-container input:checked + span { 
+#radio-0-size.toggle-group-container input:checked + span,
+#radio-24-size.toggle-group-container input:checked + span { 
   width:105px;
 }
 

@@ -15,6 +15,9 @@ angular.module('scanthisApp.createlotController', [])
     else{
       query = '?station_code=eq.' + $scope.station_code;
     }
+    if ($scope.options.incoming){
+      query += "&shipping_unit_in=is.null";
+    }
     var func = function(response){
       $scope.list.collection = response.data;
     };

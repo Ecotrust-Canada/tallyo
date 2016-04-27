@@ -8,6 +8,7 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.input = {};
   $scope.current.addnew = false;
+  $scope.current.select_change = false;
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -61,14 +62,14 @@ angular.module('scanthisApp.packingController', [])
       'B': 'AA',
       'C': 'A',
       'D': 'D'
-    }
+    };
     loin_grade = conv[loin_grade];
     if (loin_grade !== box_grade){
       $scope.overlay('mixgrade');
     }else{
       $scope.PatchObjWithContainer();
     }
-  }
+  };
 
   $scope.clearField = function(){
     $scope.input.code = null;
@@ -148,12 +149,13 @@ angular.module('scanthisApp.packingController', [])
     }
   });
 
-  $scope.enablekeypress = function(){
-    var enabled = function(event) {
-        return true;
-    };
-    document.onkeydown = enabled;
+  $scope.showEdit = function(){
+    $scope.current.edit_box= !$scope.current.edit_box;
   };
+
+
+
+
 
 
 

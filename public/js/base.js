@@ -304,6 +304,13 @@ angular.module('scanthisApp', [
     el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
   };
 
+  $scope.enablekeypress = function(){
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
+  };
+
 
   $scope.ZoomRight = function(width, fullscreen){
 

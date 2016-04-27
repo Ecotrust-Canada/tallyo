@@ -266,6 +266,7 @@ angular.module('scanthisApp.formController', [])
   
   $scope.entry[table] = {};
   $scope.formchange = true;
+  $scope.current.edit_box = false;
 
   //response functions
   var AddtoList = function(thedata){
@@ -353,6 +354,33 @@ angular.module('scanthisApp.formController', [])
       DatabaseServices.GetEntries('harvester', func, query);
     }
   };
+
+
+  $scope.SubmitEdit = function(form){
+    var table = $scope.station_info.collectiontable;
+    var pk = $scope.station_info.collectionid;
+    var id = $scope.current.collectionid;
+    var querystring = '?' + pk + '=eq.' + id;
+    var patch = form;
+    var func = function(response){
+      for (var key in patch){
+        $scope.current[table][key] = response.data[0][key];
+        $scope.current.edit_box = false;
+        $scope.form = {};
+      }
+      $scope.formchange = !$scope.formchange;
+    };
+    DatabaseServices.PatchEntry(table, patch, querystring, func);
+
+  };
+
+  $scope.$watch('current.select_change', function(newValue, oldValue) {
+    if ($scope.current.select_change !== undefined){
+      $scope.formchange=!$scope.formchange;
+    }
+  });
+
+
 
 })
 
