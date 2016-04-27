@@ -226,7 +226,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.HighlightGreen = function(str){
     if(str===0  && $scope.current.addnew === true){
       //setTimeout(function () {
-        console.log('#item-'+ str + ($scope.itemlistconfig.station_id || ''));
+        //console.log('#item-'+ str + ($scope.itemlistconfig.station_id || ''));
           var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
           if (tr){
             var c = 'new_item';
@@ -308,6 +308,7 @@ angular.module('scanthisApp.createlotController', [])
     //console.log(query);
     var func = function(response){
       $scope.items = response.data;
+      $scope.search = {};
     };
     DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
