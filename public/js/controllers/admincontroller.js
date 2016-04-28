@@ -109,7 +109,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
     if (stn.csv_1 && !stn.csv_2){
-      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
+      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);
 
     }
     else if (stn.csv_1 && stn.csv_2){

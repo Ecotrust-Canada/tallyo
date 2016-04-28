@@ -152,7 +152,11 @@ angular.module('scanthisApp.formController', [])
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
       }
-      if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
+      else if ($scope.form[row.fieldname] === ''){
+        form_error = true;
+        toastr.error('Please set ' + row.title.toLowerCase());
+      }
+      else if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
         var req_error = $scope.theform[row.fieldname].$error.required;
         var neg_error = $scope.theform[row.fieldname].$error.negative;
         if (neg_error === true){
@@ -160,7 +164,7 @@ angular.module('scanthisApp.formController', [])
           toastr.error('errors in form');
         }
       }
-      if (row.scale){
+      else if (row.scale){
         if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
           //toastr.error('Please lock weight');
           form_error = true;
