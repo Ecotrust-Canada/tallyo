@@ -316,6 +316,7 @@ angular.module('scanthisApp.AdminController', [])
     //console.log(query);
     var func = function(response){
       $scope.items = response.data;
+      $scope.search = {};
     };
     DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
   };

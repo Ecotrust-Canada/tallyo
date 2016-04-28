@@ -1433,7 +1433,9 @@ div[ng-view] {
   font-size: 12px;
 }*/
 #receiveshipment .btn-blue {
-  float: right;
+  /*float: right;*/
+  margin-top: 15px;
+  margin-left:350px;
 }
 #receiveshipment .display_row .field_val/*,
 #station-HS0-011 #current_lot .field_val */ {
