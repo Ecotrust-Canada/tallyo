@@ -214,8 +214,8 @@ angular.module('scanthisApp.packingController', [])
   //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(obj){
-    var id = obj[$scope.station_info.itemid];
-    $scope.to_delete = id;
+    //var id = obj[$scope.station_info.itemid];
+    $scope.to_delete = obj;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
     }
@@ -228,7 +228,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.PatchNull = function(){
-    var id = $scope.to_delete;
+    var id = $scope.to_delete[$scope.station_info.itemid];
     var func = function(response){     
       $scope.RemoveScan(id);
     };
