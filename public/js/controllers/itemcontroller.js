@@ -219,7 +219,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.RemoveItem = function(id){
     $scope.to_delete = id;
-    $scope.overlay('delete');
+    $scope.overlay('delete' + $scope.station_code);
   };
 
   $scope.DeleteItem = function(){
