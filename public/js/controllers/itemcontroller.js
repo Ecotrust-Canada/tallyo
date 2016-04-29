@@ -46,7 +46,12 @@ angular.module('scanthisApp.itemController', [])
         timeout: 400
       }).then(
         function successCallback(response) {
-          $scope.scale[fieldName] = response.data.value.toFixed(3);
+          if ($scope.options.truncate){
+            $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
+          }
+          else{
+            $scope.scale[fieldName] = response.data.value.toFixed(3);
+          }
         },
         function errorCallback(response) {
           //alert('once');

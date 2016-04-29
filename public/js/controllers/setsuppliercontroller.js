@@ -324,7 +324,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
   $scope.changelot = function(){
-    console.log('called');
     $scope.current.lot = null;
     $scope.current.collectionid = null;
     $scope.form.state = 'Dirty';
