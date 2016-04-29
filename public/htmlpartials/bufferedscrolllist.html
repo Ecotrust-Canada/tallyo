@@ -14,6 +14,7 @@
           <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number'] || item.received_from}}</span>
           <span ng-switch-when="pieces">{{item[name]}} pcs</span>
           <span ng-switch-when="boxes">{{item[name]}} boxes</span>
+          <span ng-switch-when="loin_num">{{item.loin_number.substring(6,10)}}</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
         <td ng-if="config.button2  && config.arg" ng-click="ResetLimit();secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
