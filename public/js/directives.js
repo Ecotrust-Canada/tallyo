@@ -260,17 +260,14 @@ angular.module('scanthisApp.directives', [])
         require: 'ngModel',
   
         link: function (scope, elem, attrs, ctrl) {
-            console.log(attrs);
             var dec = attrs.autodecimal;
             var num = Math.pow(10, dec);
-            //console.log(num);
             if (!ctrl) return;
 
             ctrl.$formatters.unshift(function (a) {
                 return $filter('number')(ctrl.$modelValue);
             });
             ctrl.$parsers.unshift(function (viewValue) {
-              //console.log(viewValue);
                 var plainNumber = viewValue.replace(/[^\d|\-+]/g, '');
                 elem.val($filter('number')(plainNumber/num,dec));
                 return plainNumber/num;
