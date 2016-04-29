@@ -2093,6 +2093,9 @@ input[name^=weight]::after {
 .pictogram_btns > span.clear {
   background-image: url(/images/remove_icon.svg);
 }
+.pictogram_btns > span.print_switch {
+  background-image: url(/images/print_icon.svg);
+}
 .pictogram_btns > span.edit {
   background-image: url(/images/edit_icon.svg);
 }
@@ -3013,5 +3016,10 @@ md-datepicker {
 
 .scroll_right:hover{
   background-color: #C8CBCC;
+}
+.print_check{
+  position: relative;
+  margin-top: -20px;
+  margin-bottom: 40px;
 }
 
