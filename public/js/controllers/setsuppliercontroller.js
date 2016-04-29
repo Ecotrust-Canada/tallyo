@@ -58,7 +58,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
 })
 
-.controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope) {
+.controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
   //for recent lots drop down
 
   $scope.lotselected = 'no selected';
@@ -285,23 +285,30 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.GenInternalLot = function(form){
+    if (!form.harvester_code){
+      toastr.error('set harvester');
+    }
+    else if (!form.state){
+      toastr.error('set state');
+    }
+    else{
+      $http.get('/server_time').then(function successCallback(response) {
+        var date = response.data.timestamp;
+        var now = moment(date).utcOffset(response.data.timezone).format();
+        var day = moment(date).utcOffset(response.data.timezone).format('DD');
+        var date_group = DateGroup(day);
+        var hars = $scope.list.harvester.filter(function(el){
+          return el.harvester_code === form.harvester_code;
+        });
+        var sup_code = hars[0].supplier_group;
+        var loin_code = LoinCode(form.state);
+        var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
+        var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
+        $scope.SetCurrentHarvester(form.harvester_code, internal_lot_code, now);
+      }, function errorCallback(response) {
 
-    $http.get('/server_time').then(function successCallback(response) {
-      var date = response.data.timestamp;
-      var now = moment(date).utcOffset(response.data.timezone).format();
-      var day = moment(date).utcOffset(response.data.timezone).format('DD');
-      var date_group = DateGroup(day);
-      var hars = $scope.list.harvester.filter(function(el){
-        return el.harvester_code === form.harvester_code;
       });
-      var sup_code = hars[0].supplier_group;
-      var loin_code = LoinCode(form.state);
-      var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
-      var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
-      $scope.SetCurrentHarvester(form.harvester_code, internal_lot_code, now);
-    }, function errorCallback(response) {
-
-    });
+    }
 
   };
 
@@ -312,13 +319,16 @@ angular.module('scanthisApp.setsupplierController', [])
       $scope.$apply(function () {
         $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';
       });
-    }, 50);
+    }, 0);
   };
 
 
   $scope.changelot = function(){
+    console.log('called');
     $scope.current.lot = null;
     $scope.current.collectionid = null;
+    $scope.form.state = 'Dirty';
+    $scope.form.harvester_code = null;
     $rootScope.$broadcast('change-lot');
   };
 
