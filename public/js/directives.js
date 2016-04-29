@@ -166,6 +166,20 @@ angular.module('scanthisApp.directives', [])
                 }
                 
             };
+            scope.pcselect = function(e, value) {
+              if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))) {
+                scope.the_val = value;
+                if (scope.config.arg){
+                  scope.onSelect({$event: e, value: value[scope.config.arg]});
+                }
+                else{
+                  scope.onSelect({$event: e, value: value});
+                }
+              }  
+            };
+
+
+
             scope.setnull = function(){
               scope.the_val = null;
             };
