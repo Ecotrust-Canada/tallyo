@@ -1983,7 +1983,7 @@ div[ng-view] {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 174px;
+  width: 225px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -2031,11 +2031,12 @@ input[name^=weight]:focus,
 }
 
 .scale-weight-set {
-  width: 126px;
+  width: 97px;
   height: 44px;
   box-sizing: border-box;
   margin-left: -14px;
 }
+
 /*
 input[name^=weight]::after {
   content: url(/images/weight_control_connector.svg);
@@ -2095,6 +2096,14 @@ input[name^=weight]::after {
 }
 .pictogram_btns > span.print_switch {
   background-image: url(/images/print_icon.svg);
+}
+.pictogram_btns > span.red_text {
+  color: red;
+  font-weight: bold;
+}
+.pictogram_btns > span.green_text {
+  color: green;
+  font-weight: bold;
 }
 .pictogram_btns > span.edit {
   background-image: url(/images/edit_icon.svg);

@@ -39,8 +39,8 @@
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
                 formdisabled="formdisabled" submit-fn="Submit(form)"></entryform>
       <div ng-if="options.print_switch" class="print_check"><div class="pictogram_btns">
-        <span ng-if="current.to_print===true" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch">Turn Off Printing</span>
-        <span ng-if="current.to_print===false" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch">Turn On Printing</span>
+        <span ng-if="current.to_print===true" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch green_text">ON</span>
+        <span ng-if="current.to_print===false" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch red_text">OFF</span>
       </div></div>
   </div>
 
