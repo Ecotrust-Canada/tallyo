@@ -35,7 +35,7 @@
             <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'">
               <input 
                 ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text" autocomplete="off"
-                ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" 
+                ng-model="scale[row.fieldname]" ng-focus="pollFn({field: 'toggle_state'});scalefn()" 
                 ng-required="{{row.required || false}}" negative>
             </span>
             <span ng-if="!row.scale || row.scale==='off'">

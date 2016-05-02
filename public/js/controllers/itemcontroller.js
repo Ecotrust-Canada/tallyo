@@ -22,7 +22,6 @@ angular.module('scanthisApp.itemController', [])
   $scope.current.addnew = false;
 
   $scope.PrintSwitch = function(){
-    console.log('called');
     $http.get('/toggle_printer/' + $scope.station_code).then(function successCallback(response) {
       $scope.current.to_print = response.data;      
     }, function errorCallback(response) {
@@ -30,7 +29,6 @@ angular.module('scanthisApp.itemController', [])
     });
     
   };
-  
 
 
   $scope.startPolling = function(fieldName) {
@@ -40,6 +38,10 @@ angular.module('scanthisApp.itemController', [])
     if (fieldName === 'toggle_state') {
       $scope.scaleon = !$scope.scaleon;
       $scope.startPolling($scope.scanform.startpolling);
+      return;
+    }
+    if (fieldName === 'set_off'){
+      $scope.scaleon = false;
       return;
     }
     // if no scale url, or stop command is set, or scale is 'off' exit

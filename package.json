@@ -36,6 +36,7 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "karma-jasmine": "^0.3.7",
+    "pg-promise": "^4.0.4",
     "serve-favicon": "^2.3.0"
   }
 }

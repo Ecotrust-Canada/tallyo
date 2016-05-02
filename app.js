@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var TraceabilityProvider = require('./lib/traceability_provider');
 var configpath = './public/js/configs/'+(process.argv[2] || 'app_config');
+var db_name = process.argv[3];
 var config = require(configpath+"_local");
 
 app.set('views', './public');
@@ -15,6 +16,13 @@ app.set('views', './public');
 app.set('view engine', 'ejs');
 
 app.use(cookieParser());
+
+var pgp = require("pg-promise")(/*options*/);
+var db = pgp("postgres://tuna_processor:salmon@localhost:5432/" + db_name);
+
+
+
+
 
 var station_states = {
   'HS0-003':{
@@ -63,6 +71,18 @@ app.get('/server_time', function(req, res, next) {
 });
 
 
+app.get('/db_query', function(req, res, next){
+  db.any("select lot_number from lot")
+      .then(function (data) {
+          // success;
+          res.send(data);
+      })
+      .catch(function (error) {
+          // error;
+      });
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
@@ -92,7 +112,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-console.log(process.argv);
+//console.log(process.argv);
 module.exports = app;
 
 
