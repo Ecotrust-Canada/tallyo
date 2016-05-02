@@ -531,6 +531,14 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
+  $scope.getAllData = function(lot_number, lot_code){
+    console.log($scope.sumStations);
+    for (var index in $scope.sumStations){
+      var stn = $scope.sumStations[index];
+      $scope.getTheData(lot_number, stn, lot_code);
+    }
+  };
+
 
 
   $scope.getTheData = function(lot_number, stn, lot_code){

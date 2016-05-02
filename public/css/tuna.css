@@ -825,6 +825,7 @@ div[ng-view] {
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
+  height: 325px;
 }
 
 #admin_manage_lots table tr .lot-station-cell {
