@@ -345,20 +345,21 @@ angular.module('scanthisApp', [
         var actual_width = getViewportWidth();
         var min_width = width;
         var ratio = actual_width / min_width;
-        //if (ratio < 1) {
-          var percent = (ratio*100).toFixed(2);
+        var percent = (ratio*100).toFixed(2);
+        
           if (fullscreen === true){
-            document.body.style.zoom = percent + "%";
+            /*document.body.style.zoom = percent + "%";
               var el = window.document.documentElement
               ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
-              rfs.call(el);
+              rfs.call(el);*/
+              document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=' + ratio + ',maximum-scale=10,initial-scale=' + ratio);
           }
           if (fullscreen === false){
-            document.body.style.zoom = "100%";
+            /*document.body.style.zoom = "100%";
             document.body.style.zoom = percent + "%";
-            document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');*/
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=0,maximum-scale=10,initial-scale=' + ratio);
           }
-      //}
       $scope.the_width = width;
     }  
   };
