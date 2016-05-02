@@ -43,6 +43,15 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('decimalweight', function() {
+  return function(input) {
+    if (input){
+      return input/10;
+    }
+
+  };
+})
+
 .filter('sumOfValue', function () {
     return function (data, key) {
         if (angular.isUndefined(data) && angular.isUndefined(key))

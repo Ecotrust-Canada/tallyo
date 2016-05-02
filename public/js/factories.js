@@ -23,7 +23,7 @@ var handleDbError = function(response) {
 
 var ForceUpper = function(entry){
   for (var key in entry){
-    if (key === 'case_number' || key === 'internal_lot_code' || key === 'ft_fa_code'){
+    if (key === 'case_number' || key === 'internal_lot_code' || key === 'ft_fa_code' || key === 'size' || key === 'received_from' || key =='grade'){
       entry[key] = entry[key].toUpperCase();
     }    
   }

@@ -8,6 +8,7 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.input = {};
   $scope.current.addnew = false;
+  $scope.current.select_change = false;
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -61,14 +62,14 @@ angular.module('scanthisApp.packingController', [])
       'B': 'AA',
       'C': 'A',
       'D': 'D'
-    }
+    };
     loin_grade = conv[loin_grade];
     if (loin_grade !== box_grade){
       $scope.overlay('mixgrade');
     }else{
       $scope.PatchObjWithContainer();
     }
-  }
+  };
 
   $scope.clearField = function(){
     $scope.input.code = null;
@@ -148,12 +149,13 @@ angular.module('scanthisApp.packingController', [])
     }
   });
 
-  $scope.enablekeypress = function(){
-    var enabled = function(event) {
-        return true;
-    };
-    document.onkeydown = enabled;
+  $scope.showEdit = function(){
+    $scope.current.edit_box= !$scope.current.edit_box;
   };
+
+
+
+
 
 
 
@@ -212,12 +214,12 @@ angular.module('scanthisApp.packingController', [])
   //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(obj){
-    var id = obj[$scope.station_info.itemid];
-    $scope.to_delete = id;
+    //var id = obj[$scope.station_info.itemid];
+    $scope.to_delete = obj;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
     }
-    if ($scope.options.qrform && obj.shipping_unit_number !== null){
+    else if ($scope.options.qrform && obj.shipping_unit_number !== null){
       toastr.error('cannot delete - box shipped');
     }else{
       $scope.overlay('delete');
@@ -226,7 +228,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.PatchNull = function(){
-    var id = $scope.to_delete;
+    var id = $scope.to_delete[$scope.station_info.itemid];
     var func = function(response){     
       $scope.RemoveScan(id);
     };

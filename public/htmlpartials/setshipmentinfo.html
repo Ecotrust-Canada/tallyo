@@ -5,12 +5,15 @@
        <span class="show_choices">Set Shipment Info</span>
       <div id="reprint_label_link" ng-if="substationlink" 
            ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
-    </div> 
-    <div class="show_choices" ng-show="addinfo">
-      <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
-      <input-dropdown thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></span>
+    </div>
+    <div class="inset_form"> 
+      <div class="show_choices" ng-show="addinfo">
+        <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+        <div class="marg_left"><input-dropdown thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+      </div>
+      <display ng-if="current.shipping_unit" settings="settings" ng-hide="addinfo" obj="current.shipping_unit" config="collectiondisplay"></display>
     </div>
   </div>
-  <display settings="settings" ng-hide="addinfo" obj="current.shipping_unit" config="collectiondisplay"></display>
 </div>
-<hr>
+
+<div class="hr_marg"><hr></div>

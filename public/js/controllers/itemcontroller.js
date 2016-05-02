@@ -10,6 +10,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.scan = {};
   $scope.entry.loin = {};
   $scope.entry.box = {};
+  $scope.current.to_print = true;
   //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
@@ -18,13 +19,14 @@ angular.module('scanthisApp.itemController', [])
   }
   $scope.current.addnew = false;
 
-
+  $scope.PrintSwitch = function(){
+    $scope.current.to_print = !$scope.current.to_print;
+  };
   
 
 
   $scope.startPolling = function(fieldName) {
     //stop polling scale
-
     $scope.stopPolling();
     // if toggle_state command is sent flip scale state and start polling
     if (fieldName === 'toggle_state') {
@@ -41,20 +43,26 @@ angular.module('scanthisApp.itemController', [])
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
+        timeout: 400
       }).then(
         function successCallback(response) {
-          $scope.scale[fieldName] = response.data.value.toFixed(3);
+          if ($scope.options.truncate){
+            $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
+          }
+          else{
+            $scope.scale[fieldName] = response.data.value.toFixed(3);
+          }
         },
         function errorCallback(response) {
-          //$scope.scale[fieldName] = 1.11;
-          toastr.error('cannot connect to scale');
-          //$scope.stopPolling();
+          //alert('once');
 
-
+    
+          $scope.stopPolling();
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if(thediv){
-           $timeout(function(){thediv.click();}, 0);
+           $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
           }
+
           
         }
       );
@@ -124,7 +132,7 @@ angular.module('scanthisApp.itemController', [])
       if ($scope.current[$scope.station_info.collectiontable].ft_fa_code){        
         thedata.ft_fa_code = $scope.current[$scope.station_info.collectiontable].ft_fa_code;
       }
-      if($scope.onLabel){
+      if($scope.onLabel && $scope.current.to_print===true){
         var data = dataCombine(thedata, $scope.onLabel.qr);
         var labels = ArrayFromJson(thedata, $scope.onLabel.print);
         console.log(data, labels);
@@ -219,7 +227,7 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.RemoveItem = function(id){
     $scope.to_delete = id;
-    $scope.overlay('delete');
+    $scope.overlay('delete' + $scope.station_code);
   };
 
   $scope.DeleteItem = function(){
@@ -263,16 +271,21 @@ angular.module('scanthisApp.itemController', [])
 
   $scope.Reprint = function(loin_number){
     if($scope.onLabel){
-      var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
-      var func = function(response){
-        var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
-        var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
-        console.log(data, labels);
-        $scope.printLabel(data, labels);
-      };
-      DatabaseServices.GetEntries('loin_with_info', func, query);
-      
+      if($scope.current.to_print === true){
+        var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
+        var func = function(response){
+          var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
+          var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
+          console.log(data, labels);
+          $scope.printLabel(data, labels);
+        };
+        DatabaseServices.GetEntries('loin_with_info', func, query);        
+      }
+      else{
+        toastr.error('printing off');
+      }
     }
+
   };
 
 
