@@ -10,7 +10,9 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.scan = {};
   $scope.entry.loin = {};
   $scope.entry.box = {};
-  $scope.current.to_print = true;
+  if ($scope.states.printer_on===true || $scope.states.printer_on===false){
+    $scope.current.to_print = $scope.states.printer_on;
+  }
   //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
@@ -20,7 +22,13 @@ angular.module('scanthisApp.itemController', [])
   $scope.current.addnew = false;
 
   $scope.PrintSwitch = function(){
-    $scope.current.to_print = !$scope.current.to_print;
+    console.log('called');
+    $http.get('/toggle_printer/' + $scope.station_code).then(function successCallback(response) {
+      $scope.current.to_print = response.data;      
+    }, function errorCallback(response) {
+      console.log(response);
+    });
+    
   };
   
 

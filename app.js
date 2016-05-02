@@ -10,7 +10,34 @@ var TraceabilityProvider = require('./lib/traceability_provider');
 var configpath = './public/js/configs/'+(process.argv[2] || 'app_config');
 var config = require(configpath+"_local");
 
+app.set('views', './public');
+
+app.set('view engine', 'ejs');
+
 app.use(cookieParser());
+
+var station_states = {
+  'HS0-003':{
+    printer_on: true
+  }
+
+};
+
+app.get("/", function(req,res){
+  res.render("index.ejs", {
+    station_states: station_states
+  });
+});
+
+
+app.get("/toggle_printer/:station", function(req,res, next){
+  var stn = req.params.station;
+  station_states[stn].printer_on = !station_states[stn].printer_on;
+  res.send(station_states[stn].printer_on);
+});
+
+
+
 app.use(express.static(path.join(__dirname, 'public' )));
 
 app.get('/config', function(req, res, next){

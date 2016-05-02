@@ -129,12 +129,15 @@ angular.module('scanthisApp', [
 
 .controller('StationCtrl', function($scope, $http, $sce, DatabaseServices) {
 
+
   $scope.init = function(settings){
     $scope.station_code = settings.station_code;
     $scope.css_code = settings.css_code;
     $scope.processor = $scope.station_code.substring(0, 3);
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
+
+    $scope.states = (station_states[$scope.station_code] || {'state': 'none'});
 
 
     if(settings.onLabel){
