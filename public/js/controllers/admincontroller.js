@@ -8,6 +8,7 @@ angular.module('scanthisApp.AdminController', [])
   //$scope.limit = 10;
   $scope.stn = {};
   $scope.stn.index= 0;
+  
 
   $scope.ListShipments = function(station_code){
     $http.get('/server_time').then(function successCallback(response) {
@@ -61,22 +62,28 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.ListHarvesters();
   
-  $scope.$watch('stn.index', function() {
-    if ($scope.stn.index !== undefined && $scope.stn.index !== null){
-      $scope.current.shipment = null;
-      $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
-      var station = $scope.sumStations[$scope.stn.index];
-      if (station.send_field === 'customer'){
-        $scope.sort_by = 'lot';
-        $scope.sort_id = 'internal_lot_code';
-      }
-      else if (station.send_field === 'received_from'){
-        $scope.sort_by = 'harvester';
-        $scope.sort_id = 'internal_lot_code';
-      }
-      $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
+  $scope.changeStn = function(index) {
+    var el = document.getElementById('ship' + index);
+    if (el){
+      //console.log(el);
     }
-  });
+    //console.log('ship'+ index);
+    $scope.stn.index = index;
+    $scope.current.shipment = null;
+    $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
+    var station = $scope.sumStations[$scope.stn.index];
+    if (station.send_field === 'customer'){
+      $scope.sort_by = 'lot';
+      $scope.sort_id = 'internal_lot_code';
+    }
+    else if (station.send_field === 'received_from'){
+      $scope.sort_by = 'harvester';
+      $scope.sort_id = 'internal_lot_code';
+    }
+    $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
+
+  };
+  $scope.changeStn($scope.stn.index);
 
   $scope.Edit = function(ship_obj){
     $scope.current.collectionid = ship_obj.shipping_unit_number;
@@ -102,7 +109,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
     if (stn.csv_1 && !stn.csv_2){
-      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
+      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);
 
     }
     else if (stn.csv_1 && stn.csv_2){
@@ -256,11 +263,106 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
 
-  $scope.$watch('stn.index', function() {
-    if ($scope.stn.index !== undefined && $scope.stn.index !== null){    
-    $scope.ListBoxes();
+
+
+
+  $scope.invconfig = 
+  {
+    cssclass: "fill small", 
+    headers: ["Case #", "Box #", "Lot", ""], 
+    fields: ["case_number", "box_number", "internal_lot_code"], 
+    order: '-timestamp',
+    button: 'remove'
+  };
+
+
+  $scope.ListAllItems = function(){
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0&order=timestamp.desc';
+    var func = function(response){
+      $scope.items = response.data;
+    };
+    DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
+  };
+  $scope.ListAllItems();
+
+  $scope.DeleteInv = function(str){
+    $scope.to_delete = str.box_number;
+    $scope.overlay('del_box');
+  };
+
+  $scope.DelBox = function(){
+    var scan = {"station_code": 'deleted', 'box_number': $scope.to_delete};
+    var func = function(response){
+      $scope.to_delete=null;
+      $scope.search = {};
+      $scope.ListAllItems();
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', scan, func);
+
+  };
+
+  $scope.ListFilteredItems = function(box_number, int_lot_code, case_number){
+    var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station ;
+    if (box_number !== undefined && box_number !== null && box_number !== ''){
+      query += '&box_number=like.*' + box_number.toUpperCase() + '*';
     }
-  });
+    if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
+      query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    if (case_number !== undefined && case_number !== null && case_number !== ''){
+      query += '&case_number=like.*' + case_number.toUpperCase() + '*';
+    }
+    query += '&order=timestamp.desc';
+    //console.log(query);
+    var func = function(response){
+      $scope.items = response.data;
+      $scope.search = {};
+    };
+    DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
+  };
+
+
+  $scope.changeStn = function(index) {
+    $scope.stn.index = index; 
+    $scope.ListBoxes();
+    $scope.ListAllItems();
+  };
+  $scope.changeStn($scope.stn.index);
+
+
+  $scope.getTheData = function(ship_obj){
+    var stn = $scope.sumStations[$scope.stn.index];
+    if (stn.csv_1 && !stn.csv_2){
+      $scope.getCSV(stn.csv_1.table, stn.csv_1.fields);
+
+    }
+    else if (stn.csv_1 && stn.csv_2){
+      $scope.getCSV(stn.csv_1.table, stn.csv_1.fields, 'summary');
+      $scope.getCSV(stn.csv_2.table, stn.csv_2.fields, 'detail');
+    }
+  };
+
+  $scope.getCSV = function(table, fields, label){
+    var query;
+    if (label === 'summary'){
+      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0';
+    }
+    else if (label === 'detail'){
+      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&box_weight=neq.0';
+    }
+    
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var name = $scope.sumStations[$scope.stn.index].label;
+      if (label){
+        name += '_' + label;
+      }
+      name += '.csv';
+      console.log(name);
+      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
 })
 
 

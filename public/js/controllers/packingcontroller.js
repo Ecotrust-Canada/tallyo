@@ -7,6 +7,8 @@ angular.module('scanthisApp.packingController', [])
 .controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
 
   $scope.input = {};
+  $scope.current.addnew = false;
+  $scope.current.select_change = false;
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -60,21 +62,21 @@ angular.module('scanthisApp.packingController', [])
       'B': 'AA',
       'C': 'A',
       'D': 'D'
-    }
+    };
     loin_grade = conv[loin_grade];
     if (loin_grade !== box_grade){
       $scope.overlay('mixgrade');
     }else{
       $scope.PatchObjWithContainer();
     }
-  }
+  };
 
   $scope.clearField = function(){
     $scope.input.code = null;
   };
 
   $scope.MakeScan = function(id){
-    $scope.entry.scan = {"station_code": $scope.station_code,};
+    $scope.entry.scan = {"station_code": $scope.station_code};
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
@@ -91,14 +93,15 @@ angular.module('scanthisApp.packingController', [])
       //toastr.success('added'); // show success toast.
 
       // attempt to highlight new row in itemstable
-      setTimeout(function () {
+      /*setTimeout(function () {
         var tr = angular.element(document.querySelector('#item-'+response.data[0][$scope.station_info.itemid]));  
         if (tr){
           var c = 'new_item';
           tr.addClass(c);
           $timeout(function(){ tr.removeClass(c); }, 2000); 
         }
-      }, 100);
+      }, 100);*/
+      $scope.current.addnew = true;
       
       $scope.MakeScan($scope.id);
 
@@ -146,12 +149,13 @@ angular.module('scanthisApp.packingController', [])
     }
   });
 
-  $scope.enablekeypress = function(){
-    var enabled = function(event) {
-        return true;
-    };
-    document.onkeydown = enabled;
+  $scope.showEdit = function(){
+    $scope.current.edit_box= !$scope.current.edit_box;
   };
+
+
+
+
 
 
 
@@ -210,10 +214,13 @@ angular.module('scanthisApp.packingController', [])
   //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(obj){
-    var id = obj[$scope.station_info.itemid];
-    $scope.to_delete = id;
+    //var id = obj[$scope.station_info.itemid];
+    $scope.to_delete = obj;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
+    }
+    else if ($scope.options.qrform && obj.shipping_unit_number !== null){
+      toastr.error('cannot delete - box shipped');
     }else{
       $scope.overlay('delete');
     }
@@ -221,7 +228,7 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.PatchNull = function(){
-    var id = $scope.to_delete;
+    var id = $scope.to_delete[$scope.station_info.itemid];
     var func = function(response){     
       $scope.RemoveScan(id);
     };
@@ -412,6 +419,8 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('AddInventoryCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
+  $scope.current.addnew = false;
+
   $scope.entry.scan = {};
 
   var focusScan = function(){
@@ -463,8 +472,9 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.DatabaseScan = function(){    
     var func = function(response){
-      //$scope.current.itemchange = !$scope.current.itemchange;
-      toastr.success('added');
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.addnew = true;
+      //toastr.success('added');
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
@@ -478,6 +488,103 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+  };
+
+  
+
+})
+
+
+.controller('AddInventoryTotalCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
+  $scope.LoadTotals = function(){
+    var table;
+    var fields;
+    if ($scope.options.total_by === 'lot'){
+      table = 'today_total_lot';
+      fields = ["internal_lot_code"];
+    }
+    else if($scope.options.total_by === 'ship'){
+      table = 'today_total_ship';
+      fields = ["ship_har"];
+    }
+
+    var func = function(response){
+      $scope.list.items = response.data;
+      $scope.totallistconfig = JSON.parse(JSON.stringify($scope.boxconfig)); 
+      $scope.totallistconfig.fields = fields.concat($scope.totallistconfig.fields);
+      $scope.LoadRecent();
+    };
+    var query = '?station_code=eq.' + $scope.station_code;
+    DatabaseServices.GetEntries(table, func, query);
+  };
+  $scope.boxconfig = 
+  {
+    cssclass: "fill small", 
+    fields: [ "boxes"], 
+    order: 'grade'
+  };
+
+  $scope.$watch('current.itemchange', function() {   
+    $scope.LoadTotals();
+  });
+
+  $scope.LoadRecent = function(){
+    var func = function(response){
+      $scope.list.included = response.data;
+    };
+    var query = '?station_code=eq.' + $scope.station_code + '&order=timestamp.desc';
+    DatabaseServices.GetEntries('box_with_info', func, query, 'twenty');
+  };
+
+
+  $scope.PatchNull = function(){
+    var itemid = $scope.to_delete;
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      if ($scope.options.secondstation){
+        console.log('secondstation');
+        $scope.RemoveSecondScan(itemid, $scope.options.secondstation);
+      }else{
+        $scope.current.itemchange = !$scope.current.itemchange;
+        $scope.to_delete = null;
+      }     
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+  $scope.RemoveSecondScan = function(itemid, stn){
+    var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + stn;
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.to_delete = null;
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
+
+
+  $scope.PatchObjRemoveContainer = function(obj){
+    var id = obj.box_number;
+    $scope.to_delete = id;
+    if (($scope.options.total_by === 'ship' && obj.lot_number !== null) || ($scope.options.total_by === 'lot' && obj.shipping_unit_number !== null)){
+      toastr.error('cannot delete - box in further processing');
+    }else{
+      $scope.overlay('delete');
+    }
+    
+  };
+
+  $scope.HighlightGreen = function(str){
+    if(str===0  && $scope.current.addnew === true){
+      setTimeout(function () {
+          var tr = angular.element(document.querySelector('#item-'+ str));  
+          if (tr){
+            var c = 'new_item';
+            tr.addClass(c);
+            $timeout(function(){ tr.removeClass(c); }, 700); 
+          }
+        }, 0);
+    }
+    $scope.current.addnew = false;
   };
 
 })

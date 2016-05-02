@@ -2,11 +2,12 @@
   <div  class="editshipentries">
 
     <span ng-if="options.ship_stations" id="radio-shipment" 
-      class="toggle-group-container" ng-class="withChecked('station_code')">
-      <label ng-repeat="station in sumStations" for="ship" ng-class="isChecked('station_code', option)"><input  
-             type="radio" id="ship" value="{{station.id}}" ng-model="stn.index" 
+      class="toggle-group-container">
+      <label ng-repeat="station in sumStations" for="ship{{$index}}" ng-click="changeStn($index)"  ><input  
+             type="radio" id="ship{{$index}}" name="ship" ng-checked="stn.index===$index"
              ><span>{{station.label}}</span></label>
     </span>
+
     <span ng-if="!options.ship_stations">Outgoing Shipments</span>
     <br>
     <br>

@@ -43,7 +43,8 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=', 
            istotal: '=', 
            updateFn: '&',
-           secondFn: '&'}, 
+           secondFn: '&',
+           testFn: '&'}, 
   controller: 'BufferScrollCtrl',
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
@@ -165,6 +166,20 @@ angular.module('scanthisApp.directives', [])
                 }
                 
             };
+            scope.pcselect = function(e, value) {
+              if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))) {
+                scope.the_val = value;
+                if (scope.config.arg){
+                  scope.onSelect({$event: e, value: value[scope.config.arg]});
+                }
+                else{
+                  scope.onSelect({$event: e, value: value});
+                }
+              }  
+            };
+
+
+
             scope.setnull = function(){
               scope.the_val = null;
             };
@@ -223,4 +238,43 @@ angular.module('scanthisApp.directives', [])
       });
     };
   })
+
+
+
+.directive( 'elemReady', function( $parse ) {
+   return {
+       restrict: 'A',
+       link: function( $scope, elem, attrs ) {    
+          elem.ready(function(){
+            $scope.$apply(function(){
+                var func = $parse(attrs.elemReady);
+                func($scope);
+            });
+          });
+       }
+    };
+})
+
+.directive('autodecimal', ['$filter', function ($filter) {
+    return {
+        require: 'ngModel',
+  
+        link: function (scope, elem, attrs, ctrl) {
+            var dec = attrs.autodecimal;
+            var num = Math.pow(10, dec);
+            if (!ctrl) return;
+
+            ctrl.$formatters.unshift(function (a) {
+                return $filter('number')(ctrl.$modelValue);
+            });
+            ctrl.$parsers.unshift(function (viewValue) {
+                var plainNumber = viewValue.replace(/[^\d|\-+]/g, '');
+                elem.val($filter('number')(plainNumber/num,dec));
+                return plainNumber/num;
+            });
+        }
+    };
+}])
+
+
 ;

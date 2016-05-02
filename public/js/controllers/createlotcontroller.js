@@ -15,6 +15,9 @@ angular.module('scanthisApp.createlotController', [])
     else{
       query = '?station_code=eq.' + $scope.station_code;
     }
+    if ($scope.options.incoming){
+      query += "&shipping_unit_in=is.null";
+    }
     var func = function(response){
       $scope.list.collection = response.data;
     };
@@ -192,7 +195,7 @@ angular.module('scanthisApp.createlotController', [])
 
 //packingstation.html, receivingstation.html, weighstation.html
 //fills in list.included with 'item' table if config belonging to selected collection
-.controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices) {
+.controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.ListCollectionItems = function(){
     var table;
@@ -221,6 +224,22 @@ angular.module('scanthisApp.createlotController', [])
       }
     }
   });
+
+
+  $scope.HighlightGreen = function(str){
+    if(str===0  && $scope.current.addnew === true){
+      //setTimeout(function () {
+        //console.log('#item-'+ str + ($scope.itemlistconfig.station_id || ''));
+          var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
+          if (tr){
+            var c = 'new_item';
+            tr.addClass(c);
+            $timeout(function(){ tr.removeClass(c); }, 700); 
+          }
+        //}, 0);
+    }
+    $scope.current.addnew = false;
+  };
 })
 
 
@@ -292,6 +311,7 @@ angular.module('scanthisApp.createlotController', [])
     //console.log(query);
     var func = function(response){
       $scope.items = response.data;
+      $scope.search = {};
     };
     DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
@@ -445,13 +465,15 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-.controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr) {
+.controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
   $scope.limit = 5;
 
   $scope.ResetLimit = function(){
     $scope.limit = 5;
   };
+
+  
 
 })
 

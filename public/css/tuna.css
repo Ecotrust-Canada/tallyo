@@ -228,7 +228,7 @@ body{
 
 #station-AM2-ADM > .panel, 
 #station-AM2-011 .panel, 
-/*#station-HS0-003 .panel,*/
+#station-HS0-003 .panel,
 /*#station-HS0-004 .panel,*/
 #station-AM1-001 .panel,
 #station-AM1-002 .panel,
@@ -243,11 +243,14 @@ body{
 #station-AM2-001 .panel {
   width: 550px;  /* min-width */
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
-/*#station-HS0-001 .panel, 
+#station-HS0-001 .panel, 
 #station-HS0-002 .panel {
   width: 550px;
-} */
+  box-sizing: border-box;
+  margin-bottom:20px;
+}
 /*
 #station-HS0-003 .panel {
   width: 800px;
@@ -353,6 +356,7 @@ body{
 .itemsframe table tr:last-child td {
   border-bottom: none;
 }
+/
 .itemtotals {
   padding: 12px 0 0 0;
 }
@@ -890,12 +894,12 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column .lot_label span.expand-control {
   display: block;
   position: absolute;
-  width: 18px;
-  height: 10px;
+  width: 48px;
+  height: 40px;
   right: 0;
   top: 18px;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
 }
 
 #admin_manage_lots table tr .lot_column .lot_label span.expand-control.opened {
@@ -940,7 +944,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot-station-cell .item-details {
   display: inline-block;
   width: 100%;
-  height: 215px;
+  height: 235px;
   margin: 0;
   position: relative;
   overflow: auto;
@@ -1341,6 +1345,11 @@ div[ng-view] {
   text-transform: uppercase;
   font-family: 'Lato-Bold';
 }
+.fieldsetrepeat .select_header {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
 #receiveshipment #form-14 .form_row {
   padding-bottom: 15px;
 }
@@ -1424,7 +1433,9 @@ div[ng-view] {
   font-size: 12px;
 }*/
 #receiveshipment .btn-blue {
-  float: right;
+  /*float: right;*/
+  margin-top: 15px;
+  margin-left:350px;
 }
 #receiveshipment .display_row .field_val/*,
 #station-HS0-011 #current_lot .field_val */ {
@@ -1459,6 +1470,7 @@ div[ng-view] {
 #station-HS0-ADM > .panel.white,
 #station-AM2-006 .panel.white,
 #station-AM2-001 .panel.white,
+#station-INV .panel.white
 .panel.white.weighstation_main,
 .panel.white.packingstation {
 
@@ -1479,6 +1491,19 @@ div[ng-view] {
   padding-top: 40px;
   min-width: 550px;
   margin-bottom: 24px;
+  box-sizing:border-box;
+}
+
+#station-INV .grey .reprint_label .select_header {
+  margin: 10px 10px;
+}
+.reprint_label .show_choices .btn-blue,
+#station-INV .grey .reprint_label .show_choices .btn-blue {
+  margin: 0 0 10px 160px;
+  color: #e9ffff;
+  font-size: 18px;
+  font-family: 'Lato-Bold';
+  width: 350px;
 }
 
 #station-AM2-006 .header,
@@ -1489,7 +1514,7 @@ div[ng-view] {
 #station-HS0-ADM > .panel.white {
   min-width: 550px;
 }
-
+#station-INV .panel.grey,
 #station-AM1-003 .panel.grey,
 #station-AM1-004 .panel.grey,
 #station-AM1-005 .panel.grey,
@@ -1612,6 +1637,8 @@ div[ng-view] {
   padding: 0 15px 20px 15px;
 }
 
+
+
 .weighstation_main .form_row,
 .editform .form_row {
   padding-bottom: 12px;
@@ -1661,10 +1688,12 @@ div[ng-view] {
 
 
 
-#create_box_form #form-0 {
+#create_box_form #form-0,
+#create_box_form #form-24{
   width: 506px;
 }
-#create_box_form #form-0 .form_label {
+#create_box_form #form-0 .form_label,
+#create_box_form #form-24 .form_label{
   width: 170px;
 }
 
@@ -1699,6 +1728,7 @@ div[ng-view] {
   width: 240px;
 }
 
+#create_box_form #form-24 .field input[type=text],
 #create_box_form #form-0 .field input[type=text],
 #form-2 #form-0 .field input[type=text] {
   width: 204px;
@@ -1712,7 +1742,8 @@ div[ng-view] {
 #form-10 .field input[type=text] {
   width: 314px;
 }
-#create_box_form #form-0 .btn-orange {
+#create_box_form #form-0 .btn-orange,
+#create_box_form #form-24 .btn-orange {
   height: 44px;
   width: 206px;
   padding: 6px 15px;
@@ -1736,7 +1767,8 @@ div[ng-view] {
   position: absolute;
 }
 
-#create_box_form #form-0 .form_buttons {
+#create_box_form #form-0 .form_buttons,
+#create_box_form #form-24 .form_buttons {
   margin-top: 16px;
 }
 
@@ -1811,6 +1843,7 @@ div[ng-view] {
 }
 
 #form-0 .form_label label,
+#form-24 .form_label label,
 #form-20 .form_label label,
 #form-23 .form_label label,
 .editform .form_label label,
@@ -1820,7 +1853,8 @@ div[ng-view] {
   text-align: right;
 }
 
-#form-0 .field, 
+#form-0 .field,
+#form-24 .field, 
 .editform .field, 
 #form-5 .field, 
 #form-10 .field, 
@@ -1833,7 +1867,8 @@ div[ng-view] {
 #form-3 .field {
   width: 260px;
 }
-#create_box_form #form-0 .field {
+#create_box_form #form-0 .field,
+#create_box_form #form-24 .field {
   width: 200px;
 }
 #create_box_form #form-4 .field {
@@ -1948,7 +1983,7 @@ div[ng-view] {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 174px;
+  width: 225px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -1996,11 +2031,12 @@ input[name^=weight]:focus,
 }
 
 .scale-weight-set {
-  width: 126px;
+  width: 97px;
   height: 44px;
   box-sizing: border-box;
   margin-left: -14px;
 }
+
 /*
 input[name^=weight]::after {
   content: url(/images/weight_control_connector.svg);
@@ -2043,6 +2079,11 @@ input[name^=weight]::after {
   position:relative;
 }
 
+#station-AM2-001 .grey span.title {
+  padding: 10px 10px 5px 10px;
+  display: inline-block;
+}
+
 .pictogram_btns > span {
   padding: 7px 10px 7px 35px;
   background-repeat: no-repeat;
@@ -2052,6 +2093,20 @@ input[name^=weight]::after {
 
 .pictogram_btns > span.clear {
   background-image: url(/images/remove_icon.svg);
+}
+.pictogram_btns > span.print_switch {
+  background-image: url(/images/print_icon.svg);
+}
+.pictogram_btns > span.red_text {
+  color: red;
+  font-weight: bold;
+}
+.pictogram_btns > span.green_text {
+  color: green;
+  font-weight: bold;
+}
+.pictogram_btns > span.edit {
+  background-image: url(/images/edit_icon.svg);
 }
 .pictogram_btns > span.reprint {
   background-image: url(/images/print_icon.svg);
@@ -2145,10 +2200,12 @@ input[name^=weight]::after {
   width: 360px;
 }
 #radio-0-grade,
+#radio-24-grade,
 #radio-9-grade {
   width: 316px;
 }
-#radio-0-size {
+#radio-0-size,
+#radio-24-size {
   width: 315px;
 }
 #radio-19-grade,
@@ -2160,13 +2217,15 @@ input[name^=weight]::after {
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
+#radio-24-grade.toggle-group-container label,
 #radio-17-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
 }
-#radio-0-size.toggle-group-container label {
+#radio-0-size.toggle-group-container label,
+#radio-24-size.toggle-group-container label {
   width: 105px;
 }
 
@@ -2191,7 +2250,7 @@ input[name^=weight]::after {
   -webkit-appearance: none;
   display: inline-block;
   position: absolute;
-  width: 100%;
+  /*width: 100%;*/
   height: 100%;
   background: transparent;
   z-index: 2;
@@ -2262,11 +2321,13 @@ input[name^=weight]::after {
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-18-grade.toggle-group-container input:checked + span,
 #radio-0-grade.toggle-group-container input:checked + span,
+#radio-24-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
 #radio-17-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
-#radio-0-size.toggle-group-container input:checked + span { 
+#radio-0-size.toggle-group-container input:checked + span,
+#radio-24-size.toggle-group-container input:checked + span { 
   width:105px;
 }
 
@@ -2572,8 +2633,7 @@ nav #menu li {
   margin: 0;
 }
 
-nav #menu li.active > span > a,
-nav #menu li.active > span {
+nav #menu li.active > a {
   opacity: 0.5;
 }
 
@@ -2857,7 +2917,31 @@ span.switch_option.active {
      text-align:center;
 }
 
-#delete {
+#del_box {
+     visibility: hidden;
+     position: fixed;
+     left: 0px;
+     top: 30px;
+     width:590px;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+
+#del_box div {
+     width:100%;
+     height: 60vh;
+     margin: auto;
+     margin-right: 100px;
+     background-color: #C77D73;
+     border:5px solid red;
+     padding:15px;
+     padding-top: 100px;
+     text-align:center;
+}
+
+.delete_dialogue {
      visibility: hidden;
      position: fixed;
      left: 0px;
@@ -2870,7 +2954,7 @@ span.switch_option.active {
 }
 
 
-#delete div {
+.delete_dialogue div {
      width:100%;
      height: 300px;
      margin: 100px auto;
@@ -2911,3 +2995,40 @@ md-datepicker {
   margin-left: 20px;
   margin-right: 20px;
 }
+
+
+.inset_form{
+  margin-left: 5px;
+  border-left: solid #005874 2px;
+}
+
+.inset_form .button{
+  margin-left: 15px;
+}
+
+.marg_left{
+  margin-left: 15px;
+}
+
+.marg_left .dropdown-container{
+  width: 450px;
+}
+
+.hr_marg{
+  margin-top:21px;
+  margin-bottom:10px;
+}
+
+.scroll_right{
+  margin-right:40px;
+}
+
+.scroll_right:hover{
+  background-color: #C8CBCC;
+}
+.print_check{
+  position: relative;
+  margin-top: -20px;
+  margin-bottom: 40px;
+}
+

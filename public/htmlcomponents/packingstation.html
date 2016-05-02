@@ -5,10 +5,8 @@
   <div any-other-click>
     <div  class="select_object" >
       <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
-           ng-click="current.collectionid = null">
-        <span class="show_choices">{{packingconfig.sectiontitle}}</span>
-        <div id="reprint_label_link" ng-if="substationlink" 
-             ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+           ng-click="current.collectionid = null;current.edit_box=false;current.select_change=!current.select_change;">
+        <span class="show_choices">{{packingconfig.sectiontitle}}</span> 
       </div> 
       <div class="show_choices" ng-hide="current.collectionid">
         <div ng-controller="FormSubmitCtrl" id="create_box_form">
@@ -23,7 +21,8 @@
       <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
       <i class="errortext" ng-if="current.mixed">Mixed Harvesters in Lot</i>
       <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
-        <span ng-if="list.included.length==0" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+        <span ng-if="list.included.length==0  && !options.enable_edit" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+        <span ng-if="options.enable_edit" ng-click="showEdit()" id="clear-{{config.id}}" class="edit">Edit</span>
         <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
               id="reprint-{{config.id}}" class="reprint">Reprint</span>
       </div>
@@ -44,6 +43,14 @@
         </span>
       </span>
     </div>
+
+    <div ng-if="current.edit_box && options.enable_edit" ng-controller="FormSubmitCtrl" id="create_box_form">
+        <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
+    </div>
+
+
+
+
   </div>
 
   <div class="scanform" ng-if="!options.qrform" >
@@ -118,7 +125,7 @@
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
-      <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)"></bufferedscrolllist>
+      <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
   </div>
   <div class="itemtotals table_row" >
     <div class="item_number">
@@ -134,9 +141,11 @@
     </div>
   </div>
 
-  <div id="delete">
+  <div class="delete_dialogue" id="delete">
     <div>
-      <p>Do you want to delete this entry?</p>
+      <p>Do you want to remove this item?</p>
+      <p ng-if="station_info.patchtable==='box'">{{to_delete.case_number || to_delete.box_number}}</p>
+      <p ng-if="station_info.patchtable==='loin'">{{to_delete.loin_number}}</p>
       <button class="btn-blue" ng-click="enablekeypress();overlay('delete')">Cancel</button>
       <button class="btn-blue" ng-click="PatchNull();enablekeypress();overlay('delete')">Yes</button>
     </div>

@@ -30,9 +30,10 @@ angular.module('scanthisApp', [
  */
 .config(function(toastrConfig) {
     angular.extend(toastrConfig, {
-        maxOpened: 3,
+        maxOpened: 4,
         positionClass: 'toast-top-full-width',
-        preventOpenDuplicates: true
+        preventOpenDuplicates: false,
+        timeOut: 700
     });
 })
 
@@ -45,6 +46,20 @@ angular.module('scanthisApp', [
   };
   $scope.stations = stationlist;
   $scope.terminals = terminals;
+
+  $scope.unFocus = function(){
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      var active = document.activeElement;
+      if (active.nodeName !== 'SELECT'){
+        active.blur();
+        var el = document.getElementById('to_focus');
+        if (el){
+          //alert('hmm');
+          el.focus();
+        }
+      }
+    }
+  };
 })
 
 .controller('RoutingCtrl', function($scope, $routeParams, $rootScope) {
@@ -239,9 +254,10 @@ angular.module('scanthisApp', [
       $scope.ZoomRight(600, true);
     }
     if(stn === 'kanban' || stn === 'supplier_setup' || stn === 'shipmentdata'){
-      document.webkitExitFullscreen();
+      window.document.webkitExitFullscreen();
       $scope.ZoomRight(600, false);
     }
+
     
   };
 
@@ -288,10 +304,17 @@ angular.module('scanthisApp', [
     el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
   };
 
+  $scope.enablekeypress = function(){
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
+  };
+
 
   $scope.ZoomRight = function(width, fullscreen){
 
-    document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
+    
 
     function getViewportWidth() {
         if (window.innerWidth) {
@@ -318,14 +341,15 @@ angular.module('scanthisApp', [
     }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=1,maximum-scale=1,initial-scale=1');
         var actual_width = getViewportWidth();
         var min_width = width;
         var ratio = actual_width / min_width;
-        if (ratio < 1) {
+        //if (ratio < 1) {
           var percent = (ratio*100).toFixed(2);
           if (fullscreen === true){
             document.body.style.zoom = percent + "%";
-              var el = document.documentElement
+              var el = window.document.documentElement
               ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
               rfs.call(el);
           }
@@ -334,7 +358,7 @@ angular.module('scanthisApp', [
             document.body.style.zoom = percent + "%";
             document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
           }
-      }
+      //}
       $scope.the_width = width;
     }  
   };

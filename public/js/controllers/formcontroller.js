@@ -3,7 +3,7 @@
 angular.module('scanthisApp.formController', [])
 
 //controller attached to entryform directive
-.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
+.controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout) {
   
   //display scale buttons
   if ($scope.config.startpolling){
@@ -35,7 +35,8 @@ angular.module('scanthisApp.formController', [])
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
-        $scope.pollFn({field: $scope.config.startpolling});
+        //$scope.pollFn({field: $scope.config.startpolling});
+        $timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
       }
       else{
         var scales = $scope.formarray.filter(function(el){
@@ -151,7 +152,11 @@ angular.module('scanthisApp.formController', [])
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
       }
-      if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
+      else if ($scope.form[row.fieldname] === ''){
+        form_error = true;
+        toastr.error('Please set ' + row.title.toLowerCase());
+      }
+      else if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
         var req_error = $scope.theform[row.fieldname].$error.required;
         var neg_error = $scope.theform[row.fieldname].$error.negative;
         if (neg_error === true){
@@ -159,7 +164,7 @@ angular.module('scanthisApp.formController', [])
           toastr.error('errors in form');
         }
       }
-      if (row.scale){
+      else if (row.scale){
         if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
           //toastr.error('Please lock weight');
           form_error = true;
@@ -218,30 +223,20 @@ angular.module('scanthisApp.formController', [])
     $scope.FormData($scope.config.dboptions);
   }
 
-  $scope.DoSomething = function(something){
-    console.log('something');
+  $scope.DoSomething = function(something, row, index){
+    //alert(something);
+    document.getElementById(something).checked = true;
+    $scope.form[row.fieldname] = row.value[index].val;
   };
 
   $scope.toggleRadioValue = function(frow){
       var fieldname = frow.fieldname;
-      //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
       var checkInput = document.getElementById('formswitch-'+fieldname);
       setTimeout(function () {
         $scope.$apply(function () {
           $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
         });
       }, 50);
-  };
-
-  $scope.isChecked = function(fieldname, option){
-      if (!$scope.form[fieldname]) return 'rb-default';
-      if ($scope.form[fieldname] == option.val) return 'rb-checked';
-      return 'rb-unset';
-  };
-
-  $scope.withChecked = function(fieldname){
-      if (!$scope.form[fieldname]) return 'rbgroup-unset';
-      return null;
   };
 
 })
@@ -252,7 +247,6 @@ angular.module('scanthisApp.formController', [])
 
 //default controller with submit form functions
 .controller('FormSubmitCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
-  //$scope.form = {};
   var table;
   if($scope.formtable){
     table = $scope.formtable;
@@ -349,6 +343,33 @@ angular.module('scanthisApp.formController', [])
       DatabaseServices.GetEntries('harvester', func, query);
     }
   };
+
+
+  $scope.SubmitEdit = function(form){
+    var table = $scope.station_info.collectiontable;
+    var pk = $scope.station_info.collectionid;
+    var id = $scope.current.collectionid;
+    var querystring = '?' + pk + '=eq.' + id;
+    var patch = form;
+    var func = function(response){
+      for (var key in patch){
+        $scope.current[table][key] = response.data[0][key];
+        $scope.current.edit_box = false;
+        $scope.form = {};
+      }
+      $scope.formchange = !$scope.formchange;
+    };
+    DatabaseServices.PatchEntry(table, patch, querystring, func);
+
+  };
+
+  $scope.$watch('current.select_change', function(newValue, oldValue) {
+    if ($scope.current.select_change !== undefined){
+      $scope.formchange=!$scope.formchange;
+    }
+  });
+
+
 
 })
 

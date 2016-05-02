@@ -16,6 +16,7 @@ Install environmental dependencies using npm
 npm install -g nodemon
 npm install -g bower
 npm install -g db-migrate
+npm install -g forever
 ```
 
 Then, install package dependencies:
@@ -31,16 +32,15 @@ Install postgreSQL
 
 create a user:
 ```
-sudo -u postgres createuser -P -s -e [user]
-sudo -u postgres psql -c "ALTER role [user] superuser;"
+sudo -u postgres createuser -P -s -e tuna_processor
+sudo -u postgres psql -c "ALTER role tuna_processor superuser;"
 ```
 when prompted, input password 
 
 create an empty database:
 ```
-sudo -u postgres createdb -O [user] [dbname]
+sudo -u postgres createdb -O tuna_processor [dbname]
 ```
-
 
 copy template_database.json as database.json
 
@@ -65,52 +65,41 @@ sudo service docker start
 sudo groupadd docker
 sudo usermod -aG docker [linux user]
 ```
-clone docker image files and navigate to correct folder
+Navigate to scanthis/deploy, then build the docker image using the command:
+```
+./postgrest_build.sh
+```
+Then run a docker image with options.
+fill in docker image name, port to run database on, ip address of server, database name and password for the postgres user:
 
-To build the docker image:
 ```
-./run.sh
-```
-Then run a docker image with options:
-```
-docker run --name [name this docker service] -p [port]:3000  -e POSTGREST_DBHOST=[server ip] -e POSTGREST_DBPORT=5432 -e POSTGREST_DBNAME=[] -e POSTGREST_DBUSER=[user] -e POSTGREST_DBPASS=[password] -d postgrest-ec
+docker run --name [name this docker service] -p [port]:3000  -e POSTGREST_DBHOST=[server ip] -e POSTGREST_DBPORT=5432 -e POSTGREST_DBNAME=[dbname] -e POSTGREST_DBUSER=tuna_processor -e POSTGREST_DBPASS=[password] -d postgrest-ec
 ```
 
 ### Configuration
-Config files should go in scanthis/public/js/configs
+navigate to scanthis/public/js
+
+clone
+```
+https://gitlab.ecocloud.ca/ecotrust/configs.git
+```
 
 files include:
 ```
 list_config.js
 form_config.js
-app_config.js
-app_config_local.js
+label_config.js
+templatelocal.js
+app_config_[].js for each processor 
 ```
+copy templatelocal.js as app_config_[]_local.js.
+uncomment and set globalurl (database url as set in docker image), port to run application on, and hwurls (urls for printers and scales).  Need to set any printer or scale urls that are referenced in app_config file
 
-list_config.js and form_config.js contain options for specific forms, list, dropdown menus, etc
-
-app_config.js specifies the type and any options for each terminal
-
-app_config_local.js contains the url for the database as well as the port to run the app on
-
-Add multiple configurations by adding additional config and config_local files
-
-For example, app_config_v2.js and app_config_v2_local.js
-
+Navigate to /scanthis.
 Start the app with this configuration by running
 ```
-npm start app_config_v2
+forever start app.js app_config_[]
 ```
-
-### Starting the Node Server
-```
-npm start
-```
-
-### Running the project on a virtual machine
-
-You run the project in VM environment using Vagrant. To do so, checkout out: https://github.com/Ecotrust-Canada/scanthis-vagrant
-
 
 
 ###postgREST without Docker
@@ -126,6 +115,8 @@ and run on database/user created earlier:
 ```
 ./postgrest postgres://[user]:[password]@localhost:5432/[database name] --port 3000 --schema public --anonymous [user] --pool 200
 ```
+
+
 ###Examples of running protractor tests:
 
 
