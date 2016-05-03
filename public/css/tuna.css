@@ -338,6 +338,7 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
+#print_labels_list table td:nth-last-child(2),
 .itemsframe.entries #list-2 table td.btn_action:nth-last-child(2),
 .itemsframe.entries table td.btn_action:last-child {
   /* Hide the text. */
@@ -356,7 +357,7 @@ body{
 .itemsframe table tr:last-child td {
   border-bottom: none;
 }
-/
+
 .itemtotals {
   padding: 12px 0 0 0;
 }
@@ -1390,10 +1391,14 @@ div[ng-view] {
   box-sizing:border-box;
 }
 
+
+
 .itemsframe.entries #list-2 table td:nth-last-child(2),
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
+
+#print_labels_list table td:nth-last-child(2),
 .itemsframe.entries #list-21 td:last-child {
   background-image: url(/images/edit_icon.svg);
 }
@@ -1666,6 +1671,7 @@ div[ng-view] {
   width: 220px;
 }
 #form-23 .form_label,
+#form-27 .form_label,
 #form-7 .form_label,
 #form-8 .form_label {
   width: 120px;
@@ -1743,6 +1749,7 @@ div[ng-view] {
 #form-10 .field input[type=text] {
   width: 314px;
 }
+
 #create_box_form #form-0 .btn-orange,
 #create_box_form #form-24 .btn-orange {
   height: 44px;
@@ -1847,6 +1854,7 @@ div[ng-view] {
 #form-24 .form_label label,
 #form-20 .form_label label,
 #form-23 .form_label label,
+#form-27 .form_label label,
 .editform .form_label label,
 #form-5 .form_label label,
 #form-10 .form_label label,
@@ -2124,6 +2132,7 @@ input[name^=weight]::after {
   border-left: 1px solid #ccccca;
 }
 
+
 .form_buttons .btn-orange {
   display: inline-block;
   right: 6px;
@@ -2135,9 +2144,16 @@ input[name^=weight]::after {
   left: 178px;
   min-width: 242px;
 }
+
+#form-27 .form_buttons .btn-orange{
+  width: auto;
+  color: #FFFFFF;
+}
+
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
 #form-23 .form_buttons .btn-orange,
+#form-27 .form_buttons .btn-orange,
 #form-20 .form_buttons .btn-orange {
   right: 16px;
 }
@@ -2196,6 +2212,7 @@ input[name^=weight]::after {
 }
 #radio-7-grade, 
 #radio-23-grade, 
+#radio-27-grade,
 #radio-20-grade, 
 #radio-8-grade {
   width: 360px;
@@ -2232,11 +2249,13 @@ input[name^=weight]::after {
 
 #radio-20-grade.toggle-group-container label,
 #radio-23-grade.toggle-group-container label,
+#radio-27-grade.toggle-group-container label,
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
 #radio-23-state.toggle-group-container label,
+#radio-27-state.toggle-group-container label,
 #radio-20-state.toggle-group-container label {
   width: 80px;
 }
@@ -2308,6 +2327,7 @@ input[name^=weight]::after {
 }
 
 #radio-23-grade.toggle-group-container input:checked + span,
+#radio-27-grade.toggle-group-container input:checked + span,
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
@@ -2315,6 +2335,7 @@ input[name^=weight]::after {
 }
 
 #radio-23-state.toggle-group-container input:checked + span,
+#radio-27-state.toggle-group-container input:checked + span,
 #radio-20-state.toggle-group-container input:checked + span { 
   width:80px;
 }

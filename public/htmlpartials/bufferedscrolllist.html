@@ -17,6 +17,8 @@
           <span ng-switch-when="loin_num">{{item.loin_number.substring(6,10)}}</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
+        <td ng-if="config.button2 && !config.arg" 
+            ng-click="secondFn({str: item})" class="btn_action">{{config.button2}}</td>
         <td ng-if="config.button2  && config.arg" ng-click="ResetLimit();secondFn({str: item[config.arg]})" class="btn_action">{{config.button2}}</td>
         <td ng-if="config.button  && !config.arg2   && config.arg" ng-click="ResetLimit();updateFn({str: item[config.arg]})" 
             class="btn_action">{{config.button}}</td>
@@ -24,6 +26,7 @@
             ng-click="updateFn({str: item[config.arg], str2: item[config.arg2]})" class="btn_action">{{config.button}}</td>
         <td ng-if="config.button && !config.arg" 
             ng-click="updateFn({str: item})" class="btn_action">{{config.button}}</td>
+        
       </tr>
     </tbody>
   </table>
