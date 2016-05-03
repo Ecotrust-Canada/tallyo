@@ -371,14 +371,14 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.limit = 10;
 
-  $scope.GetHarvesters = function(){
+  /*$scope.GetHarvesters = function(){
     var query = '';
     var func = function(response){
       $scope.list.harvester = response.data;
     };
     DatabaseServices.GetEntries('harvester', func, query);
-  };
-  $scope.GetHarvesters();
+  };*/
+  //$scope.GetHarvesters();
 
   $scope.GetHarvesterLot = function(){
     $http.get('/server_time').then(function successCallback(response) {
@@ -387,6 +387,7 @@ angular.module('scanthisApp.AdminController', [])
       var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
       var func = function(response){
         $scope.list.harvester_lot = response.data;
+        $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
         $scope.GetLotSummary();
       };
       DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
@@ -409,6 +410,7 @@ angular.module('scanthisApp.AdminController', [])
       var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
       var func = function(response){
         $scope.list.harvester_lot = response.data;
+        $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
         $scope.GetLotSummary();
       };
       DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
@@ -417,7 +419,10 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.GetLotSummary = function(){
-    var query = '';
+    var query = '?lot_number=in.';
+    for (var index in $scope.list.lot_numbers){
+      query += $scope.list.lot_numbers[index] + ',';
+    }
     var func = function(response){
       $scope.list.lot_summary = response.data;
       $scope.GetLotTotals();
@@ -426,7 +431,10 @@ angular.module('scanthisApp.AdminController', [])
   };
   
   $scope.GetLotTotals = function(){
-    var query = '';
+    var query = '?lot_number=in.';
+    for (var index in $scope.list.lot_numbers){
+      query += $scope.list.lot_numbers[index] + ',';
+    }
     var func = function(response){
       $scope.list.totals_by_lot = response.data;
       $scope.GetLotLocations();
@@ -436,6 +444,10 @@ angular.module('scanthisApp.AdminController', [])
   
   $scope.GetLotLocations = function(){
     var query = '?in_progress=eq.true';
+    query += '&lot_number=in.';
+    for (var index in $scope.list.lot_numbers){
+      query += $scope.list.lot_numbers[index] + ',';
+    }
     var func = function(response){
       $scope.list.lotlocations = response.data;
       $scope.GetRecentLots();
@@ -444,7 +456,10 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.GetRecentLots = function(){
-    var query = '';
+    var query = '?lot_number=in.';
+    for (var index in $scope.list.lot_numbers){
+      query += $scope.list.lot_numbers[index] + ',';
+    }
     var func = function(response){
       $scope.list.recent = response.data;
       $scope.loaddata();
@@ -532,7 +547,6 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getAllData = function(lot_number, lot_code){
-    console.log($scope.sumStations);
     for (var index in $scope.sumStations){
       var stn = $scope.sumStations[index];
       $scope.getTheData(lot_number, stn, lot_code);
