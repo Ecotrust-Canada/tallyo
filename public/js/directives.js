@@ -198,8 +198,6 @@ angular.module('scanthisApp.directives', [])
             scrollHeight = element[0].scrollHeight,
             offsetHeight = element[0].offsetHeight;
 
-            console.log(scrollTop, scrollHeight, offsetHeight);
-
         if (scrollTop === (scrollHeight - (offsetHeight-17))) {
           $scope.$apply(function () {
             handler($scope);
