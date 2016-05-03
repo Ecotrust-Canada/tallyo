@@ -1049,7 +1049,7 @@ div[ng-view] {
   display: inline-block;
   box-sizing:border-box;
   margin: 4px 0 0 0;
-  width: 540px;
+  width: 540;
   height: 37px;
   padding: 0 5px;
   /*overflow: hidden;*/
@@ -1068,6 +1068,12 @@ div[ng-view] {
     max-height: 200px;
     overflow-y: scroll;
 }
+
+
+
+
+
+
 .input-dropdown .dropdown div {
     cursor: pointer;
     padding: 2px 5px;
@@ -3037,6 +3043,10 @@ md-datepicker {
 
 .marg_left .dropdown-container{
   width: 450px;
+}
+
+#is_field .dropdown-container{
+  width: 342px;
 }
 
 .hr_marg{

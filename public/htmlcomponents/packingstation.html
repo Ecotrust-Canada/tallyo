@@ -29,10 +29,8 @@
 
       <span ng-if="settings.thisfish_enabled && options.thisfishlist" ng-controller="ThisfishAddCtrl">
         <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
-        <!--<dropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></dropdown>-->
 
         <input-dropdown ng-show="!current.codes && show_element==='dropdown'" thelist="list.tf_codes"  config="the_config" on-select="SetCodes(value)"></input-dropdown>
-
 
         <span ng-show="current.codes">
           Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
@@ -44,10 +42,15 @@
       </span>
     </div>
 
-<hr ng-if="options.search_box">
+    <div ng-if="current.edit_box && options.enable_edit" ng-controller="FormSubmitCtrl" id="create_box_form">
+        <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
+    </div>
+
+    
     <div ng-if="options.search_box" ng-controller="SearchBoxCtrl" class="reprint_label select_object">
+      <hr>
       <div class="select_header" ng-class="{lot_chosen: hide_search}"
-           ng-click="hide_search = !hide_search">
+           ng-click="hide_search = !hide_search;boxes = null;">
         <span class="show_choices">Search</span> 
       </div>
       <div ng-hide="hide_search">
@@ -56,8 +59,12 @@
             <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
                    ng-model="search.internal_lot_code" id="filter_internal_lot_code">
           </div>
+          <div class="display_field">
+            <label for="filter_internal_lot_code">Supplier:</label>
+            <input-dropdown  id="is_field" thelist="list.harvester"  config="adddropdown" on-select="changeVal(value)"></input-dropdown>
+          </div>
           <div>
-            <input type="button" ng-click="ListFilteredItems(search.internal_lot_code)"  class="btn-blue"
+            <input type="button" ng-click="ListFilteredItems(search.internal_lot_code, search.harvester_code)"  class="btn-blue"
                    value="Search" id="reprint-search">
           </div>
         </div>
@@ -66,20 +73,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-    <div ng-if="current.edit_box && options.enable_edit" ng-controller="FormSubmitCtrl" id="create_box_form">
-        <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
-    </div>
-
-
-
 
   </div>
 

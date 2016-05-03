@@ -268,10 +268,16 @@ angular.module('scanthisApp.packingController', [])
 .controller('SearchBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
   $scope.hide_search = true;
 
-  $scope.ListFilteredItems = function(int_lot_code){
+  $scope.search = {};
+
+
+  $scope.ListFilteredItems = function(int_lot_code, harvester_code){
     var query = '?box_number=not.is.null';
     if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
       query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    if (harvester_code !== undefined && harvester_code !== null && harvester_code !== ''){
+      query += '&harvester_code=like.*' + harvester_code + '*';
     }
     query += '&order=timestamp.desc';
     var func = function(response){
@@ -284,6 +290,20 @@ angular.module('scanthisApp.packingController', [])
   $scope.EditBox = function(obj){
     $scope.current.collectionid = obj.box_number;
     //$scope.hide_search = true;
+  };
+
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
+
+  $scope.changeVal = function(value){
+    //console.log(value);
+    $scope.search.harvester_code = value.harvester_code;
   };
 
 
