@@ -15,6 +15,7 @@
           <span ng-switch-when="pieces">{{item[name]}} pcs</span>
           <span ng-switch-when="boxes">{{item[name]}} boxes</span>
           <span ng-switch-when="loin_num">{{item.loin_number.substring(6,10)}}</span>
+          <span ng-switch-when="full_supplier">{{item.fleet}} - {{item.supplier_group}} - {{item.supplier}}</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
         <td ng-if="config.button2 && !config.arg" 

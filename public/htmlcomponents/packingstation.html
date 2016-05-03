@@ -44,6 +44,36 @@
       </span>
     </div>
 
+<hr ng-if="options.search_box">
+    <div ng-if="options.search_box" ng-controller="SearchBoxCtrl" class="reprint_label select_object">
+      <div class="select_header" ng-class="{lot_chosen: hide_search}"
+           ng-click="hide_search = !hide_search">
+        <span class="show_choices">Search</span> 
+      </div>
+      <div ng-hide="hide_search">
+        <div class="show_choices">
+          <div class="display_field">
+            <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
+                   ng-model="search.internal_lot_code" id="filter_internal_lot_code">
+          </div>
+          <div>
+            <input type="button" ng-click="ListFilteredItems(search.internal_lot_code)"  class="btn-blue"
+                   value="Search" id="reprint-search">
+          </div>
+        </div>
+        <div id="box_search_table" class="itemsframe entries">
+          <bufferedscrolllist itemlist="boxes"  config="item2listconfig" update-fn="EditBox(str)"></bufferedscrolllist>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
     <div ng-if="current.edit_box && options.enable_edit" ng-controller="FormSubmitCtrl" id="create_box_form">
         <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
     </div>
@@ -154,6 +184,9 @@
 
 
 </div>
+
+
+
 
 
 

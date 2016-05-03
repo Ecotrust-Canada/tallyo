@@ -265,6 +265,31 @@ angular.module('scanthisApp.packingController', [])
 })
 
 
+.controller('SearchBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
+  $scope.hide_search = true;
+
+  $scope.ListFilteredItems = function(int_lot_code){
+    var query = '?box_number=not.is.null';
+    if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
+      query += '&internal_lot_code=like.*' + int_lot_code + '*';
+    }
+    query += '&order=timestamp.desc';
+    var func = function(response){
+      $scope.boxes = response.data;
+      $scope.search = {};
+    };
+    DatabaseServices.GetEntries('box_search', func, query);
+  };
+
+  $scope.EditBox = function(obj){
+    $scope.current.collectionid = obj.box_number;
+    //$scope.hide_search = true;
+  };
+
+
+})
+
+
 
 
 
@@ -609,14 +634,6 @@ angular.module('scanthisApp.packingController', [])
   $scope.selectedoption = 'no selected';
 
   $scope.the_config = 
-  /*{ 
-    limit: "10",
-    order: "-timestamp", 
-    arg: "codes", 
-    fields: ["label", "codes"]
-  };
-
-  $scope.dropdownconfig = */
   { id: 0, 
     title: "Search Labels", 
     limit: "5",
