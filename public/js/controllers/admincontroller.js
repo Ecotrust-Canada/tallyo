@@ -472,6 +472,16 @@ angular.module('scanthisApp.AdminController', [])
       return (item.lot_number  === lot.lot_number && item.station_code === stn.code);
     };
 
+    $scope.sum_info ={};
+    for (var k=0;k<$scope.sumStations.length;k++){
+      $scope.sum_info[$scope.sumStations[k].code]=
+        {
+          'weight_1': 0,
+          'pieces': 0,
+          'boxes':0
+        };
+    }
+
     for (var i=0;i<$scope.list.harvester_lot.length;i++){
       var lot = $scope.list.harvester_lot[i];
     
@@ -481,6 +491,9 @@ angular.module('scanthisApp.AdminController', [])
         var summary = fjs.select(cellfilter, $scope.list.lot_summary);
         if (summary.length>0){
           lot[stn.code].summary = JSON.parse(JSON.stringify(summary[0]));
+          if (summary[0].weight_1){$scope.sum_info[stn.code].weight_1 += parseFloat(summary[0].weight_1);}
+          if (summary[0].pieces){$scope.sum_info[stn.code].pieces += parseInt(summary[0].pieces);}
+          if (summary[0].boxes){$scope.sum_info[stn.code].boxes += parseInt(summary[0].boxes);}
         }
         var totals = fjs.select(cellfilter, $scope.list.totals_by_lot);
         if (totals.length>0){
@@ -515,6 +528,35 @@ angular.module('scanthisApp.AdminController', [])
           }                
         }
       }
+
+      for (var l=0;l<$scope.sumStations.length;l++){
+        var stn1 = $scope.sumStations[l];
+        if (l===0 && $scope.sum_info[stn1.code].weight_1){
+          $scope.sum_info.start_weight = $scope.sum_info[stn1.code].weight_1;
+        }
+        if (l>0){
+          if ($scope.sum_info[$scope.sumStations[l-1].code] && ($scope.sum_info[$scope.sumStations[l-1].code][$scope.station_info.trackBy])){
+            $scope.sum_info[stn1.code].prev = JSON.parse(JSON.stringify($scope.sum_info[$scope.sumStations[l-1].code][$scope.station_info.trackBy]));
+          }
+          if ($scope.sum_info[$scope.sumStations[l-1].code]){
+            if ($scope.sumStations[l].yield && $scope.sumStations[l].yield.prev){ 
+              var thesummary1 = $scope.sum_info[$scope.sumStations[l-1].code];
+              var prev1 = (thesummary1.weight_1 || 0);
+              var prevWeight1 = JSON.parse(JSON.stringify(prev1));
+              $scope.sum_info[stn1.code].prev_yield  = $scope.sum_info[stn1.code].weight_1/prevWeight1*100;
+            }
+            if ($scope.sumStations[l].yield && $scope.sumStations[l].yield.start){ 
+              $scope.sum_info[stn1.code].start_yield  = $scope.sum_info[stn1.code].weight_1/$scope.sum_info.start_weight*100;
+            } 
+          }                
+        }
+      }
+
+
+
+
+
+
 
       if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
         var index = arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number');

@@ -16,6 +16,60 @@
           </th>
         </tr>
 
+
+
+
+
+        <tr>
+          <td class="lot_column" valign="top">
+            <div class="display_field">
+              <div class="lot_label">
+                <label>Summary</label>
+              </div>
+            </div>
+          </td>      
+            
+          </td>
+          <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
+            <div ng-class="" 
+                 class="panel white card_header">
+               <span class="data">
+                 <span ng-if="sum_info[stn.code].boxes" class="card_bit boxes">
+                   <label>boxes</label>
+                   <span class="value">{{sum_info[stn.code].boxes}}</span>
+                 </span>  
+                 <span ng-if="sum_info[stn.code].weight_1" class="card_bit weight">
+                   <label>weight</label>
+                   <span class="value">
+                     <span>
+                       {{sum_info[stn.code].weight_1 | weightnum }}<sub>{{settings.entry_unit}}</sub>
+                     </span>  
+                   </span>
+                 </span>  
+                 <span ng-if="sum_info[stn.code].pieces" class="card_bit pieces">
+                   <label>pcs</label>
+                   <span class="value">{{sum_info[stn.code].pieces}}</span>
+                 </span>  
+                 <span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
+                   <label>yield.%</label>
+                   <span class="value">
+                     <span ng-if="sum_info[stn.code].prev_yield">{{ sum_info[stn.code].prev_yield.toFixed(0) }}</span>
+                     <span ng-if="sum_info[stn.code].start_yield">{{ sum_info[stn.code].start_yield.toFixed(0) }}</span>
+                   </span>
+                 </span>  
+               </span> 
+            </div>
+          </td>
+        </tr>
+
+
+
+
+
+
+
+
+
         <!-- tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit" -->
         <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit">
 
