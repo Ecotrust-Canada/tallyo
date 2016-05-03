@@ -36,9 +36,11 @@
                 <div ng-switch-when="end_date" class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
                 <div ng-switch-default class="field_val">{{lot[row.val]}}</div>
               </div>
-            </div>
-            <button class="bottomleft btn-light" 
+
+              <button class="bottomleft btn-light" 
                  ng-click="getAllData(lot.lot_number, lot.internal_lot_code)" >CSV</button>
+            </div>
+            
           </td>
           <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
             <div ng-class="{in_progress: lot[stn.code].in_progress, warn: cssWarn(lot, stn), ok: cssOk(lot, stn)}" 
