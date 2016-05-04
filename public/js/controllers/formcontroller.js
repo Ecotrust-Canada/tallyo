@@ -152,7 +152,7 @@ angular.module('scanthisApp.formController', [])
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
       }
-      else if ($scope.form[row.fieldname] === ''){
+      else if (row.required && $scope.form[row.fieldname] === ''){
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
       }

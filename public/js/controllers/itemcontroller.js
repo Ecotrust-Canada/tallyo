@@ -53,7 +53,7 @@ angular.module('scanthisApp.itemController', [])
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
-        timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout ||  500)
+        timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
       }).then(
         function successCallback(response) {
           if ($scope.options.truncate){
