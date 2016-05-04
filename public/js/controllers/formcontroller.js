@@ -353,11 +353,14 @@ angular.module('scanthisApp.formController', [])
     var patch = form;
     var func = function(response){
       for (var key in patch){
-        $scope.current[table][key] = response.data[0][key];
+        if ($scope.current[table]){
+          $scope.current[table][key] = response.data[0][key];
+        }        
         $scope.current.edit_box = false;
         $scope.form = {};
       }
       $scope.formchange = !$scope.formchange;
+      $scope.current.reload = !$scope.current.reload || false;
     };
     DatabaseServices.PatchEntry(table, patch, querystring, func);
 
@@ -365,7 +368,7 @@ angular.module('scanthisApp.formController', [])
 
   $scope.$watch('current.select_change', function(newValue, oldValue) {
     if ($scope.current.select_change !== undefined){
-      $scope.formchange=!$scope.formchange;
+      $scope.formchange=!$scope.formchange;      
     }
   });
 

@@ -129,12 +129,15 @@ angular.module('scanthisApp', [
 
 .controller('StationCtrl', function($scope, $http, $sce, DatabaseServices) {
 
+
   $scope.init = function(settings){
     $scope.station_code = settings.station_code;
     $scope.css_code = settings.css_code;
     $scope.processor = $scope.station_code.substring(0, 3);
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
+
+    $scope.states = (station_states[$scope.station_code] || {'state': 'none'});
 
 
     if(settings.onLabel){
@@ -345,20 +348,21 @@ angular.module('scanthisApp', [
         var actual_width = getViewportWidth();
         var min_width = width;
         var ratio = actual_width / min_width;
-        //if (ratio < 1) {
-          var percent = (ratio*100).toFixed(2);
+        var percent = (ratio*100).toFixed(2);
+        
           if (fullscreen === true){
-            document.body.style.zoom = percent + "%";
+            /*document.body.style.zoom = percent + "%";
               var el = window.document.documentElement
               ,rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen;
-              rfs.call(el);
+              rfs.call(el);*/
+              document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=' + ratio + ',maximum-scale=10,initial-scale=' + ratio);
           }
           if (fullscreen === false){
-            document.body.style.zoom = "100%";
+            /*document.body.style.zoom = "100%";
             document.body.style.zoom = percent + "%";
-            document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'initial-scale=1,minimum-scale=0,maximum-scale=10,user-scalable=yes');*/
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'minimum-scale=0,maximum-scale=10,initial-scale=' + ratio);
           }
-      //}
       $scope.the_width = width;
     }  
   };

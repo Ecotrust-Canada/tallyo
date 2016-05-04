@@ -29,10 +29,8 @@
 
       <span ng-if="settings.thisfish_enabled && options.thisfishlist" ng-controller="ThisfishAddCtrl">
         <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
-        <!--<dropdown ng-show="!current.codes && show_element==='dropdown'" itemlist="list.tf_codes" cfg="the_config" selectedoption="selectedoption" change-fn="SetCodes(selected)"></dropdown>-->
 
         <input-dropdown ng-show="!current.codes && show_element==='dropdown'" thelist="list.tf_codes"  config="the_config" on-select="SetCodes(value)"></input-dropdown>
-
 
         <span ng-show="current.codes">
           Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
@@ -48,8 +46,33 @@
         <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
     </div>
 
-
-
+    
+    <div ng-if="options.search_box" ng-controller="SearchBoxCtrl" class="reprint_label select_object">
+      <hr>
+      <div class="select_header" ng-class="{lot_chosen: hide_search}"
+           ng-click="hide_search = !hide_search;boxes = null;">
+        <span class="show_choices">Search</span> 
+      </div>
+      <div ng-hide="hide_search">
+        <div class="show_choices">
+          <div class="display_field">
+            <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
+                   ng-model="search.internal_lot_code" id="filter_internal_lot_code">
+          </div>
+          <div class="display_field">
+            <label for="filter_internal_lot_code">Supplier:</label>
+            <input-dropdown  id="is_field" thelist="list.harvester"  config="adddropdown" on-select="changeVal(value)"></input-dropdown>
+          </div>
+          <div>
+            <input type="button" ng-click="ListFilteredItems(search.internal_lot_code, search.harvester_code)"  class="btn-blue"
+                   value="Search" id="reprint-search">
+          </div>
+        </div>
+        <div id="box_search_table" class="itemsframe entries">
+          <bufferedscrolllist itemlist="boxes"  config="item2listconfig" update-fn="EditBox(str)"></bufferedscrolllist>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -154,6 +177,9 @@
 
 
 </div>
+
+
+
 
 
 

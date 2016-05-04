@@ -338,6 +338,8 @@ body{
   font-size: 18px;
 }
 /* hide text, show remove icon */
+#box_search_table table td:last-child,
+#print_labels_list table td:nth-last-child(2),
 .itemsframe.entries #list-2 table td.btn_action:nth-last-child(2),
 .itemsframe.entries table td.btn_action:last-child {
   /* Hide the text. */
@@ -356,7 +358,7 @@ body{
 .itemsframe table tr:last-child td {
   border-bottom: none;
 }
-/
+
 .itemtotals {
   padding: 12px 0 0 0;
 }
@@ -825,6 +827,7 @@ div[ng-view] {
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
+  height: 325px;
 }
 
 #admin_manage_lots table tr .lot-station-cell {
@@ -1046,7 +1049,7 @@ div[ng-view] {
   display: inline-block;
   box-sizing:border-box;
   margin: 4px 0 0 0;
-  width: 540px;
+  width: 540;
   height: 37px;
   padding: 0 5px;
   /*overflow: hidden;*/
@@ -1065,6 +1068,12 @@ div[ng-view] {
     max-height: 200px;
     overflow-y: scroll;
 }
+
+
+
+
+
+
 .input-dropdown .dropdown div {
     cursor: pointer;
     padding: 2px 5px;
@@ -1389,10 +1398,15 @@ div[ng-view] {
   box-sizing:border-box;
 }
 
+
+
 .itemsframe.entries #list-2 table td:nth-last-child(2),
 #print_labels_list table td:last-child {
   background-image: url(/images/print_icon.svg);
 }
+
+#box_search_table table td:last-child,
+#print_labels_list table td:nth-last-child(2),
 .itemsframe.entries #list-21 td:last-child {
   background-image: url(/images/edit_icon.svg);
 }
@@ -1401,6 +1415,7 @@ div[ng-view] {
   color: transparent;
 }
 */
+#box_search_table td,
 #print_labels_list td,
 #shipments_list td {
   white-space: nowrap;
@@ -1665,6 +1680,7 @@ div[ng-view] {
   width: 220px;
 }
 #form-23 .form_label,
+#form-27 .form_label,
 #form-7 .form_label,
 #form-8 .form_label {
   width: 120px;
@@ -1742,6 +1758,7 @@ div[ng-view] {
 #form-10 .field input[type=text] {
   width: 314px;
 }
+
 #create_box_form #form-0 .btn-orange,
 #create_box_form #form-24 .btn-orange {
   height: 44px;
@@ -1846,6 +1863,7 @@ div[ng-view] {
 #form-24 .form_label label,
 #form-20 .form_label label,
 #form-23 .form_label label,
+#form-27 .form_label label,
 .editform .form_label label,
 #form-5 .form_label label,
 #form-10 .form_label label,
@@ -1983,7 +2001,7 @@ div[ng-view] {
   background-position: center center;
 }
 input[name^=weight] {
-  width: 225px;
+  width: 206px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -2114,7 +2132,7 @@ input[name^=weight]::after {
 }
 
 .pictogram_btns > span.manual_weight {
-  background-image: url(/images/manual_input_icon.svg);
+  background-image: url(/images/scale_icon.svg);
 }
 
 .pictogram_btns span + span, 
@@ -2122,6 +2140,7 @@ input[name^=weight]::after {
 .summary span + span { 
   border-left: 1px solid #ccccca;
 }
+
 
 .form_buttons .btn-orange {
   display: inline-block;
@@ -2134,9 +2153,16 @@ input[name^=weight]::after {
   left: 178px;
   min-width: 242px;
 }
+
+#form-27 .form_buttons .btn-orange{
+  width: auto;
+  color: #FFFFFF;
+}
+
 #form-8 .form_buttons .btn-orange,
 #form-7 .form_buttons .btn-orange,
 #form-23 .form_buttons .btn-orange,
+#form-27 .form_buttons .btn-orange,
 #form-20 .form_buttons .btn-orange {
   right: 16px;
 }
@@ -2195,6 +2221,7 @@ input[name^=weight]::after {
 }
 #radio-7-grade, 
 #radio-23-grade, 
+#radio-27-grade,
 #radio-20-grade, 
 #radio-8-grade {
   width: 360px;
@@ -2231,11 +2258,13 @@ input[name^=weight]::after {
 
 #radio-20-grade.toggle-group-container label,
 #radio-23-grade.toggle-group-container label,
+#radio-27-grade.toggle-group-container label,
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
 #radio-23-state.toggle-group-container label,
+#radio-27-state.toggle-group-container label,
 #radio-20-state.toggle-group-container label {
   width: 80px;
 }
@@ -2307,6 +2336,7 @@ input[name^=weight]::after {
 }
 
 #radio-23-grade.toggle-group-container input:checked + span,
+#radio-27-grade.toggle-group-container input:checked + span,
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
@@ -2314,6 +2344,7 @@ input[name^=weight]::after {
 }
 
 #radio-23-state.toggle-group-container input:checked + span,
+#radio-27-state.toggle-group-container input:checked + span,
 #radio-20-state.toggle-group-container input:checked + span { 
   width:80px;
 }
@@ -3014,6 +3045,10 @@ md-datepicker {
   width: 450px;
 }
 
+#is_field .dropdown-container{
+  width: 342px;
+}
+
 .hr_marg{
   margin-top:21px;
   margin-bottom:10px;
@@ -3030,5 +3065,8 @@ md-datepicker {
   position: relative;
   margin-top: -20px;
   margin-bottom: 40px;
+}
+.blue_grey{
+  background-color: rgba(18, 89, 116, 0.1);
 }
 

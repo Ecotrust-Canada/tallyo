@@ -35,7 +35,7 @@
             <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'">
               <input 
                 ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text" autocomplete="off"
-                ng-model="scale[row.fieldname]" ng-focus="weigh(row);pollFn({field: row.fieldname})" 
+                ng-model="scale[row.fieldname]" ng-focus="pollFn({field: 'toggle_state'});scalefn()" 
                 ng-required="{{row.required || false}}" negative>
             </span>
             <span ng-if="!row.scale || row.scale==='off'">
@@ -135,19 +135,9 @@
       <div class="pictogram_btns">
         <span ng-click="Reset()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
         <span ng-if="config.startpolling && poll_scale" 
-              ng-click="pollFn({field: 'toggle_state'});scalefn()" id="manual_input_{{config.station_id}}" class="manual_weight">Manual Input</span>
-        <span ng-if="config.startpolling && !poll_scale" 
-              ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale On</span>
-        <!-- <span ng-if="options.print_switch && current.to_print===true" 
-              ng-click="PrintSwitch()" 
-              value="Printing Off" 
-              id="print_switch" 
-              class="print_switch green_text">ON</span>
-        <span ng-if="options.print_switch && current.to_print===false" 
-              ng-click="PrintSwitch()" 
-              value="Printing Off" 
-              id="print_switch" 
-              class="print_switch red_text">OFF</span> -->
+              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="manual_weight green_text">Scale ON</span>
+        <span ng-if="config.startpolling && !poll_scale" class="manual_weight red_text" 
+              ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
       </div>
       <input type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
              value="{{config.submit||'Submit'}}" id="submit-{{config.id}}" ng-disabled="form_enabled===false">

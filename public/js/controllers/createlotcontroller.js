@@ -277,6 +277,9 @@ angular.module('scanthisApp.createlotController', [])
 //reprint.html - get list of loins for station, reprint function
 .controller('ReprintCtrl', function($scope, $injector, DatabaseServices) {
 
+  $scope.current.edit_box=false;
+  $scope.current.reload = false;
+
   $scope.ListAllItems = function(){
     var query = '?station_code=eq.' + $scope.station_code + '&order=timestamp.desc';
     var func = function(response){
@@ -285,9 +288,9 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
 
-  $scope.Reprint = function(loin_number, lot_number){
+  $scope.Reprint = function(obj, lot_number){
     if($scope.onLabel){
-      var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
+      var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + obj.loin_number;
       var func = function(response){
         var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
         var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
@@ -297,7 +300,7 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_with_info', func, query);      
     }
   };
-  $scope.ListAllItems();
+  //$scope.ListAllItems();
 
   $scope.ListFilteredItems = function(loin_number, int_lot_code){
     var query = '?station_code=eq.' + $scope.station_code;
@@ -315,6 +318,19 @@ angular.module('scanthisApp.createlotController', [])
     };
     DatabaseServices.GetEntries('loin_with_info', func, query, 'fifty');
   };
+
+  $scope.EditLoin = function(obj){
+    $scope.current.edit_box = true;
+    $scope.current.collectionid = obj.loin_number;
+  };
+
+  $scope.$watch('current.reload', function(newValue, oldValue) {
+    if ($scope.current.reload !== undefined){
+      $scope.ListFilteredItems($scope.current.collectionid);
+    }
+  });
+
+
 
 })
 

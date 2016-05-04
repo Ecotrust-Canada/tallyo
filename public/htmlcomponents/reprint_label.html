@@ -18,6 +18,13 @@
     </div>
   </div>
   <div id="print_labels_list" class="itemsframe entries">
-    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str)"></bufferedscrolllist>
+    <bufferedscrolllist itemlist="items"  config="itemlistconfig" update-fn="Reprint(str)" second-fn="EditLoin(str)"></bufferedscrolllist>
   </div>
+
+
+  <div ng-if="current.edit_box" ng-controller="FormSubmitCtrl" id="create_box_form">
+      <entryform config="addform" formchange="formchange" submit-fn="SubmitEdit(form)"></entryform>
+  </div>
+
+
 </div>

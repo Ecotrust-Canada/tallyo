@@ -10,7 +10,9 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.scan = {};
   $scope.entry.loin = {};
   $scope.entry.box = {};
-  $scope.current.to_print = true;
+  if ($scope.states.printer_on===true || $scope.states.printer_on===false){
+    $scope.current.to_print = $scope.states.printer_on;
+  }
   //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
@@ -20,9 +22,13 @@ angular.module('scanthisApp.itemController', [])
   $scope.current.addnew = false;
 
   $scope.PrintSwitch = function(){
-    $scope.current.to_print = !$scope.current.to_print;
+    $http.get('/toggle_printer/' + $scope.station_code).then(function successCallback(response) {
+      $scope.current.to_print = response.data;      
+    }, function errorCallback(response) {
+      console.log(response);
+    });
+    
   };
-  
 
 
   $scope.startPolling = function(fieldName) {
@@ -34,6 +40,10 @@ angular.module('scanthisApp.itemController', [])
       $scope.startPolling($scope.scanform.startpolling);
       return;
     }
+    if (fieldName === 'set_off'){
+      $scope.scaleon = false;
+      return;
+    }
     // if no scale url, or stop command is set, or scale is 'off' exit
     if (!$scope.scaleURL || fieldName==='stop' || !$scope.scaleon) {
       return;
@@ -43,7 +53,7 @@ angular.module('scanthisApp.itemController', [])
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
-        timeout: 400
+        timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout ||  500)
       }).then(
         function successCallback(response) {
           if ($scope.options.truncate){
