@@ -152,6 +152,7 @@ angular.module('scanthisApp.formController', [])
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
       }
+      // only check for empty string is field is also required
       else if (row.required && $scope.form[row.fieldname] === ''){
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
