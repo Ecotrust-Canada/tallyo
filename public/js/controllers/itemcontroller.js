@@ -67,7 +67,7 @@ angular.module('scanthisApp.itemController', [])
           //alert('once');
           toastr.error('cannot connect to scale');
     
-          //$scope.stopPolling();
+          $scope.stopPolling();
           //var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           //if(thediv){
           // $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
