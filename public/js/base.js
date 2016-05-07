@@ -137,8 +137,6 @@ angular.module('scanthisApp', [
     $scope.title = settings.title;
     $scope.station_info = settings.station_info;
 
-    $scope.states = (station_states[$scope.station_code] || {'state': 'none'});
-
 
     if(settings.onLabel){
       $scope.onLabel = settings.onLabel;
