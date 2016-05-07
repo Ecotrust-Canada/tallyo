@@ -2132,6 +2132,10 @@ input[name^=weight]::after {
 }
 
 .pictogram_btns > span.manual_weight {
+  background-image: url(/images/manual_input_icon.svg);
+}
+
+.pictogram_btns > span.scale_on {
   background-image: url(/images/scale_icon.svg);
 }
 
