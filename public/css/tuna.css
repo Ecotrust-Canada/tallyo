@@ -2226,31 +2226,34 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
+#radio-19-grade,
+#radio-17-grade,
 #radio-0-grade,
 #radio-24-grade,
 #radio-9-grade {
   width: 316px;
 }
+
 #radio-0-size,
 #radio-24-size {
   width: 315px;
 }
-#radio-19-grade,
-#radio-18-grade,
-#radio-17-grade {
+
+#radio-18-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
+#radio-17-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
-#radio-24-grade.toggle-group-container label,
-#radio-17-grade.toggle-group-container label {
+#radio-24-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
 }
+
 #radio-0-size.toggle-group-container label,
 #radio-24-size.toggle-group-container label {
   width: 105px;

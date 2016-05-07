@@ -38,10 +38,11 @@
                 ng-model="scale[row.fieldname]" ng-focus="pollFn({field: 'toggle_state'});scalefn()" 
                 ng-required="{{row.required || false}}" negative>
             </span>
-            <span ng-if="!row.scale || row.scale==='off'">
-              <!--<input name="{{row.fieldname}}" type="number" autocomplete="off"
-                ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative>-->
+            <span ng-if="row.scale==='off'">
                 <input  name="{{row.fieldname}}" autocomplete="off" type="number" ng-model="form[row.fieldname]" autodecimal="{{config.autodecimal || 0}}" ng-required="{{row.required || false}}" negative/>
+            </span>
+            <span ng-if="!row.scale">
+                <input  name="{{row.fieldname}}" autocomplete="off" type="number" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative/>
             </span>
           </span>
 

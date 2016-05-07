@@ -53,6 +53,9 @@ angular.module('scanthisApp.itemController', [])
           if ($scope.options.truncate){
             $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
           }
+          else if ($scope.options.decimal){
+            $scope.scale[fieldName] = response.data.value.toFixed($scope.options.decimal);
+          }
           else{
             $scope.scale[fieldName] = response.data.value.toFixed(3);
           }
