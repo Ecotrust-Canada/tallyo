@@ -319,7 +319,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.boxes = response.data;
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+    var query = '?shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number + '&harvester_code=eq.' + $scope.current.harvester.harvester_code;
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
   };
 
@@ -327,7 +327,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.included = response.data;
     };
-    var query = '?shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number + '&order=timestamp.desc';
+    var query = '?shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number + '&harvester_code=eq.' + $scope.current.harvester.harvester_code + '&order=timestamp.desc';
     DatabaseServices.GetEntries('box_with_info', func, query, 'hundred');
   };
 
@@ -348,7 +348,7 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
-    if ($scope.current.shipping_unit && $scope.current.shipping_unit.shipping_unit_number !== undefined){
+    if ($scope.current.shipping_unit && $scope.current.harvester){
       console.log('called');
         $scope.ListBoxes();
         $scope.ListAllBoxes();
