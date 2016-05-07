@@ -218,6 +218,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.formchange = !$scope.formchange;
       $scope.current.harvester = (response.data[0] || response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
       $scope.list.harvester.push($scope.current.harvester);
     };
     DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
@@ -256,6 +257,7 @@ angular.module('scanthisApp.receivingController', [])
         return value.harvester_code === selected;
       });
      $scope.current.harvester = filtered[0];
+     $scope.current.itemchange = !$scope.current.itemchange;
     $scope.addinfo = false;
   };
 
@@ -295,17 +297,76 @@ angular.module('scanthisApp.receivingController', [])
   
   $scope.MakeBox = function(entry){
     var func = function(response){
-      var values = response.data[0];
-      values.origin = $scope.current.harvester.supplier;
-      if($scope.onLabel){
+      $scope.current.itemchange = !$scope.current.itemchange;
+      //var values = response.data[0];
+      //values.origin = $scope.current.harvester.supplier;
+      /*if($scope.onLabel){
         var data = dataCombine(values, $scope.onLabel.qr);
         var labels = ArrayFromJson(values, $scope.onLabel.print);
         console.log(data, labels);
         $scope.printLabel(data, labels);
-      }
+      }*/
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
 })
+
+.controller('NoLabelTotalCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.istotal = true;
+
+  $scope.ListBoxes = function(){
+    var func = function(response){
+      $scope.list.boxes = response.data;
+    };
+    var query = '?shipping_unit_number=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+    DatabaseServices.GetEntries('shipment_summary_more', func, query);
+  };
+
+  $scope.ListAllBoxes = function(){
+    var func = function(response){
+      $scope.list.included = response.data;
+    };
+    var query = '?shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number + '&order=timestamp.desc';
+    DatabaseServices.GetEntries('box_with_info', func, query, 'hundred');
+  };
+
+
+  $scope.totallistconfig = 
+  { id: 11,    
+    cssclass: "fill small", 
+    fields: ["size_grade", "weight", "boxes"]
+  };
+
+
+  $scope.itemlistconfig = 
+  { id: 11,    
+    cssclass: "fill small", 
+    headers: ["Grade", "Size", "weight", ""],
+    fields: ["grade", "size", "weight"], 
+    button: "remove"
+  };
+
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.shipping_unit && $scope.current.shipping_unit.shipping_unit_number !== undefined){
+      console.log('called');
+        $scope.ListBoxes();
+        $scope.ListAllBoxes();
+
+    }
+  });
+
+  $scope.removeBox = function(obj){
+    var query = '?box_number=eq.' + obj.box_number;
+    var func = function(response){
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.RemoveEntry('box', query, func);
+  };
+
+
+})
+
+
 
 ;
