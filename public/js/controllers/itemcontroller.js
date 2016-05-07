@@ -160,6 +160,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.MakeItemScanEntry = function(form){
+    console.log(form);
     var table = $scope.station_info.itemtable.split('_')[0];
     AddtoEntryNonFormData($scope, table);
     AddtoEntryNonFormData($scope, 'scan');

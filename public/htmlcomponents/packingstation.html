@@ -76,7 +76,7 @@
 
   </div>
 
-  <div class="scanform" ng-if="!options.qrform" >
+  <div class="scanform" ng-if="!options.qrform && !current.no_label" >
     <fieldset ng-disabled="formdisabled">
       <form ng-submit="PutObjInContainer(input.code);" >
         <div class="form_row">
@@ -122,6 +122,18 @@
       </form>
     </fieldset>
   </div>
+
+
+  <div ng-if="current.no_label" id="unlabelled_input" ng-controller="InternalAddCtrl">
+    <hr>
+    <fieldset ng-disabled="formdisabled">
+      <entryform submit-fn="CheckBoxExists(form)" config="scanform" list2="list.supplier"></entryform>
+    </fieldset>
+  </div>
+
+
+  <button ng-if="options.unlabelled_from !== undefined && !current.no_label" ng-click="current.no_label=!current.no_label" class="btn-blue">No Label</button>
+  <button ng-if="options.unlabelled_from !== undefined && current.no_label" ng-click="current.no_label=!current.no_label" class="btn-blue">Barcode</button>
 
 
   <div id="overwrite">

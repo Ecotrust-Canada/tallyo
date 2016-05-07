@@ -280,6 +280,7 @@ angular.module('scanthisApp.receivingController', [])
             $scope.entry.box.grade = formrow.grade; 
             $scope.entry.box.size = formrow.size;
             $scope.entry.box.weight = formrow.weight;
+            $scope.entry.box.station_code = $scope.station_code;
 
             for (var i=1;i<=formrow.num_boxes;i++){
               var entry = JSON.parse(JSON.stringify($scope.entry.box));

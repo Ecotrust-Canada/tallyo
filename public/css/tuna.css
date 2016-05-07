@@ -1935,6 +1935,7 @@ div[ng-view] {
 #form-21 input[type="text"]{
   width: 250px;
 }
+#form-28 .styled-dropdown,
 #form-11 .styled-dropdown {
   width: 258px;
 }
@@ -2894,6 +2895,7 @@ span.switch_option.active {
   padding: 15px 6px 0 6px;
 }
 */
+#unlabelled_input .fieldsetrepeat .repeatrow,
 #receivingprintlabel .fieldsetrepeat .repeatrow {
   margin: 0;
   padding: 0 0 10px 0;
