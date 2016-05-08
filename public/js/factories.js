@@ -3,14 +3,11 @@
 /**
  * Defines what to when the database API call returns an error.
  */
-var handleDbError = function(response) {
-  console.log(response);
-  alert(response.statusText + 'no database connection');
-}
+
 /**
  * Wraps a callback function with a non-zero length check. Alert in the case of a zero lenght argument is passed.
  */
-, nonzeroLengthCheck = function(cb, onErr) {
+var nonzeroLengthCheck = function(cb, onErr) {
   return function(response) {
     if (response.data.length > 0) {
       cb(response);
@@ -38,7 +35,7 @@ limitHeaders.twenty = {headers: {'Range-Unit': 'items', 'range': '0-19'}};
 
 angular.module('scanthisApp.factories', [])
 
-.factory('DatabaseServices', function($http) {
+.factory('DatabaseServices', function($http, toastr) {
 
   var databaseurl = globalurl;
 
@@ -131,6 +128,11 @@ angular.module('scanthisApp.factories', [])
       patch[table_info.field] = newid;
       $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func), handleDbError);
     };
+  };
+
+  var handleDbError = function(response) {
+    console.log(response);
+    toastr.error('no database connection');
   };
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
