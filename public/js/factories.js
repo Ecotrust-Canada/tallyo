@@ -5,7 +5,7 @@
  */
 var handleDbError = function(response) {
   console.log(response);
-  alert(response.statusText);
+  alert(response.statusText + 'no database connection');
 }
 /**
  * Wraps a callback function with a non-zero length check. Alert in the case of a zero lenght argument is passed.
