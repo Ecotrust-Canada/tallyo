@@ -65,6 +65,8 @@ services:
       - amanda1
     networks:
       - back-tier
+    ports:
+      - "80:80"
 
 volumes:
   pgdatabase:

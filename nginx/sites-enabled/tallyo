@@ -1,6 +1,6 @@
 server {
 
-    listen 80;
+    listen 80 default_server;
     server_name postgrest-proxy;
     charset utf-8;
 
@@ -8,7 +8,10 @@ server {
     #    alias /static;
     #    autoindex on;
     #}
-
+    location /tmp {
+         alias /tmp;
+         autoindex on;
+    }
     location / {
         proxy_pass http://postgrest:3000;
         proxy_set_header Host $host;
