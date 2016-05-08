@@ -225,6 +225,7 @@ angular.module('scanthisApp', [
     if (settings.dropdowns){
       $scope.collectiondropdown = dropdownconfigs[settings.dropdowns.collectiondropdown];
       $scope.adddropdown = dropdownconfigs[settings.dropdowns.adddropdown];
+      $scope.adddropdown2 = dropdownconfigs[settings.dropdowns.adddropdown2];
     }
     
     if(settings.lists){

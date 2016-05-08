@@ -5,13 +5,19 @@
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>    
   </div>
 
-  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Start New Lot</button>
+  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Change Lot</button>
   <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button></div>
+
+  
+
+  <div ng-controller="NewLotCtrl" ng-show="showforms" class="select_object">
+
+  <input-dropdown  thelist="list.lot"  config="adddropdown2" on-select="SetLot(value);$parent.showforms=!showforms"></input-dropdown>
+
 
   <setshipmentinfo ng-show="showforms"></setshipmentinfo>
   <setharvesterinfo ng-show="showforms"></setharvesterinfo>
 
-  <div ng-controller="NewLotCtrl" ng-show="showforms" class="select_object">
     <div class="select_header">
        <span class="show_choices">Set Lot Code</span>
     </div> 
