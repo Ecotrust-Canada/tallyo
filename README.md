@@ -52,6 +52,7 @@ then run:
 ```
 db-migrate up -e [environment name]
 ```
+[environment name] is env by default, specified as a key in the database config JSON.
 
 Database should now have correct schema
 

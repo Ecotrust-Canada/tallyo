@@ -8,10 +8,12 @@ RUN npm install -g bower db-migrate db-migrate-pg
 
 RUN mkdir /opt && mkdir /opt/tallyo && cd /opt/tallyo
 RUN echo "flush cache1"
-ADD . /opt/tallyo/scanthis
+
+#ADD . /opt/tallyo/scanthis
+RUN mkdir -p /opt/tallyo/scanthis
 WORKDIR /opt/tallyo/scanthis
 
-RUN npm install --production && bower install --allow-root \
-  && cp -a template_database.json database.json
+#RUN npm install --production && bower install --allow-root \
+#  && cp -a template_database.json database.json
 
 CMD /bin/ash

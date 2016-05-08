@@ -180,6 +180,7 @@ angular.module('scanthisApp', [
       $scope.printString = settings.printString;
       var generatePrintLabel = function(stringFunc) {
         return function(codeString, fieldarray) {
+          console.log(':):):)');
           $http({
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
