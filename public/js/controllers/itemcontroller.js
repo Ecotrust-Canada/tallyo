@@ -10,9 +10,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.scan = {};
   $scope.entry.loin = {};
   $scope.entry.box = {};
-  if ($scope.states.printer_on===true || $scope.states.printer_on===false){
-    $scope.current.to_print = $scope.states.printer_on;
-  }
+  $scope.current.to_print = true;
   //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
@@ -22,11 +20,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.current.addnew = false;
 
   $scope.PrintSwitch = function(){
-    $http.get('/toggle_printer/' + $scope.station_code).then(function successCallback(response) {
-      $scope.current.to_print = response.data;      
-    }, function errorCallback(response) {
-      console.log(response);
-    });
+    $scope.current.to_print = $scope.current.to_print;
     
   };
 
@@ -58,6 +52,9 @@ angular.module('scanthisApp.itemController', [])
         function successCallback(response) {
           if ($scope.options.truncate){
             $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
+          }
+          else if ($scope.options.decimal){
+            $scope.scale[fieldName] = response.data.value.toFixed($scope.options.decimal);
           }
           else{
             $scope.scale[fieldName] = response.data.value.toFixed(3);
@@ -163,6 +160,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.MakeItemScanEntry = function(form){
+    console.log(form);
     var table = $scope.station_info.itemtable.split('_')[0];
     AddtoEntryNonFormData($scope, table);
     AddtoEntryNonFormData($scope, 'scan');

@@ -9,6 +9,7 @@ angular.module('scanthisApp.packingController', [])
   $scope.input = {};
   $scope.current.addnew = false;
   $scope.current.select_change = false;
+  $scope.current.no_label = false;
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
@@ -304,6 +305,72 @@ angular.module('scanthisApp.packingController', [])
   $scope.changeVal = function(value){
     //console.log(value);
     $scope.search.harvester_code = value.harvester_code;
+  };
+
+
+})
+
+
+.controller('InternalAddCtrl', function($scope, $http, DatabaseServices) {
+
+
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.supplier = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor + '&order=serial_id.desc';
+
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
+
+
+  $scope.CheckBoxExists = function(form){
+    console.log(form);
+    if (form){
+      var supplier = JSON.parse(form.harvester_obj);
+      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + supplier.harvester_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
+      console.log(query);
+      var func = function(response){
+        console.log(response.data);
+        if (response.data.length > 0){
+          $scope.PutObjInContainer(response.data[0].box_number);
+        }
+        else{
+          console.log('nope');
+          var entry = {};
+          entry.grade = form.grade; 
+          entry.size = form.size;
+          entry.weight = form.weight;
+          entry.harvester_code = supplier.harvester_code;
+          entry.lot_number = $scope.current.collectionid;
+          $scope.MakeBox(entry);
+        }
+      };
+      DatabaseServices.GetEntries('inventory_all', func, query);
+    }
+    
+  }
+
+
+  $scope.MakeBox = function(entry){
+    var func = function(response){
+      console.log(response.data);
+      $scope.MakeScan(response.data.box_number);
+    };
+    DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
+  };
+
+  $scope.MakeScan = function(id){
+    var entry = {};
+    entry.box_number = id;
+    entry.station_code = $scope.station_code;
+    entry.lot_number = $scope.current.collectionid;
+    var func = function(response){
+      console.log(response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);
   };
 
 

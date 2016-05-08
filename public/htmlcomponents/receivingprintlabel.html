@@ -3,9 +3,19 @@
     <setharvesterinfo></setharvesterinfo>
 
     <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
-        <span class="select_header">Print Labels</span>
+        <span class="select_header">Add boxes</span>
        <fieldsetrepeat submit-fn="SubmitForm(choices);" config="scanform"></fieldsetrepeat>
     </div>
+</div>
+
+
+<div class="panel grey not" ng-controller="NoLabelTotalCtrl">
+	<div class="itemsframe entries">
+    <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="removeBox(str)"></bufferedscrolllist>
+  </div>
+  <div class="itemtotals">
+  	<list itemlist="list.boxes"  config="totallistconfig" istotal="istotal" ></list>
+  </div>
 </div>
 
 

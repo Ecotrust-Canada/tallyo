@@ -1935,6 +1935,7 @@ div[ng-view] {
 #form-21 input[type="text"]{
   width: 250px;
 }
+#form-28 .styled-dropdown,
 #form-11 .styled-dropdown {
   width: 258px;
 }
@@ -2132,6 +2133,10 @@ input[name^=weight]::after {
 }
 
 .pictogram_btns > span.manual_weight {
+  background-image: url(/images/manual_input_icon.svg);
+}
+
+.pictogram_btns > span.scale_on {
   background-image: url(/images/scale_icon.svg);
 }
 
@@ -2226,31 +2231,34 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
+#radio-19-grade,
+#radio-29-grade,
 #radio-0-grade,
 #radio-24-grade,
 #radio-9-grade {
   width: 316px;
 }
+
 #radio-0-size,
 #radio-24-size {
   width: 315px;
 }
-#radio-19-grade,
-#radio-18-grade,
-#radio-17-grade {
+
+#radio-18-grade {
   width: 237px;
 }
 #radio-19-grade.toggle-group-container label,
 #radio-18-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
+#radio-29-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
-#radio-24-grade.toggle-group-container label,
-#radio-17-grade.toggle-group-container label {
+#radio-24-grade.toggle-group-container label {
   width: 79px;
 }
 #radio-18-pieces.toggle-group-container label {
   width: 46px;
 }
+
 #radio-0-size.toggle-group-container label,
 #radio-24-size.toggle-group-container label {
   width: 105px;
@@ -2354,7 +2362,7 @@ input[name^=weight]::after {
 #radio-0-grade.toggle-group-container input:checked + span,
 #radio-24-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
-#radio-17-grade.toggle-group-container input:checked + span { 
+#radio-29-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
 #radio-0-size.toggle-group-container input:checked + span,
@@ -2887,6 +2895,7 @@ span.switch_option.active {
   padding: 15px 6px 0 6px;
 }
 */
+#unlabelled_input .fieldsetrepeat .repeatrow,
 #receivingprintlabel .fieldsetrepeat .repeatrow {
   margin: 0;
   padding: 0 0 10px 0;
