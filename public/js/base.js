@@ -33,7 +33,7 @@ angular.module('scanthisApp', [
         maxOpened: 4,
         positionClass: 'toast-top-full-width',
         preventOpenDuplicates: false,
-        timeOut: 700
+        timeOut: 1200
     });
 })
 
@@ -224,6 +224,7 @@ angular.module('scanthisApp', [
     if (settings.dropdowns){
       $scope.collectiondropdown = dropdownconfigs[settings.dropdowns.collectiondropdown];
       $scope.adddropdown = dropdownconfigs[settings.dropdowns.adddropdown];
+      $scope.adddropdown2 = dropdownconfigs[settings.dropdowns.adddropdown2];
     }
     
     if(settings.lists){

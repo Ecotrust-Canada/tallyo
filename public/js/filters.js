@@ -7,8 +7,8 @@ angular.module('scanthisApp.filters', [])
 .filter('stringtodate', function() {
   return function(input) {
     if(input){
-      var day = input.substring(0,19);
-      return new Date(day);
+      //var day = input.substring(0,19);
+      return new Date(input);
     }
   };
 })

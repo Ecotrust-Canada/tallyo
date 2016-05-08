@@ -21,6 +21,12 @@
       <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
     </div>
 
+    <div ng-controller="CompleteLotCtrl">
+      <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" 
+              ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
+              ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
+    </div>
+
     <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsCtrl" id="prev_station_totals">
       <label>Previous  Station:</label><list ng-if="item2listconfig" itemlist="totals"  
           config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span  
@@ -61,11 +67,6 @@
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
     <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
-  </div>
-  <div ng-controller="CompleteLotCtrl">
-    <button ng-if="options.completelot  && current.collectionid && current.collectionid!=='no selected'" 
-            ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
-            ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
   </div>
 
   <div class="delete_dialogue" id="delete{{station_code}}">
