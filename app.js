@@ -1,5 +1,6 @@
 "use strict";
 
+var http = require('http');
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
@@ -75,7 +76,7 @@ app.use(function(err, req, res, next) {
 setInterval(function(){
   http.request({
     host:'postgrest',
-    port:'3000'
+    port:'3000',
     path:'/'
   }, function(){
 
