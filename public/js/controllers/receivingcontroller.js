@@ -296,20 +296,35 @@ angular.module('scanthisApp.receivingController', [])
     }    
   };
   
-  $scope.MakeBox = function(entry){
+  /*$scope.MakeBox = function(entry){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
-      //var values = response.data[0];
-      //values.origin = $scope.current.harvester.supplier;
-      /*if($scope.onLabel){
-        var data = dataCombine(values, $scope.onLabel.qr);
-        var labels = ArrayFromJson(values, $scope.onLabel.print);
-        console.log(data, labels);
-        $scope.printLabel(data, labels);
-      }*/
+
+    };
+    DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
+  };*/
+
+  $scope.MakeBox = function(entry){
+    var func = function(response){
+      console.log(response.data);
+      $scope.MakeScan(response.data[0].box_number);
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
+
+  $scope.MakeScan = function(id){
+    var entry = {};
+    entry.box_number = id;
+    entry.station_code = $scope.station_code;
+    //entry.lot_number = $scope.current.collectionid;
+    var func = function(response){
+      //console.log(response.data);
+      $scope.current.itemchange = !$scope.current.itemchange;
+    };
+    DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);
+  };
+
+
 })
 
 .controller('NoLabelTotalCtrl', function($scope, $http, DatabaseServices, toastr) {
@@ -356,6 +371,16 @@ angular.module('scanthisApp.receivingController', [])
 
     }
   });
+
+  $scope.RemoveScan = function(obj){
+    var itemid = obj.box_number;
+    var query = '?box_number=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+        $scope.removeBox(obj);
+      
+    };
+    DatabaseServices.RemoveEntry('scan', query, func);
+  };
 
   $scope.removeBox = function(obj){
     var query = '?box_number=eq.' + obj.box_number;
