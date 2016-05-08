@@ -45,11 +45,7 @@ services:
     depends_on:
       - postgrest
   amanda2:
-    #build:
-    #  dockerfile: deploy/Dockerfile-tallyo
-    #  context: .
     image: tallyo_amanda1
-#    command: sleep 10000000
     command: node app app_config_am2
     volumes:
 #      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
@@ -61,6 +57,15 @@ services:
     restart: always
     depends_on:
       - postgrest
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    volumes_from:
+      - amanda1
+    networks:
+      - back-tier
+
 volumes:
   pgdatabase:
     driver: local
