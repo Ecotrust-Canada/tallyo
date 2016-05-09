@@ -13,10 +13,10 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.ListSuppliers = function(){
     var func = function(response){
-      $scope.list.supplier = response.data;
+      $scope.list.lotin = response.data;
     };
-    var query = '?processor_code=eq.' + $scope.processor;
-    DatabaseServices.GetEntries('supplier', func, query);
+    var query = '?lot_in=is.null';
+    DatabaseServices.GetEntries('lot', func, query);
   };
   $scope.ListSuppliers();
 

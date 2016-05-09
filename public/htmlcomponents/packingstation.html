@@ -10,7 +10,7 @@
       </div> 
       <div class="show_choices" ng-hide="current.collectionid">
         <div ng-controller="FormSubmitCtrl" id="create_box_form">
-          <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)" list2="list.supplier"></entryform>
+          <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)" list1="list.lotin"></entryform>
         </div>
         <div  ng-controller="CollectionTableDropDownCtrl">
           <input-dropdown  thelist="list.collection"  config="collectiondropdown" on-select="changeFn(value)" limit="10"></input-dropdown>

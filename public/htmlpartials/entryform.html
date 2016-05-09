@@ -90,7 +90,7 @@
               <!--options from another database table-->
               <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]">
                 <option value="">-- select --</option>
-                <option ng-repeat="option in list1" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
+                <option ng-repeat="option in list1" value={{option|json_lot}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
               </select>
               <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
                 <option value="">-- select --</option>
