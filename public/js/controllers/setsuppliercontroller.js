@@ -208,7 +208,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
 
-      if ($scope.current.harvester.traceable){
+      if ($scope.current.harvester && $scope.current.harvester.traceable){
         $scope.thisfishCode($scope.current.lot.lot_number);
       }
       else{
@@ -267,12 +267,14 @@ angular.module('scanthisApp.setsupplierController', [])
       $http.get('/server_time').then(function successCallback(response) {
         var the_date = response.data.timestamp;
         var date = moment(the_date).utcOffset(response.data.timezone).format();
-        var harvester_code = $scope.current.harvester.harvester_code;
+        if (!$scope.options.no_harvester){
+          var harvester_code = $scope.current.harvester.harvester_code;
+        }
         var ship_code = $scope.current.shipping_unit.shipping_unit_number;
         var ref_num = $scope.current.shipping_unit.po_number;
         var sup_code = $scope.current.supplier.supplier_code;
         var queryString = "?internal_lot_code=eq." + ref_num;
-        $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,
+        $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
         "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code};
         //AddtoEntryFormData(form, 'lot', $scope);
         $scope.CreateLot(queryString, date, ref_num);
