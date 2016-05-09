@@ -17,10 +17,10 @@ angular.module('scanthisApp', [
   'scanthisApp.AdminController',
   'scanthisApp.ThisfishController',
   'ngSanitize', 
-  'ngCsv',
-  'toastr',
-  'gridshore.c3js.chart',
+  //'ngCsv',
   'ngMaterial',
+  'toastr',
+  //'gridshore.c3js.chart',
   'ngAnimate',
   'ngScrollable'
 ])
@@ -178,6 +178,7 @@ angular.module('scanthisApp', [
       $scope.printString = settings.printString;
       var generatePrintLabel = function(stringFunc) {
         return function(codeString, fieldarray) {
+          console.log(':):):)');
           $http({
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},

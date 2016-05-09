@@ -2,7 +2,8 @@ version: '2'
 
 services:
   db:
-    image: "postgres:9.5.2"
+    #image: "postgres:9.5.2"
+    image: tallyo_db
     volumes:
       - pgdatabase:/var/lib/postgresql/data
     networks:
@@ -12,12 +13,12 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
     restart: always
-    ports:
-      - "5432:5432"
+
   postgrest:
-    build:
-      dockerfile: deploy/Dockerfile-postgrest
-      context: .
+    #build:
+    #  dockerfile: deploy/Dockerfile-postgrest
+    #  context: .
+    image: tallyo_postgrest
     restart: always
     networks:
       - back-tier
@@ -25,13 +26,17 @@ services:
       - "3000:3000"
     depends_on:
       - db
-  tallyo:
-    build:
-      dockerfile: deploy/Dockerfile-tallyo
-      context: .
-    command: node app app_config_hs
+
+  amanda1:
+    #build:
+    #  dockerfile: deploy/Dockerfile-tallyo
+    #  context: .
+    image: tallyo_tallyo
+#    command: sleep 10000000
+    command: node app app_config_am1
     volumes:
-      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
+#      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
+       - .:/opt/tallyo/scanthis
     ports:
       - "8000:8000"
     networks:
@@ -39,10 +44,46 @@ services:
     restart: always
     depends_on:
       - postgrest
+
+  amanda2:
+    image: tallyo_tallyo
+    command: node app app_config_am2
+    volumes:
+#      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
+       - .:/opt/tallyo/scanthis
+    ports:
+      - "8001:8000"
+    networks:
+      - back-tier
+    restart: always
+    depends_on:
+      - postgrest
+
+  backup:
+    #image: "postgres:9.5.2"
+    image: tallyo_db
+    volumes:
+       - backups:/bak
+       - .:/code
+    networks:
+      - back-tier
+    restart: always
+    command: /code/deploy/start_backups.sh
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    volumes_from:
+      - amanda1
+    networks:
+      - back-tier
+    ports:
+      - "80:80"
+
 volumes:
   pgdatabase:
     driver: local
-  configs:
+  backups:
     driver: local
 
 networks:
