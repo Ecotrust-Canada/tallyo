@@ -269,10 +269,13 @@ angular.module('scanthisApp.setsupplierController', [])
         var date = moment(the_date).utcOffset(response.data.timezone).format();
         var harvester_code = $scope.current.harvester.harvester_code;
         var ship_code = $scope.current.shipping_unit.shipping_unit_number;
-        var queryString = "?harvester_code=eq." + harvester_code + "&shipping_unit_number=eq." + ship_code + "&start_date=lt." + date + "&end_date=gt." + date;
-        $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,"station_code": $scope.station_code, "processor_code": $scope.processor};
-        AddtoEntryFormData(form, 'lot', $scope);
-        $scope.CreateLot(queryString, date, form.internal_lot_code);
+        var ref_num = $scope.current.shipping_unit.po_number;
+        var sup_code = $scope.current.supplier.supplier_code;
+        var queryString = "?internal_lot_code=eq." + ref_num;
+        $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,
+        "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code};
+        //AddtoEntryFormData(form, 'lot', $scope);
+        $scope.CreateLot(queryString, date, ref_num);
       }, function errorCallback(response) {
       });
     }    

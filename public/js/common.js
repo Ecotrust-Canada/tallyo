@@ -269,6 +269,9 @@ var tableInfo = function(table){
   else if (table === 'harvester'){
     return {letter:'H', field:'harvester_code'};
   }
+  else if (table === 'supplier'){
+    return {letter:'C', field:'supplier_code'};
+  }
   else if (table === 'receive_lot'){
     return {letter:'R', field:'receive_code'};
   }

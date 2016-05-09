@@ -1,0 +1,20 @@
+<div ng-controller="SettheSupplierCtrl" class="set_harvester">
+
+  <div  class="select_object">
+    <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.supplier=null;addinfo=!addinfo">
+       <span class="show_choices">Set Supplier Info</span>
+    </div> 
+    <div class="inset_form"> 
+      <div class="show_choices" ng-show="addinfo">
+        <entryform config="supplierform1" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+        <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+      </div>
+      <display ng-if="current.supplier" settings="settings" ng-hide="addinfo" obj="current.supplier" config="supplierdisplay"></display>  
+    </div>
+  </div>
+ 
+  
+
+  <!-- button ng-hide="addinfo" ng-click="current.harvester=null;addinfo=!addinfo" class="btn-blue">Edit</button -->
+</div>
+<div class="hr_marg"><hr></div>

@@ -137,7 +137,7 @@ angular.module('scanthisApp.factories', [])
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
     var url = databaseurl + table;
-    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester'])){
+    if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester', 'supplier'])){
       $http.post(url, ForceUpper(entry), patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
     }
     else{

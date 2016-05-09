@@ -3079,3 +3079,8 @@ md-datepicker {
   background-color: rgba(18, 89, 116, 0.1);
 }
 
+.centre_btn{
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+

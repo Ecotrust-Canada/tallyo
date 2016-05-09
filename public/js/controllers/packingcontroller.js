@@ -11,6 +11,15 @@ angular.module('scanthisApp.packingController', [])
   $scope.current.select_change = false;
   $scope.current.no_label = false;
 
+  $scope.ListSuppliers = function(){
+    var func = function(response){
+      $scope.list.supplier = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor;
+    DatabaseServices.GetEntries('supplier', func, query);
+  };
+  $scope.ListSuppliers();
+
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
     if (!raw_id) {
@@ -320,16 +329,17 @@ angular.module('scanthisApp.packingController', [])
     };
     var query = '?processor_code=eq.' + $scope.processor + '&order=serial_id.desc';
 
-    DatabaseServices.GetEntries('harvester', func, query);
+    DatabaseServices.GetEntries('supplier', func, query);
   };
   $scope.ListHarvesters();
 
 
   $scope.CheckBoxExists = function(form){
+
     console.log(form);
     if (form){
       var supplier = JSON.parse(form.harvester_obj);
-      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + supplier.harvester_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
+      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + supplier.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
       console.log(query);
       var func = function(response){
         console.log(response.data);
@@ -342,7 +352,7 @@ angular.module('scanthisApp.packingController', [])
           entry.grade = form.grade; 
           entry.size = form.size;
           entry.weight = form.weight;
-          entry.harvester_code = supplier.harvester_code;
+          entry.supplier_code = supplier.supplier_code;
           entry.lot_number = $scope.current.collectionid;
           $scope.MakeBox(entry);
         }
