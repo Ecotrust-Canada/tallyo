@@ -269,7 +269,27 @@ angular.module('scanthisApp.formController', [])
     if(thediv){
      $timeout(function(){thediv.focus();}, 0);
     }
+    if ($scope.options.plus_lot){
+      $scope.PlusLot(thedata);
+    }
   };
+
+  $scope.PlusLot = function(thedata){
+    //console.log(thedata);
+    var func = function(response){
+      $scope.current.new_lot = response.data;
+      console.log($scope.current.new_lot);
+    };
+    var lot_entry = {
+      'internal_lot_code': thedata.po_number,
+      'shipping_unit_number': thedata.shipping_unit_number,
+      'supplier_code': JSON.parse(thedata.received_from).SUPPLIER_CODE,
+      'station_code': $scope.station_code
+    };
+    DatabaseServices.DatabaseEntryCreateCode('lot', lot_entry, $scope.processor, func); 
+  };
+
+
 
   //database entry
   $scope.ToDatabase = function(responsefunction){
