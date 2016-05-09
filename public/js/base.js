@@ -17,10 +17,10 @@ angular.module('scanthisApp', [
   'scanthisApp.AdminController',
   'scanthisApp.ThisfishController',
   'ngSanitize', 
-  'ngCsv',
-  'toastr',
-  'gridshore.c3js.chart',
+  //'ngCsv',
   'ngMaterial',
+  'toastr',
+  //'gridshore.c3js.chart',
   'ngAnimate',
   'ngScrollable'
 ])

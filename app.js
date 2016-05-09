@@ -74,13 +74,13 @@ app.use(function(err, req, res, next) {
 });
 
 setInterval(function(){
-  http.request({
+/*  http.request({
     host:'postgrest',
     port:'3000',
     path:'/'
   }, function(){
 
-  }).end();
+  }).end();*/
 }, 5000);
 
 //console.log(process.argv);
