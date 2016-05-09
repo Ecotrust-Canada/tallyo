@@ -13,10 +13,6 @@ var config = require(configpath+"_local");
 
 app.use(cookieParser());
 
-
-
-
-
 app.use(express.static(path.join(__dirname, 'public' )));
 
 app.get('/config', function(req, res, next){
@@ -33,16 +29,12 @@ app.get('/config', function(req, res, next){
   });
 });
 
-
 app.get('/server_time', function(req, res, next) {
  res.status(200).send({
    timestamp: new Date(),
    timezone: -(new Date().getTimezoneOffset())
  });
 });
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -75,7 +67,6 @@ app.use(function(err, req, res, next) {
 
 //console.log(process.argv);
 module.exports = app;
-
 
 app.listen(config.port);
 console.log('Server running on port', config.port);

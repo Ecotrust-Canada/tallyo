@@ -58,6 +58,19 @@ services:
     depends_on:
       - postgrest
 
+dbbackups:
+  image: kartoza/pg-backup:9.4
+  hostname: pg-backups
+  volumes:
+    - ./backups:/backups
+  environment:
+    - DUMPPREFIX=PG_TALLYO
+    - PGUSER=tuna_processor
+    - PGPASSWORD=postgres
+    - PGPORT=5432
+    - PGHOST=db
+    - PGDATABASE=postgres 
+
 #  nginx:
 #    restart: always
 #    build: ./nginx/
