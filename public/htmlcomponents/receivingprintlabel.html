@@ -1,12 +1,86 @@
+
+<div ng-init="showforms=false;editforms=false;" class="panel white" id="receiveshipment">
+
+  <div ng-controller="DisplayCollectionCtrl"  id="current_lot">
+    <display settings="settings" ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
+    <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>    
+  </div>
+
+  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Change Lot</button>
+  <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button></div>
+
+  <div ng-controller="LoadEditLotCtrl"><button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue">Edit Current Lot</button>
+  <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Hide</button></div>
+
+  
+
+  <div ng-controller="NewLotCtrl" ng-show="showforms" class="select_object">
+
+  <input-dropdown  thelist="list.lot"  config="adddropdown2" on-select="SetLot(value);$parent.showforms=!showforms"></input-dropdown>
+
+
+  <setshipmentinfo ng-show="showforms"></setshipmentinfo>
+  <setsupplierinfo ng-show="showforms"></setsupplierinfo>
+  <setharvesterinfo ng-show="showforms"></setharvesterinfo>
+
+
+    <div class="centre_btn">
+      <button class="btn-orange" ng-click="SubmitNewLot(form);showforms=!showforms">Enter</button>
+    </div> 
+    
+  </div>
+
+
+  <div ng-controller="EditLotCtrl" id="edit_shipment"  ng-show="editforms"> 
+
+      <div class="display_field">
+        <label for="inp_container_number">Container Number:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.container_number" id="inp_container_number">
+      </div>
+      <div class="display_field">
+        <label for="inp_bill_of_lading">Bill of Lading:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.bill_of_lading" id="inp_bill_of_lading">
+      </div>
+      <div class="display_field">
+        <label for="inp_vessel_name">Vessel Name:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.vessel_name" id="inp_vessel_name">
+      </div>
+      <div class="display_field">
+        <label for="inp_po_number">REF #:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.po_number" id="inp_po_number">
+      </div>
+      <div class="form_buttons">
+        <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
+      </div>
+
+    </div>
+
+</div>
+
+
+
+
 <div class="panel white" id="receivingprintlabel">
-    <setshipmentinfo></setshipmentinfo>
-    <setharvesterinfo></setharvesterinfo>
+
+
+
+
+
+
+
+
+
 
     <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
         <span class="select_header">Add boxes</span>
        <fieldsetrepeat submit-fn="SubmitForm(choices);" config="scanform"></fieldsetrepeat>
     </div>
 </div>
+
+
+
+
+
 
 
 <div class="panel grey not" ng-controller="NoLabelTotalCtrl">

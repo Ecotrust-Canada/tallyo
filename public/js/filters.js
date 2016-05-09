@@ -117,4 +117,15 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('json_filter', function(){
+  return function(input, propname, enabled) {
+    if (input){
+      console.log(input);
+      var new1 = JSON.parse(input);
+      return new1.NAME;
+      //return input;
+    }
+  };
+})
+
 ;

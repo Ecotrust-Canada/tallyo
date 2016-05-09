@@ -15,6 +15,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
 
+.directive('setsupplierinfo', function() { return { templateUrl: 'htmlpartials/setsupplierinfo.html' }; })
+
 .directive('setharvesterinfo', function() { return { templateUrl: 'htmlpartials/setharvesterinfo.html' }; })
 
 .directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
