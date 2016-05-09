@@ -7,7 +7,49 @@ git clone https://github.com/Ecotrust-Canada/scanthis
 ```
 
 
-### Installation
+## Fully Docker-based Installation
+
+
+### For Production
+
+Install docker and docker-compose.
+
+```
+git clone <tallyo source repo> tallyo
+cd tallyo
+git clone <tallyo config repo> public/js/configs
+cp public/js/configs/localtemplate.js public/js/configs/app_config_my_local.js
+```
+
+We assume you have a config file you're managing already, in this case public/js/configs/app_config_my.js . There's currently no documentation on how to generate an initial config. If you're interested in Tally-O, please contact us at catch@thisfish.info .
+
+Edit public/js/configs/app_config_my_local.js to your needs.
+
+```
+docker-compose up -f deploy/docker-compose.rebuild.yml
+```
+
+Visit your browser at http://localhost:80
+
+
+### For Developemnt Envionments
+
+Follow the instructions in the previous section. In addition, we want to map your source directory to the application image so you can work on the code. To do this, you need to include the development docker-compose file.
+
+```
+docker-compose up -f deploy/docker-compose.install.yml
+```
+
+Once this completes
+
+```
+docker-compose up -f deploy/docker-compose.dev.yml
+```
+
+Visit your browser at http://localhost:8000
+
+
+### Legacy Installation
 
 Install the latest stable version of node v4 (ie, v4.4.0) . We recommend using [nvm](https://github.com/creationix/nvm) for this.
 
