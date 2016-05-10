@@ -5,7 +5,7 @@
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>    
   </div>
 
-  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Change Lot</button>
+  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Choose Lot</button>
   <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button></div>
 
   <div ng-controller="LoadEditLotCtrl"><button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue">Edit Current Lot</button>
