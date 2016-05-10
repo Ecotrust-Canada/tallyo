@@ -366,7 +366,7 @@ angular.module('scanthisApp.packingController', [])
   $scope.MakeBox = function(entry){
     var func = function(response){
       console.log(response.data);
-      $scope.MakeScan(response.data.box_number);
+      $scope.MakeScan(response.data[0].box_number);
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
   };
