@@ -463,7 +463,7 @@ angular.module('scanthisApp.formController', [])
     if (table === 'product'){
       $scope.entry.product.product_code = (form.sap_item_code ? form.sap_item_code : createProdCode(new Date()));
       MakeEntry(form, 'product', $scope);
-      $scope.entry.product.best_before = (form.best_before ? moment.duration(form.best_before, 'years') : moment.duration(1, 'years'));
+      $scope.entry.product.best_before = (form.best_before ? moment.duration(form.best_before, 'months') : moment.duration(1, 'years'));
     }
     else{
       MakeEntry(form, table, $scope);

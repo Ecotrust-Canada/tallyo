@@ -180,6 +180,7 @@ angular.module('scanthisApp.itemController', [])
         $scope.entry.box.weight = product.weight;
       }
       $scope.entry.box.product_code = product.product_code;
+      $scope.entry.box.best_before_date = moment(new Date()).add(parseInt(product.best_before.split(' ')), 'months').format();
 
       //console.log($scope.entry.box);
     }
