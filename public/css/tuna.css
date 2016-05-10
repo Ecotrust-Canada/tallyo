@@ -2234,13 +2234,9 @@ input[name^=weight]::after {
 #radio-8-grade {
   width: 360px;
 }
-#radio-19-grade{
-  310px;
-}
-#radio-29-grade,
+
 #radio-0-grade,
-#radio-24-grade,
-#radio-9-grade {
+#radio-24-grade {
   width: 316px;
 }
 
@@ -2252,13 +2248,13 @@ input[name^=weight]::after {
 #radio-18-grade {
   width: 237px;
 }
+#radio-29-grade.toggle-group-container label,
+#radio-9-grade.toggle-group-container label,
 #radio-19-grade.toggle-group-container label{
-  width: 62px;
+  width: 65px;
   font-size: 20px;
 }
 #radio-18-grade.toggle-group-container label,
-#radio-9-grade.toggle-group-container label,
-#radio-29-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
 #radio-24-grade.toggle-group-container label {
   width: 79px;
@@ -2368,14 +2364,14 @@ input[name^=weight]::after {
   width:80px;
 }
 
-#radio-19-grade.toggle-group-container input:checked + span{
-  width: 62px;
+#radio-19-grade.toggle-group-container input:checked + span,
+#radio-9-grade.toggle-group-container input:checked + span,
+#radio-29-grade.toggle-group-container input:checked + span{
+  width: 65px;
 }
 #radio-18-grade.toggle-group-container input:checked + span,
 #radio-0-grade.toggle-group-container input:checked + span,
-#radio-24-grade.toggle-group-container input:checked + span,
-#radio-9-grade.toggle-group-container input:checked + span,
-#radio-29-grade.toggle-group-container input:checked + span { 
+#radio-24-grade.toggle-group-container input:checked + span { 
   width:79px;
 }
 #radio-0-size.toggle-group-container input:checked + span,
