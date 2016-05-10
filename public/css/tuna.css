@@ -1793,6 +1793,12 @@ div[ng-view] {
   margin-top: 24px;
   width: 510px;
 }
+.dropdown-container{
+  min-width: 220px;
+}
+#form-10 .dropdown-container{
+  width: 250px;
+}
 
 #station-HS0-003 .select_object .dropdown-container {
   width: 510px;

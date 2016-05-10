@@ -70,7 +70,7 @@
           </span>
 
           <!--select-->
-          <span ng-if="row.type === 'select'">
+          <span ng-if="row.type === 'select' && !row.value.list">
             <!--static select options-->
 
             <div class="styled-dropdown">   
@@ -92,12 +92,13 @@
                 <option value="">-- select --</option>
                 <option ng-repeat="option in list1" value={{option|json_lot}}>{{option[row.value.name]}}  <!--{{option.traceable|istraceable}}--></option>
               </select>
-              <select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
+              
+              <!--<select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
                 <option value="">-- select --</option>
-                <option ng-repeat="option in list2" value={{option}}>{{option[row.value.name]}}  <!--{{option.traceable|istraceable}}--></option>
-              </select>
+                <option ng-repeat="option in list2" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
+              </select>-->
 
-              <div class="dd_arrow"><span></span></div>
+              <div ng-if="!row.value.list" class="dd_arrow"><span></span></div>
             </div> 
 
             <!--editing dropdown options-->
@@ -120,6 +121,7 @@
             </div>
 
           </span>
+          <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" limit="10"></input-dropdown>
 
           <!--button to set scale weight-->
           <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 

@@ -240,6 +240,11 @@ angular.module('scanthisApp.formController', [])
       }, 50);
   };
 
+  $scope.searchset = function(value, row){
+    console.log(value, row);
+    $scope.form[row.fieldname] = value;
+  }
+
 })
 
 .controller('editformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
@@ -269,13 +274,12 @@ angular.module('scanthisApp.formController', [])
     if(thediv){
      $timeout(function(){thediv.focus();}, 0);
     }
-    if ($scope.options.plus_lot){
+    /*if ($scope.options.plus_lot){
       $scope.PlusLot(thedata);
-    }
+    }*/
   };
 
-  $scope.PlusLot = function(thedata){
-    //console.log(thedata);
+  /*$scope.PlusLot = function(thedata){
     var func = function(response){
       $scope.current.new_lot = response.data;
       console.log($scope.current.new_lot);
@@ -287,7 +291,7 @@ angular.module('scanthisApp.formController', [])
       'station_code': $scope.station_code
     };
     DatabaseServices.DatabaseEntryCreateCode('lot', lot_entry, $scope.processor, func); 
-  };
+  };*/
 
 
 
@@ -329,7 +333,17 @@ angular.module('scanthisApp.formController', [])
         $scope.entry.harvester.processor_code = $scope.processor;
         $scope.entry.harvester.active = true;
       }
+      if ($scope.options && $scope.options.patch_supplier){
+        //console.log(form.lot_in.lot_number);
+        var obj = form.lotnum_in;
+        $scope.entry.lot.supplier_code = obj.supplier_code;
+        $scope.entry.lot.lot_in = obj.lot_number;
+        
+        //console.log($scope.entry);
+      }
+
       MakeEntry(form, table, $scope);
+      delete $scope.entry.lot['lotnum_in'];
       $scope.ToDatabase(responsefunction);
 
     }, function errorCallback(response) {

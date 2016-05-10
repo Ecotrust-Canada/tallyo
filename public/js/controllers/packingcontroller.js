@@ -323,7 +323,7 @@ angular.module('scanthisApp.packingController', [])
 .controller('InternalAddCtrl', function($scope, $http, DatabaseServices) {
 
 
-  $scope.ListHarvesters = function(){
+  /*$scope.ListHarvesters = function(){
     var func = function(response){
       $scope.list.supplier = response.data;
     };
@@ -331,15 +331,14 @@ angular.module('scanthisApp.packingController', [])
 
     DatabaseServices.GetEntries('supplier', func, query);
   };
-  $scope.ListHarvesters();
+  $scope.ListHarvesters();*/
 
 
   $scope.CheckBoxExists = function(form){
-
-    console.log(form);
+    //console.log($scope.current.lot)
+    //console.log(form);
     if (form){
-      var supplier = JSON.parse(form.harvester_obj);
-      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + supplier.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
+      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
       console.log(query);
       var func = function(response){
         console.log(response.data);
@@ -352,7 +351,7 @@ angular.module('scanthisApp.packingController', [])
           entry.grade = form.grade; 
           entry.size = form.size;
           entry.weight = form.weight;
-          entry.supplier_code = supplier.supplier_code;
+          entry.supplier_code = $scope.current.lot.supplier_code;
           entry.lot_number = $scope.current.collectionid;
           $scope.MakeBox(entry);
         }

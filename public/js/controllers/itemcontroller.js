@@ -169,7 +169,7 @@ angular.module('scanthisApp.itemController', [])
     //assign trade_unit and weight(kg) from weight and units 
     if ($scope.options && $scope.options.trade_unit){
       //console.log(form.product_object);
-      var product = JSON.parse(form.product_object);
+      var product = form.product_object;
       
       delete $scope.entry.box.product_object;
       //console.log(product);
