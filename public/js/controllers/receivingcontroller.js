@@ -337,8 +337,9 @@ angular.module('scanthisApp.receivingController', [])
     hide: 'Add Supplier',
     submit: 'Set',
     fields:[
-      {"value":"","fieldname":"sap_code","title":"SAP Code","type":"text"}, 
-      {"value":"","fieldname":"name","title":"Name","type":"text"},
+      {"value":"","fieldname":"sap_code","title":"Supplier SAP Code","type":"text"}, 
+      {"value":"","fieldname":"name","title":"Supplier Name","type":"text", "required": true},
+      {"value":"", "fieldname":"msc_code","title":"Certification","type":"text"}
     ],
     dboptions: 'origin',
     editinform: true

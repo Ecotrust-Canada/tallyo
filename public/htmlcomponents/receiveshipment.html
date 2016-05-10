@@ -23,6 +23,7 @@
   <setharvesterinfo ng-show="showforms"></setharvesterinfo>
 
 
+
     <div class="centre_btn">
       <button class="btn-orange" ng-click="SubmitNewLot(form);showforms=!showforms">Enter</button>
     </div> 
@@ -47,6 +48,10 @@
       <div class="display_field">
         <label for="inp_po_number">REF #:</label><input type="text" autocomplete="off"
                ng-model="current.ship_edit.po_number" id="inp_po_number">
+      <div class="display_field">
+        <label for="inp_country_origin">Country Origin:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.country_origin" id="inp_country_origin">
+      </div>
       </div>
       <div class="form_buttons">
         <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
