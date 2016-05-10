@@ -36,7 +36,7 @@
                  class="panel blue_grey card_header">
                <span class="data">
                  <span ng-if="sum_info[stn.code].boxes" class="card_bit boxes">
-                   <label>boxes</label>
+                   <label>Cases</label>
                    <span class="value">{{sum_info[stn.code].boxes}}</span>
                  </span>  
                  <span ng-if="sum_info[stn.code].weight_1" class="card_bit weight">
@@ -103,7 +103,7 @@
                <span ng-if="cssWarn(lot,stn) || cssOk(lot,stn)" class="state"></span>
                <span class="data">
                  <span ng-if="lot[stn.code].summary.boxes" class="card_bit boxes">
-                   <label>boxes</label>
+                   <label>Cases</label>
                    <span class="value">{{lot[stn.code].summary.boxes}}</span>
                  </span>  
                  <span ng-if="lot[stn.code].summary.weight_1" class="card_bit weight">
@@ -131,7 +131,7 @@
               <table>
                 <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
                   <td ng-if="total.grade">{{total.grade}} </td>
-                  <td ng-if="total.boxes">{{total.boxes}} boxes </td>
+                  <td ng-if="total.boxes">{{total.boxes}} cases </td>
                   <td ng-if="total.pieces">{{total.pieces}} pcs </td> 
                   <td ng-if="total.weight">{{total.weight | weightstring}}</td>
                   <td ng-if="total.weight_1">{{total.weight_1 | weightstring}}</td>
