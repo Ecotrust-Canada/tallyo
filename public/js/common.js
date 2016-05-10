@@ -159,10 +159,12 @@ var ClearFormToDefault = function(form_arr, def_arr){
             form_arr[def_arr[i].fieldname] = def_arr[i].value[indx].val;
           }
           else{
+            console.log('this');
             form_arr[def_arr[i].fieldname] = "";  
           }
       }
       else{
+        console.log('that');
         form_arr[def_arr[i].fieldname] = "";      
       }
     }

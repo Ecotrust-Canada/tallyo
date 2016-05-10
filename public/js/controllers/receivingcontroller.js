@@ -356,7 +356,8 @@ angular.module('scanthisApp.receivingController', [])
   { id: 1, 
     layout: [
       [{'name':'Supplier Code', 'val':'sap_code'},
-      {'name':'Supplier Name', 'val':'name'}]
+      {'name':'Supplier Name', 'val':'name'},
+      {'name': 'Certification', 'val':'msc_code'}]
     ]
   };
 
