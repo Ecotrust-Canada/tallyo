@@ -42,7 +42,7 @@
                 <input  name="{{row.fieldname}}" autocomplete="off" type="number" ng-model="form[row.fieldname]" autodecimal="{{config.autodecimal || 0}}" ng-required="{{row.required || false}}" negative/>
             </span>
             <span ng-if="!row.scale">
-                <input  name="{{row.fieldname}}" autocomplete="off" type="number" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative/>
+                <input  name="num" autocomplete="off" type="number" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative/>
             </span>
           </span>
 
