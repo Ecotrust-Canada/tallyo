@@ -110,8 +110,7 @@ angular.module('scanthisApp.receivingController', [])
       'shipping_unit_in':$scope.current.harvester_lot.shipping_unit_number,
       'supplier_code': $scope.current.harvester_lot.supplier_code,
       'lot_in': $scope.current.harvester_lot.lot_number,
-      'tf_code': jsonvalues.tf_code,
-      'yield': jsonvalues.yield};
+      'tf_code': jsonvalues.tf_code};
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
