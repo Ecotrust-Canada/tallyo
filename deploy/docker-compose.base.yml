@@ -1,0 +1,67 @@
+version: '2'
+
+services:
+  db:
+    #image: "postgres:9.5.2"
+    image: tallyo_db
+    volumes:
+      - pgdatabase:/var/lib/postgresql/data
+    networks:
+      - back-tier
+    environment:
+      POSTGRES_USER: tuna_processor
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: always
+
+  postgrest:
+    restart: always
+    networks:
+      - back-tier
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  amanda1:
+    command: node app app_config_am1
+    volumes:
+       - .:/opt/tallyo/scanthis
+    ports:
+      - "8000:8000"
+    networks:
+      - back-tier
+    restart: always
+    depends_on:
+      - postgrest
+
+  amanda2:
+    volumes:
+       - .:/opt/tallyo/scanthis
+    ports:
+      - "8001:8000"
+    networks:
+      - back-tier
+    restart: always
+    depends_on:
+      - postgrest
+      - amanda1
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    volumes_from:
+      - amanda1
+    networks:
+      - back-tier
+    ports:
+      - "80:80"
+
+volumes:
+  pgdatabase:
+    driver: local
+
+networks:
+  back-tier:
+    driver: bridge
+
