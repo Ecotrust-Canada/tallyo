@@ -153,6 +153,7 @@ angular.module('scanthisApp.directives', [])
             thelist: '=',
             config: '=',
             limit: '=',
+            form: '=',
             onSelect: '&'
         },
         templateUrl: 'htmlpartials/searchdropdown.html',
@@ -184,6 +185,7 @@ angular.module('scanthisApp.directives', [])
 
             scope.setnull = function(){
               scope.the_val = null;
+              if(scope.form){scope.form = null;}
             };
         }
     };

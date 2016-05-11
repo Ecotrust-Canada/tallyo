@@ -30,12 +30,13 @@ angular.module('scanthisApp.formController', [])
   //clear fields to default
   $scope.Clear = function(){
     $scope.submitted=false;
-    var formarray = JSON.parse(JSON.stringify($scope.config.fields));
-    $scope.form = ClearFormToDefault($scope.form, formarray);
+    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
-        $timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
+        //$timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
+        $scope.pollFn({field: $scope.config.startpolling});
       }
       else{
         var scales = $scope.formarray.filter(function(el){
@@ -103,10 +104,6 @@ angular.module('scanthisApp.formController', [])
 
   //called when scale field on focus
   $scope.weigh = function(row){
-
-
-
-
     var scales = $scope.formarray.filter(function(el){
       return el.scale === 'on';
     });

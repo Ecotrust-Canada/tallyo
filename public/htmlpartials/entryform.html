@@ -121,7 +121,7 @@
             </div>
 
           </span>
-          <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" limit="10"></input-dropdown>
+          <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" limit="10" form="form[row.fieldname]"></input-dropdown>
 
           <!--button to set scale weight-->
           <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 

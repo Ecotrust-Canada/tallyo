@@ -2,7 +2,7 @@
   <label ng-if="config.title" for="select-{{config.id}}">{{config.title}}: </label>
   <div class="dd_arrow"><span></span></div>
 
-  <input ng-hide="the_val" ng-model="search[config.searchfield]" id="select-{{config.id}}">
+  <input ng-hide="(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown"> 
     <div  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||50)">
         <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>
@@ -18,8 +18,8 @@
     </div>
   </div>
 
-  <div ng-if="the_val" ng-click="setnull()" class="input-text">
-    <b ng-if="the_val">{{the_val[config.searchfield]}}</b>
+  <div ng-if="the_val || form" ng-click="setnull()" class="input-text">
+    <b ng-if="the_val || form">{{the_val[config.searchfield] || form[config.searchfield]}}</b>
     <span ng-if="the_val" ng-repeat="field in config.fields" ng-switch="field">
       <span>{{ config.delimeter || '|' }}</span>
       <span ng-switch-when="timestamp">{{the_val.timestamp|stringtodate|date:'dd/MM/yy' }}</span>
@@ -33,4 +33,5 @@
 
 
 </div>
+
 
