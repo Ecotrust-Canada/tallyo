@@ -44,7 +44,7 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':$scope.station_code, 'shipping_unit_number': $scope.current.shipping_unit.shipping_unit_number};   
+    var data = {'box_number': box_number, 'station_code':$scope.options.scan_station, 'shipping_unit_number': $scope.current.harvester_lot.shipping_unit_number};   
     var func = function(response){
       $scope.raw.string = null;
       $scope.current.itemchange = !$scope.current.itemchange;
@@ -64,7 +64,7 @@ angular.module('scanthisApp.receivingController', [])
           $scope.CheckHarvester(jsonvalues);
         }
       };
-      var query = '?box_number=eq.' + jsonvalues.box_number + '&station_code=eq.' + $scope.station_code + '&shipping_unit_in=eq.' + $scope.current.shipping_unit.shipping_unit_number;
+      var query = '?box_number=eq.' + jsonvalues.box_number;
       DatabaseServices.GetEntries('box', func, query);
     }
   };
@@ -110,8 +110,9 @@ angular.module('scanthisApp.receivingController', [])
       'station_code': $scope.station_code,
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
       'best_before_date': moment(harvestDate).add(2, 'years').format(),
-      'shipping_unit_in':$scope.current.shipping_unit.shipping_unit_number,
-      'supplier_code': JSON.parse($scope.current.shipping_unit.received_from).SUPPLIER_CODE,
+      'shipping_unit_in':$scope.current.harvester_lot.shipping_unit_number,
+      'supplier_code': $scope.current.harvester_lot.supplier_code,
+      'lot_in': $scope.current.harvester_lot.lot_number,
       'tf_code': jsonvalues.tf_code,
       'yield': jsonvalues.yield};
     var func = function(response){
@@ -336,8 +337,9 @@ angular.module('scanthisApp.receivingController', [])
     hide: 'Add Supplier',
     submit: 'Set',
     fields:[
-      {"value":"","fieldname":"sap_code","title":"SAP Code","type":"text"}, 
-      {"value":"","fieldname":"name","title":"Name","type":"text"},
+      {"value":"","fieldname":"sap_code","title":"Supplier SAP Code","type":"text"}, 
+      {"value":"","fieldname":"name","title":"Supplier Name","type":"text", "required": true},
+      {"value":"", "fieldname":"msc_code","title":"Certification","type":"text"}
     ],
     dboptions: 'origin',
     editinform: true
@@ -354,7 +356,8 @@ angular.module('scanthisApp.receivingController', [])
   { id: 1, 
     layout: [
       [{'name':'Supplier Code', 'val':'sap_code'},
-      {'name':'Supplier Name', 'val':'name'}]
+      {'name':'Supplier Name', 'val':'name'},
+      {'name': 'Certification', 'val':'msc_code'}]
     ]
   };
 
@@ -410,8 +413,9 @@ angular.module('scanthisApp.receivingController', [])
       if ($scope.current.harvester_lot !== undefined && $scope.current.harvester_lot !== null){
         $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
         $scope.entry.box.supplier_code = $scope.current.harvester_lot.supplier_code;
-        console.log($scope.current.harvester_lot.supplier_code);
+        //console.log($scope.current.harvester_lot.supplier_code);
         $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
+        $scope.entry.box.lot_in = $scope.current.harvester_lot.lot_number;
 
 
             for (var j=0;j<choices.length;j++){
@@ -470,7 +474,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.boxes = response.data;
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
+    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipment_summary_more', func, query);
   };
 
@@ -478,7 +482,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.included = response.data;
     };
-    var query = '?shipping_unit_in=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&harvester_code=eq.' + $scope.current.harvester_lot.harvester_code + '&order=timestamp.desc';
+    var query = '?shipping_unit_in=eq.' + $scope.current.harvester_lot.shipping_unit_number  + '&order=timestamp.desc';
     DatabaseServices.GetEntries('box_with_info', func, query, 'hundred');
   };
 

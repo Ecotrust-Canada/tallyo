@@ -6,7 +6,7 @@
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>    
   </div>
 
-  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Change Lot</button>
+  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Choose Lot</button>
   <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button></div>
 
   <div ng-controller="LoadEditLotCtrl"><button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue">Edit Current Lot</button>
@@ -48,6 +48,10 @@
       <div class="display_field">
         <label for="inp_po_number">REF #:</label><input type="text" autocomplete="off"
                ng-model="current.ship_edit.po_number" id="inp_po_number">
+      </div>
+      <div class="display_field">
+        <label for="inp_country_origin">Country Origin:</label><input type="text" autocomplete="off"
+               ng-model="current.ship_edit.country_origin" id="inp_country_origin">
       </div>
       <div class="form_buttons">
         <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">

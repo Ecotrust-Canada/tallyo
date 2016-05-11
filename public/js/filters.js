@@ -128,4 +128,15 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('json_lot', function(){
+  return function(input, propname, enabled) {
+    if (input){
+      //console.log(input);
+      var new1 = JSON.parse(JSON.stringify(input)) || '';
+      return new1.lot_number;
+      //return input;
+    }
+  };
+})
+
 ;

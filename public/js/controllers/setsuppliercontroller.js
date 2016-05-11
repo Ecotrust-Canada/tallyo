@@ -77,6 +77,20 @@ angular.module('scanthisApp.setsupplierController', [])
   };
   $scope.ListLots();
 
+  $scope.ListMoreLots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(14, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var func = function(response){
+        $scope.list.lots = response.data;
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
+  $scope.ListMoreLots();
+
 
   $scope.$on('collection-change', function(event, args) {
     $scope.ListLots();
@@ -208,7 +222,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
 
-      if ($scope.current.harvester.traceable){
+      if ($scope.current.harvester && $scope.current.harvester.traceable){
         $scope.thisfishCode($scope.current.lot.lot_number);
       }
       else{
@@ -267,13 +281,16 @@ angular.module('scanthisApp.setsupplierController', [])
       $http.get('/server_time').then(function successCallback(response) {
         var the_date = response.data.timestamp;
         var date = moment(the_date).utcOffset(response.data.timezone).format();
-        var harvester_code = $scope.current.harvester.harvester_code;
+        if (!$scope.options.no_harvester){
+          var harvester_code = $scope.current.harvester.harvester_code;
+        }
         var ship_code = $scope.current.shipping_unit.shipping_unit_number;
         var ref_num = $scope.current.shipping_unit.po_number;
         var sup_code = $scope.current.supplier.supplier_code;
+        var r_date = $scope.current.receivedate || null;
         var queryString = "?internal_lot_code=eq." + ref_num;
-        $scope.entry.lot = {"harvester_code": harvester_code, "shipping_unit_number": ship_code ,
-        "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code};
+        $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
+        "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};
         //AddtoEntryFormData(form, 'lot', $scope);
         $scope.CreateLot(queryString, date, ref_num);
       }, function errorCallback(response) {

@@ -30,8 +30,8 @@ angular.module('scanthisApp.formController', [])
   //clear fields to default
   $scope.Clear = function(){
     $scope.submitted=false;
-    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
-    $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+    var formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ClearFormToDefault($scope.form, formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
@@ -81,6 +81,7 @@ angular.module('scanthisApp.formController', [])
   //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
+      console.log($scope.form);
       $scope.Clear();
     }
   });
@@ -240,6 +241,11 @@ angular.module('scanthisApp.formController', [])
       }, 50);
   };
 
+  $scope.searchset = function(value, row){
+    console.log(value, row);
+    $scope.form[row.fieldname] = value;
+  }
+
 })
 
 .controller('editformCtrl', function($scope, $http, DatabaseServices, toastr, $document) {
@@ -269,7 +275,26 @@ angular.module('scanthisApp.formController', [])
     if(thediv){
      $timeout(function(){thediv.focus();}, 0);
     }
+    /*if ($scope.options.plus_lot){
+      $scope.PlusLot(thedata);
+    }*/
   };
+
+  /*$scope.PlusLot = function(thedata){
+    var func = function(response){
+      $scope.current.new_lot = response.data;
+      console.log($scope.current.new_lot);
+    };
+    var lot_entry = {
+      'internal_lot_code': thedata.po_number,
+      'shipping_unit_number': thedata.shipping_unit_number,
+      'supplier_code': JSON.parse(thedata.received_from).SUPPLIER_CODE,
+      'station_code': $scope.station_code
+    };
+    DatabaseServices.DatabaseEntryCreateCode('lot', lot_entry, $scope.processor, func); 
+  };*/
+
+
 
   //database entry
   $scope.ToDatabase = function(responsefunction){
@@ -309,7 +334,17 @@ angular.module('scanthisApp.formController', [])
         $scope.entry.harvester.processor_code = $scope.processor;
         $scope.entry.harvester.active = true;
       }
+      if ($scope.options && $scope.options.patch_supplier){
+        //console.log(form.lot_in.lot_number);
+        var obj = form.lotnum_in;
+        $scope.entry.lot.supplier_code = obj.supplier_code;
+        $scope.entry.lot.lot_in = obj.lot_number;
+        
+        //console.log($scope.entry);
+      }
+
       MakeEntry(form, table, $scope);
+      delete $scope.entry.lot['lotnum_in'];
       $scope.ToDatabase(responsefunction);
 
     }, function errorCallback(response) {
@@ -443,7 +478,7 @@ angular.module('scanthisApp.formController', [])
     if (table === 'product'){
       $scope.entry.product.product_code = (form.sap_item_code ? form.sap_item_code : createProdCode(new Date()));
       MakeEntry(form, 'product', $scope);
-      $scope.entry.product.best_before = (form.best_before ? moment.duration(form.best_before, 'years') : moment.duration(1, 'years'));
+      $scope.entry.product.best_before = (form.best_before ? moment.duration(form.best_before, 'months') : moment.duration(1, 'years'));
     }
     else{
       MakeEntry(form, table, $scope);
