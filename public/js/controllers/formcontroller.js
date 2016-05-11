@@ -81,6 +81,7 @@ angular.module('scanthisApp.formController', [])
   //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
+      console.log($scope.form);
       $scope.Clear();
     }
   });

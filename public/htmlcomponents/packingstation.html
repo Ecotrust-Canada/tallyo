@@ -129,12 +129,12 @@
   <div ng-if="current.no_label" id="unlabelled_input" ng-controller="InternalAddCtrl">
     <hr>
     <fieldset ng-disabled="formdisabled">
-      <entryform submit-fn="CheckBoxExists(form)" config="scanform" list2="list.supplier"></entryform>
+      <entryform submit-fn="CheckBoxExists(form)" config="scanform" list2="list.supplier" formchange="formchange1"></entryform>
     </fieldset>
   </div>
 
 
-  <button ng-if="options.unlabelled_from !== undefined && !current.no_label" ng-click="current.no_label=!current.no_label" class="btn-blue">No Label</button>
+  <button ng-if="options.unlabelled_from !== undefined && !current.no_label" ng-click="formchange1=!formchange1;current.no_label=!current.no_label" class="btn-blue">No Label</button>
   <button ng-if="options.unlabelled_from !== undefined && current.no_label" ng-click="current.no_label=!current.no_label" class="btn-blue">Barcode</button>
 
 

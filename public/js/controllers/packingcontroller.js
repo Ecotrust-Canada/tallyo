@@ -322,7 +322,7 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('InternalAddCtrl', function($scope, $http, DatabaseServices) {
 
-
+  $scope.formchange1 = true;
   /*$scope.ListHarvesters = function(){
     var func = function(response){
       $scope.list.supplier = response.data;
@@ -337,6 +337,9 @@ angular.module('scanthisApp.packingController', [])
   $scope.CheckBoxExists = function(form){
     //console.log($scope.current.lot)
     //console.log(form);
+    
+    //$scope.formchange1 = !$scope.formchange1;
+
     if (form){
       var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
       console.log(query);
@@ -378,6 +381,7 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       console.log(response.data);
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.formchange1 = !$scope.formchange1;
     };
     DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);
   };
