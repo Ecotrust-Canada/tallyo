@@ -384,7 +384,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.GetLot();
     };
-    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number}
+    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate}
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };

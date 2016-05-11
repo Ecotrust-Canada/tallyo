@@ -33,6 +33,12 @@
 
   <div ng-controller="EditLotCtrl" id="edit_shipment"  ng-show="editforms"> 
 
+    <div class="form_label">
+      <label>Receive Date:</label>
+    </div>
+
+    <md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker>
+
       <div class="display_field">
         <label for="inp_container_number">Container Number:</label><input type="text" autocomplete="off"
                ng-model="current.ship_edit.container_number" id="inp_container_number">
