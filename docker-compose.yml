@@ -70,15 +70,15 @@ services:
     restart: always
     command: /code/deploy/start_backups.sh
 
-  nginx:
-    restart: always
-    build: ./nginx/
-    volumes_from:
-      - amanda1
-    networks:
-      - back-tier
-    ports:
-      - "80:80"
+#  nginx:
+#    restart: always
+#    build: ./nginx/
+#    volumes_from:
+#      - amanda1
+#    networks:
+#      - back-tier
+#    ports:
+#      - "80:80"
 
 volumes:
   pgdatabase:
