@@ -1793,6 +1793,9 @@ div[ng-view] {
   margin-top: 24px;
   width: 510px;
 }
+#form-11 .dropdown-container {
+  width: 510px;
+}
 .dropdown-container{
   min-width: 220px;
 }
@@ -1875,6 +1878,10 @@ div[ng-view] {
 #form-10 .form_label label,
 #form-4 .form_label label {
   text-align: right;
+}
+
+#form-11 .form_label label{
+  text-align: left;
 }
 
 #form-0 .field,
@@ -3109,4 +3116,5 @@ md-datepicker {
   margin-left: 100px;
   margin-bottom: 50px;
 }
+
 
