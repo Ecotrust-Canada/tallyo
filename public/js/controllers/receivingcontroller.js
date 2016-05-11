@@ -363,9 +363,21 @@ angular.module('scanthisApp.receivingController', [])
   $scope.GetEditShip = function(){
     var func = function(response){
       $scope.current.ship_edit = response.data[0];
+      if ($scope.current.harvester_lot.harvester_code){
+        $scope.GetEditHar();
+      }
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipping_unit', func, query);
+  };
+
+  $scope.GetEditHar = function(){
+    var func = function(response){
+      $scope.current.har_edit = response.data[0];
+      console.log($scope.current.har_edit);
+    };
+    var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
+    DatabaseServices.GetEntries('harvester', func, query);
   };
 })
 
@@ -374,10 +386,24 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.ShipInfo = function(){
     var func = function(response){
-      $scope.PatchLot();
+      if ($scope.current.harvester_lot.harvester_code){
+        $scope.PatchHar();
+      }else{
+        $scope.PatchLot();
+      }
+      
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.ship_edit, query, func);
+  };
+
+  $scope.PatchHar = function(){
+    var func = function(response){
+      $scope.PatchLot();
+    };
+    var patch = {'fleet':$scope.current.har_edit.fleet}
+    var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
+    DatabaseServices.PatchEntry('harvester', patch, query, func);
   };
 
   $scope.PatchLot = function(){

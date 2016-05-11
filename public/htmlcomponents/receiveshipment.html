@@ -57,10 +57,14 @@
       <div class="display_field">
         <label for="inp_po_number">REF #:</label><input type="text" autocomplete="off"
                ng-model="current.ship_edit.po_number" id="inp_po_number">
+      </div>
       <div class="display_field">
         <label for="inp_country_origin">Country Origin:</label><input type="text" autocomplete="off"
                ng-model="current.ship_edit.country_origin" id="inp_country_origin">
       </div>
+      <div class="display_field">
+        <label for="inp_fleet">Fishing Vessel:</label><input type="text" autocomplete="off"
+               ng-model="current.har_edit.fleet" id="inp_fleet">
       </div>
       <div class="form_buttons">
         <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
