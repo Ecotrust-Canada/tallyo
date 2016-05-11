@@ -2289,7 +2289,8 @@ input[name^=weight]::after {
 #radio-24-size.toggle-group-container label {
   width: 105px;
 }
-#radio-17-species.toggle-group-container label{
+#radio-17-species.toggle-group-container label,
+#radio-17-grade.toggle-group-container label{
   width: 70px;
 }
 #radio-20-grade.toggle-group-container label,

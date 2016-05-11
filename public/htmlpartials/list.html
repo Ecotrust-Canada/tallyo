@@ -13,7 +13,7 @@
       <span ng-switch-when="weight_1">{{item[name] | weightstring}}</span>
       <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number']}}</span>
       <span ng-switch-when="pieces">{{item[name]}} pcs</span>
-      <span ng-switch-when="boxes">{{item[name]}} boxes</span>
+      <span ng-switch-when="boxes">{{item[name]}} cases</span>
       <span ng-switch-when="product">{{item[name.split(',')[0]][name.split(',')[1]]}}</span>
       <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
       <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
