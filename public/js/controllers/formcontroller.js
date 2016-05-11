@@ -35,7 +35,6 @@ angular.module('scanthisApp.formController', [])
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
-        //$scope.pollFn({field: $scope.config.startpolling});
         $timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
       }
       else{
@@ -47,7 +46,6 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
-    //console.log($scope.form.grade);
     $scope.form_enabled = true;
     
   };
@@ -71,7 +69,6 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
-    //console.log($scope.form.grade);
     $scope.form_enabled = true;
     
   };
@@ -81,7 +78,6 @@ angular.module('scanthisApp.formController', [])
   //watch outside variable to know when to clear form
   $scope.$watch('formchange', function(newValue, oldValue) {
     if ($scope.formchange !== undefined){
-      console.log($scope.form);
       $scope.Clear();
     }
   });
@@ -168,14 +164,12 @@ angular.module('scanthisApp.formController', [])
       }
       else if (row.scale){
         if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
-          //toastr.error('Please lock weight');
           form_error = true;
         }
       }
     }
     if (form_error === true){
       $scope.form_enabled = true;
-      //console.log('true');
       form = null;
     }
     if (form){
@@ -226,7 +220,6 @@ angular.module('scanthisApp.formController', [])
   }
 
   $scope.DoSomething = function(something, row, index){
-    //alert(something);
     document.getElementById(something).checked = true;
     $scope.form[row.fieldname] = row.value[index].val;
   };
@@ -242,7 +235,6 @@ angular.module('scanthisApp.formController', [])
   };
 
   $scope.searchset = function(value, row){
-    console.log(value, row);
     $scope.form[row.fieldname] = value;
   }
 
@@ -275,24 +267,8 @@ angular.module('scanthisApp.formController', [])
     if(thediv){
      $timeout(function(){thediv.focus();}, 0);
     }
-    /*if ($scope.options.plus_lot){
-      $scope.PlusLot(thedata);
-    }*/
   };
 
-  /*$scope.PlusLot = function(thedata){
-    var func = function(response){
-      $scope.current.new_lot = response.data;
-      console.log($scope.current.new_lot);
-    };
-    var lot_entry = {
-      'internal_lot_code': thedata.po_number,
-      'shipping_unit_number': thedata.shipping_unit_number,
-      'supplier_code': JSON.parse(thedata.received_from).SUPPLIER_CODE,
-      'station_code': $scope.station_code
-    };
-    DatabaseServices.DatabaseEntryCreateCode('lot', lot_entry, $scope.processor, func); 
-  };*/
 
 
 
@@ -335,12 +311,9 @@ angular.module('scanthisApp.formController', [])
         $scope.entry.harvester.active = true;
       }
       if ($scope.options && $scope.options.patch_supplier){
-        //console.log(form.lot_in.lot_number);
         var obj = form.lotnum_in;
         $scope.entry.lot.supplier_code = obj.supplier_code;
         $scope.entry.lot.lot_in = obj.lot_number;
-        
-        //console.log($scope.entry);
       }
 
       MakeEntry(form, table, $scope);

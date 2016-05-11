@@ -160,7 +160,6 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.MakeItemScanEntry = function(form){
-    console.log(form);
     var table = $scope.station_info.itemtable.split('_')[0];
     AddtoEntryNonFormData($scope, table);
     AddtoEntryNonFormData($scope, 'scan');
@@ -168,11 +167,9 @@ angular.module('scanthisApp.itemController', [])
 
     //assign trade_unit and weight(kg) from weight and units 
     if ($scope.options && $scope.options.trade_unit){
-      //console.log(form.product_object);
       var product = form.product_object;
       
       delete $scope.entry.box.product_object;
-      //console.log(product);
       if (product.entry_unit === 'lb'){
         $scope.entry.box.weight = product.weight / 2.2;
       }
@@ -181,14 +178,11 @@ angular.module('scanthisApp.itemController', [])
       }
       $scope.entry.box.product_code = product.product_code;
       $scope.entry.box.best_before_date = moment(new Date()).add(parseInt(product.best_before.split(' ')), 'months').format();
-
-      //console.log($scope.entry.box);
     }
     //attach harvester, shipment
     if ($scope.options && $scope.options.lot_info){
       $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
       $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
-      //$scope.entry.box.lot = $scope.current.harvester_lot.lot_number;
     }
 
   };

@@ -52,15 +52,12 @@ angular.module('scanthisApp.ThisfishController', [])
           }
         }
       }
-      console.log(harvester_entry);
       $http.post(posturl, harvester_entry, tfconfig).then
       (function(response){
-        console.log(response);
         $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
         $scope.ThisfishPro(lot_number);
       }, 
         function(response){
-          console.log(response);
           $scope.postHarResponse(harvester_entry.end_tag, response.status, response.data);
         });     
     };

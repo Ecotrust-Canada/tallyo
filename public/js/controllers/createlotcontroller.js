@@ -92,9 +92,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.changeFn = function(selected){
     $scope.current.collectionid = selected;
   };
-
-  //$scope.current.selected = "no selected";
-
+  
   $scope.$on('collection-change', function(event, args) {
     $scope.currentlots();
     $scope.completedlots();
@@ -118,7 +116,6 @@ angular.module('scanthisApp.createlotController', [])
 
       if (response.data.length > 0){
         $scope.current[$scope.station_info.collectiontable] = response.data[0];
-        //console.log(response.data[0]);
         $scope.current.itemchange = !$scope.current.itemchange;
         var thediv = document.getElementById('scaninput');
         if(thediv){
@@ -176,7 +173,6 @@ angular.module('scanthisApp.createlotController', [])
     var id = $scope.current[$scope.station_info.collectiontable][$scope.station_info.collectionid];
     var querystring = '?' + $scope.station_info.collectionid + '=eq.' + id;
     var func = function(response){
-      //$scope.current.collectionid = 'no selected';
       $scope.current.collectionid = null;
       $scope.list.collection = $scope.list.collection
       .filter(function (el) {
@@ -187,7 +183,6 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.MakeQR = function(){
-    console.log($scope.current[$scope.station_info.collectiontable].ft_fa_code);
     var data = dataCombine($scope.current[$scope.station_info.collectiontable], $scope.onLabel.qr);
     var labels = ArrayFromJson($scope.current[$scope.station_info.collectiontable], $scope.onLabel.print);
     console.log(data, labels);
@@ -215,7 +210,6 @@ angular.module('scanthisApp.createlotController', [])
     }
     var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
     var func = function(response){
-      //console.log(response.headers()['content-range'].split('/')[1]);
       $scope.list.included = response.data;
       $scope.list.length = response.headers()['content-range'].split('/')[1];
     };
@@ -236,15 +230,12 @@ angular.module('scanthisApp.createlotController', [])
 
   $scope.HighlightGreen = function(str){
     if(str===0  && $scope.current.addnew === true){
-      //setTimeout(function () {
-        //console.log('#item-'+ str + ($scope.itemlistconfig.station_id || ''));
           var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
           if (tr){
             var c = 'new_item';
             tr.addClass(c);
             $timeout(function(){ tr.removeClass(c); }, 700); 
           }
-        //}, 0);
     }
     $scope.current.addnew = false;
   };
@@ -319,7 +310,6 @@ angular.module('scanthisApp.createlotController', [])
       query += '&internal_lot_code=like.*' + int_lot_code + '*';
     }
     query += '&order=timestamp.desc';
-    //console.log(query);
     var func = function(response){
       $scope.items = response.data;
       $scope.search = {};
@@ -457,7 +447,6 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.ShowCodes = function(label){
-    //console.log('function called');
     var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
     var func = function(response){
       $scope.list.codes = response.data;
@@ -496,8 +485,6 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ResetLimit = function(){
     $scope.limit = 5;
   };
-
-  
 
 })
 

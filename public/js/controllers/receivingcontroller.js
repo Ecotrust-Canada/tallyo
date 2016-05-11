@@ -14,9 +14,6 @@ angular.module('scanthisApp.receivingController', [])
     for (var i=0;i<$scope.valuesarray.length;i++){
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
-    //jsonvalues.box_number = jsonvalues.box_number.toUpperCase();
-    //jsonvalues.harvester_code = jsonvalues.harvester_code.toUpperCase();
-    console.log(jsonvalues);
     $scope.checkBox(jsonvalues);
 
   };
@@ -208,7 +205,6 @@ angular.module('scanthisApp.receivingController', [])
     if (form){
       MakeEntry(form, 'harvester', $scope);
       $scope.entry.harvester.processor_code = $scope.processor;
-      //$scope.MakeHarvesterEntry();
       $scope.CheckHarvester();
       $scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
@@ -413,7 +409,6 @@ angular.module('scanthisApp.receivingController', [])
       if ($scope.current.harvester_lot !== undefined && $scope.current.harvester_lot !== null){
         $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
         $scope.entry.box.supplier_code = $scope.current.harvester_lot.supplier_code;
-        //console.log($scope.current.harvester_lot.supplier_code);
         $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
         $scope.entry.box.lot_in = $scope.current.harvester_lot.lot_number;
 
@@ -435,14 +430,6 @@ angular.module('scanthisApp.receivingController', [])
         toastr.error("missing origin info");}
     }    
   };
-  
-  /*$scope.MakeBox = function(entry){
-    var func = function(response){
-      $scope.current.itemchange = !$scope.current.itemchange;
-
-    };
-    DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
-  };*/
 
   $scope.MakeBox = function(entry){
     var func = function(response){
@@ -455,9 +442,7 @@ angular.module('scanthisApp.receivingController', [])
     var entry = {};
     entry.box_number = id;
     entry.station_code = $scope.station_code;
-    //entry.lot_number = $scope.current.collectionid;
     var func = function(response){
-      //console.log(response.data);
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);

@@ -291,7 +291,6 @@ angular.module('scanthisApp.setsupplierController', [])
         var queryString = "?internal_lot_code=eq." + ref_num;
         $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
         "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};
-        //AddtoEntryFormData(form, 'lot', $scope);
         $scope.CreateLot(queryString, date, ref_num);
       }, function errorCallback(response) {
       });
@@ -333,7 +332,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
-    //var curr_checked = angular.element($document[0].querySelector('#switch-'+fieldname)).checked;
     var checkInput = document.getElementById('toggle-state');
     setTimeout(function () {
       $scope.$apply(function () {
@@ -342,7 +340,6 @@ angular.module('scanthisApp.setsupplierController', [])
     }, 0);
   };
 
-
   $scope.changelot = function(){
     $scope.current.lot = null;
     $scope.current.collectionid = null;
@@ -350,8 +347,6 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.form.harvester_code = null;
     $rootScope.$broadcast('change-lot');
   };
-
-
 
   $scope.formchange=true;
 })

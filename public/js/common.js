@@ -107,9 +107,7 @@ var MakeEntry = function(form, scopevar, $scope){
 
 
 var ClearFormToDefault = function(form_arr, def_arr){
-  console.log('here');
     for (var i=0;i<def_arr.length;i++){
-     // console.log(def_arr[i].type);
       if (def_arr[i].type === 'text'){
         if (!def_arr[i].stay){
           form_arr[def_arr[i].fieldname] = def_arr[i].value;
@@ -119,15 +117,12 @@ var ClearFormToDefault = function(form_arr, def_arr){
         } 
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
-        console.log('two');
         if (!def_arr[i].stay || !form_arr[def_arr[i].fieldname]){
           var index = (def_arr[i].default  || 0);
           form_arr[def_arr[i].fieldname] = def_arr[i].value[index].val;
-        //  console.log(def_arr[i].value[index].val);
         } 
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length > 2){
-      //  console.log('more');
         if (!def_arr[i].stay){
           var indx = def_arr[i].default;
           if (indx || indx === 0){
@@ -150,16 +145,13 @@ var ClearFormToDefault = function(form_arr, def_arr){
   };
 
   var ResetForm = function(form_arr, def_arr){
-   //console.log('here');
     for (var i=0;i<def_arr.length;i++){
       if (def_arr[i].type === 'text'){
         form_arr[def_arr[i].fieldname] = def_arr[i].value;
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length == 2){
-        //console.log('two');
         var index = (def_arr[i].default  || 0);
         form_arr[def_arr[i].fieldname] = def_arr[i].value[index].val;
-      //  console.log(def_arr[i].value[index].val);
       }
       else if (def_arr[i].type === 'radio' && def_arr[i].value.length > 2){
           var indx = def_arr[i].default;
@@ -167,12 +159,10 @@ var ClearFormToDefault = function(form_arr, def_arr){
             form_arr[def_arr[i].fieldname] = def_arr[i].value[indx].val;
           }
           else{
-          //  console.log('this');
             form_arr[def_arr[i].fieldname] = "";  
           }
       }
       else{
-      //  console.log('that');
         form_arr[def_arr[i].fieldname] = "";      
       }
     }
@@ -363,11 +353,9 @@ var confirmTrue = function(message, func, elsefunc){
 var copyObj = function(obj) {
   var copy = Object.create(Object.getPrototypeOf(obj));
   var propNames = Object.getOwnPropertyNames(obj);
-  console.log(propNames);
 
   propNames.forEach(function(name) {
     var desc = Object.getOwnPropertyDescriptor(obj, name);
-    console.log(desc);
     Object.defineProperty(copy, name, desc);
   });
 

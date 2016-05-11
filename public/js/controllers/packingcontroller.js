@@ -34,7 +34,6 @@ angular.module('scanthisApp.packingController', [])
         var itemcollection = response.data[0][($scope.station_info.patchid || $scope.station_info.collectionid)];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
-          //confirmTrue("overwrite from previous?", $scope.PatchObjWithContainer, $scope.clearField);
           var disabled = function(event) {
             event.preventDefault();
   
@@ -100,21 +99,8 @@ angular.module('scanthisApp.packingController', [])
   $scope.PatchObjWithContainer = function(){
 
     var func = function(response){
-      //toastr.success('added'); // show success toast.
-
-      // attempt to highlight new row in itemstable
-      /*setTimeout(function () {
-        var tr = angular.element(document.querySelector('#item-'+response.data[0][$scope.station_info.itemid]));  
-        if (tr){
-          var c = 'new_item';
-          tr.addClass(c);
-          $timeout(function(){ tr.removeClass(c); }, 2000); 
-        }
-      }, 100);*/
-      $scope.current.addnew = true;
-      
+      $scope.current.addnew = true;      
       $scope.MakeScan($scope.id);
-
     };
     var onErr = function(){
       toastr.error('invalid QR code'); // show failure toast.
@@ -122,7 +108,6 @@ angular.module('scanthisApp.packingController', [])
 
     var patch = {};
     patch[($scope.station_info.patchid || $scope.station_info.collectionid)] = $scope.current.collectionid;
-    //console.log(patch);
     var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };  
@@ -187,10 +172,6 @@ angular.module('scanthisApp.packingController', [])
       var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
       DatabaseServices.GetEntries('lot_summary', func, query);
     }
-    /*else if ($scope.station_info.collectiontable === 'box'){
-      $scope.current.totals.weight = $scope.current.box.weight;
-      $scope.current.totals.pieces = $scope.current.box.pieces;      
-    }*/
     else if ($scope.station_info.collectiontable === 'shipping_unit'){
       var func1 = function(response){
         if (response.data.length > 0){
@@ -219,12 +200,8 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices, toastr) {
-
-
-  //confirmTrue = function(message, func, elsefunc)
   
   $scope.PatchObjRemoveContainer = function(obj){
-    //var id = obj[$scope.station_info.itemid];
     $scope.to_delete = obj;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
@@ -299,7 +276,6 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.EditBox = function(obj){
     $scope.current.collectionid = obj.box_number;
-    //$scope.hide_search = true;
   };
 
   $scope.ListHarvesters = function(){
@@ -312,7 +288,6 @@ angular.module('scanthisApp.packingController', [])
   $scope.ListHarvesters();
 
   $scope.changeVal = function(value){
-    //console.log(value);
     $scope.search.harvester_code = value.harvester_code;
   };
 
@@ -323,33 +298,16 @@ angular.module('scanthisApp.packingController', [])
 .controller('InternalAddCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.formchange1 = true;
-  /*$scope.ListHarvesters = function(){
-    var func = function(response){
-      $scope.list.supplier = response.data;
-    };
-    var query = '?processor_code=eq.' + $scope.processor + '&order=serial_id.desc';
-
-    DatabaseServices.GetEntries('supplier', func, query);
-  };
-  $scope.ListHarvesters();*/
-
 
   $scope.CheckBoxExists = function(form){
-    //console.log($scope.current.lot)
-    //console.log(form);
-    
-    //$scope.formchange1 = !$scope.formchange1;
-
     if (form){
       var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
-      console.log(query);
       var func = function(response){
-        console.log(response.data);
         if (response.data.length > 0){
           $scope.PutObjInContainer(response.data[0].box_number);
         }
         else{
-          console.log('nope');
+          console.log('new');
           var entry = {};
           entry.grade = form.grade; 
           entry.size = form.size;
@@ -367,7 +325,6 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.MakeBox = function(entry){
     var func = function(response){
-      console.log(response.data);
       $scope.MakeScan(response.data[0].box_number);
     };
     DatabaseServices.DatabaseEntryCreateCode('box', entry, $scope.processor, func);
@@ -379,7 +336,6 @@ angular.module('scanthisApp.packingController', [])
     entry.station_code = $scope.station_code;
     entry.lot_number = $scope.current.collectionid;
     var func = function(response){
-      console.log(response.data);
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange1 = !$scope.formchange1;
     };
@@ -481,7 +437,6 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('HarvesterBoxCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) { 
   $scope.harvesterArray = [];
-  //$scope.collectionid = '';
   $scope.current.mixed = false;
 
   $scope.$watch('list.included', function() {
@@ -599,7 +554,6 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.current.addnew = true;
-      //toastr.success('added');
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
@@ -667,7 +621,6 @@ angular.module('scanthisApp.packingController', [])
     var query = '?' + $scope.station_info.itemid + '=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
       if ($scope.options.secondstation){
-        console.log('secondstation');
         $scope.RemoveSecondScan(itemid, $scope.options.secondstation);
       }else{
         $scope.current.itemchange = !$scope.current.itemchange;
@@ -745,7 +698,6 @@ angular.module('scanthisApp.packingController', [])
   };
 
   $scope.SetCodes = function(codes){
-    console.log(codes);
     $scope.current.codes = codes;
     codes.forEach(
       function(el){

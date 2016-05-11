@@ -5,7 +5,6 @@ angular.module('scanthisApp.AdminController', [])
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.current.itemchange = true;
-  //$scope.limit = 10;
   $scope.stn = {};
   $scope.stn.index= 0;
   
@@ -49,8 +48,7 @@ angular.module('scanthisApp.AdminController', [])
     cssclass: "fill small", 
     fields: ["size_grade", "weight", "boxes"], 
     limit: "10000",
-    order: "grade",
-    /*csv: true*/
+    order: "grade"
   };
 
   $scope.ListHarvesters = function(){
@@ -65,9 +63,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.changeStn = function(index) {
     var el = document.getElementById('ship' + index);
     if (el){
-      //console.log(el);
     }
-    //console.log('ship'+ index);
     $scope.stn.index = index;
     $scope.current.shipment = null;
     $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
@@ -163,7 +159,6 @@ angular.module('scanthisApp.AdminController', [])
       }
       else{
         $scope.show_sorted = false;
-        //$scope.totallistconfig.fields[0] = $scope.sumStations[$scope.stn.index].box_info;
         $scope.ListBoxes();
       }
     }
@@ -313,7 +308,6 @@ angular.module('scanthisApp.AdminController', [])
       query += '&case_number=like.*' + case_number.toUpperCase() + '*';
     }
     query += '&order=timestamp.desc';
-    //console.log(query);
     var func = function(response){
       $scope.items = response.data;
       $scope.search = {};
@@ -370,15 +364,6 @@ angular.module('scanthisApp.AdminController', [])
 .controller('LotCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.limit = 10;
-
-  /*$scope.GetHarvesters = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.harvester = response.data;
-    };
-    DatabaseServices.GetEntries('harvester', func, query);
-  };*/
-  //$scope.GetHarvesters();
 
   $scope.GetHarvesterLot = function(){
     $http.get('/server_time').then(function successCallback(response) {
@@ -660,7 +645,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
     var func = function(response){
-      //window.location.reload();
       $rootScope.$broadcast('collection-change', {id: 'no selected'});
     };
     var r = confirm("Are you sure you want to complete this lot?");
