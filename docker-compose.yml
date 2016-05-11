@@ -2,8 +2,8 @@ version: '2'
 
 services:
   db:
-    #image: "postgres:9.5.2"
-    image: tallyo_db
+    image: "postgres:9.5.2"
+    #image: tallyo_db
     volumes:
       - pgdatabase:/var/lib/postgresql/data
     networks:
@@ -31,7 +31,7 @@ services:
     #build:
     #  dockerfile: deploy/Dockerfile-tallyo
     #  context: .
-    image: tallyo_tallyo
+    image: tallyo
 #    command: sleep 10000000
     command: node app app_config_am1
     volumes:
@@ -46,7 +46,7 @@ services:
       - postgrest
 
   amanda2:
-    image: tallyo_tallyo
+    image: tallyo
     command: node app app_config_am2
     volumes:
 #      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
@@ -59,16 +59,16 @@ services:
     depends_on:
       - postgrest
 
-  backup:
-    #image: "postgres:9.5.2"
-    image: tallyo_db
-    volumes:
-       - backups:/bak
-       - .:/code
-    networks:
-      - back-tier
-    restart: always
-    command: /code/deploy/start_backups.sh
+#  backup:
+#    image: "postgres:9.5.2"
+#    #image: tallyo_db
+#    volumes:
+#       - backups:/bak
+#       - .:/code
+#    networks:
+#      - back-tier
+#    restart: always
+#    command: /code/deploy/start_backups.sh
 
 #  nginx:
 #    restart: always
