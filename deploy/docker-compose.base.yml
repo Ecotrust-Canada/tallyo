@@ -2,6 +2,9 @@ version: '2'
 
 services:
   db:
+    build:
+      context: ./deploy/db
+    image: tallyo_db
     volumes:
       - pgdatabase:/var/lib/postgresql/data
     networks:
@@ -13,6 +16,9 @@ services:
     restart: always
 
   postgrest:
+    build:
+      context: ./deploy/postgrest
+    image: tallyo_postgrest
     restart: always
     networks:
       - back-tier
@@ -22,10 +28,13 @@ services:
       - db
 
   amanda1:
+    build:
+      dockerfile: ./deploy/tallyo/Dockerfile
+      context: .
+    image: tallyo
     command: node app app_config_am1
-    #command: sleep 100000
     volumes:
-       - ..:/opt/tallyo
+       - .:/opt/tallyo
     ports:
       - "8000:8000"
     networks:
@@ -35,8 +44,10 @@ services:
       - postgrest
 
   amanda2:
+    image: tallyo
+    command: node app app_config_am2
     volumes:
-       - .:/opt/tallyo/scanthis
+       - .:/opt/tallyo
     ports:
       - "8001:8000"
     networks:
@@ -47,14 +58,17 @@ services:
       - amanda1
 
   nginx:
+    build:
+      context: ./deploy/nginx
+    image: tallyo_nginx
     restart: always
-    build: ./deploy/nginx/
     volumes_from:
       - amanda1
     networks:
       - back-tier
     ports:
       - "80:80"
+      - "81:81"
 
 volumes:
   pgdatabase:

@@ -1,22 +1,6 @@
 version: '2'
 
 services:
-  db:
-    image: tallyo_db
-
-  postgrest:
-    image: tallyo_postgrest
-
-  amanda1:
-    image: tallyo_tallyo
-#    volumes:
-#      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
-
-  amanda2:
-    image: tallyo_tallyo
-
-  nginx:
-    image: tallyo_nginx
 
   backup:
     image: tallyo_db
@@ -26,7 +10,7 @@ services:
     networks:
       - back-tier
     restart: always
-    command: /code/deploy/start_backups.sh
+    command: /code/deploy/backups/run_backups.sh
 
 volumes:
   backups:

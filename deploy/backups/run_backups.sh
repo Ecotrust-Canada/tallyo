@@ -20,4 +20,15 @@ rm `find /bak/* -mtime "+30" | grep -v "01\-"` 2> /dev/null
 # remove files older than 2 days that aren't at 8 o'clock
 rm `find /bak/* -mtime "+2" | grep -v "\-22"` 2> /dev/null
 
-sleep 3600
+KEY=/code/id_rsa
+
+if [ -f $KEY ];
+then
+   echo "Backup key $KEY exists, backing up remotely."
+   scp -i $KEY -o "StrictHostKeyChecking no" test 192.168.1.11:/bak/
+else
+   echo "No backup key found, not backing up remotely."
+fi
+
+sleep 5
+

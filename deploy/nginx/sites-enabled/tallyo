@@ -1,7 +1,6 @@
 server {
 
     listen 80 default_server;
-    server_name postgrest-proxy;
     charset utf-8;
 
     location /bower_components {
@@ -30,7 +29,6 @@ server {
 server {
 
     listen 81 default_server;
-    server_name postgrest-proxy;
     charset utf-8;
 
     location /bower_components {
