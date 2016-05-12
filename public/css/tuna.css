@@ -1786,6 +1786,12 @@ div[ng-view] {
   right: 2px;
   position: absolute;
 }
+.select_object .centre_btn .btn-orange {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  right: 0;
+}
 
 #create_box_form #form-0 .form_buttons,
 #create_box_form #form-24 .form_buttons {
@@ -3128,8 +3134,8 @@ md-datepicker {
 }
 
 .centre_btn{
-  margin-left: 100px;
-  margin-bottom: 50px;
+  position: relative;
+  margin: 10px auto;
 }
 #drop_search .styled-dropdown{
   width: 220px;
