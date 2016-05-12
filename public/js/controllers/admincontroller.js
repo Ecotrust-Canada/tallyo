@@ -264,7 +264,7 @@ angular.module('scanthisApp.AdminController', [])
   $scope.invconfig = 
   {
     cssclass: "fill small", 
-    headers: ["Case #", "Box #", "Lot", ""], 
+    headers: ["Case #", "Box ID", "Lot", ""], 
     fields: ["case_number", "box_number", "internal_lot_code"], 
     order: '-timestamp',
     button: 'remove'
