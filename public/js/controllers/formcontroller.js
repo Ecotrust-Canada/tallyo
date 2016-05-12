@@ -314,7 +314,9 @@ angular.module('scanthisApp.formController', [])
       }
 
       MakeEntry(form, table, $scope);
-      delete $scope.entry.lot['lotnum_in'];
+      if ($scope.entry.lot && $scope.entry.lot['lotnum_in']){
+          delete $scope.entry.lot['lotnum_in'];
+      }
       $scope.ToDatabase(responsefunction);
 
     }, function errorCallback(response) {
