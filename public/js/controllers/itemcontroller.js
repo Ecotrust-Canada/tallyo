@@ -50,28 +50,32 @@ angular.module('scanthisApp.itemController', [])
         timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
       }).then(
         function successCallback(response) {
-          if ($scope.options.truncate){
-            $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
-          }
-          else if ($scope.options.decimal){
-            $scope.scale[fieldName] = response.data.value.toFixed($scope.options.decimal);
-          }
-          else{
-            $scope.scale[fieldName] = response.data.value.toFixed(3);
+          if(response.data.value){
+            if ($scope.options.truncate){
+              $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
+            }
+            else if ($scope.options.decimal){
+              $scope.scale[fieldName] = response.data.value.toFixed($scope.options.decimal);
+            }
+            else{
+              $scope.scale[fieldName] = response.data.value.toFixed(3);
+            }
+          }else{
+            $scope.scale[fieldname] = "";
           }
         },
         function errorCallback(response) {
           //alert('once');
-          toastr.error('cannot connect to scale');
+          //toastr.error('cannot connect to scale');
     
-          $scope.stopPolling();
+          //$scope.stopPolling();
 
           //$scope.scale[fieldName] = 1.11;
 
-          //var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
-          //if(thediv){
-          // $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
-          //}          
+          var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
+          if(thediv){
+          $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
+          }          
         }
       );
     }, 500);

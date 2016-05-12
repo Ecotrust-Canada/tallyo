@@ -140,7 +140,7 @@
       <div class="pictogram_btns">
         <span ng-click="Reset()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
         <span ng-if="config.startpolling && poll_scale" 
-              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="scale_on green_text">Scale ON</span>
+              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="scale_on green_text" id="manual_input_{{config.station_id}}">Scale ON</span>
         <span ng-if="config.startpolling && !poll_scale" class="scale_on red_text" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
       </div>

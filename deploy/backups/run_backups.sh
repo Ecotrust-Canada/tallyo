@@ -6,13 +6,13 @@ mkdir -p /bak
 
 export PGPASSWORD=postgres
 
-FILENAME=/bak/tallyo-$(date +%Y%m%d-%H%M%S).sql
+DB_DUMP=/bak/tallyo-$(date +%Y%m%d-%H%M%S).sql
 
 echo "Backing up..."
 
-pg_dump -h db -U tuna_processor postgres > $FILENAME
+pg_dump -h db -U tuna_processor postgres > $DB_DUMP
 
-echo "A backup was saved in $FILENAME"
+echo "A backup was saved in $DB_DUMP"
 
 # remove anything that's not the first of a month, and is at least a month old
 rm `find /bak/* -mtime "+30" | grep -v "01\-"` 2> /dev/null
@@ -25,10 +25,10 @@ KEY=/code/id_rsa
 if [ -f $KEY ];
 then
    echo "Backup key $KEY exists, backing up remotely."
-   scp -i $KEY -o "StrictHostKeyChecking no" test 192.168.1.11:/bak/
+   scp -i $KEY -o "StrictHostKeyChecking no" $DB_DUMP tallyoadmin@192.168.1.11:/bak/
 else
    echo "No backup key found, not backing up remotely."
 fi
 
-sleep 5
+sleep 3600
 

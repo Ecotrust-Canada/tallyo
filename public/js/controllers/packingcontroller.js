@@ -16,6 +16,7 @@ angular.module('scanthisApp.packingController', [])
       $scope.list.lotin = response.data;
     };
     var query = '?lot_in=is.null';
+    query += '&order=timestamp.desc';
     DatabaseServices.GetEntries('lot', func, query);
   };
   $scope.ListSuppliers();
