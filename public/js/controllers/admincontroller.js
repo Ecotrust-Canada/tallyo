@@ -583,6 +583,12 @@ angular.module('scanthisApp.AdminController', [])
 
 
   $scope.getTheData = function(lot_number, stn, lot_code){
+    if (stn.csv_lot){
+      $scope.getlotCSV(lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);
+    }
+    if (stn.csv_prolot){
+      $scope.getprolotCSV(lot_number, stn, lot_code, stn.csv_prolot.table, stn.csv_prolot.fields);
+    }
     if (stn.csv_1 && !stn.csv_2){
       $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
 
@@ -599,6 +605,38 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.list.detail = response.data;
       var name = lot_code + '_' + stn.name;
+      if (label){
+        name += '_' + label;
+      }
+      name += '.csv';
+      console.log(name);
+      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
+
+
+  $scope.getlotCSV = function(lot_number, stn, lot_code, table, fields, label){
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var name = lot_code;
+      if (label){
+        name += '_' + label;
+      }
+      name += '.csv';
+      console.log(name);
+      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
+
+
+  $scope.getprolotCSV = function(lot_number, stn, lot_code, table, fields, label){
+    var query = '?production_lot=eq.' + lot_number;
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var name = lot_code;
       if (label){
         name += '_' + label;
       }
