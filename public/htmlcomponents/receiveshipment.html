@@ -66,6 +66,32 @@
         <label for="inp_fleet">Fishing Vessel:</label><input type="text" autocomplete="off"
                ng-model="current.har_edit.fleet" id="inp_fleet">
       </div>
+
+
+          <div id="drop_search" class="display_field"><label for="inp_area">Fishing Area:</label>
+            <div class="styled-dropdown">
+              <select ng-model="current.har_edit.fishing_area">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in current.har_area" 
+                        ng-select="current.har_edt.fishing_area = option.value">{{option.value}}</option>
+              </select>
+              <div ng-if="!row.value.list" class="dd_arrow"><span></span></div>
+            </div>
+          </div>
+
+          <div id="drop_search" class="display_field"><label for="inp_method">Fishing Method:</label>
+            <div class="styled-dropdown">
+              <select ng-model="current.har_edit.fishing_method">
+                <option value="">-- select --</option>
+                <option ng-repeat="option in current.har_method" 
+                        ng-select="current.har_edit.fishing_method = option.value">{{option.value}}</option>
+              </select>
+              <div ng-if="!row.value.list" class="dd_arrow"><span></span></div>
+            </div>
+          </div>
+
+
+
       <div class="form_buttons">
         <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
       </div>

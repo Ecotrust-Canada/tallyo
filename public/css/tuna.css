@@ -3121,5 +3121,8 @@ md-datepicker {
   margin-left: 100px;
   margin-bottom: 50px;
 }
+#drop_search .styled-dropdown{
+  width: 220px;
+}
 
 

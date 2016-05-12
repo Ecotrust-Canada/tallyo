@@ -374,11 +374,31 @@ angular.module('scanthisApp.receivingController', [])
   $scope.GetEditHar = function(){
     var func = function(response){
       $scope.current.har_edit = response.data[0];
-      console.log($scope.current.har_edit);
+      //console.log($scope.current.har_edit);
+      $scope.GetHarArea();
     };
     var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
     DatabaseServices.GetEntries('harvester', func, query);
   };
+
+  $scope.GetHarArea = function(){
+    var func = function(response){
+      $scope.current.har_area = response.data;
+      //console.log($scope.current.har_area);
+      $scope.GetHarMethod();
+    };
+    var query = '?table_name=eq.origin&field_name=eq.fishing_area';
+    DatabaseServices.GetEntries('formoptions', func, query);
+  };
+
+  $scope.GetHarMethod = function(){
+    var func = function(response){
+      $scope.current.har_method = response.data;
+      //console.log($scope.current.har_method);
+    };
+    var query = '?table_name=eq.origin&field_name=eq.fishing_method';
+    DatabaseServices.GetEntries('formoptions', func, query);
+  };  
 })
 
 
@@ -401,7 +421,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.PatchLot();
     };
-    var patch = {'fleet':$scope.current.har_edit.fleet}
+    var patch = {'fleet':$scope.current.har_edit.fleet, 'fishing_area':$scope.current.har_edit.fishing_area, 'fishing_method':$scope.current.har_edit.fishing_method}
     var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
     DatabaseServices.PatchEntry('harvester', patch, query, func);
   };
