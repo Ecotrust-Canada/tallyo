@@ -1348,6 +1348,7 @@ div[ng-view] {
 }*/
 
 .display_field label, #prev_station_totals label,
+#edit_shipment .form_label label,
 .fieldsetrepeat label, #receiveshipment #form-14 .form_label label/*,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value]*/  {
   color: #777777;
@@ -1373,6 +1374,7 @@ div[ng-view] {
 #receiveshipment #form-14 .form_label label,
 #receiveshipment .display_row .display_field label,
 #receivingprintlabel .display_row .display_field label,
+#edit_shipment .form_label label, 
 #edit_shipment .display_field label {
   font-size: 12px;
 }
@@ -1385,7 +1387,7 @@ div[ng-view] {
 #receiveshipment .display_row label,
 #receivingprintlabel .display_row label,
 #receiveshipment #form-14 .form_label label,
-#edit_shipment .display_field label {
+#edit_shipment .form_label {
   display: inline-block;
   width: 160px;
   padding: 0 16px;
@@ -1393,9 +1395,12 @@ div[ng-view] {
   text-align: right;
 }
 #receivingprintlabel .display_row .field_val,
+#edit_shipment .form_row .field,
 #receiveshipment .display_row .field_val {
   display: inline-block;
   box-sizing:border-box;
+}
+#edit_shipment .form_row .field {
 }
 
 
@@ -1432,7 +1437,7 @@ div[ng-view] {
 #edit_shipment input[type=text] {
   display: inline-block;
   height: 36px;
-  width: 348px;
+  width: 340px;
   color: #03223c;
   font-size: 22px;
   font-family: 'Lato-Bold';
@@ -1652,13 +1657,11 @@ div[ng-view] {
   padding: 0 15px 20px 15px;
 }
 
-
-
+#edit_shipment .form_row,
 .weighstation_main .form_row,
 .editform .form_row {
   padding-bottom: 12px;
 }
-
 
 .packingstation .form_row {
   padding-bottom: 15px;
@@ -1962,6 +1965,10 @@ div[ng-view] {
 .styled-dropdown select {
   height: 36px;
 }
+#edit_shipment .styled-dropdown {
+  width: 336px;
+  margin-bottom: 10px;
+}
 
 .show_choices .styled-dropdown select {
   display: block;
@@ -2210,10 +2217,10 @@ input[name^=weight]::after {
 
 #edit_shipment .btn-orange {
   height: 44px;
-  width: 370px;
+  width: 344px;
   font-size: 18px;
   padding: 6px 25px;
-  left: 159px;
+  left: 164px;
 }
 
 #form-8 .form_label label[for=grade] {
@@ -3074,6 +3081,9 @@ md-datepicker {
   margin-right: 20px;
 }
 
+#edit_shipment md-datepicker {
+  margin-left: -16px;
+}
 
 .inset_form{
   margin-left: 5px;
@@ -3123,6 +3133,7 @@ md-datepicker {
 }
 #drop_search .styled-dropdown{
   width: 220px;
+  display: inline-block;
 }
 
 
