@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+  backup:
+    image: tallyo_db
+    volumes:
+       - backups:/bak
+       - .:/code
+    networks:
+      - back-tier
+    restart: always
+    command: /code/deploy/backups/run_backups.sh
+    #command: sleep 1000000
+
+volumes:
+  backups:
+    driver: local
