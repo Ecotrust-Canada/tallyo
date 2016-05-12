@@ -37,13 +37,13 @@ Visit your browser at http://localhost:80
 Follow the instructions in the previous section. In addition, we want to map your source directory to the application image so you can work on the code. To do this, you need to include the development docker-compose file.
 
 ```
-docker-compose up -f deploy/docker-compose.install.yml
+docker-compose -f docker-compose.yml -f deploy/docker-compose.install.yml up
 ```
 
 Once this completes
 
 ```
-docker-compose up -f deploy/docker-compose.dev.yml
+docker-compose -f deploy/docker-compose.dev.yml up
 ```
 
 Visit your browser at http://localhost:8000
