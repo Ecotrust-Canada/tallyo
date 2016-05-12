@@ -1,0 +1,33 @@
+verson: '2'
+
+services:
+  db:
+    image: tallyo_db
+
+  postgrest:
+    image: tallyo_postgrest
+
+  amanda1:
+    image: tallyo_tallyo
+#    volumes:
+#      - ./public/js/configs:/opt/tallyo/scanthis/public/js/configs
+
+  amanda2:
+    image: tallyo_tallyo
+
+  nginx:
+    image: tallyo_nginx
+
+  backup:
+    image: tallyo_db
+    volumes:
+       - backups:/bak
+       - .:/code
+    networks:
+      - back-tier
+    restart: always
+    command: /code/deploy/start_backups.sh
+
+volumes:
+  backups:
+    driver: local
