@@ -1,4 +1,4 @@
-verson: '2'
+version: '2'
 
 services:
   db:

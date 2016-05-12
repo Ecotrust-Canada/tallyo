@@ -2,17 +2,19 @@ version: '2'
 
 services:
   db:
-    image: "postgres:9.5.2"
+    build:
+      context: ./db
+    image: tallyo_db
 
   postgrest:
     build:
-      dockerfile: deploy/postgrest/Dockerfile
-      context: .
+      context: ./postgrest
+    image: tallyo_postgrest
 
   amanda1:
     build:
       dockerfile: deploy/tallyo/Dockerfile
-      context: .
+      context: ..
     image: tallyo
 
   amanda2:
@@ -20,5 +22,5 @@ services:
 
   nginx:
     build:
-      dockerfile: ./deploy/nginx/Dockerfile
-      context: .
+      context: ./nginx
+    image: tallyo_nginx

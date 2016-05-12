@@ -2,8 +2,6 @@ version: '2'
 
 services:
   db:
-    #image: "postgres:9.5.2"
-    image: tallyo_db
     volumes:
       - pgdatabase:/var/lib/postgresql/data
     networks:
@@ -25,8 +23,9 @@ services:
 
   amanda1:
     command: node app app_config_am1
+    #command: sleep 100000
     volumes:
-       - .:/opt/tallyo/scanthis
+       - ..:/opt/tallyo
     ports:
       - "8000:8000"
     networks:
@@ -49,7 +48,7 @@ services:
 
   nginx:
     restart: always
-    build: ./nginx/
+    build: ./deploy/nginx/
     volumes_from:
       - amanda1
     networks:
