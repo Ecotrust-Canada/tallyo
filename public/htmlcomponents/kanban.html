@@ -130,7 +130,7 @@
             <div ng-if="lot.expanded" class="panel item-details">
               <table>
                 <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
-                  <td ng-if="total.grade">{{total.grade}}<label ng-if="total.species">({{total.species}})</label> </td>
+                  <td ng-if="total.grade">{{total.grade}}<label ng-if="total.species">  ({{total.species}})</label><label ng-if="total.state">  ({{total.state}})</label> </td>
                   <td ng-if="total.boxes">{{total.boxes}} cases </td>
                   <td ng-if="total.pieces">{{total.pieces}} pcs </td> 
                   <td ng-if="total.weight">{{total.weight | weightstring}}</td>
