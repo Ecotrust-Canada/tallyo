@@ -251,6 +251,9 @@ body{
   box-sizing: border-box;
   margin-bottom:20px;
 }
+#station-AM2-011 #receiveshipment {
+  vertical-align: top;
+}
 /*
 #station-HS0-003 .panel {
   width: 800px;
@@ -1367,6 +1370,13 @@ div[ng-view] {
 #receiveshipment #form-14 .field {
   display: inline-block;
 }
+#form-11 .field {
+  width: 290px;
+}
+
+#form-11 .dropdown-container {
+  width: 242px;
+}
 
 /*#station-HS0-011 .display_field label,
 #station-HS0-011 #current_lot label[for=internal_lot_code-value],*/
@@ -1399,8 +1409,6 @@ div[ng-view] {
 #receiveshipment .display_row .field_val {
   display: inline-block;
   box-sizing:border-box;
-}
-#edit_shipment .form_row .field {
 }
 
 
@@ -1658,6 +1666,7 @@ div[ng-view] {
 }
 
 #edit_shipment .form_row,
+#receivingprintlabel .form_row,
 .weighstation_main .form_row,
 .editform .form_row {
   padding-bottom: 12px;
@@ -1671,6 +1680,7 @@ div[ng-view] {
 .packingstation .form_label,
 #form-13 .form_label,
 #scaninventory .form_label,
+#receivingprintlabel .form_label,
 .editform .form_label {
   display: inline-block;
   text-align: right;
@@ -1800,9 +1810,6 @@ div[ng-view] {
 
 .select_object .dropdown-container {
   margin-top: 24px;
-  width: 510px;
-}
-#form-11 .dropdown-container {
   width: 510px;
 }
 .dropdown-container{
@@ -1959,7 +1966,7 @@ div[ng-view] {
 }
 #form-28 .styled-dropdown,
 #form-11 .styled-dropdown {
-  width: 220px;
+  width: 238px;
 }
 #form-21 .styled-dropdown {
   width: 258px;
