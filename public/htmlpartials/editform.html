@@ -1,6 +1,6 @@
 <div ng-repeat="field in config.displayfields" class="display_field" ng-switch on="field.fieldname">
   <label>{{field.title}}:</label>
-    <span ng-switch-when="timestamp">{{obj[field.fieldname]|stringtodate|date:'MMM dd yyyy'}}</span>
+    <span ng-switch-when="timestamp">{{obj[field.fieldname]|stringtodate}}</span>
     <span ng-switch-default>{{obj[field.fieldname]}}</span>
 
 </div>

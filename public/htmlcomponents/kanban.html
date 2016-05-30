@@ -88,7 +88,7 @@
 
               <div ng-repeat="row in collectiondisplay.layout | tf_filter : 'val' : settings.thisfish_enabled" class="display_field" ng-switch on="row.val">
                 <label>{{row.name}}:</Label>
-                <div ng-switch-when="end_date" class="field_val">{{lot.end_date|stringtodate|date:format:"MMMM d, yyyy"}}</div>
+                <div ng-switch-when="end_date" class="field_val">{{lot.end_date|stringtodate}}</div>
                 <div ng-switch-default class="field_val">{{lot[row.val]}}</div>
               </div>
 

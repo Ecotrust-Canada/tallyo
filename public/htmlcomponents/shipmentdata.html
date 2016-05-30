@@ -71,7 +71,7 @@
             </tr>
           <tr ng-repeat="ship in list.shipments | filter: filter_shipping | orderBy: '-timestamp'"
               id="item-{{ship.shipping_unit_number}}" class="animation">
-              <td>{{ship.timestamp|stringtodate|date:'MMM dd yyyy'}}</td>
+              <td>{{ship.timestamp|stringtodate}}</td>
               <td>{{ship.po_number}}</td>
               <td>{{ship[sumStations[stn.index].send_field]}}</td>
               <td>{{ship.container_number}}</td>

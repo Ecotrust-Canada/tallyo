@@ -17,7 +17,7 @@
 
        
       <span ng-repeat="name in config.fields" ng-switch on="name">
-        <span ng-switch-when="timestamp" class="list_item_val">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>        
+        <span ng-switch-when="timestamp" class="list_item_val">{{item.timestamp|stringtotime }}</span>        
         <span ng-switch_when="pieces" class="list_item_val">{{item[name]}} pcs</span>
         <span ng-switch_when="boxes" class="list_item_val">{{item[name]}} boxes</span>
         <span ng-switch-default class="list_item_val">{{item[name]}}</span>

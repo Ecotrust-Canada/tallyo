@@ -8,7 +8,7 @@
           id="item-{{$index}}{{config.station_id}}" class="animation" elem-ready="testFn({str:$index})">
         <td ng-repeat="name in config.fields" ng-switch on="name">
           <span ng-switch-when="numindex">{{listlength - $parent.$parent.$index}}</span>
-          <span ng-switch-when="timestamp">{{item.timestamp|stringtodate|date:'MMM dd HH:mm:ss' }}</span>
+          <span ng-switch-when="timestamp">{{item.timestamp|stringtotime }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="weight">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="internal_lot_code">{{item[name] || item['lot_number'] || item.received_from}}</span>

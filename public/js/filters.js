@@ -4,11 +4,32 @@
 angular.module('scanthisApp.filters', [])
 
 /*turns a string into a date object*/
+.filter('stringtotime', function() {
+  return function(input) {
+    if(input){
+      var day = input.substring(0,19);
+      //return new Date(day);
+      return moment(day).format('MMMM DD, HH:mm:ss');
+    }
+  };
+})
+
 .filter('stringtodate', function() {
   return function(input) {
     if(input){
-      //var day = input.substring(0,19);
-      return new Date(input);
+      var day = input.substring(0,19);
+      //return new Date(day);
+      return moment(day).format('MMMM DD, YYYY');
+    }
+  };
+})
+
+.filter('stringtodateshort', function() {
+  return function(input) {
+    if(input){
+      var day = input.substring(0,19);
+      //return new Date(day);
+      return moment(day).format('dd/MM/yy');
     }
   };
 })
