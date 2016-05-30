@@ -2261,7 +2261,6 @@ input[name^=weight]::after {
   width: 210px;
 }
 #radio-7-grade, 
-#radio-23-grade, 
 #radio-27-grade,
 #radio-20-grade, 
 #radio-8-grade {
@@ -2318,17 +2317,28 @@ input[name^=weight]::after {
   width: 70px;
 }
 #radio-20-grade.toggle-group-container label,
-#radio-23-grade.toggle-group-container label,
+
 #radio-27-grade.toggle-group-container label,
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
+
+#radio-23-grade.toggle-group-container label{
+  width: 61px;
+}
+
+#radio-23-grade.toggle-group-container label span{
+  font-size: 27px;
+}
+
 #radio-23-state.toggle-group-container label,
 #radio-27-state.toggle-group-container label,
 #radio-20-state.toggle-group-container label {
   width: 80px;
 }
+
+
 .toggle-group-container.rbgroup-unset,
 .toggle-group-container.rbgroup-unset {
   background-image: linear-gradient(-180deg, #0089BC 0%, #0E6383 61%, #084C65 100%);
@@ -2396,12 +2406,16 @@ input[name^=weight]::after {
   border: none;
 }
 
-#radio-23-grade.toggle-group-container input:checked + span,
+
 #radio-27-grade.toggle-group-container input:checked + span,
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
   width:60px;
+}
+
+#radio-23-grade.toggle-group-container input:checked + span{
+  width: 61px;
 }
 
 #radio-23-state.toggle-group-container input:checked + span,

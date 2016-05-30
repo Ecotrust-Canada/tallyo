@@ -68,9 +68,9 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.CheckGrade = function(box_grade, loin_grade){
     var conv = {
-      'A': 'AAA',
-      'B': 'AA',
-      'C': 'A',
+      'AAA': 'AAA',
+      'AA': 'AA',
+      'A': 'A',
       'D': 'D'
     };
     loin_grade = conv[loin_grade];
