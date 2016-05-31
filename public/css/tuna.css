@@ -3061,7 +3061,7 @@ span.switch_option.active {
      left: 0px;
      top: 0px;
      margin-top: 100px;
-     width:590px;
+     width:580px;
      height:100%;
      text-align:center;
      z-index: 1000;
@@ -3078,6 +3078,10 @@ span.switch_option.active {
      padding:15px;
      padding-top: 100px;
      text-align:center;
+}
+
+.large_text{
+  font-size: 60px;
 }
 
 #mixgrade {
