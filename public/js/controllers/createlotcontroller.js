@@ -32,7 +32,33 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.changeFn = function(selected){
-    $scope.current.collectionid = selected;
+    if ($scope.options.p_date){
+
+
+      $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+      var end_date = moment.parseZone(date).endOf('day').format();
+
+
+      var patch = {'end_date': end_date};
+      var query = '?lot_number=eq.' + selected;
+      var func = function(response){
+        if (response.data.length > 0){
+          $scope.current.collectionid = response.data[0].lot_number;
+        }//end if
+        else{
+        }
+      };
+      DatabaseServices.PatchEntry('lot', patch, query, func);
+      }, function errorCallback(response) {
+      });
+
+
+    }else{
+      $scope.current.collectionid = selected;
+    }
+    
   };
 
   $scope.current.selected = "no selected";
@@ -359,7 +385,7 @@ angular.module('scanthisApp.createlotController', [])
       var func = function(response){
         $scope.list.recent_lot = response.data;
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query);
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
     }, function errorCallback(response) {
     });
   };

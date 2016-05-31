@@ -97,7 +97,7 @@ angular.module('scanthisApp.setsupplierController', [])
   });
 
   $scope.SetLot = function(lot_number){
-    var query = '?lot_number=eq.' + lot_number;
+    /*var query = '?lot_number=eq.' + lot_number;
     var func = function(response){
       if (response.data.length > 0){
         $scope.current.lot = response.data[0];
@@ -106,7 +106,34 @@ angular.module('scanthisApp.setsupplierController', [])
       else{
       }
     };
-    DatabaseServices.GetEntries('lot', func, query);
+    DatabaseServices.GetEntries('lot', func, query);*/
+
+
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).format();
+      var end_date = moment.parseZone(date).endOf('day').format();
+
+
+      var patch = {'end_date': end_date};
+      var query = '?lot_number=eq.' + lot_number;
+      var func = function(response){
+        if (response.data.length > 0){
+          $scope.current.lot = response.data[0];
+          $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+        }//end if
+        else{
+        }
+      };
+      DatabaseServices.PatchEntry('lot', patch, query, func);
+
+
+
+    }, function errorCallback(response) {
+    });
+
+
+
   };
 
 
