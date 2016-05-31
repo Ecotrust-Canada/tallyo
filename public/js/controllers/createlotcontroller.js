@@ -72,7 +72,8 @@ angular.module('scanthisApp.createlotController', [])
   $scope.completedlots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      console.log($scope.options.selectfromcurrentlots);
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract($scope.options.selectfromcurrentlots, 'days').format();
       var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
       var func = function(response){
         $scope.list.old_harvester_lot = response.data;
@@ -353,12 +354,12 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListRecentLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&lot_in=not.is.null';
       var func = function(response){
         $scope.list.recent_lot = response.data;
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query);      
+      DatabaseServices.GetEntries('harvester_lot', func, query);
     }, function errorCallback(response) {
     });
   };

@@ -80,7 +80,7 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.ListMoreLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(14, 'days').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
       var func = function(response){
         $scope.list.lots = response.data;
