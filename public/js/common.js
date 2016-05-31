@@ -186,6 +186,9 @@ var ArrayFromJson = function(json, stringarray){
     else if (stringarray[i] === 'tf_code' && !json[stringarray[i]]){
       json[stringarray[i]] = 'No Code';
     }
+    else if (stringarray[i] === 'ft_fa_code' && !json[stringarray[i]]){
+      json[stringarray[i]] = 'non-FT';
+    }
     newarray.push(json[stringarray[i]]);
   }
   return newarray;
