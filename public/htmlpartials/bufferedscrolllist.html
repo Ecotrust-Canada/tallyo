@@ -16,6 +16,7 @@
           <span ng-switch-when="boxes">{{item[name]}} cases</span>
           <span ng-switch-when="loin_num">{{item.loin_number.substring(6,10)}}</span>
           <span ng-switch-when="box_num">{{item.box_number.substring(6,10)}}</span>
+          <span ng-switch-when="case_number">{{item.case_number || item.box_number.substring(6,10)}}</span>
           <span ng-switch-when="full_supplier">{{item.fleet}} - {{item.supplier_group}} - {{item.supplier}}</span>
           <span ng-switch-default>{{item[name]}}</span>
         </td>
