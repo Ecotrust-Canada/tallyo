@@ -370,6 +370,7 @@ angular.module('scanthisApp.AdminController', [])
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
       var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
         $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
@@ -393,6 +394,7 @@ angular.module('scanthisApp.AdminController', [])
       var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
 
       var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
+      query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
         $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
