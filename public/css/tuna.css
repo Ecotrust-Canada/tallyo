@@ -2261,7 +2261,6 @@ input[name^=weight]::after {
   width: 210px;
 }
 #radio-7-grade, 
-#radio-27-grade,
 #radio-20-grade, 
 #radio-8-grade {
   width: 360px;
@@ -2318,16 +2317,18 @@ input[name^=weight]::after {
 }
 #radio-20-grade.toggle-group-container label,
 
-#radio-27-grade.toggle-group-container label,
+
 #radio-8-grade.toggle-group-container label,
 #radio-7-grade.toggle-group-container label {
   width: 60px;
 }
 
+#radio-27-grade.toggle-group-container label,
 #radio-23-grade.toggle-group-container label{
   width: 61px;
 }
 
+#radio-27-grade.toggle-group-container label span,
 #radio-23-grade.toggle-group-container label span{
   font-size: 27px;
 }
@@ -2407,13 +2408,14 @@ input[name^=weight]::after {
 }
 
 
-#radio-27-grade.toggle-group-container input:checked + span,
+
 #radio-20-grade.toggle-group-container input:checked + span,
 #radio-8-grade.toggle-group-container input:checked + span,
 #radio-7-grade.toggle-group-container input:checked + span { 
   width:60px;
 }
 
+#radio-27-grade.toggle-group-container input:checked + span,
 #radio-23-grade.toggle-group-container input:checked + span{
   width: 61px;
 }
