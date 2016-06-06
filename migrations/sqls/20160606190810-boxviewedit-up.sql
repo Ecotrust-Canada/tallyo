@@ -227,6 +227,7 @@ CREATE OR REPLACE VIEW public.harvester_lot AS
     lot."timestamp",
     lot.harvester_code,
     lot.internal_lot_code,
+    lot.station_code,
     harvester.species_common,
     harvester.fair_trade,
     harvester.supplier_group,
