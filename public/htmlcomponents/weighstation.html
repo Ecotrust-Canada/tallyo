@@ -36,7 +36,9 @@
           ng-if="totals[0].boxes">{{totals | sumOfValue:'boxes'}} boxes</span>
         </div>
     </div>
-  </div>   
+  </div>  
+
+  <editlot ng-if="options.receivelot"></editlot> 
 
   <div ng-controller="ScanCtrl" class="scanform">
     <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" 

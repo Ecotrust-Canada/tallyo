@@ -11,8 +11,6 @@
           <span ng-switch-when="timestamp">{{value.timestamp|stringtodateshort }}</span>
           <span ng-switch-when="weight">{{value.weight|weightstring}}</span>
           <span ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
-          <span ng-switch-when="to_from">{{value.customer || value.received_from}}</span>
-          <span ng-switch-when="supplier_obj">{{value.received_from || json_filter}}</span>
           <span ng-switch-default >{{value[field]}}</span>
         </span> </div> 
     </div>
@@ -25,8 +23,6 @@
       <span ng-switch-when="timestamp">{{the_val.timestamp|stringtodateshort }}</span>
       <span ng-switch-when="weight">{{the_val.weight|weightstring}}</span>
       <span ng-switch-when="internal_lot_code">{{the_val[field] || the_val['lot_number']}}</span>
-      <span ng-switch-when="to_from">{{the_val.customer || the_val.received_from}}</span>
-      <span ng-switch-when="supplier_obj">{{the_val.received_from || json_filter}}</span>
       <span ng-switch-default >{{the_val[field]}}</span>
     </span> 
   </div>

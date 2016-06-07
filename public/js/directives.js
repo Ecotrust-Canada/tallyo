@@ -13,6 +13,8 @@ angular.module('scanthisApp.directives', [])
 //create lot from harvester, or select recently completed lot
 .directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
 
+.directive('editlot', function() { return { templateUrl: 'htmlpartials/editlot.html' }; })
+
 .directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
 
 .directive('setsupplierinfo', function() { return { templateUrl: 'htmlpartials/setsupplierinfo.html' }; })

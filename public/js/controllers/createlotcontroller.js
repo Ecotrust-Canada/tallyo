@@ -187,8 +187,12 @@ angular.module('scanthisApp.createlotController', [])
   });
 
   $scope.$on('collection-change', function(event, args) {
-
-    $scope.current.collectionid = args.id;
+    if ($scope.current.collectionid !== args.id){
+      $scope.current.collectionid = args.id;
+    }
+    else{
+      $scope.DisplayCollectionInfo();
+    }    
   });
 
   $scope.$on('change-lot', function(event) {

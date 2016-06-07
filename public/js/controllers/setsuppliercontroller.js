@@ -58,6 +58,98 @@ angular.module('scanthisApp.setsupplierController', [])
 
 })
 
+
+.controller('EditLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
+
+  $scope.showedit=false;
+  //for harvester drop down
+  $scope.form = {};
+  $scope.form.state = 'Dirty';
+
+  $scope.selected = 'no selected';
+
+  $scope.resetform= function(){
+    $scope.form = {};
+    $scope.form.state = 'Dirty';
+
+    $scope.selected = 'no selected';
+  };
+
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true';
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
+
+
+  $scope.GetHar = function(harvester){
+    $scope.form.harvester_code = harvester.harvester_code;
+    $scope.current.harvester = harvester;
+  };
+
+  $scope.GenInternalLot = function(form){
+    if (!form.harvester_code){
+      toastr.error('set harvester');
+    }
+    else if (!form.state){
+      toastr.error('set state');
+    }
+    else{
+      $http.get('/server_time').then(function successCallback(response) {
+        var date = response.data.timestamp;
+        var now = moment(date).utcOffset(response.data.timezone).format();
+        var day = moment(date).utcOffset(response.data.timezone).format('DD');
+        var date_group = DateGroup(day);
+        var hars = $scope.list.harvester.filter(function(el){
+          return el.harvester_code === form.harvester_code;
+        });
+        var sup_code = hars[0].supplier_group;
+        var loin_code = LoinCode(form.state);
+        var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
+        var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
+        //console.log(internal_lot_code);
+        $scope.EditCurrentHarvester(form.harvester_code, internal_lot_code, now);
+      }, function errorCallback(response) {
+
+      });
+    }
+
+  };
+
+  $scope.toggleStateValue = function(){
+    var checkInput = document.getElementById('toggle-state-edit');
+    setTimeout(function () {
+      $scope.$apply(function () {
+        $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';
+      });
+    }, 0);
+  };
+
+
+  $scope.EditCurrentHarvester = function(harvester_code, internal_lot_code, now){
+
+    $scope.current.harvester_code = harvester_code;
+    var date = now;
+    var query = "?lot_number=eq." + $scope.current.collectionid;
+    var patch = {"harvester_code": harvester_code, "internal_lot_code": internal_lot_code};
+    var func = function(response){
+      $scope.current.lot = (response.data[0] || response.data);
+
+      //$scope.DisplayCollection();
+      $rootScope.$broadcast('collection-change', {id: $scope.current.collectionid});
+
+      $scope.form = {};
+      $scope.showedit = false;
+    };
+    DatabaseServices.PatchEntry('lot', patch, query, func);
+  };
+
+
+})
+
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
   //for recent lots drop down
 
@@ -171,6 +263,8 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();
+
+
 
 
   /*

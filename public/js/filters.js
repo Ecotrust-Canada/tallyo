@@ -29,7 +29,7 @@ angular.module('scanthisApp.filters', [])
     if(input){
       var day = input.substring(0,19);
       //return new Date(day);
-      return moment(day).format('dd/MM/yy');
+      return moment(day).format('DD/MM/YY');
     }
   };
 })

@@ -1,0 +1,27 @@
+<div ng-controller="EditLotCtrl" ng-show="current.collectionid" class="select_object">  
+  <button ng-click="resetform();showedit=true" ng-hide="showedit" class="btn-blue">Edit</button>
+  <button ng-click="showedit=false" ng-show="showedit" class="btn-blue">Hide</button> 
+  <div  class="show_choices" ng-show="showedit===true">
+
+    <input-dropdown  thelist="list.harvester"  config="adddropdown" on-select="GetHar(value)"></input-dropdown>
+
+    <div class="form_buttons">
+
+      <span class="switch_option" ng_class="{active: form.state=='Dirty'}"
+          value="Dirty">Dirty</span>
+      <div ng-click="toggleStateValue()" class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+               id="toggle-state-edit" ng-checked="form.state=='Clean'">
+        <label class="onoffswitch-label" for="toggle-state">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+      <span class="switch_option" ng_class="{active: form.state=='Clean'}"
+          value="Clean">Clean</span>
+
+      <button ng-click="GenInternalLot(form)" class="btn-orange">Edit</button>
+
+    </div>
+  </div>
+</div>
