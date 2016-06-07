@@ -1,9 +1,9 @@
 <div ng-controller="EditLotCtrl" ng-show="current.collectionid" class="select_object">  
-  <button ng-click="resetform();showedit=true" ng-hide="showedit" class="btn-blue">Edit</button>
+  <button ng-click="resetform();showedit=true" ng-hide="showedit" class="btn-blue">Edit Current</button>
   <button ng-click="showedit=false" ng-show="showedit" class="btn-blue">Hide</button> 
   <div  class="show_choices" ng-show="showedit===true">
 
-    <input-dropdown  thelist="list.harvester"  config="adddropdown" on-select="GetHar(value)"></input-dropdown>
+    <input-dropdown  thelist="list.harvester"  config="adddropdown2" on-select="GetHar(value)"></input-dropdown>
 
     <div class="form_buttons">
 
