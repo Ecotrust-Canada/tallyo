@@ -2773,6 +2773,9 @@ fieldset{
 fieldset[disabled] {
   opacity: 0.3;
 }
+button[disabled] {
+  opacity: 0.3;
+}
 .addfields{
     margin: 10px 0;
 }

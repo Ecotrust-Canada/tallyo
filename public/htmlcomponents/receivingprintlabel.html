@@ -6,22 +6,26 @@
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>    
   </div>
 
-  <div><button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Choose Lot</button>
-  <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button></div>
+  <div>
+    <button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue" ng-disabled="editforms">Choose Lot</button>
+    <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button>
+  </div>
 
-  <div ng-controller="LoadEditLotCtrl"><button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue">Edit Current Lot</button>
-  <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Hide</button></div>
+  <div ng-controller="LoadEditLotCtrl">
+    <button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue" ng-disabled="showforms">Edit Current Lot</button>
+    <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Hide</button>
+  </div>
 
   
 
   <div ng-controller="NewLotCtrl" ng-show="showforms" class="select_object">
 
-  <input-dropdown  thelist="list.lots"  config="adddropdown2" on-select="SetLot(value);$parent.showforms=!showforms"></input-dropdown>
+  <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="SetLot(value);$parent.showforms=!showforms"></input-dropdown>
 
 
-  <setshipmentinfo ng-show="showforms"></setshipmentinfo>
-  <setsupplierinfo ng-show="showforms"></setsupplierinfo>
-  <setharvesterinfo ng-show="showforms"></setharvesterinfo>
+  <setshipmentinfo></setshipmentinfo>
+  <setsupplierinfo></setsupplierinfo>
+  <setharvesterinfo></setharvesterinfo>
 
 
     <div class="centre_btn">
@@ -101,21 +105,20 @@
 
 
 <div class="panel white" id="receivingprintlabel">
-
-
-
-
-
-
-
-
-
-
     <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
         <span class="select_header">Add boxes</span>
-       <fieldsetrepeat submit-fn="SubmitForm(choices);" config="scanform"></fieldsetrepeat>
+       <fieldsetrepeat submit-fn="SubmitForm(choices);" config="scanform" formdisabled="formdisabled"></fieldsetrepeat>
+    </div>
+
+    <hr>
+
+    <div ng-controller="CompleteLotCtrl">
+      <button ng-if=" current.collectionid && current.collectionid!=='no selected'" 
+              ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
+              ng-click="CompleteLot(current.collectionid, [station_code])">Complete Lot</button>
     </div>
 </div>
+
 
 
 

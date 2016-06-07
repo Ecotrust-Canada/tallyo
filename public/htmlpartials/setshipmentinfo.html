@@ -1,15 +1,26 @@
 <div ng-controller="SetShipmentCtrl">
   
   <div  class="select_object">
-    <div class="select_header" ng-class="{lot_chosen: !addinfo}" ng-click="current.shipping_unit=null;current.harvester=null;addinfo=!addinfo">
+    <div class="select_header" ng-class="{lot_chosen: !current.shipping_unit}" ng-click="current.shipping_unit=null">
        <span class="show_choices">Set Shipment Info</span>
     </div>
     <div class="inset_form"> 
-      <div class="show_choices" ng-show="addinfo">
+      <div class="show_choices" ng-show="!current.shipping_unit">
         <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
         <div class="marg_left"><input-dropdown ng-if="adddropdown" thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></div>
       </div>
-      <display ng-if="current.shipping_unit" settings="settings" ng-hide="addinfo" obj="current.shipping_unit" config="collectiondisplay"></display>
+      <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>
     </div>
   </div>
 </div>
+
+
+<div class="hr_marg"><hr></div>
+
+<div class="form_label">
+  <label>Receive Date:</label>
+</div>
+
+ <md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker>
+
+<div class="hr_marg"><hr></div>

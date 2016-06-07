@@ -430,7 +430,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.GetLot();
     };
-    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate}
+    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate};
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
@@ -448,6 +448,16 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
+      $scope.formdisabled = true;
+    }
+    else{
+      $scope.formdisabled = false;
+
+    }
+  });
+
   $scope.entry.box = {};
   $scope.SubmitForm = function(choices){
     if (choices){
@@ -457,22 +467,19 @@ angular.module('scanthisApp.receivingController', [])
         $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
         $scope.entry.box.lot_in = $scope.current.harvester_lot.lot_number;
 
+        for (var j=0;j<choices.length;j++){
+          var formrow = choices[j];
+          $scope.entry.box.grade = formrow.grade; 
+          $scope.entry.box.size = formrow.size;
+          $scope.entry.box.weight = formrow.weight;
+          $scope.entry.box.station_code = $scope.station_code;
 
-            for (var j=0;j<choices.length;j++){
-              var formrow = choices[j];
-              $scope.entry.box.grade = formrow.grade; 
-              $scope.entry.box.size = formrow.size;
-              $scope.entry.box.weight = formrow.weight;
-              $scope.entry.box.station_code = $scope.station_code;
-
-              for (var i=1;i<=formrow.num_boxes;i++){
-                var entry = JSON.parse(JSON.stringify($scope.entry.box));
-                $scope.MakeBox(entry);
-              }
-            }    
-        
-      }else{
-        toastr.error("missing origin info");}
+          for (var i=1;i<=formrow.num_boxes;i++){
+            var entry = JSON.parse(JSON.stringify($scope.entry.box));
+            $scope.MakeBox(entry);
+          }
+        }            
+      }
     }    
   };
 

@@ -1,27 +1,32 @@
-<form name="theform">
-  <div  data-ng-repeat="choice in choices" class="repeatrow">
-    <span ng-repeat="field in config.fields">
-      <label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>
-      <div ng-if="field.type==='select'" class="styled-dropdown dd-{{field.fieldname}}">
-        <select ng-model="choice[field.fieldname]" ng-required="true" 
-            name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}" 
-                ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-          <option ng-repeat="obj in field.value">{{obj.name}}</option>
-        </select>
-        <div class="dd_arrow"><span></span></div>
-      </div>
-      <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
-             placeholder="{{field.placeholder}}" title="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" 
-             ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-      <input ng-if="field.type==='text'" type="text" autocomplete="off" ng-model="choice[field.fieldname]" 
-             placeholder="field.placeholder"  title="{{field.placeholder}}" ng-required="true" 
-             name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-    </span>    
-    <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+
+<fieldset ng-disabled="formdisabled">
+  <form name="theform">
+    <div  data-ng-repeat="choice in choices" class="repeatrow">
+      <span ng-repeat="field in config.fields">
+        <label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>
+        <div ng-if="field.type==='select'" class="styled-dropdown dd-{{field.fieldname}}">
+          <select ng-model="choice[field.fieldname]" ng-required="true" 
+              name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}" 
+                  ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+            <option ng-repeat="obj in field.value">{{obj.name}}</option>
+          </select>
+          <div class="dd_arrow"><span></span></div>
+        </div>
+        <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
+               placeholder="{{field.placeholder}}" title="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" 
+               ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+        <input ng-if="field.type==='text'" type="text" autocomplete="off" ng-model="choice[field.fieldname]" 
+               placeholder="field.placeholder"  title="{{field.placeholder}}" ng-required="true" 
+               name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+      </span>    
+      <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+    </div>
+  </form>
+
+  <button class="addfields btn-blue" ng-click="addNewChoice()">Add fields</button>
+  <div class="form_buttons">
+    <button ng-click="reset()" class="bottomleft btn-light">Reset Form</button>
+    <input type="button" ng-click="isValid(choices);submitFn({choices: choices});reset()" value="{{config.title}}" class="bottomright btn-orange">
   </div>
-</form>
-<button class="addfields btn-blue" ng-click="addNewChoice()">Add fields</button>
-<div class="form_buttons">
-  <button ng-click="reset()" class="bottomleft btn-light">Reset Form</button>
-  <input type="button" ng-click="isValid(choices);submitFn({choices: choices});reset()" value="{{config.title}}" class="bottomright btn-orange">
-</div>
+
+</fieldset>

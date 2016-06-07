@@ -63,6 +63,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.lotselected = 'no selected';
 
+
   $scope.ListLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
@@ -90,6 +91,21 @@ angular.module('scanthisApp.setsupplierController', [])
     });
   };
   $scope.ListMoreLots();
+
+
+  $scope.ListStationLots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
+      var func = function(response){
+        $scope.list.stnlots = response.data;
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
+  $scope.ListStationLots();
 
 
   $scope.$on('collection-change', function(event, args) {
@@ -121,6 +137,9 @@ angular.module('scanthisApp.setsupplierController', [])
         if (response.data.length > 0){
           $scope.current.lot = response.data[0];
           $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
+          $scope.current.shipping_unit = null;
+          $scope.current.harvester = null;
+          $scope.current.supplier = null;
         }//end if
         else{
         }
@@ -254,6 +273,9 @@ angular.module('scanthisApp.setsupplierController', [])
       }
       else{
         $scope.current.collectionid = $scope.current.lot.lot_number;
+        $scope.current.shipping_unit = null;
+        $scope.current.harvester = null;
+        $scope.current.supplier = null;
       }
 
       $scope.form = {};

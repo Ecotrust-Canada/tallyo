@@ -149,7 +149,7 @@ angular.module('scanthisApp.createlotController', [])
          $timeout(function(){thediv.focus();}, 0);
         }
         if ($scope.station_info.collectiontable === 'harvester_lot'){
-          $scope.GetHarvester($scope.current.harvester_lot.harvester_code);
+          //$scope.GetHarvester($scope.current.harvester_lot.harvester_code);
         }
 
       }
@@ -158,7 +158,7 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntryNoAlert(table, func, query);
   };
 
-  $scope.GetHarvester = function(harvester_code){
+  /*$scope.GetHarvester = function(harvester_code){
     var query = '?harvester_code=eq.' + harvester_code;
     var func = function(response){
       if (response.data.length > 0){
@@ -168,7 +168,7 @@ angular.module('scanthisApp.createlotController', [])
       
     };
     DatabaseServices.GetEntryNoAlert('harvester', func, query);
-  };
+  };*/
 
   //Display items triggered by this variable changing
   $scope.current.itemchange = true;
