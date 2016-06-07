@@ -125,6 +125,9 @@ angular.module('scanthisApp.AdminController', [])
       name += '.csv';
       console.log(name);
       alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+
+      //var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      //console.log(newdata);
     };
     DatabaseServices.GetEntries(table, func, query);
   };
@@ -354,6 +357,7 @@ angular.module('scanthisApp.AdminController', [])
       name += '.csv';
       console.log(name);
       alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+      
     };
     DatabaseServices.GetEntries(table, func, query);
   };
@@ -586,65 +590,86 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getTheData = function(lot_number, stn, lot_code){
     if (stn.csv_lot){
-      $scope.getlotCSV(lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);
+      async.parallel([
+          function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);},
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Lot_info',header:true},{sheetid:'Station_info',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
     }
-    if (stn.csv_prolot){
-      $scope.getprolotCSV(lot_number, stn, lot_code, stn.csv_prolot.table, stn.csv_prolot.fields);
+    else if (stn.csv_prolot){
+      async.parallel([
+          function(callback){ $scope.getprolotCSV(callback, lot_number, stn, lot_code, stn.csv_prolot.table, stn.csv_prolot.fields);},
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Lot_info',header:true},{sheetid:'Station_info',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
     }
-    if (stn.csv_1 && !stn.csv_2){
-      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);
+    else if (stn.csv_1 && !stn.csv_2){
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
+      });
 
     }
     else if (stn.csv_1 && stn.csv_2){
-      $scope.getCSV(lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields, 'summary');
-      $scope.getCSV(lot_number, stn, lot_code, stn.csv_2.table, stn.csv_2.fields, 'detail');
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);},
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_2.table, stn.csv_2.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Summary',header:true},{sheetid:'Loins',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
     }
 
   };
 
-  $scope.getCSV = function(lot_number, stn, lot_code, table, fields, label){
+  $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
       $scope.list.detail = response.data;
-      var name = lot_code + '_' + stn.name;
-      if (label){
-        name += '_' + label;
-      }
-      name += '.csv';
-      console.log(name);
-      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
     };
-    DatabaseServices.GetEntries(table, func, query);
+    DatabaseServices.GetEntries(table, func, query, callback);
   };
 
-
-  $scope.getlotCSV = function(lot_number, stn, lot_code, table, fields, label){
+  $scope.getlotCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number;
     var func = function(response){
       $scope.list.detail = response.data;
-      var name = lot_code;
-      if (label){
-        name += '_' + label;
-      }
-      name += '.csv';
-      console.log(name);
-      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
     };
     DatabaseServices.GetEntries(table, func, query);
   };
 
 
-  $scope.getprolotCSV = function(lot_number, stn, lot_code, table, fields, label){
+  $scope.getprolotCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?production_lot=eq.' + lot_number;
     var func = function(response){
       $scope.list.detail = response.data;
-      var name = lot_code;
-      if (label){
-        name += '_' + label;
-      }
-      name += '.csv';
-      console.log(name);
-      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
     };
     DatabaseServices.GetEntries(table, func, query);
   };
