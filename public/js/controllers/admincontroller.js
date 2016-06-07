@@ -580,11 +580,41 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getAllData = function(lot_number, lot_code){
-    for (var index in $scope.sumStations){
-      var stn = $scope.sumStations[index];
-      $scope.getTheData(lot_number, stn, lot_code);
+    var func_array = [];
+    var opts = [];
+    if ($scope.sumStations[0].csv_lot){
+      var stn = $scope.sumStations[0];
+      func_array.push(function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);});
+      opts.push({sheetid: 'lot_info' , header:true});
     }
+    else if ($scope.sumStations[0].csv_prolot){
+      var prostn = $scope.sumStations[0];
+      func_array.push(function(callback){ $scope.getprolotCSV(callback, lot_number, prostn, lot_code, prostn.csv_prolot.table, prostn.csv_prolot.fields);});
+      opts.push({sheetid: 'lot_info' , header:true});
+    }
+    for (var index in $scope.sumStations){      
+      opts.push({sheetid: $scope.sumStations[index].name , header:true});
+    }
+
+    async.forEachOf($scope.sumStations, function (value, key, callback) {
+      func_array.push(function(callback){ $scope.getCSV(callback, lot_number, value, lot_code, value.csv_1.table, value.csv_1.fields);});
+    }, function (err, results) {
+        if (err) console.error(err.message);
+        
+    });
+
+    async.parallel(func_array,
+      function(err, results) {
+          var name = lot_code;
+          name += '.xlsx';
+          console.log(name);
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+
   };
+
+
+
 
 
 
@@ -646,9 +676,14 @@ angular.module('scanthisApp.AdminController', [])
   $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
     var func = function(response){
-      $scope.list.detail = response.data;
-      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
-      callback(null, newdata);
+      if(response.data.length>0){
+        $scope.list.detail = response.data;
+        var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+        callback(null, newdata);
+      }
+      else{
+        callback(null, [{nodata:'nodata'}]);
+      }
     };
     DatabaseServices.GetEntries(table, func, query, callback);
   };
