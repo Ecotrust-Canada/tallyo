@@ -518,15 +518,17 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.boxes = response.data;
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
-    DatabaseServices.GetEntries('shipment_summary_more', func, query);
+    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code);
+    DatabaseServices.GetEntries('shipment_summary', func, query);
   };
+
+
 
   $scope.ListAllBoxes = function(){
     var func = function(response){
       $scope.list.included = response.data;
     };
-    var query = '?shipping_unit_in=eq.' + $scope.current.harvester_lot.shipping_unit_number  + '&order=timestamp.desc';
+    var query = '?shipping_unit_in=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code) + '&order=timestamp.desc';
     DatabaseServices.GetEntries('box_with_info', func, query, 'hundred');
   };
 
@@ -555,13 +557,19 @@ angular.module('scanthisApp.receivingController', [])
   });
 
   $scope.RemoveScan = function(obj){
-    var itemid = obj.box_number;
-    var query = '?box_number=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
-    var func = function(response){
-        $scope.removeBox(obj);
-      
-    };
-    DatabaseServices.RemoveEntry('scan', query, func);
+    if (obj.lot_number !== null){
+      toastr.error('cannot delete - box in processing');
+    }
+    else{
+      var itemid = obj.box_number;
+      var query = '?box_number=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+      var func = function(response){ 
+          $scope.removeBox(obj);
+        
+      };
+      DatabaseServices.RemoveEntry('scan', query, func);
+    }
+    
   };
 
   $scope.removeBox = function(obj){
@@ -573,7 +581,55 @@ angular.module('scanthisApp.receivingController', [])
   };
 
 
+
+
+  $scope.getTheData = function(lot_number, stn, lot_code){
+    if (stn.csv_lot){
+      async.parallel([
+          function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);},
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'shipment_info',header:true},{sheetid:'boxes',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+    }
+  };
+
+  $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
+    var query = '?lot_in=eq.' + lot_number + '&station_code=eq.' + stn.code;
+    var func = function(response){
+      if(response.data.length>0){
+        $scope.list.detail = response.data;
+        var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+        callback(null, newdata);
+      }
+      else{
+        callback(null, [{nodata:'nodata'}]);
+      }
+    };
+    DatabaseServices.GetEntries(table, func, query, callback);
+  };
+
+  $scope.getlotCSV = function(callback, lot_number, stn, lot_code, table, fields){
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
+
+
+
 })
+
+
+
 
 
 

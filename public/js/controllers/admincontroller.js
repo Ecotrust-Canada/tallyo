@@ -51,14 +51,14 @@ angular.module('scanthisApp.AdminController', [])
     order: "grade"
   };
 
-  $scope.ListHarvesters = function(){
+  /*$scope.ListHarvesters = function(){
     var func = function(response){
       $scope.list.harvester = response.data;
     };
     var query = '';
     DatabaseServices.GetEntries('harvester', func, query, 'hundred');
-  };
-  $scope.ListHarvesters();
+  };*/
+ //$scope.ListHarvesters();
   
   $scope.changeStn = function(index) {
     var el = document.getElementById('ship' + index);
@@ -109,7 +109,7 @@ angular.module('scanthisApp.AdminController', [])
           function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);}
       ],
       function(err, results) {
-          var name = lot_code + '_' + stn.name;
+          var name = ship_obj.po_number;
           name += '.xlsx';
           console.log(name);
           alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
@@ -135,6 +135,7 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.list.detail = response.data;
+      console.log(response.data);
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
       callback(null, newdata);
     };
@@ -180,7 +181,7 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.totals = response.data;
-      $scope.loadSorted();
+      //$scope.loadSorted();
     };
     DatabaseServices.GetEntries('shipment_summary', func, query);
   };
@@ -193,7 +194,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.istotal = true;
 
-  $scope.loadSorted = function(){
+  /*$scope.loadSorted = function(){
     if ($scope.sort_by === 'lot'){
       $scope.loadSortedLot();
     }
@@ -239,7 +240,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.hideSorted = function(){
     $scope.show_sorted = false;
-  };
+  };*/
 
 })
 

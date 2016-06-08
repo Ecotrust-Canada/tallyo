@@ -117,6 +117,7 @@
               ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
               ng-click="CompleteLot(current.collectionid, [station_code])">Complete Lot</button>
     </div>
+    
 </div>
 
 
@@ -127,6 +128,14 @@
 
 
 <div class="panel grey not" ng-controller="NoLabelTotalCtrl">
+
+      <button ng-if=" current.collectionid && current.collectionid!=='no selected'" 
+              ng-disabled="current.completed===true" class="btn-blue" id="complete-lot"
+              ng-click="getTheData(current.collectionid, sumStations, current.harvester_lot.internal_lot_code)">CSV</button><br>
+
+
+
+
 	<div class="itemsframe entries">
     <bufferedscrolllist itemlist="list.included" config="itemlistconfig" update-fn="RemoveScan(str)"></bufferedscrolllist>
   </div>

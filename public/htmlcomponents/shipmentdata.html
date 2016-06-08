@@ -94,26 +94,7 @@
       Shipment totals
       <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
     </div>
-
-    <div ng-show="show_sorted" ng-repeat= "origin in list.origin" class="itemtotals">
-      <span ng-repeat="field in sumStations[stn.index].har_info">{{origin[field]}}   </span>
-      <list itemlist="totals_sorted"  config="totallistconfig" istotal="istotal" filterstring="origin.harvester_code"></list>
-    </div>
-
-
-    <button ng-hide="show_sorted" ng-click="showSorted()" class="btn-blue">Sort by Origin</button>
-    <button ng-show="show_sorted" ng-click="hideSorted()" class="btn-blue">Hide</button>
   </div>
-
-
-
-  <!--<div buffered-scroll-lots id="admin_manage_lots" >
-    <div class="inner_scrollable">
-      <table>
-      </table>
-    </div>
-  </div>-->
-
 </div>
 
 <div id="keepzoom"></div>
