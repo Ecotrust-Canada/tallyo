@@ -41,7 +41,7 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':$scope.options.scan_station, 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
+    var data = {'box_number': box_number, 'station_code':($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code), 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
     var func = function(response){
       $scope.raw.string = null;
       $scope.current.itemchange = !$scope.current.itemchange;
