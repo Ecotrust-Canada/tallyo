@@ -138,15 +138,6 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
-.filter('json_filter', function(){
-  return function(input, propname, enabled) {
-    if (input){
-      var new1 = JSON.parse(input);
-      return new1.NAME;
-    }
-  };
-})
-
 .filter('json_lot', function(){
   return function(input, propname, enabled) {
     if (input){

@@ -41,7 +41,7 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':$scope.options.scan_station, 'shipping_unit_number': $scope.current.harvester_lot.shipping_unit_number};   
+    var data = {'box_number': box_number, 'station_code':$scope.options.scan_station, 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
     var func = function(response){
       $scope.raw.string = null;
       $scope.current.itemchange = !$scope.current.itemchange;
@@ -107,10 +107,17 @@ angular.module('scanthisApp.receivingController', [])
       'station_code': $scope.station_code,
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
       'best_before_date': moment(harvestDate).add(2, 'years').format(),
-      'shipping_unit_in':$scope.current.harvester_lot.shipping_unit_number,
-      'supplier_code': $scope.current.harvester_lot.supplier_code,
-      'lot_in': $scope.current.harvester_lot.lot_number,
       'tf_code': jsonvalues.tf_code};
+    if ($scope.current.harvester_lot){
+      data.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
+      data.supplier_code = $scope.current.harvester_lot.supplier_code;
+      data.lot_in = $scope.current.harvester_lot.lot_number;
+    }
+    else if ($scope.current.shipping_unit){
+      data.shipping_unit_in = $scope.current.shipping_unit.shipping_unit_number;
+    }
+
+
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
