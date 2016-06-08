@@ -200,7 +200,7 @@ angular.module('scanthisApp.AdminController', [])
     else if ($scope.sort_by === 'harvester'){
       $scope.loadSortedHar();
     }
-  }
+  };
 
   $scope.loadSortedHar = function(){
     var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
@@ -335,8 +335,54 @@ angular.module('scanthisApp.AdminController', [])
   };
   $scope.changeStn($scope.stn.index);
 
-
   $scope.getTheData = function(ship_obj){
+    var stn = $scope.sumStations[$scope.stn.index];
+    if (stn.csv_1 && !stn.csv_2){
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
+      });
+
+    }
+    else if (stn.csv_1 && stn.csv_2){
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, stn.csv_1.table, stn.csv_1.fields, 'summary');},
+          function(callback){ $scope.getCSV(callback, stn.csv_2.table, stn.csv_2.fields, 'detail');}
+      ],
+      function(err, results) {
+          var name = 'inventory';
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Summary',header:true},{sheetid:'Loins',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+    }
+  };
+
+  $scope.getCSV = function(callback, table, fields, label){
+    var query;
+    if (label === 'summary'){
+      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0';
+    }
+    else if (label === 'detail'){
+      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&box_weight=neq.0';
+    }
+
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
+
+
+  /*$scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
     if (stn.csv_1 && !stn.csv_2){
       $scope.getCSV(stn.csv_1.table, stn.csv_1.fields);
@@ -369,7 +415,7 @@ angular.module('scanthisApp.AdminController', [])
       
     };
     DatabaseServices.GetEntries(table, func, query);
-  };
+  };*/
 })
 
 
