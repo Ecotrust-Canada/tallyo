@@ -105,29 +105,38 @@ angular.module('scanthisApp.AdminController', [])
   $scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
     if (stn.csv_1 && !stn.csv_2){
-      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
+      });
 
     }
     else if (stn.csv_1 && stn.csv_2){
-      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields, 'summary');
-      $scope.getCSV(ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_2.table, stn.csv_2.fields, 'detail');
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields, 'summary');},
+          function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_2.table, stn.csv_2.fields, 'detail');}
+      ],
+      function(err, results) {
+          var name = ship_obj.po_number;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Summary',header:true},{sheetid:'Loins',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
     }
   };
 
-  $scope.getCSV = function(ship_number, po_number, table, fields, label){
+  $scope.getCSV = function(callback, ship_number, po_number, table, fields, label){
     var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.list.detail = response.data;
-      var name = po_number;
-      if (label){
-        name += '_' + label;
-      }
-      name += '.csv';
-      console.log(name);
-      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
-
-      //var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
-      //console.log(newdata);
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
     };
     DatabaseServices.GetEntries(table, func, query);
   };
