@@ -19,7 +19,7 @@
         <label>{{sumStations[stn.index].ship}}:</label><span>{{current.shipment.timestamp|stringtodate|date:'MMM dd yyyy'}}</span>
       </div>
       <div class="display_field">
-        <label>PO Number:</label><span>{{current.shipment.po_number}}</span>
+        <label>{{sumStations[stn.index].po_title || 'PO Number'}}:</label><span>{{current.shipment.po_number}}</span>
       </div>
       <div class="display_field">
         <label for="inp_customer">{{sumStations[stn.index].send}}:</label><input type="text" autocomplete="off" ng-model="current.shipment[sumStations[stn.index].send_field]" id="inp_customer">
@@ -61,7 +61,7 @@
         <table>
           <tr>
               <th>{{sumStations[stn.index].ship}}</th>
-              <th>Po Number</th>
+              <th>{{sumStations[stn.index].po_title || 'PO Number'}}</th>
               <th>{{sumStations[stn.index].send}}</th>
               <th>Container Number</th>
               <th>Bill of Lading</th>

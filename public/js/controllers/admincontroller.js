@@ -381,41 +381,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries(table, func, query);
   };
 
-
-  /*$scope.getTheData = function(ship_obj){
-    var stn = $scope.sumStations[$scope.stn.index];
-    if (stn.csv_1 && !stn.csv_2){
-      $scope.getCSV(stn.csv_1.table, stn.csv_1.fields);
-
-    }
-    else if (stn.csv_1 && stn.csv_2){
-      $scope.getCSV(stn.csv_1.table, stn.csv_1.fields, 'summary');
-      $scope.getCSV(stn.csv_2.table, stn.csv_2.fields, 'detail');
-    }
-  };
-
-  $scope.getCSV = function(table, fields, label){
-    var query;
-    if (label === 'summary'){
-      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0';
-    }
-    else if (label === 'detail'){
-      query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&box_weight=neq.0';
-    }
-    
-    var func = function(response){
-      $scope.list.detail = response.data;
-      var name = $scope.sumStations[$scope.stn.index].label;
-      if (label){
-        name += '_' + label;
-      }
-      name += '.csv';
-      console.log(name);
-      alasql("SELECT " + fields + " INTO CSV( '"+name+"', {headers: true, separator:','}) FROM ?",[$scope.list.detail]);
-      
-    };
-    DatabaseServices.GetEntries(table, func, query);
-  };*/
 })
 
 
@@ -429,6 +394,9 @@ angular.module('scanthisApp.AdminController', [])
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
       var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      if ($scope.options.internal_lot){
+        query += '&shipping_unit_number=is.null';
+      }      
       query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
@@ -453,6 +421,9 @@ angular.module('scanthisApp.AdminController', [])
       var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
 
       var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
+      if ($scope.options.internal_lot){
+        query += '&shipping_unit_number=is.null';
+      } 
       query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;

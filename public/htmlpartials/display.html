@@ -3,7 +3,7 @@
     <label ng-if="col.name" for="{{col.val}}-value">{{col.name}}: </label>
     <div class="field_val" id="{{col.val}}-value" ng-switch on="col.val" ng-cloak>
       <span ng-switch-when="timestamp" class="display_val">{{obj.timestamp|stringtotime }}</span>
-      <span ng-switch-when="timestamp_date" class="display_val">{{obj.timestamp}}</span>
+      <span ng-switch-when="timestamp_date" class="display_val">{{obj.timestamp | stringtodate}}</span>
       <span ng-switch-when="end_date" class="display_val">{{obj.end_date|stringtodate}}</span>
       <span ng-switch-when="start_date" class="display_val">{{obj.start_date|stringtodate }}</span>
       <span ng-switch_when="weight_1" class="display_val">{{obj[col.val] | weightstring}}</span>

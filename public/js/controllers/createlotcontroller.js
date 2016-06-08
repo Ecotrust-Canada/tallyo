@@ -98,7 +98,6 @@ angular.module('scanthisApp.createlotController', [])
   $scope.completedlots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      console.log($scope.options.selectfromcurrentlots);
       var date = moment(the_date).utcOffset(response.data.timezone).subtract($scope.options.selectfromcurrentlots, 'days').format();
       var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
       var func = function(response){
