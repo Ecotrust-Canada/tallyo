@@ -115,7 +115,6 @@ angular.module('scanthisApp.setsupplierController', [])
         var loin_code = LoinCode(form.state);
         var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
         var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
-        //console.log(internal_lot_code);
         $scope.EditCurrentHarvester(form.harvester_code, internal_lot_code, now);
       }, function errorCallback(response) {
 
@@ -142,10 +141,7 @@ angular.module('scanthisApp.setsupplierController', [])
     var patch = {"harvester_code": harvester_code, "internal_lot_code": internal_lot_code};
     var func = function(response){
       $scope.current.lot = (response.data[0] || response.data);
-
-      //$scope.DisplayCollection();
       $rootScope.$broadcast('collection-change', {id: $scope.current.collectionid});
-
       $scope.form = {};
       $scope.showedit = false;
     };
@@ -210,18 +206,6 @@ angular.module('scanthisApp.setsupplierController', [])
   });
 
   $scope.SetLot = function(lot_number){
-    /*var query = '?lot_number=eq.' + lot_number;
-    var func = function(response){
-      if (response.data.length > 0){
-        $scope.current.lot = response.data[0];
-        $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
-      }//end if
-      else{
-      }
-    };
-    DatabaseServices.GetEntries('lot', func, query);*/
-
-
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).format();
@@ -242,14 +226,8 @@ angular.module('scanthisApp.setsupplierController', [])
         }
       };
       DatabaseServices.PatchEntry('lot', patch, query, func);
-
-
-
     }, function errorCallback(response) {
     });
-
-
-
   };
 
 

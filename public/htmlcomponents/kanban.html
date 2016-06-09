@@ -81,7 +81,7 @@
                 <span ng-if="lot.expanded" ng-click="lot.expanded = false" class="expand-control opened"></span>  
                 <span ng-if="!lot.expanded" ng-click="lot.expanded = true" class="expand-control closed"></span>
               </div>
-              <div class="field_val lot_code">{{lot.internal_lot_code || lot.lot_number}}</div>
+              <div class="field_val lot_code">{{lot.internal_lot_code || lot.lot_number}} <span ng-if="lot.ref_number"> - {{lot.ref_number}}</span> </div>
             </div>        
             <div ng-if="lot.expanded" class="expanded">
 
