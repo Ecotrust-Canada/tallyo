@@ -17,7 +17,7 @@ angular.module('scanthisApp.packingController', [])
     };
     var query = '?lot_in=is.null&processor_code=eq.' + $scope.processor;
     query += '&order=timestamp.desc';
-    DatabaseServices.GetEntries('lot', func, query);
+    DatabaseServices.GetEntries('lot', func, query, 'fifty');
   };
   $scope.ListSuppliers();
 
