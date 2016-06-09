@@ -15,7 +15,7 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       $scope.list.lotin = response.data;
     };
-    var query = '?lot_in=is.null';
+    var query = '?lot_in=is.null&processor_code=eq.' + $scope.processor;
     query += '&order=timestamp.desc';
     DatabaseServices.GetEntries('lot', func, query);
   };
@@ -125,8 +125,6 @@ angular.module('scanthisApp.packingController', [])
     }
   };
 
-
-
   $scope.Complete = function(){
     if ($scope.onLabel){
       $scope.MakeQR();
@@ -148,12 +146,6 @@ angular.module('scanthisApp.packingController', [])
   $scope.showEdit = function(){
     $scope.current.edit_box= !$scope.current.edit_box;
   };
-
-
-
-
-
-
 
 })
 
@@ -197,7 +189,6 @@ angular.module('scanthisApp.packingController', [])
   });
 
 })
-
 
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices, toastr) {
@@ -258,7 +249,6 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.search = {};
 
-
   $scope.ListFilteredItems = function(int_lot_code, harvester_code){
     var query = '?box_number=not.is.null';
     if (int_lot_code !== undefined && int_lot_code !== null && int_lot_code !== ''){
@@ -291,7 +281,6 @@ angular.module('scanthisApp.packingController', [])
   $scope.changeVal = function(value){
     $scope.search.harvester_code = value.harvester_code;
   };
-
 
 })
 

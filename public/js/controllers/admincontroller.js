@@ -8,7 +8,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.stn = {};
   $scope.stn.index= 0;
   
-
   $scope.ListShipments = function(station_code){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
@@ -21,7 +20,6 @@ angular.module('scanthisApp.AdminController', [])
     }, function errorCallback(response) {
     });
   };
-
 
   $scope.FilterShipDate = function(){
     var station_code = $scope.current.station_code;
@@ -50,15 +48,6 @@ angular.module('scanthisApp.AdminController', [])
     limit: "10000",
     order: "grade"
   };
-
-  /*$scope.ListHarvesters = function(){
-    var func = function(response){
-      $scope.list.harvester = response.data;
-    };
-    var query = '';
-    DatabaseServices.GetEntries('harvester', func, query, 'hundred');
-  };*/
- //$scope.ListHarvesters();
   
   $scope.changeStn = function(index) {
     var el = document.getElementById('ship' + index);
@@ -77,7 +66,6 @@ angular.module('scanthisApp.AdminController', [])
       $scope.sort_id = 'internal_lot_code';
     }
     $scope.ListShipments($scope.sumStations[$scope.stn.index].station);
-
   };
   $scope.changeStn($scope.stn.index);
 
@@ -100,7 +88,6 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + $scope.current.shipment.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.shipment, query, func);
   }; 
-
 
   $scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
@@ -181,7 +168,6 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.totals = response.data;
-      //$scope.loadSorted();
     };
     DatabaseServices.GetEntries('shipment_summary', func, query);
   };
@@ -194,56 +180,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.istotal = true;
 
-  /*$scope.loadSorted = function(){
-    if ($scope.sort_by === 'lot'){
-      $scope.loadSortedLot();
-    }
-    else if ($scope.sort_by === 'harvester'){
-      $scope.loadSortedHar();
-    }
-  };
-
-  $scope.loadSortedHar = function(){
-    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
-    var func = function(response){
-      $scope.totals_sorted = response.data;
-      var origins = fjs.pluck('harvester_code', $scope.totals_sorted);
-      var originlist = origins.filter(onlyUnique);
-      var filtered_origin = originlist.filter(notNull);
-      $scope.list.origin = $scope.list.harvester.filter(function(el){
-        return (filtered_origin.indexOf(el.harvester_code) != -1);
-      });
-    };
-    DatabaseServices.GetEntries('shipment_summary_more', func, query);
-  };
-
-
-  $scope.loadSortedLot = function(){
-    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
-    var func = function(response){
-      $scope.totals_sorted = response.data;
-      var origins = fjs.pluck('internal_lot_code', $scope.totals_sorted);
-      var originlist = origins.filter(onlyUnique);
-      var filtered_origin = originlist.filter(notNull);
-      $scope.list.origin = [];
-      filtered_origin.forEach(function(el){
-        $scope.list.origin.push({'harvester_code' : el, 'internal_lot_code': el});
-      })
-
-    };
-    DatabaseServices.GetEntries('shipping_summary_lot', func, query);
-  };
-
-  $scope.showSorted = function(){
-    $scope.show_sorted = true;   
-  };
-
-  $scope.hideSorted = function(){
-    $scope.show_sorted = false;
-  };*/
-
 })
-
 
 //inventory.html - shows current totals of boxes at given stations
 .controller('InventoryCtrl', function($scope, $http, DatabaseServices, toastr) {
@@ -251,7 +188,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.istotal = true;
   $scope.stn.index= 0;
   
-
   $scope.boxconfig = 
   {
     cssclass: "fill small", 
@@ -271,9 +207,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('box_inventory', func, query);
   };
 
-
-
-
   $scope.invconfig = 
   {
     cssclass: "fill small", 
@@ -282,7 +215,6 @@ angular.module('scanthisApp.AdminController', [])
     order: '-timestamp',
     button: 'remove'
   };
-
 
   $scope.ListAllItems = function(){
     var query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&weight=neq.0&order=timestamp.desc';
@@ -306,7 +238,6 @@ angular.module('scanthisApp.AdminController', [])
       $scope.ListAllItems();
     };
     DatabaseServices.DatabaseEntryReturn('scan', scan, func);
-
   };
 
   $scope.ListFilteredItems = function(box_number, int_lot_code, case_number){
@@ -328,7 +259,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
   };
 
-
   $scope.changeStn = function(index) {
     $scope.stn.index = index; 
     $scope.ListBoxes();
@@ -348,7 +278,6 @@ angular.module('scanthisApp.AdminController', [])
           console.log(name);
           alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
       });
-
     }
     else if (stn.csv_1 && stn.csv_2){
       async.parallel([
@@ -373,7 +302,6 @@ angular.module('scanthisApp.AdminController', [])
     else if (label === 'detail'){
       query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&box_weight=neq.0';
     }
-
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
@@ -383,7 +311,6 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
-
 
 //Lot summary page - loads all the data, has functions for exporting to csv and completing lot
 .controller('LotCtrl', function($scope, $http, DatabaseServices, $timeout) {
@@ -409,7 +336,6 @@ angular.module('scanthisApp.AdminController', [])
     });
   };
   $scope.GetHarvesterLot();
-
 
   $scope.FilterDate = function(){
     $http.get('/server_time').then(function successCallback(response) {
@@ -570,26 +496,16 @@ angular.module('scanthisApp.AdminController', [])
         }
       }
 
-
-
-
-
-
-
       if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
         var index = arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number');
         lot.expanded = true;
         lot[$scope.sumStations[0].code].in_progress = false;
         if (!lot[$scope.sumStations[0].code].summary){
           lot[$scope.sumStations[0].code].summary = true;          
-        }
-        
+        }        
       }
     }
-
   };
-
-
 
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};
@@ -626,8 +542,7 @@ angular.module('scanthisApp.AdminController', [])
     async.forEachOf($scope.sumStations, function (value, key, callback) {
       func_array.push(function(callback){ $scope.getCSV(callback, lot_number, value, lot_code, value.csv_1.table, value.csv_1.fields);});
     }, function (err, results) {
-        if (err) console.error(err.message);
-        
+        if (err) console.error(err.message);        
     });
 
     async.parallel(func_array,
@@ -637,13 +552,7 @@ angular.module('scanthisApp.AdminController', [])
           console.log(name);
           alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
       });
-
   };
-
-
-
-
-
 
   $scope.getTheData = function(lot_number, stn, lot_code){
     if (stn.csv_lot){
@@ -682,7 +591,6 @@ angular.module('scanthisApp.AdminController', [])
           console.log(name);
           alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);
       });
-
     }
     else if (stn.csv_1 && stn.csv_2){
       async.parallel([
@@ -697,7 +605,6 @@ angular.module('scanthisApp.AdminController', [])
           alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
       });
     }
-
   };
 
   $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
@@ -785,9 +692,5 @@ angular.module('scanthisApp.AdminController', [])
   };
 
 })
-
-
-
-
 
 ;
