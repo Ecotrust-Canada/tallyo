@@ -122,7 +122,6 @@ angular.module('scanthisApp.AdminController', [])
     var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     var func = function(response){
       $scope.list.detail = response.data;
-      console.log(response.data);
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
       callback(null, newdata);
     };

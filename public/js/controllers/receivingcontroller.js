@@ -562,7 +562,7 @@ angular.module('scanthisApp.receivingController', [])
     }
     else{
       var itemid = obj.box_number;
-      var query = '?box_number=eq.' + itemid + '&station_code=eq.' + $scope.station_code;
+      var query = '?box_number=eq.' + itemid + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code);
       var func = function(response){ 
           $scope.removeBox(obj);
         
