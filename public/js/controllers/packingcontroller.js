@@ -15,7 +15,8 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       $scope.list.lotin = response.data;
     };
-    var query = '?lot_in=is.null&processor_code=eq.' + $scope.processor;
+    var query = '?lot_in=is.null';
+    //&processor_code=eq.' + $scope.processor;
     query += '&order=timestamp.desc';
     DatabaseServices.GetEntries('lot', func, query, 'fifty');
   };
