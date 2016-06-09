@@ -478,21 +478,4 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 
-.controller('EditFieldCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.form = {};
-  
-  $scope.LotCode = function(PatchTo, SetFormTo){
-    var func = function(response){
-      $scope.form.internal_lot_code = SetFormTo;//this is to fill in with previous when clicking edit
-       $scope.DisplayCollectionInfo();
-    };
-    var patch = {'internal_lot_code': PatchTo};
-    var query = '?lot_number=eq.' + $scope.current.harvester_lot.lot_number ;
-    DatabaseServices.PatchEntry('lot', patch, query, func);    
-  };
-
-})
-
-
 ;

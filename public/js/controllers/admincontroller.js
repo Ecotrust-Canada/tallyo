@@ -272,7 +272,7 @@ angular.module('scanthisApp.AdminController', [])
           function(callback){ $scope.getCSV(callback, stn.csv_1.table, stn.csv_1.fields);}
       ],
       function(err, results) {
-          var name = lot_code + '_' + stn.name;
+          var name = 'inventory';
           name += '.xlsx';
           console.log(name);
           alasql('SELECT * INTO XLSX ("' + name + '", { headers:true }) FROM ?', results);

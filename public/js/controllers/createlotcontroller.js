@@ -4,7 +4,7 @@
 angular.module('scanthisApp.createlotController', [])
 
 
-//packingstation.html, receivingstation.html - fills in dropdown to select collection and assigns selected
+//packingstation.html - fills in dropdown to select collection and assigns selected
 .controller('CollectionTableDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(){
@@ -17,7 +17,7 @@ angular.module('scanthisApp.createlotController', [])
     }
     var query;
     if (table === 'harvester_lot'){
-      query = '?processor_code=eq.' + $scope.processor + '&lot_in=not.is.null';
+      query = '?processor_code=eq.' + $scope.processor + '&lot_in=not.is.null';//AM2 Int. Receiving
     }
     else{
       query = '?station_code=eq.' + $scope.station_code;
@@ -295,10 +295,10 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-.controller('prevStationCtrl', function($scope, $http, DatabaseServices) {
+/*.controller('prevStationCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.station_code = $scope.prevStation;
-})
+})*/
 
 
 

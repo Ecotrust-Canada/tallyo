@@ -35,7 +35,6 @@ angular.module('scanthisApp.formController', [])
     if ($scope.config.startpolling) {
       clearObj($scope.scale);
       if ($scope.poll_scale === true){
-        //$timeout(function(){$scope.pollFn({field: $scope.config.startpolling});}, 0);
         $scope.pollFn({field: $scope.config.startpolling});
       }
       else{
@@ -233,7 +232,7 @@ angular.module('scanthisApp.formController', [])
 
   $scope.searchset = function(value, row){
     $scope.form[row.fieldname] = value;
-  }
+  };
 
 })
 
@@ -416,7 +415,7 @@ angular.module('scanthisApp.formController', [])
       }  
 
       return option;
-    }  
+    };
 })
 
 

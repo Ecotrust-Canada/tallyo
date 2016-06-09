@@ -95,20 +95,7 @@ angular.module('scanthisApp.itemController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      //toastr.success("submit successful");
-
-      // attempt to highlight new row in itemstable
-      /*setTimeout(function () {
-        var tr = angular.element(document.querySelector('#item-'+response.data[$scope.station_info.itemid]));  
-        if (tr){
-          var c = 'new_item';
-          tr.addClass(c);
-          $timeout(function(){ tr.removeClass(c); }, 700); 
-        }
-      }, 400);*/
-
-      $scope.current.addnew = true;
-      
+      $scope.current.addnew = true;      
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
