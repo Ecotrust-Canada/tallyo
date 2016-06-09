@@ -61,7 +61,7 @@ angular.module('scanthisApp.itemController', [])
               $scope.scale[fieldName] = response.data.value.toFixed(3);
             }
           }else{
-            $scope.scale[fieldname] = "";
+            $scope.scale[fieldName] = "";
           }
         },
         function errorCallback(response) {
