@@ -17,6 +17,7 @@ services:
 
   postgrest:
     build:
+      dockerfile: ./Dockerfile-postgrest
       context: ./deploy/postgrest
     image: tallyo_postgrest
     restart: always
