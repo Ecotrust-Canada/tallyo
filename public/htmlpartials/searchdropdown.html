@@ -17,13 +17,13 @@
   </div>
 
   <div ng-if="the_val || form" ng-click="setnull()" class="input-text">
-    <b ng-if="the_val || form">{{the_val[config.searchfield] || form[config.searchfield]}}</b>
-    <span ng-if="the_val" ng-repeat="field in config.fields" ng-switch="field">
+    <b ng-if="the_val || form">{{the_val[config.searchfield] || form[config.searchfield]}} </b>
+    <span ng-if="the_val || form" ng-repeat="field in config.fields" ng-switch="field">
       <span>{{ config.delimeter || '|' }}</span>
-      <span ng-switch-when="timestamp">{{the_val.timestamp|stringtodateshort }}</span>
-      <span ng-switch-when="weight">{{the_val.weight|weightstring}}</span>
-      <span ng-switch-when="internal_lot_code">{{the_val[field] || the_val['lot_number']}}</span>
-      <span ng-switch-default >{{the_val[field]}}</span>
+      <span ng-switch-when="timestamp">{{(the_val.timestamp|stringtodateshort) || (form.timestamp|stringtodateshort)}}</span>
+      <span ng-switch-when="weight">{{(the_val.weight|weightstring) || (form.weight|weightstring)}}</span>
+      <span ng-switch-when="internal_lot_code">{{(the_val[field] || the_val['lot_number']) ||  (form[field] || form['lot_number'])}}</span>
+      <span ng-switch-default >{{the_val[field] || form[field]}}</span>
     </span> 
   </div>
 

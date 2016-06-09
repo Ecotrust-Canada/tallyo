@@ -59,7 +59,7 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 
-.controller('EditLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
+.controller('EditRLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
 
   $scope.showedit=false;
   //for harvester drop down
@@ -69,8 +69,9 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.selected = 'no selected';
 
   $scope.resetform= function(){
+    $scope.default = JSON.parse(JSON.stringify($scope.current.harvester_lot));
     $scope.form = {};
-    $scope.form.state = 'Dirty';
+    $scope.form.state = ( $scope.current.harvester_lot.internal_lot_code.substring(10,11) === '9'? 'Clean' : 'Dirty' );
 
     $scope.selected = 'no selected';
   };
@@ -91,13 +92,17 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.GenInternalLot = function(form){
-    if (!form.harvester_code){
+    if (!form.harvester_code && !$scope.default){
       toastr.error('set harvester');
+      
     }
     else if (!form.state){
       toastr.error('set state');
     }
     else{
+      if (!form.harvester_code){
+        form.harvester_code = $scope.default.harvester_code;
+      }
       $http.get('/server_time').then(function successCallback(response) {
         var date = response.data.timestamp;
         var now = moment(date).utcOffset(response.data.timezone).format();
@@ -106,7 +111,7 @@ angular.module('scanthisApp.setsupplierController', [])
         var hars = $scope.list.harvester.filter(function(el){
           return el.harvester_code === form.harvester_code;
         });
-        var sup_code = hars[0].supplier_group;
+        var sup_code = (hars[0] ? hars[0].supplier_group : $scope.default.supplier_group);
         var loin_code = LoinCode(form.state);
         var date_code = moment(date).utcOffset(response.data.timezone).format('DDMMYY');
         var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;

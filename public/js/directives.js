@@ -162,6 +162,8 @@ angular.module('scanthisApp.directives', [])
         templateUrl: 'htmlpartials/searchdropdown.html',
         link: function(scope, element, attrs) {
             element.addClass('input-dropdown');
+            
+
             scope.select = function(e, value) {
                 scope.the_val = value;
                 if (scope.config.arg){
@@ -183,8 +185,6 @@ angular.module('scanthisApp.directives', [])
                 }
               }  
             };
-
-
 
             scope.setnull = function(){
               scope.the_val = null;
