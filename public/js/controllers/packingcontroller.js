@@ -16,7 +16,6 @@ angular.module('scanthisApp.packingController', [])
       $scope.list.lotin = response.data;
     };
     var query = '?lot_in=is.null';
-    //&processor_code=eq.' + $scope.processor;
     query += '&order=timestamp.desc';
     DatabaseServices.GetEntries('lot', func, query, 'fifty');
   };
@@ -37,8 +36,7 @@ angular.module('scanthisApp.packingController', [])
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
           var disabled = function(event) {
-            event.preventDefault();
-  
+            event.preventDefault();  
           };
           document.onkeydown = disabled;
           $scope.overlay('overwrite');
@@ -53,8 +51,7 @@ angular.module('scanthisApp.packingController', [])
             $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade);
           }else{
             $scope.PatchObjWithContainer();
-          }
-          
+          }          
         }      
       };
       var onErr = function() {
@@ -140,7 +137,6 @@ angular.module('scanthisApp.packingController', [])
     }
     else{
       $scope.formdisabled = false;
-
     }
   });
 
@@ -203,8 +199,7 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('cannot delete - box shipped');
     }else{
       $scope.overlay('delete');
-    }
-    
+    }    
   };
 
   $scope.PatchNull = function(){
@@ -227,8 +222,7 @@ angular.module('scanthisApp.packingController', [])
       else{
         $scope.current.itemchange = !$scope.current.itemchange;
         $scope.to_delete=null;
-      }
-      
+      }      
     };
     DatabaseServices.RemoveEntry('scan', query, func);
   };
@@ -309,10 +303,8 @@ angular.module('scanthisApp.packingController', [])
         }
       };
       DatabaseServices.GetEntries('inventory_all', func, query);
-    }
-    
-  }
-
+    }    
+  };
 
   $scope.MakeBox = function(entry){
     var func = function(response){
@@ -335,9 +327,6 @@ angular.module('scanthisApp.packingController', [])
 
 
 })
-
-
-
 
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
