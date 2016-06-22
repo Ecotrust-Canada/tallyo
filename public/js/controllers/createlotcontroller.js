@@ -25,6 +25,7 @@ angular.module('scanthisApp.createlotController', [])
     if ($scope.options.incoming){
       query += "&shipping_unit_in=is.null";
     }
+    query += '&order=timestamp.desc';
     var func = function(response){
       $scope.list.collection = response.data;
     };
@@ -86,7 +87,7 @@ angular.module('scanthisApp.createlotController', [])
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
-      var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
+      var query = '?end_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
       };
@@ -99,7 +100,7 @@ angular.module('scanthisApp.createlotController', [])
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract($scope.options.selectfromcurrentlots, 'days').format();
-      var query = '?start_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
+      var query = '?end_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.false';
       var func = function(response){
         $scope.list.old_harvester_lot = response.data;
       };
@@ -272,6 +273,50 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
+.controller('DisplayItemsPackingCtrl', function($scope, $http, DatabaseServices, $timeout) {
+
+  $scope.ListCollectionItems = function(){
+    var table;
+    if ($scope.station_info.itemtable === 'box'){
+      table = 'box_with_info';
+    }
+    else{
+      table = $scope.station_info.itemtable;
+    }
+    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+    var func = function(response){
+      $scope.list.included = response.data;
+      $scope.list.length = response.headers()['content-range'].split('/')[1];
+    };
+    DatabaseServices.GetEntries(table, func, query, 'hundred');
+  };
+
+  $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      if ($scope.current.collectionid === 'no selected'){
+        $scope.list.included = null;
+      }
+      else{
+        $scope.ListCollectionItems();
+      }
+    }
+  });
+
+
+  $scope.HighlightGreen = function(str){
+    if(str===0  && $scope.current.addnew === true){
+          var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
+          if (tr){
+            var c = 'new_item';
+            tr.addClass(c);
+            $timeout(function(){ tr.removeClass(c); }, 700); 
+          }
+    }
+    $scope.current.addnew = false;
+  };
+})
+
+
 
 //weighstation.html
 //gets totals from database
@@ -286,6 +331,48 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      $scope.ItemTotals();
+    }
+  });
+
+  $scope.istotal = true;
+
+})
+
+
+.controller('TotalsOnceCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.ItemTotals = function(){
+    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.totals = response.data;
+    };
+    DatabaseServices.GetEntries('totals_by_lot', func, query);
+  };
+
+  $scope.$watch('current.collectionid', function(newValue, oldValue) {
+    if ($scope.current.collectionid !== undefined){
+      $scope.ItemTotals();
+    }
+  });
+
+  $scope.istotal = true;
+
+})
+
+
+.controller('TotalsWeighCtrl', function($scope, $http, DatabaseServices) {
+
+  $scope.ItemTotals = function(){
+    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.totals = response.data;
+    };
+    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
+  };
+
+  $scope.$watch('list.included.length', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
       $scope.ItemTotals();
     }

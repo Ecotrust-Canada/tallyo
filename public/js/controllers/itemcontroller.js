@@ -20,7 +20,7 @@ angular.module('scanthisApp.itemController', [])
   $scope.current.addnew = false;
 
   $scope.PrintSwitch = function(){
-    $scope.current.to_print = $scope.current.to_print;
+    $scope.current.to_print = !$scope.current.to_print;
     
   };
 
@@ -170,6 +170,7 @@ angular.module('scanthisApp.itemController', [])
       else if (product.entry_unit === 'kg'){
         $scope.entry.box.weight = product.weight;
       }
+      $scope.entry.box.grade = product.product_type;
       $scope.entry.box.product_code = product.product_code;
       $scope.entry.box.best_before_date = moment(new Date()).add(parseInt(product.best_before.split(' ')), 'months').format();
     }

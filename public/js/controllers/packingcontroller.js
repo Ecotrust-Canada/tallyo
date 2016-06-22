@@ -94,6 +94,18 @@ angular.module('scanthisApp.packingController', [])
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
   };
 
+
+  $scope.PatchOldScan = function(){
+
+    var func = function(response){
+      $scope.PatchObjWithContainer();
+    };
+
+    var patch = {pieces: 0};
+    var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id + '&station_code=eq.' + $scope.station_code;   
+    DatabaseServices.PatchEntry('scan', patch, query, func);
+  };
+
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(){
 

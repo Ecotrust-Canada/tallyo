@@ -379,20 +379,8 @@ angular.module('scanthisApp.formController', [])
     }
   });
 
-
-
 })
 
-//controller attached to list and expandedlist - ?mostly for csv?
-.controller('ListCtrl', function($scope, $http, DatabaseServices, toastr) {
-  $scope.getArray = function(){
-    return copyArrayPart($scope.itemlist, $scope.config.fields);
-  };
-  $scope.getHeader = function(){
-    return $scope.config.headers;
-  };
-
-})
 
 .controller('OptionCtrl', function($scope){
     $scope.formatOption = function(cfg, item){

@@ -12,7 +12,7 @@ angular.module('scanthisApp.AdminController', [])
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
-      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + station_code;
+      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + station_code + '&order=timestamp.desc';
       var func = function(response){
         $scope.list.shipments = response.data;
       };
@@ -32,7 +32,7 @@ angular.module('scanthisApp.AdminController', [])
       var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
       var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
 
-      var query = '?timestamp=gte.'+ start_date + '&timestamp=lte.' + end_date + '&station_code=eq.' + station_code;
+      var query = '?timestamp=gte.'+ start_date + '&timestamp=lte.' + end_date + '&station_code=eq.' + station_code + '&order=timestamp.desc';
       var func = function(response){
         $scope.list.shipments = response.data;
       };
@@ -393,12 +393,13 @@ angular.module('scanthisApp.AdminController', [])
     }
     var func = function(response){
       $scope.list.lotlocations = response.data;
-      $scope.GetRecentLots();
+      //$scope.GetRecentLots();
+      $scope.loaddata();
     };
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
-  $scope.GetRecentLots = function(){
+  /*$scope.GetRecentLots = function(){
     var query = '?lot_number=in.';
     for (var index in $scope.list.lot_numbers){
       query += $scope.list.lot_numbers[index] + ',';
@@ -408,7 +409,7 @@ angular.module('scanthisApp.AdminController', [])
       $scope.loaddata();
     };
     DatabaseServices.GetEntries('recent_lot', func, query);
-  };
+  };*/
 
   $scope.loaddata = function(){
     var cellfilter = function(item){
@@ -495,15 +496,17 @@ angular.module('scanthisApp.AdminController', [])
         }
       }
 
-      if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
+      /*if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
         var index = arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number');
         lot.expanded = true;
         lot[$scope.sumStations[0].code].in_progress = false;
         if (!lot[$scope.sumStations[0].code].summary){
           lot[$scope.sumStations[0].code].summary = true;          
         }        
-      }
+      }*/
     }
+
+    $scope.list.harvester_lot[0].expanded = true;
   };
 
   $scope.CompleteLot = function(lot_number, station_codes){

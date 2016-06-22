@@ -27,17 +27,6 @@ var createProdCode = function(date){
   return 'P' +  datestring;
 };
 
-
-/*checks whether a date is within a range*/
-var DateRangeCurrent = function(date, start_date, end_date){
-    if (date > start_date && date < end_date){
-        return true;
-    }
-    return false;
-};
-
-
-
 /*checks that a json object has no "" values*/
 var NoMissingValues = function(jsonobj, except){
     for (var key in jsonobj) {
@@ -49,19 +38,6 @@ var NoMissingValues = function(jsonobj, except){
     }
     return true;
 };
-
-/*checks that a json objects doesn't have all "" values*/
-var NotEmpty = function(jsonobj){
-    for (var key in jsonobj) {
-      if (jsonobj.hasOwnProperty(key)) {
-        if (jsonobj[key] !== '' || jsonobj[key] === undefined){
-            return true;
-        }
-      }
-    }
-    return false;
-};
-
 
 var CreateLotEntryPeriod = function(today, period, $scope){
     var dates = dateManipulation(today, period);
@@ -232,24 +208,6 @@ var cleanQueryString = function(querystring){
   return queryStringNew;
 };
 
-
-
-
-var cleanJsonArray = function(array){
-
-  var cleanJson = function(element, index, array){
-    for (var key in element) {
-      if (element.hasOwnProperty(key)) {
-        if (element[key] === '' || element[key] === undefined  || element[key] === null){
-            delete element[key];
-        }
-      }
-    }
-  };
-
-  array.forEach(cleanJson);
-};
-
 var padz = function(n, width, z) {
   z = z || '0';
   n = n + '';
@@ -287,9 +245,6 @@ var isInArray = function(value, array) {
 var AddtoEntryNonFormData = function($scope, table){
   $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
   $scope.entry[table].station_code = $scope.station_code;
-  /*if($scope.current[$scope.station_info.collectiontable] && $scope.current[$scope.station_info.collectiontable].internal_lot_code){
-    $scope.entry[table].internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
-  }*/
 };
 
 var AddtoEntryFormData = function(form, scopevar, $scope){
@@ -297,28 +252,6 @@ var AddtoEntryFormData = function(form, scopevar, $scope){
       $scope.entry[scopevar][key] = form[key];
   }
 };
-
-var onlyUnique = function(value, index, self) { 
-    return self.indexOf(value) === index;
-};
-
-var notNull = function(value){
-  return value;
-};
-
-var copyArrayPart = function(array, fields){
-  var newarray = [];
-  for (var i=0;i<array.length;i++){
-    var obj = {};
-    for (var j=0;j<fields.length;j++){
-      obj[fields[j]] = array[i][fields[j]];
-    }
-    newarray.push(obj);
-  }
-  return newarray;
-};
-
-
 
 var sizefromweight = function(weight_kg){
   var size;
@@ -335,34 +268,6 @@ var sizefromweight = function(weight_kg){
     size = "8-up lb";
   }
   return size;
-};
-
-
-var formIsValid = function($scope){
-  
-};
-
-var confirmTrue = function(message, func, elsefunc){
-  var alert = confirm(message);
-  if (alert === true){
-    func();
-  }
-  else{
-    elsefunc();
-  }
-};
-
-
-var copyObj = function(obj) {
-  var copy = Object.create(Object.getPrototypeOf(obj));
-  var propNames = Object.getOwnPropertyNames(obj);
-
-  propNames.forEach(function(name) {
-    var desc = Object.getOwnPropertyDescriptor(obj, name);
-    Object.defineProperty(copy, name, desc);
-  });
-
-  return copy;
 };
 
 var clearObj = function(obj) {
@@ -391,8 +296,6 @@ var propertyNames = function(obj){
   });
   return props;
 };
-
-
 
 var DateGroup = function(today){
   var day = parseInt(today);
@@ -434,14 +337,3 @@ var cutString = function (str, cutStart, cutEnd){
   return str.substr(0,cutStart) + str.substr(cutEnd+1);
 };
 
-var eventFire = function(el, etype){
-  if(el){
-    if (el.fireEvent) {
-      el.fireEvent('on' + etype);
-    } else {
-      var evObj = document.createEvent('Events');
-      evObj.initEvent(etype, true, false);
-      el.dispatchEvent(evObj);
-    }
-  }
-};

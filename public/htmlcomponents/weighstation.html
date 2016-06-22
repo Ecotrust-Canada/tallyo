@@ -27,7 +27,7 @@
               ng-click="CompleteLot(current.collectionid, options.completelot)">Complete Lot</button>
     </div>
 
-    <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsCtrl" id="prev_station_totals">
+    <div ng-if="prevStation" ng-init="station_code = prevStation" ng-controller="TotalsOnceCtrl" id="prev_station_totals">
       <label>Previous  Station:</label><list ng-if="item2listconfig" itemlist="totals"  
           config="item2listconfig" istotal="istotal"></list><div ng-if="!item2listconfig" class="prev_summary"><span  
           ng-if="totals[0].weight">{{totals | sumOfValue:'weight'| weightstring}}</span><span 
@@ -67,7 +67,7 @@
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
     <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
   </div>
-  <div ng-if="station_info.itemtotals" ng-controller="TotalsCtrl" class="itemtotals">
+  <div ng-if="station_info.itemtotals" ng-controller="TotalsWeighCtrl" class="itemtotals">
     <list itemlist="totals"  config="totallistconfig" istotal="istotal"></list>
   </div>
 

@@ -36,7 +36,6 @@ angular.module('scanthisApp.directives', [])
            istotal: '=', 
            updateFn: '&',
            secondFn: '&'},
-  controller: 'ListCtrl',
   templateUrl: 'htmlpartials/list.html' }; })
 
 
@@ -59,7 +58,6 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=',  
            updateFn: '&',
            hideFn: '&'},
-  controller: 'ListCtrl',
   templateUrl: 'htmlpartials/expandedlist.html' }; })
 
 .directive('dropdown', function() { return { 

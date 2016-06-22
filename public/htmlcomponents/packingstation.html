@@ -142,7 +142,7 @@
     <div>
       <p>This code has been scanned to a different {{packingconfig.collection}}. Do you want to change this data entry?</p>
       <button class="btn-blue" ng-click="clearField();enablekeypress();overlay('overwrite')">Cancel</button>
-      <button class="btn-blue" ng-click="PatchObjWithContainer();enablekeypress();overlay('overwrite')">Yes</button>
+      <button class="btn-blue" ng-click="PatchOldScan();enablekeypress();overlay('overwrite')">Yes</button>
     </div>
   </div>
 
@@ -161,7 +161,7 @@
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
   <div ng-if="options.notifyharvester" ng-controller="HarvesterBoxCtrl"></div>
 
-  <div class="itemsframe entries"  ng-controller="DisplayItemsCtrl">
+  <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
       <bufferedscrolllist itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)"></bufferedscrolllist>
   </div>
   <div class="itemtotals table_row" >

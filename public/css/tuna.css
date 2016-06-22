@@ -1888,6 +1888,7 @@ div[ng-view] {
 #form-24 .form_label label,
 #form-20 .form_label label,
 #form-23 .form_label label,
+#form-7 .form_label label,
 #form-27 .form_label label,
 .editform .form_label label,
 #form-5 .form_label label,
@@ -2260,9 +2261,8 @@ input[name^=weight]::after {
 #radio-17-species{
   width: 210px;
 }
-#radio-7-grade, 
-#radio-20-grade, 
-#radio-8-grade {
+
+#radio-20-grade {
   width: 360px;
 }
 
@@ -2318,20 +2318,16 @@ input[name^=weight]::after {
 #radio-20-grade.toggle-group-container label,
 
 
-#radio-8-grade.toggle-group-container label,
-#radio-7-grade.toggle-group-container label {
-  width: 60px;
-}
 
+#radio-8-grade.toggle-group-container label,
+#radio-7-grade.toggle-group-container label,
 #radio-27-grade.toggle-group-container label,
 #radio-23-grade.toggle-group-container label{
   width: 61px;
 }
 
-#radio-27-grade.toggle-group-container label span,
-#radio-23-grade.toggle-group-container label span{
-  font-size: 27px;
-}
+
+
 
 #radio-23-state.toggle-group-container label,
 #radio-27-state.toggle-group-container label,
@@ -2394,6 +2390,16 @@ input[name^=weight]::after {
   line-height: 50px;
   position: relative;
 }
+
+
+#radio-8-grade.toggle-group-container label span,
+#radio-7-grade.toggle-group-container label span,
+#radio-27-grade.toggle-group-container label span,
+#radio-23-grade.toggle-group-container label span{
+  font-size: 27px;
+} 
+
+
 .toggle-group-container.rbgroup-unset label span,
 .toggle-group-container.rbgroup-unset label span {
   color: white;
@@ -2409,12 +2415,12 @@ input[name^=weight]::after {
 
 
 
-#radio-20-grade.toggle-group-container input:checked + span,
-#radio-8-grade.toggle-group-container input:checked + span,
-#radio-7-grade.toggle-group-container input:checked + span { 
+#radio-20-grade.toggle-group-container input:checked + span{ 
   width:60px;
 }
 
+#radio-8-grade.toggle-group-container input:checked + span
+#radio-7-grade.toggle-group-container input:checked + span,
 #radio-27-grade.toggle-group-container input:checked + span,
 #radio-23-grade.toggle-group-container input:checked + span{
   width: 61px;
