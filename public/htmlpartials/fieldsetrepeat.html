@@ -3,13 +3,15 @@
   <form name="theform">
     <div  data-ng-repeat="choice in choices" class="repeatrow">
       <span ng-repeat="field in config.fields">
-        <label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>
+        <!--<label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>-->
         <div ng-if="field.type==='select'" class="styled-dropdown dd-{{field.fieldname}}">
-          <select ng-model="choice[field.fieldname]" ng-required="true" 
-              name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}" 
-                  ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-            <option ng-repeat="obj in field.value">{{obj.name}}</option>
-          </select>
+          <div ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+            <select ng-model="choice[field.fieldname]" ng-required="true"
+                name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}">
+              <option value="" disabled selected>{{field.title}}</option>
+              <option ng-repeat="obj in field.value">{{obj.name}}</option>
+            </select>
+          </div>
           <div class="dd_arrow"><span></span></div>
         </div>
         <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
@@ -26,7 +28,7 @@
   <button class="addfields btn-blue" ng-click="addNewChoice()">Add fields</button>
   <div class="form_buttons">
     <button ng-click="reset()" class="bottomleft btn-light">Reset Form</button>
-    <input type="button" ng-click="isValid(choices);submitFn({choices: choices});reset()" value="{{config.title}}" class="bottomright btn-orange">
+    <input type="button" ng-click="submitFn({choices: isValid(choices)})" value="{{config.title}}" class="bottomright btn-orange">
   </div>
 
 </fieldset>

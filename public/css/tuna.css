@@ -1949,6 +1949,10 @@ div[ng-view] {
   border-radius: 0;
   width: 100%;
 }
+
+.errorfield select{
+  background-color: #B37470;
+}
 .editform .styled-dropdown {
   width: 238px;
   display: inline-block;
@@ -2281,7 +2285,7 @@ input[name^=weight]::after {
 }
 #radio-28-weight.toggle-group-container label,
 #radio-28-grade.toggle-group-container label,
-#radio-28-size.toggle-group-container label,
+
 #radio-29-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
 #radio-19-grade.toggle-group-container label{
@@ -2289,14 +2293,12 @@ input[name^=weight]::after {
   font-size: 20px;
 }
 
+
+
 #radio-29-state.toggle-group-container label{
   width: 110px;
 }
 
-#radio-28-size.toggle-group-container,
-#radio-28-size.toggle-group-container label{
-  height: 105px;
-}
 #radio-18-grade.toggle-group-container label,
 #radio-0-grade.toggle-group-container label,
 #radio-24-grade.toggle-group-container label {
@@ -2389,6 +2391,15 @@ input[name^=weight]::after {
   color: #0076AD;
   line-height: 50px;
   position: relative;
+}
+
+#radio-28-size.toggle-group-container label{
+  width: 62px;
+}
+
+#radio-28-size.toggle-group-container label span{
+  width: 62px;
+  font-size: 23px;
 }
 
 
@@ -2761,7 +2772,7 @@ nav #menu li a {
 }
 
 fieldset{
-    font-size: 10px;
+    /*font-size: 10px;*/
     -webkit-margin-start: 2px;
     -webkit-margin-end: 2px;
     -webkit-padding-before: 0;
@@ -2997,22 +3008,21 @@ span.switch_option.active {
 }
 .fieldsetrepeat .styled-dropdown {
   display: inline-block;
-  margin: 0 6px 0 0;
+  margin: 0 12px 0 0;
   box-sizing: border-box;
 }
 .fieldsetrepeat .styled-dropdown.dd-grade {
-  width: 80px;
+  width: 105px;
 }
 .fieldsetrepeat .styled-dropdown.dd-weight {
-  width: 64px;
-  margin-right: 0;
+  width: 110px;
 }
 .fieldsetrepeat .styled-dropdown.dd-size {
   width: 100px;
 }
 .fieldsetrepeat input[type=text],
 .fieldsetrepeat input[type=number] {
-  width: 40px;
+  width: 70px;
 }
 
 

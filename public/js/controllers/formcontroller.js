@@ -476,18 +476,23 @@ angular.module('scanthisApp.formController', [])
       var req_error = $scope.theform[row].$error.required;
       var neg_error = $scope.theform[row].$error.negative;
       if (req_error === true || neg_error === true){
-        form_error = true;        
+        form_error = true;
+        //toastr.error('please select '+ $scope.config.fields[i].title);
       }
     }
     if (form_error === true){
       toastr.error('errors in form');
-      choices = null;
+      return null;
     }
-
-    return choices;
+    else{
+      $scope.submitted = false;
+      $scope.choices = [{id: 'choice1'}];
+      return choices;
+    }    
   };
 
   $scope.reset = function(){
+
     $scope.submitted = false;
     $scope.choices = [{id: 'choice1'}];
   };
