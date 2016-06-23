@@ -970,7 +970,8 @@ div[ng-view] {
   width: auto;
 }
 
-#admin_manage_lots table tr .lot-station-cell .card_header.warn span.data,
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_p span.data,
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_w span.data,
 #admin_manage_lots table tr .lot-station-cell .card_header.ok span.data {
   padding-left:28px;
 }
@@ -984,7 +985,8 @@ div[ng-view] {
   left: 0;
 }
 
-#admin_manage_lots table tr .lot-station-cell .card_header.warn span.state {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_p span.state,
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_w span.state {
   background-color: #F04A30;
   background-image: url(/images/admin_card_warn_bg.svg);
   background-repeat: no-repeat;
@@ -1032,11 +1034,19 @@ div[ng-view] {
   white-space: nowrap;
   flex-wrap: wrap;
 }
-#admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces label {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_p .card_bit.pieces label {
   color: #f24133;
 }
 
-#admin_manage_lots table tr .lot-station-cell .card_header.warn .card_bit.pieces .value {
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_p .card_bit.pieces .value {
+  color: #f04a30;
+}
+
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_w .card_bit.weight label {
+  color: #f24133;
+}
+
+#admin_manage_lots table tr .lot-station-cell .card_header.warn_w .card_bit.weight .value {
   color: #f04a30;
 }
 

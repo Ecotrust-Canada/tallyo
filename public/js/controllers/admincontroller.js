@@ -320,7 +320,7 @@ angular.module('scanthisApp.AdminController', [])
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
-      var query = '?start_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
       if ($scope.options.internal_lot){
         query += '&shipping_unit_number=is.null';
       }      
@@ -346,7 +346,7 @@ angular.module('scanthisApp.AdminController', [])
       var end_date = moment($scope.endDate).add(e_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').endOf('day').format();
       var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
 
-      var query = '?start_date=gte.'+ start_date + '&end_date=lte.' + end_date + '&processor_code=eq.' + $scope.processor;
+      var query = '?start_date=not.gte.'+ end_date + '&end_date=not.lte.' + start_date + '&processor_code=eq.' + $scope.processor;
       if ($scope.options.internal_lot){
         query += '&shipping_unit_number=is.null';
       } 

@@ -98,7 +98,7 @@
             
           </td>
           <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
-            <div ng-class="{in_progress: lot[stn.code].in_progress, warn: cssWarn(lot, stn), ok: cssOk(lot, stn)}" 
+            <div ng-class="{in_progress: lot[stn.code].in_progress, warn_p: cssWarn(lot, stn) && station_info.trackBy==='pieces', warn_w: cssWarn(lot, stn) && station_info.trackBy==='weight_1', ok: cssOk(lot, stn)}" 
                  class="panel white card_header">
                <span ng-if="cssWarn(lot,stn) || cssOk(lot,stn)" class="state"></span>
                <span class="data">
@@ -130,7 +130,7 @@
             <div ng-if="lot.expanded" class="panel item-details">
               <table>
                 <tr ng-repeat = "total in lot[stn.code].totals | orderBy: 'state'">
-                  <td ng-if="total.grade">{{total.grade}}<label ng-if="total.species">  ({{total.species}})</label><label ng-if="total.state">  ({{total.state}})</label> </td>
+                  <td ng-if="total.grade">{{total.grade}}<label ng-if="total.species">  ({{total.species}})</label><label ng-if="total.state">  ({{total.state}})</label><label ng-if="total.size">  ({{total.size}})</label> </td>
                   <td ng-if="total.boxes">{{total.boxes}} cases </td>                  
                   <td ng-if="total.weight">{{total.weight | weightstring}}</td>
                   <td ng-if="total.weight_1">{{total.weight_1 | weightstring}}</td>
