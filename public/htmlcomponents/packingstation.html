@@ -126,7 +126,7 @@
   </div>
 
 
-  <div ng-if="current.no_label" id="unlabelled_input" ng-controller="InternalAddCtrl">
+  <div ng-if="current.no_label" id="unlabelled_input" ng-controller="InternalAddCtrl" class="scanform">
     <hr>
     <fieldset ng-disabled="formdisabled">
       <entryform submit-fn="CheckBoxExists(form)" config="scanform" list2="list.supplier" formchange="formchange1"></entryform>

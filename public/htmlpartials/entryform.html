@@ -16,7 +16,7 @@
     <div ng-repeat="row in formarray" class="form_row"> <!--For each object in config.fields -->
 
 
-        <div class="form_label">
+        <div class="form_label" ng-if="row.title!=='second'">
           <label for="{{row.fieldname}}">{{row.title}}:
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
