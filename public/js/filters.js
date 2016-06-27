@@ -24,6 +24,14 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('datestringtodate', function() {
+  return function(input) {
+    if(input){
+      return moment(input).format('MMMM DD, YYYY');
+    }
+  };
+})
+
 .filter('stringtodateshort', function() {
   return function(input) {
     if(input){
