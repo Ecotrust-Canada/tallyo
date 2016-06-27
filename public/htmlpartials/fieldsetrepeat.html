@@ -2,7 +2,7 @@
 <fieldset ng-disabled="formdisabled">
   <form name="theform">
     <div  data-ng-repeat="choice in choices" class="repeatrow">
-      <span ng-repeat="field in config.fields">
+      <span ng-repeat="field in config.fields" class="in-{{field.fieldname}}">
         <!--<label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>-->
         <div ng-if="field.type==='select' && field.fieldname!=='weight'" class="styled-dropdown dd-{{field.fieldname}}">
           <div ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">

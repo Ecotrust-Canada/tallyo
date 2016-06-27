@@ -2426,7 +2426,7 @@ input[name^=weight]::after {
 
 #radio-28-size.toggle-group-container label span{
   width: 62px;
-  font-size: 23px;
+  font-size: 19px;
 }
 
 
@@ -3044,19 +3044,20 @@ span.switch_option.active {
   margin: 0 12px 0 0;
   box-sizing: border-box;
 }
-.fieldsetrepeat .styled-dropdown.dd-grade {
-  width: 105px;
-}
-.fieldsetrepeat .styled-dropdown.dd-weight {
-  width: 110px;
-}
-.fieldsetrepeat .styled-dropdown.dd-size {
-  width: 100px;
-}
 .fieldsetrepeat input[type=text],
 .fieldsetrepeat input[type=number] {
   width: 70px;
 }
+.fieldsetrepeat .styled-dropdown.dd-grade {
+  width: 105px;
+}
+.fieldsetrepeat .in-weight input[type=number] {
+  width: 130px;
+}
+.fieldsetrepeat .styled-dropdown.dd-size {
+  width: 100px;
+}
+
 
 
 #overwrite {
