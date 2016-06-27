@@ -2049,6 +2049,21 @@ div[ng-view] {
   background-repeat: no-repeat;
   background-position: center center;
 }
+.form-text input[name=num] {
+  width: 110px;
+  height: 45px;
+  color: #03223c;
+  font-size: 44px;
+  font-family: 'Lato-Bold';
+  display:inline-block;
+  box-sizing: border-box;
+  background: #DBEBEF;
+  border: 1px solid #CAE2EB;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  margin-right: 0;
+}
+
 input[name^=weight] {
   width: 206px;
   height: 58px;
