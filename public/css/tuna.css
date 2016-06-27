@@ -1188,6 +1188,7 @@ div[ng-view] {
   background-image: url(/images/search.png);
   background-repeat: no-repeat;
   background-position: right 10px center;
+  margin-right: 20px;
 }
 
 #harvester_list .header input.search {
@@ -3178,8 +3179,8 @@ span.switch_option.active {
 }
 
 md-datepicker {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #edit_shipment md-datepicker {
@@ -3235,6 +3236,28 @@ md-datepicker {
 #drop_search .styled-dropdown{
   width: 220px;
   display: inline-block;
+}
+
+.date_filter_label{
+  color: #0076AD;
+  text-transform: uppercase;
+  font-family: 'Lato-Bold';
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.marg_top{
+  padding-top: 8px;
+}
+
+.marg_top_5{
+  padding-top: 5px;
+}
+
+.no_wrap{
+  white-space:nowrap;
+  /*vertical-align: middle;*/
+  /*overflow: hidden;*/
 }
 
 

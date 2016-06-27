@@ -2,7 +2,9 @@
 <div  ng-controller="LotCtrl" class="adminmanagelots">
   <div class="header">
     <input ng-model="searchText" class="search" placeholder="Search"></input>
+    <div class="block marg_top"><span class="date_filter_label">Date Range</span></div>
     <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+    <div class="block marg_top"><span class="date_filter_label">To</span></div>
     <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
     <button ng-click="FilterDate()">Go</button>
   </div>
