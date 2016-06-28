@@ -50,7 +50,7 @@
                  </span>
               </span>
               <span class="data">
-                <span ng-if="sum_info[stn.code].pieces && !sum_info[stn.code].boxes" class="card_bit pieces">
+                <span ng-if="sum_info[stn.code].pieces && !sum_info[stn.code].boxes && !stn.no_pieces" class="card_bit pieces">
                    <label>pcs</label>
                    <span class="value">{{sum_info[stn.code].pieces}}</span>
                  </span>  
@@ -114,11 +114,11 @@
             
           </td>
           <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
-            <div ng-class="{lot_complete: !lot[stn.code].in_progress, warn_p: cssWarn(lot, stn) && station_info.trackBy==='pieces', warn_w: cssWarn(lot, stn) && station_info.trackBy==='weight_1', ok: cssOk(lot, stn)}" 
+            <div ng-class="{lot_complete: !lot[stn.code].in_progress && !options.no_complete, warn_p: cssWarn(lot, stn) && station_info.trackBy==='pieces', warn_w: cssWarn(lot, stn) && station_info.trackBy==='weight_1', ok: cssOk(lot, stn)}" 
                  class="panel white card_header">
 
                <span class="state">
-                <div ng-if="!(lot[stn.code].prev_yield || lot[stn.code].start_yield) && !lot[stn.code].in_progress" class="done_check"></div>
+                <div ng-if="!(lot[stn.code].prev_yield || lot[stn.code].start_yield) && !lot[stn.code].in_progress && !options.no_complete" class="done_check"></div>
                  <span ng-if="(lot[stn.code].prev_yield || lot[stn.code].start_yield)" class="card_bit yield">
                    <label>yield</label>
                    <span class="yield_val">
@@ -133,7 +133,7 @@
                    <label>Cases</label>
                    <span class="value">{{lot[stn.code].summary.boxes}}</span>
                  </span>                   
-                 <span ng-if="lot[stn.code].summary.pieces && !lot[stn.code].summary.boxes" class="card_bit pieces">
+                 <span ng-if="lot[stn.code].summary.pieces && !lot[stn.code].summary.boxes && !stn.no_pieces" class="card_bit pieces">
                    <label>pcs</label>
                    <span class="value">{{lot[stn.code].summary.pieces}}</span>
                  </span>
@@ -161,7 +161,7 @@
                   <td ng-if="total.boxes">{{total.boxes}} cases </td>                  
                   <td ng-if="total.weight">{{total.weight | weightstring}}</td>
                   <td ng-if="total.weight_1">{{total.weight_1 | weightstring}}</td>
-                  <td ng-if="total.pieces && !total.boxes">{{total.pieces}} pcs </td> 
+                  <td ng-if="total.pieces && !total.boxes && !stn.no_pieces">{{total.pieces}} pcs </td> 
                 </tr>
               </table>
 
