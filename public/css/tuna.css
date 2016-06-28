@@ -889,6 +889,12 @@ div[ng-view] {
   padding-top: 10px;
 }
 
+#admin_manage_lots table tr .lot_column .sum_label {
+  position: relative;
+  display: block;
+  padding-top: 2px;
+}
+
 #admin_manage_lots table tr .lot_column label {
   font-size: 12px;
 }
@@ -934,6 +940,13 @@ div[ng-view] {
   display: inline-flex;
   color: #03223C;
   font-size: 16px;
+  font-family: 'Lato-Regular';
+}
+
+#admin_manage_lots table .lot_column .display_field .field_val_small {
+  display: inline-flex;
+  color: #03223C;
+  font-size: 14px;
   font-family: 'Lato-Regular';
 }
 

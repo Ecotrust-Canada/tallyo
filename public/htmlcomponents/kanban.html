@@ -25,9 +25,14 @@
         <tr>
           <td class="lot_column" valign="top">
             <div class="display_field">
-              <div class="lot_label">
+              <div class="sum_label">
                 <label>Summary</label>
                 <div class="field_val lot_code">{{startDate|date:'MMM dd'}} - {{endDate|date:'MMM dd'}}</div>
+                <div class="field_val_small">{{sum_info.num_lots}} Lots</div><br>
+                <div class="field_val_small">
+                  <span ng-repeat="row in options.sum_display">{{sum_info[row.field]}} {{row.name}} {{$last ? '' : ' / '}}</span>
+                </div>
+
               </div>
             </div>
           </td>      
@@ -45,6 +50,10 @@
                  </span>
               </span>
               <span class="data">
+                <span ng-if="sum_info[stn.code].pieces && !sum_info[stn.code].boxes" class="card_bit pieces">
+                   <label>pcs</label>
+                   <span class="value">{{sum_info[stn.code].pieces}}</span>
+                 </span>  
                <span ng-if="sum_info[stn.code].boxes" class="card_bit boxes">
                  <label>Cases</label>
                  <span class="value">{{sum_info[stn.code].boxes}}</span>
@@ -57,10 +66,7 @@
                    </span>  
                  </span>
                </span>  
-               <span ng-if="sum_info[stn.code].pieces && !sum_info[stn.code].boxes" class="card_bit pieces">
-                 <label>pcs</label>
-                 <span class="value">{{sum_info[stn.code].pieces}}</span>
-               </span>  
+               
                <!--<span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
                  <label>yield.%</label>
                  <span class="value">

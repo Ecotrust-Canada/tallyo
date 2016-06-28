@@ -330,7 +330,7 @@ angular.module('scanthisApp.AdminController', [])
         $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
         $scope.GetLotSummary();
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
+      DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
     }, function errorCallback(response) {
     });
   };
@@ -356,7 +356,7 @@ angular.module('scanthisApp.AdminController', [])
         $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
         $scope.GetLotSummary();
       };
-      DatabaseServices.GetEntries('harvester_lot', func, query, 'fifty');      
+      DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
     }, function errorCallback(response) {
     });
   };
@@ -417,6 +417,25 @@ angular.module('scanthisApp.AdminController', [])
     };
 
     $scope.sum_info ={};
+
+    for (var key in $scope.options.sum_display){
+      var row = $scope.options.sum_display[key];
+      $scope.sum_info[row.field] = Array.from(new Set(fjs.pluck(row.field, $scope.list.harvester_lot))).length;
+    }
+
+    //var suppliers = Array.from(new Set(fjs.pluck('supplier', $scope.list.harvester_lot)));
+    //var fleets = Array.from(new Set(fjs.pluck('fleet', $scope.list.harvester_lot)));
+
+    //var suppliers2 = Array.from(new Set(fjs.pluck('supplier_code', $scope.list.harvester_lot)));
+
+   
+    $scope.sum_info.num_lots = $scope.list.harvester_lot.length;
+    //$scope.sum_info.num_sups = suppliers2.length;
+    //$scope.sum_info.num_fleets = fleets.length;
+
+
+
+
     for (var k=0;k<$scope.sumStations.length;k++){
       $scope.sum_info[$scope.sumStations[k].code]=
         {
@@ -683,14 +702,14 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $rootScope.$broadcast('collection-change', {id: 'no selected'});
     };
-    var r = confirm("Are you sure you want to complete this lot?");
-    if (r === true) {
+    //var r = confirm("Are you sure you want to complete this lot?");
+    //if (r === true) {
       for (var i=0;i<station_codes.length;i++){
         var station_code=station_codes[i];
         var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;     
           DatabaseServices.PatchEntry('lotlocations',patch, query, func);
       }
-    }
+    //}
   };
 
 })
