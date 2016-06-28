@@ -1018,6 +1018,14 @@ div[ng-view] {
   background-position: center center;*/
 }
 
+#admin_manage_lots table tr .lot-station-cell .card_header.blue_grey span.state{
+  background-color: #03223c;
+  opacity: .7;
+  /*background-image: url(/images/admin_card_warn_bg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;*/
+}
+
 #admin_manage_lots table tr .lot-station-cell .card_header .card_bit {
  display: inline-block;
 }
@@ -3269,6 +3277,7 @@ md-datepicker {
 }
 .blue_grey{
   background-color: rgba(18, 89, 116, 0.1);
+  padding-left: 0;
 }
 
 .centre_btn{

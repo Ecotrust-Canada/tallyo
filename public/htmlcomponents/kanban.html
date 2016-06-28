@@ -34,33 +34,41 @@
             
           </td>
           <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
-            <div ng-class="" 
-                 class="panel blue_grey card_header">
-               <span class="data">
-                 <span ng-if="sum_info[stn.code].boxes" class="card_bit boxes">
-                   <label>Cases</label>
-                   <span class="value">{{sum_info[stn.code].boxes}}</span>
-                 </span>  
-                 <span ng-if="sum_info[stn.code].weight_1" class="card_bit weight">
-                   <label>weight</label>
-                   <span class="value">
-                     <span>
-                       {{sum_info[stn.code].weight_1 | weightnum }}<sub>{{settings.entry_unit}}</sub>
-                     </span>  
+            <div ng-class="" class="panel blue_grey card_header">
+              <span class="state">
+                 <span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
+                   <label>yield</label>
+                   <span class="yield_val">
+                     <span ng-if="sum_info[stn.code].prev_yield">{{ sum_info[stn.code].prev_yield.toFixed(0) }} |</span>
+                     <span ng-if="sum_info[stn.code].start_yield">{{ sum_info[stn.code].start_yield.toFixed(0) }}</span> %
                    </span>
-                 </span>  
-                 <span ng-if="sum_info[stn.code].pieces" class="card_bit pieces">
-                   <label>pcs</label>
-                   <span class="value">{{sum_info[stn.code].pieces}}</span>
-                 </span>  
-                 <!--<span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
-                   <label>yield.%</label>
-                   <span class="value">
-                     <span ng-if="sum_info[stn.code].prev_yield">{{ sum_info[stn.code].prev_yield.toFixed(0) }}</span>
-                     <span ng-if="sum_info[stn.code].start_yield">{{ sum_info[stn.code].start_yield.toFixed(0) }}</span>
-                   </span>
-                 </span>-->
-               </span> 
+                 </span>
+              </span>
+              <span class="data">
+               <span ng-if="sum_info[stn.code].boxes" class="card_bit boxes">
+                 <label>Cases</label>
+                 <span class="value">{{sum_info[stn.code].boxes}}</span>
+               </span>  
+               <span ng-if="sum_info[stn.code].weight_1" class="card_bit weight">
+                 <label>weight</label>
+                 <span class="value">
+                   <span>
+                     {{sum_info[stn.code].weight_1 | weightnum }}<sub>{{settings.entry_unit}}</sub>
+                   </span>  
+                 </span>
+               </span>  
+               <span ng-if="sum_info[stn.code].pieces && !sum_info[stn.code].boxes" class="card_bit pieces">
+                 <label>pcs</label>
+                 <span class="value">{{sum_info[stn.code].pieces}}</span>
+               </span>  
+               <!--<span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
+                 <label>yield.%</label>
+                 <span class="value">
+                   <span ng-if="sum_info[stn.code].prev_yield">{{ sum_info[stn.code].prev_yield.toFixed(0) }}</span>
+                   <span ng-if="sum_info[stn.code].start_yield">{{ sum_info[stn.code].start_yield.toFixed(0) }}</span>
+                 </span>
+               </span>-->
+              </span> 
             </div>
           </td>
         </tr>
