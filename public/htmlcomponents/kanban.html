@@ -53,13 +53,13 @@
                    <label>pcs</label>
                    <span class="value">{{sum_info[stn.code].pieces}}</span>
                  </span>  
-                 <span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
+                 <!--<span ng-if="sum_info[stn.code].prev_yield || sum_info[stn.code].start_yield" class="card_bit yield">
                    <label>yield.%</label>
                    <span class="value">
                      <span ng-if="sum_info[stn.code].prev_yield">{{ sum_info[stn.code].prev_yield.toFixed(0) }}</span>
                      <span ng-if="sum_info[stn.code].start_yield">{{ sum_info[stn.code].start_yield.toFixed(0) }}</span>
                    </span>
-                 </span>  
+                 </span>-->
                </span> 
             </div>
           </td>
@@ -100,14 +100,29 @@
             
           </td>
           <td ng-repeat="stn in sumStations" class="station-column-{{stn.csscode}} lot-station-cell">
-            <div ng-class="{in_progress: lot[stn.code].in_progress, warn_p: cssWarn(lot, stn) && station_info.trackBy==='pieces', warn_w: cssWarn(lot, stn) && station_info.trackBy==='weight_1', ok: cssOk(lot, stn)}" 
+            <div ng-class="{lot_complete: !lot[stn.code].in_progress, warn_p: cssWarn(lot, stn) && station_info.trackBy==='pieces', warn_w: cssWarn(lot, stn) && station_info.trackBy==='weight_1', ok: cssOk(lot, stn)}" 
                  class="panel white card_header">
-               <span ng-if="cssWarn(lot,stn) || cssOk(lot,stn)" class="state"></span>
+
+               <span class="state">
+                <div ng-if="!(lot[stn.code].prev_yield || lot[stn.code].start_yield) && !lot[stn.code].in_progress" class="done_check"></div>
+                 <span ng-if="(lot[stn.code].prev_yield || lot[stn.code].start_yield)" class="card_bit yield">
+                   <label>yield</label>
+                   <span class="yield_val">
+                     <span ng-if="lot[stn.code].prev_yield">{{ lot[stn.code].prev_yield.toFixed(0) }}|</span>
+                     <span ng-if="lot[stn.code].start_yield">{{ lot[stn.code].start_yield.toFixed(0) }}</span> %
+                   </span>
+                 </span>  
+               </span>
+               <!--</span>-->
                <span class="data">
                  <span ng-if="lot[stn.code].summary.boxes" class="card_bit boxes">
                    <label>Cases</label>
                    <span class="value">{{lot[stn.code].summary.boxes}}</span>
-                 </span>  
+                 </span>                   
+                 <span ng-if="lot[stn.code].summary.pieces && !lot[stn.code].summary.boxes" class="card_bit pieces">
+                   <label>pcs</label>
+                   <span class="value">{{lot[stn.code].summary.pieces}}</span>
+                 </span>
                  <span ng-if="lot[stn.code].summary.weight_1" class="card_bit weight">
                    <label>weight</label>
                    <span class="value">
@@ -115,19 +130,15 @@
                        {{lot[stn.code].summary.weight_1 | weightnum }}<sub>{{settings.entry_unit}}</sub>
                      </span>  
                    </span>
-                 </span>  
-                 <span ng-if="lot[stn.code].summary.pieces && !lot[stn.code].summary.boxes" class="card_bit pieces">
-                   <label>pcs</label>
-                   <span class="value">{{lot[stn.code].summary.pieces}}</span>
-                 </span>  
-                 <span ng-if="lot[stn.code].prev_yield || lot[stn.code].start_yield" class="card_bit yield">
+                 </span>    
+                 <!--<span ng-if="lot[stn.code].prev_yield || lot[stn.code].start_yield" class="card_bit yield">
                    <label>yield.%</label>
                    <span class="value">
                      <span ng-if="lot[stn.code].prev_yield">{{ lot[stn.code].prev_yield.toFixed(0) }}</span>
                      <span ng-if="lot[stn.code].start_yield">{{ lot[stn.code].start_yield.toFixed(0) }}</span>
                    </span>
                  </span>  
-               </span> 
+               </span>--> 
             </div>
             <div ng-if="lot.expanded" class="panel item-details">
               <table>

@@ -943,7 +943,7 @@ div[ng-view] {
   width: 100%;
   height: 90px;
   margin: 0;
-  padding: 24px 8px 16px 16px;
+  padding: 24px 8px 16px 116px;
   box-shadow: 1px 2px 5px 0px rgba(3,34,60,0.6);
   position: relative;
   z-index: 2;
@@ -962,45 +962,60 @@ div[ng-view] {
   vertical-align: top;
 }
 
-.card_header.in_progress {
+/*.card_header.in_progress {
   background-image: url(/images/left_edge_bg.png);
   background-repeat: repeat-y;
   background-position: left top;
-}
+}*/
 
 #admin_manage_lots table tr .lot-station-cell .card_header span.data {
   display: block;
   width: auto;
 }
 
-#admin_manage_lots table tr .lot-station-cell .card_header.warn_p span.data,
+/*#admin_manage_lots table tr .lot-station-cell .card_header.warn_p span.data,
 #admin_manage_lots table tr .lot-station-cell .card_header.warn_w span.data,
 #admin_manage_lots table tr .lot-station-cell .card_header.ok span.data {
   padding-left:28px;
-}
+}*/
 
 #admin_manage_lots table tr .lot-station-cell .card_header span.state {
   display: inline-block;
-  width: 34px;
-  height: 90px;
+  width: 86px;
+  height: 66px;
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #0076AD;
+  padding: 24px 0 0 14px;
+}
+
+
+
+
+#admin_manage_lots table tr .lot-station-cell .card_header.lot_complete span.state {
+  background-color: #6197B0;
+  
+
+}
+
+
+#admin_manage_lots table tr .lot-station-cell .card_header .done_check {
+  background-image: url(/images/admin_card_ok_bg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100px;
+  height: 90px;
+  margin: -24px 0 0 -14px;
 }
 
 #admin_manage_lots table tr .lot-station-cell .card_header.warn_p span.state,
 #admin_manage_lots table tr .lot-station-cell .card_header.warn_w span.state {
   background-color: #F04A30;
-  background-image: url(/images/admin_card_warn_bg.svg);
+  opacity: 1;
+  /*background-image: url(/images/admin_card_warn_bg.svg);
   background-repeat: no-repeat;
-  background-position: center center;
-}
-
-#admin_manage_lots table tr .lot-station-cell .card_header.ok span.state {
-  background-color: #0076AD;
-  background-image: url(/images/admin_card_ok_bg.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center center;*/
 }
 
 #admin_manage_lots table tr .lot-station-cell .card_header .card_bit {
@@ -1024,6 +1039,18 @@ div[ng-view] {
   font-family: 'Lato-Bold';
   display: block;
 }
+
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit.yield label {
+  text-align: left;
+  color: white;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-family: 'Lato-Bold';
+  display: block;
+}
+
+
 #admin_manage_lots table tr .lot-station-cell .card_header .card_bit:nth-child(n+2) {
   border-left: 1px solid #ccccca;
 }
@@ -1037,6 +1064,18 @@ div[ng-view] {
   white-space: nowrap;
   flex-wrap: wrap;
 }
+
+#admin_manage_lots table tr .lot-station-cell .card_header .card_bit .yield_val {
+  color: white;
+  font-size: 14px;
+  font-family: 'Lato-Bold';
+  display: block;
+  padding-top: 5px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+
+
 #admin_manage_lots table tr .lot-station-cell .card_header.warn_p .card_bit.pieces label {
   color: #f24133;
 }
