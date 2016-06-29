@@ -427,18 +427,8 @@ angular.module('scanthisApp.AdminController', [])
       $scope.sum_info[row.field] = Array.from(new Set(fjs.pluck(row.field, $scope.list.harvester_lot))).length;
     }
 
-    //var suppliers = Array.from(new Set(fjs.pluck('supplier', $scope.list.harvester_lot)));
-    //var fleets = Array.from(new Set(fjs.pluck('fleet', $scope.list.harvester_lot)));
-
-    //var suppliers2 = Array.from(new Set(fjs.pluck('supplier_code', $scope.list.harvester_lot)));
-
    
     $scope.sum_info.num_lots = $scope.list.harvester_lot.length;
-    //$scope.sum_info.num_sups = suppliers2.length;
-    //$scope.sum_info.num_fleets = fleets.length;
-
-
-
 
     for (var k=0;k<$scope.sumStations.length;k++){
       $scope.sum_info[$scope.sumStations[k].code]=
@@ -695,6 +685,13 @@ angular.module('scanthisApp.AdminController', [])
              (item.fleet && item.fleet.toLowerCase().indexOf(searchkey) > -1) ||
              (item.tf_code && item.tf_code.toLowerCase().indexOf(searchkey) > -1) ||
              (item.landing_location && item.landing_location.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.supplier_name && item.supplier_name.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.country_origin && item.country_origin.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.species && item.species.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.fishing_area && item.fishing_area.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.sap_code && item.sap_code.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.msc_code && item.msc_code.toLowerCase().indexOf(searchkey) > -1) ||
+             (item.ref_number && item.ref_number.toLowerCase().indexOf(searchkey) > -1) ||
              (item.ft_fa_code && item.ft_fa_code.toLowerCase().indexOf(searchkey) > -1); 
   };
 })
