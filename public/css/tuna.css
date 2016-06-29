@@ -827,7 +827,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column {
   position: absolute;
   left: 10px;
-  width: 160px;
+  width: 220px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
@@ -886,7 +886,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column .lot_label {
   position: relative;
   display: block;
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 #admin_manage_lots table tr .lot_column .sum_label {
