@@ -28,7 +28,7 @@
               <div class="sum_label">
                 <label>Summary</label>
                 <div class="field_val lot_code">{{startDate|date:'MMM dd'}} - {{endDate|date:'MMM dd'}}</div>
-                <div class="field_val_small">{{sum_info.num_lots}} Lots</div><br>
+                <div class="field_val_small">{{sum_info.num_lots}} Lots</div>
                 <div class="field_val_small">
                   <span ng-repeat="row in options.sum_display">{{sum_info[row.field]}} {{row.name}} {{$last ? '' : ' / '}}</span>
                 </div>

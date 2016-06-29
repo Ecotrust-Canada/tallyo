@@ -814,7 +814,7 @@ div[ng-view] {
 }
 #admin_manage_lots .inner_scrollable {
   overflow: auto;
-  margin-left: 200px;
+  margin-left: 240px;
 }
 /* attempt to put screen dependent widths */
 /*
@@ -827,7 +827,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column {
   position: absolute;
   left: 10px;
-  width: 250px;
+  width: 290px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
@@ -944,7 +944,6 @@ div[ng-view] {
 }
 
 #admin_manage_lots table .lot_column .display_field .field_val_small {
-  display: inline-flex;
   color: #03223C;
   font-size: 14px;
   font-family: 'Lato-Regular';
