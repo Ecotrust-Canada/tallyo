@@ -316,6 +316,10 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.limit = 10;
 
+  $scope.myValueFunction = function(total) {
+    return total.grade + 'Z';
+  };
+
   $scope.GetHarvesterLot = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
