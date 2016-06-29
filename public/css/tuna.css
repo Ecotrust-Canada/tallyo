@@ -814,7 +814,7 @@ div[ng-view] {
 }
 #admin_manage_lots .inner_scrollable {
   overflow: auto;
-  margin-left: 170px;
+  margin-left: 200px;
 }
 /* attempt to put screen dependent widths */
 /*
@@ -827,7 +827,7 @@ div[ng-view] {
 #admin_manage_lots table tr .lot_column {
   position: absolute;
   left: 10px;
-  width: 220px;
+  width: 250px;
   border-top: 1px solid #cecfca;
   overflow-wrap: break-word;
   word-break: break-all;
