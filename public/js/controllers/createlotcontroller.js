@@ -158,18 +158,6 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntryNoAlert(table, func, query);
   };
 
-  /*$scope.GetHarvester = function(harvester_code){
-    var query = '?harvester_code=eq.' + harvester_code;
-    var func = function(response){
-      if (response.data.length > 0){
-        $scope.current.harvester = response.data[0];
-        $scope.current.harvester_lot.ft_fa_code = $scope.current.harvester.ft_fa_code;
-      }
-      
-    };
-    DatabaseServices.GetEntryNoAlert('harvester', func, query);
-  };*/
-
   //Display items triggered by this variable changing
   $scope.current.itemchange = true;
 
@@ -227,7 +215,7 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
-//packingstation.html, receivingstation.html, weighstation.html
+//weighstation.html
 //fills in list.included with 'item' table if config belonging to selected collection
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
@@ -254,21 +242,21 @@ angular.module('scanthisApp.createlotController', [])
       }
       else{
         $scope.ListCollectionItems();
+        $scope.ItemTotals();
       }
     }
   });
 
-
   $scope.HighlightGreen = function(str){
-    if(str===0  && $scope.current.addnew === true){
-          var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
-          if (tr){
-            var c = 'new_item';
-            tr.addClass(c);
-            $timeout(function(){ tr.removeClass(c); }, 700); 
-          }
-    }
-    $scope.current.addnew = false;
+    $timeout(function(){ $scope.current.addnew = false; }, 500);
+  };
+
+  $scope.ItemTotals = function(){
+    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
+    var func = function(response){
+      $scope.list.totals = response.data;
+    };
+    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
   };
 })
 
@@ -304,43 +292,11 @@ angular.module('scanthisApp.createlotController', [])
 
 
   $scope.HighlightGreen = function(str){
-    if(str===0  && $scope.current.addnew === true){
-          var tr = angular.element(document.querySelector('#item-'+ str + ($scope.itemlistconfig.station_id || '')));  
-          if (tr){
-            var c = 'new_item';
-            tr.addClass(c);
-            $timeout(function(){ tr.removeClass(c); }, 700); 
-          }
-    }
-    $scope.current.addnew = false;
+    $timeout(function(){ $scope.current.addnew = false; }, 700);
   };
 })
 
-
-
-//weighstation.html
-//gets totals from database
-.controller('TotalsCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.ItemTotals = function(){
-    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
-    var func = function(response){
-      $scope.totals = response.data;
-    };
-    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
-  };
-
-  $scope.$watch('current.itemchange', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined){
-      $scope.ItemTotals();
-    }
-  });
-
-  $scope.istotal = true;
-
-})
-
-
+//to fill in prev station info
 .controller('TotalsOnceCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ItemTotals = function(){
@@ -363,29 +319,8 @@ angular.module('scanthisApp.createlotController', [])
 
 
 .controller('TotalsWeighCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.ItemTotals = function(){
-    var query = '?' + ( $scope.station_info.patchid || $scope.station_info.collectionid ) + '=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
-    var func = function(response){
-      $scope.totals = response.data;
-    };
-    DatabaseServices.GetEntries($scope.station_info.itemtotals, func, query);
-  };
-
-  $scope.$watch('list.included.length', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined){
-      $scope.ItemTotals();
-    }
-  });
-
   $scope.istotal = true;
-
 })
-
-/*.controller('prevStationCtrl', function($scope, $http, DatabaseServices) {
-
-  $scope.station_code = $scope.prevStation;
-})*/
 
 
 
@@ -416,7 +351,6 @@ angular.module('scanthisApp.createlotController', [])
       DatabaseServices.GetEntries('loin_with_info', func, query);      
     }
   };
-  //$scope.ListAllItems();
 
   $scope.ListFilteredItems = function(loin_number, int_lot_code){
     var query = '?station_code=eq.' + $scope.station_code;

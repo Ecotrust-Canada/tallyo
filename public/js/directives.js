@@ -36,7 +36,17 @@ angular.module('scanthisApp.directives', [])
            istotal: '=', 
            updateFn: '&',
            secondFn: '&'},
-  templateUrl: 'htmlpartials/list.html' }; })
+  templateUrl: 'htmlpartials/list.html',
+  link: function(scope, element, attrs) {
+    scope.orderFunction = function(total) {
+      if (scope.config.order === 'grade'){
+        return total.grade + 'Z';
+      }
+      else return total[scope.config.order];
+    };
+  }
+  
+  };})
 
 
 .directive('bufferedscrolllist', function() { return { 
@@ -47,7 +57,8 @@ angular.module('scanthisApp.directives', [])
            istotal: '=', 
            updateFn: '&',
            secondFn: '&',
-           testFn: '&'}, 
+           testFn: '&',
+           current: '='}, 
   controller: 'BufferScrollCtrl',
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
@@ -251,7 +262,7 @@ angular.module('scanthisApp.directives', [])
 
 
 
-.directive( 'elemReady', function( $parse ) {
+.directive( 'elemReady', function( $parse, $timeout ) {
    return {
        restrict: 'A',
        link: function( $scope, elem, attrs ) {    
@@ -259,6 +270,7 @@ angular.module('scanthisApp.directives', [])
             $scope.$apply(function(){
                 var func = $parse(attrs.elemReady);
                 func($scope);
+                
             });
           });
        }

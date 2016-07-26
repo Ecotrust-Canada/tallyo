@@ -643,7 +643,7 @@ angular.module('scanthisApp.packingController', [])
     
   };
 
-  $scope.HighlightGreen = function(str){
+  /*$scope.HighlightGreen = function(str){
     if(str===0  && $scope.current.addnew === true){
       setTimeout(function () {
           var tr = angular.element(document.querySelector('#item-'+ str));  
@@ -655,7 +655,7 @@ angular.module('scanthisApp.packingController', [])
         }, 0);
     }
     $scope.current.addnew = false;
-  };
+  };*/
 
 })
 
