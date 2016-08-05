@@ -58,6 +58,10 @@
       <div ng-hide="hide_search">
         <div class="show_choices">
           <div class="display_field">
+            <label for="filter_case_number">Case Number:</label><input 
+                   ng-model="search.case_number" id="filter_case_number">
+          </div>
+          <div class="display_field">
             <label for="filter_internal_lot_code">Internal Lot Code:</label><input 
                    ng-model="search.internal_lot_code" id="filter_internal_lot_code">
           </div>
@@ -66,7 +70,7 @@
             <input-dropdown  id="is_field" thelist="list.harvester"  config="adddropdown" on-select="changeVal(value)"></input-dropdown>
           </div>
           <div>
-            <input type="button" ng-click="ListFilteredItems(search.internal_lot_code, search.harvester_code)"  class="btn-blue"
+            <input type="button" ng-click="ListFilteredItems(search.case_number, search.internal_lot_code, search.harvester_code)"  class="btn-blue"
                    value="Search" id="reprint-search">
           </div>
         </div>
