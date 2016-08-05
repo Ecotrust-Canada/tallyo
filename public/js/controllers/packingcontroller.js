@@ -81,6 +81,10 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.clearField = function(){
     $scope.input.code = null;
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
   };
 
   $scope.MakeScan = function(id){
@@ -89,6 +93,10 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
       $scope.input.code=null;
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
