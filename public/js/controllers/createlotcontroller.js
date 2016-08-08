@@ -531,10 +531,24 @@ angular.module('scanthisApp.createlotController', [])
 
 .controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
+  $scope.static_limit = 10;
+
   $scope.limit = 5;
 
   $scope.ResetLimit = function(){
     $scope.limit = 5;
+  };
+
+})
+
+.controller('BufferScrollPackingCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
+
+  $scope.static_limit = 40;
+
+  $scope.limit = 35;
+
+  $scope.ResetLimit = function(){
+    $scope.limit = 35;
   };
 
 })

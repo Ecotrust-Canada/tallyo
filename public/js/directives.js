@@ -62,6 +62,19 @@ angular.module('scanthisApp.directives', [])
   controller: 'BufferScrollCtrl',
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
+.directive('bufferedscrolllistpacking', function() { return { 
+  scope: { itemlist: '=',  
+           config: '=' ,
+           listlength: '=', 
+           filterstring: '=', 
+           istotal: '=', 
+           updateFn: '&',
+           secondFn: '&',
+           testFn: '&',
+           current: '='}, 
+  controller: 'BufferScrollPackingCtrl',
+  templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
+
 .directive('expandedlist', function() { return { 
   scope: { itemlist: '=', 
            displaycfg: '=', 
@@ -226,7 +239,7 @@ angular.module('scanthisApp.directives', [])
         }
         if (scrollTop === 0) {
           $scope.$apply(function () {
-            $scope.limit = 10;
+            $scope.limit = attrs.bufferedScroll || 10;
           });
         }
       });
