@@ -119,7 +119,13 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getCSV = function(callback, ship_number, po_number, table, fields, label){
-    var query = '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+    var query = '';
+    if ($scope.sumStations[$scope.stn.index].send_field === 'received_from'){
+      query += '?shipping_unit_in=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+    }
+    else{
+      query += '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+    }
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
