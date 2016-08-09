@@ -240,6 +240,8 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.to_delete=null;
       $scope.search = {};
+      $scope.ListBoxes();
+      $scope.items = null;
       //$scope.ListAllItems();
     };
     DatabaseServices.DatabaseEntryReturn('scan', scan, func);
