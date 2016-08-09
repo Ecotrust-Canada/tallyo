@@ -228,7 +228,7 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
   };
-  $scope.ListAllItems();
+  //$scope.ListAllItems();
 
   $scope.DeleteInv = function(str){
     $scope.to_delete = str.box_number;
@@ -240,7 +240,7 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $scope.to_delete=null;
       $scope.search = {};
-      $scope.ListAllItems();
+      //$scope.ListAllItems();
     };
     DatabaseServices.DatabaseEntryReturn('scan', scan, func);
   };
@@ -267,11 +267,11 @@ angular.module('scanthisApp.AdminController', [])
   $scope.changeStn = function(index) {
     $scope.stn.index = index; 
     $scope.ListBoxes();
-    $scope.ListAllItems();
+    //$scope.ListAllItems();
   };
   $scope.changeStn($scope.stn.index);
 
-  $scope.getTheData = function(ship_obj){
+  $scope.getTheData = function(){
     var stn = $scope.sumStations[$scope.stn.index];
     if (stn.csv_1 && !stn.csv_2){
       async.parallel([
