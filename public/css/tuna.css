@@ -2113,7 +2113,7 @@ div[ng-view] {
   background-position: center center;
 }
 .form-text input[name=num] {
-  width: 110px;
+  width: 170px;
   height: 45px;
   color: #03223c;
   font-size: 44px;
