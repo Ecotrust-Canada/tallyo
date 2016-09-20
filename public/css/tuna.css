@@ -2377,6 +2377,8 @@ input[name^=weight]::after {
   font-size: 20px;
 }
 
+#radio-29-species.toggle-group-container label,
+#radio-18-species.toggle-group-container label,
 #radio-19-species.toggle-group-container label,
 #radio-19-grade.toggle-group-container label,
 #radio-9-grade.toggle-group-container label,
@@ -2559,6 +2561,8 @@ input[name^=weight]::after {
   width: 65px;
 }
 
+#radio-18-species.toggle-group-container input:checked + span,
+#radio-29-species.toggle-group-container input:checked + span,
 #radio-19-species.toggle-group-container input:checked + span,
 #radio-19-grade.toggle-group-container input:checked + span,
 #radio-9-grade.toggle-group-container input:checked + span,
