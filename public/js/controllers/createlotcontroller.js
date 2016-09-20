@@ -220,19 +220,25 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.ListCollectionItems = function(){
-    var table;
-    if ($scope.station_info.itemtable === 'box'){
-      table = 'box_with_info';
-    }
-    else{
-      table = $scope.station_info.itemtable;
-    }
-    var query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-    var func = function(response){
-      $scope.list.included = response.data;
-      $scope.list.length = response.headers()['content-range'].split('/')[1];
-    };
-    DatabaseServices.GetEntries(table, func, query, 'hundred');
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      var table;
+      if ($scope.station_info.itemtable === 'box'){
+        table = 'box_with_info';
+      }
+      else{
+        table = $scope.station_info.itemtable;
+      }
+      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+      var func = function(response){
+        $scope.list.included = response.data;
+        $scope.list.length = response.headers()['content-range'].split('/')[1];
+      };
+      DatabaseServices.GetEntries(table, func, query); 
+    }, function errorCallback(response) {
+    });
+      
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
