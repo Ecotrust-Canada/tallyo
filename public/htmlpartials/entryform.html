@@ -17,7 +17,7 @@
 
 
         <div class="form_label" ng-if="row.title!=='second'">
-          <label for="{{row.fieldname}}">{{row.title}}:
+          <label ng-if="row.title!=='second_short'" for="{{row.fieldname}}">{{row.title}}:
             <span ng-if="theform[row.fieldname].$error.required===true && submitted"><i class="errortext">required field</i></span>
             <span ng-if="theform[row.fieldname].$error.negative===true && submitted"><i class="errortext">negative</i></span>
           </label>

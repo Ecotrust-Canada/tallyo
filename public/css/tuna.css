@@ -2375,11 +2375,11 @@ input[name^=weight]::after {
 
 
 #radio-29-grade.toggle-group-container label,
-#radio-9-grade.toggle-group-container label,
 #radio-19-grade.toggle-group-container label{
   width: 65px;
   font-size: 20px;
 }
+#radio-9-grade.toggle-group-container label,
 #radio-9-species.toggle-group-container label{
   min-width: 75px;
   font-size: 20px;
@@ -2556,10 +2556,10 @@ input[name^=weight]::after {
 
 #radio-28-size.toggle-group-container input:checked + span,
 #radio-19-grade.toggle-group-container input:checked + span,
-#radio-9-grade.toggle-group-container input:checked + span,
 #radio-29-grade.toggle-group-container input:checked + span{
   width: 65px;
 }
+#radio-9-grade.toggle-group-container input:checked + span,
 #radio-9-species.toggle-group-container input:checked + span{
   min-width: 75px;
 }
