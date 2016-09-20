@@ -2380,6 +2380,10 @@ input[name^=weight]::after {
   width: 65px;
   font-size: 20px;
 }
+#radio-9-species.toggle-group-container label{
+  min-width: 75px;
+  font-size: 20px;
+}
 
 #radio-28-grade.toggle-group-container label{
   width:68px;
@@ -2555,6 +2559,9 @@ input[name^=weight]::after {
 #radio-9-grade.toggle-group-container input:checked + span,
 #radio-29-grade.toggle-group-container input:checked + span{
   width: 65px;
+}
+#radio-9-species.toggle-group-container input:checked + span{
+  min-width: 75px;
 }
 
 #radio-28-grade.toggle-group-container input:checked + span{
