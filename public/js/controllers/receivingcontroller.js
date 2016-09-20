@@ -211,8 +211,9 @@ angular.module('scanthisApp.receivingController', [])
     if (form){
       MakeEntry(form, 'harvester', $scope);
       $scope.entry.harvester.processor_code = $scope.processor;
-      $scope.CheckHarvester();
-      $scope.formchange = !$scope.formchange;
+      //$scope.CheckHarvester();
+      $scope.MakeHarvesterEntry();
+      //$scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
     }
     
@@ -239,21 +240,21 @@ angular.module('scanthisApp.receivingController', [])
   $scope.ListHarvesters();
 
 
-  $scope.CheckHarvester = function(){
-    var func = function(response){
-      if (response.data.length < 1){
-        $scope.MakeHarvesterEntry();
-      }
-      else{
-        toastr.warning('cannot create duplicate');
-      }
-    };
-    var query = '?processor_code=eq.' + $scope.processor;
-    $scope.addform.fields.forEach(function(row){
-        query += '&' + row.fieldname + '=eq.' + $scope.entry.harvester[row.fieldname];
-    });
-    DatabaseServices.GetEntries('harvester', func, query);
-  };
+  // $scope.CheckHarvester = function(){
+  //   var func = function(response){
+  //     if (response.data.length < 1){
+  //       $scope.MakeHarvesterEntry();
+  //     }
+  //     else{
+  //       toastr.warning('cannot create duplicate');
+  //     }
+  //   };
+  //   var query = '?processor_code=eq.' + $scope.processor;
+  //   $scope.addform.fields.forEach(function(row){
+  //       query += '&' + row.fieldname + '=eq.' + $scope.entry.harvester[row.fieldname];
+  //   });
+  //   DatabaseServices.GetEntries('harvester', func, query);
+  // };
 
   $scope.SetCurrent = function(selected){
      var filtered = $scope.list.harvester.filter(
