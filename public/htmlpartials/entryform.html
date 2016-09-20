@@ -30,6 +30,9 @@
           <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" autocomplete="off" value={{row.value}} 
                 ng-model="form[row.fieldname]" ng-required="{{row.required || false}}"></span>
 
+          <!--datepicker-->
+          <span ng-if="row.type === 'datepicker'"> <md-datepicker ng-model="form[row.fieldname]" md-placeholder="date"></md-datepicker></span>
+
           <!--number-->
           <span ng-if="row.type === 'number'">
             <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'">
