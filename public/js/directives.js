@@ -23,6 +23,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('searchtext', function() { return { templateUrl: 'htmlpartials/searchtext.html' }; })
 
+.directive('editreceivinglot', function() { return { templateUrl: 'htmlpartials/editreceivinglot.html' }; })
+
 .directive('display', function() { return { 
   scope: {config: '=',
           obj: '=',
@@ -114,8 +116,7 @@ angular.module('scanthisApp.directives', [])
           list2: '=', 
           objectid: '=',
           formdisabled: '=', 
-          submitFn: '&',
-          pollFn: '&'},
+          changeFn: '&'},
   controller: 'editdataCtrl', 
   templateUrl: 'htmlpartials/edit_form.html' }; })
 
@@ -193,11 +194,18 @@ angular.module('scanthisApp.directives', [])
             config: '=',
             limit: '=',
             form: '=',
+            initial: '=',
             onSelect: '&'
         },
         templateUrl: 'htmlpartials/searchdropdown.html',
         link: function(scope, element, attrs) {
             element.addClass('input-dropdown');
+
+            scope.$watch('initial', function(newValue, oldValue) {
+              if (scope.initial){
+                scope.the_val = scope.initial;
+              }  
+            });
             
 
             scope.select = function(e, value) {
@@ -210,6 +218,7 @@ angular.module('scanthisApp.directives', [])
                 }
                 
             };
+
             scope.pcselect = function(e, value) {
               if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))) {
                 scope.the_val = value;

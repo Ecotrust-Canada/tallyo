@@ -7,12 +7,12 @@
 
   <div>
     <button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue" ng-disabled="editforms">Choose Lot</button>
-    <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Hide</button>
+    <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Cancel</button>
   </div>
 
   <div ng-controller="LoadEditLotCtrl">
     <button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip();formchange=!formchange" class="btn-blue" ng-disabled="showforms">Edit Current Lot</button>
-    <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Hide</button>
+    <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Cancel</button>
   </div>
 
   
@@ -32,107 +32,6 @@
     
   </div>
 
-
-
-  <div ng-controller="EditLotCtrl"  ng-show="editforms" class="select_object"> 
-    <div  class="select_object">
-      <div class="select_header">
-         <span class="show_choices">Shipment Info</span>
-      </div>
-      <div class="inset_form"> 
-        <div class="show_choices" ng-show="!current.shipping_unit">
-          <editdata config="collectionform" formchange="formchange" thedata="current.ship_edit"></editdata>
-          <div class="marg_left"><input-dropdown ng-if="adddropdown" thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></div>
-        </div>
-        <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>
-      </div>
-    </div>
-
-    <div  class="select_object">
-      <div class="select_header">
-         <span class="show_choices">Supplier</span>
-      </div> 
-      <div class="inset_form"> 
-        <div class="show_choices" ng-show="!current.supplier">
-          <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetCurrent(value)"></input-dropdown></div>
-        </div>
-        <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
-      </div>
-    </div>
-
-    <div  class="select_object" ng-if="current.har_edit">
-      <div class="select_header">
-         <span class="show_choices">Fishing Info</span>
-      </div> 
-      <div class="inset_form"> 
-        <div class="show_choices" ng-show="!current.harvester">
-          <editdata config="addform" formchange="formchange" thedata="current.har_edit"></editdata>
-          <div class="marg_left"><input-dropdown ng-if="collectiondropdown" thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown></div>
-        </div>
-        <display ng-if="current.harvester" settings="settings" obj="current.harvester" config="collection2display"></display>  
-      </div>
-    </div>
-
-    
-
-    <!-- <div class="form_row">
-      <div class="form_label"><label>Receive Date:</label></div>
-      <div class="field"><md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_container_number">Container Number:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.ship_edit.container_number" id="inp_container_number"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_bill_of_lading">Bill of Lading:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.ship_edit.bill_of_lading" id="inp_bill_of_lading"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_vessel_name">Vessel Name:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.ship_edit.vessel_name" id="inp_vessel_name"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_po_number">REF #:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.ship_edit.po_number" id="inp_po_number"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_country_origin">Country Origin:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.ship_edit.country_origin" id="inp_country_origin"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="inp_fleet">Fishing Vessel:</label></div>
-      <div class="field"><input type="text" autocomplete="off"
-           ng-model="current.har_edit.fleet" id="inp_fleet"></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="fishing_area">Fishing Area:</label></div>
-      <div class="field"><div class="styled-dropdown">
-        <select ng-model="current.har_edit.fishing_area" id="fishing_area">
-          <option value="">-- select --</option>
-          <option ng-repeat="option in current.har_area" 
-                  ng-select="current.har_edt.fishing_area = option.value">{{option.value}}</option>
-        </select>
-        <div ng-if="!row.value.list" class="dd_arrow"><span></span></div></div>
-    </div>
-    <div class="form_row">
-      <div class="form_label"><label for="fishing_method">Fishing Method:</label></div>
-      <div class="field"><div class="styled-dropdown">
-        <select ng-model="current.har_edit.fishing_method" id="fishing_method">
-          <option value="">-- select --</option>
-          <option ng-repeat="option in current.har_method" 
-                  ng-select="current.har_edit.fishing_method = option.value">{{option.value}}</option>
-        </select>
-        <div ng-if="!row.value.list" class="dd_arrow"><span></span></div></div>
-    </div> -->
-    <!-- <div class="centre_btn">
-      <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
-    </div> -->
-
-  </div>
+  <editreceivinglot></editreceivinglot>
 
 </div>

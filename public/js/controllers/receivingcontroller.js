@@ -381,20 +381,38 @@ angular.module('scanthisApp.receivingController', [])
 .controller('LoadEditLotCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.GetEditShip = function(){
+    $scope.GetReceiveDate();
     var func = function(response){
       $scope.current.ship_edit = response.data[0];
-      if ($scope.current.harvester_lot.harvester_code){
-        $scope.GetEditSup();
-      }
+      $scope.GetEditSup();
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
 
+  $scope.GetReceiveDate = function(){
+
+    var _date;
+    if ($scope.current.harvester_lot.receive_date){
+      _date = new Date($scope.current.harvester_lot.receive_date);
+      _date = _date.valueOf() + _date.getTimezoneOffset()*60000;
+      $scope.current.receivedate = new Date(_date);
+    }
+    else{
+      $scope.current.receivedate=null;
+    }
+    
+  };
+
+
   $scope.GetEditSup = function(){
+    console.log('called');
+    $scope.current.supplier_code = $scope.current.harvester_lot.supplier_code;
     var func = function(response){
       $scope.current.sup_edit = response.data[0];
-      $scope.GetEditHar();
+      if ($scope.current.harvester_lot.harvester_code){
+        $scope.GetEditHar();
+      }
     };
     var query = '?supplier_code=eq.' + $scope.current.harvester_lot.supplier_code;
     DatabaseServices.GetEntries('supplier', func, query);
@@ -403,31 +421,11 @@ angular.module('scanthisApp.receivingController', [])
   $scope.GetEditHar = function(){
     var func = function(response){
       $scope.current.har_edit = response.data[0];
-      //console.log($scope.current.har_edit);
-      //$scope.GetHarArea();
     };
     var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
     DatabaseServices.GetEntries('harvester', func, query);
   };
 
-  $scope.GetHarArea = function(){
-    var func = function(response){
-      $scope.current.har_area = response.data;
-      //console.log($scope.current.har_area);
-      $scope.GetHarMethod();
-    };
-    var query = '?table_name=eq.origin&field_name=eq.fishing_area';
-    DatabaseServices.GetEntries('formoptions', func, query);
-  };
-
-  $scope.GetHarMethod = function(){
-    var func = function(response){
-      $scope.current.har_method = response.data;
-      //console.log($scope.current.har_method);
-    };
-    var query = '?table_name=eq.origin&field_name=eq.fishing_method';
-    DatabaseServices.GetEntries('formoptions', func, query);
-  }; 
 
 
 })
@@ -452,6 +450,19 @@ angular.module('scanthisApp.receivingController', [])
     ]
   };
 
+  $scope.SetEditSupplier = function(value){
+    $scope.current.supplier_code = value;
+  };
+
+  $scope.OnChangeShip = function(fieldname, val){
+    console.log('called');
+    $scope.current.ship_edit[fieldname] = val;
+  };
+
+  $scope.OnChangeHar = function(fieldname, val){
+    $scope.current.har_edit[fieldname] = val;
+  };
+
 
   $scope.ShipInfo = function(){
     var func = function(response){
@@ -470,7 +481,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.PatchLot();
     };
-    var patch = {'fleet':$scope.current.har_edit.fleet, 'fishing_area':$scope.current.har_edit.fishing_area, 'fishing_method':$scope.current.har_edit.fishing_method}
+    var patch = {'fleet':$scope.current.har_edit.fleet, 'fishing_area':$scope.current.har_edit.fishing_area, 'fishing_method':$scope.current.har_edit.fishing_method};
     var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
     DatabaseServices.PatchEntry('harvester', patch, query, func);
   };
@@ -479,7 +490,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.GetLot();
     };
-    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate};
+    var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate, 'supplier_code': $scope.current.supplier_code};
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };

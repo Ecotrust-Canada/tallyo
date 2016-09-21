@@ -1,0 +1,54 @@
+<div ng-controller="EditLotCtrl"  ng-show="editforms" class="select_object"> 
+    <div  class="select_object">
+      <div class="select_header">
+         <span class="show_choices">Shipment Info</span>
+      </div>
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.shipping_unit">
+          <editdata config="collectionform" formchange="formchange" thedata="current.ship_edit" change-fn="OnChangeShip(fieldname, val)"></editdata>
+        </div>
+        <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>
+      </div>
+    </div>
+
+    <div  class="select_object">
+      <div class="select_header">
+         <span class="show_choices">Receive Date</span>
+      </div> 
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.supplier">
+          <div class="marg_left"><div class="field"><md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker></div></div>
+        </div>
+        <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
+      </div>
+    </div>
+
+    <div  class="select_object">
+      <div class="select_header">
+         <span class="show_choices">Supplier</span>
+      </div> 
+      <div class="inset_form"> 
+        <div class="show_choices">
+          <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetEditSupplier(value)" initial="current.sup_edit"></input-dropdown></div>
+        </div>
+      </div>
+    </div>
+
+    <div  class="select_object" ng-if="current.har_edit">
+      <div class="select_header">
+         <span class="show_choices">Fishing Info</span>
+      </div> 
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.harvester">
+          <editdata config="addform" formchange="formchange" thedata="current.har_edit" change-fn="OnChangeHar(fieldname, val)"></editdata>
+          <div class="marg_left"><input-dropdown ng-if="collectiondropdown" thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+        </div>
+        <display ng-if="current.harvester" settings="settings" obj="current.harvester" config="collection2display"></display>  
+      </div>
+    </div>
+
+    <div class="centre_btn">
+      <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
+    </div>
+
+  </div>

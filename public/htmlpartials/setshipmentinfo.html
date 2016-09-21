@@ -17,10 +17,18 @@
 
 <div class="hr_marg"><hr></div>
 
-<div class="form_label">
-  <label>Receive Date:</label>
+<div  class="select_object">
+  <div class="select_header">
+     <span class="show_choices">Receive Date</span>
+  </div> 
+  <div class="inset_form"> 
+    <div class="show_choices" ng-show="!current.supplier">
+      <div class="marg_left"><div class="field"><md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker></div></div>
+    </div>
+    <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
+  </div>
 </div>
 
- <md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker>
+ 
 
 <div class="hr_marg"><hr></div>

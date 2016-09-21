@@ -27,31 +27,22 @@
 
           <!--text-->
           <span ng-if="row.type === 'text'"> <input name="{{row.fieldname}}" type="text" autocomplete="off" value="something"
-                ng-model="form[row.fieldname]" ng-required="{{row.required || false}}"></span>
+                ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})"></span>
 
           <!--datepicker-->
-          <span ng-if="row.type === 'datepicker'"> <md-datepicker ng-model="form[row.fieldname]" md-placeholder="date"></md-datepicker></span>
+          <span ng-if="row.type === 'datepicker'"> <md-datepicker ng-model="form[row.fieldname]" md-placeholder="date" ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})"></md-datepicker></span>
 
           <!--number-->
           <span ng-if="row.type === 'number'">
-            <span ng-if="row.scale==='on' || row.scale==='wait' || row.scale==='lock'">
-              <input 
-                ng-class="{scaletext: row.scale==='on'}" name="{{row.fieldname}}" type="text" autocomplete="off"
-                ng-model="scale[row.fieldname]" ng-focus="pollFn({field: 'toggle_state'});scalefn()" 
-                ng-required="{{row.required || false}}" negative>
-            </span>
-            <span ng-if="row.scale==='off'">
-                <input  name="{{row.fieldname}}" autocomplete="off" type="number" ng-model="form[row.fieldname]" autodecimal="{{config.autodecimal || 0}}" ng-required="{{row.required || false}}" negative/>
-            </span>
             <span ng-if="!row.scale">
-                <input  name="num" autocomplete="off" type="number" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative/>
+                <input ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})"  name="num" autocomplete="off" type="number" ng-model="form[row.fieldname]" ng-required="{{row.required || false}}" negative/>
             </span>
           </span>
 
           <!--radio-->
           <span ng-if="row.type === 'radio' && row.value.length > 2" id="radio-{{config.id}}-{{row.fieldname}}" 
             class="toggle-group-container" ng-class="{'rbgroup-unset': !form[row.fieldname]}">
-            <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-click="DoSomething(row.fieldname + $index + config.station_id + row.title, row, $index)"><input  
+            <label ng-repeat="option in row.value" for="{{row.fieldname + $index + config.station_id}}" ng-click="DoSomething(row.fieldname + $index + config.station_id + row.title, row, $index)"><input ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})"
                    name="{{row.fieldname}}" type="radio" 
                    id="{{row.fieldname + $index + config.station_id + row.title}}" value={{option.val}} ng-model="form[row.fieldname]"
                    ng-required="{{row.required || false}}"><span>{{option.label}}</span></label>
@@ -60,7 +51,7 @@
             <span class="switch_option" ng_class="{active: form[row.fieldname]==row.value[0].val}"
                 value="row.value[0].val">{{row.value[0].val}}</span>
             <div ng-click="toggleRadioValue(row)" class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+              <input ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
                      id="formswitch-{{row.fieldname}}" ng-checked="form[row.fieldname]==row.value[1].val">
               <label class="onoffswitch-label" for="formswitch-{{row.fieldname}}">
                 <span class="onoffswitch-inner"></span>
@@ -76,29 +67,24 @@
             <!--static select options-->
 
             <div class="styled-dropdown">   
-              <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" 
+              <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})"
                       ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
                 <option value="">-- select --</option>
                 <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
               </select>
 
               <!--dboptions-->
-              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
+              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}" ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})">
                 <option value="">-- select --</option>
                 <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
-                        ng-select="form[row.fieldname] = option.value">{{option.value}}</option>
+                        >{{option.value}}</option>
               </select>
 
               <!--options from another database table-->
-              <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]" name="{{row.fieldname}}">
+              <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]" name="{{row.fieldname}}" ng-change="changeFn({fieldname:row.fieldname, val:form[row.fieldname]})">
                 <option value="">-- select --</option>
                 <option ng-repeat="option in list1" value={{option|json_lot}}>{{option[row.value.name]}}  <!--{{option.traceable|istraceable}}--></option>
               </select>
-              
-              <!--<select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
-                <option value="">-- select --</option>
-                <option ng-repeat="option in list2" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
-              </select>-->
 
               <div ng-if="!row.value.list" class="dd_arrow"><span></span></div>
             </div> 
@@ -125,30 +111,9 @@
           </span>
           <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
-          <!--button to set scale weight-->
-          <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 
-               class="weight-connector"/>
-          <button class="scale-weight-set" 
-                  ng-if="row.pollarg && row.scale!='off'"
-                  ng-disabled="row.scale!='on' || !scale[row.fieldname]" 
-                  ng-click="store(row);pollFn({field: row.pollarg})"
-                  ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
-
         </div>
 
       </div>
-    
-    <!-- <div class="form_buttons">
-      <div class="pictogram_btns">
-        <span ng-click="Reset()" value="Clear Entry" id="clear-{{config.id}}" class="clear">Clear Entry</span>
-        <span ng-if="config.startpolling && poll_scale" 
-              ng-click="pollFn({field: 'toggle_state'});scalefn()" class="scale_on green_text" id="manual_input_{{config.station_id}}">Scale ON</span>
-        <span ng-if="config.startpolling && !poll_scale" class="scale_on red_text" 
-              ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
-      </div>
-      <input type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
-             value="{{config.submit||'Submit'}}" id="submit-{{config.id}}" >
-    </div>      -->
 
   </fieldset>
 </form>
