@@ -11,7 +11,7 @@
   </div>
 
   <div ng-controller="LoadEditLotCtrl">
-    <button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip()" class="btn-blue" ng-disabled="showforms">Edit Current Lot</button>
+    <button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip();formchange=!formchange" class="btn-blue" ng-disabled="showforms">Edit Current Lot</button>
     <button ng-show="editforms" ng-click="$parent.editforms=!editforms" class="btn-blue">Hide</button>
   </div>
 
@@ -25,6 +25,7 @@
     <setsupplierinfo></setsupplierinfo>
     <setharvesterinfo></setharvesterinfo>
 
+
     <div class="centre_btn">
       <button class="btn-orange" ng-click="SubmitNewLot(form);$parent.showforms=!showforms">Enter</button>
     </div> 
@@ -32,9 +33,49 @@
   </div>
 
 
-  <div ng-controller="EditLotCtrl" id="edit_shipment"  ng-show="editforms"> 
 
-    <div class="form_row">
+  <div ng-controller="EditLotCtrl"  ng-show="editforms" class="select_object"> 
+    <div  class="select_object">
+      <div class="select_header">
+         <span class="show_choices">Shipment Info</span>
+      </div>
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.shipping_unit">
+          <editdata config="collectionform" formchange="formchange" thedata="current.ship_edit"></editdata>
+          <div class="marg_left"><input-dropdown ng-if="adddropdown" thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+        </div>
+        <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>
+      </div>
+    </div>
+
+    <div  class="select_object">
+      <div class="select_header">
+         <span class="show_choices">Supplier</span>
+      </div> 
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.supplier">
+          <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+        </div>
+        <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
+      </div>
+    </div>
+
+    <div  class="select_object" ng-if="current.har_edit">
+      <div class="select_header">
+         <span class="show_choices">Fishing Info</span>
+      </div> 
+      <div class="inset_form"> 
+        <div class="show_choices" ng-show="!current.harvester">
+          <editdata config="addform" formchange="formchange" thedata="current.har_edit"></editdata>
+          <div class="marg_left"><input-dropdown ng-if="collectiondropdown" thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+        </div>
+        <display ng-if="current.harvester" settings="settings" obj="current.harvester" config="collection2display"></display>  
+      </div>
+    </div>
+
+    
+
+    <!-- <div class="form_row">
       <div class="form_label"><label>Receive Date:</label></div>
       <div class="field"><md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker></div>
     </div>
@@ -87,10 +128,10 @@
                   ng-select="current.har_edit.fishing_method = option.value">{{option.value}}</option>
         </select>
         <div ng-if="!row.value.list" class="dd_arrow"><span></span></div></div>
-    </div>
-    <div class="form_buttons">
+    </div> -->
+    <!-- <div class="centre_btn">
       <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
-    </div>
+    </div> -->
 
   </div>
 

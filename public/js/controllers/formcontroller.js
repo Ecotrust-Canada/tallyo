@@ -46,6 +46,7 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
+    $scope.FormData($scope.config.dboptions);
     $scope.form_enabled = true;
     
   };
@@ -133,6 +134,171 @@ angular.module('scanthisApp.formController', [])
     
     $scope.poll_scale = !$scope.poll_scale;
   };
+
+  $scope.submitted=false;
+
+  $scope.isValid = function(form){
+    $scope.submitted = true;
+    var form_error = false;
+    for (var i=0;i<$scope.formarray.length;i++){
+      var row = $scope.formarray[i];
+      if (row.required && !$scope.form[row.fieldname]){
+        form_error = true;
+        toastr.error('Please set ' + row.title.toLowerCase());
+      }
+      // only check for empty string is field is also required
+      else if (row.required && $scope.form[row.fieldname] === ''){
+        form_error = true;
+        toastr.error('Please set ' + row.title.toLowerCase());
+      }
+      else if ($scope.theform[row.fieldname] && $scope.theform[row.fieldname].$error){
+        var req_error = $scope.theform[row.fieldname].$error.required;
+        var neg_error = $scope.theform[row.fieldname].$error.negative;
+        if (neg_error === true){
+          form_error = true;
+          toastr.error('errors in form');
+        }
+      }
+      else if (row.scale){
+        if (!$scope.form[row.fieldname] || $scope.form[row.fieldname] === null){
+          form_error = true;
+        }
+      }
+    }
+    if (form_error === true){
+      $scope.form_enabled = true;
+      form = null;
+    }
+    if (form){
+      if ($scope.config.hide){
+        $scope.hideform = true;
+      }
+    }
+    if ($scope.config.hidden){
+      $scope.config.hidden.forEach(function(entry){
+        form[entry.fieldname] = entry.val;
+      });
+    }
+    
+    return form;
+
+  };
+
+
+  //functions for editing dropdown choices
+  $scope.FormData = function(table){
+    var func = function(response){
+      $scope.formoptions = response.data; 
+    };
+    var query = '?table_name=eq.' + table;
+    DatabaseServices.GetEntryNoAlert('formoptions', func, query);
+  };
+
+  $scope.Delete = function(value, field){
+    var query='?table_name=eq.' + $scope.config.dboptions + '&value=eq.' + value + '&field_name=eq.' + field;
+    var func = function(response){
+      $scope.FormData($scope.config.dboptions);
+    };
+    DatabaseServices.RemoveEntry('formoptions', query, func);
+  };
+
+  $scope.New = function(value, field){
+    if (value){
+      var entry ={"table_name": $scope.config.dboptions, "value": value, "field_name": field};
+      var func = function(response){
+        $scope.FormData($scope.config.dboptions);
+      };
+      DatabaseServices.DatabaseEntry('formoptions', entry, func);
+    }    
+  };
+
+  if ($scope.config.dboptions){
+    $scope.FormData($scope.config.dboptions);
+  }
+
+  $scope.DoSomething = function(something, row, index){
+    document.getElementById(something).checked = true;
+    $scope.form[row.fieldname] = row.value[index].val;
+  };
+
+  $scope.toggleRadioValue = function(frow){
+      var fieldname = frow.fieldname;
+      var checkInput = document.getElementById('formswitch-'+fieldname);
+      setTimeout(function () {
+        $scope.$apply(function () {
+          $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
+        });
+      }, 50);
+  };
+
+  $scope.searchset = function(value, row){
+    $scope.form[row.fieldname] = value;
+  };
+
+})
+
+
+.controller('editdataCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout) {
+  $scope.$watch('thedata', function(newValue, oldValue) {
+    if ($scope.thedata !== undefined){
+      $scope.Clear();
+    }
+  });
+
+  //booleans for show/hide edit dropdown
+  $scope.editdrop = {};
+  if (!$scope.form){
+    $scope.form = {};
+  }
+
+  //default show or hide form
+  $scope.hideform = false;
+  if ($scope.config.hide){
+    $scope.hideform = true;
+  }
+
+  //all the fields in the form
+  $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+
+  $scope.form_enabled = false;
+
+  //clear fields to default
+  $scope.Clear = function(){
+    $scope.submitted=false;
+    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
+    $scope.form_enabled = true;
+    for (var key in $scope.thedata){
+      $scope.form[key] = $scope.thedata[key];
+    }
+    $scope.FormData($scope.config.dboptions);
+    
+  };
+
+
+  $scope.Reset = function(){
+    $scope.submitted=false;
+    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    $scope.form = ResetForm($scope.form, $scope.formarray);
+    $scope.form_enabled = true;
+    
+  };
+
+  //watch outside variable to know when to clear form
+  // $scope.$watch('formchange', function(newValue, oldValue) {
+  //   if ($scope.formchange !== undefined){
+  //     $scope.Clear();
+  //   }
+  // });
+
+
+  //hide the form once it's submitted
+  $scope.hidefn = function(){
+    if ($scope.config.hide){
+      $scope.hideform = true;
+    }
+  };
+
 
   $scope.submitted=false;
 

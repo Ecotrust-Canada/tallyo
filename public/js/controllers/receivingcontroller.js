@@ -157,6 +157,10 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+  $scope.$watch('showforms', function(newValue, oldValue) {
+    $scope.formchange = !$scope.formchange;
+  });
+
   $scope.formchange = true;
   $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
@@ -201,6 +205,10 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 .controller('SetOriginCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.$watch('showforms', function(newValue, oldValue) {
+    $scope.formchange = !$scope.formchange;
+  });
 
   $scope.formchange = true;
   $scope.addinfo = true;
@@ -270,6 +278,10 @@ angular.module('scanthisApp.receivingController', [])
 
 
 .controller('SettheSupplierCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.$watch('showforms', function(newValue, oldValue) {
+    $scope.formchange = !$scope.formchange;
+  });
 
   $scope.formchange = true;
   $scope.addinfo = true;
@@ -372,18 +384,27 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.current.ship_edit = response.data[0];
       if ($scope.current.harvester_lot.harvester_code){
-        $scope.GetEditHar();
+        $scope.GetEditSup();
       }
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
 
+  $scope.GetEditSup = function(){
+    var func = function(response){
+      $scope.current.sup_edit = response.data[0];
+      $scope.GetEditHar();
+    };
+    var query = '?supplier_code=eq.' + $scope.current.harvester_lot.supplier_code;
+    DatabaseServices.GetEntries('supplier', func, query);
+  };
+
   $scope.GetEditHar = function(){
     var func = function(response){
       $scope.current.har_edit = response.data[0];
       //console.log($scope.current.har_edit);
-      $scope.GetHarArea();
+      //$scope.GetHarArea();
     };
     var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
     DatabaseServices.GetEntries('harvester', func, query);
@@ -406,11 +427,31 @@ angular.module('scanthisApp.receivingController', [])
     };
     var query = '?table_name=eq.origin&field_name=eq.fishing_method';
     DatabaseServices.GetEntries('formoptions', func, query);
-  };  
+  }; 
+
+
 })
 
 
 .controller('EditLotCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.supplierdropdown = 
+  { id: 1, 
+    order: "-timestamp", 
+    arg: "supplier_code", 
+    searchfield: "sap_code",
+    delimeter: '-',
+    fields: ["name"]
+  };
+  $scope.supplierdisplay = 
+  { id: 1, 
+    layout: [
+      [{'name':'Supplier Code', 'val':'sap_code'},
+      {'name':'Supplier Name', 'val':'name'},
+      {'name': 'Certification', 'val':'msc_code'}]
+    ]
+  };
+
 
   $scope.ShipInfo = function(){
     var func = function(response){

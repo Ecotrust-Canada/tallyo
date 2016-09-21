@@ -105,6 +105,20 @@ angular.module('scanthisApp.directives', [])
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })
 
+.directive('editdata', function() { return { 
+  scope: {table: '=',  
+          config: '=', 
+          thedata: '=',
+          formchange: '=',
+          list1: '=', 
+          list2: '=', 
+          objectid: '=',
+          formdisabled: '=', 
+          submitFn: '&',
+          pollFn: '&'},
+  controller: 'editdataCtrl', 
+  templateUrl: 'htmlpartials/edit_form.html' }; })
+
 .directive('editform', function() { return { 
   scope: {obj: '=',  
           config: '=',   
