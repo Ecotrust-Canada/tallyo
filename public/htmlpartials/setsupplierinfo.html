@@ -7,7 +7,7 @@
     <div class="inset_form"> 
       <div class="show_choices" ng-show="!current.supplier">
         <entryform config="supplierform1" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
-        <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetCurrent(value)"></input-dropdown></div>
+        <div class="marg_left"><input-dropdown thelist="list.supplier"  config="supplierdropdown" on-select="SetCurrent(value)" initial="current.supplier"></input-dropdown></div>
       </div>
       <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
     </div>

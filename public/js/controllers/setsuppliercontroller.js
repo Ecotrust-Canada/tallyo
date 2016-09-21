@@ -478,4 +478,96 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 
+.controller('CreateLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
+  //for recent lots drop down
+
+  $scope.form = {};
+
+
+  $scope.ListStationLots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
+      var func = function(response){
+        $scope.list.stnlots = response.data;
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
+  //$scope.ListStationLots();
+
+
+  /*make a new lot in the database*/
+  $scope.DatabaseLot = function(){
+    var func = function(response){
+      $scope.ListStationLots();
+      $scope.form = {};
+    };
+    DatabaseServices.DatabaseEntryCreateCode('lot', $scope.entry.lot, $scope.processor, func);
+  };
+
+  /*fill in fields in json obj*/
+  $scope.MakeLotEntry = function(date, internal_lot_code){    
+    CreateLotEntryPeriod(date, 'day', $scope);
+    $scope.entry.lot.station_code = $scope.station_code;
+
+    $scope.entry.lot.receive_station = $scope.settings.receive_station;
+    $scope.entry.lot.process_station = $scope.settings.process_station;
+
+    $scope.entry.lot.internal_lot_code = internal_lot_code;
+
+  };
+
+  /*Gets current lot given selected supplier, if does not exist creates a new lot*/
+  $scope.CreateLot = function(queryString, date, internal_lot_code){
+    var func = function(response){
+      if (response.data.length > 0){
+        $scope.current.lot = response.data[0];
+        $scope.current.collectionid = $scope.current.lot.lot_number;
+      }//end if
+      else{
+        $scope.MakeLotEntry(date, internal_lot_code);
+        $scope.DatabaseLot();  
+      }
+    };
+    DatabaseServices.GetEntries('lot', func, queryString);
+  };
+
+
+  $scope.SubmitNewLot = function(form){
+    if (form){
+      $http.get('/server_time').then(function successCallback(response) {
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        if (!$scope.options.no_harvester){
+          var harvester_code = $scope.current.harvester.harvester_code;
+        }
+        var ship_code = $scope.current.shipping_unit.shipping_unit_number;
+        var ref_num = $scope.current.shipping_unit.po_number;
+        var sup_code = $scope.current.supplier.supplier_code;
+        var r_date = $scope.current.receivedate || null;
+        var queryString = "?internal_lot_code=eq." + ref_num;
+        $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
+        "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};
+        $scope.CreateLot(queryString, date, ref_num);
+      }, function errorCallback(response) {
+      });
+    }    
+  };
+
+  $scope.$watch('createforms', function(newValue, oldValue) {
+    if ($scope.createforms === true){
+      $scope.current.receivedate = null;
+      $scope.current.shipping_unit = null;
+      $scope.current.harvester = null;
+      $scope.current.supplier = null;
+    }
+    
+  });
+
+})
+
+
 ;

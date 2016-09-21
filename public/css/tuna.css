@@ -1538,6 +1538,22 @@ div[ng-view] {
   margin-top: 15px;
   margin-left:350px;
 }
+
+#receiveshipment .editbuttons .btn-blue {
+  float:right;
+  margin-top:-39px;
+}
+
+#receiveshipment .editbuttons .dropdown-container {
+  min-width:420px;
+}
+
+#receiveshipment .createbuttons .btn-blue {
+  /*float: right;*/
+  margin-top: 35px;
+}
+
+
 #receiveshipment .display_row .field_val/*,
 #station-HS0-011 #current_lot .field_val */ {
   color: #213141;

@@ -157,7 +157,7 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-  $scope.$watch('showforms', function(newValue, oldValue) {
+  $scope.$watch('createforms', function(newValue, oldValue) {
     $scope.formchange = !$scope.formchange;
   });
 
@@ -206,7 +206,7 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('SetOriginCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-  $scope.$watch('showforms', function(newValue, oldValue) {
+  $scope.$watch('createforms', function(newValue, oldValue) {
     $scope.formchange = !$scope.formchange;
   });
 
@@ -231,6 +231,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.formchange = !$scope.formchange;
       $scope.current.harvester = (response.data[0] || response.data);
+      console.log($scope.current.harvester);
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.list.harvester.push($scope.current.harvester);
     };
@@ -238,14 +239,14 @@ angular.module('scanthisApp.receivingController', [])
 
   };
 
-  $scope.ListHarvesters = function(){
-    var func = function(response){
-      $scope.list.harvester = response.data;
-    };
-    var query = '?processor_code=eq.' + $scope.processor;
-    DatabaseServices.GetEntries('harvester', func, query);
-  };
-  $scope.ListHarvesters();
+  // $scope.ListHarvesters = function(){
+  //   var func = function(response){
+  //     $scope.list.harvester = response.data;
+  //   };
+  //   var query = '?processor_code=eq.' + $scope.processor;
+  //   DatabaseServices.GetEntries('harvester', func, query);
+  // };
+  // $scope.ListHarvesters();
 
 
   // $scope.CheckHarvester = function(){
@@ -264,22 +265,22 @@ angular.module('scanthisApp.receivingController', [])
   //   DatabaseServices.GetEntries('harvester', func, query);
   // };
 
-  $scope.SetCurrent = function(selected){
-     var filtered = $scope.list.harvester.filter(
-      function(value){
-        return value.harvester_code === selected;
-      });
-     $scope.current.harvester = filtered[0];
-     $scope.current.itemchange = !$scope.current.itemchange;
-    $scope.addinfo = false;
-  };
+  // $scope.SetCurrent = function(selected){
+  //    var filtered = $scope.list.harvester.filter(
+  //     function(value){
+  //       return value.harvester_code === selected;
+  //     });
+  //    $scope.current.harvester = filtered[0];
+  //    $scope.current.itemchange = !$scope.current.itemchange;
+  //   $scope.addinfo = false;
+  // };
 
 })
 
 
 .controller('SettheSupplierCtrl', function($scope, $http, DatabaseServices, toastr) {
 
-  $scope.$watch('showforms', function(newValue, oldValue) {
+  $scope.$watch('createforms', function(newValue, oldValue) {
     $scope.formchange = !$scope.formchange;
   });
 
@@ -380,13 +381,22 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('LoadEditLotCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+  $scope.SetEditLot = function(lot_number){
+    var func = function(response){
+      $scope.current.edit_lot = response.data[0];
+    };
+    var query = '?lot_number=eq.' + lot_number;
+    DatabaseServices.GetEntries('harvester_lot', func, query);
+  };
+
+
   $scope.GetEditShip = function(){
     $scope.GetReceiveDate();
     var func = function(response){
       $scope.current.ship_edit = response.data[0];
       $scope.GetEditSup();
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
+    var query = '?shipping_unit_number=eq.' + $scope.current.edit_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
 
@@ -394,7 +404,7 @@ angular.module('scanthisApp.receivingController', [])
 
     var _date;
     if ($scope.current.harvester_lot.receive_date){
-      _date = new Date($scope.current.harvester_lot.receive_date);
+      _date = new Date($scope.current.edit_lot.receive_date);
       _date = _date.valueOf() + _date.getTimezoneOffset()*60000;
       $scope.current.receivedate = new Date(_date);
     }
@@ -407,14 +417,14 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.GetEditSup = function(){
     console.log('called');
-    $scope.current.supplier_code = $scope.current.harvester_lot.supplier_code;
+    $scope.current.supplier_code = $scope.current.edit_lot.supplier_code;
     var func = function(response){
       $scope.current.sup_edit = response.data[0];
-      if ($scope.current.harvester_lot.harvester_code){
+      if ($scope.current.edit_lot.harvester_code){
         $scope.GetEditHar();
       }
     };
-    var query = '?supplier_code=eq.' + $scope.current.harvester_lot.supplier_code;
+    var query = '?supplier_code=eq.' + $scope.current.edit_lot.supplier_code;
     DatabaseServices.GetEntries('supplier', func, query);
   };
 
@@ -422,11 +432,9 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.current.har_edit = response.data[0];
     };
-    var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
+    var query = '?harvester_code=eq.' + $scope.current.edit_lot.harvester_code;
     DatabaseServices.GetEntries('harvester', func, query);
   };
-
-
 
 })
 
@@ -466,14 +474,14 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.ShipInfo = function(){
     var func = function(response){
-      if ($scope.current.harvester_lot.harvester_code){
+      if ($scope.current.edit_lot.harvester_code){
         $scope.PatchHar();
       }else{
         $scope.PatchLot();
       }
       
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
+    var query = '?shipping_unit_number=eq.' + $scope.current.edit_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.ship_edit, query, func);
   };
 
@@ -482,26 +490,32 @@ angular.module('scanthisApp.receivingController', [])
       $scope.PatchLot();
     };
     var patch = {'fleet':$scope.current.har_edit.fleet, 'fishing_area':$scope.current.har_edit.fishing_area, 'fishing_method':$scope.current.har_edit.fishing_method};
-    var query = '?harvester_code=eq.' + $scope.current.harvester_lot.harvester_code;
+    var query = '?harvester_code=eq.' + $scope.current.edit_lot.harvester_code;
     DatabaseServices.PatchEntry('harvester', patch, query, func);
   };
 
   $scope.PatchLot = function(){
     var func = function(response){
-      $scope.GetLot();
+      $scope.ListStationLots();
     };
     var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate, 'supplier_code': $scope.current.supplier_code};
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
+    var query = '?shipping_unit_number=eq.' + $scope.current.edit_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
-  $scope.GetLot = function(){
+ $scope.ListStationLots = function(){
+  $http.get('/server_time').then(function successCallback(response) {
+    var the_date = response.data.timestamp;
+    var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
+    var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
     var func = function(response){
-      $scope.current.harvester_lot = response.data[0];
+      $scope.list.stnlots = response.data;
     };
-    var query = '?lot_number=eq.' + $scope.current.harvester_lot.lot_number;
-    DatabaseServices.GetEntries('harvester_lot', func, query);
-  };
+    DatabaseServices.GetEntries('harvester_lot', func, query);      
+  }, function errorCallback(response) {
+  });
+};
+
 
 
 })
