@@ -15,10 +15,10 @@
       <span ng-switch-when="pieces">{{item[name]}} pcs</span>
       <span ng-switch-when="boxes">{{item[name]}} cases</span>
       <span ng-switch-when="product">{{item[name.split(',')[0]][name.split(',')[1]]}}</span>
-      <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
+      <span ng-switch-when="grade_state">{{item.grade}} <label ng-if="item.state">({{item.state}})</label><label ng-if="item.species">({{item.species}})</label></span>
       <span ng-switch-when="grade_species">{{item.grade}} <label ng-if="item.species">({{item.species}})</label></span>
-      <span ng-switch-when="size_grade">{{item.grade}} <label ng-if="item.size">({{item.size}})</label></span>
-      <span ng-switch-when="customer">{{item.grade}} <label ng-if="item.state">({{item.state}})</label></span>
+      <span ng-switch-when="size_grade">{{item.grade}} <label ng-if="item.size">({{item.size}})</label></label><label ng-if="item.species">({{item.species}})</label></span>
+      <span ng-switch-when="customer">{{item.grade}} <label ng-if="item.state">({{item.state}})</label><label ng-if="item.species">({{item.species}})</label></span>
       <span ng-switch-when="ship_har">{{item.received_from}} - {{item.fleet}}</span>
       <span ng-switch-default>{{item[name]}}</span>
     </td>
@@ -37,7 +37,7 @@
       <span ng-switch-when="weight_total">{{items | sumOfValue:'weight_total'| weightstring}}</span>
       <span ng-switch-when="weight">{{items | sumOfValue:'weight'| weightstring}}</span>
       <span ng-switch-when="pieces">{{items | sumOfValue:'pieces'}} pcs</span>
-      <span ng-switch-when="boxes">{{items | sumOfValue:'boxes'}} boxes</span>
+      <span ng-switch-when="boxes">{{items | sumOfValue:'boxes'}} cases</span>
       <span ng-switch-default></span>
     </td>
 

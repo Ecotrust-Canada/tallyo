@@ -307,16 +307,27 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.formchange1 = true;
 
+  $scope.PatchPDC = function(pdc, box_number){
+    var func = function(response){
+      $scope.PutObjInContainer(response.data[0].box_number);
+    };
+    var patch = {'pdc_text': pdc};
+    var query = '?box_number=eq.' + box_number;
+    DatabaseServices.PatchEntry('box', patch, query, func);
+
+  };
+
   $scope.CheckBoxExists = function(form){
     if (form){
-      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.supplier_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
+      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.harvester_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
       var func = function(response){
         if (response.data.length > 0){
-          $scope.PutObjInContainer(response.data[0].box_number);
+          $scope.PatchPDC(form.pdc_text, response.data[0].box_number);
         }
         else{
           console.log('new');
           var entry = {};
+          entry.pdc_text = form.pdc_text;
           entry.grade = form.grade; 
           entry.size = form.size;
           entry.weight = form.weight;

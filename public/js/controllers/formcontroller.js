@@ -475,6 +475,7 @@ angular.module('scanthisApp.formController', [])
       if ($scope.options && $scope.options.patch_supplier){
         var obj = form.lotnum_in;
         $scope.entry.lot.supplier_code = obj.supplier_code;
+        $scope.entry.lot.harvester_code = obj.harvester_code;
         $scope.entry.lot.lot_in = obj.lot_number;
       }
 
