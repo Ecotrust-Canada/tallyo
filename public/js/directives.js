@@ -131,7 +131,8 @@ angular.module('scanthisApp.directives', [])
 
 .directive('fieldsetrepeat', function() { return { 
   scope: { config: '=' ,
-           formdisabled: '=',  
+           formdisabled: '=', 
+           buttonlabel: '=', 
            submitFn: '&'},
   controller: 'FieldsetCtrl',
   templateUrl: 'htmlpartials/fieldsetrepeat.html' }; })

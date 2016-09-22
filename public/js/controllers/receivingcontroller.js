@@ -416,7 +416,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.GetReceiveDate = function(){
 
     var _date;
-    if ($scope.current.harvester_lot.receive_date){
+    if ($scope.current.edit_lot.receive_date){
       _date = new Date($scope.current.edit_lot.receive_date);
       _date = _date.valueOf() + _date.getTimezoneOffset()*60000;
       $scope.current.receivedate = new Date(_date);
@@ -534,6 +534,8 @@ angular.module('scanthisApp.receivingController', [])
 })
 
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.delete_label = "Delete Cases";
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
     if ($scope.current.collectionid === undefined  || $scope.current.collectionid === null || $scope.current.collectionid === 'no selected'){
