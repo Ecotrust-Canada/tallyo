@@ -126,6 +126,7 @@ angular.module('scanthisApp.AdminController', [])
     else{
       query += '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     }
+    query += '&order=timestamp.desc';
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
@@ -309,6 +310,7 @@ angular.module('scanthisApp.AdminController', [])
     else if (label === 'detail'){
       query = '?station_code=eq.' + $scope.sumStations[$scope.stn.index].station + '&box_weight=neq.0';
     }
+    query += '&order=timestamp.desc';
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
@@ -632,6 +634,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
+    query += '&order=timestamp.desc';
     var func = function(response){
       if(response.data.length>0){
         $scope.list.detail = response.data;
@@ -647,6 +650,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getlotCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number;
+    query += '&order=timestamp.desc';
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
@@ -658,6 +662,7 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getprolotCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?production_lot=eq.' + lot_number;
+    query += '&order=timestamp.desc';
     var func = function(response){
       $scope.list.detail = response.data;
       var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
