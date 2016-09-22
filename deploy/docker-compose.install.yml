@@ -2,4 +2,4 @@ version: '2'
 
 services:
   amanda1:
-   command: ./deploy/tallyo/install.sh
+   command: /opt/tallyo/deploy/tallyo/install.sh
