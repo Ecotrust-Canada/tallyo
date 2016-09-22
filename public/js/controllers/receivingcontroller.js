@@ -170,10 +170,23 @@ angular.module('scanthisApp.receivingController', [])
     if (form){
       MakeEntry(form, 'shipping_unit', $scope);
       $scope.entry.shipping_unit.station_code = $scope.station_code;
-      $scope.MakeShippingEntry();
+      $scope.CheckShipment();
       $scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
     }
+  };
+
+  $scope.CheckShipment = function(){
+    var func = function(response){
+      if (response.data.length < 1){
+        $scope.MakeShippingEntry();
+      }
+      else{
+        toastr.warning('duplicate REF # & bill of lading');
+      }
+    };
+    var query = '?po_number=eq.' + $scope.entry.shipping_unit.po_number + '&bill_of_lading=eq.' + $scope.entry.shipping_unit.bill_of_lading;
+    DatabaseServices.GetEntries('shipping_unit', func, query);
   };
 
   $scope.MakeShippingEntry = function(){
