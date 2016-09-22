@@ -5,7 +5,14 @@ Open source Fish Plant data collection software, geared towards generating trace
 ```
 git clone https://github.com/Ecotrust-Canada/scanthis
 ```
-
+## Requirements:
+node V4.4.0
+PostGreSQL
+PostGREST 0.3.20
+nodemon
+bower
+db-migrate
+forever
 
 ## Fully Docker-based Installation
 

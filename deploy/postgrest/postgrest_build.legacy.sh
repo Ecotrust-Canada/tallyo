@@ -1,6 +1,6 @@
 #!/bin/sh
 
-docker build -f Dockerfile-postgrest -t postgrest-ec:0.3.0.3 .
+docker build -f Dockerfile-postgrest -t postgrest-ec:0.3.2.0 .
 
 # run -d -v /mnt/mirror0/owncloud/data:/var/www/html/data -v /mnt/mirror0/owncloud/config:/var/www/html/config  --name owncloud-test -p 82:80 owncloud-smb
 

@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 RUN apt-get update
 RUN apt-get install -y tar xz-utils wget libpq-dev
 
-ENV POSTGREST_VERSION 0.3.0.3
+ENV POSTGREST_VERSION 0.3.2.0
 ENV POSTGREST_DBHOST db
 ENV POSTGREST_DBPORT 5432
 ENV POSTGREST_DBNAME postgres
