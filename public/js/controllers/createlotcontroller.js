@@ -266,7 +266,7 @@ angular.module('scanthisApp.createlotController', [])
   };
 })
 
-
+//Harsam packing and shipping, Amanda shipping stations - used for workflow of patching object into container
 .controller('DisplayItemsPackingCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.ListCollectionItems = function(){
