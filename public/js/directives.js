@@ -203,8 +203,14 @@ angular.module('scanthisApp.directives', [])
             element.addClass('input-dropdown');
 
             scope.$watch('initial', function(newValue, oldValue) {
-              if (scope.initial){
+              if (scope.initial !== undefined){
                 scope.the_val = scope.initial;
+              }  
+            });
+
+            scope.$watch('thelist', function(newValue, oldValue) {
+              if (scope.thelist){
+                scope.the_val = null;
               }  
             });
             

@@ -477,11 +477,29 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.formchange=true;
 })
 
+.controller('ListLotsCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
+  $scope.ListStationLots();
+
+  $scope.dropdownSelect = function(lot_number){
+    $scope.current.lot_to_edit_or_select = lot_number;
+  };
+
+  $scope.CreateButton = function(){
+    $scope.current.showforms='CREATE';
+    $scope.current.shipping_unit = null;
+    $scope.current.harvester = null;
+    $scope.current.supplier = null;
+    $scope.entry = null;
+    $scope.current.receivedate = null;
+  };
+})
+
 
 .controller('CreateLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
   //for recent lots drop down
 
   $scope.form = {};
+  $scope.create_button = true;
 
 
   $scope.ListStationLots = function(){
@@ -491,6 +509,13 @@ angular.module('scanthisApp.setsupplierController', [])
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
       var func = function(response){
         $scope.list.stnlots = response.data;
+        $scope.current.lot_to_edit_or_select=null;
+        $scope.current.showforms='NONE';
+        $scope.create_button = true;
+        $scope.current.shipping_unit = null;
+        $scope.current.harvester = null;
+        $scope.current.supplier = null;
+
       };
       DatabaseServices.GetEntries('harvester_lot', func, query);      
     }, function errorCallback(response) {
@@ -537,23 +562,40 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
   $scope.SubmitNewLot = function(form){
+    $scope.create_button = false;
     if (form){
-      $http.get('/server_time').then(function successCallback(response) {
-        var the_date = response.data.timestamp;
-        var date = moment(the_date).utcOffset(response.data.timezone).format();
-        if (!$scope.options.no_harvester){
-          var harvester_code = $scope.current.harvester.harvester_code;
-        }
-        var ship_code = $scope.current.shipping_unit.shipping_unit_number;
-        var ref_num = $scope.current.shipping_unit.po_number;
-        var sup_code = $scope.current.supplier.supplier_code;
-        var r_date = $scope.current.receivedate || null;
-        var queryString = "?internal_lot_code=eq." + ref_num;
-        $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
-        "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};
-        $scope.CreateLot(queryString, date, ref_num);
-      }, function errorCallback(response) {
-      });
+      if (!$scope.current.shipping_unit){
+        toastr.error('Set Shipment Info');
+      }
+      else if (!$scope.current.supplier){
+        toastr.error('Set Supplier Info');
+      }
+      else if (!$scope.options.no_harvester && !$scope.current.harvester){
+        toastr.error('Set Fishing Info');
+      }
+      else{
+
+
+        $http.get('/server_time').then(function successCallback(response) {
+          var the_date = response.data.timestamp;
+          var date = moment(the_date).utcOffset(response.data.timezone).format();
+          if (!$scope.options.no_harvester){
+            var harvester_code = $scope.current.harvester.harvester_code;
+          }
+          var ship_code = $scope.current.shipping_unit.shipping_unit_number;
+          var ref_num = $scope.current.shipping_unit.po_number;
+          var sup_code = $scope.current.supplier.supplier_code;
+          var r_date = $scope.current.receivedate || null;
+          var queryString = "?internal_lot_code=eq." + ref_num;
+          $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
+          "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};
+          $scope.CreateLot(queryString, date, ref_num);
+        }, function errorCallback(response) {
+        });
+
+      }
+
+
     }    
   };
 

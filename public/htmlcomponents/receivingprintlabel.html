@@ -1,61 +1,36 @@
-
-<div ng-init="showforms=false;edit_dialog=false" class="panel white" id="receiveshipment">
+<div class="panel white" id="receiveshipment" ng-init="current.showforms='NONE'" ng-controller="NewLotCtrl">
 
   <div ng-controller="DisplayCollectionCtrl"  id="current_lot">
     <display settings="settings" ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>
   </div>
 
-  <div>
-    <button ng-hide="showforms" ng-click="showforms=!showforms" class="btn-blue">Choose Lot</button>
-    <button ng-show="showforms" ng-click="showforms=!showforms" class="btn-blue">Cancel Choose Lot</button>
+  <div ng-controller="ListLotsCtrl" class="select_object">
+    <button ng-click="CreateButton()" class="btn-blue" ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">Create New Lot</button>
+    <fieldset ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">
+      <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="dropdownSelect(value)" ng-click="current.lot_to_edit_or_select=null"></input-dropdown>
+    </fieldset>
   </div>
   <div>
-    <button ng-hide="edit_dialog" ng-click="edit_dialog=!edit_dialog" class="btn-blue">Edit/Create</button>
-    <button ng-show="edit_dialog" ng-click="edit_dialog=!edit_dialog" class="btn-blue">Cancel Edit/Create</button>
+    <button ng-click="SetLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Set Current</button>
   </div>
-
-  <div ng-controller="NewLotCtrl" ng-show="showforms" class="select_object">
-    <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="SetLot(value);$parent.showforms=!showforms"></input-dropdown>
-    <br>
-    <br>
-    <br>
-    
-  </div>
-
-  
-
-</div>
-
-
-
-<div ng-init="createforms=false;editforms=false;" class="panel white" id="receiveshipment" ng-show="edit_dialog">
-
   <div ng-controller="LoadEditLotCtrl" class="editbuttons">
-    <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="SetEditLot(value)"></input-dropdown>
-    <button ng-hide="editforms" ng-click="$parent.editforms=!editforms;GetEditShip();formchange=!formchange" class="btn-blue" ng-disabled="(createforms || !current.edit_lot)">Edit Lot</button>
-    <button ng-show="editforms" ng-click="$parent.editforms=!editforms;current.edit_lot=null" class="btn-blue">Cancel</button>
+    <button ng-click="current.showforms='EDIT';SetEditLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Edit</button>
   </div>
 
-  <div class="createbuttons">
-    <button ng-hide="createforms" ng-click="createforms=!createforms;formchange=!formchange" class="btn-blue" ng-disabled="editforms">Create Lot</button>
-    <button ng-show="createforms" ng-click="createforms=!createforms" class="btn-blue">Cancel</button>
-  </div>
+  <editreceivinglot></editreceivinglot>
 
-  <div ng-controller="CreateLotCtrl" ng-show="createforms" class="select_object">
+  <div ng-controller="CreateLotCtrl" ng-show="current.showforms==='CREATE'" class="select_object">
+    <button ng-click="current.showforms='NONE'" class="btn-blue">Cancel</button>
     <setshipmentinfo></setshipmentinfo>
     <setsupplierinfo></setsupplierinfo>
     <setharvesterinfo></setharvesterinfo>
 
     <div class="centre_btn">
-      <button class="btn-orange" ng-click="SubmitNewLot(form);$parent.createforms=!$parent.createforms">Enter</button>
+      <button class="btn-orange" ng-click="SubmitNewLot(form)">Enter</button>
     </div> 
     
   </div>
-
-
-  <editreceivinglot></editreceivinglot>
-
 </div>
 
 

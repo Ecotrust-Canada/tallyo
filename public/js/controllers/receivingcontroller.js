@@ -397,6 +397,7 @@ angular.module('scanthisApp.receivingController', [])
   $scope.SetEditLot = function(lot_number){
     var func = function(response){
       $scope.current.edit_lot = response.data[0];
+      $scope.GetEditShip();
     };
     var query = '?lot_number=eq.' + lot_number;
     DatabaseServices.GetEntries('harvester_lot', func, query);
@@ -454,6 +455,8 @@ angular.module('scanthisApp.receivingController', [])
 
 .controller('EditLotCtrl', function($scope, $http, DatabaseServices, toastr) {
 
+  $scope.save_button = true;
+
   $scope.supplierdropdown = 
   { id: 1, 
     order: "-timestamp", 
@@ -486,6 +489,7 @@ angular.module('scanthisApp.receivingController', [])
 
 
   $scope.ShipInfo = function(){
+    $scope.save_button = false;
     var func = function(response){
       if ($scope.current.edit_lot.harvester_code){
         $scope.PatchHar();
@@ -509,25 +513,31 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.PatchLot = function(){
     var func = function(response){
+      if ($scope.current.lot_to_edit_or_select === $scope.current.harvester_lot.lot_number){
+        $scope.SetLot($scope.current.lot_to_edit_or_select);
+      }
       $scope.ListStationLots();
     };
     var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': $scope.current.receivedate, 'supplier_code': $scope.current.supplier_code};
-    var query = '?shipping_unit_number=eq.' + $scope.current.edit_lot.shipping_unit_number;
+    var query = '?lot_number=eq.' + $scope.current.edit_lot.lot_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
- $scope.ListStationLots = function(){
-  $http.get('/server_time').then(function successCallback(response) {
-    var the_date = response.data.timestamp;
-    var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
-    var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
-    var func = function(response){
-      $scope.list.stnlots = response.data;
-    };
-    DatabaseServices.GetEntries('harvester_lot', func, query);      
-  }, function errorCallback(response) {
-  });
-};
+  $scope.ListStationLots = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
+      var func = function(response){
+        $scope.list.stnlots = response.data;
+        $scope.current.lot_to_edit_or_select=null;
+        $scope.current.showforms='NONE';
+        $scope.save_button = true;
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query);      
+    }, function errorCallback(response) {
+    });
+  };
 
 
 

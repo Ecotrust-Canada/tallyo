@@ -1,4 +1,7 @@
-<div ng-controller="EditLotCtrl"  ng-show="editforms" class="select_object"> 
+<div ng-controller="EditLotCtrl"  ng-show="current.showforms==='EDIT'" class="select_object"> 
+
+    <button ng-click="current.showforms='NONE'" class="btn-blue">Cancel</button>
+
     <div  class="select_object">
       <div class="select_header">
          <span class="show_choices">Shipment Info</span>
@@ -44,7 +47,7 @@
     </div>
 
     <div class="centre_btn">
-      <input type="button" ng-click="$parent.editforms=!editforms;ShipInfo()" value="Save" class="btn-orange">
+      <input type="button" ng-click="ShipInfo()" value="Save" class="btn-orange" ng-disabled="!save_button">
     </div>
 
   </div>
