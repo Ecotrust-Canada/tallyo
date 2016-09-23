@@ -222,7 +222,8 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListCollectionItems = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      //var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var table;
       if ($scope.station_info.itemtable === 'box'){
         table = 'box_with_info';
@@ -285,7 +286,8 @@ angular.module('scanthisApp.createlotController', [])
     }
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      //var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var table;
       if ($scope.station_info.itemtable === 'box'){
         table = 'box_with_info';
