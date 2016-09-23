@@ -35,7 +35,7 @@ services:
     image: tallyo
     command: node app app_config_am1
     volumes:
-       - .:/opt/tallyo
+       - ./public:/opt/tallyo/public
     ports:
       - "8000:8000"
     networks:
@@ -48,7 +48,7 @@ services:
     image: tallyo
     command: node app app_config_am2
     volumes:
-       - .:/opt/tallyo
+       - ./public:/opt/tallyo/public
     ports:
       - "8001:8000"
     networks:

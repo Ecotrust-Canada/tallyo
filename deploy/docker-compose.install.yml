@@ -2,4 +2,4 @@ version: '2'
 
 services:
   amanda1:
-   command: ./deploy/tallyo/install.sh
+   command: db-migrate up -e env
