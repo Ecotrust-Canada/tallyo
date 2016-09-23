@@ -188,7 +188,7 @@ angular.module('scanthisApp.formController', [])
   //functions for editing dropdown choices
   $scope.FormData = function(table){
     var func = function(response){
-      $scope.formoptions = response.data; 
+      $scope.formoptions = response.data;
     };
     var query = '?table_name=eq.' + table;
     DatabaseServices.GetEntryNoAlert('formoptions', func, query);
