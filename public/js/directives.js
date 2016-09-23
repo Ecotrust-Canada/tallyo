@@ -320,17 +320,19 @@ angular.module('scanthisApp.directives', [])
   
         link: function (scope, elem, attrs, ctrl) {
             var dec = attrs.autodecimal;
-            var num = Math.pow(10, dec);
-            if (!ctrl) return;
+            if (dec){
+              var num = Math.pow(10, dec);
+              if (!ctrl) return;
 
-            ctrl.$formatters.unshift(function (a) {
-                return $filter('number')(ctrl.$modelValue);
-            });
-            ctrl.$parsers.unshift(function (viewValue) {
-                var plainNumber = viewValue.replace(/[^\d|\-+]/g, '');
-                elem.val($filter('number')(plainNumber/num,dec));
-                return plainNumber/num;
-            });
+              ctrl.$formatters.unshift(function (a) {
+                  return $filter('number')(ctrl.$modelValue);
+              });
+              ctrl.$parsers.unshift(function (viewValue) {
+                  var plainNumber = viewValue.replace(/[^\d|\-+]/g, '');
+                  elem.val($filter('number')(plainNumber/num,dec));
+                  return plainNumber/num;
+              });
+            }
         }
     };
 }])

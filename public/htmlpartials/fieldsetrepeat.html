@@ -29,7 +29,7 @@
 
         <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
                placeholder="{{field.placeholder}}" title="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" 
-               ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+               ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}" autodecimal="{{field.autodecimal}}">
         <input ng-if="field.type==='text'" type="text" autocomplete="off" ng-model="choice[field.fieldname]" 
                placeholder="field.placeholder"  title="{{field.placeholder}}" ng-required="true" 
                name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
