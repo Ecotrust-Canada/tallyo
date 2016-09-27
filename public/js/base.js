@@ -15,7 +15,7 @@ angular.module('scanthisApp', [
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',
-  'scanthisApp.ThisfishController',
+  // 'scanthisApp.ThisfishController',
   'ngSanitize', 
   //'ngCsv',
   'ngMaterial',

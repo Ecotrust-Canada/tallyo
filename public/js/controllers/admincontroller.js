@@ -1,6 +1,9 @@
 'use strict';
 angular.module('scanthisApp.AdminController', [])
 
+
+// ShipListCtrl, InventoryCtrl, LotCtrl, CompleteLotCtrl
+
 //editentries.html - controller for listing and editing shipment entries
 .controller('ShipListCtrl', function($scope, $http, DatabaseServices) {
 
@@ -229,7 +232,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('inventory_all', func, query, 'fifty');
   };
-  //$scope.ListAllItems();
 
   $scope.DeleteInv = function(str){
     $scope.to_delete = str.box_number;
@@ -243,7 +245,6 @@ angular.module('scanthisApp.AdminController', [])
       $scope.search = {};
       $scope.ListBoxes();
       $scope.items = null;
-      //$scope.ListAllItems();
     };
     DatabaseServices.DatabaseEntryReturn('scan', scan, func);
   };
@@ -270,7 +271,6 @@ angular.module('scanthisApp.AdminController', [])
   $scope.changeStn = function(index) {
     $scope.stn.index = index; 
     $scope.ListBoxes();
-    //$scope.ListAllItems();
   };
   $scope.changeStn($scope.stn.index);
 
@@ -413,18 +413,6 @@ angular.module('scanthisApp.AdminController', [])
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
 
-  /*$scope.GetRecentLots = function(){
-    var query = '?lot_number=in.';
-    for (var index in $scope.list.lot_numbers){
-      query += $scope.list.lot_numbers[index] + ',';
-    }
-    var func = function(response){
-      $scope.list.recent = response.data;
-      $scope.loaddata();
-    };
-    DatabaseServices.GetEntries('recent_lot', func, query);
-  };*/
-
   $scope.loaddata = function(){
     var cellfilter = function(item){
       return (item.lot_number  === lot.lot_number && item.station_code === stn.code);
@@ -518,15 +506,6 @@ angular.module('scanthisApp.AdminController', [])
           }                
         }
       }
-
-      /*if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
-        var index = arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number');
-        lot.expanded = true;
-        lot[$scope.sumStations[0].code].in_progress = false;
-        if (!lot[$scope.sumStations[0].code].summary){
-          lot[$scope.sumStations[0].code].summary = true;          
-        }        
-      }*/
     }
 
     $scope.list.harvester_lot[0].expanded = true;
@@ -716,14 +695,11 @@ angular.module('scanthisApp.AdminController', [])
     var func = function(response){
       $rootScope.$broadcast('collection-change', {id: 'no selected'});
     };
-    //var r = confirm("Are you sure you want to complete this lot?");
-    //if (r === true) {
       for (var i=0;i<station_codes.length;i++){
         var station_code=station_codes[i];
         var query = '?station_code=eq.' + station_code + '&lot_number=eq.' + lot_number;     
           DatabaseServices.PatchEntry('lotlocations',patch, query, func);
       }
-    //}
   };
 
 })

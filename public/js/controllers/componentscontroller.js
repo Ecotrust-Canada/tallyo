@@ -3,8 +3,12 @@
 
 angular.module('scanthisApp.createlotController', [])
 
+// CollectionTableDropDownCtrl, SelectLotDropDownCtrl, DisplayCollectionCtrl, DisplayItemsCtrl, DisplayItemsPackingCtrl, TotalsOnceCtrl,
+// TotalsWeighCtrl, ReprintCtrl, LotSelectCtrl, BufferScrollPackingCtrl, BufferScrollCtrl 
+
 
 //packingstation.html - fills in dropdown to select collection and assigns selected
+// Select box or shipment or lot
 .controller('CollectionTableDropDownCtrl', function($scope, $http, DatabaseServices) {
 
   $scope.ListCollections = function(){
@@ -32,44 +36,40 @@ angular.module('scanthisApp.createlotController', [])
     DatabaseServices.GetEntries(table, func, query, 'hundred');
   };
 
+//for AM2 int. receiving, sets end_date to current day 
   $scope.changeFn = function(selected){
     if ($scope.options.p_date){
-
-
       $http.get('/server_time').then(function successCallback(response) {
-      var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).format();
-      var end_date = moment.parseZone(date).endOf('day').format();
-
-
-      var patch = {'end_date': end_date};
-      var query = '?lot_number=eq.' + selected;
-      var func = function(response){
-        if (response.data.length > 0){
-          $scope.current.collectionid = response.data[0].lot_number;
-        }//end if
-        else{
-        }
-      };
-      DatabaseServices.PatchEntry('lot', patch, query, func);
+        var the_date = response.data.timestamp;
+        var date = moment(the_date).utcOffset(response.data.timezone).format();
+        var end_date = moment.parseZone(date).endOf('day').format();
+        var patch = {'end_date': end_date};
+        var query = '?lot_number=eq.' + selected;
+        var func = function(response){
+          if (response.data.length > 0){
+            $scope.current.collectionid = response.data[0].lot_number;
+          }
+          else{
+          }
+        };
+        DatabaseServices.PatchEntry('lot', patch, query, func);
       }, function errorCallback(response) {
       });
-
-
     }else{
       $scope.current.collectionid = selected;
-    }
-    
+    }   
   };
 
   $scope.current.selected = "no selected";
 
+  //initially load available collections (box/shipment/lot)
   $scope.$watch('station_info', function(newValue, oldValue) {
     if ($scope.station_info !== undefined){
       $scope.ListCollections();
     }
   });
 
+  //reload dropdown list on selection/creation of new
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
       $scope.current.selected = $scope.current.collectionid;
@@ -443,118 +443,6 @@ angular.module('scanthisApp.createlotController', [])
 
 })
 
-
-
-.controller('ThisfishLabelCtrl', function($scope, $http, DatabaseServices, toastr) {
-
-
-  $scope.tableconfig = 
-  { id: 2,    
-    cssclass: "fill", 
-    headers: ["Product Type", "Thisfish Code"], 
-    fields: ["product,product_type", "tf_code"], 
-  };
-
-  $scope.dropdownconfig = 
-  { id: 0, 
-    title: "Search Labels", 
-    limit: "5",
-    order: "-timestamp", 
-    arg: "label", 
-    searchfield: "label", 
-    delimeter: '-',
-    fields: ["codes"]
-  };
-
-
-
-  $scope.ListProducts = function(){
-    var query = '?traceable=eq.true';
-    var func = function(response){
-      $scope.list.product = response.data;
-      $scope.availableProducts = response.data;
-    };
-    DatabaseServices.GetEntries('product', func, query);
-  };
-
-  $scope.ListProducts();
-
-
-  $scope.ListLabels = function(){
-    var query = '';
-    var func = function(response){
-      $scope.list.label = response.data;
-    };
-    DatabaseServices.GetEntries('group_codes', func, query);
-  };
-
-  $scope.ListLabels();
-
-  $scope.selectedProducts = [];
-
-
-  $scope.GetCodes = function(label){
-    var query = "?product_code=is.null&order=tf_code";
-    var func = function(response){
-      var tf_list = response.data;
-      var last = false;
-      $scope.selectedProducts.forEach(
-        function(el, index){
-          if (index === $scope.selectedProducts.length-1){
-            last = true;
-          }
-          var nextcode = tf_list[index].tf_code;
-          $scope.assignCode(el.product_code, nextcode, label, last);
-        }
-      );
-    };
-    DatabaseServices.GetEntries('thisfish', func, query);
-  };
-
-  $scope.assignCode = function(product_code, tf_code, label, last){
-    var today = moment(new Date()).format();
-    var query = '?tf_code=eq.' + tf_code;
-    var func = function(response){
-      if (last === true){
-        $scope.ShowCodes(label);
-      }      
-    };
-    var patch = {'product_code': product_code, 'label':label, 'timestamp': today};
-    DatabaseServices.PatchEntry('thisfish',patch, query, func);
-  };
-
-  $scope.ShowCodes = function(label){
-    var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
-    var func = function(response){
-      $scope.list.codes = response.data;
-      $scope.current.tf_group = response.data[0];
-      $scope.ListLabels();
-      $scope.moveAll($scope.selectedProducts,$scope.availableProducts);
-      $scope.label = null;
-    };
-    DatabaseServices.GetEntries('thisfish', func, query);
-      };
-
-  $scope.moveItem = function(item, from, to) {
-
-      var idx=from.indexOf(item);
-      if (idx != -1) {
-          from.splice(idx, 1);
-          to.push(item);      
-      }
-  };
-  $scope.moveAll = function(from, to) {
-
-      angular.forEach(from, function(item) {
-          to.push(item);
-      });
-      from.length = 0;
-  };            
-
-
-
-})
-
 .controller('BufferScrollCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
   $scope.static_limit = 10;
@@ -578,6 +466,120 @@ angular.module('scanthisApp.createlotController', [])
   };
 
 })
+
+
+
+// .controller('ThisfishLabelCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+
+//   $scope.tableconfig = 
+//   { id: 2,    
+//     cssclass: "fill", 
+//     headers: ["Product Type", "Thisfish Code"], 
+//     fields: ["product,product_type", "tf_code"], 
+//   };
+
+//   $scope.dropdownconfig = 
+//   { id: 0, 
+//     title: "Search Labels", 
+//     limit: "5",
+//     order: "-timestamp", 
+//     arg: "label", 
+//     searchfield: "label", 
+//     delimeter: '-',
+//     fields: ["codes"]
+//   };
+
+
+
+//   $scope.ListProducts = function(){
+//     var query = '?traceable=eq.true';
+//     var func = function(response){
+//       $scope.list.product = response.data;
+//       $scope.availableProducts = response.data;
+//     };
+//     DatabaseServices.GetEntries('product', func, query);
+//   };
+
+//   $scope.ListProducts();
+
+
+//   $scope.ListLabels = function(){
+//     var query = '';
+//     var func = function(response){
+//       $scope.list.label = response.data;
+//     };
+//     DatabaseServices.GetEntries('group_codes', func, query);
+//   };
+
+//   $scope.ListLabels();
+
+//   $scope.selectedProducts = [];
+
+
+//   $scope.GetCodes = function(label){
+//     var query = "?product_code=is.null&order=tf_code";
+//     var func = function(response){
+//       var tf_list = response.data;
+//       var last = false;
+//       $scope.selectedProducts.forEach(
+//         function(el, index){
+//           if (index === $scope.selectedProducts.length-1){
+//             last = true;
+//           }
+//           var nextcode = tf_list[index].tf_code;
+//           $scope.assignCode(el.product_code, nextcode, label, last);
+//         }
+//       );
+//     };
+//     DatabaseServices.GetEntries('thisfish', func, query);
+//   };
+
+//   $scope.assignCode = function(product_code, tf_code, label, last){
+//     var today = moment(new Date()).format();
+//     var query = '?tf_code=eq.' + tf_code;
+//     var func = function(response){
+//       if (last === true){
+//         $scope.ShowCodes(label);
+//       }      
+//     };
+//     var patch = {'product_code': product_code, 'label':label, 'timestamp': today};
+//     DatabaseServices.PatchEntry('thisfish',patch, query, func);
+//   };
+
+//   $scope.ShowCodes = function(label){
+//     var query = '?label=eq.' + label + '&select=lot_number, tf_code, timestamp, product_code, product{*}';
+//     var func = function(response){
+//       $scope.list.codes = response.data;
+//       $scope.current.tf_group = response.data[0];
+//       $scope.ListLabels();
+//       $scope.moveAll($scope.selectedProducts,$scope.availableProducts);
+//       $scope.label = null;
+//     };
+//     DatabaseServices.GetEntries('thisfish', func, query);
+//       };
+
+//   $scope.moveItem = function(item, from, to) {
+
+//       var idx=from.indexOf(item);
+//       if (idx != -1) {
+//           from.splice(idx, 1);
+//           to.push(item);      
+//       }
+//   };
+//   $scope.moveAll = function(from, to) {
+
+//       angular.forEach(from, function(item) {
+//           to.push(item);
+//       });
+//       from.length = 0;
+//   };            
+
+
+
+// })
+
+
 
 
 

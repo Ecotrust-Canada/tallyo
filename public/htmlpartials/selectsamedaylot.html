@@ -1,3 +1,5 @@
+<!-- lot selector for weighstation, filtered by timestamp -->
+
 <div ng-controller="LotSelectCtrl" class="select_object" id="selectsamedaylot" ng-cloak>
   <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
        ng-click="current.collectionid = null;">
@@ -8,11 +10,4 @@
 
     <input-dropdown  thelist="list.recent_lot"  config="adddropdown" on-select="current.collectionid = value;"></input-dropdown>
   </div>
-
-  <!-- form>
-    <label for="singleSelect"> Choose Lot: </label><br>
-    <select name="singleSelect" ng-model="current.collectionid">
-      <option ng-repeat = "lot in list.lot | orderBy: '-timestamp'" value={{lot.lot_number}}>{{lot.internal_lot_code}} {{lot.end_date|stringtodate|date:format:"MMM dd"}}</option>
-    </select>
-  </form -->
 </div>

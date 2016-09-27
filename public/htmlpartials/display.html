@@ -1,3 +1,5 @@
+<!-- used to show current lot, box, etc -->
+
 <div ng-repeat="row in config.layout" class="display_row">
   <div ng-repeat="col in row | tf_filter: 'val' : settings.thisfish_enabled" class="display_field"> 
     <label ng-if="col.name" for="{{col.val}}-value">{{col.name}}: </label>

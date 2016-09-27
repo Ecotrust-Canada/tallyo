@@ -13,6 +13,7 @@ angular.module('scanthisApp.directives', [])
 //create lot from harvester, or select recently completed lot
 .directive('receivelot', function() { return { templateUrl: 'htmlpartials/receivelot.html' }; })
 
+//Edit lot - used in conjuction with receivelot
 .directive('editlot', function() { return { templateUrl: 'htmlpartials/editlot.html' }; })
 
 .directive('setshipmentinfo', function() { return { templateUrl: 'htmlpartials/setshipmentinfo.html' }; })
@@ -86,13 +87,13 @@ angular.module('scanthisApp.directives', [])
            hideFn: '&'},
   templateUrl: 'htmlpartials/expandedlist.html' }; })
 
-.directive('dropdown', function() { return { 
-  scope: { itemlist: '=',  
-           cfg: '=', 
-           selectedoption: '=', 
-           changeFn: '&' },
-  controller: 'OptionCtrl',
-  templateUrl: 'htmlpartials/dropdown.html' }; })
+// .directive('dropdown', function() { return { 
+//   scope: { itemlist: '=',  
+//            cfg: '=', 
+//            selectedoption: '=', 
+//            changeFn: '&' },
+//   controller: 'OptionCtrl',
+//   templateUrl: 'htmlpartials/dropdown.html' }; })
 
 .directive('entryform', function() { return { 
   scope: {table: '=',  
@@ -120,14 +121,14 @@ angular.module('scanthisApp.directives', [])
   controller: 'editdataCtrl', 
   templateUrl: 'htmlpartials/edit_form.html' }; })
 
-.directive('editform', function() { return { 
-  scope: {obj: '=',  
-          config: '=',   
-          formchange: '=',
-          formdisabled: '=', 
-          submitFn: '&'},
-  controller: 'editformCtrl', 
-  templateUrl: 'htmlpartials/editform.html' }; })
+// .directive('editform', function() { return { 
+//   scope: {obj: '=',  
+//           config: '=',   
+//           formchange: '=',
+//           formdisabled: '=', 
+//           submitFn: '&'},
+//   controller: 'editformCtrl', 
+//   templateUrl: 'htmlpartials/editform.html' }; })
 
 .directive('fieldsetrepeat', function() { return { 
   scope: { config: '=' ,
