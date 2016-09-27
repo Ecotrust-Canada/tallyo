@@ -353,6 +353,52 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
 
+
+})
+
+.controller('CSVReceivingCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.getTheData = function(lot_number, stn, lot_code){
+    if (stn.csv_lot){
+      async.parallel([
+          function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);},
+          function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'shipment_info',header:true},{sheetid:'boxes',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+    }
+  };
+
+  $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
+    var query = '?lot_in=eq.' + lot_number + '&station_code=eq.' + stn.code;
+    var func = function(response){
+      if(response.data.length>0){
+        $scope.list.detail = response.data;
+        var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+        callback(null, newdata);
+      }
+      else{
+        callback(null, [{nodata:'nodata'}]);
+      }
+    };
+    DatabaseServices.GetEntries(table, func, query, callback);
+  };
+
+  $scope.getlotCSV = function(callback, lot_number, stn, lot_code, table, fields){
+    var query = '?lot_number=eq.' + lot_number;
+    var func = function(response){
+      $scope.list.detail = response.data;
+      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      callback(null, newdata);
+    };
+    DatabaseServices.GetEntries(table, func, query);
+  };
+
 })
 
 

@@ -461,6 +461,11 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.dropdownSelect = function(lot_number){
     $scope.current.lot_to_edit_or_select = lot_number;
+    var func = function(response){
+      $scope.current.internal_lot_code = response.data[0].internal_lot_code;
+    };
+    var query = '?lot_number=eq.' + lot_number;
+    DatabaseServices.GetEntries('lot', func, query);
   };
 
   $scope.CreateButton = function(){

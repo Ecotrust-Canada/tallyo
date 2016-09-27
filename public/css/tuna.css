@@ -1536,12 +1536,15 @@ div[ng-view] {
 #receiveshipment .btn-blue {
   /*float: right;*/
   margin-top: 15px;
-  margin-left:350px;
+  /*margin-left:350px;*/
+  margin-left:280px;
 }
 
 #receiveshipment .editbuttons .btn-blue {
-  float:right;
+/*  float:right;*/
   margin-top:-39px;
+  margin-left:0px;
+
 }
 
 #receiveshipment .editbuttons .dropdown-container {
@@ -1551,6 +1554,10 @@ div[ng-view] {
 #receiveshipment .createbuttons .btn-blue {
   /*float: right;*/
   margin-top: 35px;
+}
+
+.is_inline{
+  display: inline-block;
 }
 
 
