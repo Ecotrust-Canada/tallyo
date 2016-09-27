@@ -8,7 +8,6 @@
     <div class="inset_form"> 
       <div class="show_choices" ng-show="!current.shipping_unit">
         <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
-        <div class="marg_left"><input-dropdown ng-if="adddropdown" thelist="list.shipping_unit"  config="adddropdown" on-select="SetCurrent(value)"></input-dropdown></div>
       </div>
       <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>
     </div>

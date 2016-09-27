@@ -5,7 +5,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('SetSupplierCtrl', function($scope, $http, DatabaseServices, $rootScope) {
 
-
   /*Loads all the harvesters for the current processor*/
   $scope.ListHarvesters = function(){
     var func = function(response){
@@ -55,7 +54,6 @@ angular.module('scanthisApp.setsupplierController', [])
     
   };
 
-
 })
 
 
@@ -72,7 +70,6 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.default = JSON.parse(JSON.stringify($scope.current.harvester_lot));
     $scope.form = {};
     $scope.form.state = ( $scope.current.harvester_lot.internal_lot_code.substring(10,11) === '9'? 'Clean' : 'Dirty' );
-
     $scope.selected = 'no selected';
   };
 
@@ -85,7 +82,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
   $scope.ListHarvesters();
 
-
   $scope.GetHar = function(harvester){
     $scope.form.harvester_code = harvester.harvester_code;
     $scope.current.harvester = harvester;
@@ -93,8 +89,7 @@ angular.module('scanthisApp.setsupplierController', [])
 
   $scope.GenInternalLot = function(form){
     if (!form.harvester_code && !$scope.default){
-      toastr.error('set harvester');
-      
+      toastr.error('set harvester');      
     }
     else if (!form.state){
       toastr.error('set state');
@@ -117,10 +112,8 @@ angular.module('scanthisApp.setsupplierController', [])
         var internal_lot_code = $scope.options.process_plant + sup_code + date_group + date_code + loin_code;
         $scope.EditCurrentHarvester(form.harvester_code, internal_lot_code, now);
       }, function errorCallback(response) {
-
       });
     }
-
   };
 
   $scope.toggleStateValue = function(){
@@ -132,9 +125,7 @@ angular.module('scanthisApp.setsupplierController', [])
     }, 0);
   };
 
-
   $scope.EditCurrentHarvester = function(harvester_code, internal_lot_code, now){
-
     $scope.current.harvester_code = harvester_code;
     var date = now;
     var query = "?lot_number=eq." + $scope.current.collectionid;
@@ -148,14 +139,12 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.PatchEntry('lot', patch, query, func);
   };
 
-
 })
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
   //for recent lots drop down
 
   $scope.lotselected = 'no selected';
-
 
   $scope.ListLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
@@ -185,7 +174,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
   $scope.ListMoreLots();
 
-
   $scope.ListStationLots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
@@ -199,7 +187,6 @@ angular.module('scanthisApp.setsupplierController', [])
     });
   };
   $scope.ListStationLots();
-
 
   $scope.$on('collection-change', function(event, args) {
     $scope.ListLots();
@@ -230,8 +217,6 @@ angular.module('scanthisApp.setsupplierController', [])
     });
   };
 
-
-
   //for harvester drop down
   $scope.form = {};
   $scope.form.state = 'Dirty';
@@ -246,8 +231,6 @@ angular.module('scanthisApp.setsupplierController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
   $scope.ListHarvesters();
-
-
 
 
   /*
@@ -319,8 +302,6 @@ angular.module('scanthisApp.setsupplierController', [])
    * end lotlocations
    */
 
-   
-
   $scope.thisfishCode = function(lotnum){
     var query = '';
     var func = function(response){
@@ -338,7 +319,6 @@ angular.module('scanthisApp.setsupplierController', [])
     var patch = {lot_number: lotnum};
     DatabaseServices.PatchEntry('thisfish',patch, query, func);
   };
-
 
   /*make a new lot in the database*/
   $scope.DatabaseLot = function(){
@@ -400,7 +380,6 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.CreateLot(queryString, date, internal_lot_code);
 
   };
-
 
   $scope.SubmitNewLot = function(form){
     if (form){
@@ -574,8 +553,6 @@ angular.module('scanthisApp.setsupplierController', [])
         toastr.error('Set Fishing Info');
       }
       else{
-
-
         $http.get('/server_time').then(function successCallback(response) {
           var the_date = response.data.timestamp;
           var date = moment(the_date).utcOffset(response.data.timezone).format();
@@ -592,10 +569,7 @@ angular.module('scanthisApp.setsupplierController', [])
           $scope.CreateLot(queryString, date, ref_num);
         }, function errorCallback(response) {
         });
-
       }
-
-
     }    
   };
 
@@ -605,8 +579,7 @@ angular.module('scanthisApp.setsupplierController', [])
       $scope.current.shipping_unit = null;
       $scope.current.harvester = null;
       $scope.current.supplier = null;
-    }
-    
+    }    
   });
 
 })

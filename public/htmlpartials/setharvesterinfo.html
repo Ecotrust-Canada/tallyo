@@ -8,7 +8,6 @@
     <div class="inset_form"> 
       <div class="show_choices" ng-show="!current.harvester">
         <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
-        <div class="marg_left"><input-dropdown ng-if="collectiondropdown" thelist="list.harvester"  config="collectiondropdown" on-select="SetCurrent(value)"></input-dropdown></div>
       </div>
       <display ng-if="current.harvester" settings="settings" obj="current.harvester" config="collection2display"></display>  
     </div>

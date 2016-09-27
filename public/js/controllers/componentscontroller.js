@@ -289,13 +289,19 @@ angular.module('scanthisApp.createlotController', [])
       //var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var table;
+      var query;
       if ($scope.station_info.itemtable === 'box'){
         table = 'box_with_info';
+        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+      }
+      else if ($scope.station_info.itemtable === 'loin_with_info'){
+        table = $scope.station_info.itemtable;
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
       }
       else{
         table = $scope.station_info.itemtable;
+        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
       }
-      var query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
       var func = function(response){
         $scope.list.included = response.data;
         $scope.list.length = response.headers()['content-range'].split('/')[1];

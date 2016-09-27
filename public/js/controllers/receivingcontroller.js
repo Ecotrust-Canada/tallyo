@@ -17,22 +17,6 @@ angular.module('scanthisApp.receivingController', [])
     $scope.checkBox(jsonvalues);
   };
 
-  // $scope.MakeItemFromQR = function(jsonvalues){
-  //   if ($scope.current.collectionid){
-  //     var func = function(response){
-  //       if (response.data.length >0){
-  //         $scope.raw.string = null;
-  //         toastr.warning("already exists");
-  //       }
-  //       else{
-  //         $scope.CheckHarvester(jsonvalues);
-  //       }
-  //     };
-  //     var query = '?box_number=eq.' + jsonvalues.box_number;
-  //     DatabaseServices.GetEntries('box', func, query);
-  //   }
-  // };
-
   //Check if box exists
   $scope.checkBox = function(jsonvalues){
     var func = function(response){
@@ -41,7 +25,7 @@ angular.module('scanthisApp.receivingController', [])
       }
       else{
         var box = response.data[0];
-        if(box.shipping_unit_in === $scope.current.shipping_unit.shipping_unit_number){
+        if(($scope.current.shipping_unit && box.shipping_unit_in === $scope.current.shipping_unit.shipping_unit_number) || ($scope.current.harvester_lot && box.lot_in === $scope.current.harvester_lot.lot_number)){
           toastr.warning('Already scanned');
           $scope.raw.string = null;
         }else{
@@ -92,7 +76,6 @@ angular.module('scanthisApp.receivingController', [])
       'pieces':jsonvalues.pieces, 
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
-      'timestamp': moment(parseInt(jsonvalues.timestamp, 36)).format(),
       'internal_lot_code': jsonvalues.internal_lot_code,  
       'station_code': $scope.station_code,
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
@@ -106,8 +89,6 @@ angular.module('scanthisApp.receivingController', [])
     else if ($scope.current.shipping_unit){
       data.shipping_unit_in = $scope.current.shipping_unit.shipping_unit_number;
     }
-
-
     var func = function(response){
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
@@ -115,8 +96,12 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.DatabaseEntryReturn('box', data, func);
   };
 
+  //and scan object
   $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code), 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
+    var data = {'box_number': box_number, 'station_code':($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code), 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};
+    if ($scope.current.harvester_lot){
+      data.lot_number = $scope.current.harvester_lot.lot_number;
+    }   
     var func = function(response){
       $scope.raw.string = null;
       $scope.current.itemchange = !$scope.current.itemchange;
@@ -141,20 +126,6 @@ angular.module('scanthisApp.receivingController', [])
 
 })
 
-.controller('RemoveItemCtrl', function($scope, $http, DatabaseServices) {
-  $scope.RemoveItem = function(id){
-    var query = '?' + $scope.station_info.itemid + '=eq.' + id;
-    var func = function(){
-      $scope.current.itemchange = !$scope.current.itemchange;
-    };
-    DatabaseServices.RemoveEntry($scope.station_info.itemtable, query, func);
-  };
-
-})
-
-
-
-
 .controller('SetShipmentCtrl', function($scope, $http, DatabaseServices, toastr) {
 
   $scope.$watch('createforms', function(newValue, oldValue) {
@@ -162,20 +133,19 @@ angular.module('scanthisApp.receivingController', [])
   });
 
   $scope.formchange = true;
-  $scope.addinfo = true;
   $scope.entry.shipping_unit = {};
-  $scope.selected = "no selected";
 
+  //Get Data
   $scope.SubmitForm = function(form){  
     if (form){
       MakeEntry(form, 'shipping_unit', $scope);
       $scope.entry.shipping_unit.station_code = $scope.station_code;
-      $scope.CheckShipment();
       $scope.formchange = !$scope.formchange;
-      $scope.addinfo = false;
+      $scope.CheckShipment();
     }
   };
 
+  //Check if duplicate
   $scope.CheckShipment = function(){
     var func = function(response){
       if (response.data.length < 1){
@@ -189,30 +159,12 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('shipping_unit', func, query);
   };
 
+  //create shipment object
   $scope.MakeShippingEntry = function(){
     var func = function(response){
       $scope.current.shipping_unit = (response.data[0] || response.data);
-      $scope.list.shipping_unit.push($scope.current.shipping_unit);
     };
     DatabaseServices.DatabaseEntryCreateCode('shipping_unit', $scope.entry.shipping_unit, $scope.processor, func);
-  };
-
-  $scope.ListShipments = function(){
-    var func = function(response){
-      $scope.list.shipping_unit = response.data;
-    };
-    var query = '?station_code=eq.' + $scope.station_code;
-    DatabaseServices.GetEntries('shipping_unit', func, query);
-  };
-  $scope.ListShipments();
-
-  $scope.SetCurrent = function(selected){
-     var filtered = $scope.list.shipping_unit.filter(
-      function(value){
-        return value.shipping_unit_number === selected;
-      });
-     $scope.current.shipping_unit = filtered[0];
-    $scope.addinfo = false;
   };
 
 })
@@ -224,69 +176,25 @@ angular.module('scanthisApp.receivingController', [])
   });
 
   $scope.formchange = true;
-  $scope.addinfo = true;
   $scope.entry.harvester = {};
-  $scope.selected = "no selected";
 
+  //get data
   $scope.SubmitForm = function(form){  
     if (form){
       MakeEntry(form, 'harvester', $scope);
+      $scope.formchange = !$scope.formchange;
       $scope.entry.harvester.processor_code = $scope.processor;
-      //$scope.CheckHarvester();
       $scope.MakeHarvesterEntry();
-      //$scope.formchange = !$scope.formchange;
-      $scope.addinfo = false;
-    }
-    
+    }    
   };
 
+  //create harvester object
   $scope.MakeHarvesterEntry = function(){
     var func = function(response){
-      $scope.formchange = !$scope.formchange;
       $scope.current.harvester = (response.data[0] || response.data);
-      console.log($scope.current.harvester);
-      $scope.current.itemchange = !$scope.current.itemchange;
-      $scope.list.harvester.push($scope.current.harvester);
     };
     DatabaseServices.DatabaseEntryCreateCode('harvester', $scope.entry.harvester, $scope.processor, func);
-
   };
-
-  // $scope.ListHarvesters = function(){
-  //   var func = function(response){
-  //     $scope.list.harvester = response.data;
-  //   };
-  //   var query = '?processor_code=eq.' + $scope.processor;
-  //   DatabaseServices.GetEntries('harvester', func, query);
-  // };
-  // $scope.ListHarvesters();
-
-
-  // $scope.CheckHarvester = function(){
-  //   var func = function(response){
-  //     if (response.data.length < 1){
-  //       $scope.MakeHarvesterEntry();
-  //     }
-  //     else{
-  //       toastr.warning('cannot create duplicate');
-  //     }
-  //   };
-  //   var query = '?processor_code=eq.' + $scope.processor;
-  //   $scope.addform.fields.forEach(function(row){
-  //       query += '&' + row.fieldname + '=eq.' + $scope.entry.harvester[row.fieldname];
-  //   });
-  //   DatabaseServices.GetEntries('harvester', func, query);
-  // };
-
-  // $scope.SetCurrent = function(selected){
-  //    var filtered = $scope.list.harvester.filter(
-  //     function(value){
-  //       return value.harvester_code === selected;
-  //     });
-  //    $scope.current.harvester = filtered[0];
-  //    $scope.current.itemchange = !$scope.current.itemchange;
-  //   $scope.addinfo = false;
-  // };
 
 })
 
@@ -309,8 +217,7 @@ angular.module('scanthisApp.receivingController', [])
       $scope.CheckSupplier();
       $scope.formchange = !$scope.formchange;
       $scope.addinfo = false;
-    }
-    
+    }    
   };
 
   $scope.MakeSupplierEntry = function(){
@@ -415,7 +322,6 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.GetReceiveDate = function(){
-
     var _date;
     if ($scope.current.edit_lot.receive_date){
       _date = new Date($scope.current.edit_lot.receive_date);
@@ -424,13 +330,10 @@ angular.module('scanthisApp.receivingController', [])
     }
     else{
       $scope.current.receivedate=null;
-    }
-    
+    }    
   };
 
-
   $scope.GetEditSup = function(){
-    console.log('called');
     $scope.current.supplier_code = $scope.current.edit_lot.supplier_code;
     var func = function(response){
       $scope.current.sup_edit = response.data[0];
@@ -487,7 +390,6 @@ angular.module('scanthisApp.receivingController', [])
     $scope.current.har_edit[fieldname] = val;
   };
 
-
   $scope.ShipInfo = function(){
     $scope.save_button = false;
     var func = function(response){
@@ -495,8 +397,7 @@ angular.module('scanthisApp.receivingController', [])
         $scope.PatchHar();
       }else{
         $scope.PatchLot();
-      }
-      
+      }      
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.edit_lot.shipping_unit_number;
     DatabaseServices.PatchEntry('shipping_unit', $scope.current.ship_edit, query, func);
@@ -539,8 +440,6 @@ angular.module('scanthisApp.receivingController', [])
     });
   };
 
-
-
 })
 
 .controller('NewBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
@@ -553,7 +452,6 @@ angular.module('scanthisApp.receivingController', [])
     }
     else{
       $scope.formdisabled = false;
-
     }
   });
 
@@ -616,13 +514,7 @@ angular.module('scanthisApp.receivingController', [])
           $scope.entry.box.grade = formrow.grade; 
           $scope.entry.box.size = formrow.size;
           $scope.entry.box.weight = formrow.weight;
-
           DatabaseServices.GetEntries('box', func, query);
-
-          // for (var i=1;i<=formrow.num_boxes;i++){
-          //   var entry = JSON.parse(JSON.stringify($scope.entry.box));
-          //   $scope.MakeBox(entry);
-          // }
         }            
       }
     }    
@@ -658,37 +550,9 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('shipment_summary', func, query);
   };
 
-
-
-  $scope.ListAllBoxes = function(){
-    var func = function(response){
-      $scope.list.included = response.data;
-    };
-    var query = '?shipping_unit_in=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code) + '&order=timestamp.desc';
-    DatabaseServices.GetEntries('box_with_info', func, query, 'hundred');
-  };
-
-
-  $scope.totallistconfig = 
-  { id: 11,    
-    cssclass: "fill small", 
-    fields: ["size_grade", "weight", "boxes"]
-  };
-
-
-  $scope.itemlistconfig = 
-  { id: 11,    
-    cssclass: "fill small", 
-    headers: ["Grade", "Size", "weight", ""],
-    fields: ["grade", "size", "weight"], 
-    button: "remove"
-  };
-
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
     if ($scope.current.harvester_lot){
         $scope.ListBoxes();
-        $scope.ListAllBoxes();
-
     }
   });
 
@@ -700,12 +564,10 @@ angular.module('scanthisApp.receivingController', [])
       var itemid = obj.box_number;
       var query = '?box_number=eq.' + itemid + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code);
       var func = function(response){ 
-          $scope.removeBox(obj);
-        
+          $scope.removeBox(obj);        
       };
       DatabaseServices.RemoveEntry('scan', query, func);
-    }
-    
+    }    
   };
 
   $scope.removeBox = function(obj){
@@ -715,9 +577,6 @@ angular.module('scanthisApp.receivingController', [])
     };
     DatabaseServices.RemoveEntry('box', query, func);
   };
-
-
-
 
   $scope.getTheData = function(lot_number, stn, lot_code){
     if (stn.csv_lot){
@@ -760,12 +619,7 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries(table, func, query);
   };
 
-
-
 })
-
-
-
 
 
 
