@@ -3,11 +3,11 @@
 
 angular.module('scanthisApp.receivingController', [])
 
-
+// This is to read boxes from HS at AM, and from buru at ambon
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
-
   $scope.current.addnew = false;
 
+  //get info from QR
   $scope.readQR = function(){
     var rawArray = $scope.raw.string.toUpperCase().split("/");
     var jsonvalues = {};
@@ -15,9 +15,25 @@ angular.module('scanthisApp.receivingController', [])
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
     }
     $scope.checkBox(jsonvalues);
-
   };
 
+  // $scope.MakeItemFromQR = function(jsonvalues){
+  //   if ($scope.current.collectionid){
+  //     var func = function(response){
+  //       if (response.data.length >0){
+  //         $scope.raw.string = null;
+  //         toastr.warning("already exists");
+  //       }
+  //       else{
+  //         $scope.CheckHarvester(jsonvalues);
+  //       }
+  //     };
+  //     var query = '?box_number=eq.' + jsonvalues.box_number;
+  //     DatabaseServices.GetEntries('box', func, query);
+  //   }
+  // };
+
+  //Check if box exists
   $scope.checkBox = function(jsonvalues){
     var func = function(response){
       if (response.data.length === 0){
@@ -34,38 +50,11 @@ angular.module('scanthisApp.receivingController', [])
         }        
       }
     };
-
     var query = '?box_number=eq.' + jsonvalues.box_number;
     DatabaseServices.GetEntries('box', func, query);
-
   };
 
-  $scope.DatabaseScan = function(box_number){ 
-    var data = {'box_number': box_number, 'station_code':($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code), 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
-    var func = function(response){
-      $scope.raw.string = null;
-      $scope.current.itemchange = !$scope.current.itemchange;
-      $scope.current.addnew = true;
-    };
-    DatabaseServices.DatabaseEntryReturn('scan', data, func);
-  };
-
-  $scope.MakeItemFromQR = function(jsonvalues){
-    if ($scope.current.collectionid){
-      var func = function(response){
-        if (response.data.length >0){
-          $scope.raw.string = null;
-          toastr.warning("already exists");
-        }
-        else{
-          $scope.CheckHarvester(jsonvalues);
-        }
-      };
-      var query = '?box_number=eq.' + jsonvalues.box_number;
-      DatabaseServices.GetEntries('box', func, query);
-    }
-  };
-
+  //Check if Harvester exists
   $scope.CheckHarvester = function(jsonvalues){
     var query = '?harvester_code=eq.' + jsonvalues.harvester_code;
     var func = function(response){
@@ -79,19 +68,20 @@ angular.module('scanthisApp.receivingController', [])
     DatabaseServices.GetEntries('harvester', func, query);
   };
 
+  //create harvester if it doesn't
   $scope.createHarvester = function(jsonvalues){
-    var data = 
-     {'harvester_code': jsonvalues.harvester_code,
+    var data = {
+      'harvester_code': jsonvalues.harvester_code,
       'fleet': jsonvalues.fleet,
       'supplier_group': jsonvalues.supplier_group,
       'fishing_area': jsonvalues.fishing_area};
-
     var func = function(response){
       $scope.createBox(jsonvalues);
     };
     DatabaseServices.DatabaseEntryReturn('harvester', data, func);
   };
 
+  //create box object
   $scope.createBox = function(jsonvalues){
     var harvestDate = moment(parseInt(jsonvalues.harvest_date, 36)).format();
     var data = 
@@ -110,7 +100,7 @@ angular.module('scanthisApp.receivingController', [])
       'tf_code': jsonvalues.tf_code};
     if ($scope.current.harvester_lot){
       data.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
-      data.supplier_code = $scope.current.harvester_lot.supplier_code;
+      //data.supplier_code = $scope.current.harvester_lot.supplier_code;
       data.lot_in = $scope.current.harvester_lot.lot_number;
     }
     else if ($scope.current.shipping_unit){
@@ -123,6 +113,16 @@ angular.module('scanthisApp.receivingController', [])
       $scope.DatabaseScan(box_number);
     };
     DatabaseServices.DatabaseEntryReturn('box', data, func);
+  };
+
+  $scope.DatabaseScan = function(box_number){ 
+    var data = {'box_number': box_number, 'station_code':($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code), 'shipping_unit_number': ($scope.current.harvester_lot ? $scope.current.harvester_lot.shipping_unit_number : $scope.current.shipping_unit.shipping_unit_number)};   
+    var func = function(response){
+      $scope.raw.string = null;
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.addnew = true;
+    };
+    DatabaseServices.DatabaseEntryReturn('scan', data, func);
   };
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
