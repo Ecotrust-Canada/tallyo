@@ -11,7 +11,6 @@ angular.module('scanthisApp.itemController', [])
   $scope.entry.loin = {};
   $scope.entry.box = {};
   $scope.current.to_print = true;
-  //$scope.form = {};
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
     $scope.scaleon = true;
@@ -65,12 +64,6 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
-          //alert('once');
-          //toastr.error('cannot connect to scale');
-    
-          //$scope.stopPolling();
-
-          //$scope.scale[fieldName] = 1.11;
 
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if(thediv){

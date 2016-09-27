@@ -11,17 +11,22 @@
       <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="dropdownSelect(value)" ng-click="current.lot_to_edit_or_select=null"></input-dropdown>
     </fieldset>
   </div>
-  <div>
+  <div class="is_inline">
     <button ng-click="SetLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Set Current</button>
   </div>
-  <div ng-controller="LoadEditLotCtrl" class="editbuttons">
+  <div ng-controller="LoadEditLotCtrl" class="editbuttons is_inline">
     <button ng-click="current.showforms='EDIT';SetEditLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Edit</button>
+
+  </div>
+  <div>
+    <br>
     <br>
     <br>
     <br>
     <br>
     <br>
   </div>
+    
 
   <editreceivinglot></editreceivinglot>
 
