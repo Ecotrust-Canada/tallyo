@@ -73,7 +73,7 @@
           </div>
         </div>
         <div id="box_search_table" class="itemsframe entries">
-          <bufferedscrolllist itemlist="boxes"  config="item2listconfig" update-fn="EditBox(str)"></bufferedscrolllist>
+          <bufferedscrolllist itemlist="boxes"  listlength="boxes.length" config="item2listconfig" update-fn="EditBox(str)"></bufferedscrolllist>
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
 </div>
 
 
-<div class="panel grey" ng-controller="RemovePatchCtrl" ng-show="!formdisabled && list.included.length>0 && current.collectionid">
+<div class="panel grey" ng-controller="RemovePatchCtrl" ng-show="!formdisabled && current.totals.pieces>0 && current.collectionid">
   <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 
   <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
