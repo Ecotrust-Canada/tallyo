@@ -5,26 +5,18 @@
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>
   </div>
 
-  <div ng-controller="ListLotsCtrl" class="select_object">
+  <div ng-controller="ListLotsCtrl" class="select_object lot_setup">
     <button ng-click="CreateButton()" class="btn-blue" ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">Create New Lot</button>
     <fieldset ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">
       <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="dropdownSelect(value)" ng-click="current.lot_to_edit_or_select=null"></input-dropdown>
     </fieldset>
   </div>
-  <div class="is_inline">
+  <div class="is_inline no_csv">
     <button ng-click="SetLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Set Current</button>
   </div>
   <div ng-controller="LoadEditLotCtrl" class="editbuttons is_inline">
     <button ng-click="current.showforms='EDIT';SetEditLot(current.lot_to_edit_or_select)" class="btn-blue" ng-disabled="!current.lot_to_edit_or_select || current.showforms==='EDIT' || current.showforms==='CREATE'">Edit</button>
 
-  </div>
-  <div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
   </div>
     
 
@@ -40,6 +32,15 @@
       <button class="btn-orange" ng-click="SubmitNewLot(form)">Enter</button>
     </div> 
     
+  </div>
+
+  <div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
   </div>
 
 
