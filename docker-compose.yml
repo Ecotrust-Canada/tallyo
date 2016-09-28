@@ -13,6 +13,7 @@ services:
       POSTGRES_USER: tuna_processor
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
+      DB_TIMEZONE: UTC
     restart: always
 
   postgrest:
