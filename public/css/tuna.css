@@ -1783,7 +1783,7 @@ div[ng-view] {
   padding-right: 15px;
 }
 .weighstation_main .form_label {
-  width: 150px;
+  width: 90px;
 }
 #station-AM2-004 .weighstation_main .form_label {
   width: 220px;
@@ -2428,7 +2428,7 @@ input[name^=weight]::after {
 
 
 #radio-29-state.toggle-group-container label{
-  width: 110px;
+  min-width: 90px;
 }
 
 #radio-18-grade.toggle-group-container label,
