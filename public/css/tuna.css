@@ -1537,7 +1537,7 @@ div[ng-view] {
   /*float: right;*/
   margin-top: 15px;
   /*margin-left:350px;*/
-  margin-left:280px;
+  margin-left:287px;
 }
 
 #receiveshipment .editbuttons .btn-blue {
@@ -1547,8 +1547,27 @@ div[ng-view] {
 
 }
 
+#receiveshipment .lot_setup .btn-blue {
+  margin-left:385px;
+
+}
+
+#receiveshipment .no_csv .btn-blue {
+  margin-left:349px;
+
+}
+
+#receiveshipment .cancel_btn.btn-blue {
+  margin-left:434px;
+
+}
+
 #receiveshipment .editbuttons .dropdown-container {
   min-width:420px;
+}
+
+#receiveshipment .lot_setup .dropdown-container {
+  margin-top: 0px;
 }
 
 #receiveshipment .createbuttons .btn-blue {
