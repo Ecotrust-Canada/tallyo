@@ -33,7 +33,7 @@ angular.module('scanthisApp', [
         maxOpened: 4,
         positionClass: 'toast-top-full-width',
         preventOpenDuplicates: false,
-        timeOut: 1200
+        timeOut: 2000
     });
 })
 

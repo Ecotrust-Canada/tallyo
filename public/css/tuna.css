@@ -3384,5 +3384,11 @@ md-datepicker {
   display: inline-block;
   vertical-align: top;
 }
+.toast-top-full-width {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: auto;
+}
 
 
