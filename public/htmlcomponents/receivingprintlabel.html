@@ -1,3 +1,4 @@
+<div class="align_top">
 <div class="panel white" id="receiveshipment" ng-init="current.showforms='NONE'" ng-controller="NewLotCtrl">
 
   <div ng-controller="DisplayCollectionCtrl"  id="current_lot">
@@ -41,7 +42,7 @@
 
 
 
-<div class="panel white" id="receivingprintlabel">
+<div class="panel white not" id="receivingprintlabel">
     <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
         <span class="select_header">Add Cases</span>
        <fieldsetrepeat submit-fn="SubmitForm(choices);" config="scanform" formdisabled="formdisabled"></fieldsetrepeat>
@@ -58,11 +59,12 @@
 </div>
 
 
-<div class="panel white" id="receivingprintlabel">
+<div class="panel white not" id="receivingprintlabel">
     <div ng-controller="NewBoxCtrl" class="fieldsetrepeat">
         <span class="select_header">Delete Cases</span>
        <fieldsetrepeat submit-fn="DeleteBoxes(choices);" config="scanform" formdisabled="formdisabled" buttonlabel="delete_label"></fieldsetrepeat>
     </div>
+</div>
 </div>
 
 
@@ -72,7 +74,7 @@
 
 
 
-<div class="panel grey not" ng-controller="NoLabelTotalCtrl">
+<div class="panel grey" ng-controller="NoLabelTotalCtrl">
   <div ng-controller="DisplayItemsPackingCtrl">
     <div class="itemsframe entries">
       <bufferedscrolllist itemlist="list.included" listlength="list.included.length" config="itemlistconfig" update-fn="RemoveScan(str)"></bufferedscrolllist>
