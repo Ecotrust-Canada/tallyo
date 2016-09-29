@@ -2414,7 +2414,7 @@ input[name^=weight]::after {
 #radio-18-grade {
   width: 237px;
 }
-#radio-28-weight.toggle-group-container label,
+#radio-28-species.toggle-group-container label,
 #radio-29-grade.toggle-group-container label{
   width: 65px;
   font-size: 20px;
@@ -3184,13 +3184,16 @@ span.switch_option.active {
   width: 70px;
 }
 .fieldsetrepeat .styled-dropdown.dd-grade {
-  width: 105px;
+  width: 95px;
 }
 .fieldsetrepeat .in-weight input[type=number] {
   width: 130px;
 }
 .fieldsetrepeat .styled-dropdown.dd-size {
-  width: 100px;
+  width: 95px;
+}
+.fieldsetrepeat .styled-dropdown.dd-species {
+  width: 110px;
 }
 
 

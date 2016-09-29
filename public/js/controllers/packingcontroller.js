@@ -319,7 +319,7 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.CheckBoxExists = function(form){
     if (form){
-      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&harvester_code=eq.' + $scope.current.lot.harvester_code + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase();
+      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&lot_in=eq.' + $scope.current.lot.lot_in + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase() + '&species=eq.' + form.species.toUpperCase();
       var func = function(response){
         if (response.data.length > 0){
           $scope.PatchPDC(form.pdc_text, response.data[0].box_number);

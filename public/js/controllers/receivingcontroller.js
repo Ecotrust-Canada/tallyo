@@ -515,6 +515,7 @@ angular.module('scanthisApp.receivingController', [])
           $scope.entry.box.grade = formrow.grade; 
           $scope.entry.box.size = formrow.size;
           $scope.entry.box.weight = formrow.weight;
+          $scope.entry.box.species = formrow.species;
           $scope.entry.box.station_code = $scope.station_code;
 
           for (var i=1;i<=formrow.num_boxes;i++){
@@ -556,7 +557,7 @@ angular.module('scanthisApp.receivingController', [])
 
         for (var j=0;j<choices.length;j++){
           var formrow = choices[j];
-          query += '&grade=eq.' + formrow.grade + '&size=eq.' + formrow.size.toUpperCase() + '&weight=eq.' + formrow.weight + '&limit=' + formrow.num_boxes;
+          query += '&grade=eq.' + formrow.grade + '&size=eq.' + formrow.size.toUpperCase() + '&weight=eq.' + formrow.weight + '&species=eq.' + formrow.species + '&limit=' + formrow.num_boxes;
           $scope.entry.box.grade = formrow.grade; 
           $scope.entry.box.size = formrow.size;
           $scope.entry.box.weight = formrow.weight;
