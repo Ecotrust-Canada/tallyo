@@ -15,6 +15,7 @@ ADD . /opt/tallyo
 WORKDIR /opt/tallyo
 
 COPY deploy/tallyo/docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 RUN npm install --production && bower install --allow-root \
  && cp -a template_database.json database.json
