@@ -86,7 +86,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.currentlots = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract($scope.options.selectfromcurrentlots, 'days').format();
       var query = '?end_date=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&in_progress=eq.true';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
