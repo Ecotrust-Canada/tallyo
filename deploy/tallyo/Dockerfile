@@ -1,20 +1,24 @@
 FROM alpine:3.3
 
-RUN echo "bust cache 1"
+ENV DB_RUNMIGRATIONS false
 
 RUN apk update && apk upgrade
 
 RUN apk add nodejs git
 
-RUN npm install -g bower db-migrate db-migrate-pg
 
-RUN echo "flush cache1"
+
+RUN npm install -g bower db-migrate db-migrate-pg
 
 RUN mkdir -p /opt/tallyo
 ADD . /opt/tallyo
 WORKDIR /opt/tallyo
 
+COPY deploy/tallyo/docker-entrypoint.sh /
+
 RUN npm install --production && bower install --allow-root \
  && cp -a template_database.json database.json
 
-CMD /bin/ash
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/bin/sh"]

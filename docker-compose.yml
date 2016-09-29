@@ -34,11 +34,13 @@ services:
       dockerfile: ./deploy/tallyo/Dockerfile
       context: .
     image: tallyo
-    command: node app app_config_am1
+    command: app app_config_am1
     volumes:
        - ./public:/opt/tallyo/public
     ports:
       - "8000:8000"
+    environment:
+      DB_RUNMIGRATIONS: 'true'
     networks:
       - back-tier
     restart: always
@@ -47,7 +49,7 @@ services:
 
   amanda2:
     image: tallyo
-    command: node app app_config_am2
+    command: app app_config_am2
     volumes:
        - ./public:/opt/tallyo/public
     ports:
