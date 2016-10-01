@@ -372,29 +372,52 @@ angular.module('scanthisApp.AdminController', [])
     }, function errorCallback(response) {
     });
   };
+  
+  $scope.getOneLotSummary = function(lot_number, callback){
+    var data = {"lot_number": lot_number};
+    $http.post('/lot_summary', data, {headers: {'Prefer': 'return=representation'}}).then(
+      function(response){
+        var lot_summary = response.data;
+        for (var key in lot_summary){
+          $scope.list.lot_summary.push(lot_summary[key]);
+        } 
+        callback(null, lot_summary);
+      }
+      );
+  };
 
   $scope.GetLotSummary = function(){
-    var query = '?lot_number=in.';
-    for (var index in $scope.list.lot_numbers){
-      query += $scope.list.lot_numbers[index] + ',';
-    }
-    var func = function(response){
-      $scope.list.lot_summary = response.data;
+    $scope.list.lot_summary = [];
+    async.eachSeries($scope.list.lot_numbers, function iterator(item, callback) {
+     $scope.getOneLotSummary(item, callback);
+    }, function done() {
+      //...
       $scope.GetLotTotals();
-    };
-    DatabaseServices.GetEntries('lot_summary', func, query);
+    });
   };
-  
+
+
+  $scope.getOneLotTotal = function(lot_number, callback){
+    var data = {"lot_number": lot_number};
+    $http.post('/lot_totals', data, {headers: {'Prefer': 'return=representation'}}).then(
+      function(response){
+        var lot_summary = response.data;
+        for (var key in lot_summary){
+          $scope.list.totals_by_lot.push(lot_summary[key]);
+        } 
+        callback(null, lot_summary);
+      }
+      );
+  };
+
   $scope.GetLotTotals = function(){
-    var query = '?lot_number=in.';
-    for (var index in $scope.list.lot_numbers){
-      query += $scope.list.lot_numbers[index] + ',';
-    }
-    var func = function(response){
-      $scope.list.totals_by_lot = response.data;
+    $scope.list.totals_by_lot = [];
+    async.eachSeries($scope.list.lot_numbers, function iterator(item, callback) {
+     $scope.getOneLotTotal(item, callback);
+    }, function done() {
+      //...
       $scope.GetLotLocations();
-    };
-    DatabaseServices.GetEntries('totals_by_lot', func, query);
+    });
   };
   
   $scope.GetLotLocations = function(){
@@ -410,18 +433,6 @@ angular.module('scanthisApp.AdminController', [])
     };
     DatabaseServices.GetEntries('lotlocations', func, query);
   };
-
-  /*$scope.GetRecentLots = function(){
-    var query = '?lot_number=in.';
-    for (var index in $scope.list.lot_numbers){
-      query += $scope.list.lot_numbers[index] + ',';
-    }
-    var func = function(response){
-      $scope.list.recent = response.data;
-      $scope.loaddata();
-    };
-    DatabaseServices.GetEntries('recent_lot', func, query);
-  };*/
 
   $scope.loaddata = function(){
     var cellfilter = function(item){
@@ -466,7 +477,7 @@ angular.module('scanthisApp.AdminController', [])
         }
         var locations = fjs.select(cellfilter, $scope.list.lotlocations);
         if (locations.length>0){
-          lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
+          //lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
         }
         if (lot[$scope.sumStations[j].code].summary){ 
           var thesum = lot[$scope.sumStations[j].code].summary;
@@ -516,15 +527,6 @@ angular.module('scanthisApp.AdminController', [])
           }                
         }
       }
-
-      /*if(arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number') !== -1){
-        var index = arrayObjectIndexOf($scope.list.recent, lot.lot_number, 'lot_number');
-        lot.expanded = true;
-        lot[$scope.sumStations[0].code].in_progress = false;
-        if (!lot[$scope.sumStations[0].code].summary){
-          lot[$scope.sumStations[0].code].summary = true;          
-        }        
-      }*/
     }
 
     $scope.list.harvester_lot[0].expanded = true;
