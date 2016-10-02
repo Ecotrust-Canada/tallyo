@@ -1394,7 +1394,7 @@ div[ng-view] {
 }
 
 #harvester_list #list-20 .display_row {
-  margin: 0;
+  margin: 10px;
 }
 
 #harvester_list #list-20 .display_field .field_val {
@@ -1537,11 +1537,11 @@ div[ng-view] {
   font-weight: 500;
   font-size: 12px;
 }*/
+
 #receiveshipment .btn-blue {
-  /*float: right;*/
+  float: right;
   margin-top: 15px;
-  /*margin-left:350px;*/
-  margin-left:287px;
+  margin-left: 387px;
 }
 
 #receiveshipment .editbuttons .btn-blue {
@@ -2174,7 +2174,7 @@ div[ng-view] {
 }
 
 input[name^=weight] {
-  width: 206px;
+  width: 262px;
   height: 58px;
   color: #03223c;
   font-size: 48px;
@@ -2194,8 +2194,9 @@ img.weight-connector {
   margin: 0;
   display: inline-block;
   position: relative;
-  top: -12px;
-  left: -7px;
+  top: -14px;
+  left: -5px;
+  width: 79px;
 }
 
 input[name^=weight]:focus,
@@ -2222,10 +2223,11 @@ input[name^=weight]:focus,
 }
 
 .scale-weight-set {
-  width: 97px;
+  width: 102px;
   height: 44px;
-  box-sizing: border-box;
-  margin-left: -14px;
+  bottom: 75px;
+  right: 8px;
+  position: absolute;
 }
 
 /*
@@ -2391,7 +2393,6 @@ input[name^=weight]::after {
   /*border: 1px solid #CAE2EB;*/
   box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50), 0px 2px 4px 0px rgba(0,0,0,0.50);
   border-radius: 5px;
-  position: relative;
 }
 .scale-weight-set.lock{
   height: 40px;
@@ -3394,4 +3395,6 @@ md-datepicker {
   margin: auto;
 }
 
-
+.display_collection {
+  margin-top: 10px;
+}

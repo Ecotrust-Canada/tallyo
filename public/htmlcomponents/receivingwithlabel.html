@@ -1,6 +1,6 @@
 <div class="panel white" id="receiveshipment" ng-init="current.showforms='NONE'" ng-controller="NewLotCtrl">
 
-  <div ng-controller="DisplayCollectionCtrl"  id="current_lot">
+  <div ng-controller="DisplayCollectionCtrl"  id="current_lot" class="display_collection">
     <display settings="settings" ng-if="current[station_info.collectiontable]" obj="current[station_info.collectiontable]" config="adddisplay"></display>
     <p ng-if="!current[station_info.collectiontable]">No Current Lot</p>
   </div>

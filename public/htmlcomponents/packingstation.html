@@ -18,7 +18,7 @@
 
       </div>
     </div>
-    <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot">
+    <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot" class="display_collection">
       <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
       <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
         <span ng-if="list.included.length==0  && !options.enable_edit" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>

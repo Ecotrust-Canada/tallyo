@@ -49,7 +49,7 @@ angular.module('scanthisApp.itemController', [])
         timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
       }).then(
         function successCallback(response) {
-          if(response.data.value){
+          if(response.data.value !== "" && response.data.value != null){
             if ($scope.options.truncate){
               $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
             }
@@ -67,7 +67,8 @@ angular.module('scanthisApp.itemController', [])
 
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if(thediv){
-          $timeout(function(){thediv.click();toastr.error('cannot connect to scale');}, 0);
+            $timeout(function(){thediv.click();
+            toastr.error('cannot connect to scale');}, 0);
           }          
         }
       );

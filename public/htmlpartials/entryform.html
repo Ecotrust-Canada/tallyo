@@ -131,11 +131,9 @@
           <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
           <!--button to set scale weight-->
-          <img ng-if="row.pollarg && row.scale!='off'" src="/images/weight_control_connector.svg" 
-               class="weight-connector"/>
-          <button class="scale-weight-set" 
+          <button class="scale-weight-set"
                   ng-if="row.pollarg && row.scale!='off'"
-                  ng-disabled="row.scale!='on' || !scale[row.fieldname]" 
+                  ng-disabled="row.scale!='on' || !scale[row.fieldname] || scale[row.fieldname] == 0"
                   ng-click="store(row);pollFn({field: row.pollarg})"
                   ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
 
