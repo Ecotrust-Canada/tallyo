@@ -1,6 +1,6 @@
 FROM postgres:9.5.2
 
-ENV DB_TIMEZONE UTC
+ENV TALLYO_TIMEZONE UTC
 
 COPY preentry.sh /
 RUN chmod +x ./preentry.sh

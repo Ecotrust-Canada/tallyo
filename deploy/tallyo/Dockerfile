@@ -1,10 +1,11 @@
 FROM alpine:3.3
 
 ENV DB_RUNMIGRATIONS false
+ENV TALLYO_TIMEZONE UTC
 
 RUN apk update && apk upgrade
 
-RUN apk add nodejs git
+RUN apk add nodejs git tzdata
 
 
 

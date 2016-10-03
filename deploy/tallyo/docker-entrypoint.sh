@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo "Setting timezone to :"$DB_TIMEZONE
+echo "Setting timezone to: "$TALLYO_TIMEZONE
 
-cp /usr/share/zoneinfo/$DB_TIMEZONE /etc/localtime
-echo $DB_TIMEZONE > /etc/timezone
+cp /usr/share/zoneinfo/$TALLYO_TIMEZONE /etc/localtime
+echo $TALLYO_TIMEZONE > /etc/timezone
 
 if [ $DB_RUNMIGRATIONS = true ] ; then
 	echo "Running database migrations"
