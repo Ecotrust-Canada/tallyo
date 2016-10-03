@@ -23,7 +23,7 @@
   <editreceivinglot></editreceivinglot>
 
   <div ng-controller="CreateLotCtrl" ng-show="current.showforms==='CREATE'" class="select_object">
-    <button ng-click="current.showforms='NONE'" class="btn-blue">Cancel</button>
+    <button ng-click="current.showforms='NONE'" class="cancel_btn btn-blue">Cancel</button>
     <setshipmentinfo></setshipmentinfo>
     <setsupplierinfo></setsupplierinfo>
     <setharvesterinfo></setharvesterinfo>
@@ -32,15 +32,6 @@
       <button class="btn-orange" ng-click="SubmitNewLot(form)">Enter</button>
     </div> 
     
-  </div>
-
-  <div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
   </div>
 
 
