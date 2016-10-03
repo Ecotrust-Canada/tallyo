@@ -346,6 +346,7 @@ angular.module('scanthisApp.AdminController', [])
       var func = function(response){
         $scope.list.harvester_lot = response.data;
         $scope.BeginLoadLots();
+        $scope.loadTimeframeSummary(start_date, end_date);
       };
       DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
     }, function errorCallback(response) {
