@@ -133,7 +133,7 @@
           <!--button to set scale weight-->
           <button class="scale-weight-set"
                   ng-if="row.pollarg && row.scale!='off'"
-                  ng-disabled="row.scale!='on' || !scale[row.fieldname] || scale[row.fieldname] == 0"
+                  ng-disabled="row.scale!='on' || !scale[row.fieldname] || scale[row.fieldname] <= 0"
                   ng-click="store(row);pollFn({field: row.pollarg})"
                   ng-class="row.scale"><img ng-src="/images/weight_{{row.scale}}_icon.svg"/></button>
 
