@@ -65,8 +65,11 @@ var make_totals_query = function(lot_number, station_code, type){
   else if (type === 'loin'){
     query = "SELECT lot_number,station_code, sum(weight_1) AS weight_1, grade, state, count(loin_number) AS pieces FROM loin WHERE lot_number = '" + lot_number + "' and station_code = '" + station_code + "' GROUP BY lot_number, station_code, grade, state";
   }
-  else if (type === 'box_grade_size'){
+  else if (type === 'box'){
     query = "SELECT lot_number, station_code, sum(weight) AS weight_1, grade, size, sum(pieces) AS pieces, count(box_number) AS boxes FROM box WHERE lot_number = '" + lot_number + "' and station_code = '" + station_code + "' GROUP BY lot_number, station_code, grade, size";
+  }
+  else if (type === 'box_scanned'){
+    query = "SELECT box.lot_number, scan.station_code, sum(box.weight) AS weight_1, box.grade, box.size, sum(box.pieces) AS pieces, count(box.box_number) AS boxes FROM box inner join ( SELECT scan_1.box_number, scan_1.station_code FROM scan scan_1 GROUP BY scan_1.box_number, scan_1.station_code) scan on box.box_number = scan.box_number WHERE box.lot_number = '" + lot_number + "' and scan.station_code = '" + station_code + "' GROUP BY box.lot_number, scan.station_code, box.grade, box.size";
   }
   return query;
 };
@@ -79,8 +82,11 @@ var make_summary_query = function(lot_number, station_code, type){
   else if (type === 'loin_grade' || type === 'loin'){
     query = "SELECT lot_number, station_code, count(loin_number) AS pieces, sum(weight_1) AS weight_1 FROM loin WHERE lot_number = '" + lot_number + "' and station_code = '" + station_code + "' GROUP BY lot_number, station_code;";
   }
-  else if (type === 'box_grade_size'){
+  else if (type === 'box'){
     query = "select lot_number, station_code, sum(pieces) AS pieces, sum(weight) AS weight_1, count(box_number) AS boxes FROM box WHERE lot_number = '" + lot_number + "' and station_code = '" + station_code + "' GROUP BY lot_number, station_code";
+  }
+  else if (type === 'box_scanned'){
+    query = "SELECT box.lot_number, scan.station_code, sum(box.weight) AS weight_1, sum(box.pieces) AS pieces, count(box.box_number) AS boxes FROM box inner join ( SELECT scan_1.box_number, scan_1.station_code FROM scan scan_1 GROUP BY scan_1.box_number, scan_1.station_code) scan on box.box_number = scan.box_number WHERE box.lot_number = '" + lot_number + "' and scan.station_code = '" + station_code + "' GROUP BY box.lot_number, scan.station_code";
   }
   return query;
 };
@@ -93,8 +99,11 @@ var make_timeframe_query = function(start_timeframe, end_timeframe, station_code
   else if (type === 'loin_grade' || type === 'loin'){
     query = "SELECT count(distinct loin.lot_number), loin.station_code, count(loin.loin_number) AS pieces, sum(weight_1) AS weight_1 FROM loin inner join lot on loin.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and loin.station_code = '" + station_code + "' AND loin.weight_1 IS NOT NULL GROUP BY loin.station_code";
   }
-  else if (type === 'box_grade_size'){
+  else if (type === 'box'){
     query = "SELECT count(distinct box.lot_number), box.station_code, count(box.box_number) AS boxes, sum(weight) AS weight_1 FROM box inner join lot on box.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and box.station_code = '" + station_code + "' AND box.weight IS NOT NULL GROUP BY box.station_code";
+  }
+  else if (type === 'box_scanned'){
+    query = "SELECT count(distinct box.lot_number), scan.station_code, count(box.box_number) AS boxes, sum(weight) AS weight_1 FROM box inner join ( SELECT scan_1.box_number, scan_1.station_code FROM scan scan_1 GROUP BY scan_1.box_number, scan_1.station_code) scan on box.box_number = scan.box_number inner join lot on box.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and scan.station_code = '" + station_code + "' AND box.weight IS NOT NULL GROUP BY scan.station_code";
   }
   return query;
 };
