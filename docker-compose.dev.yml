@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  amanda1:
+    volumes:
+       - ./public:/opt/tallyo/public
+    restart: never
+
+  amanda2:
+    volumes:
+       - ./public:/opt/tallyo/public
+    restart: never
+

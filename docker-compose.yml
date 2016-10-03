@@ -13,7 +13,7 @@ services:
       POSTGRES_USER: tuna_processor
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
-      DB_TIMEZONE: UTC
+      DB_TIMEZONE: Asia/Ho_Chi_Minh
     restart: always
 
   postgrest:
@@ -24,8 +24,8 @@ services:
     restart: always
     networks:
       - back-tier
-  environment:
-      DB_TIMEZONE: UTC
+    environment:
+      DB_TIMEZONE: Asia/Ho_Chi_Minh
     ports:
       - "3000:3000"
     depends_on:
@@ -43,7 +43,7 @@ services:
       - "8000:8000"
     environment:
       DB_RUNMIGRATIONS: 'true'
-      DB_TIMEZONE: UTC
+      DB_TIMEZONE: Asia/Ho_Chi_Minh
     networks:
       - back-tier
     restart: always
@@ -59,26 +59,13 @@ services:
       - "8001:8000"
     environment:
       DB_RUNMIGRATIONS: 'false'
-      DB_TIMEZONE: UTC
+      DB_TIMEZONE: Asia/Ho_Chi_Minh
     networks:
       - back-tier
     restart: always
     depends_on:
       - postgrest
       - amanda1
-
-  nginx:
-    build:
-      context: ./deploy/nginx
-    image: tallyo_nginx
-    restart: always
-    volumes_from:
-      - amanda1
-    networks:
-      - back-tier
-    ports:
-      - "80:80"
-      - "81:81"
 
 volumes:
   pgdatabase:
