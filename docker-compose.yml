@@ -24,6 +24,8 @@ services:
     restart: always
     networks:
       - back-tier
+  environment:
+      DB_TIMEZONE: UTC
     ports:
       - "3000:3000"
     depends_on:
@@ -41,6 +43,7 @@ services:
       - "8000:8000"
     environment:
       DB_RUNMIGRATIONS: 'true'
+      DB_TIMEZONE: UTC
     networks:
       - back-tier
     restart: always
@@ -54,6 +57,9 @@ services:
        - ./public:/opt/tallyo/public
     ports:
       - "8001:8000"
+    environment:
+      DB_RUNMIGRATIONS: 'false'
+      DB_TIMEZONE: UTC
     networks:
       - back-tier
     restart: always
