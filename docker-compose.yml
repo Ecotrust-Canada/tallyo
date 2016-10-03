@@ -37,9 +37,7 @@ services:
       context: .
     image: tallyo
     command: app app_config_am1
-    volumes:
-       - ./public:/opt/tallyo/public
-    ports:
+   ports:
       - "8000:8000"
     environment:
       DB_RUNMIGRATIONS: 'true'
@@ -53,8 +51,6 @@ services:
   amanda2:
     image: tallyo
     command: app app_config_am2
-    volumes:
-       - ./public:/opt/tallyo/public
     ports:
       - "8001:8000"
     environment:
