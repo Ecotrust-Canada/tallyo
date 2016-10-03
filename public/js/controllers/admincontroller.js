@@ -328,26 +328,6 @@ angular.module('scanthisApp.AdminController', [])
     return total.grade + 'Z';
   };
 
-  $scope.GetHarvesterLot = function(){
-    $http.get('/server_time').then(function successCallback(response) {
-      var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
-      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
-      if ($scope.options.internal_lot){
-        query += '&shipping_unit_number=is.null';
-      }      
-      query += '&order=timestamp.desc';
-      var func = function(response){
-        $scope.list.harvester_lot = response.data;
-        $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
-        $scope.GetLotSummary();
-      };
-      DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
-    }, function errorCallback(response) {
-    });
-  };
-  $scope.GetHarvesterLot();
-
   $scope.FilterDate = function(){
     $http.get('/server_time').then(function successCallback(response) {
 
@@ -365,148 +345,77 @@ angular.module('scanthisApp.AdminController', [])
       query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
-        $scope.list.lot_numbers = fjs.pluck('lot_number', $scope.list.harvester_lot);
-        $scope.GetLotSummary();
+        $scope.BeginLoadLots();
       };
       DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
     }, function errorCallback(response) {
     });
   };
-  
-  $scope.getOneLotSummary = function(lot_number, callback){
-    var data = {"lot_number": lot_number};
-    $http.post('/lot_summary', data, {headers: {'Prefer': 'return=representation'}}).then(
+
+  $scope.GetHarvesterLot = function(){
+    $http.get('/server_time').then(function successCallback(response) {
+      var the_date = response.data.timestamp;
+      var date = moment(the_date).utcOffset(response.data.timezone).subtract(7, 'days').format();
+      var now = moment(the_date).utcOffset(response.data.timezone).add(1, 'days').format();
+      var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor;
+      if ($scope.options.internal_lot){
+        query += '&shipping_unit_number=is.null';
+      }      
+      query += '&order=timestamp.desc';
+      var func = function(response){
+        $scope.list.harvester_lot = response.data;
+        $scope.BeginLoadLots();
+        $scope.loadTimeframeSummary(date, now);
+      };
+      DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
+    }, function errorCallback(response) {
+    });
+  };
+  $scope.GetHarvesterLot();
+
+  $scope.loadTimeframeSummary = function(start_timeframe, end_timeframe){
+    var data = {"start_timeframe": start_timeframe, "end_timeframe": end_timeframe};
+    $http.post('/timeframe_summary', data, {headers: {'Prefer': 'return=representation'}}).then(
       function(response){
-        var lot_summary = response.data;
-        for (var key in lot_summary){
-          $scope.list.lot_summary.push(lot_summary[key]);
-        } 
-        callback(null, lot_summary);
+        $scope.list.summary_info = response.data;
+        //console.log($scope.list.summary_info);
+        $scope.displayTimeframeSummary();
       }
       );
   };
 
-  $scope.GetLotSummary = function(){
-    $scope.list.lot_summary = [];
-    async.eachSeries($scope.list.lot_numbers, function iterator(item, callback) {
-     $scope.getOneLotSummary(item, callback);
-    }, function done() {
-      //...
-      $scope.GetLotTotals();
-    });
-  };
-
-
-  $scope.getOneLotTotal = function(lot_number, callback){
-    var data = {"lot_number": lot_number};
-    $http.post('/lot_totals', data, {headers: {'Prefer': 'return=representation'}}).then(
-      function(response){
-        var lot_summary = response.data;
-        for (var key in lot_summary){
-          $scope.list.totals_by_lot.push(lot_summary[key]);
-        } 
-        callback(null, lot_summary);
-      }
-      );
-  };
-
-  $scope.GetLotTotals = function(){
-    $scope.list.totals_by_lot = [];
-    async.eachSeries($scope.list.lot_numbers, function iterator(item, callback) {
-     $scope.getOneLotTotal(item, callback);
-    }, function done() {
-      //...
-      $scope.GetLotLocations();
-    });
-  };
-  
-  $scope.GetLotLocations = function(){
-    var query = '?in_progress=eq.true';
-    query += '&lot_number=in.';
-    for (var index in $scope.list.lot_numbers){
-      query += $scope.list.lot_numbers[index] + ',';
-    }
-    var func = function(response){
-      $scope.list.lotlocations = response.data;
-      //$scope.GetRecentLots();
-      $scope.loaddata();
-    };
-    DatabaseServices.GetEntries('lotlocations', func, query);
-  };
-
-  $scope.loaddata = function(){
-    var cellfilter = function(item){
-      return (item.lot_number  === lot.lot_number && item.station_code === stn.code);
-    };
-
-    $scope.sum_info ={};
+  $scope.displayTimeframeSummary = function(){
+     $scope.sum_info ={};
 
     for (var key in $scope.options.sum_display){
       var row = $scope.options.sum_display[key];
       $scope.sum_info[row.field] = Array.from(new Set(fjs.pluck(row.field, $scope.list.harvester_lot))).length;
-    }
-
-   
+    }   
     $scope.sum_info.num_lots = $scope.list.harvester_lot.length;
 
-    for (var k=0;k<$scope.sumStations.length;k++){
-      $scope.sum_info[$scope.sumStations[k].code]=
-        {
-          'weight_1': 0,
-          'pieces': 0,
-          'boxes':0
-        };
-    }
+    var cellfilter = function(item){
+      return (item.station_code === stn1.code);
+    };
 
-    for (var i=0;i<$scope.list.harvester_lot.length;i++){
-      var lot = $scope.list.harvester_lot[i];
-    
-        for (var j=0;j<$scope.sumStations.length;j++){
-        var stn = $scope.sumStations[j];
-        lot[stn.code]= {};        
-        var summary = fjs.select(cellfilter, $scope.list.lot_summary);
-        if (summary.length>0){
-          lot[stn.code].summary = JSON.parse(JSON.stringify(summary[0]));
-          if (summary[0].weight_1){$scope.sum_info[stn.code].weight_1 += parseFloat(summary[0].weight_1);}
-          if (summary[0].pieces){$scope.sum_info[stn.code].pieces += parseInt(summary[0].pieces);}
-          if (summary[0].boxes){$scope.sum_info[stn.code].boxes += parseInt(summary[0].boxes);}
-        }
-        var totals = fjs.select(cellfilter, $scope.list.totals_by_lot);
-        if (totals.length>0){
-          lot[stn.code].totals = JSON.parse(JSON.stringify(totals));
-        }
-        var locations = fjs.select(cellfilter, $scope.list.lotlocations);
-        if (locations.length>0){
-          //lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
-        }
-        if (lot[$scope.sumStations[j].code].summary){ 
-          var thesum = lot[$scope.sumStations[j].code].summary;
-          var start = (thesum.weight_2 || thesum.weight_1 || 0);
-          lot[stn.code].current_weight = JSON.parse(JSON.stringify(start));
-        }  
-        if (j===0 && lot[stn.code].current_weight){
-          lot.start_weight = lot[stn.code].current_weight;
-        }
-        if (j>0){
-          if (lot[$scope.sumStations[j-1].code].summary && (lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy])){
-            lot[stn.code].prev = JSON.parse(JSON.stringify(lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy]));
-          }
-          if (lot[$scope.sumStations[j-1].code].summary){
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev){ 
-              var thesummary = lot[$scope.sumStations[j-1].code].summary;
-              var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
-              var prevWeight = JSON.parse(JSON.stringify(prev));
-              lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
-            }
-            if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
-              lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
-            } 
-          }                
-        }
-      }
-
-      for (var l=0;l<$scope.sumStations.length;l++){
+    for (var l=0;l<$scope.sumStations.length;l++){
         var stn1 = $scope.sumStations[l];
+        var numbers = fjs.select(cellfilter, $scope.list.summary_info)[0];
+        if (numbers){
+          $scope.sum_info[stn1.code]=
+            {
+              'weight_1': (numbers.weight_1 || 0),
+              'pieces': (numbers.pieces || 0 ),
+              'boxes': (numbers.boxes || 0)
+            };
+        }
+        else{
+          $scope.sum_info[stn1.code]=
+            {
+              'weight_1': 0,
+              'pieces': 0,
+              'boxes': 0
+            };
+        }
         if (l===0 && $scope.sum_info[stn1.code].weight_1){
           $scope.sum_info.start_weight = $scope.sum_info[stn1.code].weight_1;
         }
@@ -527,10 +436,109 @@ angular.module('scanthisApp.AdminController', [])
           }                
         }
       }
-    }
-
-    $scope.list.harvester_lot[0].expanded = true;
   };
+
+  $scope.BeginLoadLots = function(){
+    $scope.list.lot_summary = [];
+    $scope.list.totals_by_lot = [];
+    $scope.list.lotlocations = [];
+    async.forEachOfSeries($scope.list.harvester_lot, function iterator(item, key, callback) {
+     $scope.getOneLotSummary(item, key, callback);
+    }, function done() {
+    });
+  };
+  
+  $scope.getOneLotSummary = function(harvester_lot, key, callback){
+    var data = {"lot_number": harvester_lot.lot_number};
+    $http.post('/lot_summary', data, {headers: {'Prefer': 'return=representation'}}).then(
+      function(response){
+        var lot_summary = response.data;
+        for (var the_key in lot_summary){
+          $scope.list.lot_summary.push(lot_summary[the_key]);
+        } 
+        $scope.getOneLotTotal(harvester_lot, key, callback);
+      }
+      );
+  };
+
+  $scope.getOneLotTotal = function(harvester_lot, key, callback){
+    var data = {"lot_number": harvester_lot.lot_number};
+    $http.post('/lot_totals', data, {headers: {'Prefer': 'return=representation'}}).then(
+      function(response){
+        var lot_summary = response.data;
+        for (var the_key in lot_summary){
+          $scope.list.totals_by_lot.push(lot_summary[the_key]);
+        } 
+        $scope.GetLotLocations(harvester_lot, key, callback);
+      }
+      );
+  };
+  $scope.GetLotLocations = function(harvester_lot, key, callback){
+    var query = '/lotlocations?in_progress=eq.true&lot_number=eq.' + harvester_lot.lot_number;
+    $http.get(query).then(
+      function(response){
+        var lot_summary = response.data;
+        for (var the_key in lot_summary){
+          $scope.list.lotlocations.push(lot_summary[the_key]);
+        } 
+        callback(null, lot_summary);
+        $scope.loaddata(harvester_lot, key);
+      }
+      );
+  };
+  
+
+  $scope.loaddata = function(harvester_lot, key){
+    var cellfilter = function(item){
+      return (item.lot_number  === lot.lot_number && item.station_code === stn.code);
+    };
+    var lot = harvester_lot;
+    
+    for (var j=0;j<$scope.sumStations.length;j++){
+      var stn = $scope.sumStations[j];
+      lot[stn.code]= {};        
+      var summary = fjs.select(cellfilter, $scope.list.lot_summary);
+      if (summary.length>0){
+        lot[stn.code].summary = JSON.parse(JSON.stringify(summary[0]));
+      }
+      var totals = fjs.select(cellfilter, $scope.list.totals_by_lot);
+      if (totals.length>0){
+        lot[stn.code].totals = JSON.parse(JSON.stringify(totals));
+      }
+      var locations = fjs.select(cellfilter, $scope.list.lotlocations);
+      if (locations.length>0){
+        lot[stn.code].in_progress = JSON.parse(JSON.stringify(locations[0].in_progress));
+      }
+      if (lot[$scope.sumStations[j].code].summary){ 
+        var thesum = lot[$scope.sumStations[j].code].summary;
+        var start = (thesum.weight_2 || thesum.weight_1 || 0);
+        lot[stn.code].current_weight = JSON.parse(JSON.stringify(start));
+      }  
+      if (j===0 && lot[stn.code].current_weight){
+        lot.start_weight = lot[stn.code].current_weight;
+      }
+      if (j>0){
+        if (lot[$scope.sumStations[j-1].code].summary && (lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy])){
+          lot[stn.code].prev = JSON.parse(JSON.stringify(lot[$scope.sumStations[j-1].code].summary[$scope.station_info.trackBy]));
+        }
+        if (lot[$scope.sumStations[j-1].code].summary){
+          if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.prev){ 
+            var thesummary = lot[$scope.sumStations[j-1].code].summary;
+            var prev = (thesummary.weight_2 || thesummary.weight_1 || 0);
+            var prevWeight = JSON.parse(JSON.stringify(prev));
+            lot[stn.code].prev_yield  = lot[stn.code].current_weight/prevWeight*100;
+          }
+          if ($scope.sumStations[j].yield && $scope.sumStations[j].yield.start){ 
+            lot[stn.code].start_yield  = lot[stn.code].current_weight/lot.start_weight*100;
+          } 
+        }                
+      }
+    }
+    if (key === 0){
+      $scope.list.harvester_lot[0].expanded = true;
+    }
+  };
+
 
   $scope.CompleteLot = function(lot_number, station_codes){
     var patch = {'in_progress': false};

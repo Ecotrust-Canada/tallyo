@@ -85,6 +85,20 @@ var make_summary_query = function(lot_number, station_code, type){
   return query;
 };
 
+var make_timeframe_query = function(start_timeframe, end_timeframe, station_code, type){
+  var query;
+  if (type === 'scan'){
+    query = "SELECT count(distinct scan.lot_number), scan.station_code, sum(pieces) AS pieces, sum(weight_1) AS weight_1 FROM scan inner join lot on scan.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and scan.station_code = '" + station_code + "' AND scan.weight_1 IS NOT NULL GROUP BY scan.station_code";
+  }
+  else if (type === 'loin_grade' || type === 'loin'){
+    query = "SELECT count(distinct loin.lot_number), loin.station_code, count(loin.loin_number) AS pieces, sum(weight_1) AS weight_1 FROM loin inner join lot on loin.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and loin.station_code = '" + station_code + "' AND loin.weight_1 IS NOT NULL GROUP BY loin.station_code";
+  }
+  else if (type === 'box_grade_size'){
+    query = "SELECT count(distinct box.lot_number), box.station_code, count(box.box_number) AS boxes, sum(weight) AS weight_1 FROM box inner join lot on box.lot_number = lot.lot_number WHERE lot.end_date  >= '" + start_timeframe + "' and lot.start_date <= '" + end_timeframe + "' and box.station_code = '" + station_code + "' AND box.weight IS NOT NULL GROUP BY box.station_code";
+  }
+  return query;
+};
+
 var send_the_totals_query = function(item, callback, req, res, results_array){
   var query = make_totals_query(req.body.lot_number, item.stn, item.type);
   db.any(query)
@@ -115,6 +129,21 @@ var send_the_summary_query = function(item, callback, req, res, results_array){
       });
 };
 
+var send_the_timeframe_query = function(item, callback, req, res, results_array){
+  var query = make_timeframe_query(req.body.start_timeframe, req.body.end_timeframe, item.stn, item.type);
+  db.any(query)
+      .then(function (data) {
+          // success;
+          for (var key in data){
+            results_array.push(data[key]);
+          }
+          callback(null, data);
+      })
+      .catch(function (error) {
+          // error;
+      });
+};
+
 
 
 app.post('/lot_totals', function(req, res, next){
@@ -131,6 +160,16 @@ app.post('/lot_summary', function(req, res, next){
   var results_array = [];
   async.eachSeries(station_config, function iteratee(item, callback) {
     send_the_summary_query(item, callback, req, res, results_array);
+  }, function done() {
+    res.send(results_array);
+  });
+
+});
+
+app.post('/timeframe_summary', function(req, res, next){
+  var results_array = [];
+  async.eachSeries(station_config, function iteratee(item, callback) {
+    send_the_timeframe_query(item, callback, req, res, results_array);
   }, function done() {
     res.send(results_array);
   });
