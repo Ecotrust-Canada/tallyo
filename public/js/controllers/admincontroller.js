@@ -345,7 +345,8 @@ angular.module('scanthisApp.AdminController', [])
       query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
-        $scope.BeginLoadLots();
+        $scope.paginate();
+        $scope.BeginLoadLots(0);
         $scope.loadTimeframeSummary(start_date, end_date);
       };
       DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
@@ -365,7 +366,8 @@ angular.module('scanthisApp.AdminController', [])
       query += '&order=timestamp.desc';
       var func = function(response){
         $scope.list.harvester_lot = response.data;
-        $scope.BeginLoadLots();
+        $scope.paginate();
+        $scope.BeginLoadLots(0);
         $scope.loadTimeframeSummary(date, now);
       };
       DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
@@ -373,6 +375,29 @@ angular.module('scanthisApp.AdminController', [])
     });
   };
   $scope.GetHarvesterLot();
+
+  $scope.paginate = function(){
+    var num = $scope.list.harvester_lot.length;
+    var pages = Math.ceil(num/10);
+    $scope.list.pages = [];
+    for (var i=0;i<pages;i++){
+      $scope.list.pages.push(i);
+    }
+  };
+
+  $scope.BeginLoadLots = function(page){
+    if ($scope.current.page !== page){
+      $scope.current.page = page;
+      $scope.list.paginated_lots = $scope.list.harvester_lot.slice(page*10,(page*10)+10);
+      $scope.list.lot_summary = [];
+      $scope.list.totals_by_lot = [];
+      $scope.list.lotlocations = [];
+      async.forEachOfSeries($scope.list.paginated_lots, function iterator(item, key, callback) {
+       $scope.getOneLotSummary(item, key, callback);
+      }, function done() {
+      });
+    }
+  };
 
   $scope.loadTimeframeSummary = function(start_timeframe, end_timeframe){
     var data = {"start_timeframe": start_timeframe, "end_timeframe": end_timeframe};
@@ -439,15 +464,6 @@ angular.module('scanthisApp.AdminController', [])
       }
   };
 
-  $scope.BeginLoadLots = function(){
-    $scope.list.lot_summary = [];
-    $scope.list.totals_by_lot = [];
-    $scope.list.lotlocations = [];
-    async.forEachOfSeries($scope.list.harvester_lot, function iterator(item, key, callback) {
-     $scope.getOneLotSummary(item, key, callback);
-    }, function done() {
-    });
-  };
   
   $scope.getOneLotSummary = function(harvester_lot, key, callback){
     var data = {"lot_number": harvester_lot.lot_number};

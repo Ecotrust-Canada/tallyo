@@ -20,7 +20,7 @@
 
 
 
-
+<h3> Page:<span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)">{{ page }}</span></h3>
 
         <tr>
           <td class="lot_column" valign="top">
@@ -80,7 +80,7 @@
 
 
         <!-- tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit" -->
-        <tr ng-repeat="lot in list.harvester_lot | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit">
+        <tr ng-repeat="lot in list.paginated_lots | orderBy: '-timestamp' | filter: filter_lot | limitTo: limit">
 
           <td class="lot_column" valign="top">
             <div class="display_field">
