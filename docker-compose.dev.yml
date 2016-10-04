@@ -1,13 +1,18 @@
 version: '2'
 
 services:
+  db:
+    ports:
+      - "5432:5432"
+
   amanda1:
     volumes:
-       - ./public:/opt/tallyo/public
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public
     restart: never
 
   amanda2:
     volumes:
-       - ./public:/opt/tallyo/public
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public
     restart: never
-
