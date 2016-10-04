@@ -357,6 +357,7 @@ angular.module('scanthisApp.packingController', [])
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange1 = !$scope.formchange1;
+      $scope.current.addnew = true;  
     };
     DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);
   };
