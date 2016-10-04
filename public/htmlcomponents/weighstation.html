@@ -41,15 +41,26 @@
   <editlot ng-if="options.receivelot"></editlot> 
 
   <div ng-controller="ScanCtrl" class="scanform">
-    <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" 
+    <entryform ng-if="!tableinform" config="scanform" scale="scale" formchange="formchange" submit-fn="Submit(form)" scansubmit-fn="ScanSubmit(form, uuid)"
                poll-fn="startPolling(field)" formdisabled="formdisabled"></entryform>
 
     <entryform ng-if="tableinform" config="scanform" form="form" formchange="formchange" list2="list[tableinform]" 
-                formdisabled="formdisabled" submit-fn="Submit(form)"></entryform>
+                formdisabled="formdisabled" submit-fn="Submit(form)" scansubmit-fn="ScanSubmit(form, uuid)"></entryform>
       <div ng-if="options.print_switch" class="print_check"><div class="pictogram_btns">
         <span ng-if="current.to_print===true" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch green_text">ON</span>
         <span ng-if="current.to_print===false" ng-click="PrintSwitch()" value="Printing Off" id="print_switch" class="print_switch red_text">OFF</span>
       </div></div>
+
+
+    <div id="overwrite">
+      <div>
+        <p>Box already scanned. Overwrite Data?</p>
+        <button class="btn-blue" ng-click="enablekeypress();overlay('overwrite')">Cancel</button>
+        <button class="btn-blue" ng-click="OverwriteBox();enablekeypress();overlay('overwrite')">Yes</button>
+      </div>
+    </div>
+
+
   </div>
 
   <div ng-if="formedit" class="addform">
@@ -79,5 +90,16 @@
       <button class="btn-blue" ng-click="DeleteItem();enablekeypress();overlay('delete' + station_code)">Yes</button>
     </div>
   </div>
+</div>
+
+
+<div class="panel grey">
+  <div ng-controller="PrintManyLabelsCtrl">
+    <entryform config="addform2" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
+  </div>
+</div>
+
+
+
   
 

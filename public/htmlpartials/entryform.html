@@ -149,12 +149,35 @@
         <span ng-if="config.startpolling && !poll_scale" class="scale_on red_text" 
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
       </div>
-      <input type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
+
+
+      <input ng-if="!config.scan_to_submit" type="button" ng-click="form_enabled=false;submitFn({form: isValid(form)})"  class="btn-orange"
              value="{{config.submit||'Submit'}}" id="submit-{{config.id}}" >
+
+
+
+
+
     </div>     
 
   </fieldset>
 </form>
+
+<fieldset ng-disabled="formdisabled" ng-if="config.scan_to_submit" class="addform">
+<br>
+  <form ng-submit="form_enabled=false;scansubmitFn({form: isValid(form), uuid: submit_string});submit_string=null">
+    <div class="form_row">
+      <div class="form_label">
+        <label>Scan Label:
+        </label>
+      </div>
+      <div class="field">
+        <input id="scaninput" type="text" ng-model="submit_string" 
+               autocomplete="off" placeholder="Start scanning...">
+      </div>
+    </div>
+  </form>
+</fieldset>
 
 
 

@@ -104,6 +104,7 @@ angular.module('scanthisApp.directives', [])
           list2: '=', 
           formdisabled: '=', 
           submitFn: '&',
+          scansubmitFn: '&',
           pollFn: '&'},
   controller: 'entryformCtrl', 
   templateUrl: 'htmlpartials/entryform.html' }; })

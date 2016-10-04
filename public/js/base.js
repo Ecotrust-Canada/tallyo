@@ -22,7 +22,8 @@ angular.module('scanthisApp', [
   'toastr',
   //'gridshore.c3js.chart',
   'ngAnimate',
-  'ngScrollable'
+  'ngScrollable',
+  'angular-uuid'
 ])
 
 /*

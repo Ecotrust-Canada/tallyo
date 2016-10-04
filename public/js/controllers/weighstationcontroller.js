@@ -187,7 +187,39 @@ angular.module('scanthisApp.itemController', [])
         $scope.DatabaseItem();
       }
     }
+  };
 
+  $scope.ScanSubmit = function(form, uuid){ 
+    if (form){   
+      var query = "?uuid_from_label=eq." + uuid;
+      var func = function(response){
+        if (response.data.length>0){
+          //toastr.warning('Already added');
+          $scope.overwrite_form = form;
+          $scope.overwrite_uuid = uuid;
+          $scope.overlay('overwrite');
+        }
+        else{
+          form.uuid_from_label = uuid;
+          $scope.Submit(form);
+        }
+      };
+      DatabaseServices.GetEntries('box', func, query);
+    }
+  };
+
+  $scope.OverwriteBox = function(){
+    $scope.MakeItemScanEntry($scope.overwrite_form);
+    var patch = $scope.entry.box;
+    var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
+    var func = function(response){
+      $scope.overwrite_form = null;
+      $scope.overwrite_uuid = null;
+      $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.formchange = !$scope.formchange;
+      $scope.current.addnew = true;      
+    };
+    DatabaseServices.PatchEntry('box', patch, query, func);
   };
 
   $scope.ListProducts = function(){
@@ -277,9 +309,30 @@ angular.module('scanthisApp.itemController', [])
     }
 
   };
+})
 
 
+.controller('PrintManyLabelsCtrl', function($scope, uuid) {
+  $scope.formchange = false;
 
+  $scope.PrintUUIDLabel = function(uuid){
+    var data = uuid;
+    var labels = [uuid];
+    console.log(data, labels);
+    $scope.printLabel(data, labels);
+  };
+
+  $scope.SubmitForm = function(form){
+    if (form){
+      var number_boxes = form.number_boxes;
+      for (var i=0;i<number_boxes;i++){
+        var hash = uuid.v4();
+        $scope.PrintUUIDLabel(hash);
+      }
+      $scope.formchange = !$scope.formchange;
+    }
+
+  };
 
 })
 

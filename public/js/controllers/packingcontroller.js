@@ -32,6 +32,7 @@ angular.module('scanthisApp.packingController', [])
 
       var func = function(response){
         $scope.current.patchitem = response.data[0];//so can check most recent scan against rest to determine if mixing harvesters
+        $scope.id = response.data[0][$scope.station_info.itemid];
         var itemcollection = response.data[0][($scope.station_info.patchid || $scope.station_info.collectionid)];
         //if the object is in another collection
         if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
@@ -54,12 +55,13 @@ angular.module('scanthisApp.packingController', [])
           }          
         }      
       };
-      var onErr = function() {
+      var onErr = function(err) {
+        console.log(err);
         $scope.clearField();
         toastr.error('invalid QR code'); // show failure toast.
       };
 
-      var query = '?' + $scope.station_info.itemid + '=eq.' + id;
+      var query = '?' + ($scope.station_info.scanid || $scope.station_info.itemid) + '=eq.' + id;
       DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
     }    
   };
