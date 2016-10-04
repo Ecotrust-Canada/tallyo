@@ -76,7 +76,8 @@ angular.module('scanthisApp.receivingController', [])
       'pieces':jsonvalues.pieces, 
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
-      'internal_lot_code': jsonvalues.internal_lot_code,  
+      'internal_lot_code': jsonvalues.internal_lot_code,
+      'pdc_text': jsonvalues.internal_lot_code,  
       'station_code': $scope.station_code,
       'harvest_date': moment(parseInt(jsonvalues.harvest_date, 36)).format(),
       'best_before_date': moment(harvestDate).add(2, 'years').format(),
