@@ -3323,4 +3323,28 @@ md-datepicker {
   /*overflow: hidden;*/
 }
 
+.circle
+    {
+    width:40px;
+    height:40px;
+    border-radius:20px;
+    font-size:20px;
+    color:#03223c;
+    line-height:40px;
+    text-align:center;
+    background: #B4CAD9;
+    }
+
+.circle.is_current
+    {
+    width:40px;
+    height:40px;
+    border-radius:20px;
+    font-size:20px;
+    color:#fff;
+    line-height:40px;
+    text-align:center;
+    background: #03223c;
+    }
+
 

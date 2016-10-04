@@ -8,6 +8,16 @@
     <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
     <button ng-click="FilterDate()">Go</button>
   </div>
+
+
+<div> <span class="date_filter_label">Page: </span><span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)" ><div class="circle block" ng-class="{is_current:$parent.current.page===page}">{{page +1}}</div>
+</span></div>
+
+
+
+
+
+
   <div buffered-scroll-lots id="admin_manage_lots" >
     <div class="inner_scrollable">
       <table>
@@ -20,7 +30,7 @@
 
 
 
-<h3> Page:<span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)">{{ page }}</span></h3>
+
 
         <tr>
           <td class="lot_column" valign="top">
