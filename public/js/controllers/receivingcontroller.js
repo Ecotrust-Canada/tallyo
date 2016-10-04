@@ -461,7 +461,7 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.PatchLot = function(){
     var func = function(response){
-      if ($scope.current.lot_to_edit_or_select === $scope.current.harvester_lot.lot_number){
+      if ($scope.current.harvester_lot && ($scope.current.lot_to_edit_or_select === $scope.current.harvester_lot.lot_number)){
         $scope.SetLot($scope.current.lot_to_edit_or_select);
       }
       $scope.ListStationLots();
