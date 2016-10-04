@@ -93,7 +93,7 @@
 </div>
 
 
-<div class="panel grey">
+<div class="panel grey" ng-if="options.print_uuid">
   <div ng-controller="PrintManyLabelsCtrl">
     <entryform config="addform2" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
   </div>
