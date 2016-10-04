@@ -23,6 +23,8 @@ angular.module('scanthisApp.itemController', [])
     
   };
 
+  $scope.retry = 0;
+
 
   $scope.startPolling = function(fieldName) {
     //stop polling scale
@@ -49,7 +51,11 @@ angular.module('scanthisApp.itemController', [])
         timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
       }).then(
         function successCallback(response) {
-          if(response.data.value !== "" && response.data.value != null){
+          if ($scope.retry !== 0){
+            toastr.success('scale reconnected');
+          }
+          $scope.retry = 0;
+          if(response.data.value !== "" && response.data.value !== null){
             if ($scope.options.truncate){
               $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
             }
@@ -64,12 +70,22 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
+            console.log(response);
+            var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
+            if(thediv){
+              $timeout(function(){thediv.click();
+                toastr.error('cannot connect to scale');
+                if ($scope.retry < 2){
+                  $scope.retry++;
+                  var _thediv = document.getElementById('scale_on_' + ($scope.scanform.station_id || ''));
+                  if(_thediv){
+                    $timeout(function(){_thediv.click();
+                    toastr.warning('trying to reconnect to scale');}, 2000);
+                  }
+                }
+              }, 0);   
+            }
 
-          var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
-          if(thediv){
-            $timeout(function(){thediv.click();
-            toastr.error('cannot connect to scale');}, 0);
-          }          
         }
       );
     }, 500);
