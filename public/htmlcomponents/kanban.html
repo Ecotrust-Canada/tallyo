@@ -10,7 +10,7 @@
   </div>
 
 
-<div> <span class="date_filter_label">Page: </span><span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)" ><div class="circle block" ng-class="{is_current:$parent.current.page===page}">{{page +1}}</div>
+<div> <span class="page_label">Page: </span><span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)" ><div class="circle block" ng-class="{is_current:$parent.current.page===page}">{{page +1}}</div>
 </span></div>
 
 
@@ -185,6 +185,11 @@
       </table>
     </div>
     </div>
-  </div>
+ 
+
+  <div> <span class="page_label">Page: </span><span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)" ><div class="circle block" ng-class="{is_current:$parent.current.page===page}">{{page +1}}</div>
+</span></div>
+
+ </div>
 
 </div>

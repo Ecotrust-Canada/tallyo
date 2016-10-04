@@ -3347,4 +3347,13 @@ md-datepicker {
     background: #03223c;
     }
 
+.page_label{
+    color: #125974;
+    font-size: 24px;
+    font-family: 'Lato-Bold';
+    margin-right: 20px;
+    margin-left: 10px;
+    vertical-align: central;
+}
+
 
