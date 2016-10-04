@@ -8,7 +8,7 @@
   <div ng-controller="ListLotsCtrl" class="select_object lot_setup">
     <button ng-click="CreateButton()" class="btn-blue" ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">Create New Lot</button>
     <fieldset ng-disabled="current.showforms==='EDIT' || current.showforms==='CREATE'">
-      <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="dropdownSelect(value)" ng-click="current.lot_to_edit_or_select=null"></input-dropdown>
+      <input-dropdown  thelist="list.stnlots"  config="adddropdown2" on-select="dropdownSelect(value)" ng-click="pcdropdownclick()" ng-mousedown="dropdownclick()"></input-dropdown>
     </fieldset>
   </div>
   <div class="is_inline no_csv">

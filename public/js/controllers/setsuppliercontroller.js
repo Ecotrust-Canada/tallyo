@@ -476,6 +476,19 @@ angular.module('scanthisApp.setsupplierController', [])
     $scope.entry = null;
     $scope.current.receivedate = null;
   };
+
+
+  $scope.dropdownclick = function(){
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      $scope.current.lot_to_edit_or_select=null;
+    }
+  };
+  $scope.pcdropdownclick = function(){
+    console.log('here');
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))) {
+      $scope.current.lot_to_edit_or_select=null;
+    }
+  };
 })
 
 
