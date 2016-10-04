@@ -8,5 +8,8 @@ echo $TALLYO_TIMEZONE > /etc/timezone
 
 dpkg-reconfigure -f noninteractive tzdata
 
+/wait-for-it.sh -t 0 $DB_HOSTNAME:$POSTGREST_DBPORT
 
-exec postgrest postgres://${POSTGREST_DBUSER}:${POSTGREST_DBPASS}@${POSTGREST_DBHOST}:${POSTGREST_DBPORT}/${POSTGREST_DBNAME} --port 3000 --schema public --anonymous postgres --pool 200
+echo "Starting Postgrest server"
+
+exec postgrest postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOSTNAME}:${POSTGREST_DBPORT}/${POSTGRES_DB} --port 3000 --schema public --anonymous postgres --pool 200

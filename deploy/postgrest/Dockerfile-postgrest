@@ -4,11 +4,11 @@ RUN apt-get update
 RUN apt-get install -y tar xz-utils wget libpq-dev
 
 ENV POSTGREST_VERSION 0.3.2.0
-ENV POSTGREST_DBHOST db
+ENV DB_HOSTNAME db
 ENV POSTGREST_DBPORT 5432
-ENV POSTGREST_DBNAME postgres
-ENV POSTGREST_DBUSER tuna_processor
-ENV POSTGREST_DBPASS postgres
+ENV POSTGRES_DB postgres
+ENV POSTGRES_USER tuna_processor
+ENV POSTGRES_PASSWORD postgres
 ENV TALLYO_TIMEZONE UTC
 
 RUN wget http://github.com/begriffs/postgrest/releases/download/v${POSTGREST_VERSION}/postgrest-${POSTGREST_VERSION}-ubuntu.tar.xz
@@ -17,7 +17,8 @@ RUN rm postgrest-${POSTGREST_VERSION}-ubuntu.tar.xz
 RUN mv postgrest /usr/local/bin/postgrest
 
 COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
+COPY wait-for-it.sh /
+RUN chmod +x /docker-entrypoint.sh /wait-for-it.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 

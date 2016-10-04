@@ -9,11 +9,9 @@ services:
       - pgdatabase:/var/lib/postgresql/data
     networks:
       - back-tier
-    environment:
-      POSTGRES_USER: tuna_processor
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
-      TALLYO_TIMEZONE: UTC
+    env_file: 
+      - static.env
+      - local.env
     restart: always
 
   postgrest:
@@ -24,8 +22,9 @@ services:
     restart: always
     networks:
       - back-tier
-    environment:
-      TALLYO_TIMEZONE: UTC
+    env_file: 
+      - static.env
+      - local.env
     ports:
       - "3000:3000"
     depends_on:
@@ -39,9 +38,11 @@ services:
     command: app app_config_am1
     ports:
       - "8000:8000"
+    env_file: 
+      - static.env
+      - local.env
     environment:
       DB_RUNMIGRATIONS: 'true'
-      TALLYO_TIMEZONE: UTC
     networks:
       - back-tier
     restart: always
@@ -53,9 +54,9 @@ services:
     command: app app_config_am2
     ports:
       - "8001:8000"
-    environment:
-      DB_RUNMIGRATIONS: 'false'
-      TALLYO_TIMEZONE: UTC
+    env_file: 
+      - static.env
+      - local.env
     networks:
       - back-tier
     restart: always

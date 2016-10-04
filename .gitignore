@@ -2,6 +2,7 @@
 id_rsa
 logs/*
 !.gitkeep
+local.env
 node_modules/
 public/bower_components/
 public/js/configs
