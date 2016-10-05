@@ -109,6 +109,10 @@ angular.module('scanthisApp.itemController', [])
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -206,18 +210,21 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.ScanSubmit = function(form, uuid){ 
-    if (form){   
+    if (form){ 
+      $scope.entry.box = {};  
       var query = "?uuid_from_label=eq." + uuid;
       var func = function(response){
         if (response.data.length>0){
-          //toastr.warning('Already added');
+          toastr.warning('overwriting');
           $scope.overwrite_form = form;
           $scope.overwrite_uuid = uuid;
-          $scope.overlay('overwrite');
+          //$scope.overlay('overwrite');
+          $scope.OverwriteBox();
         }
         else{
           form.uuid_from_label = uuid;
           $scope.Submit(form);
+          form = null;
         }
       };
       DatabaseServices.GetEntries('box', func, query);
@@ -225,6 +232,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.OverwriteBox = function(){
+    delete $scope.overwrite_form['uuid_from_label'];
     $scope.MakeItemScanEntry($scope.overwrite_form);
     var patch = $scope.entry.box;
     var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
@@ -233,7 +241,11 @@ angular.module('scanthisApp.itemController', [])
       $scope.overwrite_uuid = null;
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      $scope.current.addnew = true;      
+      //$scope.current.addnew = true;
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }      
     };
     DatabaseServices.PatchEntry('box', patch, query, func);
   };
@@ -263,13 +275,14 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices, $timeout) {
 
-  $scope.RemoveItem = function(id){
-    $scope.to_delete = id;
+  $scope.RemoveItem = function(obj){
+    $scope.to_delete = obj;
+    $scope.deletelabel = obj[($scope.station_info.deletelabel||$scope.station_info.itemid)];
     $scope.overlay('delete' + $scope.station_code);
   };
 
   $scope.DeleteItem = function(){
-    var id = $scope.to_delete;
+    var id = $scope.to_delete[$scope.station_info.itemid];
     if($scope.station_info.itemtable === 'scan'){
       $scope.RemoveScanOnly(id);
     }

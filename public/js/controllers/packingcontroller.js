@@ -25,6 +25,7 @@ angular.module('scanthisApp.packingController', [])
   $scope.PutObjInContainer = function(raw_id){
     if (!raw_id) {
       toastr.error('please scan a code');
+      $scope.clearField();
     }
     else{
       var id = raw_id.split("/")[0].toUpperCase();
@@ -125,6 +126,7 @@ angular.module('scanthisApp.packingController', [])
     };
     var onErr = function(){
       toastr.error('invalid QR code'); // show failure toast.
+      $scope.clearField();
     };
 
     var patch = {};
@@ -216,9 +218,11 @@ angular.module('scanthisApp.packingController', [])
     $scope.to_delete = obj;
     if ($scope.options.qrform && obj.lot_number !== null){
       toastr.error('cannot delete - box in processing');
+      $scope.clearField();
     }
     else if ($scope.options.qrform && obj.shipping_unit_number !== null){
       toastr.error('cannot delete - box shipped');
+      $scope.clearField();
     }else{
       $scope.overlay('delete');
     }    
