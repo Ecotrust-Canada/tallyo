@@ -70,25 +70,34 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
-            console.log(response);
-            var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
-            if(thediv){
-              $timeout(function(){thediv.click();
-                toastr.error('cannot connect to scale');
-                if ($scope.retry < 2){
-                  $scope.retry++;
-                  var _thediv = document.getElementById('scale_on_' + ($scope.scanform.station_id || ''));
-                  if(_thediv){
-                    $timeout(function(){_thediv.click();
-                    toastr.warning('trying to reconnect to scale');}, 2000);
-                  }
-                }
-              }, 0);   
-            }
+          console.log(response);
+          // get the manual_input_ element - this means clicking it will set manual input mode but it is currently in auto mode
+          var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
+          if (thediv) {
+            var _timeout = ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000);
+            // let's avoid a divide by zero shall we
+            if (_timeout <= 0) _timeout = 1000;
 
-        }
-      );
-    }, 500);
+            // retry for at least 2 seconds
+            if ($scope.retry < ( 2000 / _timeout )) {
+              // we are retrying here now so we do not want to change the state of the scale until the retries have been exhausted
+              // basically we are simply delaying the clicking of _thediv which will set the scale to manual mode
+
+              // increment retry and prevent a toast flood by only sending every 5th retry
+              if (( $scope.retry++ % 5 ) == 0) {
+                toastr.warning('Scale connection is unstable...');
+              }
+            }
+          } else {
+            // we have retried for two seconds and no luck reconnectiong - switch to manual input
+            // reverse logic here - thediv manual_input_ means clicking it will make it manual input
+            thediv.click();
+
+            // alert user to error condition
+            toastr.error('Scale connection lost');
+          }
+        });
+      }, 500);
   };
 
   // stop polling scale and clear scalePromise
