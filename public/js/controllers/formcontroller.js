@@ -4,6 +4,14 @@ angular.module('scanthisApp.formController', [])
 
 //controller attached to entryform directive
 .controller('entryformCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout) {
+
+  $scope.dboptionsconfig =
+  { id: 1, 
+    arg: "value", 
+    searchfield: "value",
+    fields: []
+  };
+
   
   //display scale buttons
   if ($scope.config.startpolling){
@@ -145,6 +153,10 @@ angular.module('scanthisApp.formController', [])
       if (row.required && !$scope.form[row.fieldname]){
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
+        var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          } 
       }
       // only check for empty string is field is also required
       else if (row.required && $scope.form[row.fieldname] === ''){

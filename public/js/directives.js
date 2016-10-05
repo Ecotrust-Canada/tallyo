@@ -197,6 +197,7 @@ angular.module('scanthisApp.directives', [])
             config: '=',
             limit: '=',
             form: '=',
+            filter: '=',
             initial: '=',
             onSelect: '&'
         },

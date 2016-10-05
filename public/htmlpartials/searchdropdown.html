@@ -1,12 +1,21 @@
 <!-- directive for most dropdowns - allows typing to search for options -->
-
 <div class="dropdown-container">
   <label ng-if="config.title" for="select-{{config.id}}">{{config.title}}: </label>
   <div class="dd_arrow"><span></span></div>
 
   <input ng-hide="(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown">
-    <div  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||50)">
+    <div ng-if="!filter"  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||50)">
+        <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>
+        <span ng-repeat="field in config.fields" ng-switch="field" >
+          <span>{{ config.delimeter || '|' }}</span>
+          <span ng-switch-when="timestamp">{{value.timestamp|stringtodateshort }}</span>
+          <span ng-switch-when="weight">{{value.weight|weightstring}}</span>
+          <span ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
+          <span ng-switch-default >{{value[field]}}</span>
+        </span> </div> 
+    </div>
+    <div ng-if="filter"  ng-repeat="value in thelist | orderBy: config.order | filter: {field_name:filter}: true |filter:search:strict">
         <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>
         <span ng-repeat="field in config.fields" ng-switch="field" >
           <span>{{ config.delimeter || '|' }}</span>
@@ -19,7 +28,7 @@
   </div>
 
   <div ng-if="the_val || form" ng-click="setnull()" class="input-text">
-    <b ng-if="the_val || form">{{the_val[config.searchfield] || form[config.searchfield]}} </b>
+    <b ng-if="the_val || form">{{the_val[config.searchfield] || form[config.searchfield] || form}} </b>
     <span ng-if="the_val || form" ng-repeat="field in config.fields" ng-switch="field">
       <span>{{ config.delimeter || '|' }}</span>
       <span ng-switch-when="timestamp">{{(the_val.timestamp|stringtodateshort) || (form.timestamp|stringtodateshort)}}</span>
