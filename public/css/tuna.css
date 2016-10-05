@@ -3387,6 +3387,7 @@ md-datepicker {
   /*overflow: hidden;*/
 }
 
+
 .align_top{
   display: inline-block;
   vertical-align: top;
@@ -3397,6 +3398,41 @@ md-datepicker {
   right: 0;
   margin: auto;
 }
+
+.circle
+    {
+    width:40px;
+    height:40px;
+    border-radius:20px;
+    font-size:20px;
+    color:#03223c;
+    line-height:40px;
+    text-align:center;
+    background: #B4CAD9;
+    }
+
+.circle.is_current
+    {
+    width:40px;
+    height:40px;
+    border-radius:20px;
+    font-size:20px;
+    color:#fff;
+    line-height:40px;
+    text-align:center;
+    background: #03223c;
+    }
+
+.page_label{
+    color: #125974;
+    font-size: 24px;
+    font-family: 'Lato-Bold';
+    margin-right: 20px;
+    margin-left: 10px;
+    vertical-align: central;
+}
+
+
 
 .display_collection {
   margin-top: 10px;
