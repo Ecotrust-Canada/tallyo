@@ -346,7 +346,7 @@ angular.module('scanthisApp.AdminController', [])
       var func = function(response){
         $scope.list.harvester_lot = response.data;
         $scope.paginate();
-        $scope.BeginLoadLots(0);
+        $scope.BeginLoadLots(0, true);
         $scope.loadTimeframeSummary(start_date, end_date);
       };
       DatabaseServices.GetEntries('harvester_lot', func, query/*, 'fifty'*/);      
@@ -385,8 +385,8 @@ angular.module('scanthisApp.AdminController', [])
     }
   };
 
-  $scope.BeginLoadLots = function(page){
-    if ($scope.current.page !== page){
+  $scope.BeginLoadLots = function(page, start){
+    if ($scope.current.page !== page || start){
       $scope.current.page = page;
       $scope.list.paginated_lots = $scope.list.harvester_lot.slice(page*10,(page*10)+10);
       $scope.list.lot_summary = [];
