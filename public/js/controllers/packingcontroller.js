@@ -23,8 +23,13 @@ angular.module('scanthisApp.packingController', [])
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.disabled = true;
+          }
     if (!raw_id) {
       toastr.error('please scan a code');
+      $scope.clearField();
     }
     else{
       var thediv = document.getElementById('scaninput');
@@ -87,8 +92,8 @@ angular.module('scanthisApp.packingController', [])
     $scope.input.code = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
-              thediv.disabled = false;
-              thediv.focus();
+            thediv.disabled = false;
+            thediv.focus();
           }
   };
 
