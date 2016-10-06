@@ -315,6 +315,10 @@ angular.module('scanthisApp.itemController', [])
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.to_delete = null;
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
     };
     DatabaseServices.RemoveEntry(table, query, func);
   };
