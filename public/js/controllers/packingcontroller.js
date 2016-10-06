@@ -27,6 +27,10 @@ angular.module('scanthisApp.packingController', [])
       toastr.error('please scan a code');
     }
     else{
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.disabled = true;
+          }
       var id = raw_id.split("/")[0].toUpperCase();
       $scope.id = id;
 
@@ -83,6 +87,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.input.code = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
+              thediv.disabled = false;
               thediv.focus();
           }
   };
@@ -92,11 +97,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
-      $scope.input.code=null;
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          }
+      $scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
