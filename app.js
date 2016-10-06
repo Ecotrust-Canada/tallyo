@@ -54,6 +54,40 @@ app.get('/server_time', function(req, res, next) {
  });
 });
 
+app.get('/increment', function(req, res, next){
+  fs.readFile('increment.json', function(err, data){
+    if (err){
+      if (err.code === "ENOENT") {
+        var new__num = (parseInt(1)*1)+1;
+        res.send('1');
+        fs.writeFile('increment.json', new__num, function(err){
+          if (err){
+           throw err;
+          }      
+        });
+      }else{
+        throw err;
+      }      
+    }else{
+      var new_num;
+      if (parseInt(data) < 10000){
+        new_num = (parseInt(data)*1)+1;
+      }
+      else{
+        new_num = (parseInt(0)*1)+1;
+      }
+      
+      fs.writeFile('increment.json', new_num, function(err){
+        if (err){
+          throw err;
+        }      
+      });
+      res.send(data);
+    }
+    
+  });
+});
+
 var make_totals_query = function(lot_number, station_code, type){
   var query;
   if (type === 'scan'){

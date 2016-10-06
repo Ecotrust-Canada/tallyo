@@ -273,6 +273,7 @@ angular.module('scanthisApp.formController', [])
     var func = function(response){
       $scope.formchange = !$scope.formchange;
       responsefunction((response.data[0] ? response.data[0] : response.data));
+      $scope.entry[table] = {};
     };
 
     var processor;

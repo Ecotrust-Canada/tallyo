@@ -5,7 +5,7 @@
   <div any-other-click>
     <div  class="select_object" >
       <div class="select_header" ng-class="{lot_chosen: current.collectionid}"
-           ng-click="current.collectionid = null;current.edit_box=false;current.select_change=!current.select_change;">
+           ng-click="current.collectionid = null;current[station_info.collectiontable]=null;current.edit_box=false;current.select_change=!current.select_change;">
         <span class="show_choices">{{packingconfig.sectiontitle}}</span> 
       </div> 
       <div class="show_choices" ng-hide="current.collectionid">
