@@ -45,14 +45,21 @@ angular.module('scanthisApp.itemController', [])
     }
 
     scalePromise = $interval(function() {
+      var _timeout = ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000);
+
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
-        timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
+        timeout: _timeout
       }).then(
         function successCallback(response) {
-          if ($scope.retry !== 0){
-            toastr.success('scale reconnected');
+          if ($scope.retry != 0){
+            var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+            if(status_msg) {
+              status_msg.innerText = 'Scale OK';
+              status_msg.className = 'scale_msg';
+              console.log('Scale connection restored after ' + $scope.retry * _timeout / 1000 + ' seconds');
+            }
           }
           $scope.retry = 0;
           if(response.data.value !== "" && response.data.value !== null){
@@ -70,25 +77,41 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
-            console.log(response);
-            var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
-            if(thediv){
-              $timeout(function(){thediv.click();
-                toastr.error('cannot connect to scale');
-                if ($scope.retry < 2){
-                  $scope.retry++;
-                  var _thediv = document.getElementById('scale_on_' + ($scope.scanform.station_id || ''));
-                  if(_thediv){
-                    $timeout(function(){_thediv.click();
-                    toastr.warning('trying to reconnect to scale');}, 2000);
-                  }
-                }
-              }, 0);   
-            }
+          // get the manual_input_ element - this means clicking it will set manual input mode but it is currently in auto mode
+          var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
+          if (thediv) {
+            // let's avoid a divide by zero shall we
+            if (_timeout <= 0) _timeout = 1000;
 
-        }
-      );
-    }, 500);
+            // retry for at least 2 seconds and increment retry counter every time to track total length of lost comms
+            if ($scope.retry++ < ( 2000 / _timeout )) {
+              // only log to console during unstable period
+              console.log('Unstable scale connection for ' + $scope.retry * _timeout / 1000 + ' seconds');
+
+              // we are retrying here now so we do not want to change the state of the scale until the retries have been exhausted
+              // basically we are simply delaying the clicking of _thediv which will set the scale to manual mode
+              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if(status_msg) {
+                status_msg.innerText = 'Scale Unstable';
+                status_msg.className = 'scale_msg_warn';
+              }
+            } else {
+              // we have retried for two seconds and no luck reconnectiong - switch to manual input
+              // reverse logic here - thediv manual_input_ means clicking it will make it manual input
+              //thediv.click();
+
+              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if(status_msg) {
+                status_msg.innerText = 'Scale LOST';
+                status_msg.className = 'scale_msg_error';
+
+                // clear the scale value
+                $scope.scale[fieldName] = "";
+              }
+            }
+          }
+        });
+      }, 500);
   };
 
   // stop polling scale and clear scalePromise
@@ -109,6 +132,10 @@ angular.module('scanthisApp.itemController', [])
       if ($scope.options.secondstation){
         $scope.SecondScan();
       }
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
     };
     if (NoMissingValues($scope.entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -206,18 +233,21 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.ScanSubmit = function(form, uuid){ 
-    if (form){   
+    if (form){ 
+      $scope.entry.box = {};  
       var query = "?uuid_from_label=eq." + uuid;
       var func = function(response){
         if (response.data.length>0){
-          //toastr.warning('Already added');
+          toastr.warning('overwriting');
           $scope.overwrite_form = form;
           $scope.overwrite_uuid = uuid;
-          $scope.overlay('overwrite');
+          //$scope.overlay('overwrite');
+          $scope.OverwriteBox();
         }
         else{
           form.uuid_from_label = uuid;
           $scope.Submit(form);
+          form = null;
         }
       };
       DatabaseServices.GetEntries('box', func, query);
@@ -225,6 +255,7 @@ angular.module('scanthisApp.itemController', [])
   };
 
   $scope.OverwriteBox = function(){
+    delete $scope.overwrite_form['uuid_from_label'];
     $scope.MakeItemScanEntry($scope.overwrite_form);
     var patch = $scope.entry.box;
     var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
@@ -233,7 +264,11 @@ angular.module('scanthisApp.itemController', [])
       $scope.overwrite_uuid = null;
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
-      $scope.current.addnew = true;      
+      //$scope.current.addnew = true;
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }      
     };
     DatabaseServices.PatchEntry('box', patch, query, func);
   };
@@ -263,13 +298,14 @@ angular.module('scanthisApp.itemController', [])
 
 .controller('RemoveScanCtrl', function($scope, $http, toastr, DatabaseServices, $timeout) {
 
-  $scope.RemoveItem = function(id){
-    $scope.to_delete = id;
+  $scope.RemoveItem = function(obj){
+    $scope.to_delete = obj;
+    $scope.deletelabel = obj[($scope.station_info.deletelabel||$scope.station_info.itemid)];
     $scope.overlay('delete' + $scope.station_code);
   };
 
   $scope.DeleteItem = function(){
-    var id = $scope.to_delete;
+    var id = $scope.to_delete[$scope.station_info.itemid];
     if($scope.station_info.itemtable === 'scan'){
       $scope.RemoveScanOnly(id);
     }
@@ -302,6 +338,10 @@ angular.module('scanthisApp.itemController', [])
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.to_delete = null;
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
     };
     DatabaseServices.RemoveEntry(table, query, func);
   };

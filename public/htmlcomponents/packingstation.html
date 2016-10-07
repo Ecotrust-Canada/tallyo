@@ -182,7 +182,7 @@
   <div class="delete_dialogue" id="delete">
     <div>
       <p>Do you want to remove this item?</p>
-      <p class="large_text" ng-if="station_info.patchtable==='box'">{{to_delete.case_number || to_delete.box_number}}</p>
+      <p class="large_text" ng-if="station_info.patchtable==='box'">{{to_delete.uuid_end || to_delete.case_number || to_delete.box_number}}</p>
       <p class="large_text" ng-if="station_info.patchtable==='loin'">{{to_delete.loin_number}}</p>
       <button class="btn-blue" ng-click="enablekeypress();overlay('delete')">Cancel</button>
       <button class="btn-blue" ng-click="PatchNull();enablekeypress();overlay('delete')">Yes</button>

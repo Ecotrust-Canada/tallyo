@@ -5,6 +5,16 @@ angular.module('scanthisApp.receivingController', [])
 
 // This is to read boxes from HS at AM, and from buru at ambon
 .controller('ReadBoxCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.clearField = function(){
+    $scope.raw.string = null;
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          }
+  };
+
+
   $scope.current.addnew = false;
 
   //get info from QR
@@ -27,10 +37,10 @@ angular.module('scanthisApp.receivingController', [])
         var box = response.data[0];
         if(($scope.current.shipping_unit && box.shipping_unit_in === $scope.current.shipping_unit.shipping_unit_number) || ($scope.current.harvester_lot && box.lot_in === $scope.current.harvester_lot.lot_number)){
           toastr.warning('Already scanned');
-          $scope.raw.string = null;
+          $scope.clearField();
         }else{
           toastr.error('Box with this code already exists');
-          $scope.raw.string = null;
+          $scope.clearField();
         }        
       }
     };
@@ -104,7 +114,7 @@ angular.module('scanthisApp.receivingController', [])
       data.lot_number = $scope.current.harvester_lot.lot_number;
     }   
     var func = function(response){
-      $scope.raw.string = null;
+      $scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.current.addnew = true;
     };

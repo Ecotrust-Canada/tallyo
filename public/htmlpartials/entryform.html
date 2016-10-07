@@ -76,37 +76,11 @@
                 value="row.value[1].val">{{row.value[1].val}}</span>
           </span>
 
-          <!--select-->
-          <span ng-if="row.type === 'select' && !row.value.list">
-            <!--static select options-->
+          <!--select--> 
 
-            <div class="styled-dropdown">   
-              <select ng-if="row.value !== 'dboptions' && !row.value.list" ng-model="form[row.fieldname]" 
-                      ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
-                <option value="">-- select --</option>
-                <option ng-repeat="option in row.value" value={{option.name}}>{{option.name}}</option>
-              </select>
+          <input-dropdown ng-if="row.type === 'select' && row.value ==='dboptions'" filter="row.fieldname"  thelist="formoptions"  config="dboptionsconfig" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
-              <!--dboptions-->
-              <select ng-if="row.value ==='dboptions'" ng-model="form[row.fieldname]" ng-required="{{row.required || row.thisfish || false}}" name="{{row.fieldname}}">
-                <option value="">-- select --</option>
-                <option ng-repeat="option in formoptions | filter: {field_name:row.fieldname}: true |filter:search:strict" 
-                        ng-select="form[row.fieldname] = option.value">{{option.value}}</option>
-              </select>
 
-              <!--options from another database table-->
-              <select ng-if="row.value.list && row.value.list === 'list1'" ng-model="form[row.fieldname]" name="{{row.fieldname}}">
-                <option value="">-- select --</option>
-                <option ng-repeat="option in list1" value={{option|json_lot}}>{{option[row.value.name]}}  <!--{{option.traceable|istraceable}}--></option>
-              </select>
-              
-              <!--<select ng-if="row.value.list && row.value.list === 'list2'" ng-model="form[row.fieldname]">
-                <option value="">-- select --</option>
-                <option ng-repeat="option in list2" value={{option}}>{{option[row.value.name]}}  {{option.traceable|istraceable}}</option>
-              </select>-->
-
-              <div ng-if="!row.value.list" class="dd_arrow"><span></span></div>
-            </div> 
 
             <!--editing dropdown options-->
             <div ng-if="row.value ==='dboptions' && config.editinform === true" 
@@ -127,7 +101,6 @@
               </div>
             </div>
 
-          </span>
           <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
           <!--button to set scale weight-->
@@ -148,6 +121,7 @@
               ng-click="pollFn({field: 'toggle_state'});scalefn()" class="scale_on green_text" id="manual_input_{{config.station_id}}">Scale ON</span>
         <span ng-if="config.startpolling && !poll_scale" class="scale_on red_text" id="scale_on_{{config.station_id}}"
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
+        <span ng-if="config.startpolling && poll_scale" id="scale_status_message_{{config.station_id}}" class="scale_msg">Scale OK</span>
       </div>
 
 
