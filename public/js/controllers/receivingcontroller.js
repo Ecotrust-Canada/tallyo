@@ -439,7 +439,6 @@ angular.module('scanthisApp.receivingController', [])
   };
 
   $scope.OnChangeShip = function(fieldname, val){
-    console.log('called');
     $scope.current.ship_edit[fieldname] = val;
   };
 
