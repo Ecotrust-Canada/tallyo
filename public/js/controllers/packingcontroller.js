@@ -377,31 +377,51 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
-    $http.get('/increment').then(function successCallback(response) {
 
         var case_num;
         if(!$scope.current.box.case_number){
-          case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt(response.data)),5);
-        }
-        else case_num = $scope.current.box.case_number;
-        var lot_num = GetBoxLotNumber($scope.list.included);
-        if (lot_num !== undefined){
-          $scope.GetInfo(lot_num, case_num);
-        }
-        else{
-          var harvester_code = null;
-          var box_weight = CalculateBoxWeight($scope.list.included);
-          var best_before = null;
-          var num = 0;
-          var internal_lot_code = '';
-          lot_num = null;
-          if ($scope.current.collectionid) {
-              $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
-          }
-        }
+          $http.get('/increment').then(function successCallback(response) {
+            case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt(response.data)),5);
 
-    }, function errorCallback(response) {
-    });
+            var lot_num = GetBoxLotNumber($scope.list.included);
+            if (lot_num !== undefined){
+              $scope.GetInfo(lot_num, case_num);
+            }
+            else{
+              var harvester_code = null;
+              var box_weight = CalculateBoxWeight($scope.list.included);
+              var best_before = null;
+              var num = 0;
+              var internal_lot_code = '';
+              lot_num = null;
+              if ($scope.current.collectionid) {
+                  $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
+              }
+            }
+
+
+          }, function errorCallback(response) {
+          });
+        }else{
+          case_num = $scope.current.box.case_number;
+
+          var lot_num = GetBoxLotNumber($scope.list.included);
+          if (lot_num !== undefined){
+            $scope.GetInfo(lot_num, case_num);
+          }
+          else{
+            var harvester_code = null;
+            var box_weight = CalculateBoxWeight($scope.list.included);
+            var best_before = null;
+            var num = 0;
+            var internal_lot_code = '';
+            lot_num = null;
+            if ($scope.current.collectionid) {
+                $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
+            }
+          }
+
+        }            
 
   };
 
