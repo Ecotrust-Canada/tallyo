@@ -45,10 +45,12 @@ angular.module('scanthisApp.itemController', [])
     }
 
     scalePromise = $interval(function() {
+      var _timeout = ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000);
+
       $http({
         method: 'GET',
         url: $scope.scaleURL + 'weight',
-        timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
+        timeout: _timeout
       }).then(
         function successCallback(response) {
           if ($scope.retry != 0){
@@ -56,6 +58,7 @@ angular.module('scanthisApp.itemController', [])
             if(status_msg) {
               status_msg.innerText = 'Scale OK';
               status_msg.className = 'scale_msg';
+              console.log('Scale connection restored after ' + $scope.retry * _timeout / 1000 + ' seconds');
             }
           }
           $scope.retry = 0;
@@ -74,17 +77,17 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
-          console.log('Unstable scale connection:');
-          console.log(response);
           // get the manual_input_ element - this means clicking it will set manual input mode but it is currently in auto mode
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
           if (thediv) {
-            var _timeout = ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000);
             // let's avoid a divide by zero shall we
             if (_timeout <= 0) _timeout = 1000;
 
-            // retry for at least 2 seconds
+            // retry for at least 2 seconds and increment retry counter every time to track total length of lost comms
             if ($scope.retry++ < ( 2000 / _timeout )) {
+              // only log to console during unstable period
+              console.log('Unstable scale connection for ' + $scope.retry * _timeout / 1000 + ' seconds');
+
               // we are retrying here now so we do not want to change the state of the scale until the retries have been exhausted
               // basically we are simply delaying the clicking of _thediv which will set the scale to manual mode
               var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));

@@ -121,7 +121,7 @@
               ng-click="pollFn({field: 'toggle_state'});scalefn()" class="scale_on green_text" id="manual_input_{{config.station_id}}">Scale ON</span>
         <span ng-if="config.startpolling && !poll_scale" class="scale_on red_text" id="scale_on_{{config.station_id}}"
               ng-click="pollFn({field: 'toggle_state'});scalefn()">Scale OFF</span>
-        <span id="scale_status_message_{{config.station_id}}" class="scale_msg">Scale OK</span>
+        <span ng-if="config.startpolling && poll_scale" id="scale_status_message_{{config.station_id}}" class="scale_msg">Scale OK</span>
       </div>
 
 
