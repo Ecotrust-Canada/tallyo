@@ -1120,7 +1120,8 @@ div[ng-view] {
 .card_bit .value span:nth-child(2)::before {
   content: url(/images/delim_icon.svg);
 }
-.input-dropdown {
+.input-dropdown,
+.fieldset-dropdown {
     position: relative;
     display: inline-block;
 }
@@ -1134,7 +1135,13 @@ div[ng-view] {
   /*overflow: hidden;*/
   position: relative;
 }
-.input-dropdown .dropdown {
+
+.fieldset-dropdown .dropdown-container input {
+  vertical-align: bottom;
+}
+
+.input-dropdown .dropdown,
+.fieldset-dropdown .dropdown {
     display: none;
     position: absolute;
     top: 100%;
@@ -1153,11 +1160,13 @@ div[ng-view] {
 
 
 
-.input-dropdown .dropdown div {
+.input-dropdown .dropdown div,
+.fieldset-dropdown .dropdown div {
     cursor: pointer;
     padding: 2px 5px;
 }
-.input-dropdown input:focus + .dropdown {
+.input-dropdown input:focus + .dropdown,
+.fieldset-dropdown input:focus + .dropdown {
     display: block;
 }
 
@@ -3004,6 +3013,7 @@ button[disabled] {
     padding: 4px 9px;
     vertical-align: top;
     line-height: 100%;   
+    margin-top: 10px;
 }
 
 .toggle_bg.active {
@@ -3198,24 +3208,37 @@ span.switch_option.active {
 }
 .fieldsetrepeat .styled-dropdown {
   display: inline-block;
-  margin: 0 12px 0 0;
   box-sizing: border-box;
 }
 .fieldsetrepeat input[type=text],
 .fieldsetrepeat input[type=number] {
   width: 70px;
+  vertical-align: top;
+    margin-top: 5px;
 }
-.fieldsetrepeat .styled-dropdown.dd-grade {
-  width: 95px;
+.fieldsetrepeat .dropdown-container{
+  min-width:0px;
+}
+.fieldsetrepeat .styled-dropdown.dd-grade,
+.dropdown-container.dc-grade {
+  width: 105px;
 }
 .fieldsetrepeat .in-weight input[type=number] {
   width: 130px;
+  vertical-align: top;
+    margin-top: 5px;
 }
-.fieldsetrepeat .styled-dropdown.dd-size {
-  width: 95px;
+.fieldsetrepeat .styled-dropdown.dd-size,
+.dropdown-container.dc-size {
+  width: 115px;
 }
-.fieldsetrepeat .styled-dropdown.dd-species {
+.fieldsetrepeat .styled-dropdown.dd-species,
+.dropdown-container.dc-species {
   width: 110px;
+}
+
+.fieldsetrepeat .input-text{
+  margin-bottom: -3px;
 }
 
 

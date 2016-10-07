@@ -5,28 +5,32 @@
       <span ng-repeat="field in config.fields" class="in-{{field.fieldname}}">
         <!--<label for="sel-{{choice.id}}-{{field.fieldname}}">{{field.title}}</label>-->
         <div ng-if="field.type==='select' && field.fieldname!=='weight'" class="styled-dropdown dd-{{field.fieldname}}">
-          <div ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-            <select ng-model="choice[field.fieldname]" ng-required="true"
+          <div class="fieldset-dropdown" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
+           <!--  <select ng-model="choice[field.fieldname]" ng-required="true"
                 name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}">
               <option value="" disabled selected>{{field.title}}</option>
               <option ng-repeat="obj in field.value">{{obj.name}}</option>
-            </select>
+            </select> -->
+
+
+            <div class="dropdown-container dc-{{field.fieldname}}">
+              <div class="dd_arrow"><span></span></div>
+              <input ng-hide="choice[field.fieldname]" placeholder="{{field.title}}">
+              <div class="dropdown">
+                <div ng-repeat="value in field.value">
+                    <div ng-click="select($event, value)" ng-mousedown="choice[field.fieldname]=value.name"><b>{{value.name}}</b>
+                    </div> 
+                </div>
+              </div>
+              <div ng-show="choice[field.fieldname]" ng-click="choice[field.fieldname]=null" class="input-text">
+                {{choice[field.fieldname]}}
+              </div>
+            </div>
+
+
+
           </div>
-          <div class="dd_arrow"><span></span></div>
         </div>
-
-        <div ng-if="field.type==='select' && field.fieldname==='weight'" class="styled-dropdown dd-{{field.fieldname}}">
-          <div ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
-            <select ng-model="choice[field.fieldname]" ng-required="true"
-                name="{{choice.id}}{{field.fieldname}}" id="sel-{{choice.id}}-{{field.fieldname}}">
-              <option value="" disabled selected>{{field.title}}</option>
-              <option ng-repeat="obj in field.value">{{obj.name}} kg</option>
-            </select>
-          </div>
-          <div class="dd_arrow"><span></span></div>
-        </div>
-
-
         <input ng-if="field.type==='number'" type="number" autocomplete="off" ng-model="choice[field.fieldname]" 
                placeholder="{{field.placeholder}}" title="{{field.placeholder}}" ng-required="true" name="{{choice.id}}{{field.fieldname}}" 
                ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}" autodecimal="{{field.autodecimal}}">
