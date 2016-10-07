@@ -3483,3 +3483,7 @@ md-datepicker {
 .display_collection {
   margin-top: 10px;
 }
+
+*:focus {
+    outline: none;
+}
