@@ -1928,10 +1928,11 @@ div[ng-view] {
   margin-top: 16px;
 }
 
-.select_object .dropdown-container {
+.select_object.lot_setup .dropdown-container {
   margin-top: 24px;
   width: 510px;
 }
+
 .dropdown-container{
   min-width: 220px;
 }
