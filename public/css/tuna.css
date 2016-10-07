@@ -1950,8 +1950,13 @@ div[ng-view] {
 }
 
 #station-HS0-003 .select_object .dropdown-container,
-#station-AM1-005 .select_object .dropdown-container {
+#station-AM1-005 .select_object .dropdown-container,
+.select_object .dropdown-container {
   width: 510px;
+}
+
+.select_object entryform .dropdown-container{
+  width:100%;
 }
 
 .weighstation_main .form_label label,
