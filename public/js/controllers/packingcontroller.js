@@ -23,11 +23,19 @@ angular.module('scanthisApp.packingController', [])
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.disabled = true;
+          }
     if (!raw_id) {
       toastr.error('please scan a code');
       $scope.clearField();
     }
     else{
+      var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.disabled = true;
+          }
       var id = raw_id.split("/")[0].toUpperCase();
       $scope.id = id;
 
@@ -86,7 +94,8 @@ angular.module('scanthisApp.packingController', [])
     $scope.input.code = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
-              thediv.focus();
+            thediv.disabled = false;
+            thediv.focus();
           }
   };
 
@@ -95,11 +104,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
-      $scope.input.code=null;
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          }
+      $scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -372,26 +377,32 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
-    var case_num;
-    if(!$scope.current.box.case_number){
-      case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt($scope.current.collectionid.substring(6,10),36)%10001),5);
-    }
-    else case_num = $scope.current.box.case_number;
-    var lot_num = GetBoxLotNumber($scope.list.included);
-    if (lot_num !== undefined){
-      $scope.GetInfo(lot_num, case_num);
-    }
-    else{
-      var harvester_code = null;
-      var box_weight = CalculateBoxWeight($scope.list.included);
-      var best_before = null;
-      var num = 0;
-      var internal_lot_code = '';
-      lot_num = null;
-      if ($scope.current.collectionid) {
-          $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
-      }
-    }
+    $http.get('/increment').then(function successCallback(response) {
+
+        var case_num;
+        if(!$scope.current.box.case_number){
+          case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt(response.data)),5);
+        }
+        else case_num = $scope.current.box.case_number;
+        var lot_num = GetBoxLotNumber($scope.list.included);
+        if (lot_num !== undefined){
+          $scope.GetInfo(lot_num, case_num);
+        }
+        else{
+          var harvester_code = null;
+          var box_weight = CalculateBoxWeight($scope.list.included);
+          var best_before = null;
+          var num = 0;
+          var internal_lot_code = '';
+          lot_num = null;
+          if ($scope.current.collectionid) {
+              $scope.PatchBoxNull(box_weight, lot_num, num, harvester_code, internal_lot_code, best_before, case_num);
+          }
+        }
+
+    }, function errorCallback(response) {
+    });
+
   };
 
   $scope.GetInfo = function(lot_num, case_num){

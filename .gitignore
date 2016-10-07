@@ -16,3 +16,4 @@ database.json
 *~
 *DS_Store
 docker-compose.override.yml
+increment.json
