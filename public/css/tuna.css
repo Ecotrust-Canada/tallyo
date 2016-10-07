@@ -1940,7 +1940,8 @@ div[ng-view] {
   width: 250px;
 }
 
-#station-HS0-003 .select_object .dropdown-container {
+#station-HS0-003 .select_object .dropdown-container,
+#station-AM1-005 .select_object .dropdown-container {
   width: 510px;
 }
 
