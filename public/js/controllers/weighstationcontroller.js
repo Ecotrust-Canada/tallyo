@@ -51,8 +51,12 @@ angular.module('scanthisApp.itemController', [])
         timeout: ($scope.options.scale_timeout || $scope.settings.scale_timeout || 1000)
       }).then(
         function successCallback(response) {
-          if ($scope.retry !== 0){
-            toastr.success('scale reconnected');
+          if ($scope.retry != 0){
+            var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+            if(status_msg) {
+              status_msg.innerText = 'Scale OK';
+              status_msg.className = 'scale_msg';
+            }
           }
           $scope.retry = 0;
           if(response.data.value !== "" && response.data.value !== null){
@@ -70,6 +74,7 @@ angular.module('scanthisApp.itemController', [])
           }
         },
         function errorCallback(response) {
+          console.log('Unstable scale connection:');
           console.log(response);
           // get the manual_input_ element - this means clicking it will set manual input mode but it is currently in auto mode
           var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
@@ -79,22 +84,28 @@ angular.module('scanthisApp.itemController', [])
             if (_timeout <= 0) _timeout = 1000;
 
             // retry for at least 2 seconds
-            if ($scope.retry < ( 2000 / _timeout )) {
+            if ($scope.retry++ < ( 2000 / _timeout )) {
               // we are retrying here now so we do not want to change the state of the scale until the retries have been exhausted
               // basically we are simply delaying the clicking of _thediv which will set the scale to manual mode
+              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if(status_msg) {
+                status_msg.innerText = 'Scale Unstable';
+                status_msg.className = 'scale_msg_warn';
+              }
+            } else {
+              // we have retried for two seconds and no luck reconnectiong - switch to manual input
+              // reverse logic here - thediv manual_input_ means clicking it will make it manual input
+              //thediv.click();
 
-              // increment retry and prevent a toast flood by only sending every 5th retry
-              if (( $scope.retry++ % 5 ) == 0) {
-                toastr.warning('Scale connection is unstable...');
+              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if(status_msg) {
+                status_msg.innerText = 'Scale LOST';
+                status_msg.className = 'scale_msg_error';
+
+                // clear the scale value
+                $scope.scale[fieldName] = "";
               }
             }
-          } else {
-            // we have retried for two seconds and no luck reconnectiong - switch to manual input
-            // reverse logic here - thediv manual_input_ means clicking it will make it manual input
-            thediv.click();
-
-            // alert user to error condition
-            toastr.error('Scale connection lost');
           }
         });
       }, 500);

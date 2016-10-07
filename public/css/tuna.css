@@ -2315,6 +2315,22 @@ input[name^=weight]::after {
   background-image: url(/images/scale_icon.svg);
 }
 
+.scale_msg {
+  color: #0076AD;
+  font-weight: bold;
+}
+
+.scale_msg_error {
+  color: red;
+  font-weight: bold;
+}
+
+.scale_msg_warn {
+  color: darkorange;
+  font-weight: bold;
+}
+
+
 .pictogram_btns span + span, 
 .prev_summary span + span,
 .summary span + span { 
@@ -2711,7 +2727,7 @@ input[name^=weight]::after {
 #refresh a, .pictogram_btns > span {
   font-family: 'Lato-Bold';
   font-size: 15px;
-  color: #0076AD;
+  /*color: #0076AD;*/
   line-height: 15px;
   text-decoration: none;
 }
@@ -2737,7 +2753,7 @@ input[name^=weight]::after {
 #doublestn a, .pictogram_btns > span {
   font-family: 'Lato-Bold';
   font-size: 15px;
-  color: #0076AD;
+  /*color: #0076AD;*/
   line-height: 15px;
   text-decoration: none;
 }
