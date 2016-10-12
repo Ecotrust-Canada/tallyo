@@ -186,6 +186,10 @@ angular.module('scanthisApp.packingController', [])
           var data = response.data[0];
           $scope.current.totals.weight = data.weight_1;
           $scope.current.totals.pieces = data.boxes;
+        }
+        else{
+          $scope.current.totals.weight = 0;
+          $scope.current.totals.pieces = 0;
         }        
       };
       var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
@@ -197,6 +201,10 @@ angular.module('scanthisApp.packingController', [])
           var data = response.data[0];
           $scope.current.totals.weight = data.total_weight;
           $scope.current.totals.pieces = data.boxes;
+        }
+        else{
+          $scope.current.totals.weight = 0;
+          $scope.current.totals.pieces = 0;
         }
       };
       var query1 = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
@@ -218,6 +226,15 @@ angular.module('scanthisApp.packingController', [])
 
 
 .controller('RemovePatchCtrl', function($scope, $http, DatabaseServices, toastr) {
+
+  $scope.clearField = function(){
+    $scope.input.code = null;
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+            thediv.disabled = false;
+            thediv.focus();
+          }
+  };
   
   $scope.PatchObjRemoveContainer = function(obj){
     $scope.to_delete = obj;
