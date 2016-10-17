@@ -94,7 +94,20 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getTheData = function(ship_obj){
     var stn = $scope.sumStations[$scope.stn.index];
-    if (stn.csv_1 && !stn.csv_2){
+    if (stn.csv_1 && stn.csv_ship){
+      async.parallel([
+          function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_ship.table, stn.csv_ship.fields);},
+          function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);}
+      ],
+      function(err, results) {
+          var name = ship_obj.po_number;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Shipment',header:true},{sheetid:'Boxes',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+    }
+    else if (stn.csv_1 && !stn.csv_2){
       async.parallel([
           function(callback){ $scope.getCSV(callback, ship_obj.shipping_unit_number, ship_obj.po_number, stn.csv_1.table, stn.csv_1.fields);}
       ],
