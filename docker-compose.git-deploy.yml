@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  amanda1:
+    volumes:
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public
+
+  amanda2:
+    volumes:
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public

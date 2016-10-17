@@ -6,13 +6,7 @@ services:
       - "5432:5432"
 
   amanda1:
-    volumes:
-      - ./migrations:/opt/tallyo/migrations
-      - ./public:/opt/tallyo/public
     restart: never
 
   amanda2:
-    volumes:
-      - ./migrations:/opt/tallyo/migrations
-      - ./public:/opt/tallyo/public
     restart: never

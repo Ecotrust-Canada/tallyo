@@ -13,6 +13,7 @@ var config = require(configpath+"_local");
 
 app.use(cookieParser());
 
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use(express.static(path.join(__dirname, 'public' )));
 
 app.get('/config', function(req, res, next){
