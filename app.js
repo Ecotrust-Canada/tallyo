@@ -31,6 +31,7 @@ var db = pgp("postgres://tuna_processor:salmon@" + the_db.host + ":5432/" + the_
 
 
 
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use(express.static(path.join(__dirname, 'public' )));
 
 app.get('/config', function(req, res, next){
