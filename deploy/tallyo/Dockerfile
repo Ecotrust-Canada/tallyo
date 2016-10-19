@@ -3,11 +3,9 @@ FROM alpine:3.3
 ENV DB_RUNMIGRATIONS false
 ENV TALLYO_TIMEZONE UTC
 
-RUN apk update && apk upgrade
-
-RUN apk add nodejs git tzdata bash
-
-
+RUN apk update && \
+    apk upgrade && \
+    apk add nodejs git tzdata bash
 
 RUN npm install -g bower db-migrate db-migrate-pg
 
@@ -22,6 +20,5 @@ RUN chmod +x /docker-entrypoint.sh /wait-for-it.sh
 RUN npm install --production && bower install --allow-root \
  && cp -a template_database.json database.json
 
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
