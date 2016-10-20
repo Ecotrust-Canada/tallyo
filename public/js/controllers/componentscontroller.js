@@ -343,7 +343,7 @@ angular.module('scanthisApp.createlotController', [])
 
 
   $scope.HighlightGreen = function(str){
-    $timeout(function(){ $scope.current.addnew = false; }, 700);
+    $timeout(function(){ $scope.current.addnew = false; }, 500);
   };
 })
 
