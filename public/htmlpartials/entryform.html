@@ -77,8 +77,9 @@
           </span>
 
           <!--select--> 
-
           <input-dropdown ng-if="row.type === 'select' && row.value ==='dboptions'" filter="row.fieldname"  thelist="formoptions"  config="dboptionsconfig" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
+
+          <input-dropdown ng-if="row.type === 'select' && row.dropdown_options"  thelist="row.dropdown_options"  config="dboptionsconfig" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
 
 
