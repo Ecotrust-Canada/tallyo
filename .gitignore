@@ -4,7 +4,7 @@ logs/*
 !.gitkeep
 local.env
 node_modules/
-public/bower_components/
+bower_components
 public/js/configs
 tmp
 .DS_Store
