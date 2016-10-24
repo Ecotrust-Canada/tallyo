@@ -69,17 +69,22 @@ angular.module('scanthisApp.packingController', [])
         $scope.clearField();
         toastr.error('invalid QR code'); // show failure toast.
       };
+      var err_func = function(err) {
+        console.log(err);
+        $scope.clearField();
+        toastr.error('Database error'); // show failure toast.
+      };
       var query;
       if ($scope.station_info.scanid && $scope.station_info.scanid === 'uuid_from_label' && id.length === 8){
         query = '?uuid_from_label=gt.' + id + '-0000-0000-0000-000000000000&uuid_from_label=lt.' + id + '-ffff-ffff-ffff-ffffffffffff' ;
-        DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+        DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr, null, err_func);
       }
       else if ($scope.station_info.scanid && $scope.station_info.scanid === 'uuid_from_label' && id.length !== 8 && id.length !== 36){
         $scope.clearField();
         toastr.error('invalid QR code');
       }else{
         query = '?' + ($scope.station_info.scanid || $scope.station_info.itemid) + '=eq.' + id;
-        DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr);
+        DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr, null, err_func);
       }
     }    
   };

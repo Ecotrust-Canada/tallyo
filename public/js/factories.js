@@ -43,65 +43,72 @@ angular.module('scanthisApp.factories', [])
   /**
    * Creates new row in database
    */
-  db_service.DatabaseEntry = function(table, entry, func){
+  db_service.DatabaseEntry = function(table, entry, func, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table;
-    $http.post(url, ForceUpper(entry)).then(func, handleDbError);
+    $http.post(url, ForceUpper(entry)).then(func, on_error);
   };
 
   /**
    * Creates a new row in the database and returns the result.
    */
-  db_service.DatabaseEntryReturn = function(table, entry, func){
+  db_service.DatabaseEntryReturn = function(table, entry, func, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table;
-    $http.post(url, ForceUpper(entry), patchHeaders).then(func, handleDbError);
+    $http.post(url, ForceUpper(entry), patchHeaders).then(func, on_error);
   };
 
   /**
    * Sends a patch to the database and returns the result.
    */
-  db_service.PatchEntry = function(table, patch, querystring, func, onErr){
+  db_service.PatchEntry = function(table, patch, querystring, func, onErr, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.patch(url, ForceUpper(patch), patchHeaders).then(nonzeroLengthCheck(func, onErr), handleDbError);
+    $http.patch(url, ForceUpper(patch), patchHeaders).then(nonzeroLengthCheck(func, onErr), on_error);
   };
 
   /**
    * Deletes a record from the database.
    */
-  db_service.RemoveEntry = function(table, querystring, func){
+  db_service.RemoveEntry = function(table, querystring, func, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table + cleanQueryString(querystring);
-    $http.delete(url).then(func, handleDbError);
+    $http.delete(url).then(func, on_error);
   };
 
   /**
    * Fetch a DB record
    * @param onErr - called if nothing matching query
    */
-  db_service.GetEntry = function(table, func, querystring, onErr, range){
+  db_service.GetEntry = function(table, func, querystring, onErr, range, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table + cleanQueryString(querystring);
     if (range){
-      $http.get(url, limitHeaders[range]).then(nonzeroLengthCheck(func, onErr), handleDbError);
+      $http.get(url, limitHeaders[range]).then(nonzeroLengthCheck(func, onErr), on_error);
     }else{
-      $http.get(url).then(nonzeroLengthCheck(func, onErr), handleDbError);
+      $http.get(url).then(nonzeroLengthCheck(func, onErr), on_error);
     }    
   };
   
   /**
    * Get a record from the DB, quietly.
    */
-  db_service.GetEntryNoAlert = function(table, func, querystring, range){
+  db_service.GetEntryNoAlert = function(table, func, querystring, range, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table + cleanQueryString(querystring);
     
     if (range){
-      $http.get(url, limitHeaders[range]).then(func, handleDbError);
+      $http.get(url, limitHeaders[range]).then(func, on_error);
     }else{
-      $http.get(url).then(func, handleDbError);
+      $http.get(url).then(func, on_error);
     }  
   };
 
   /**
    * Fetch multiple records from the DB.
    */
-  db_service.GetEntries = function(table, func, querystring, range){
+  db_service.GetEntries = function(table, func, querystring, range, err_func){
+    var on_error = err_func || handleDbError;
     var url;
     if (querystring){
       url = databaseurl + table + cleanQueryString(querystring);
@@ -110,13 +117,14 @@ angular.module('scanthisApp.factories', [])
       url = databaseurl + table;
     }
     if (range){
-      $http.get(url, limitHeaders[range]).then(func, handleDbError);
+      $http.get(url, limitHeaders[range]).then(func, on_error);
     }else{
-      $http.get(url).then(func, handleDbError);
+      $http.get(url).then(func, on_error);
     }  
   };
 
-  var CreateCode = function(table, processor_code, func, onErr){
+  var CreateCode = function(table, processor_code, func, onErr, err_func){
+    var on_error = err_func || handleDbError;
     return function(response){
       var table_info = tableInfo(table);
       var id = response.data.serial_id;
@@ -126,7 +134,7 @@ angular.module('scanthisApp.factories', [])
       var newid = table_info.letter + '-' + processor_code + '-' + padz(id36, 4);
       var patch = {};
       patch[table_info.field] = newid;
-      $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func), handleDbError);
+      $http.patch(url, patch, patchHeaders).then(nonzeroLengthCheck(func, onErr), on_error);
     };
   };
 
@@ -135,13 +143,14 @@ angular.module('scanthisApp.factories', [])
     toastr.error('no database connection');
   };
 
-  db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func){
+  db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func, err_func){
+    var on_error = err_func || handleDbError;
     var url = databaseurl + table;
     if (isInArray(table, ['box', 'lot', 'loin', 'shipping_unit', 'harvester', 'supplier'])){
-      $http.post(url, ForceUpper(entry), patchHeaders).then(CreateCode(table, processor_code, func), handleDbError);
+      $http.post(url, ForceUpper(entry), patchHeaders).then(CreateCode(table, processor_code, func), on_error);
     }
     else{
-      $http.post(url, ForceUpper(entry), patchHeaders).then(func, handleDbError);
+      $http.post(url, ForceUpper(entry), patchHeaders).then(func, on_error);
     }
   };
 
