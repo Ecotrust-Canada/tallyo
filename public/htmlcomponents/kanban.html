@@ -1,13 +1,43 @@
 <div class="panel grey">
 <div  ng-controller="LotCtrl" class="adminmanagelots">
-  <div class="header">
+<!--   <div class="header">
     <input ng-model="searchText" class="search" placeholder="Search"></input>
     <div class="block marg_top"><span class="date_filter_label">Date Range</span></div>
     <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
     <div class="block marg_top"><span class="date_filter_label">To</span></div>
     <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker>
     <button ng-click="FilterDate()">Go</button>
+  </div> -->
+
+
+
+<div class="kanban_search">
+  <div class="select_header" ng-class="{lot_chosen: hide_search}"
+       ng-click="hide_search = !hide_search;boxes = null;">
+    <span class="show_choices">Search</span> 
   </div>
+  <div ng-hide="hide_search">
+    <div class="show_choices">
+      <div class="header">
+
+        <div class="display_field" ng-repeat="option in options.search_options">
+            <div class="search_label"><span for="filter_{{option.fieldname}}">{{option.label}}:</span></div>
+            <input ng-model="search[option.fieldname]" id="filter_{{option.fieldname}}">
+        </div>
+
+
+        <div class="block marg_top marg_10"><span class="date_filter_label">Date Range:</span></div><br>
+        <md-datepicker ng-model="startDate" md-placeholder="Start date"></md-datepicker>
+        <div class="block marg_top"><span class="date_filter_label">To</span></div>
+        <md-datepicker ng-model="endDate" md-placeholder="End date"></md-datepicker><br>
+        <button class="btn-blue" ng-click="FilterDate()">Go</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 <div> <span class="page_label">Page: </span><span ng-repeat="page in list.pages" ng-click="BeginLoadLots(page)" ><div class="circle block" ng-class="{is_current:$parent.current.page===page}">{{page +1}}</div>
