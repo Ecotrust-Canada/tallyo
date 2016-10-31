@@ -97,7 +97,7 @@ angular.module('scanthisApp.filters', [])
 .filter('weightstring', function() {
   return function(input) {
     if (input){
-      return String(input.toFixed(2)) + ' kg';
+      return String(parseInt(input).toFixed(2)) + ' kg';
     }
     
   };
@@ -105,7 +105,8 @@ angular.module('scanthisApp.filters', [])
 .filter('weightnum', function() {
   return function(input) {
     if (input){
-      return String(input.toFixed(2));
+
+      return String(parseInt(input).toFixed(2));
     }
     
   };
