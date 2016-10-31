@@ -21,7 +21,9 @@
     <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot" class="display_collection">
       <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
       <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
-        <span ng-if="list.included.length==0  && !options.enable_edit" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+        <span ng-if="station_info.collectiontable !== 'lot' && list.included.length==0 && current.totals.pieces ===0  && !options.enable_edit" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
+        <span ng-if="station_info.collectiontable === 'lot' && current.lot.num_items === 0" id="clear-{{config.id}}" class="clear" ng-click="delete()" >Delete</span>
+        <span ng-if="station_info.collectiontable === 'lot' && current.lot.num_items !== 0"><span class="infotext">Lot contains items - cannot delete</span></span>
         <span ng-if="options.enable_edit" ng-click="showEdit()" id="clear-{{config.id}}" class="edit">Edit</span>
         <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
               id="reprint-{{config.id}}" class="reprint">Reprint</span>

@@ -500,6 +500,13 @@ body{
   font-size: 10px;
   color: red;
 }
+.infotext{
+  font-size: 10px;
+  color: #0076AD;
+  font-style: italic;
+  opacity: 0.6;
+  margin-left: -30px;
+}
 
 ng-submitted ng-invalid { 
   background: red; 
