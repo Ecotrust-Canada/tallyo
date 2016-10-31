@@ -23,7 +23,7 @@
   </div> 
   <div class="inset_form"> 
     <div class="show_choices">
-      <div class="marg_left"><div class="field"><md-datepicker ng-model="current.receivedate" md-placeholder="Receive date"></md-datepicker></div></div>
+      <div class="marg_left"><div class="field"><md-datepicker ng-model="current.receivedate" ng-model-options="{ timezone: 'utc' }" md-placeholder="Receive date"></md-datepicker></div></div> {{current.receivedate }}
     </div>
     <display ng-if="current.supplier" settings="settings" obj="current.supplier" config="supplierdisplay"></display>  
   </div>

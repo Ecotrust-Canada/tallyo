@@ -155,4 +155,15 @@ angular.module('scanthisApp.filters', [])
   };
 })
 
+.filter('to_utc', function(){
+  return function(input){
+    if (input){
+      var localTime  = moment.utc(input).toDate();
+      localTime = moment(localTime).format('YYYY-MM-DD HH:mm:ss');
+      return localTime;
+    }
+    
+  };
+})
+
 ;
