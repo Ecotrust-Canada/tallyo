@@ -85,6 +85,7 @@ angular.module('scanthisApp.receivingController', [])
       'size': jsonvalues.size, 
       'grade':jsonvalues.grade, 
       'pieces':jsonvalues.pieces, 
+      'species': jsonvalues.species,
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
       'internal_lot_code': jsonvalues.internal_lot_code,

@@ -371,6 +371,7 @@ angular.module('scanthisApp.packingController', [])
           var entry = {};
           entry.pdc_text = form.pdc_text;
           entry.grade = form.grade; 
+          entry.species = form.species; 
           entry.size = form.size;
           entry.weight = form.weight;
           entry.supplier_code = $scope.current.lot.supplier_code;

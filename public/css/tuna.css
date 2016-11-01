@@ -1857,9 +1857,13 @@ div[ng-view] {
 #create_box_form #form-24{
   width: 506px;
 }
-#create_box_form #form-0 .form_label,
+
 #create_box_form #form-24 .form_label{
   width: 170px;
+}
+
+#create_box_form #form-0 .form_label{
+  width:167px;
 }
 
 .editform .form_label {
@@ -2058,7 +2062,7 @@ div[ng-view] {
 #form-3 .field {
   width: 260px;
 }
-#create_box_form #form-0 .field,
+
 #create_box_form #form-24 .field {
   width: 200px;
 }
@@ -2521,6 +2525,12 @@ input[name^=weight]::after {
 #radio-27-grade.toggle-group-container label,
 #radio-23-grade.toggle-group-container label{
   width: 60px;
+}
+
+#radio-0-species.toggle-group-container label,
+#radio-23-species.toggle-group-container label,
+#radio-7-species.toggle-group-container label{
+  width:80px;
 }
 
 
