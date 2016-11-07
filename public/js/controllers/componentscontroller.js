@@ -222,8 +222,8 @@ angular.module('scanthisApp.createlotController', [])
   $scope.ListCollectionItems = function(){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      //var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      //var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var table;
       var query;
       if ($scope.station_info.itemtable === 'box'){
@@ -239,6 +239,10 @@ angular.module('scanthisApp.createlotController', [])
       if ($scope.options.hundred_limit){
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query, 'hundred'); 
+      }
+      if ($scope.options.all_items){
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+        DatabaseServices.GetEntries(table, func, query); 
       }
       else{
         query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
@@ -293,8 +297,8 @@ angular.module('scanthisApp.createlotController', [])
     }
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
-      //var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-      var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
+      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+      //var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var func = function(response){
         $scope.list.included = response.data;
         $scope.list.length = response.headers()['content-range'].split('/')[1];
@@ -343,7 +347,7 @@ angular.module('scanthisApp.createlotController', [])
 
 
   $scope.HighlightGreen = function(str){
-    $timeout(function(){ $scope.current.addnew = false; }, 700);
+    $timeout(function(){ $scope.current.addnew = false; }, 500);
   };
 })
 

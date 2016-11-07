@@ -8,7 +8,8 @@
       <tr ng-if="config.headers">
       <th></th>
         <th ng-repeat="title in config.headers">{{title}}</th>
-      </tr>  
+      </tr>
+
       <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: limit | filter: filterstring"
           id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$first && current.addnew===true}' elem-ready="testFn({str:$index})">
           <td><span>{{listlength - $index}}</span></td>

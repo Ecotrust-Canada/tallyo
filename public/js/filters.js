@@ -97,7 +97,7 @@ angular.module('scanthisApp.filters', [])
 .filter('weightstring', function() {
   return function(input) {
     if (input){
-      return String(input.toFixed(2)) + ' kg';
+      return String(parseFloat(input).toFixed(2)) + ' kg';
     }
     
   };
@@ -105,7 +105,8 @@ angular.module('scanthisApp.filters', [])
 .filter('weightnum', function() {
   return function(input) {
     if (input){
-      return String(input.toFixed(2));
+
+      return String(parseFloat(input).toFixed(2));
     }
     
   };
@@ -152,6 +153,17 @@ angular.module('scanthisApp.filters', [])
       var new1 = JSON.parse(JSON.stringify(input)) || '';
       return new1.lot_number;
     }
+  };
+})
+
+.filter('to_utc', function(){
+  return function(input){
+    if (input){
+      var localTime  = moment.utc(input).toDate();
+      localTime = moment(localTime).format('YYYY-MM-DD HH:mm:ss');
+      return localTime;
+    }
+    
   };
 })
 

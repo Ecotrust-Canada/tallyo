@@ -347,17 +347,13 @@ angular.module('scanthisApp.itemController', [])
   };
 
 
-  $scope.Reprint = function(loin_number){
+  $scope.Reprint = function(loin){
     if($scope.onLabel){
       if($scope.current.to_print === true){
-        var query = '?station_code=eq.' + $scope.station_code + '&loin_number=eq.' + loin_number;
-        var func = function(response){
-          var data = dataCombine((response.data[0] || response.data), $scope.onLabel.qr);
-          var labels = ArrayFromJson((response.data[0] || response.data), $scope.onLabel.print);
-          console.log(data, labels);
-          $scope.printLabel(data, labels);
-        };
-        DatabaseServices.GetEntries('loin_with_info', func, query);        
+        var data = dataCombine(loin, $scope.onLabel.qr);
+        var labels = ArrayFromJson(loin, $scope.onLabel.print);
+        console.log(data, labels);
+        $scope.printLabel(data, labels);    
       }
       else{
         toastr.error('printing off');

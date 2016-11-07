@@ -68,6 +68,7 @@ angular.module('scanthisApp.receivingController', [])
       'harvester_code': jsonvalues.harvester_code,
       'fleet': jsonvalues.fleet,
       'supplier_group': jsonvalues.supplier_group,
+      'ft_fa_code': jsonvalues.ft_fa_code,
       'fishing_area': jsonvalues.fishing_area};
     var func = function(response){
       $scope.createBox(jsonvalues);
@@ -84,6 +85,7 @@ angular.module('scanthisApp.receivingController', [])
       'size': jsonvalues.size, 
       'grade':jsonvalues.grade, 
       'pieces':jsonvalues.pieces, 
+      'species': jsonvalues.species,
       'weight':jsonvalues.weight,
       'case_number':jsonvalues.case_number, /*can mod from box_number*/
       'internal_lot_code': jsonvalues.internal_lot_code,
@@ -387,6 +389,7 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_in=eq.' + lot_number + '&station_code=eq.' + stn.code;
+    query += '&order=timestamp.desc';
     var func = function(response){
       if(response.data.length>0){
         $scope.list.detail = response.data;

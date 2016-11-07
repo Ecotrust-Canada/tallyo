@@ -35,7 +35,7 @@
                 ng-model="form[row.fieldname]" ng-required="{{row.required || false}}"></span>
 
           <!--datepicker-->
-          <span ng-if="row.type === 'datepicker'"> <md-datepicker ng-model="form[row.fieldname]" md-placeholder="date"></md-datepicker></span>
+          <span ng-if="row.type === 'datepicker'"> <md-datepicker ng-model="form[row.fieldname]" ng-model-options="{ timezone: 'utc' }" md-placeholder="date"></md-datepicker></span>
 
           <!--number-->
           <span ng-if="row.type === 'number'">
@@ -77,8 +77,9 @@
           </span>
 
           <!--select--> 
-
           <input-dropdown ng-if="row.type === 'select' && row.value ==='dboptions'" filter="row.fieldname"  thelist="formoptions"  config="dboptionsconfig" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
+
+          <input-dropdown ng-if="row.type === 'select' && row.dropdown_options"  thelist="row.dropdown_options"  config="dboptionsconfig" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
 
 
 

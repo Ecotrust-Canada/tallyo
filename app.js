@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 var pgp = require("pg-promise")(/*options*/);
-var db = pgp("postgres://tuna_processor:salmon@" + the_db.host + ":5432/" + the_db.database);
+var db = pgp("postgres://" + the_db.user + ":" + the_db.password + "@" + the_db.host + ":5432/" + the_db.database);
 
 
 

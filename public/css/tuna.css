@@ -500,6 +500,13 @@ body{
   font-size: 10px;
   color: red;
 }
+.infotext{
+  font-size: 10px;
+  color: #0076AD;
+  font-style: italic;
+  opacity: 0.6;
+  margin-left: -30px;
+}
 
 ng-submitted ng-invalid { 
   background: red; 
@@ -1850,9 +1857,13 @@ div[ng-view] {
 #create_box_form #form-24{
   width: 506px;
 }
-#create_box_form #form-0 .form_label,
+
 #create_box_form #form-24 .form_label{
   width: 170px;
+}
+
+#create_box_form #form-0 .form_label{
+  width:167px;
 }
 
 .editform .form_label {
@@ -2051,7 +2062,7 @@ div[ng-view] {
 #form-3 .field {
   width: 260px;
 }
-#create_box_form #form-0 .field,
+
 #create_box_form #form-24 .field {
   width: 200px;
 }
@@ -2516,6 +2527,12 @@ input[name^=weight]::after {
   width: 60px;
 }
 
+#radio-0-species.toggle-group-container label,
+#radio-23-species.toggle-group-container label,
+#radio-7-species.toggle-group-container label{
+  width:80px;
+}
+
 
 
 
@@ -2689,11 +2706,26 @@ input[name^=weight]::after {
   padding-right: 30px;
   font-size: 18px;
 }
-.select_object .select_header.lot_chosen  .show_choices{
+.kanban_search .select_header  .show_choices {
+  display: inline-block;
+  width: auto;
+  padding-right: 30px;
+  font-size: 28px;
+}
+
+.select_object .select_header.lot_chosen  .show_choices,
+.kanban_search .lot_chosen  .show_choices{
   background-image: url(/images/open_details.png);
   background-repeat: no-repeat;
   background-position: right center;
 }
+
+.kanban_search{
+  margin-top: 30px;
+  margin-bottom: 50px;
+  margin-left:40px;
+}
+
 
 .select_object .select_header #reprint_label_link,
 .select_header #retouching_link {
@@ -3419,8 +3451,22 @@ md-datepicker {
   margin-top: 20px;
 }
 
+.search_label{
+  color: #0076AD;
+  text-transform: uppercase;
+  font-family: 'Lato-Bold';
+  font-size: 20px;
+  margin-top: 20px;
+  width: 220px;
+  display: inline-block;
+}
+
 .marg_top{
   padding-top: 8px;
+}
+
+.marg_10{
+  margin-top: 10px;
 }
 
 .marg_top_5{

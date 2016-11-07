@@ -339,6 +339,10 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.limit = 10;
 
+  $scope.hide_search = true;
+
+  $scope.search = {};
+
   $scope.myValueFunction = function(total) {
     return total.grade + 'Z';
   };
@@ -354,11 +358,16 @@ angular.module('scanthisApp.AdminController', [])
       var start_date = moment($scope.startDate).add(s_offset, 'hours').utcOffset(response.data.timezone).subtract(the_offset, 'hours').startOf('day').format();
 
       var query = '?start_date=not.gte.'+ end_date + '&end_date=not.lte.' + start_date + '&processor_code=eq.' + $scope.processor;
-      if ($scope.options.internal_lot){
+      if ($scope.options.internal_lot){//limits to production lots
         query += '&shipping_unit_number=is.null';
-      } 
+      }
+      for (var key in $scope.search){
+        var val = $scope.search[key];
+        query += '&' + key + '=ilike.*' + val + '*';
+      }
       query += '&order=timestamp.desc';
       var func = function(response){
+        $scope.hide_search = true;
         $scope.list.harvester_lot = response.data;
         $scope.paginate();
         $scope.BeginLoadLots(0, true);
