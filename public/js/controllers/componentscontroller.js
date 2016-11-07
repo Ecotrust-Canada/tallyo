@@ -240,6 +240,10 @@ angular.module('scanthisApp.createlotController', [])
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query, 'hundred'); 
       }
+      if ($scope.options.all_items){
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+        DatabaseServices.GetEntries(table, func, query); 
+      }
       else{
         query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
