@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  db:
+    ports:
+      - "${AMANDA_DB_PORT}:5432"
+
+  postgrest:
+    ports:
+      - "${AMANDA_POSTGREST_PORT}:3000"
+
+  tallyo:
+    command: app app_config_am1
+    ports:
+      - "${AMANDA_TALLYO_PORT}:8000"
+    environment:
+      DB_RUNMIGRATIONS: 'true'
+    restart: always
+
+  # the second instance needs to define all service attributes because it has nothing to override
+  # this is the 'messy' aspect to this method
+  tallyo2:
+    image: tallyo
+    command: app app_config_am2
+    ports:
+      - "${AMANDA_TALLYO2_PORT}:8000"
+    env_file: 
+      - static.env
+      - local.env
+    environment:
+      DB_RUNMIGRATIONS: 'false'
+    networks:
+      - back-tier
+    restart: always
+    volumes:
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public

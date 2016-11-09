@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  db:
+    ports:
+      - "${BURU_DB_PORT}:5432"
+
+  postgrest:
+    ports:
+      - "${BURU_POSTGREST_PORT}:3000"
+
+  tallyo:
+    command: app app_config_hsb
+    ports:
+      - "${BURU_TALLYO_PORT}:8000"
+    environment:
+      DB_RUNMIGRATIONS: 'true'
+    restart: always

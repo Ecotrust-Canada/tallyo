@@ -5,14 +5,14 @@ services:
     build:
       context: ./deploy/db
     image: tallyo_db
-    volumes:
-      - pgdatabase:/var/lib/postgresql/data
     networks:
       - back-tier
     env_file: 
       - static.env
       - local.env
     restart: always
+    volumes:
+      - pgdatabase:/var/lib/postgresql/data
 
   postgrest:
     build:
@@ -25,44 +25,24 @@ services:
     env_file: 
       - static.env
       - local.env
-    ports:
-      - "3000:3000"
     depends_on:
       - db
 
-  amanda1:
+  tallyo:
     build:
       dockerfile: ./deploy/tallyo/Dockerfile
       context: .
     image: tallyo
-    command: app app_config_am1
-    ports:
-      - "8000:8000"
-    env_file: 
+    env_file:
       - static.env
       - local.env
     environment:
       DB_RUNMIGRATIONS: 'true'
+    volumes:
+      - ./migrations:/opt/tallyo/migrations
+      - ./public:/opt/tallyo/public
     networks:
       - back-tier
-    restart: always
-    depends_on:
-      - postgrest
-
-  amanda2:
-    image: tallyo
-    command: app app_config_am2
-    ports:
-      - "8001:8000"
-    env_file: 
-      - static.env
-      - local.env
-    networks:
-      - back-tier
-    restart: always
-    depends_on:
-      - postgrest
-      - amanda1
 
 volumes:
   pgdatabase:
