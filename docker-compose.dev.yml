@@ -2,11 +2,8 @@ version: '2'
 
 services:
   db:
+    # set DB_PORT by using command line
+    # $> DB_PORT=5432 docker-compose -f docker-compose.yml -f docker-compose.harsam.yml -f docker-compose.dev.yml -p harsam up
     ports:
-      - "5432:5432"
-
-  amanda1:
-    restart: never
-
-  amanda2:
-    restart: never
+      - "${DB_PORT}:5432"
+      

@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  postgrest:
+    ports:
+      - "${HARSAM_POSTGREST_PORT}:3000"
+
+  tallyo:
+    command: app app_config_hs
+    ports:
+      - "${HARSAM_TALLYO_PORT}:8000"
+    environment:
+      DB_RUNMIGRATIONS: 'true'
+    restart: always

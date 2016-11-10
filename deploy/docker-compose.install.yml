@@ -1,5 +1,0 @@
-version: '2'
-
-services:
-  amanda1:
-   command: db-migrate up -e env
