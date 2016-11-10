@@ -1,10 +1,6 @@
 version: '2'
 
 services:
-  db:
-    ports:
-      - "${AMANDA_DB_PORT}:5432"
-
   postgrest:
     ports:
       - "${AMANDA_POSTGREST_PORT}:3000"
