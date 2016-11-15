@@ -242,7 +242,7 @@ angular.module('scanthisApp.itemController', [])
           $scope.overwrite_form = form;
           $scope.overwrite_uuid = uuid;
           //$scope.overlay('overwrite');
-          $scope.OverwriteBox();
+          $scope.OverwriteBox(form);
         }
         else{
           form.uuid_from_label = uuid;
@@ -254,16 +254,38 @@ angular.module('scanthisApp.itemController', [])
     }
   };
 
-  $scope.OverwriteBox = function(){
+  $scope.OverwriteBox = function(form){
     delete $scope.overwrite_form['uuid_from_label'];
     $scope.MakeItemScanEntry($scope.overwrite_form);
     var patch = $scope.entry.box;
     var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
-    var func = function(response){
+    var func = function(response){      
       $scope.overwrite_form = null;
       $scope.overwrite_uuid = null;
-      $scope.current.itemchange = !$scope.current.itemchange;
-      $scope.formchange = !$scope.formchange;
+
+
+      var box = response.data[0];
+      var scan_entry = {};
+      scan_entry.box_number = box.box_number;
+      scan_entry.lot_number = box.lot_number;
+      scan_entry.station_code = box.station_code;
+
+
+      var func = function(response){
+        var func = function(response){
+            $scope.current.itemchange = !$scope.current.itemchange;
+            $scope.formchange = !$scope.formchange;
+            $scope.current.addnew = true;      
+          };
+        DatabaseServices.DatabaseEntryReturn('scan', scan_entry, func);
+      };
+
+      var patch = {pieces: 0};
+      var query = '?box_number=eq.' + box.box_number + '&station_code=eq.' + $scope.station_code;   
+      DatabaseServices.PatchEntry('scan', patch, query, func);
+
+      //$scope.current.itemchange = !$scope.current.itemchange;
+      //$scope.formchange = !$scope.formchange;
       //$scope.current.addnew = true;
       var thediv = document.getElementById('scaninput');
           if (thediv){
