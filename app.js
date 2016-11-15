@@ -56,37 +56,57 @@ app.get('/server_time', function(req, res, next) {
 });
 
 app.get('/increment', function(req, res, next){
-  fs.readFile('increment.json', function(err, data){
-    if (err){
-      if (err.code === "ENOENT") {
-        var new__num = (parseInt(1)*1)+1;
-        res.send('1');
-        fs.writeFile('increment.json', new__num, function(err){
-          if (err){
-           throw err;
-          }      
-        });
-      }else{
-        throw err;
-      }      
-    }else{
-      var new_num;
-      if (parseInt(data) < 10000){
-        new_num = (parseInt(data)*1)+1;
-      }
-      else{
-        new_num = (parseInt(0)*1)+1;
-      }
+
+  // fs.readFile('increment.json', function(err, data){
+  //   if (err){
+  //     if (err.code === "ENOENT") {
+  //       var new__num = (parseInt(1)*1)+1;
+  //       res.send('1');
+  //       fs.writeFile('increment.json', new__num, function(err){
+  //         if (err){
+  //          throw err;
+  //         }      
+  //       });
+  //     }else{
+  //       throw err;
+  //     }      
+  //   }else{
+  //     var new_num;
+  //     if (parseInt(data) < 10000){
+  //       new_num = (parseInt(data)*1)+1;
+  //     }
+  //     else{
+  //       new_num = (parseInt(0)*1)+1;
+  //     }
       
-      fs.writeFile('increment.json', new_num, function(err){
-        if (err){
-          throw err;
-        }      
-      });
-      res.send(data);
-    }
+  //     fs.writeFile('increment.json', new_num, function(err){
+  //       if (err){
+  //         throw err;
+  //       }      
+  //     });
+  //     res.send(data);
+  //   }
     
-  });
+  // });
+
+  var query = 'select to_increment from increment_case where serial_id =1';
+  db.any(query)
+      .then(function (data) {
+          var num = String(data[0].to_increment);
+          res.status(200).send(num);
+          var is_num = parseInt(num);
+          var new_num;
+          if (is_num < 10000){
+            new_num= is_num +1;
+          }else{
+            new_num = 1;
+          }
+          var query = 'update increment_case set to_increment = ' + new_num + ' where serial_id = 1';
+          db.any(query).then(function (data) {});
+      })
+      .catch(function (error) {
+          // error;
+      });
 });
 
 var make_totals_query = function(lot_number, station_code, type){
