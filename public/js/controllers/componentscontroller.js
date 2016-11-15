@@ -305,28 +305,29 @@ angular.module('scanthisApp.createlotController', [])
       };
       var table;
       var query;
-      if ($scope.options.hundred_limit){
-        if ($scope.station_info.itemtable === 'box'){
-          table = 'box_with_info';
-        }
-        else {
-          table = $scope.station_info.itemtable;
-        }        
+      
+      if ($scope.station_info.itemtable === 'box'){
+        table = 'box_with_info';
+      }
+      else {
+        table = $scope.station_info.itemtable;
+      }
+
+      if ($scope.options.hundred_limit){        
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query, 'hundred'); 
       }
-      else if ($scope.station_info.itemtable === 'box'){
-        table = 'box_with_info';
-        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-        DatabaseServices.GetEntries(table, func, query); 
-      }
-      else if ($scope.station_info.itemtable === 'loin_with_info'){
-        table = $scope.station_info.itemtable;
+
+      // else if ($scope.station_info.itemtable === 'box'){
+      //   table = 'box_with_info';
+      //   query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+      //   DatabaseServices.GetEntries(table, func, query); 
+      // }
+      else if ($scope.station_info.itemtable === 'loin_with_info' || $scope.options.all_items){
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
       }
       else{
-        table = $scope.station_info.itemtable;
         query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
       }
