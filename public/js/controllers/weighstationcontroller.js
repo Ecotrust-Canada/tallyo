@@ -62,7 +62,7 @@ angular.module('scanthisApp.itemController', [])
             }
           }
           $scope.retry = 0;
-          if(response.data.value !== "" && response.data.value !== null){
+          if(response.data && response.data.value !== "" && response.data.value !== null  && response.data.value !== 'undefined'){
             if ($scope.options.truncate){
               $scope.scale[fieldName] = Math.floor(response.data.value * 10)/10;
             }
