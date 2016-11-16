@@ -561,8 +561,12 @@ angular.module('scanthisApp.receivingController', [])
   $scope.DeleteBoxes = function(choices){
     if (choices){
       if ($scope.current.harvester_lot !== undefined && $scope.current.harvester_lot !== null){
-        var query = '?select=box_number&lot_in=eq.' + $scope.current.harvester_lot.lot_number + '&station_code=eq.' + $scope.station_code;
+        var query = '?select=box_number&lot_in=eq.' + $scope.current.harvester_lot.lot_number + '&station_code=eq.' + $scope.station_code + '&lot_number=is.null';
         var func = function(response){
+          if (response.data.length<formrow.num_boxes){
+            var no_delete = parseInt(formrow.num_boxes) - parseInt(response.data.length);
+            toastr.error('failed to delete ' + no_delete + ' boxes. Do not exist or already added to internal receiving');
+          }
           for (var k=0;k<response.data.length;k++){
             $scope.DeleteScan(response.data[k].box_number);
           }
