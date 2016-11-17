@@ -224,6 +224,9 @@ angular.module('scanthisApp.packingController', [])
       var query1 = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
       DatabaseServices.GetEntries('ship_with_info', func1, query1);
     }
+    // else if ($scope.station_info.collectiontable === 'box'){
+    //   $scope.CalcBox();
+    // }
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -409,7 +412,6 @@ angular.module('scanthisApp.packingController', [])
 
 .controller('CalculateBoxCtrl', function($scope, $http, DatabaseServices) {
   $scope.CalcBox = function(){
-
         var case_num;
         if(!$scope.current.box.case_number){
           $http.get('/increment').then(function successCallback(response) {
@@ -453,7 +455,7 @@ angular.module('scanthisApp.packingController', [])
             }
           }
 
-        }            
+        }       
 
   };
 
@@ -511,6 +513,10 @@ angular.module('scanthisApp.packingController', [])
   }; 
 
   $scope.$watch('list.included', function() {
+    if ($scope.list.included && $scope.list.included.length === 0){
+      $scope.current.totals.weight = 0;
+      $scope.current.totals.pieces = 0;
+    }
     if ($scope.list.included !== undefined && $scope.list.included !== null){
       $scope.CalcBox();
     }

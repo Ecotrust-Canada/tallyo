@@ -28,7 +28,8 @@ where exists (select * from scan s2 where s2.box_number is not null and s2.shipp
 and s2.box_number = s1.box_number and s2.station_code = s1.station_code and 
 s1.shipping_unit_number = s2.shipping_unit_number and s1.timestamp < s2.timestamp);
 
-ALTER TABLE scan ADD CONSTRAINT box_shipment UNIQUE (box_number, shipping_unit_number, station_code);
+CREATE UNIQUE INDEX box_shipment ON scan (box_number, shipping_unit_number, station_code)
+where pieces=1;
 
 
 delete from scan s1
@@ -36,7 +37,8 @@ where exists (select * from scan s2 where s2.box_number is not null and s2.loin_
 and s2.box_number = s1.box_number and s2.station_code = s1.station_code and 
 s1.loin_number = s2.loin_number and s1.timestamp < s2.timestamp);
 
-ALTER TABLE scan ADD CONSTRAINT loin_box UNIQUE (loin_number, box_number, station_code);
+CREATE UNIQUE INDEX loin_box ON scan (loin_number, box_number, station_code)
+where pieces=1;
 
 delete from scan s1
 where exists (select * from scan s2 where s2.box_number is not null and s2.lot_number is not null 
