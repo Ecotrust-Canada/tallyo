@@ -140,7 +140,13 @@ angular.module('scanthisApp.factories', [])
 
   var handleDbError = function(response) {
     console.log(response);
+    if (response.data.code !== '23505'){
     toastr.error('Error: ' + (response.statusText || 'no Database Connection'));
+    }
+    var thediv = document.getElementById('scaninput');
+          if (thediv){
+              thediv.focus();
+          } 
   };
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func, err_func){
