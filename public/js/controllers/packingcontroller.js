@@ -513,7 +513,7 @@ angular.module('scanthisApp.packingController', [])
   }; 
 
   $scope.$watch('list.included', function() {
-    if ($scope.list.included && $scope.list.included.length === 0){
+    if ($scope.list.included && $scope.list.included.length === 0 && $scope.station_info.collectiontable === 'box'){
       $scope.current.totals.weight = 0;
       $scope.current.totals.pieces = 0;
     }

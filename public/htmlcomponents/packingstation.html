@@ -160,9 +160,9 @@
 
 </div>
 
-<div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl">
+
   <div class="panel grey" ng-controller="RemovePatchCtrl" ng-show="!formdisabled && current.totals.pieces>0 && current.collectionid">
-    
+    <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 
     <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
         <bufferedscrolllistpacking itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current"></bufferedscrolllistpacking>
@@ -194,7 +194,7 @@
 
 
   </div>
-</div>
+
 
 
 
