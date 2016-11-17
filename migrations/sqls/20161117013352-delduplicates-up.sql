@@ -40,7 +40,8 @@ ALTER TABLE scan ADD CONSTRAINT loin_box UNIQUE (loin_number, box_number, statio
 
 delete from scan s1
 where exists (select * from scan s2 where s2.box_number is not null and s2.lot_number is not null 
-and s2.box_number = s1.box_number and s2.station_code = s1.station_code and 
+and s2.box_number = s1.box_number and s2.station_code = s1.station_code and s2.pieces = s1.pieces and 
 s1.lot_number = s2.lot_number and s1.timestamp < s2.timestamp);
 
-ALTER TABLE scan ADD CONSTRAINT box_lot UNIQUE (lot_number, box_number, station_code);
+CREATE UNIQUE INDEX box_lot ON scan (lot_number, box_number, station_code)
+where pieces=1;

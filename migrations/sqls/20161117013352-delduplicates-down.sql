@@ -6,4 +6,4 @@ ALTER TABLE scan drop CONSTRAINT box_shipment;
 
 ALTER TABLE scan drop CONSTRAINT loin_box;
 
-ALTER TABLE scan drop CONSTRAINT box_lot;
+drop index box_lot;
