@@ -147,6 +147,10 @@ angular.module('scanthisApp.factories', [])
           if (thediv){
               thediv.focus();
           } 
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
   };
 
   db_service.DatabaseEntryCreateCode = function(table, entry, processor_code, func, err_func){
