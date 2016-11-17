@@ -137,10 +137,13 @@ angular.module('scanthisApp.AdminController', [])
   $scope.getCSV = function(callback, ship_number, po_number, table, fields, label){
     var query = '';
     if ($scope.sumStations[$scope.stn.index].send_field === 'received_from'){
-      query += '?shipping_unit_in=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+      query += '?shipping_unit_in=eq.' + ship_number;
     }
     else{
-      query += '?shipping_unit_number=eq.' + ship_number + '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+      query += '?shipping_unit_number=eq.' + ship_number;
+    }
+    if (!$scope.options.no_station){
+      query += '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
     }
     query += '&order=timestamp.desc';
     var func = function(response){

@@ -323,10 +323,15 @@ angular.module('scanthisApp.createlotController', [])
       //   query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
       //   DatabaseServices.GetEntries(table, func, query); 
       // }
+      else if ($scope.options.no_station){
+        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+        DatabaseServices.GetEntries(table, func, query); 
+      }
       else if ($scope.station_info.itemtable === 'loin_with_info' || $scope.options.all_items){
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
       }
+
       else{
         query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
