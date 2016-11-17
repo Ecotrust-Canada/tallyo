@@ -15,7 +15,7 @@ echo "Removing current db from docker deployment"
 
 dropdb $POSTGRES_DB
 
-if [$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
 	echo "Database drop failed, exiting" && \
 	exit 1
 else
@@ -26,7 +26,7 @@ echo "Creating empty db in docker deployment"
 
 createdb -O $POSTGRES_USER $POSTGRES_DB
 
-if [$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
 	echo "Failed to create database, exiting" && \
 	exit 1
 else
@@ -38,7 +38,7 @@ echo "Restoring db from docker backup"
 # pg_restore -d $POSTGRES_DB /code/backups/st.dump
 pg_restore -d $POSTGRES_DB <&0
 
-if [$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
 	echo "Database restore failed" && \
 	exit 1
 else
