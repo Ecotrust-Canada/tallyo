@@ -275,7 +275,7 @@ angular.module('scanthisApp.itemController', [])
         var func = function(response){
             $scope.current.itemchange = !$scope.current.itemchange;
             $scope.formchange = !$scope.formchange;
-            $scope.current.addnew = true;      
+            //$scope.current.addnew = true;      
           };
         DatabaseServices.DatabaseEntryReturn('scan', scan_entry, func);
       };
