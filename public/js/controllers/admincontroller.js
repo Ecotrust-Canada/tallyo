@@ -147,8 +147,14 @@ angular.module('scanthisApp.AdminController', [])
     }
     query += '&order=timestamp.desc';
     var func = function(response){
-      $scope.list.detail = response.data;
-      var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      var newdata;
+      if (response.data.length > 0){
+        $scope.list.detail = response.data;
+        newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+      }else{
+        newdata = alasql("SELECT " + fields + " FROM ?",[{'nodata':'nodata'}]);
+      }
+      
       callback(null, newdata);
     };
     DatabaseServices.GetEntries(table, func, query);
