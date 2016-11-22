@@ -134,7 +134,11 @@ angular.module('scanthisApp.createlotController', [])
   $scope.DisplayCollectionInfo = function(){
     var table;
     if ($scope.station_info.collectiontable === 'lot'){
-      table = 'harvester_lot';
+      if ($scope.options.lot_count){
+        table = 'harvester_lot_with_count';
+      }else{
+        table = 'harvester_lot';
+      }
     }
     else{
       table = $scope.station_info.collectiontable;

@@ -19,6 +19,7 @@ union
 where exists (select * from box b2 where b2.box_number != b1.box_number and 
 b1.uuid_from_label = b2.uuid_from_label and b2.shipping_unit_number is not null))
 );
+delete from box where box_number is null;
 
 ALTER TABLE box ADD CONSTRAINT box_uuid UNIQUE (uuid_from_label);
 
