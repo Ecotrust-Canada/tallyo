@@ -493,7 +493,9 @@ angular.module('scanthisApp.packingController', [])
                               cutString(box_har.internal_lot_code, 4, 5).substring(0, 8) : null;
     var box_weight = CalculateBoxWeight($scope.list.included);
     var num = $scope.list.included.length;
-    var best_before = moment(box_har.timestamp).add(2, 'years').format();
+    var ts = String(box_har.timestamp);
+    var offset = ts.substring(ts.length-6);
+    var best_before = moment(box_har.timestamp).add(2, 'years').utcOffset(offset).format();
 
     var func = function(response){
       $scope.current.box = response.data[0];
@@ -501,7 +503,7 @@ angular.module('scanthisApp.packingController', [])
         $scope.current.box.ft_fa_code = box_har.ft_fa_code;
         $scope.current.box.fleet = box_har.fleet;
         $scope.current.box.harvest_date = moment(box_har.timestamp).format();
-        $scope.current.box.prod_date = moment(box_har.timestamp).format('YYYY-MM-DD');
+        $scope.current.box.prod_date = moment(box_har.timestamp).utcOffset(offset).format('YYYY-MM-DD');
         $scope.current.box.supplier_group = box_har.supplier_group;
         $scope.current.box.wpp = box_har.fishing_area;
         $scope.current.totals.weight = $scope.current.box.weight;
