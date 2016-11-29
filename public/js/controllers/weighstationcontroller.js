@@ -174,10 +174,14 @@ angular.module('scanthisApp.itemController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       }
-      $scope.entry.scan[itemid] = (response.data[0][itemid] || response.data[itemid]);
+      $scope.entry.scan[itemid] = (thedata[itemid]);
       $scope.DatabaseScan();     
     };
-    if (NoMissingValues($scope.entry[table], itemid)){
+    if ($scope.options.print_uuid && NoMissingValues($scope.entry[table], itemid)){
+      $scope.entry[table].box_number = String($scope.entry[table].uuid_from_label);
+      DatabaseServices.DatabaseEntryReturn(table,$scope.entry[table], func);
+    }
+    else if (NoMissingValues($scope.entry[table], itemid)){
       DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
@@ -352,7 +356,26 @@ angular.module('scanthisApp.itemController', [])
     var func = function(){
       $scope.RemoveObject(id, itemid, table);
     };
-    DatabaseServices.RemoveEntry('scan', query, func);
+    var err_func = function(response){
+      if (response.statusText === 'Not Found'){
+        $scope.RemoveObject(id, itemid, table);
+      }else{
+        console.log(response);
+        if (response.data.code !== '23505'){
+        toastr.error('Error: ' + (response.statusText || 'no Database Connection'));
+        }
+        var thediv = document.getElementById('scaninput');
+              if (thediv){
+                  thediv.focus();
+              } 
+        var enabled = function(event) {
+            return true;
+        };
+        document.onkeydown = enabled;
+      }
+      
+    };
+    DatabaseServices.RemoveEntry('scan', query, func, err_func);
   };
 
   $scope.RemoveObject = function(id, itemid, table){
