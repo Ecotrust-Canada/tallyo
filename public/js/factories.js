@@ -140,8 +140,8 @@ angular.module('scanthisApp.factories', [])
 
   var handleDbError = function(response) {
     console.log(response);
-    if (response.data.code !== '23505'){
-    toastr.error('Error: ' + (response.statusText || 'no Database Connection'));
+    if (!response.data || response.data.code !== '23505'){
+    toastr.error('Error: ' + (response.statusText || 'no Network Connection'));
     }
     var thediv = document.getElementById('scaninput');
           if (thediv){
