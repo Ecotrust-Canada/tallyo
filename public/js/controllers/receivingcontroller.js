@@ -14,12 +14,25 @@ angular.module('scanthisApp.receivingController', [])
           }
   };
 
+  var err_func = function(response) {
+    console.log(response);
+    if (!response.data || response.data.code !== '23505'){
+    toastr.error('Error: ' + (response.statusText || 'no Network Connection'));
+    }
+    $scope.clearField();
+    var enabled = function(event) {
+        return true;
+    };
+    document.onkeydown = enabled;
+  };
+
 
   $scope.current.addnew = false;
 
   //get info from QR
   $scope.readQR = function(){
     var rawArray = $scope.raw.string.toUpperCase().split("/");
+    //console.log(rawArray);
     var jsonvalues = {};
     for (var i=0;i<$scope.valuesarray.length;i++){
       jsonvalues[$scope.valuesarray[i]] = rawArray[i];
@@ -52,11 +65,11 @@ angular.module('scanthisApp.receivingController', [])
   $scope.CheckHarvester = function(jsonvalues){
     var query = '?harvester_code=eq.' + jsonvalues.harvester_code;
     var func = function(response){
-      if (response.data.length<1){
+      if (response.data.length<1 && jsonvalues.harvester_code){
         $scope.createHarvester(jsonvalues);
       }
       else{
-        if(response.data[0].ft_fa_code === jsonvalues.ft_fa_code && response.data[0].fishing_area === jsonvalues.fishing_area){
+        if(!jsonvalues.harvester_code || (response.data[0].ft_fa_code === jsonvalues.ft_fa_code && response.data[0].fishing_area === jsonvalues.fishing_area)){
           $scope.createBox(jsonvalues);
         }else{
           $scope.patchHarvester(jsonvalues);
@@ -76,7 +89,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.createBox(jsonvalues);
     };
-    DatabaseServices.PatchEntry('harvester', data,query, func);
+    DatabaseServices.PatchEntry('harvester', data,query, func, err_func);
   };
 
   //create harvester if it doesn't
@@ -90,7 +103,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.createBox(jsonvalues);
     };
-    DatabaseServices.DatabaseEntryReturn('harvester', data, func);
+    DatabaseServices.DatabaseEntryReturn('harvester', data, func, err_func);
   };
 
   //create box object
@@ -123,7 +136,7 @@ angular.module('scanthisApp.receivingController', [])
       var box_number = response.data.box_number;
       $scope.DatabaseScan(box_number);
     };
-    DatabaseServices.DatabaseEntryReturn('box', data, func);
+    DatabaseServices.DatabaseEntryReturn('box', data, func, err_func);
   };
 
   //and scan object
@@ -137,7 +150,7 @@ angular.module('scanthisApp.receivingController', [])
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.current.addnew = true;
     };
-    DatabaseServices.DatabaseEntryReturn('scan', data, func);
+    DatabaseServices.DatabaseEntryReturn('scan', data, func, err_func);
   };
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
