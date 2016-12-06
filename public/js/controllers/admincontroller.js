@@ -142,6 +142,9 @@ angular.module('scanthisApp.AdminController', [])
     else{
       query += '?shipping_unit_number=eq.' + ship_number;
     }
+    if (!$scope.options.no_station){
+      query += '&station_code=eq.' +$scope.sumStations[$scope.stn.index].station;
+    }
     query += '&order=timestamp.desc';
     var func = function(response){
       var newdata;
