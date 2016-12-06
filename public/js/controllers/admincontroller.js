@@ -196,7 +196,7 @@ angular.module('scanthisApp.AdminController', [])
   });
 
   $scope.ShipTotals = function(){
-    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.sumStations[$scope.stn.index].station;
+    var query = '?shipping_unit_number=eq.' + $scope.current.collectionid;
     var func = function(response){
       $scope.totals = response.data;
     };
