@@ -56,7 +56,7 @@ angular.module('scanthisApp.receivingController', [])
         $scope.createHarvester(jsonvalues);
       }
       else{
-        if(response.data[0].ft_fa_code === jsonvalues.ft_fa_code){
+        if(response.data[0].ft_fa_code === jsonvalues.ft_fa_code && response.data[0].fishing_area === jsonvalues.fishing_area){
           $scope.createBox(jsonvalues);
         }else{
           $scope.patchHarvester(jsonvalues);
@@ -630,7 +630,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.list.boxes = response.data;
     };
-    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number + '&station_code=eq.' + ($scope.options.scan_station ? $scope.options.scan_station : $scope.station_code);
+    var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
     DatabaseServices.GetEntries('shipment_summary', func, query);
   };
 
