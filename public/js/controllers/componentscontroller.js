@@ -230,8 +230,10 @@ angular.module('scanthisApp.createlotController', [])
       //var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var table;
       var query;
-      if ($scope.station_info.itemtable === 'box'){
+      if ($scope.station_info.itemtable === 'box' && !$scope.options.print_uuid){
         table = 'box_with_info';
+      }else if ($scope.station_info.itemtable === 'box' && $scope.options.print_uuid){
+        table = 'boxes_uuid';
       }
       else{
         table = $scope.station_info.itemtable;

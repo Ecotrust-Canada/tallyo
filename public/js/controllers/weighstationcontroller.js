@@ -242,11 +242,16 @@ angular.module('scanthisApp.itemController', [])
       var query = "?uuid_from_label=eq." + uuid;
       var func = function(response){
         if (response.data.length>0){
-          toastr.warning('overwriting');
-          $scope.overwrite_form = form;
-          $scope.overwrite_uuid = uuid;
+          console.log(response.data, form);
+          if (response.data[0].product_code === form.product_object.product_code){
+            toastr.warning('overwriting');
+          }else{
+            toastr.warning('changing product');
+          }
+          //$scope.overwrite_form = form;
+          //$scope.overwrite_uuid = uuid;
           //$scope.overlay('overwrite');
-          $scope.OverwriteBox(form);
+          $scope.OverwriteBox(response.data[0].box_number, form, uuid);
         }
         else{
           form.uuid_from_label = uuid;
@@ -258,46 +263,60 @@ angular.module('scanthisApp.itemController', [])
     }
   };
 
-  $scope.OverwriteBox = function(form){
-    delete $scope.overwrite_form['uuid_from_label'];
-    $scope.MakeItemScanEntry($scope.overwrite_form);
-    var patch = $scope.entry.box;
-    var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
-    var func = function(response){      
-      $scope.overwrite_form = null;
-      $scope.overwrite_uuid = null;
-
-
-      var box = response.data[0];
-      var scan_entry = {};
-      scan_entry.box_number = box.box_number;
-      scan_entry.lot_number = box.lot_number;
-      scan_entry.station_code = box.station_code;
-
-
+  $scope.OverwriteBox = function(box_number, form, uuid){
+    var query = '?box_number=eq.' + box_number;
+    var func = function(response){
+      var query = '?box_number=eq.' + box_number;
       var func = function(response){
-        var func = function(response){
-            $scope.current.itemchange = !$scope.current.itemchange;
-            $scope.formchange = !$scope.formchange;
-            //$scope.current.addnew = true;      
-          };
-        DatabaseServices.DatabaseEntryReturn('scan', scan_entry, func);
+        form.uuid_from_label = uuid;
+          $scope.Submit(form);
+          form = null;
       };
-
-      var patch = {pieces: 0};
-      var query = '?box_number=eq.' + box.box_number + '&station_code=eq.' + $scope.station_code;   
-      DatabaseServices.PatchEntry('scan', patch, query, func);
-
-      //$scope.current.itemchange = !$scope.current.itemchange;
-      //$scope.formchange = !$scope.formchange;
-      //$scope.current.addnew = true;
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          }      
+      DatabaseServices.RemoveEntry('box', query, func, func);
     };
-    DatabaseServices.PatchEntry('box', patch, query, func);
+    DatabaseServices.RemoveEntry('scan', query, func, func);
   };
+
+  // $scope.OverwriteBox = function(form){
+  //   delete $scope.overwrite_form['uuid_from_label'];
+  //   $scope.MakeItemScanEntry($scope.overwrite_form);
+  //   var patch = $scope.entry.box;
+  //   var query = "?uuid_from_label=eq." + $scope.overwrite_uuid;
+  //   var func = function(response){      
+  //     $scope.overwrite_form = null;
+  //     $scope.overwrite_uuid = null;
+
+
+  //     var box = response.data[0];
+  //     var scan_entry = {};
+  //     scan_entry.box_number = box.box_number;
+  //     scan_entry.lot_number = box.lot_number;
+  //     scan_entry.station_code = box.station_code;
+
+
+  //     var func = function(response){
+  //       var func = function(response){
+  //           $scope.current.itemchange = !$scope.current.itemchange;
+  //           $scope.formchange = !$scope.formchange;
+  //           //$scope.current.addnew = true;      
+  //         };
+  //       DatabaseServices.DatabaseEntryReturn('scan', scan_entry, func);
+  //     };
+
+  //     var patch = {pieces: 0};
+  //     var query = '?box_number=eq.' + box.box_number + '&station_code=eq.' + $scope.station_code;   
+  //     DatabaseServices.PatchEntry('scan', patch, query, func);
+
+  //     //$scope.current.itemchange = !$scope.current.itemchange;
+  //     //$scope.formchange = !$scope.formchange;
+  //     //$scope.current.addnew = true;
+  //     var thediv = document.getElementById('scaninput');
+  //         if (thediv){
+  //             thediv.focus();
+  //         }      
+  //   };
+  //   DatabaseServices.PatchEntry('box', patch, query, func);
+  // };
 
   $scope.ListProducts = function(){
     var query = '';
