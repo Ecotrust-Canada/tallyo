@@ -10,6 +10,7 @@ angular.module('scanthisApp.receivingController', [])
     $scope.raw.string = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
+            //console.log(thediv.innerHTML);
               thediv.focus();
           }
   };
@@ -19,7 +20,7 @@ angular.module('scanthisApp.receivingController', [])
     if (!response.data || response.data.code !== '23505'){
     toastr.error('Error: ' + (response.statusText || 'no Network Connection'));
     }
-    $scope.clearField();
+    //$scope.clearField();
     var enabled = function(event) {
         return true;
     };
@@ -31,7 +32,10 @@ angular.module('scanthisApp.receivingController', [])
 
   //get info from QR
   $scope.readQR = function(){
+    //console.log($scope.raw.string);
     var rawArray = $scope.raw.string.toUpperCase().split("/");
+    $scope.clearField();
+    
     //console.log(rawArray);
     var jsonvalues = {};
     for (var i=0;i<$scope.valuesarray.length;i++){
@@ -50,10 +54,10 @@ angular.module('scanthisApp.receivingController', [])
         var box = response.data[0];
         if(($scope.current.shipping_unit && box.shipping_unit_in === $scope.current.shipping_unit.shipping_unit_number) || ($scope.current.harvester_lot && box.lot_in === $scope.current.harvester_lot.lot_number)){
           toastr.warning('Already scanned');
-          $scope.clearField();
+          //$scope.clearField();
         }else{
           toastr.error('Box with this code already exists');
-          $scope.clearField();
+          //$scope.clearField();
         }        
       }
     };
@@ -89,7 +93,7 @@ angular.module('scanthisApp.receivingController', [])
     var func = function(response){
       $scope.createBox(jsonvalues);
     };
-    DatabaseServices.PatchEntry('harvester', data,query, func, err_func);
+    DatabaseServices.PatchEntry('harvester', data,query, func, err_func, err_func);
   };
 
   //create harvester if it doesn't
@@ -146,7 +150,7 @@ angular.module('scanthisApp.receivingController', [])
       data.lot_number = $scope.current.harvester_lot.lot_number;
     }   
     var func = function(response){
-      $scope.clearField();
+      //$scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.current.addnew = true;
     };
