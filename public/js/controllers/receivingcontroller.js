@@ -523,6 +523,7 @@ angular.module('scanthisApp.receivingController', [])
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
       var func = function(response){
         $scope.list.stnlots = response.data;
+        $scope.list.stnlots.unshift(null);
         $scope.current.lot_to_edit_or_select=null;
         $scope.current.showforms='NONE';
         $scope.save_button = true;

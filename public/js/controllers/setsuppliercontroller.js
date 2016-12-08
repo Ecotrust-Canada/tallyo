@@ -181,6 +181,7 @@ angular.module('scanthisApp.setsupplierController', [])
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
       var func = function(response){
         $scope.list.stnlots = response.data;
+        $scope.list.stnlots.unshift(null);
       };
       DatabaseServices.GetEntries('harvester_lot', func, query);      
     }, function errorCallback(response) {
@@ -457,7 +458,7 @@ angular.module('scanthisApp.setsupplierController', [])
 })
 
 .controller('ListLotsCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
-  $scope.ListStationLots();
+  //$scope.ListStationLots();
 
   $scope.dropdownSelect = function(lot_number){
     $scope.current.lot_to_edit_or_select = lot_number;
@@ -505,6 +506,7 @@ angular.module('scanthisApp.setsupplierController', [])
       var query = '?end_date=gte.'+ date + '&processor_code=eq.' + $scope.processor + '&station_code=eq.' + $scope.station_code;
       var func = function(response){
         $scope.list.stnlots = response.data;
+        $scope.list.stnlots.unshift(null);
         $scope.current.lot_to_edit_or_select=null;
         $scope.current.showforms='NONE';
         $scope.create_button = true;
