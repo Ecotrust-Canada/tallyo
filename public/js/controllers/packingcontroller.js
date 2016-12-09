@@ -23,19 +23,20 @@ angular.module('scanthisApp.packingController', [])
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
-    var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.disabled = true;
-          }
+    // var thediv = document.getElementById('scaninput');
+    //       if (thediv){
+    //           thediv.disabled = true;
+    //       }
     if (!raw_id) {
-      toastr.error('please scan a code');
       $scope.clearField();
+      toastr.error('please scan a code');
     }
     else{
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.disabled = true;
-          }
+      // var thediv = document.getElementById('scaninput');
+      //     if (thediv){
+      //         thediv.disabled = true;
+      //     }
+      $scope.clearField();
       var id = raw_id.split("/")[0].toUpperCase();
       $scope.id = id;
 
@@ -54,7 +55,7 @@ angular.module('scanthisApp.packingController', [])
         //if it is already in current collection
         else if (itemcollection === $scope.current.collectionid){
           toastr.warning('already added');
-          $scope.clearField();
+          //$scope.clearField();
         }
         else{
           if ($scope.options.check_grade){
@@ -66,12 +67,12 @@ angular.module('scanthisApp.packingController', [])
       };
       var onErr = function(err) {
         console.log(err);
-        $scope.clearField();
+        //$scope.clearField();
         toastr.error('invalid QR code'); // show failure toast.
       };
       var err_func = function(err) {
         console.log(err);
-        $scope.clearField();
+        //$scope.clearField();
         toastr.error('Database error'); // show failure toast.
       };
       var query;
@@ -80,7 +81,7 @@ angular.module('scanthisApp.packingController', [])
         DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr, null, err_func);
       }
       else if ($scope.station_info.scanid && $scope.station_info.scanid === 'uuid_from_label' && id.length !== 8 && id.length !== 36){
-        $scope.clearField();
+        //$scope.clearField();
         toastr.error('invalid QR code');
       }else{
         query = '?' + ($scope.station_info.scanid || $scope.station_info.itemid) + '=eq.' + id;
@@ -108,7 +109,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.input.code = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
-            thediv.disabled = false;
+            //thediv.disabled = false;
             thediv.focus();
           }
   };
@@ -118,7 +119,7 @@ angular.module('scanthisApp.packingController', [])
     $scope.entry.scan[$scope.station_info.itemid] = id;
     $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
-      $scope.clearField();
+      //$scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
     };
     DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
@@ -145,7 +146,7 @@ angular.module('scanthisApp.packingController', [])
     };
     var onErr = function(){
       toastr.error('invalid QR code'); // show failure toast.
-      $scope.clearField();
+      //$scope.clearField();
     };
 
     var patch = {};
