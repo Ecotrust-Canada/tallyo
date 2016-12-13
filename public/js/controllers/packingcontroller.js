@@ -351,12 +351,12 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.CheckBoxExists = function(form){
     if (form){
-      var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&lot_in=eq.' + $scope.current.lot.lot_in + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase() + '&species=eq.' + form.species.toUpperCase();
-      var func = function(response){
-        if (response.data.length > 0){
-          $scope.PatchPDC(form.pdc_text, response.data[0].box_number);
-        }
-        else{
+      //var query = '?station_code=eq.'+ $scope.options.unlabelled_from + '&lot_in=eq.' + $scope.current.lot.lot_in + '&size=eq.' + form.size.toUpperCase() + '&weight=eq.' + form.weight + '&grade=eq.' + form.grade.toUpperCase() + '&species=eq.' + form.species.toUpperCase();
+      // var func = function(response){
+      //   if (response.data.length > 0){
+      //     $scope.PatchPDC(form.pdc_text, response.data[0].box_number);
+      //   }
+      //   else{
           console.log('new');
           var entry = {};
           entry.pdc_text = form.pdc_text;
@@ -367,9 +367,9 @@ angular.module('scanthisApp.packingController', [])
           entry.supplier_code = $scope.current.lot.supplier_code;
           entry.lot_number = $scope.current.collectionid;
           $scope.MakeBox(entry);
-        }
-      };
-      DatabaseServices.GetEntries('inventory_all', func, query);
+      //   }
+      // };
+      // DatabaseServices.GetEntries('inventory_all', func, query);
     }    
   };
 

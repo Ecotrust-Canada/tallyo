@@ -571,8 +571,8 @@ angular.module('scanthisApp.receivingController', [])
           entry.box.station_code = $scope.station_code;
 
           for (var i=1;i<=formrow.num_boxes;i++){
-            entry = JSON.parse(JSON.stringify(entry.box));
-            $scope.MakeBox(entry);
+            var entry_new = JSON.parse(JSON.stringify(entry.box));
+            $scope.MakeBox(entry_new);
           }
         }            
       }
@@ -604,7 +604,7 @@ angular.module('scanthisApp.receivingController', [])
         var func = function(response){
           if (response.data.length<formrow.num_boxes){
             var no_delete = parseInt(formrow.num_boxes) - parseInt(response.data.length);
-            toastr.error('failed to delete ' + no_delete + ' boxes. Do not exist or already added to internal receiving');
+            toastr.error('failed to delete ' + no_delete + ' boxes. Do not exist');
           }
           for (var k=0;k<response.data.length;k++){
             $scope.DeleteScan(response.data[k].box_number);
@@ -614,9 +614,6 @@ angular.module('scanthisApp.receivingController', [])
         for (var j=0;j<choices.length;j++){
           var formrow = choices[j];
           query += '&grade=eq.' + formrow.grade + '&size=eq.' + formrow.size.toUpperCase() + '&weight=eq.' + formrow.weight + '&species=eq.' + formrow.species + '&limit=' + formrow.num_boxes;
-          // $scope.entry.box.grade = formrow.grade; 
-          // $scope.entry.box.size = formrow.size;
-          // $scope.entry.box.weight = formrow.weight;
           DatabaseServices.GetEntries('box', func, query);
         }            
       }
