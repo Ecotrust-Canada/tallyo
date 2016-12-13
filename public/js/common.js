@@ -242,15 +242,17 @@ var isInArray = function(value, array) {
   return array.indexOf(value) > -1;
 };
 
-var AddtoEntryNonFormData = function($scope, table){
-  $scope.entry[table][$scope.station_info.collectionid] = $scope.current.collectionid;
-  $scope.entry[table].station_code = $scope.station_code;
+var AddtoEntryNonFormData = function($scope, entry){
+  entry[$scope.station_info.collectionid] = $scope.current.collectionid;
+  entry.station_code = $scope.station_code;
+  return entry;
 };
 
-var AddtoEntryFormData = function(form, scopevar, $scope){
+var AddtoEntryFormData = function(form, $scope, entry){
   for (var key in form){
-      $scope.entry[scopevar][key] = form[key];
+      entry[key] = form[key];
   }
+  return entry;
 };
 
 var sizefromweight = function(weight_kg){

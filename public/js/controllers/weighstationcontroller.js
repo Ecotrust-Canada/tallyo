@@ -7,9 +7,9 @@ angular.module('scanthisApp.itemController', [])
 .controller('ScanCtrl', function($scope, $http, $interval, DatabaseServices, toastr, $timeout) {
   var scalePromise;
 
-  $scope.entry.scan = {};
-  $scope.entry.loin = {};
-  $scope.entry.box = {};
+  // $scope.entry.scan = {};
+  // $scope.entry.loin = {};
+  // $scope.entry.box = {};
   $scope.current.to_print = true;
   $scope.formchange = true;
   if ($scope.scanform.startpolling) {
@@ -124,42 +124,44 @@ angular.module('scanthisApp.itemController', [])
       $scope.stopPolling();
   });
 
-  $scope.DatabaseScan = function(form){
+  $scope.DatabaseScan = function(entry){
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.formchange = !$scope.formchange;
       $scope.current.addnew = true;      
       if ($scope.options.secondstation){
-        $scope.SecondScan();
+        $scope.SecondScan(entry);
       }
       var thediv = document.getElementById('scaninput');
           if (thediv){
               thediv.focus();
           }
     };
-    if (NoMissingValues($scope.entry.scan)){
-      DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+    if (NoMissingValues(entry.scan)){
+      DatabaseServices.DatabaseEntryReturn('scan', entry.scan, func);
     }
     else{ toastr.error("missing values"); }
   };
   
 
   /*fills in fields in json to submit to database*/
-  $scope.MakeScanEntry = function(form){
-    AddtoEntryNonFormData($scope, 'scan');
-    AddtoEntryFormData(form, 'scan', $scope);
+  $scope.MakeScanEntry = function(form, entry){
+    entry.scan = {};
+    entry.scan = AddtoEntryNonFormData($scope, entry.scan);
+    entry.scan = AddtoEntryFormData(form, $scope, entry.scan);
 
     if ($scope.options && $scope.options.sizefromweight){
-      $scope.entry.scan.size = sizefromweight(form.weight_1);
+      entry.scan.size = sizefromweight(form.weight_1);
     }
+    return entry;
   };
 
-  $scope.DatabaseItem = function(){ 
+  $scope.DatabaseItem = function(entry){ 
     var table = $scope.station_info.itemtable.split('_')[0];
     var itemid = $scope.station_info.itemid;
     if (table === 'box'){
-      $scope.entry.box.harvester_code = $scope.current[$scope.station_info.collectiontable].harvester_code;
-      $scope.entry.box.internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
+      entry.box.harvester_code = $scope.current[$scope.station_info.collectiontable].harvester_code;
+      entry.box.internal_lot_code = $scope.current[$scope.station_info.collectiontable].internal_lot_code;
     }  
     var func = function(response){      
       //print a label if onLabel specified in config
@@ -174,71 +176,73 @@ angular.module('scanthisApp.itemController', [])
         console.log(data, labels);
         $scope.printLabel(data, labels);
       }
-      $scope.entry.scan[itemid] = (thedata[itemid]);
-      $scope.DatabaseScan();     
+      entry.scan[itemid] = (thedata[itemid]);
+      $scope.DatabaseScan(entry);     
     };
-    if ($scope.options.print_uuid && NoMissingValues($scope.entry[table], itemid)){
-      $scope.entry[table].box_number = String($scope.entry[table].uuid_from_label);
-      DatabaseServices.DatabaseEntryReturn(table,$scope.entry[table], func);
+    if ($scope.options.print_uuid && NoMissingValues(entry[table], itemid)){
+      entry[table].box_number = String(entry[table].uuid_from_label);
+      DatabaseServices.DatabaseEntryReturn(table,entry[table], func);
     }
-    else if (NoMissingValues($scope.entry[table], itemid)){
-      DatabaseServices.DatabaseEntryCreateCode(table, $scope.entry[table], $scope.processor, func);
+    else if (NoMissingValues(entry[table], itemid)){
+      DatabaseServices.DatabaseEntryCreateCode(table, entry[table], $scope.processor, func);
     }
     else{ toastr.error("missing values"); }
   };
 
-  $scope.SecondScan = function(){
-    $scope.entry.scan.station_code = $scope.options.secondstation;    
+  $scope.SecondScan = function(entry){
+    entry.scan.station_code = $scope.options.secondstation;    
     var func = function(response){
     };
-    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+    DatabaseServices.DatabaseEntryReturn('scan', entry.scan, func);
   };
 
-  $scope.MakeItemScanEntry = function(form){
+  $scope.MakeItemScanEntry = function(form, entry){
     var table = $scope.station_info.itemtable.split('_')[0];
-    AddtoEntryNonFormData($scope, table);
-    AddtoEntryNonFormData($scope, 'scan');
-    AddtoEntryFormData(form, table, $scope);
+    entry.scan = {};
+    entry[table] = {};
+    entry[table] = AddtoEntryNonFormData($scope, entry[table]);
+    entry.scan = AddtoEntryNonFormData($scope, entry.scan);
+    entry[table] = AddtoEntryFormData(form, $scope, entry[table]);
 
     //assign trade_unit and weight(kg) from weight and units 
     if ($scope.options && $scope.options.trade_unit){
       var product = form.product_object;
       
-      delete $scope.entry.box.product_object;
+      delete entry.box.product_object;
       if (product.entry_unit === 'lb'){
-        $scope.entry.box.weight = product.weight / 2.2;
+        entry.box.weight = product.weight / 2.2;
       }
       else if (product.entry_unit === 'kg'){
-        $scope.entry.box.weight = product.weight;
+        entry.box.weight = product.weight;
       }
-      $scope.entry.box.grade = product.product_type;
-      $scope.entry.box.product_code = product.product_code;
-      $scope.entry.box.best_before_date = moment(new Date()).add(parseInt(product.best_before.split(' ')), 'months').format();
+      entry.box.grade = product.product_type;
+      entry.box.product_code = product.product_code;
+      entry.box.best_before_date = moment(new Date()).add(parseInt(product.best_before.split(' ')), 'months').format();
     }
     //attach harvester, shipment
     if ($scope.options && $scope.options.lot_info){
-      $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
-      $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
+      entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
+      entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
     }
-
+    return entry;
   };
 
   $scope.Submit = function(form){
     if (form){
+      var entry = {};
       if($scope.station_info.itemtable === 'scan'){
-        $scope.MakeScanEntry(form);
-        $scope.DatabaseScan(form);
+        entry = $scope.MakeScanEntry(form, entry);
+        $scope.DatabaseScan(entry);
       }
       else{
-        $scope.MakeItemScanEntry(form);
-        $scope.DatabaseItem();
+        entry = $scope.MakeItemScanEntry(form, entry);
+        $scope.DatabaseItem(entry);
       }
     }
   };
 
   $scope.ScanSubmit = function(form, uuid){ 
-    if (form){ 
-      $scope.entry.box = {};  
+    if (form){
       var query = "?uuid_from_label=eq." + uuid;
       var func = function(response){
         if (response.data.length>0){
