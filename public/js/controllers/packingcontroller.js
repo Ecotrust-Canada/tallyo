@@ -23,56 +23,46 @@ angular.module('scanthisApp.packingController', [])
 
   /*put an object in a container if the id matches an object. alerts to overwrite if in another*/
   $scope.PutObjInContainer = function(raw_id){
-    // var thediv = document.getElementById('scaninput');
-    //       if (thediv){
-    //           thediv.disabled = true;
-    //       }
     if (!raw_id) {
       $scope.clearField();
       toastr.error('please scan a code');
     }
     else{
-      // var thediv = document.getElementById('scaninput');
-      //     if (thediv){
-      //         thediv.disabled = true;
-      //     }
       $scope.clearField();
       var id = raw_id.split("/")[0].toUpperCase();
-      $scope.id = id;
 
       var func = function(response){
         $scope.current.patchitem = response.data[0];//so can check most recent scan against rest to determine if mixing harvesters
-        $scope.id = response.data[0][$scope.station_info.itemid];
+        id = response.data[0][$scope.station_info.itemid];
         var itemcollection = response.data[0][($scope.station_info.patchid || $scope.station_info.collectionid)];
         //if the object is in another collection
-        if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){ 
+        if (itemcollection && itemcollection !== $scope.current.collectionid  && itemcollection.substring(2,5) === $scope.processor){
+          $scope.id = id; 
           var disabled = function(event) {
             event.preventDefault();  
           };
           document.onkeydown = disabled;
           $scope.overlay('overwrite');
+          
         }
         //if it is already in current collection
         else if (itemcollection === $scope.current.collectionid){
           toastr.warning('already added');
-          //$scope.clearField();
         }
         else{
           if ($scope.options.check_grade){
-            $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade);
+            $scope.CheckGrade($scope.current.box.grade, $scope.current.patchitem.grade, id);
           }else{
-            $scope.PatchObjWithContainer();
+            $scope.PatchObjWithContainer(id);
           }          
         }      
       };
       var onErr = function(err) {
         console.log(err);
-        //$scope.clearField();
         toastr.error('invalid QR code'); // show failure toast.
       };
       var err_func = function(err) {
         console.log(err);
-        //$scope.clearField();
         toastr.error('Database error'); // show failure toast.
       };
       var query;
@@ -81,7 +71,6 @@ angular.module('scanthisApp.packingController', [])
         DatabaseServices.GetEntry($scope.station_info.patchtable, func, query, onErr, null, err_func);
       }
       else if ($scope.station_info.scanid && $scope.station_info.scanid === 'uuid_from_label' && id.length !== 8 && id.length !== 36){
-        //$scope.clearField();
         toastr.error('invalid QR code');
       }else{
         query = '?' + ($scope.station_info.scanid || $scope.station_info.itemid) + '=eq.' + id;
@@ -90,7 +79,7 @@ angular.module('scanthisApp.packingController', [])
     }    
   };
 
-  $scope.CheckGrade = function(box_grade, loin_grade){
+  $scope.CheckGrade = function(box_grade, loin_grade, id){
     var conv = {
       'AAA': 'AAA',
       'AA': 'AA',
@@ -99,9 +88,10 @@ angular.module('scanthisApp.packingController', [])
     };
     loin_grade = conv[loin_grade];
     if (loin_grade !== box_grade){
+      $scope.id = id;
       $scope.overlay('mixgrade');
     }else{
-      $scope.PatchObjWithContainer();
+      $scope.PatchObjWithContainer(id);
     }
   };
 
@@ -109,20 +99,18 @@ angular.module('scanthisApp.packingController', [])
     $scope.input.code = null;
     var thediv = document.getElementById('scaninput');
           if (thediv){
-            //thediv.disabled = false;
             thediv.focus();
           }
   };
 
   $scope.MakeScan = function(id){
-    $scope.entry.scan = {"station_code": $scope.station_code};
-    $scope.entry.scan[$scope.station_info.itemid] = id;
-    $scope.entry.scan[$scope.station_info.collectionid] = $scope.current.collectionid;
+    var entry_scan = {"station_code": $scope.station_code};
+    entry_scan[$scope.station_info.itemid] = id;
+    entry_scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
-      //$scope.clearField();
       $scope.current.itemchange = !$scope.current.itemchange;
     };
-    DatabaseServices.DatabaseEntryReturn('scan', $scope.entry.scan, func);
+    DatabaseServices.DatabaseEntryReturn('scan', entry_scan, func);
   };
 
 
@@ -138,20 +126,18 @@ angular.module('scanthisApp.packingController', [])
   };
 
   /*writes the foreignkey of the object, adds object to list*/
-  $scope.PatchObjWithContainer = function(){
-
+  $scope.PatchObjWithContainer = function(id){
+    id = id || $scope.id;
     var func = function(response){
       $scope.current.addnew = true;      
-      $scope.MakeScan($scope.id);
+      $scope.MakeScan(id);
     };
     var onErr = function(){
       toastr.error('invalid QR code'); // show failure toast.
-      //$scope.clearField();
     };
-
     var patch = {};
     patch[($scope.station_info.patchid || $scope.station_info.collectionid)] = $scope.current.collectionid;
-    var query = '?' + $scope.station_info.itemid + '=eq.' + $scope.id;   
+    var query = '?' + $scope.station_info.itemid + '=eq.' + id;   
     DatabaseServices.PatchEntry($scope.station_info.patchtable, patch, query, func, onErr);
   };  
 
