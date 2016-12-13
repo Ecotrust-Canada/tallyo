@@ -255,7 +255,26 @@ angular.module('scanthisApp.itemController', [])
           form = null;
         }
       };
-      DatabaseServices.GetEntries('box', func, query);
+
+      var err_func = function(response) {
+        console.log(response);
+        if (response.data && response.data.code == '22P02'){
+          toastr.error('Invalid UUID');
+        }
+        else if (!response.data || response.data.code !== '23505'){
+        toastr.error('Error: ' + (response.statusText || 'no Network Connection'));
+        }
+        var thediv = document.getElementById('scaninput');
+              if (thediv){
+                  thediv.focus();
+              } 
+        var enabled = function(event) {
+            return true;
+        };
+        document.onkeydown = enabled;
+      };
+
+      DatabaseServices.GetEntries('box', func, query, null, err_func);
     }
   };
 
