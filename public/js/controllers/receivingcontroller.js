@@ -552,25 +552,26 @@ angular.module('scanthisApp.receivingController', [])
     }
   });
 
-  $scope.entry.box = {};
   $scope.SubmitForm = function(choices){
     if (choices){
+      var entry = {};
+      entry.box = {};
       if ($scope.current.harvester_lot !== undefined && $scope.current.harvester_lot !== null){
-        $scope.entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
-        $scope.entry.box.supplier_code = $scope.current.harvester_lot.supplier_code;
-        $scope.entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
-        $scope.entry.box.lot_in = $scope.current.harvester_lot.lot_number;
+        entry.box.harvester_code = $scope.current.harvester_lot.harvester_code;
+        entry.box.supplier_code = $scope.current.harvester_lot.supplier_code;
+        entry.box.shipping_unit_in = $scope.current.harvester_lot.shipping_unit_number;
+        entry.box.lot_in = $scope.current.harvester_lot.lot_number;
 
         for (var j=0;j<choices.length;j++){
           var formrow = choices[j];
-          $scope.entry.box.grade = formrow.grade; 
-          $scope.entry.box.size = formrow.size;
-          $scope.entry.box.weight = formrow.weight;
-          $scope.entry.box.species = formrow.species;
-          $scope.entry.box.station_code = $scope.station_code;
+          entry.box.grade = formrow.grade; 
+          entry.box.size = formrow.size;
+          entry.box.weight = formrow.weight;
+          entry.box.species = formrow.species;
+          entry.box.station_code = $scope.station_code;
 
           for (var i=1;i<=formrow.num_boxes;i++){
-            var entry = JSON.parse(JSON.stringify($scope.entry.box));
+            entry = JSON.parse(JSON.stringify(entry.box));
             $scope.MakeBox(entry);
           }
         }            
@@ -613,9 +614,9 @@ angular.module('scanthisApp.receivingController', [])
         for (var j=0;j<choices.length;j++){
           var formrow = choices[j];
           query += '&grade=eq.' + formrow.grade + '&size=eq.' + formrow.size.toUpperCase() + '&weight=eq.' + formrow.weight + '&species=eq.' + formrow.species + '&limit=' + formrow.num_boxes;
-          $scope.entry.box.grade = formrow.grade; 
-          $scope.entry.box.size = formrow.size;
-          $scope.entry.box.weight = formrow.weight;
+          // $scope.entry.box.grade = formrow.grade; 
+          // $scope.entry.box.size = formrow.size;
+          // $scope.entry.box.weight = formrow.weight;
           DatabaseServices.GetEntries('box', func, query);
         }            
       }
