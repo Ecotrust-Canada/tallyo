@@ -54,7 +54,7 @@ angular.module('scanthisApp.formController', [])
         });
       }     
     }
-    $scope.FormData($scope.config.dboptions);
+    //$scope.FormData($scope.config.dboptions);
     $scope.form_enabled = true;
     
   };

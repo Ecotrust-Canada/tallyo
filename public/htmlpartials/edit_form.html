@@ -93,9 +93,8 @@
             </div> 
 
             <!--editing dropdown options-->
-            <div ng-if="row.value ==='dboptions' && config.editinform === true" 
+            <!-- <div ng-if="row.value ==='dboptions' && config.editinform === true" 
                  ng-init="editdrop[row.fieldname]=true" id="edit-options-{{row.fieldname}}" class="edit-options">            
-              <!--button to edit dropdown options-->
               <button id="{{row.fieldname}}-{{config.id}}" 
                       ng-class="{edit: editdrop[row.fieldname], close_edit: !editdrop[row.fieldname]}" 
                       ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
@@ -109,7 +108,7 @@
                 <input class="short" type="text" autocomplete="off" ng-model="new"><span class="add-field-option" 
                        ng-click="New(new, row.fieldname)"></span>
               </div>
-            </div>
+            </div> -->
 
           </span>
           <input-dropdown ng-if="row.value.list && row.value.list === 'list2'"  thelist="list2"  config="row.conf" on-select="searchset(value, row)" form="form[row.fieldname]"></input-dropdown>
