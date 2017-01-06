@@ -36,10 +36,12 @@ angular.module('scanthisApp', [
         preventOpenDuplicates: false,
         timeOut: 2000
     });
+
 })
 
 
-.controller('MainCtrl', function($scope) {
+.controller('MainCtrl', function($scope, $animate) {
+  $animate.enabled(false);
   $scope.current_terminal = {
     id: -1,
     icon: 'menu',

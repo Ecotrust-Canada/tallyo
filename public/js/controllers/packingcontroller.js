@@ -4,7 +4,7 @@
 angular.module('scanthisApp.packingController', [])
 
 
-.controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $animate, $timeout) {
+.controller('PackingCtrl', function($scope, $http, DatabaseServices, toastr, $timeout) {
 
   $scope.input = {};
   $scope.current.addnew = false;
