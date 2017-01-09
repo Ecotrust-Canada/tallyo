@@ -1531,6 +1531,10 @@ div[ng-view] {
   background-image: url(/images/print_icon.svg);
 }
 
+.itemsframe.entries #list-2 table td.loadmore:nth-last-child(2){
+  background-image: none;
+}
+
 #box_search_table table td:last-child,
 #print_labels_list table td:nth-last-child(2),
 .itemsframe.entries #list-21 td:last-child {

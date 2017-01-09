@@ -15,14 +15,9 @@ angular.module('scanthisApp', [
   'scanthisApp.createlotController',
   'scanthisApp.setsupplierController',
   'scanthisApp.AdminController',
-  // 'scanthisApp.ThisfishController',
-  'ngSanitize', 
-  //'ngCsv',
   'ngMaterial',
   'toastr',
-  //'gridshore.c3js.chart',
   'ngAnimate',
-  'ngScrollable',
   'angular-uuid'
 ])
 

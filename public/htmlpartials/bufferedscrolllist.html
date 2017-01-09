@@ -2,7 +2,7 @@
 <!-- directives bufferedscrolllist and bufferedscrolllistpacking -->
 
 
-<div class="bufferedscroll" buffered-scroll="{{static_limit}}" id="list-{{config.id}}">
+<div class="bufferedscroll" id="list-{{config.id}}">
   <table ng-class="config.cssclass">
     <tbody>
       <tr ng-if="config.headers">
@@ -10,11 +10,10 @@
         <th ng-repeat="title in config.headers">{{title}}</th>
       </tr>
 
-      <tr ng-repeat="item in itemlist | orderBy: config.order | limitTo: limit | filter: filterstring"
+      <tr ng-repeat="item in itemlist | orderBy: config.order | filter: filterstring"
           id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$first && current.addnew===true}' elem-ready="testFn({str:$index})">
           <td><span>{{listlength - $index}}</span></td>
         <td ng-repeat="name in config.fields" ng-switch on="name" >
-          <span ng-switch-when="numindex">{{listlength - $parent.$parent.$index}}</span>
           <span ng-switch-when="timestamp">{{item.timestamp|stringtotime }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
           <span ng-switch-when="weight">{{(item[name]) | weightstring }}</span>
@@ -37,6 +36,12 @@
         <td ng-if="config.button && !config.arg" 
             ng-click="updateFn({str: item})" class="btn_action">{{config.button}}</td>
         
+      </tr>
+      <tr ng-if="itemlist.length<listlength">
+        <td class="loadmore"></td>
+        <td>
+        <a ng-click="loadmoreFn({num:itemlist.length})">load more</a>
+        </td>
       </tr>
     </tbody>
   </table>

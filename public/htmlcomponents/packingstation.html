@@ -165,7 +165,7 @@
     <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 
     <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
-        <bufferedscrolllistpacking itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current"></bufferedscrolllistpacking>
+        <bufferedscrolllistpacking itemlist="list.included" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current" loadmore-fn="loadMore(num)"></bufferedscrolllistpacking>
     </div>
     <div class="itemtotals table_row" >
       <div class="item_number">

@@ -223,7 +223,7 @@ angular.module('scanthisApp.createlotController', [])
 //fills in list.included with 'item' table if config belonging to selected collection
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
-  $scope.ListCollectionItems = function(){
+  $scope.ListCollectionItems = function(num){
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
@@ -242,21 +242,21 @@ angular.module('scanthisApp.createlotController', [])
         $scope.list.included = response.data;
         $scope.list.length = response.headers()['content-range'].split('/')[1];
       };
-      if ($scope.options.hundred_limit){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-        DatabaseServices.GetEntries(table, func, query, 'hundred'); 
-      }
-      if ($scope.options.all_items){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-        DatabaseServices.GetEntries(table, func, query); 
+      if ($scope.options.hundred_limit || $scope.options.all_items){
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc'+ '&limit=' + (num||10);
+        DatabaseServices.GetEntries(table, func, query);
       }
       else{
-        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
         DatabaseServices.GetEntries(table, func, query); 
       }
     }, function errorCallback(response) {
     });
       
+  };
+
+  $scope.loadMore = function(num){
+    $scope.ListCollectionItems(num*2);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
@@ -287,7 +287,7 @@ angular.module('scanthisApp.createlotController', [])
 //Harsam packing and shipping, Amanda shipping stations - used for workflow of patching object into container
 .controller('DisplayItemsPackingCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
-  $scope.ListCollectionItems = function(){
+  $scope.ListCollectionItems = function(num){
     var table;
     if ($scope.station_info.itemtable === 'box'){
       if ($scope.options.shiplist){
@@ -304,14 +304,12 @@ angular.module('scanthisApp.createlotController', [])
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-      //var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
       var func = function(response){
         $scope.list.included = response.data;
         $scope.list.length = response.headers()['content-range'].split('/')[1];
       };
       var table;
-      var query;
-      
+      var query;      
       if ($scope.station_info.itemtable === 'box'){
         table = 'box_with_info';
       }
@@ -319,31 +317,29 @@ angular.module('scanthisApp.createlotController', [])
         table = $scope.station_info.itemtable;
       }
 
-      if ($scope.options.hundred_limit){        
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-        DatabaseServices.GetEntries(table, func, query, 'hundred'); 
-      }
 
-      // else if ($scope.station_info.itemtable === 'box'){
-      //   table = 'box_with_info';
-      //   query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
-      //   DatabaseServices.GetEntries(table, func, query); 
-      // }
-      else if ($scope.options.no_station){
-        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+      if ($scope.options.no_station){
+        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
         DatabaseServices.GetEntries(table, func, query); 
       }
-      else if ($scope.station_info.itemtable === 'loin_with_info' || $scope.options.all_items){
+      else if ($scope.station_info.itemtable === 'loin_with_info'){
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
         DatabaseServices.GetEntries(table, func, query); 
       }
-
+      else if ($scope.options.all_items || $scope.options.hundred_limit){
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
+        DatabaseServices.GetEntries(table, func, query); 
+      }
       else{
-        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc';
+        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
         DatabaseServices.GetEntries(table, func, query); 
       }
     }, function errorCallback(response) {
     });
+  };
+
+  $scope.loadMore = function(num){
+    $scope.ListCollectionItems(num*2);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
