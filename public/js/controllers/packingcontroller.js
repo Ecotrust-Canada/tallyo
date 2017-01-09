@@ -194,7 +194,7 @@ angular.module('scanthisApp.packingController', [])
         }        
       };
       var query = '?lot_number=eq.' + $scope.current.collectionid + '&station_code=eq.' + $scope.station_code;
-      DatabaseServices.GetEntries('lot_summary', func, query);
+      DatabaseServices.GetEntries('box_intrec_total', func, query);
     }
     else if ($scope.station_info.collectiontable === 'shipping_unit'){
       var func1 = function(response){
