@@ -647,7 +647,7 @@ angular.module('scanthisApp.receivingController', [])
       $scope.list.boxes = response.data;
     };
     var query = '?shipping_unit_number=eq.' + $scope.current.harvester_lot.shipping_unit_number;
-    DatabaseServices.GetEntries('shipment_summary', func, query);
+    DatabaseServices.GetEntries('box_har_total', func, query);
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {

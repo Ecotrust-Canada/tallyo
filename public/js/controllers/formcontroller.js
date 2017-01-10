@@ -38,7 +38,7 @@ angular.module('scanthisApp.formController', [])
   //clear fields to default
   $scope.Clear = function(){
     $scope.submitted=false;
-    $scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
+    //$scope.formarray = JSON.parse(JSON.stringify($scope.config.fields));
     $scope.form = ClearFormToDefault($scope.form, $scope.formarray);
     if ($scope.config.startpolling) {
       clearObj($scope.scale);

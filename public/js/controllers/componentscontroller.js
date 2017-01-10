@@ -243,11 +243,11 @@ angular.module('scanthisApp.createlotController', [])
         $scope.list.length = response.headers()['content-range'].split('/')[1];
       };
       if ($scope.options.hundred_limit || $scope.options.all_items){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc'+ '&limit=' + (num||10);
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc'+ '&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query);
       }
       else{
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query); 
       }
     }, function errorCallback(response) {
@@ -319,7 +319,7 @@ angular.module('scanthisApp.createlotController', [])
 
 
       if ($scope.options.no_station){
-        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
+        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query); 
       }
       else if ($scope.station_info.itemtable === 'loin_with_info'){
@@ -327,11 +327,11 @@ angular.module('scanthisApp.createlotController', [])
         DatabaseServices.GetEntries(table, func, query); 
       }
       else if ($scope.options.all_items || $scope.options.hundred_limit){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query); 
       }
       else{
-        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||10);
+        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query); 
       }
     }, function errorCallback(response) {

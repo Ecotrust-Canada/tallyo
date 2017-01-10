@@ -23,3 +23,16 @@ CREATE OR REPLACE VIEW public.box_intrec_total AS
 
 ALTER TABLE public.box_intrec_total
   OWNER TO tuna_processor;
+
+
+CREATE OR REPLACE VIEW public.box_har_total AS 
+ SELECT count(box.box_number) as boxes,
+    box.size,
+    box.grade,
+    sum(box.weight) as weight,
+    box.shipping_unit_in as shipping_unit_number
+   FROM box
+     group by size, grade, shipping_unit_in;
+
+ALTER TABLE public.box_har_total
+  OWNER TO tuna_processor;
