@@ -4,7 +4,7 @@ angular.module('scanthisApp.routing', ['ngRoute'])
 
 
 
-.config(function($routeProvider) {
+.config(function($routeProvider, $locationProvider) {
   //
   // For any unmatched url, redirect to /state1
 
@@ -17,6 +17,8 @@ angular.module('scanthisApp.routing', ['ngRoute'])
       controller: 'RoutingCtrl', 
       template: '<div class="block" ng-repeat="station in currentstations" ng-include="station.include"></div>'  
     });
+
+    $locationProvider.html5Mode(false);
 
 
 });

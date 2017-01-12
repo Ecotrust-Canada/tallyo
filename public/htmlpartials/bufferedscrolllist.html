@@ -2,14 +2,15 @@
 <!-- directives bufferedscrolllist and bufferedscrolllistpacking -->
 
 
-<div class="bufferedscroll" id="list-{{config.id}}">
-  <table ng-class="config.cssclass">
-    <tbody>
+<div class="bufferedscroll" buffered-scroll id="list-{{config.id}}">
+  <table ng-class="config.cssclass" >
+    <thead>
       <tr ng-if="config.headers">
       <th></th>
         <th ng-repeat="title in config.headers">{{title}}</th>
       </tr>
-
+    </thead>
+    <tbody>
       <tr ng-repeat="item in itemlist track by item[config.trackBy] | orderBy: config.order | filter: filterstring"
           id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$first && current.addnew===true}' elem-ready="testFn({str:$index})">
           <td><span>{{listlength - $index}}</span></td>
@@ -36,12 +37,6 @@
         <td ng-if="config.button && !config.arg" 
             ng-click="updateFn({str: item})" class="btn_action">{{config.button}}</td>
         
-      </tr>
-      <tr ng-if="itemlist.length<listlength">
-        <td class="loadmore"></td>
-        <td>
-        <a ng-click="loadmoreFn({num:itemlist.length})">load more</a>
-        </td>
       </tr>
     </tbody>
   </table>

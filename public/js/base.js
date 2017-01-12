@@ -35,7 +35,10 @@ angular.module('scanthisApp', [
 })
 
 
-.controller('MainCtrl', function($scope, $animate) {
+.controller('MainCtrl', function($scope, $animate, $route, $routeParams, $location) {
+  $scope.$route = $route;
+  $scope.$location = $location;
+  $scope.$routeParams = $routeParams;
   $animate.enabled(false);
   $scope.current_terminal = {
     id: -1,

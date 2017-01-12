@@ -251,9 +251,7 @@ angular.module('scanthisApp.directives', [])
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
-        if ($scope.itemlist && $scope.limit < $scope.itemlist.length) {
-          $scope.limit += 5;
-        }
+        $scope.loadmoreFn({num:$scope.itemlist.length});
       };
       element.on('scroll',function (evt) {
         var scrollTop    = element[0].scrollTop,
@@ -272,7 +270,7 @@ angular.module('scanthisApp.directives', [])
         }
         if (scrollTop === 0) {
           $scope.$apply(function () {
-            $scope.limit = attrs.bufferedScroll || 10;
+            $scope.loadmoreFn();
           });
         }
       });

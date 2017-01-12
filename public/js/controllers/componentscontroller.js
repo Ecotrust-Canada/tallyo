@@ -252,7 +252,13 @@ angular.module('scanthisApp.createlotController', [])
   };
 
   $scope.loadMore = function(num){
-    $scope.ListCollectionItems(num*2);
+    console.log(num);
+    if (num){
+      $scope.ListCollectionItems(num*2);
+    }else{
+      $scope.ListCollectionItems();
+    }
+    
   };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {

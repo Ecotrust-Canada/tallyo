@@ -36,3 +36,5 @@ CREATE OR REPLACE VIEW public.box_har_total AS
 
 ALTER TABLE public.box_har_total
   OWNER TO tuna_processor;
+
+CREATE INDEX location_idx ON lotlocations (station_code);
