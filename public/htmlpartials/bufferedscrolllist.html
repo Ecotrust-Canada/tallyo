@@ -13,7 +13,7 @@
     <tbody>
       <tr ng-repeat="item in itemlist track by item[config.trackBy] | orderBy: config.order | filter: filterstring"
           id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$first && current.addnew===true}' elem-ready="testFn({str:$index})">
-          <td><span>{{listlength - $index}}</span></td>
+          <td><span>{{listlength - $index - offset}}</span></td>
         <td ng-repeat="name in config.fields" ng-switch on="name" >
           <span ng-switch-when="timestamp">{{item.timestamp|stringtotime }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
@@ -40,4 +40,7 @@
       </tr>
     </tbody>
   </table>
+  <span ng-if="itemlist.length>4" ng-click="scrolltop()" class="scroll-top">Scroll to top</span>
 </div>
+
+

@@ -301,7 +301,7 @@ body{
   height: auto;
   overflow: auto;
   background-color: #fbfcf8;
-  padding-bottom: 20px;
+  /*padding-bottom: 20px;*/
   white-space: nowrap;
 }
 .itemsframe table, .itemtotals table {
@@ -312,6 +312,15 @@ body{
 .marg{
   margin-bottom:10px;
   margin-left:10px;
+}
+
+.scroll-top{
+  position: absolute;
+  left: 5px;
+  top: 200px;
+  font-size: 15px;
+  font-style: italic;
+  color: #0076AD;
 }
 /*
 .itemsframe table tr:hover {

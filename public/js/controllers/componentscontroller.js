@@ -146,13 +146,19 @@ angular.module('scanthisApp.createlotController', [])
     var func = function(response){
 
       if (response.data.length > 0){
-        $scope.current[$scope.station_info.collectiontable] = response.data[0];
-        $scope.current.itemchange = !$scope.current.itemchange;
-        var thediv = document.getElementById('scaninput');
-        if(thediv){
-         $timeout(function(){thediv.focus();}, 0);
-        }
+        $http.get('/server_time').then(function successCallback(response) {
+          var the_date = response.data.timestamp;
+          $scope.current.start_of_day = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+          $scope.current[$scope.station_info.collectiontable] = response.data[0];
+          $scope.current.itemchange = !$scope.current.itemchange;
+          var thediv = document.getElementById('scaninput');
+          if(thediv){
+           $timeout(function(){thediv.focus();}, 0);
+          }
+        }, function errorCallback(response) {
+        });
       }
+     
     };
     var query = '?' + $scope.station_info.collectionid + '=eq.' + $scope.current.collectionid;
     DatabaseServices.GetEntryNoAlert(table, func, query);
@@ -165,8 +171,6 @@ angular.module('scanthisApp.createlotController', [])
     $scope.current[$scope.station_info.collectiontable] = null;
     if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
       if ($scope.current.collectionid === 'no selected' || $scope.current.collectionid === null){
-        // $scope.current.collectionid = null;
-        // $scope.current.itemchange = !$scope.current.itemchange;
       }
       else{
         $scope.DisplayCollectionInfo();
@@ -177,10 +181,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.$on('collection-change', function(event, args) {
     if ($scope.current.collectionid !== args.id){
       $scope.current.collectionid = args.id;
-    }
-    // else{
-    //   $scope.DisplayCollectionInfo();
-    // }    
+    }   
   });
 
   $scope.$on('change-lot', function(event) {
@@ -220,10 +221,10 @@ angular.module('scanthisApp.createlotController', [])
 .controller('DisplayItemsCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
   $scope.ListCollectionItems = function(num){
-    $http.get('/server_time').then(function successCallback(response) {
-      var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-      //var date = moment(the_date).utcOffset(response.data.timezone).subtract(($scope.settings.data_time_range || 24), 'hours').format();
+    console.log($scope.current.start_of_day);
+    // $http.get('/server_time').then(function successCallback(response) {
+      // var the_date = response.data.timestamp;
+      // var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
       var table;
       var query;
       if ($scope.station_info.itemtable === 'box' && !$scope.options.print_uuid){
@@ -235,26 +236,32 @@ angular.module('scanthisApp.createlotController', [])
         table = $scope.station_info.itemtable;
       }
       var func = function(response){
-        $scope.list.included = response.data;
-        $scope.list.length = response.headers()['content-range'].split('/')[1];
+        if (!num){
+          $scope.list.included = response.data;
+          $scope.list.length = response.headers()['content-range'].split('/')[1];
+        }else{
+          for (var a in response.data){
+            $scope.list.included.push(response.data[a]);
+          }
+        }
       };
       if ($scope.options.hundred_limit || $scope.options.all_items){
         query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc'+ '&limit=' + (num||5);
         DatabaseServices.GetEntries(table, func, query);
       }
       else{
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=10&offset=' + (num||0);
         DatabaseServices.GetEntries(table, func, query); 
       }
-    }, function errorCallback(response) {
-    });
+    // }, function errorCallback(response) {
+    // });
       
   };
 
   $scope.loadMore = function(num){
     console.log(num);
     if (num){
-      $scope.ListCollectionItems(num*2);
+      $scope.ListCollectionItems(num);
     }else{
       $scope.ListCollectionItems();
     }

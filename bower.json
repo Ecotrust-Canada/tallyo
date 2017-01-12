@@ -23,7 +23,8 @@
     "ngScrollable": "ng-scrollable#~0.2.3",
     "alasql": "^0.2.7",
     "js-xlsx": "^0.8.0",
-    "angular-uuids": "^0.0.4"
+    "angular-uuids": "^0.0.4",
+    "angular-ui-scroll": "^1.5.2"
   },
   "resolutions": {
     "angular": "^1.5.8"
