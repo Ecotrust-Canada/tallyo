@@ -293,6 +293,29 @@ angular.module('scanthisApp.directives', [])
     };
   })
 
+.directive('scrollhelper', function ($parse) {
+    return function ($scope, element, attrs) {
+      
+
+      $scope.$watch('current.itemchange', function(newValue, oldValue) {
+        $scope.myAdapter.reload(0);
+      });
+
+      element.on('scroll',function (evt) {
+        var scrollTop    = element[0].scrollTop,
+            scrollHeight = element[0].scrollHeight,
+            offsetHeight = element[0].offsetHeight;
+
+        if (scrollTop === 0) {
+          $scope.$apply(function () {
+              $scope.myAdapter.reload(0);
+          });
+        }
+      });
+
+    };
+  })
+
 .directive('bufferedScrollLots', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {

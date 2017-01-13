@@ -48,6 +48,20 @@ input {
   background-color: #DBEBEF;
   border: 1px solid #CAE2EB;
 }
+
+.viewport {
+  height: 200px;
+  overflow: auto;
+  /*custom*/
+  /*!custom*/
+}
+
+.viewport {
+  border: 1px #cccccc solid;
+  border-radius: 5px;
+}
+
+
 .input-text {
   background-color: #DBEBEF;
   border: 1px solid #CAE2EB;

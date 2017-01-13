@@ -2,8 +2,9 @@
 <!-- directives bufferedscrolllist and bufferedscrolllistpacking -->
 
 
-<div class="bufferedscroll" buffered-scroll id="list-{{config.id}}">
-  <table ng-class="config.cssclass" >
+<!-- <div class="bufferedscroll" id="list-{{config.id}}"> -->
+<div ng-if="current.collectionid"  class="viewport" id="viewport-tableScroller" ui-scroll-viewport scrollhelper>
+  <table>
     <thead>
       <tr ng-if="config.headers">
       <th></th>
@@ -11,9 +12,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in itemlist track by item[config.trackBy] | orderBy: config.order | filter: filterstring"
-          id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$first && current.addnew===true}' elem-ready="testFn({str:$index})">
-          <td><span>{{listlength - $index - offset}}</span></td>
+      <tr ui-scroll="item in itemlist" start-index="0" adapter="myAdapter"
+          id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$index==0&&current.addnew===true}' elem-ready="testFn({str:$index})">
+        <td><span>{{listlength - $index - offset}}</span></td>
         <td ng-repeat="name in config.fields" ng-switch on="name" >
           <span ng-switch-when="timestamp">{{item.timestamp|stringtotime }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>
@@ -40,7 +41,8 @@
       </tr>
     </tbody>
   </table>
-  <span ng-if="itemlist.length>4" ng-click="scrolltop()" class="scroll-top">Scroll to top</span>
-</div>
+  </div>
+<!--   <span ng-if="itemlist.length>4" ng-click="scrolltop()" class="scroll-top">Scroll to top</span>
+</div> -->
 
 

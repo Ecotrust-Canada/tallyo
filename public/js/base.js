@@ -18,7 +18,9 @@ angular.module('scanthisApp', [
   'ngMaterial',
   'toastr',
   'ngAnimate',
-  'angular-uuid'
+  'angular-uuid',
+  'ui.scroll.jqlite',
+  'ui.scroll'
 ])
 
 /*
@@ -33,6 +35,10 @@ angular.module('scanthisApp', [
     });
 
 })
+
+.config(function($compileProvider) {
+    $compileProvider.preAssignBindingsEnabled(true);
+  })
 
 
 .controller('MainCtrl', function($scope, $animate, $route, $routeParams, $location) {
