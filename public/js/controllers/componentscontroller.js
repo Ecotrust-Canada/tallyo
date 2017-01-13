@@ -225,14 +225,7 @@ angular.module('scanthisApp.createlotController', [])
   datasource.minIndex = 0;
 
   datasource.get = function(index, count, success){
-    console.log(index);
-    // if (index<0){
-    //   index=0;
-    // }
-    //console.log($scope.current.start_of_day);
-    // $http.get('/server_time').then(function successCallback(response) {
-      // var the_date = response.data.timestamp;
-      // var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
+    console.log($scope.current.start_of_day);
       var table;
       var query;
       if ($scope.station_info.itemtable === 'box' && !$scope.options.print_uuid){
@@ -247,34 +240,22 @@ angular.module('scanthisApp.createlotController', [])
         success(response.data);
         $scope.list.length = response.headers()['content-range'].split('/')[1];
       };
-      if ($scope.options.hundred_limit || $scope.options.all_items){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
-          DatabaseServices.GetEntries(table, func, query); 
-      }
-      else{
-        if ($scope.current.collectionid && index>=0 && index<=($scope.list.length||0)){
+
+      if ($scope.current.collectionid && index>=0 && index<=($scope.list.length||0)){
+        if ($scope.options.hundred_limit || $scope.options.all_items){
           query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
-          DatabaseServices.GetEntries(table, func, query); 
-        }else{
-          success([]);
+            DatabaseServices.GetEntries(table, func, query); 
         }
-      }
-    // }, function errorCallback(response) {
-    // });
-      
+        else if ($scope.current.start_of_day){
+          query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
+          DatabaseServices.GetEntries(table, func, query); 
+        }
+      }else{
+          success([]);
+      }  
   };
 
   $scope.datasource = datasource;
-
-  $scope.loadMore = function(num){
-    console.log(num);
-    if (num){
-      $scope.ListCollectionItems(num);
-    }else{
-      $scope.ListCollectionItems();
-    }
-    
-  };
 
   $scope.$watch('current.itemchange', function(newValue, oldValue) {
     if ($scope.current.collectionid !== undefined){
@@ -282,7 +263,6 @@ angular.module('scanthisApp.createlotController', [])
         $scope.list.included = null;
       }
       else{
-        //$scope.ListCollectionItems();
         $scope.ItemTotals();
       }
     }
@@ -304,7 +284,10 @@ angular.module('scanthisApp.createlotController', [])
 //Harsam packing and shipping, Amanda shipping stations - used for workflow of patching object into container
 .controller('DisplayItemsPackingCtrl', function($scope, $http, DatabaseServices, $timeout) {
 
-  $scope.ListCollectionItems = function(num){
+  var datasource = {};
+  datasource.minIndex = 0;
+
+  datasource.get = function(index, count, success){
     var table;
     if ($scope.station_info.itemtable === 'box'){
       if ($scope.options.shiplist){
@@ -312,31 +295,23 @@ angular.module('scanthisApp.createlotController', [])
       }
       else{
         table = 'box_with_info';
-      }
-      
+      } 
     }
     else{
       table = $scope.station_info.itemtable;
     }
-    $http.get('/server_time').then(function successCallback(response) {
-      var the_date = response.data.timestamp;
-      var date = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-      var func = function(response){
-        $scope.list.included = response.data;
-        $scope.list.length = response.headers()['content-range'].split('/')[1];
-      };
-      var table;
-      var query;      
-      if ($scope.station_info.itemtable === 'box'){
-        table = 'box_with_info';
-      }
-      else {
-        table = $scope.station_info.itemtable;
-      }
 
+    var func = function(response){
+      $scope.list.included = response.data;
+      success(response.data);
+      $scope.list.length = response.headers()['content-range'].split('/')[1];
+    };
+    var query;
+
+    if ($scope.current.collectionid && index>=0 && index<=($scope.list.length||0)){ 
 
       if ($scope.options.no_station){
-        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
+        query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
         DatabaseServices.GetEntries(table, func, query); 
       }
       else if ($scope.station_info.itemtable === 'loin_with_info'){
@@ -344,32 +319,19 @@ angular.module('scanthisApp.createlotController', [])
         DatabaseServices.GetEntries(table, func, query); 
       }
       else if ($scope.options.all_items || $scope.options.hundred_limit){
-        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
+        query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
         DatabaseServices.GetEntries(table, func, query); 
       }
-      else{
-        query = '?timestamp=gte.'+ date + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (num||5);
+      else if ($scope.current.start_of_day){
+          query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
         DatabaseServices.GetEntries(table, func, query); 
       }
-    }, function errorCallback(response) {
-    });
+    }else{
+      success([]);
+    }  
   };
 
-  $scope.loadMore = function(num){
-    $scope.ListCollectionItems(num*2);
-  };
-
-  $scope.$watch('current.itemchange', function(newValue, oldValue) {
-    if ($scope.current.collectionid !== undefined){
-      if ($scope.current.collectionid === 'no selected'){
-        $scope.list.included = null;
-      }
-      else{
-        $scope.ListCollectionItems();
-      }
-    }
-  });
-
+  $scope.datasource = datasource;
 
   $scope.HighlightGreen = function(str){
     $timeout(function(){ $scope.current.addnew = false; }, 500);

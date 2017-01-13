@@ -50,7 +50,7 @@ input {
 }
 
 .viewport {
-  height: 200px;
+  max-height: 200px;
   overflow: auto;
   /*custom*/
   /*!custom*/

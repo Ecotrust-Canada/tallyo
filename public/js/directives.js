@@ -59,24 +59,22 @@ angular.module('scanthisApp.directives', [])
            filterstring: '=',
            updateFn: '&',
            secondFn: '&',
-           loadmoreFn: '&',
            testFn: '&',
-           current: '='}, 
-  controller: 'BufferScrollCtrl',
+           current: '='},
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
 
-.directive('bufferedscrolllistpacking', function() { return { 
+.directive('basiclist', function() { return { 
   scope: { itemlist: '=',  
            config: '=' ,
            listlength: '=', 
-           filterstring: '=', 
+           filterstring: '=',
            updateFn: '&',
            secondFn: '&',
            loadmoreFn: '&',
            testFn: '&',
            current: '='}, 
-  controller: 'BufferScrollPackingCtrl',
-  templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
+  controller: 'BufferScrollCtrl',
+  templateUrl: 'htmlpartials/basiclist.html' }; })
 
 .directive('expandedlist', function() { return { 
   scope: { itemlist: '=', 
@@ -251,9 +249,8 @@ angular.module('scanthisApp.directives', [])
 .directive('bufferedScroll', function ($parse) {
     return function ($scope, element, attrs) {
       var handler = function () {
-        if ($scope.itemlist.length<$scope.listlength && $scope.itemlist.length !== $scope.prev){
-          $scope.prev = $scope.itemlist.length;
-          $scope.loadmoreFn({num: $scope.itemlist.length});
+        if ($scope.itemlist && $scope.limit < $scope.itemlist.length) {
+          $scope.limit += 5;
         }
       };
       element.on('scroll',function (evt) {
@@ -273,23 +270,10 @@ angular.module('scanthisApp.directives', [])
         }
         if (scrollTop === 0) {
           $scope.$apply(function () {
-            if ($scope.itemlist.length > 10){
-              $scope.loadmoreFn();
-            }
+            $scope.limit = attrs.bufferedScroll || 10;
           });
         }
       });
-
-      $scope.scrolltop = function(){
-        document.getElementById('list-'+$scope.config.id).scrollTop = 0;
-      };
-
-      $scope.$watch('current.offset', function(newValue, oldValue) {
-        if ($scope.current.offset === 0){
-          $scope.offset = 0;
-        }
-      });
-
     };
   })
 
