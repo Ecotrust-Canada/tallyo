@@ -109,6 +109,7 @@ angular.module('scanthisApp.packingController', [])
     entry_scan[$scope.station_info.collectionid] = $scope.current.collectionid;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.addnew = true;
     };
     DatabaseServices.DatabaseEntryReturn('scan', entry_scan, func);
   };
@@ -128,8 +129,7 @@ angular.module('scanthisApp.packingController', [])
   /*writes the foreignkey of the object, adds object to list*/
   $scope.PatchObjWithContainer = function(id){
     id = id || $scope.id;
-    var func = function(response){
-      $scope.current.addnew = true;      
+    var func = function(response){      
       $scope.MakeScan(id);
     };
     var onErr = function(){
@@ -273,6 +273,7 @@ angular.module('scanthisApp.packingController', [])
       }
       else{
         $scope.current.itemchange = !$scope.current.itemchange;
+        $scope.current.removing = !$scope.current.removing;
         $scope.to_delete=null;
       }      
     };
@@ -283,6 +284,7 @@ angular.module('scanthisApp.packingController', [])
     var query = '?' + $scope.station_info.itemid + '=eq.' + itemid;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.removing = !$scope.current.removing;
       $scope.to_delete=null;
     };
     DatabaseServices.RemoveEntry($scope.station_info.patchtable, query, func);

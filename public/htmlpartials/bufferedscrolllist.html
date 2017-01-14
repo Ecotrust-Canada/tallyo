@@ -7,14 +7,14 @@
   <table>
     <thead>
       <tr ng-if="config.headers">
-      <th></th>
+        <th></th>
         <th ng-repeat="title in config.headers">{{title}}</th>
       </tr>
     </thead>
     <tbody>
       <tr ui-scroll="item in itemlist" start-index="0" adapter="myAdapter"
-          id="item-{{$index}}{{config.station_id}}" class="animation" ng-class='{new_item:$index==0&&current.addnew===true}' elem-ready="testFn({str:$index})">
-        <td><span>{{listlength - $index - offset}}</span></td>
+          id="item-{{$index}}{{config.station_id}}" class="animation">
+        <td><span>{{listlength - $index - offset + ($parent.itemlist.minIndex||0)}}</span></td>
         <td ng-repeat="name in config.fields" ng-switch on="name" >
           <span ng-switch-when="timestamp">{{item.timestamp|stringtotime }}</span>
           <span ng-switch-when="weight_1">{{(item[name]) | weightstring }}</span>

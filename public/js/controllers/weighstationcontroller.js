@@ -341,6 +341,7 @@ angular.module('scanthisApp.itemController', [])
     var query = '?serial_id=eq.' + scan_id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.removing = !$scope.current.removing;
       $scope.to_delete = null;
     };
     DatabaseServices.RemoveEntry('scan', query, func);
@@ -379,6 +380,7 @@ angular.module('scanthisApp.itemController', [])
     var query = '?' + itemid + '=eq.' + id;
     var func = function(){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.removing = !$scope.current.removing;
       $scope.to_delete = null;
       var thediv = document.getElementById('scaninput');
           if (thediv){

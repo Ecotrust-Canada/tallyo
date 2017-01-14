@@ -174,6 +174,7 @@ angular.module('scanthisApp.setsupplierController', [])
       var query = '?lot_number=eq.' + lot_number;
       var func = function(response){
         if (response.data.length > 0){
+          $scope.current.lot = null;
           $scope.current.lot = response.data[0];
           $rootScope.$broadcast('collection-change', {id: $scope.current.lot.lot_number});
           $scope.current.shipping_unit = null;
@@ -434,11 +435,13 @@ angular.module('scanthisApp.setsupplierController', [])
   $scope.dropdownclick = function(){
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
       $scope.current.lot_to_edit_or_select=null;
+      $scope.current.collectionid=null;
     }
   };
   $scope.pcdropdownclick = function(){
     if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent))) {
       $scope.current.lot_to_edit_or_select=null;
+      $scope.current.collectionid=null;
     }
   };
 })

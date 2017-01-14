@@ -592,6 +592,7 @@ angular.module('scanthisApp.receivingController', [])
     entry.station_code = $scope.station_code;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.addnew = true;
     };
     DatabaseServices.DatabaseEntryCreateCode('scan', entry, $scope.processor, func);
   };
@@ -674,6 +675,7 @@ angular.module('scanthisApp.receivingController', [])
     var query = '?box_number=eq.' + obj.box_number;
     var func = function(response){
       $scope.current.itemchange = !$scope.current.itemchange;
+      $scope.current.removing = !$scope.current.removing;
     };
     DatabaseServices.RemoveEntry('box', query, func);
   };

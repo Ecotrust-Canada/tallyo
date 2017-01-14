@@ -57,11 +57,78 @@ angular.module('scanthisApp.directives', [])
            config: '=' ,
            listlength: '=', 
            filterstring: '=',
+           prepFn: '&',
            updateFn: '&',
            secondFn: '&',
            testFn: '&',
            current: '='},
   templateUrl: 'htmlpartials/bufferedscrolllist.html' }; })
+
+.directive('scrollhelper', function ($parse, $timeout) {
+    return function ($scope, element, attrs) {
+
+      var adding = function(arr){
+
+        if($scope.myAdapter.isBOF()){
+
+          $scope.myAdapter.prepend(arr);
+          $scope.itemlist.minIndex = ($scope.itemlist.minIndex || 0) -1;
+
+          $timeout(function(){ 
+            element[0].scrollTop = 0;
+            var checkFlag = function() {
+                if(document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||'')) === null) {
+                   window.setTimeout(checkFlag, 100);
+                } else {
+                  var el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
+                  el.classList.add('new_item'); 
+                  $timeout(function(){ el.classList.remove('new_item');}, 700);
+                }
+            };
+            checkFlag();
+              
+          }, 0);
+
+        }else{
+          element[0].scrollTop = 0;
+          $timeout(function(){
+
+              var checkFlag = function() {
+                  if(document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||'')) === null) {
+                     window.setTimeout(checkFlag, 100);
+                  } else {
+                    var el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
+                    el.classList.add('new_item'); 
+                    $timeout(function(){ el.classList.remove('new_item');}, 700);
+                  }
+              };
+              checkFlag();
+
+              
+            }, 100);
+        }
+
+      };
+      
+
+      $scope.$watch('current.addnew', function(newValue, oldValue) {
+        if($scope.current.addnew === true){
+          if ($scope.config.reload){
+            $scope.myAdapter.reload(0);
+          }else{
+            $scope.testFn();
+            $scope.prepFn({prep:adding});
+          }
+        }
+      });
+
+      $scope.$watch('current.removing', function(newValue, oldValue) {
+        $scope.testFn();
+        $scope.myAdapter.reload($scope.itemlist.minIndex||0);
+      });
+
+    };
+  })
 
 .directive('basiclist', function() { return { 
   scope: { itemlist: '=',  
@@ -274,29 +341,6 @@ angular.module('scanthisApp.directives', [])
           });
         }
       });
-    };
-  })
-
-.directive('scrollhelper', function ($parse) {
-    return function ($scope, element, attrs) {
-      
-
-      $scope.$watch('current.itemchange', function(newValue, oldValue) {
-        $scope.myAdapter.reload(0);
-      });
-
-      element.on('scroll',function (evt) {
-        var scrollTop    = element[0].scrollTop,
-            scrollHeight = element[0].scrollHeight,
-            offsetHeight = element[0].offsetHeight;
-
-        if (scrollTop === 0) {
-          $scope.$apply(function () {
-              $scope.myAdapter.reload(0);
-          });
-        }
-      });
-
     };
   })
 

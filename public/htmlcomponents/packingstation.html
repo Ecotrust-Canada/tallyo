@@ -8,7 +8,7 @@
            ng-click="current.collectionid = null;current[station_info.collectiontable]=null;current.edit_box=false;current.select_change=!current.select_change;">
         <span class="show_choices">{{packingconfig.sectiontitle}}</span> 
       </div> 
-      <div class="show_choices" ng-hide="current.collectionid">
+      <div class="show_choices" ng-if="!current.collectionid">
         <div ng-controller="FormSubmitCtrl" id="create_box_form">
           <entryform config="collectionform" formchange="formchange" submit-fn="SubmitAddSetCurrent(form)" list2="list.lotin"></entryform>
         </div>
@@ -18,9 +18,9 @@
 
       </div>
     </div>
-    <div  ng-controller="DisplayCollectionCtrl" ng-show="current.collectionid" id="current_lot" class="display_collection">
+    <div  ng-controller="DisplayCollectionCtrl" ng-if="current.collectionid" id="current_lot" class="display_collection">
       <display settings="settings" obj="current[station_info.collectiontable]" config="collectiondisplay"></display>
-      <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-show="current[station_info.collectiontable]">
+      <div ng-if="current[station_info.collectiontable]" class="pictogram_btns" ng-if="current[station_info.collectiontable]">
         <span ng-if="station_info.collectiontable !== 'lot' && list.included.length==0 && current.totals.pieces ===0  && !options.enable_edit" ng-click="delete()" id="clear-{{config.id}}" class="clear">Delete</span>
         <span ng-if="station_info.collectiontable === 'lot' && current.lot.num_items === 0" id="clear-{{config.id}}" class="clear" ng-click="delete()" >Delete</span>
         <span ng-if="station_info.collectiontable === 'lot' && current.lot.num_items !== 0"><span class="infotext">Lot contains items - cannot delete</span></span>
@@ -28,20 +28,6 @@
         <span ng-if="onLabel && list.included.length>0" ng-click="MakeQR()" 
               id="reprint-{{config.id}}" class="reprint">Reprint</span>
       </div>
-
-      <span ng-if="settings.thisfish_enabled && options.thisfishlist" ng-controller="ThisfishAddCtrl">
-        <button ng-if="!current.codes  && show_element!=='dropdown'" ng-disabled="!current.collectionid" ng-click="$parent.show_element='dropdown'">Add ThisFish Codes</button>
-
-        <input-dropdown ng-show="!current.codes && show_element==='dropdown'" thelist="list.tf_codes"  config="the_config" on-select="SetCodes(value)"></input-dropdown>
-
-        <span ng-show="current.codes">
-          Thisfish Codes: <button ng-click="RemoveCodes(current.codes);$parent.current.codes=null;show_element=''">Remove</button>
-          <span ng-repeat="code in current.products">
-          <br>{{code}}
-          </span>
-          
-        </span>
-      </span>
     </div>
 
     <div ng-if="current.edit_box && options.enable_edit" ng-controller="FormSubmitCtrl" id="create_box_form">
@@ -55,7 +41,7 @@
            ng-click="hide_search = !hide_search;boxes = null;">
         <span class="show_choices">Search</span> 
       </div>
-      <div ng-hide="hide_search">
+      <div ng-if="!hide_search">
         <div class="show_choices">
           <div class="display_field">
             <label for="filter_case_number">Case Number:</label><input 
@@ -161,11 +147,11 @@
 </div>
 
 
-  <div class="panel grey" ng-controller="RemovePatchCtrl" ng-show="!formdisabled">
+  <div class="panel grey" ng-controller="RemovePatchCtrl" ng-if="!formdisabled">
     <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 
     <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
-        <bufferedscrolllist ng-if="current.collectionid" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current"></bufferedscrolllist>
+        <bufferedscrolllist ng-if="current.collectionid" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current" prep-fn="getLatest(prep)"></bufferedscrolllist>
     </div>
     <div class="itemtotals table_row" ng-if="current.collectionid">
       <div class="item_number">
