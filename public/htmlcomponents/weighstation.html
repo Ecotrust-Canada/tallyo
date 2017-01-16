@@ -77,7 +77,7 @@
 
 <div class="panel grey not" ng-show="current.collectionid" ng-controller="RemoveScanCtrl" >
   <div class="itemsframe entries" ng-controller="DisplayItemsCtrl">
-    <bufferedscrolllist ng-if="current.collectionid" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)" test-fn="HighlightGreen()" current="current" prep-fn="getLatest(prep)"></bufferedscrolllist>
+    <bufferedscrolllist ng-if="current[station_info.collectiontable]" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="RemoveItem(str)" second-fn="Reprint(str)" test-fn="HighlightGreen()" current="current" prep-fn="getLatest(prep)"></bufferedscrolllist>
   </div>
   <div ng-if="station_info.itemtotals" ng-controller="TotalsWeighCtrl" class="itemtotals">
     <list itemlist="list.totals"  config="totallistconfig" istotal="istotal"></list>

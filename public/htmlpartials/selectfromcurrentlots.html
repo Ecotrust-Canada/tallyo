@@ -4,9 +4,9 @@
   <div class="select_header" ng-class="{lot_chosen: current.collectionid}">
     <span class="show_choices" ng-click="current.collectionid = null">Select Lot</span>
     <div id="reprint_label_link" ng-if="substationlink" 
-         ng-click="switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
+         ng-click="current.stopPolling();switchSubstation(substationlink.index)">{{substationlink.title}}</div>  
   </div> 
-  <div class="show_choices" ng-hide="current.collectionid">
+  <div class="show_choices" ng-if="!current.collectionid">
     <input-dropdown  thelist="list.harvester_lot"  config="collectiondropdown" on-select="changeFn(value)"></input-dropdown>
     <input-dropdown  thelist="list.old_harvester_lot"  config="adddropdown" on-select="changeFn(value)"></input-dropdown>
   </div> 

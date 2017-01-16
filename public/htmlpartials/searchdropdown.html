@@ -3,7 +3,7 @@
   <label ng-if="config.title" for="select-{{config.id}}">{{config.title}}: </label>
   <div class="dd_arrow"><span></span></div>
 
-  <input ng-hide="(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
+  <input ng-if="!(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown">
     <div ng-if="!filter"  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||1000)">
         <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>

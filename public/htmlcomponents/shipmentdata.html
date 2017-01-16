@@ -12,7 +12,7 @@
     <br>
     <br>
 
-    <div id="edit_shipment"  ng-hide="current.shipment === undefined || current.shipment === null"> 
+    <div id="edit_shipment"  ng-if="!(current.shipment === undefined || current.shipment === null)"> 
 
       
       <div class="display_field">
@@ -87,7 +87,7 @@
     </div>
   </div>
 
-  <div ng-hide="current.shipment === undefined || current.shipment === null">
+  <div ng-if="!(current.shipment === undefined || current.shipment === null)">
     <div class="marg">
       <span class="totals_caption">CSV Download: </span>
       <button class="btn-blue marg" ng-click="getTheData(current.shipment)">CSV</button>

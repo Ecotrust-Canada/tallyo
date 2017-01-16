@@ -1,8 +1,8 @@
 <!-- Edit lot within weighstation ie. HS Receiving -->
 
-<div ng-controller="EditRLotCtrl" ng-show="current.collectionid" class="select_object">  
-  <button ng-click="resetform();showedit=true" ng-hide="showedit" class="btn-blue">Edit Current</button>
-  <button ng-click="showedit=false" ng-show="showedit" class="btn-blue">Hide</button> 
+<div ng-controller="EditRLotCtrl" ng-if="current.collectionid" class="select_object">  
+  <button ng-click="resetform();showedit=true" ng-if="!showedit" class="btn-blue">Edit Current</button>
+  <button ng-click="showedit=false" ng-if="showedit" class="btn-blue">Hide</button> 
   <div  class="show_choices" ng-if="showedit===true">
 
     <input-dropdown thelist="list.harvester"  config="adddropdown2" on-select="GetHar(value)" form="default"></input-dropdown>

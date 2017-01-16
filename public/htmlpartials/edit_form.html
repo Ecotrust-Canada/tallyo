@@ -5,8 +5,8 @@
 <div class="marg_left">
   <button id="toggle-{{config.id}}" 
           ng-if="config.hide" ng-click="$parent.hideform = !hideform" class="btn-blue">
-    <span ng-show="hideform">{{config.hide}}</span>
-    <span ng-hide="hideform">Hide Form</span>
+    <span ng-if="hideform">{{config.hide}}</span>
+    <span ng-if="!hideform">Hide Form</span>
   </button>
 </div>
 
@@ -98,9 +98,9 @@
               <button id="{{row.fieldname}}-{{config.id}}" 
                       ng-class="{edit: editdrop[row.fieldname], close_edit: !editdrop[row.fieldname]}" 
                       ng-click="editdrop[row.fieldname] = !editdrop[row.fieldname]">
-                <span ng-show="editdrop[row.fieldname]"><i>Edit</i></span><span ng-hide="editdrop[row.fieldname]">Hide</span>
+                <span ng-if="editdrop[row.fieldname]"><i>Edit</i></span><span ng-if="!editdrop[row.fieldname]">Hide</span>
               </button> 
-              <div ng-hide="editdrop[row.fieldname]">
+              <div ng-if="!editdrop[row.fieldname]">
                 <div class="dropdownoptions" ng-repeat="selection in formoptions|filter:{field_name:row.fieldname}: true">
                   <span class="dd_option">{{selection.value}}</span>
                   <span class="remove_option" ng-click="Delete(selection.value, row.fieldname)" value="X" /></span>

@@ -149,7 +149,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   //HS receiving
   $scope.ListLots = function(){
-    console.log('ListLots');
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).format();
@@ -165,7 +164,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   //Both
   $scope.SetLot = function(lot_number){
-    console.log('setLot');
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).format();
@@ -265,7 +263,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
 
   $scope.$watch('current.collectionid', function(newValue, oldValue) {
-    console.log($scope.current.collectionid);
     if ($scope.current.collectionid !== undefined && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
       $rootScope.$broadcast('collection-change', {id: $scope.current.collectionid});
       setlotlocations();
@@ -399,7 +396,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.changelot = function(){
-    console.log('changelot');
     $scope.current.lot = null;
     $scope.current.collectionid = null;
     $scope.form.state = 'Dirty';
@@ -455,7 +451,6 @@ angular.module('scanthisApp.setsupplierController', [])
 
   //Only for AM receiving stations
   $scope.ListtheStationLots = function(){
-    console.log('ListStationLots');
     $http.get('/server_time').then(function successCallback(response) {
       var the_date = response.data.timestamp;
       var date = moment(the_date).utcOffset(response.data.timezone).subtract(30, 'days').format();

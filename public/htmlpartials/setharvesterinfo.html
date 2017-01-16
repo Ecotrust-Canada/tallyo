@@ -6,7 +6,7 @@
        <span class="show_choices">Set Fishing Info</span>
     </div> 
     <div class="inset_form"> 
-      <div class="show_choices" ng-show="!current.harvester">
+      <div class="show_choices" ng-if="!current.harvester">
         <entryform config="addform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
       </div>
       <display ng-if="current.harvester" settings="settings" obj="current.harvester" config="collection2display"></display>  

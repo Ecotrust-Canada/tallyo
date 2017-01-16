@@ -15,14 +15,14 @@
 
             <div class="dropdown-container dc-{{field.fieldname}}">
               <div class="dd_arrow"><span></span></div>
-              <input ng-hide="choice[field.fieldname]" placeholder="{{field.title}}">
+              <input ng-if="!choice[field.fieldname]" placeholder="{{field.title}}">
               <div class="dropdown">
                 <div ng-repeat="value in field.value">
                     <div ng-click="select($event, value)" ng-mousedown="choice[field.fieldname]=value.name"><b>{{value.name}}</b>
                     </div> 
                 </div>
               </div>
-              <div ng-show="choice[field.fieldname]" ng-click="choice[field.fieldname]=null" class="input-text">
+              <div ng-if="choice[field.fieldname]" ng-click="choice[field.fieldname]=null" class="input-text">
                 {{choice[field.fieldname]}}
               </div>
             </div>
@@ -38,7 +38,7 @@
                placeholder="field.placeholder"  title="{{field.placeholder}}" ng-required="true" 
                name="{{choice.id}}{{field.fieldname}}" ng-class="{errorfield: theform[choice.id + field.fieldname].$error.required===true && submitted}">
       </span>    
-      <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+      <button class="remove" ng-if="$last" ng-click="removeChoice()">-</button>
     </div>
   </form>
 

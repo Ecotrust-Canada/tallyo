@@ -38,3 +38,17 @@ ALTER TABLE public.box_har_total
   OWNER TO tuna_processor;
 
 CREATE INDEX location_idx ON lotlocations (station_code);
+
+
+CREATE INDEX loin_by_lot ON loin (lot_number);
+
+CREATE INDEX loin_by_station ON loin (station_code);
+
+CREATE INDEX loin_by_box ON loin (box_number);
+
+CREATE INDEX box_by_har ON box (harvester_code);
+CREATE INDEX box_by_lot ON box (lot_number);
+CREATE INDEX box_by_station ON box (station_code);
+CREATE INDEX box_by_lotin ON box (lot_in);
+CREATE INDEX box_by_ship ON box (shipping_unit_number);
+CREATE INDEX box_by_shipin ON box (shipping_unit_in);

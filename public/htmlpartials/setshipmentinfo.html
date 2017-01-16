@@ -6,7 +6,7 @@
        <span class="show_choices">Set Shipment Info</span>
     </div>
     <div class="inset_form"> 
-      <div class="show_choices" ng-show="!current.shipping_unit">
+      <div class="show_choices" ng-if="!current.shipping_unit">
         <entryform config="collectionform" formchange="formchange" submit-fn="SubmitForm(form)"></entryform>
       </div>
       <display ng-if="current.shipping_unit" settings="settings" obj="current.shipping_unit" config="collectiondisplay"></display>

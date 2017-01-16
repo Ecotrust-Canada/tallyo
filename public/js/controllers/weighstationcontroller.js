@@ -120,6 +120,10 @@ angular.module('scanthisApp.itemController', [])
     scalePromise = null;
   };
 
+  $scope.current.stopPolling = function(){
+    $scope.stopPolling();
+  };
+
   $scope.$on('$locationChangeStart', function( event ) {
       $scope.stopPolling();
   });

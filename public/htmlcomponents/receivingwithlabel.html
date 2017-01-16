@@ -74,7 +74,7 @@
 <div class="panel grey not" ng-controller="NoLabelTotalCtrl">
   <div ng-controller="DisplayItemsPackingCtrl">
     <div class="itemsframe entries">
-      <bufferedscrolllist ng-if="current.collectionid" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="RemoveScan(str)" current="current" test-fn="HighlightGreen(str)" prep-fn="getLatest(prep)"></bufferedscrolllist>
+      <bufferedscrolllist ng-if="current.harvester_lot" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="RemoveScan(str)" current="current" test-fn="HighlightGreen(str)" prep-fn="getLatest(prep)"></bufferedscrolllist>
     </div>
     <div class="itemtotals">
     	<list itemlist="list.boxes"  config="totallistconfig" istotal="istotal" ></list>

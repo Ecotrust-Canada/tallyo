@@ -144,12 +144,10 @@ angular.module('scanthisApp.createlotController', [])
       table = $scope.station_info.collectiontable;
     }
     var func = function(response){
-
       if (response.data.length > 0){
         $scope.current[$scope.station_info.collectiontable] = response.data[0];
         $http.get('/server_time').then(function successCallback(response) {
           var the_date = response.data.timestamp;
-          console.log('called');
           $scope.current.start_of_day = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
           
           $scope.current.itemchange = !$scope.current.itemchange;
@@ -229,9 +227,7 @@ angular.module('scanthisApp.createlotController', [])
     //console.log($scope.current.start_of_day);
       var table;
       var query;
-      if ($scope.station_info.itemtable === 'box' && !$scope.options.print_uuid){
-        table = 'box_with_info';
-      }else if ($scope.station_info.itemtable === 'box' && $scope.options.print_uuid){
+      if ($scope.options.print_uuid){
         table = 'boxes_uuid';
       }
       else{
@@ -273,9 +269,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.getLatest = function(prep){
       var table;
       var query;
-      if ($scope.station_info.itemtable === 'box' && !$scope.options.print_uuid){
-        table = 'box_with_info';
-      }else if ($scope.station_info.itemtable === 'box' && $scope.options.print_uuid){
+      if ($scope.options.print_uuid){
         table = 'boxes_uuid';
       }
       else{
@@ -337,7 +331,7 @@ angular.module('scanthisApp.createlotController', [])
         table = 'shipment_list';
       }
       else{
-        table = 'box_with_info';
+        table = 'box';
       } 
     }
     else{
@@ -400,7 +394,7 @@ angular.module('scanthisApp.createlotController', [])
         table = 'shipment_list';
       }
       else{
-        table = 'box_with_info';
+        table = 'box';
       } 
     }
     else{
@@ -416,8 +410,12 @@ angular.module('scanthisApp.createlotController', [])
       query = '?' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=1&offset=0';
       DatabaseServices.GetEntries(table, func, query); 
     }
-    else{
+    else if ($scope.options.all_items || $scope.options.hundred_limit){
       query = '?station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=1&offset=0';
+      DatabaseServices.GetEntries(table, func, query); 
+    }
+    else if ($scope.current.start_of_day){
+      query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=1&offset=0';
       DatabaseServices.GetEntries(table, func, query); 
     }
 

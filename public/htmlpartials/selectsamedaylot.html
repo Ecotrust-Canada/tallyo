@@ -5,7 +5,7 @@
        ng-click="current.collectionid = null;">
     <span class="show_choices">Choose Lot</span>
   </div>
-  <div class="show_choices" ng-hide="current.collectionid">
+  <div class="show_choices" ng-if="!current.collectionid">
     <input-dropdown  thelist="list.lot"  config="collectiondropdown" on-select="current.collectionid = value;"></input-dropdown>
 
     <input-dropdown  thelist="list.recent_lot"  config="adddropdown" on-select="current.collectionid = value;"></input-dropdown>

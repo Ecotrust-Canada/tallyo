@@ -16,7 +16,7 @@
        ng-click="hide_search = !hide_search;boxes = null;">
     <span class="show_choices">Search</span> 
   </div>
-  <div ng-hide="hide_search">
+  <div ng-if="!hide_search">
     <div class="show_choices">
       <div class="header">
 
@@ -121,7 +121,7 @@
                 <span ng-if="!lot.expanded" ng-click="lot.expanded = true" class="expand-control closed"></span>
               </div>
               <div class="field_val lot_code">{{lot.internal_lot_code || lot.lot_number}} <span ng-if="lot.ref_number"> - {{lot.ref_number}}</span> </div>
-              <div ng-show="!lot.expanded" class="field_val_small" ng-repeat="row in options.compress_view">
+              <div ng-if="!lot.expanded" class="field_val_small" ng-repeat="row in options.compress_view">
                 <span  ng-switch on="row.field">
                   <span ng-switch-when="receive_date">{{row.name}}: {{lot[row.field]|datestringtodate}}</span>
                   <span ng-switch-when="start_date">{{row.name}}: {{lot[row.field]|stringtodate}}</span>

@@ -11,13 +11,13 @@
  
 
   <div ng-init="formtable='harvester'">  
-    <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
+    <div ng-controller="FormSubmitCtrl" ng-if="!addnew">
       <entryform config="collectionform" formchange="formchange" submit-fn="SubmitCheckDuplicate(form)"></entryform>
     </div>
   </div>
 
   <div ng-if="settings.thisfish_enabled" ng-init="formtable='harvester'">  
-    <div ng-controller="FormSubmitCtrl" ng-hide="addnew">
+    <div ng-controller="FormSubmitCtrl" ng-if="!addnew">
       <entryform config="addform" formchange="formchange" submit-fn="SubmitAddtoList(form)"></entryform>
     </div>
   </div>
