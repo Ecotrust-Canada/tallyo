@@ -151,7 +151,7 @@
     <div ng-if="options.calcbox" ng-controller="CalculateBoxCtrl"></div>
 
     <div class="itemsframe entries"  ng-controller="DisplayItemsPackingCtrl">
-        <bufferedscrolllist ng-if="current.collectionid" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current" prep-fn="getLatest(prep)"></bufferedscrolllist>
+        <bufferedscrolllist ng-if="current[station_info.collectiontable]" itemlist="datasource" listlength="list.length" config="itemlistconfig" update-fn="PatchObjRemoveContainer(str)" test-fn="HighlightGreen(str)" current="current" prep-fn="getLatest(prep)"></bufferedscrolllist>
     </div>
     <div class="itemtotals table_row" ng-if="current.collectionid">
       <div class="item_number">

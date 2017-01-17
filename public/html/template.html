@@ -1,12 +1,11 @@
 
-
 <div ng-controller="StationCtrl" ng-init="init(station.settings)"  >
   
-  <div class="navbutton" ng-if="terminal.showsection!==visibility && visibility">
+  <div class="navbutton" ng-hide="terminal.showsection===visibility || !visibility">
     <button ng-click="terminal.showsection=visibility">Go To: {{title}}</button>
   </div>
 
-  <div ng-class="station.settings.css.station" ng-if="terminal.showsection===visibility || !visibility">
+  <div ng-class="station.settings.css.station" ng-show="terminal.showsection===visibility || !visibility">
     <b>{{title}}</b>
     <div ng-repeat="component in includes" ng-include="component" ng-cloak></div>
   </div>

@@ -253,6 +253,8 @@ angular.module('scanthisApp.directives', [])
     },
   };
 }])
+
+
 .directive('inputDropdown', function($compile) {
     
     return {

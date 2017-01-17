@@ -54,16 +54,12 @@ angular.module('scanthisApp', [
   $scope.stations = stationlist;
   $scope.terminals = terminals;
 
-  $scope.unFocus = function(){
+  $scope.unFocus = function(e){
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
       var active = document.activeElement;
-      if (active.nodeName !== 'SELECT'){
+      if (active.nodeName !== 'SELECT' && e.srcElement.className !== 'dropdown' && e.srcElement.className !== 'scroll_right' && !e.srcElement.className.includes('named')){
+        //alert(e.target);
         active.blur();
-        var el = document.getElementById('to_focus');
-        if (el){
-          //alert('hmm');
-          el.focus();
-        }
       }
     }
   };
