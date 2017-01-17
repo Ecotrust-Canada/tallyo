@@ -6,7 +6,7 @@
   <input ng-hide="(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
   <div class="dropdown" ng-mousedown="">
     <div ng-if="!filter"  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||1000)" class="named">
-        <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>
+        <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b class="named">{{value[config.searchfield]}}</b>
         <span ng-repeat="field in config.fields" ng-switch="field" class="named">
           <span class="named">{{ config.delimeter || '|' }}</span>
           <span class="named" ng-switch-when="timestamp">{{value.timestamp|stringtodateshort }}</span>
@@ -16,9 +16,9 @@
         </span> </div> 
     </div>
     <div ng-if="filter"  ng-repeat="value in thelist | orderBy: config.order | filter: {field_name:filter}: true |filter:search:strict" class="named">
-        <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b>{{value[config.searchfield]}}</b>
+        <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b class="named">{{value[config.searchfield]}}</b>
         <span ng-repeat="field in config.fields" ng-switch="field" class="named">
-          <span>{{ config.delimeter || '|' }}</span>
+          <span class="named">{{ config.delimeter || '|' }}</span>
           <span class="named" ng-switch-when="timestamp">{{value.timestamp|stringtodateshort }}</span>
           <span class="named" ng-switch-when="weight">{{value.weight|weightstring}}</span>
           <span class="named" ng-switch-when="internal_lot_code">{{value[field] || value['lot_number']}}</span>
