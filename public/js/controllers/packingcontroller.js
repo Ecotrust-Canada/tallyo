@@ -97,10 +97,11 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.clearField = function(){
     $scope.input.code = null;
-    var thediv = document.getElementById('scaninput');
-          if (thediv){
-            thediv.focus();
-          }
+    $scope.thediv = document.getElementById('scaninput');
+    if ($scope.thediv){
+      $scope.thediv.focus();
+      delete $scope.thediv;
+    }
   };
 
   $scope.MakeScan = function(id){
@@ -233,11 +234,12 @@ angular.module('scanthisApp.packingController', [])
 
   $scope.clearField = function(){
     $scope.input.code = null;
-    var thediv = document.getElementById('scaninput');
-          if (thediv){
-            thediv.disabled = false;
-            thediv.focus();
-          }
+    $scope.thediv = document.getElementById('scaninput');
+    if ($scope.thediv){
+      $scope.thediv.disabled = false;
+      $scope.thediv.focus();
+      delete $scope.thediv;
+    }
   };
   
   $scope.PatchObjRemoveContainer = function(obj){

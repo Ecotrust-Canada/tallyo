@@ -53,9 +53,6 @@ angular.module('scanthisApp.AdminController', [])
   };
   
   $scope.changeStn = function(index) {
-    var el = document.getElementById('ship' + index);
-    if (el){
-    }
     $scope.stn.index = index;
     $scope.current.shipment = null;
     $scope.current.station_code = $scope.sumStations[$scope.stn.index].station;
@@ -746,7 +743,7 @@ angular.module('scanthisApp.AdminController', [])
   };  
   
   $scope.searchText = '';
-  $scope.startDate = moment().subtract('days', 7).toDate();
+  $scope.startDate = moment().subtract(7, 'days').toDate();
   $scope.endDate = new Date();
   $scope.filter_lot = function(item){
       if ($scope.searchText === '') return true;

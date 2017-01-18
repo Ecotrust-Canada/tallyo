@@ -67,45 +67,39 @@ angular.module('scanthisApp.directives', [])
 .directive('scrollhelper', function ($parse, $timeout) {
     return function ($scope, element, attrs) {
 
+      var checkFlag = function() {
+        $scope.the_el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
+        if( $scope.the_el === null) {
+          delete $scope.the_el;
+          window.setTimeout(checkFlag, 100);
+        } else {
+          $scope.the_el.classList.add('new_item'); 
+          $timeout(function(){ $scope.the_el.classList.remove('new_item'); delete $scope.the_el;}, 500);
+        }
+      };
+
       var adding = function(arr){
 
         if($scope.myAdapter.isBOF()){
 
-          $scope.myAdapter.prepend(arr);
-          $scope.itemlist.minIndex = ($scope.itemlist.minIndex || 0) -1;
-
-          $timeout(function(){ 
-            element[0].scrollTop = 0;
-            var checkFlag = function() {
-                if(document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||'')) === null) {
-                   window.setTimeout(checkFlag, 100);
-                } else {
-                  var el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
-                  el.classList.add('new_item'); 
-                  $timeout(function(){ el.classList.remove('new_item');}, 700);
-                }
-            };
+          if ($scope.itemlist.minIndex && $scope.itemlist.minIndex < -20){
+            $scope.itemlist.minIndex = 0;
+            $scope.myAdapter.reload(0);
+            $scope.the_el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
             checkFlag();
-              
-          }, 0);
-
+          }else{
+            $scope.myAdapter.prepend(arr);
+            $scope.itemlist.minIndex = ($scope.itemlist.minIndex || 0) -1;
+            $timeout(function(){ 
+              element[0].scrollTop = 0;
+              checkFlag();                
+            }, 0);
+          }
         }else{
-          element[0].scrollTop = 0;
-          $timeout(function(){
-
-              var checkFlag = function() {
-                  if(document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||'')) === null) {
-                     window.setTimeout(checkFlag, 100);
-                  } else {
-                    var el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
-                    el.classList.add('new_item'); 
-                    $timeout(function(){ el.classList.remove('new_item');}, 700);
-                  }
-              };
-              checkFlag();
-
-              
-            }, 100);
+          $scope.itemlist.minIndex = 0;
+          $scope.myAdapter.reload(0);
+          $scope.the_el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
+          checkFlag();
         }
 
       };
@@ -126,6 +120,20 @@ angular.module('scanthisApp.directives', [])
         $scope.testFn();
         $scope.myAdapter.reload($scope.itemlist.minIndex||0);
       });
+
+      // element.on('scroll',function (evt) {
+      //   var scrollTop    = element[0].scrollTop,
+      //       scrollHeight = element[0].scrollHeight,
+      //       offsetHeight = element[0].offsetHeight;
+
+      //   if (scrollTop === 0) {
+      //     $scope.$apply(function () {
+      //       console.log('here');
+      //       $scope.itemlist.maxIndex = 20;
+      //       console.log($scope.itemlist.maxIndex);
+      //     });
+      //   }
+      // });
 
     };
   })

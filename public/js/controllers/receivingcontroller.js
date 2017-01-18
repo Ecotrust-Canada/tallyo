@@ -8,11 +8,11 @@ angular.module('scanthisApp.receivingController', [])
 
   $scope.clearField = function(){
     $scope.raw.string = null;
-    var thediv = document.getElementById('scaninput');
-          if (thediv){
-            //console.log(thediv.innerHTML);
-              thediv.focus();
-          }
+    $scope.thediv = document.getElementById('scaninput');
+    if ($scope.thediv){
+      $scope.thediv.focus();
+      delete $scope.thediv;
+    }
   };
 
   var err_func = function(response) {

@@ -151,9 +151,9 @@ angular.module('scanthisApp.createlotController', [])
           $scope.current.start_of_day = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
           
           $scope.current.itemchange = !$scope.current.itemchange;
-          var thediv = document.getElementById('scaninput');
-          if(thediv){
-           $timeout(function(){thediv.focus();}, 0);
+          $scope.thediv = document.getElementById('scaninput');
+          if($scope.thediv){
+            $timeout(function(){$scope.thediv.focus(); delete $scope.thediv;}, 0);
           }
         }, function errorCallback(response) {
         });

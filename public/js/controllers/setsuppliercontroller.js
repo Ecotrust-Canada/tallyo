@@ -117,10 +117,11 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
-    var checkInput = document.getElementById('toggle-state-edit');
+    $scope.checkInput = document.getElementById('toggle-state-edit');
     setTimeout(function () {
       $scope.$apply(function () {
-        $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';
+        $scope.form.state = $scope.checkInput.checked ? 'Clean' : 'Dirty';
+        delete $scope.checkInput;
       });
     }, 0);
   };
@@ -143,6 +144,15 @@ angular.module('scanthisApp.setsupplierController', [])
 
 .controller('NewLotCtrl', function($scope, $http, DatabaseServices, $rootScope, toastr) {
   //for recent lots drop down
+
+  $scope.ListHarvesters = function(){
+    var func = function(response){
+      $scope.list.harvester = response.data;
+    };
+    var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true&order=serial_id.desc';
+    DatabaseServices.GetEntries('harvester', func, query);
+  };
+  $scope.ListHarvesters();
 
   $scope.lotselected = 'no selected';
 
@@ -387,10 +397,11 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.toggleStateValue = function(){
-    var checkInput = document.getElementById('toggle-state');
+    $scope.checkInput = document.getElementById('toggle-state');
     setTimeout(function () {
       $scope.$apply(function () {
-        $scope.form.state = checkInput.checked ? 'Clean' : 'Dirty';
+        $scope.form.state = $scope.checkInput.checked ? 'Clean' : 'Dirty';
+        delete $scope.checkInput;
       });
     }, 0);
   };

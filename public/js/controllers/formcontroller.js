@@ -155,10 +155,10 @@ angular.module('scanthisApp.formController', [])
       if (row.required && !$scope.form[row.fieldname]){
         form_error = true;
         toastr.error('Please set ' + row.title.toLowerCase());
-        var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          } 
+        $scope.thediv = document.getElementById('scaninput');
+        if($scope.thediv){
+          $timeout(function(){$scope.thediv.focus(); delete $scope.thediv;}, 0);
+        }
       }
       // only check for empty string is field is also required
       else if (row.required && $scope.form[row.fieldname] === ''){
@@ -231,16 +231,19 @@ angular.module('scanthisApp.formController', [])
   }
 
   $scope.DoSomething = function(something, row, index){
-    document.getElementById(something).checked = true;
+    $scope.el = document.getElementById(something);
+    $scope.el.checked = true;
+    delete $scope.el;
     $scope.form[row.fieldname] = row.value[index].val;
   };
 
   $scope.toggleRadioValue = function(frow){
       var fieldname = frow.fieldname;
-      var checkInput = document.getElementById('formswitch-'+fieldname);
+      $scope.checkInput = document.getElementById('formswitch-'+fieldname);
       setTimeout(function () {
         $scope.$apply(function () {
-          $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
+          $scope.form[fieldname] = $scope.checkInput.checked ? frow.value[1].val : frow.value[0].val;
+          delete $scope.checkInput;
         });
       }, 50);
   };
@@ -396,16 +399,19 @@ angular.module('scanthisApp.formController', [])
   }
 
   $scope.DoSomething = function(something, row, index){
-    document.getElementById(something).checked = true;
+    $scope.el = document.getElementById(something);
+    $scope.el.checked = true;
+    delete $scope.el;
     $scope.form[row.fieldname] = row.value[index].val;
   };
 
   $scope.toggleRadioValue = function(frow){
       var fieldname = frow.fieldname;
-      var checkInput = document.getElementById('formswitch-'+fieldname);
+      $scope.checkInput = document.getElementById('formswitch-'+fieldname);
       setTimeout(function () {
         $scope.$apply(function () {
-          $scope.form[fieldname] = checkInput.checked ? frow.value[1].val : frow.value[0].val;
+          $scope.form[fieldname] = $scope.checkInput.checked ? frow.value[1].val : frow.value[0].val;
+          delete $scope.checkInput;
         });
       }, 50);
   };
@@ -439,9 +445,9 @@ angular.module('scanthisApp.formController', [])
   var AddSetCurrent = function(thedata){
     $scope.list.collection.push(thedata);
     $scope.current.collectionid = thedata[$scope.station_info.collectionid];
-    var thediv = document.getElementById('scaninput');
-    if(thediv){
-     $timeout(function(){thediv.focus();}, 0);
+    $scope.thediv = document.getElementById('scaninput');
+    if($scope.thediv){
+     $timeout(function(){$scope.thediv.focus(); delete $scope.thediv;}, 0);
     }
   };
 

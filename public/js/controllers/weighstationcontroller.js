@@ -54,11 +54,12 @@ angular.module('scanthisApp.itemController', [])
       }).then(
         function successCallback(response) {
           if ($scope.retry != 0){
-            var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
-            if(status_msg) {
-              status_msg.innerText = 'Scale OK';
-              status_msg.className = 'scale_msg';
+            $scope.status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+            if($scope.status_msg) {
+              $scope.status_msg.innerText = 'Scale OK';
+              $scope.status_msg.className = 'scale_msg';
               console.log('Scale connection restored after ' + $scope.retry * _timeout / 1000 + ' seconds');
+              delete $scope.status_msg;
             }
           }
           $scope.retry = 0;
@@ -78,8 +79,8 @@ angular.module('scanthisApp.itemController', [])
         },
         function errorCallback(response) {
           // get the manual_input_ element - this means clicking it will set manual input mode but it is currently in auto mode
-          var thediv = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
-          if (thediv) {
+          $scope.the_div = document.getElementById('manual_input_' + ($scope.scanform.station_id || ''));
+          if ($scope.the_div) {
             // let's avoid a divide by zero shall we
             if (_timeout <= 0) _timeout = 1000;
 
@@ -90,25 +91,28 @@ angular.module('scanthisApp.itemController', [])
 
               // we are retrying here now so we do not want to change the state of the scale until the retries have been exhausted
               // basically we are simply delaying the clicking of _thediv which will set the scale to manual mode
-              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
-              if(status_msg) {
-                status_msg.innerText = 'Scale Unstable';
-                status_msg.className = 'scale_msg_warn';
+              $scope.status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if($scope.status_msg) {
+                $scope.status_msg.innerText = 'Scale Unstable';
+                $scope.status_msg.className = 'scale_msg_warn';
+                delete $scope.status_msg;
               }
             } else {
               // we have retried for two seconds and no luck reconnectiong - switch to manual input
               // reverse logic here - thediv manual_input_ means clicking it will make it manual input
               //thediv.click();
 
-              var status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
-              if(status_msg) {
-                status_msg.innerText = 'Scale LOST';
-                status_msg.className = 'scale_msg_error';
+              $scope.status_msg = document.getElementById('scale_status_message_' + ($scope.scanform.station_id || ''));
+              if($scope.status_msg) {
+                $scope.status_msg.innerText = 'Scale LOST';
+                $scope.status_msg.className = 'scale_msg_error';
+                delete $scope.status_msg;
 
                 // clear the scale value
                 $scope.scale[fieldName] = "";
               }
             }
+            delete $scope.the_div;
           }
         });
       }, 500);
@@ -136,10 +140,11 @@ angular.module('scanthisApp.itemController', [])
       if ($scope.options.secondstation){
         $scope.SecondScan(entry);
       }
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          }
+      $scope.thediv = document.getElementById('scaninput');
+      if ($scope.thediv){
+          $scope.thediv.focus();
+          delete $scope.thediv;
+      }
     };
     if (NoMissingValues(entry.scan)){
       DatabaseServices.DatabaseEntryReturn('scan', entry.scan, func);
@@ -272,10 +277,11 @@ angular.module('scanthisApp.itemController', [])
         else if (!response.data || response.data.code !== '23505'){
         toastr.error('Error: ' + (response.statusText || 'no Network Connection'));
         }
-        var thediv = document.getElementById('scaninput');
-              if (thediv){
-                  thediv.focus();
-              } 
+        $scope.thediv = document.getElementById('scaninput');
+        if ($scope.thediv){
+            $scope.thediv.focus();
+            delete $scope.thediv;
+        }
         var enabled = function(event) {
             return true;
         };
@@ -366,10 +372,11 @@ angular.module('scanthisApp.itemController', [])
         if (response.data.code !== '23505'){
         toastr.error('Error: ' + (response.statusText || 'no Database Connection'));
         }
-        var thediv = document.getElementById('scaninput');
-              if (thediv){
-                  thediv.focus();
-              } 
+        $scope.thediv = document.getElementById('scaninput');
+        if ($scope.thediv){
+            $scope.thediv.focus();
+            delete $scope.thediv;
+        }
         var enabled = function(event) {
             return true;
         };
@@ -386,10 +393,11 @@ angular.module('scanthisApp.itemController', [])
       $scope.current.itemchange = !$scope.current.itemchange;
       $scope.current.removing = !$scope.current.removing;
       $scope.to_delete = null;
-      var thediv = document.getElementById('scaninput');
-          if (thediv){
-              thediv.focus();
-          }
+      $scope.thediv = document.getElementById('scaninput');
+      if ($scope.thediv){
+          $scope.thediv.focus();
+          delete $scope.thediv;
+      }
     };
     DatabaseServices.RemoveEntry(table, query, func);
   };

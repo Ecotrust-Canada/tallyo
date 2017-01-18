@@ -5,7 +5,7 @@
       ng-click="changelot()">
     <span class="show_choices">Set Current Lot</span>
   </div>
-  <div class="show_choices" ng-if="!current.collectionid">
+  <div class="show_choices" ng-hide="current.collectionid">
     <input-dropdown  thelist="list.harvester"  config="adddropdown" on-select="GetHar(value)"></input-dropdown>
     <div class="form_buttons">
 
