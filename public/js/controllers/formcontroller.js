@@ -288,6 +288,7 @@ angular.module('scanthisApp.formController', [])
     for (var key in $scope.thedata){
       $scope.form[key] = $scope.thedata[key];
     }
+    delete $scope.thedata;
     $scope.FormData($scope.config.dboptions);
     
   };
@@ -375,28 +376,6 @@ angular.module('scanthisApp.formController', [])
     var query = '?table_name=eq.' + table;
     DatabaseServices.GetEntryNoAlert('formoptions', func, query);
   };
-
-  $scope.Delete = function(value, field){
-    var query='?table_name=eq.' + $scope.config.dboptions + '&value=eq.' + value + '&field_name=eq.' + field;
-    var func = function(response){
-      $scope.FormData($scope.config.dboptions);
-    };
-    DatabaseServices.RemoveEntry('formoptions', query, func);
-  };
-
-  $scope.New = function(value, field){
-    if (value){
-      var entry ={"table_name": $scope.config.dboptions, "value": value, "field_name": field};
-      var func = function(response){
-        $scope.FormData($scope.config.dboptions);
-      };
-      DatabaseServices.DatabaseEntry('formoptions', entry, func);
-    }    
-  };
-
-  if ($scope.config.dboptions){
-    $scope.FormData($scope.config.dboptions);
-  }
 
   $scope.DoSomething = function(something, row, index){
     $scope.el = document.getElementById(something);
