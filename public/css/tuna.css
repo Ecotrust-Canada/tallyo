@@ -1218,6 +1218,7 @@ div[ng-view] {
 .input-dropdown input:focus + .dropdown,
 .fieldset-dropdown input:focus + .dropdown {
     display: block;
+    z-index: 20000;
 }
 
 #admin_manage_lots table tr .lot-station-cell .item-details table {

@@ -4,7 +4,7 @@
   <div class="dd_arrow"><span></span></div>
 
   <input ng-hide="(the_val || form)" ng-model="search[config.searchfield]" id="select-{{config.id}}">
-  <div class="dropdown" ng-mousedown="">
+  <div class="dropdown">
     <div ng-if="!filter"  ng-repeat="value in thelist | orderBy: config.order | filter: search | limitTo: (limit||1000)" class="named">
         <div class="scroll_right" ng-click="select($event, value)" ng-mousedown="pcselect($event, value)"><b class="named">{{value[config.searchfield]}}</b>
         <span ng-repeat="field in config.fields" ng-switch="field" class="named">

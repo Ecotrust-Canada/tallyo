@@ -168,7 +168,7 @@ angular.module('scanthisApp.createlotController', [])
   $scope.current.itemchange = true;
 
   $scope.$watch('current.collectionid', function() {
-    $scope.current[$scope.station_info.collectiontable] = null;
+    //$scope.current[$scope.station_info.collectiontable] = null;
     if ($scope.station_info !== undefined && $scope.current.collectionid !== undefined){
       if ($scope.current.collectionid === 'no selected' || $scope.current.collectionid === null){
       }
