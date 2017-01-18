@@ -82,7 +82,7 @@ angular.module('scanthisApp.directives', [])
 
         if($scope.myAdapter.isBOF()){
 
-          if ($scope.itemlist.minIndex && $scope.itemlist.minIndex < -20){
+          if ($scope.itemlist.minIndex && $scope.itemlist.minIndex <= -19){
             $scope.itemlist.minIndex = 0;
             $scope.myAdapter.reload(0);
             $scope.the_el = document.getElementById('item-' + ($scope.itemlist.minIndex||0) + ($scope.config.station_id||''));
@@ -121,20 +121,6 @@ angular.module('scanthisApp.directives', [])
         $scope.myAdapter.reload($scope.itemlist.minIndex||0);
       });
 
-      // element.on('scroll',function (evt) {
-      //   var scrollTop    = element[0].scrollTop,
-      //       scrollHeight = element[0].scrollHeight,
-      //       offsetHeight = element[0].offsetHeight;
-
-      //   if (scrollTop === 0) {
-      //     $scope.$apply(function () {
-      //       console.log('here');
-      //       $scope.itemlist.maxIndex = 20;
-      //       console.log($scope.itemlist.maxIndex);
-      //     });
-      //   }
-      // });
-
     };
   })
 
@@ -160,13 +146,6 @@ angular.module('scanthisApp.directives', [])
            hideFn: '&'},
   templateUrl: 'htmlpartials/expandedlist.html' }; })
 
-// .directive('dropdown', function() { return { 
-//   scope: { itemlist: '=',  
-//            cfg: '=', 
-//            selectedoption: '=', 
-//            changeFn: '&' },
-//   controller: 'OptionCtrl',
-//   templateUrl: 'htmlpartials/dropdown.html' }; })
 
 .directive('entryform', function() { return { 
   scope: {table: '=',  
@@ -195,14 +174,6 @@ angular.module('scanthisApp.directives', [])
   controller: 'editdataCtrl', 
   templateUrl: 'htmlpartials/edit_form.html' }; })
 
-// .directive('editform', function() { return { 
-//   scope: {obj: '=',  
-//           config: '=',   
-//           formchange: '=',
-//           formdisabled: '=', 
-//           submitFn: '&'},
-//   controller: 'editformCtrl', 
-//   templateUrl: 'htmlpartials/editform.html' }; })
 
 .directive('fieldsetrepeat', function() { return { 
   scope: { config: '=' ,

@@ -74,13 +74,17 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   $scope.ListHarvesters = function(){
+    console.log('here');
     var func = function(response){
       $scope.list.harvester = response.data;
     };
     var query = '?processor_code=eq.' + $scope.processor + '&active=eq.true&order=serial_id.desc';
     DatabaseServices.GetEntries('harvester', func, query);
   };
-  $scope.ListHarvesters();
+  if (!$scope.list.harvester || $scope.list.harvester.length === 0){
+    $scope.ListHarvesters();
+  }
+  
 
   $scope.GetHar = function(harvester){
     $scope.form.harvester_code = harvester.harvester_code;
