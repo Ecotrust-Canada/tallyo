@@ -255,7 +255,8 @@ angular.module('scanthisApp.formController', [])
 })
 
 
-.controller('editdataCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout) {
+.controller('editdataCtrl', function($scope, $http, DatabaseServices, toastr, $document, $timeout, $animate) {
+  $animate.enabled(true);
   $scope.$watch('thedata', function(newValue, oldValue) {
     if ($scope.thedata !== undefined){
       $scope.Clear();
@@ -288,7 +289,6 @@ angular.module('scanthisApp.formController', [])
     for (var key in $scope.thedata){
       $scope.form[key] = $scope.thedata[key];
     }
-    delete $scope.thedata;
     $scope.FormData($scope.config.dboptions);
     
   };
