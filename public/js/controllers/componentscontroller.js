@@ -236,6 +236,10 @@ angular.module('scanthisApp.createlotController', [])
       var func = function(response){
         success(response.data);
         $scope.list.length = response.headers()['content-range'].split('/')[1];
+        if (index === 0){
+          $timeout(function(){ $scope.datasource.maxIndex = parseInt($scope.list.length) + parseInt($scope.datasource.minIndex)  - 1;}, 0);
+        }
+        
       };
 
       if ($scope.current.collectionid && index>=0 && index<=($scope.list.length||0)){

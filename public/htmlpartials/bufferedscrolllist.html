@@ -4,11 +4,11 @@
 
 <!-- <div class="bufferedscroll" id="list-{{config.id}}"> -->
 <div id="list-{{config.id}}">
-<div ng-if="current.collectionid"  class="viewport" id="viewport-tableScroller" ui-scroll-viewport scrollhelper>
+<div ng-if="current.collectionid"  class="viewport" id="viewport-tableScroller" ui-scroll-viewport scrollhelper >
   <table>
     <thead>
       <tr ng-if="config.headers">
-        <th></th>
+        <th ng-click="lengthfn()">{{itemlist.maxIndex}}</th>
         <th ng-repeat="title in config.headers">{{title}}</th>
       </tr>
     </thead>

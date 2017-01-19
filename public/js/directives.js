@@ -103,7 +103,12 @@ angular.module('scanthisApp.directives', [])
         }
 
       };
-      
+
+      $scope.lengthfn = function(){
+        $scope.itemlist.maxIndex = parseInt($scope.listlength) + parseInt($scope.itemlist.minIndex)  - 1;
+        console.log($scope.itemlist.maxIndex);
+      };
+
 
       $scope.$watch('current.addnew', function(newValue, oldValue) {
         if($scope.current.addnew === true){
@@ -115,6 +120,7 @@ angular.module('scanthisApp.directives', [])
           }
         }
       });
+
 
       $scope.$watch('current.removing', function(newValue, oldValue) {
         $scope.testFn();
