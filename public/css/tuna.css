@@ -95,6 +95,19 @@ body{
     background-repeat: repeat;
     background-position: left top;
 }
+
+.loading-message{
+    position: absolute;
+    top: 60px;
+    left: 190px;
+    background: lightgrey;
+    opacity: 0.9;
+    color: #195672;
+    font-size: 19px;
+    font-family: 'Lato-Bold';
+    font-style: italic;
+    padding: 15px 40px
+}
 .container {
   min-height:100%;
   position:relative;
