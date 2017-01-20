@@ -469,7 +469,8 @@ angular.module('scanthisApp.createlotController', [])
 })
 
 
-.controller('TotalsWeighCtrl', function($scope, $http, DatabaseServices) {
+.controller('TotalsWeighCtrl', function($scope, $http, DatabaseServices, $animate) {
+  $animate.enabled(false);
   $scope.istotal = true;
 })
 
