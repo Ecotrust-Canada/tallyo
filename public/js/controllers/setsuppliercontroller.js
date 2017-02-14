@@ -564,6 +564,7 @@ angular.module('scanthisApp.setsupplierController', [])
           var ref_num = $scope.current.shipping_unit.po_number;
           var sup_code = $scope.current.supplier.supplier_code;
           var r_date = $scope.current.receivedate || null;
+          r_date = String(moment(r_date).utc().format()).substring(0, 10);
           var queryString = "?internal_lot_code=eq." + ref_num;
           $scope.entry.lot = {"harvester_code": (harvester_code || null), "shipping_unit_number": ship_code ,
           "station_code": $scope.station_code, "processor_code": $scope.processor, "supplier_code": sup_code, "receive_date": r_date};

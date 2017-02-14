@@ -259,6 +259,9 @@ var AddtoEntryFormData = function(form, $scope, entry){
   for (var key in form){
       entry[key] = form[key];
   }
+  if (entry.pdc){
+    entry.pdc = String(moment(entry.pdc).utc().format()).substring(0, 10);
+  }
   return entry;
 };
 

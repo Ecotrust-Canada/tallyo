@@ -514,7 +514,7 @@ angular.module('scanthisApp.receivingController', [])
     };
     var browser_date = new Date($scope.current.receivedate);
     var _date = new Date($scope.current.receivedate);
-    var receive = moment.utc(_date.valueOf() - browser_date.getTimezoneOffset()*60000).format();
+    var receive = moment.utc(_date.valueOf() - browser_date.getTimezoneOffset()*60000).format().substring(0, 10);
     var patch = {'internal_lot_code': $scope.current.ship_edit.po_number, 'receive_date': receive, 'supplier_code': $scope.current.supplier_code};
     var query = '?lot_number=eq.' + $scope.current.edit_lot.lot_number;
     DatabaseServices.PatchEntry('lot', patch, query, func);
