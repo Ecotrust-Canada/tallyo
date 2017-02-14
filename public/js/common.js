@@ -242,6 +242,13 @@ var isInArray = function(value, array) {
   return array.indexOf(value) > -1;
 };
 
+var AddtoEntryNonFormDataItem = function($scope, entry){
+  var collection_field = ($scope.station_info.patchid || $scope.station_info.collectionid);
+  entry[collection_field] = $scope.current.collectionid;
+  entry.station_code = $scope.station_code;
+  return entry;
+};
+
 var AddtoEntryNonFormData = function($scope, entry){
   entry[$scope.station_info.collectionid] = $scope.current.collectionid;
   entry.station_code = $scope.station_code;

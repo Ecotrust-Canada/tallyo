@@ -355,7 +355,6 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.FilterDate = function(){
     $http.get('/server_time').then(function successCallback(response) {
-
       var s_offset = parseInt(moment($scope.startDate).format("Z").substring(0,3));
       var e_offset = parseInt(moment($scope.endDate).format("Z").substring(0,3));
       var the_offset = response.data.timezone/60;
@@ -636,7 +635,20 @@ angular.module('scanthisApp.AdminController', [])
   };
 
   $scope.getTheData = function(lot_number, stn, lot_code){
-    if (stn.csv_lot){
+    if (stn.csv_in && stn.csv_lot){
+      async.parallel([
+          function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);},
+          function(callback){ $scope.getCSVin(callback, lot_number, stn, lot_code, stn.csv_in.table, stn.csv_in.fields);}
+      ],
+      function(err, results) {
+          var name = lot_code + '_' + stn.name;
+          name += '.xlsx';
+          console.log(name);
+          var opts = [{sheetid:'Lot_info',header:true},{sheetid:'Station_info',header:true}];
+          alasql('SELECT INTO XLSX("' + name + '",?) FROM ?',[opts,results]);
+      });
+    }
+    else if (stn.csv_lot){
       async.parallel([
           function(callback){ $scope.getlotCSV(callback, lot_number, stn, lot_code, stn.csv_lot.table, stn.csv_lot.fields);},
           function(callback){ $scope.getCSV(callback, lot_number, stn, lot_code, stn.csv_1.table, stn.csv_1.fields);}
@@ -690,6 +702,22 @@ angular.module('scanthisApp.AdminController', [])
 
   $scope.getCSV = function(callback, lot_number, stn, lot_code, table, fields){
     var query = '?lot_number=eq.' + lot_number + '&station_code=eq.' + stn.code;
+    query += '&order=timestamp.desc';
+    var func = function(response){
+      if(response.data.length>0){
+        $scope.list.detail = response.data;
+        var newdata = alasql("SELECT " + fields + " FROM ?",[$scope.list.detail]);
+        callback(null, newdata);
+      }
+      else{
+        callback(null, [{nodata:'nodata'}]);
+      }
+    };
+    DatabaseServices.GetEntries(table, func, query, callback);
+  };
+
+  $scope.getCSVin = function(callback, lot_number, stn, lot_code, table, fields){
+    var query = '?lot_in=eq.' + lot_number + '&station_code=eq.' + stn.code;
     query += '&order=timestamp.desc';
     var func = function(response){
       if(response.data.length>0){

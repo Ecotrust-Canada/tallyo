@@ -209,7 +209,7 @@ angular.module('scanthisApp.itemController', [])
     var table = $scope.station_info.itemtable.split('_')[0];
     entry.scan = {};
     entry[table] = {};
-    entry[table] = AddtoEntryNonFormData($scope, entry[table]);
+    entry[table] = AddtoEntryNonFormDataItem($scope, entry[table]);
     entry.scan = AddtoEntryNonFormData($scope, entry.scan);
     entry[table] = AddtoEntryFormData(form, $scope, entry[table]);
 
