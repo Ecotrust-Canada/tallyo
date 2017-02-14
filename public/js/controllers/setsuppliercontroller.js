@@ -259,7 +259,6 @@ angular.module('scanthisApp.setsupplierController', [])
   };
 
   var addlotlocations = function(){
-    
     for (var j=0;j<$scope.setstation.add.length;j++){
       var station1 = $scope.setstation.add[j];
       AddStationLot($scope.current.collectionid, station1);
@@ -280,6 +279,7 @@ angular.module('scanthisApp.setsupplierController', [])
     if ($scope.current.collectionid !== undefined && $scope.current.collectionid !== null && $scope.current.collectionid !== 'no selected'){
       $rootScope.$broadcast('collection-change', {id: $scope.current.collectionid});
       setlotlocations();
+      addlotlocations();
     }
   });
 
