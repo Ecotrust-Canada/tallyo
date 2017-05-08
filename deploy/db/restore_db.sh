@@ -13,7 +13,7 @@ fi
 
 echo "Removing current db from docker deployment"
 
-dropdb $POSTGRES_DB
+dropdb -U $POSTGRES_USER $POSTGRES_DB
 
 if [ $? -ne 0 ]; then
 	echo "Database drop failed, exiting" && \
@@ -36,7 +36,7 @@ fi
 echo "Restoring db from docker backup"
 
 # pg_restore -d $POSTGRES_DB /code/backups/st.dump
-pg_restore -d $POSTGRES_DB <&0
+pg_restore -U $POSTGRES_USER -d $POSTGRES_DB <&0
 
 if [ $? -ne 0 ]; then
 	echo "Database restore failed" && \

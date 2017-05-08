@@ -405,8 +405,8 @@ angular.module('scanthisApp.packingController', [])
   $scope.CalcBox = function(){
         var case_num;
         if(!$scope.current.box.case_number){
-          $http.get('/increment').then(function successCallback(response) {
-            case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt(response.data)),5);
+          $http.get('/increment?label=' + $scope.options.case_label).then(function successCallback(response) {
+            case_num = ($scope.options.case_label || 'Z' ) + padz(String(parseInt(response.data)), 5);
 
             var lot_num = GetBoxLotNumber($scope.list.included);
             if (lot_num !== undefined){
@@ -446,7 +446,7 @@ angular.module('scanthisApp.packingController', [])
             }
           }
 
-        }       
+        }
 
   };
 

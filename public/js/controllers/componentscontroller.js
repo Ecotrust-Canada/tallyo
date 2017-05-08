@@ -149,7 +149,7 @@ angular.module('scanthisApp.createlotController', [])
         $http.get('/server_time').then(function successCallback(response) {
           var the_date = response.data.timestamp;
           $scope.current.start_of_day = moment(the_date).utcOffset(response.data.timezone).startOf('day').format();
-          
+
           $scope.current.itemchange = !$scope.current.itemchange;
           $scope.thediv = document.getElementById('scaninput');
           if($scope.thediv){
@@ -249,7 +249,7 @@ angular.module('scanthisApp.createlotController', [])
         }
         else if ($scope.current.start_of_day){
           query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
-          DatabaseServices.GetEntries(table, func, query); 
+          DatabaseServices.GetEntries(table, func, query);
         }else{
           success([]);
         }
@@ -260,7 +260,7 @@ angular.module('scanthisApp.createlotController', [])
         }
         else if ($scope.current.start_of_day){
           query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (count+index) +'&offset=0';
-          DatabaseServices.GetEntries(table, func, query); 
+          DatabaseServices.GetEntries(table, func, query);
         }
         else{
           success([]);
@@ -288,9 +288,9 @@ angular.module('scanthisApp.createlotController', [])
         DatabaseServices.GetEntries(table, func, query); 
       }else if ($scope.current.start_of_day){
         query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=1';
-        DatabaseServices.GetEntries(table, func, query); 
+        DatabaseServices.GetEntries(table, func, query);
       }
-      
+
 
   };
 
@@ -360,7 +360,7 @@ angular.module('scanthisApp.createlotController', [])
       }
       else if ($scope.current.start_of_day){
           query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + count +'&offset=' + index;
-        DatabaseServices.GetEntries(table, func, query); 
+        DatabaseServices.GetEntries(table, func, query);
       }
       else{
           success([]);
@@ -380,7 +380,7 @@ angular.module('scanthisApp.createlotController', [])
       }
       else if ($scope.current.start_of_day){
           query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=' + (count+index) +'&offset=0';
-        DatabaseServices.GetEntries(table, func, query); 
+        DatabaseServices.GetEntries(table, func, query);
       }
       else{
           success([]);
@@ -420,7 +420,7 @@ angular.module('scanthisApp.createlotController', [])
     }
     else if ($scope.current.start_of_day){
       query = '?timestamp=gte.' + $scope.current.start_of_day + '&station_code=eq.' + $scope.station_code + '&' + ($scope.station_info.patchid || $scope.station_info.collectionid) + '=eq.' + $scope.current.collectionid + '&order=timestamp.desc&limit=1&offset=0';
-      DatabaseServices.GetEntries(table, func, query); 
+      DatabaseServices.GetEntries(table, func, query);
     }
 
   };

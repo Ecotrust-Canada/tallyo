@@ -41,6 +41,8 @@ services:
     volumes:
       - ./migrations:/opt/tallyo/migrations
       - ./public:/opt/tallyo/public
+#      - ./:/opt/tallyo
+#      - /opt/tallyo/node_modules
     networks:
       - back-tier
 

@@ -4,6 +4,10 @@ services:
   db:
     # set DB_PORT by using command line
     # $> DB_PORT=5432 docker-compose -f docker-compose.yml -f docker-compose.harsam.yml -f docker-compose.dev.yml -p harsam up
+    # powershell:
+    # PS tallyo> $Env:DB_PORT = 5432
+    # PS tallyo> docker-compose -f docker-compose.yml -f docker-compose.harsam.yml -f docker-compose.dev.yml -p harsam up
     ports:
       - "${DB_PORT}:5432"
-      
+    volumes:
+      - .:/tally

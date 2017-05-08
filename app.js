@@ -55,25 +55,67 @@ app.get('/server_time', function(req, res, next) {
  });
 });
 
+// because of non-ideal database and application design this overly complicated increment function is
+// required for case/box numbers
 app.get('/increment', function(req, res, next){
+  // only increment from box numbers that have this system's case_label
+  var label = req.query.label;
+  if (!label) {
+      // a missing label will make the query match any non-null case_number
+      label = '';
+  }
 
-  var query = 'select to_increment from increment_case where serial_id =1';
+  var query = "select b.case_number, b.weight, b.pieces, inc.to_increment " +
+              "from box as b, increment_case as inc " +
+              "where b.case_number LIKE '" + label + "%' " +
+              "order by b.timestamp desc " +
+              "limit 1";
+
   db.any(query)
       .then(function (data) {
-          var num = String(data[0].to_increment);
-          res.status(200).send(num);
-          var is_num = parseInt(num);
-          var new_num;
-          if (is_num < 10000){
-            new_num= is_num +1;
-          }else{
-            new_num = 1;
+          // remove prefix from case_number
+          console.log('increment db query results: ' + JSON.stringify(data));
+
+          // default case_number to account for empty query, and non-parsable query results - very unlikely
+          var case_num = 0;
+
+          if(data.length > 0) {
+              // use the latest box number to check and prevent rogue increment_case table values which happen because of
+              // unintended, multiple or arbitrary calls to /increment
+              var prev_case_num = parseInt(data[0].case_number.match(/\d+$/));
+
+              // if prev_case_num did not parse, to_increment will be used by default
+              if (prev_case_num) {
+                  // we want prev_case_num to take precedence so the customer is more likely to see sequential box numbers
+                  case_num = prev_case_num;
+              } else {
+                  var incr_num = parseInt(data[0].to_increment);
+                  // just a final check for final failure mode/corner case where a db integer does not parse, yeah right
+                  if (incr_num) {
+                      case_num = incr_num;
+                  }
+              }
           }
+
+          // worst-case scenario is the db is empty or parseInt all failed so we'd be starting from 0
+          var new_num;
+
+          if (case_num < 99999) {
+              new_num = case_num + 1;
+          } else {
+              new_num = 1;
+          }
+
+          // this must send a String or else downstream code will not see the new case number
+          // e.g. res.status(200).send(new_num) will not work
+          res.status(200).send(String(new_num));
+
           var query = 'update increment_case set to_increment = ' + new_num + ' where serial_id = 1';
-          db.any(query).then(function (data) {});
+          db.any(query).then(function (data) { });
       })
       .catch(function (error) {
-          // error;
+          res.status(500).send(error);
+          console.error('get /increment error: ' + error);
       });
 });
 

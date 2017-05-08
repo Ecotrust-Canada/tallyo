@@ -1501,6 +1501,23 @@ div[ng-view] {
   font-family: Arial, Helvetica, sans-serif;
 }*/
 
+/*.display_field {*/
+  /*display: flex;*/
+  /*text-align: right;*/
+/*}*/
+
+/*.display_field label {*/
+  /*flex: 2;*/
+  /*vertical-align: middle;*/
+  /*margin: auto;*/
+  /*margin-right: 1em;*/
+/*}*/
+
+/*.display_field input, .display_field span {*/
+  /*flex: 4;*/
+  /*text-align: left;*/
+/*}*/
+
 .display_field label, #prev_station_totals label,
 #edit_shipment .form_label label,
 .fieldsetrepeat label, #receiveshipment #form-14 .form_label label/*,
@@ -1508,6 +1525,7 @@ div[ng-view] {
   color: #777777;
   text-transform: uppercase;
   font-family: 'Lato-Bold';
+
 }
 .fieldsetrepeat .select_header {
   margin-bottom: 5px;

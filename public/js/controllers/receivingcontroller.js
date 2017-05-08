@@ -167,8 +167,8 @@ angular.module('scanthisApp.receivingController', [])
   });
 
   $scope.Complete = function(){ 
-    $scope.current.selected = 'no selected';
-    $scope.current.collectionid = 'no selected';
+    $scope.current.selected = null;
+    $scope.current.collectionid = null;
   };
 
 })
